@@ -1,0 +1,142 @@
+<script>
+  ((window, document) => {
+    var waitForJQuery = setInterval(function () {
+      if (typeof $ != 'undefined') {
+          $(function() {
+
+            const hideWidgets = (params) => {
+              const { smile } = params;
+              let result = { smile };
+        
+              if (!smile) {
+                const smile$ = $('div#smile-ui-container');
+                if (smile$.length > 0) {
+                  smile$.hide();
+                  result.smile = true;
+                }
+              }
+        
+              /* 
+              if (!fb) {
+                const fb$ = $('.facebook-message-us-button');
+                if (fb$.length > 0) {
+                  fb$.hide();
+                  result.fb = true;
+                }
+              }
+              */
+        
+              const hasAllWidgetsHidden = Object.keys(result).some( widget => !result[widget] );
+        
+              if (hasAllWidgetsHidden) {
+                return setTimeout(() => hideWidgets(result), 500);
+              } else {
+                return true;
+              }
+            }
+        
+            const showWidgets = () => {
+              $('div#smile-ui-container').show()
+              // $('.facebook-message-us-button').show();
+            }
+            
+            /* when filter button is clicked, toggle class show on mobile view list */
+            $('#toggleFilters').on('click', () => setTimeout(() => { 
+              if ($('.mobile-view.bg-backdrop').hasClass('show')) {
+                showWidgets();
+              } else {
+                hideWidgets({ smile: false });
+              }
+              $('.mobile-view.bg-backdrop').toggleClass('show');
+            }, 100));
+        
+            /* listener for bg-backdrop when clicked */
+            $('.mobile-view.bg-backdrop').on('click', function(e) {
+              if (e.target !== this)
+                return;
+              $('#toggleFilters')[0].click();
+            });
+        
+            /* arrow up listener */
+            $('.mobile-view.bg-backdrop span.button-up').on('click', () => $('#toggleFilters')[0].click());
+          /* listener for Filter button */
+            $('.btn-search-tags').on('click', e => {
+              let tagsSelected = [];
+              const screenView = $(e.target).data('view');
+              $(`.${screenView}-view .new-list-tags input:checked`).each( (index, element) => {
+                tagsSelected = [...tagsSelected, $(element).val()];
+              } )
+        
+              if (tagsSelected[0] == 'all-tags') {
+                window.location.href = `/collections/${ location.pathname.split('/')[2] }`;
+              } else {
+                window.location.href = `/collections/${ location.pathname.split('/')[2] }/${tagsSelected.join('+')}`;
+              }
+        
+            });
+          /* when All Tags is clicked */
+            $('.new-list-tags input[name="all-tags"]').on( 'change', e => {
+              console.log('test')
+              if ($(e.target).prop('checked')) {
+                const screenView = $(e.target).data('view');
+                $(`.${screenView}-view .new-list-tags input:checked:not([name="all-tags"])`).each((index, element) => $(element).prop('checked', false))
+              }
+            } );
+          /* when a tag (other than All Tags) is clicked */
+            $('.new-list-tags input:not([name="all-tags"])').on('change', e => {
+              const screenView = $(e.target).data('view');
+              const allTagsReset = $(`.${screenView}-view .new-list-tags input[name="all-tags"]`);
+              if ($(e.target).prop('checked') && allTagsReset.prop('checked')) {
+                allTagsReset.prop('checked', false);
+              }
+            });
+        
+            $(window).on('resize', function(){
+              const win = $(this);
+              if (win.height() > 768) { 
+                if ($('.mobile-view.bg-backdrop').hasClass('show')) {
+                  $('.mobile-view.bg-backdrop').removeClass('show');
+                  showWidgets();
+                }
+              }
+            });
+          });
+  
+          clearInterval(waitForJQuery);
+      }
+    }, 10);
+  })(window, document)
+  
+</script>
+
+<ul class="collection-nav new-list-tags">
+  <li {% unless current_tags %}class="collection-nav--active"{% endunless %}>
+    {% capture first_tag %}{{ current_tags | first }}{% endcapture %}
+    <label for="all-tags-reset_{{ screen }}">
+      <input type="checkbox" name="all-tags" id="all-tags-reset_{{ screen }}" value="all-tags" {% unless current_tags %}checked{% endunless %} data-view="{{ screen }}">
+      <span class="checkmark"></span>
+      All Tags
+    </label>
+  </li>
+  {% for tag in collection.all_tags %}
+    {% if tag contains '- ' %}
+      {% if current_tags contains tag %}
+        <li class="collection-nav--active">
+          <label for="{{ tag | handle }}_{{ screen }}">
+            <input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}_{{ screen }}" value="{{ tag | handle }}" data-view="{{ screen }}" checked>
+            <span class="checkmark"></span>
+            {{ tag }}
+          </label>
+        </li>
+      {% else %}
+        <li>
+          <label for="{{ tag | handle }}_{{ screen }}">
+            <input type="checkbox" name="{{ tag | handle }}" id="{{ tag | handle }}_{{ screen }}" value="{{ tag | handle }}" data-view="{{ screen }}">
+            <span class="checkmark"></span>
+            {{ tag }}
+          </label>
+        </li>
+      {% endif %}
+    {% endif %} 
+  {% endfor %}
+</ul>

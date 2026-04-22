@@ -1,0 +1,496 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 15,
+        "banner_desktop": "shopify://shop_images/Salon_Aftercare_-_Desktop_Banner.png",
+        "banner_mobile": "shopify://shop_images/Salon_Aftercare_-_Mobile_Banner.png",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 76
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": true,
+        "show_description_below": true,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/storytelling-thinning-hair-sep-2023-desktop-banner.jpg",
+            "slide_image_mobile": "shopify://shop_images/storytelling-thinning-hair-sep-2023-mobile-banner.jpg",
+            "slide_image_url": "https://www.hairmnl.com/pages/general-hairfall-personalized-solutions-davines-energizing-kerastase-genesis"
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Award-Winning_Thinning_Hair_Treatments_Desktop_213b479c-d331-4347-ba28-388c04a47843.jpg",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Award-Winning_Thinning_Hair_Treatments_Mobile_789f3cc0-a958-4e87-ab97-42017dd283f9.jpg",
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h1>Salon Aftercare</h1><p>At HairMNL, we're passionate about hair care, and it's not just about selling products – it's about helping you maintain the beauty of your hair. Our Salon Aftercare Collections are carefully curated to address the specific needs of different hair treatments, ensuring your locks remain healthy, vibrant, and full of life.</p><ul><li><strong>Expertly Formulated:</strong> Our products are designed by experts in the field to enhance and prolong the effects of salon treatments.</li><li><strong>Tailored to Your Needs:</strong> Whether you have color-treated hair, rebonded locks, permed waves, a Brazilian blowout, keratin-treated strands, or bleached beauty, we have the right aftercare products to meet your unique needs.</li><li><strong>Radiant Results:</strong> With our aftercare collections, you can expect long-lasting color, smoothness, definition, frizz control, and vibrant blonde locks.</li><li><strong>Professional Quality at Home: </strong>Enjoy salon-quality care from the comfort of your own home.</li><li><strong>Healthy Hair, Always:</strong> Our products are formulated to keep your hair healthy and strong, so you can continue to flaunt the stunning results of your salon treatment.</li></ul><p>Explore our Salon Aftercare Collections and indulge your hair in the pampering it deserves. Discover the difference in maintaining the beauty of your hair with HairMNL.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "",
+            "text_align": "text-left"
+          }
+        },
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0",
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "bc0cd955-5794-4834-9af3-3fb195f0c058": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14411676778595__bc0cd955-5794-4834-9af3-3fb195f0c058-1675366340ba3d52a8-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "title": "For Hairfall Management",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14411676778595__bc0cd955-5794-4834-9af3-3fb195f0c058-1675366340ba3d52a8-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "title": "For Hairloss Prevention",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14411676778595__bc0cd955-5794-4834-9af3-3fb195f0c058-1675366340ba3d52a8-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "title": "For Increased Hair Density",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "f1108138-aa66-44ce-a8db-ff2c2d489e50": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "title": "For Increased Hair Diameter",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "c2989609-b73f-4bd5-aa88-815c9fa800b1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "title": "For a Receding Hairline",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14411676778595__bc0cd955-5794-4834-9af3-3fb195f0c058-1675366340ba3d52a8-0",
+        "template--14411676778595__bc0cd955-5794-4834-9af3-3fb195f0c058-1675366340ba3d52a8-1",
+        "template--14411676778595__bc0cd955-5794-4834-9af3-3fb195f0c058-1675366340ba3d52a8-2",
+        "f1108138-aa66-44ce-a8db-ff2c2d489e50",
+        "c2989609-b73f-4bd5-aa88-815c9fa800b1"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "7a270b7d-2599-42c7-ba52-5681e1d57193": {
+      "type": "section-collection-grid",
+      "blocks": {
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "products-for-colored-hair",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/products-for-colored-hair"
+          }
+        },
+        "c6b924e4-aea4-4ce4-9c02-99adfd385f13": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "products-for-bleached-hair",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/products-for-bleached-hair"
+          }
+        },
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "products-for-rebonded-hair",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/products-for-rebonded-hair"
+          }
+        },
+        "fc847e9c-a37f-4eba-a76a-2fc7e93b987d": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "products-for-permed-hair",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/products-for-permed-hair"
+          }
+        },
+        "94b07b62-0251-4166-a21f-eb8ceb5fa000": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "keratin-treated-hair",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/keratin-treated-hair"
+          }
+        },
+        "8b9f931e-7bed-4331-84e7-42be19b980ef": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "brazilian-blowout",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/brazilian-blowout"
+          }
+        }
+      },
+      "block_order": [
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-0",
+        "c6b924e4-aea4-4ce4-9c02-99adfd385f13",
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-1",
+        "fc847e9c-a37f-4eba-a76a-2fc7e93b987d",
+        "94b07b62-0251-4166-a21f-eb8ceb5fa000",
+        "8b9f931e-7bed-4331-84e7-42be19b980ef"
+      ],
+      "settings": {
+        "title": "",
+        "grid": 3,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.6
+      }
+    },
+    "e4d10257-2e6a-4ee6-8b8d-c077464c197a": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14411676778595__e4d10257-2e6a-4ee6-8b8d-c077464c197a-1676002138d56f4b61-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "tousled-online-magazine",
+            "blog_handle": "highlight-the-aftercare-expert-balayage-aftercare-tips-from-a-licensed-hair-professional"
+          }
+        },
+        "3c080d12-1719-4bbe-b10d-c5a71134005c": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "ultimate-guide-to-keratin-treatment-and-aftercare"
+          }
+        },
+        "7904dbc7-abd6-4bb4-be3f-5f20ebfde28d": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "damage-hair-care-for-rough-and-weak-hair-from-color-and-chemical-treatments"
+          }
+        },
+        "6e091d23-4e68-47b3-8976-ed933a50de2f": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "bond-builders-are-hair-saviors-why-you-should-be-using-it-on-your-damaged-hair"
+          }
+        }
+      },
+      "block_order": [
+        "template--14411676778595__e4d10257-2e6a-4ee6-8b8d-c077464c197a-1676002138d56f4b61-0",
+        "3c080d12-1719-4bbe-b10d-c5a71134005c",
+        "7904dbc7-abd6-4bb4-be3f-5f20ebfde28d",
+        "6e091d23-4e68-47b3-8976-ed933a50de2f"
+      ],
+      "settings": {
+        "title": "Tousled Online Magazine",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "4a9fb288-42b1-4bee-a258-bbf046e23b50": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "dc6ecbcb-9176-44d1-aafb-a841ca6c2633": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "rebonding-vs-keratin-treatment-achieving-silky-hair"
+          }
+        },
+        "1b65159b-eb8f-49a8-84d2-230a492b4439": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "top-5-tips-for-maintaining-highlighted-hair"
+          }
+        },
+        "ad25aab6-9a16-4e49-b8e5-390e0048edb0": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "why-sulfate-free-shampoos-are-a-must-have-for-anyone-with-hair-color"
+          }
+        },
+        "b985e58b-a253-4e26-a57e-21c34108ed8e": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "the-best-aftercare-products-for-brazilian-blowout-from-hairmnl"
+          }
+        },
+        "bccca529-cf7d-4e14-9d7b-c9b0fca63ce5": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "hairmnls-definitive-guide-to-the-best-aftercare-products-for-popular-salon-treatments"
+          }
+        }
+      },
+      "block_order": [
+        "dc6ecbcb-9176-44d1-aafb-a841ca6c2633",
+        "1b65159b-eb8f-49a8-84d2-230a492b4439",
+        "ad25aab6-9a16-4e49-b8e5-390e0048edb0",
+        "b985e58b-a253-4e26-a57e-21c34108ed8e",
+        "bccca529-cf7d-4e14-9d7b-c9b0fca63ce5"
+      ],
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "af2b07a1-cff3-46ec-8449-11caca7a2642": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Need help deciding?",
+        "text": "<p>Feel free to send us a message for an online consultation.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Chat Now",
+        "button_url": "https://m.me/hairmnl",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "For Thinning Hair",
+        "title_font_size": 17,
+        "collection": "holiday-gifts-for-thinning-hair",
+        "grid": 6,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "7313cc6a-91a7-4ca6-8577-e1859706e634": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "hero",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "bc0cd955-5794-4834-9af3-3fb195f0c058",
+    "7a270b7d-2599-42c7-ba52-5681e1d57193",
+    "e4d10257-2e6a-4ee6-8b8d-c077464c197a",
+    "4a9fb288-42b1-4bee-a258-bbf046e23b50",
+    "af2b07a1-cff3-46ec-8449-11caca7a2642",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "7313cc6a-91a7-4ca6-8577-e1859706e634"
+  ]
+}

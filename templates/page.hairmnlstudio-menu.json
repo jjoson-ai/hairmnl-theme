@@ -1,0 +1,883 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "section_static_banner_WGXD96": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "name": "Static Banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/hairmnl-studio-free-kerastase-fusio-dose-treatment.jpg",
+        "banner_mobile": "shopify://shop_images/hairmnl-studio-free-kerastase-fusio-dose-treatment_1.jpg",
+        "banner_url": "shopify://collections/kerastase",
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_banner_slider_HmYXXg": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "banner_slide_9ELnYP": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/2026-mar-apr-salon-site-banners-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/2026-mar-apr-salon-site-banners-mobile.jpg",
+            "slide_image_url": "http://studio.hairmnl.com"
+          }
+        },
+        "banner_slide_yTaghd": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/hairmnl-studio-cut-above-the-rest-june-2025-deskto.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-studio-cut-above-the-rest-june-2025-mobile.jpg",
+            "slide_image_url": "http://studio.hairmnl.com/"
+          }
+        }
+      },
+      "block_order": [
+        "banner_slide_9ELnYP",
+        "banner_slide_yTaghd"
+      ],
+      "name": "Banner Slider",
+      "settings": {
+        "enable_section": false,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "6e7e1e0a-e313-4cac-a95b-3e35b9023088": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "HairMNL Studio",
+        "text": "<h1>Menu of Services</h1>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "98c75afb-3c68-4d97-930e-4431d9c2a26f": {
+      "type": "section-gallery",
+      "blocks": {
+        "template--14432242237539__98c75afb-3c68-4d97-930e-4431d9c2a26f-1679136045e544536c-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Studio_Service_Menu_as_of_March_2026.jpg",
+            "link": ""
+          }
+        },
+        "template--14432242237539__98c75afb-3c68-4d97-930e-4431d9c2a26f-1679136045e544536c-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Studio_Service_Menu_as_of_March_2026_2.jpg",
+            "link": ""
+          }
+        },
+        "a9d04b12-1195-40ee-aa5b-ea414a27d72a": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Studio_Service_Menu_as_of_March_2026_3.jpg",
+            "link": ""
+          }
+        },
+        "image_hJB4ct": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/4_-_HairMNL_Studio_Service_Menu_as_of_Jan_5_2026.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14432242237539__98c75afb-3c68-4d97-930e-4431d9c2a26f-1679136045e544536c-1",
+        "template--14432242237539__98c75afb-3c68-4d97-930e-4431d9c2a26f-1679136045e544536c-2",
+        "a9d04b12-1195-40ee-aa5b-ea414a27d72a",
+        "image_hJB4ct"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": false,
+        "aspect_ratio": 1.5,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12
+      }
+    },
+    "b8d6fa10-0c77-4290-a774-be0fecb038f3": {
+      "type": "section-gallery",
+      "blocks": {
+        "template--14463335596131__b8d6fa10-0c77-4290-a774-be0fecb038f3-image-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Studio_Service_Menu_as_of_March_2026_1.jpg",
+            "link": ""
+          }
+        },
+        "template--14463335596131__b8d6fa10-0c77-4290-a774-be0fecb038f3-image-3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Studio_Service_Menu_as_of_March_2026_5.jpg",
+            "link": ""
+          }
+        },
+        "image_cVwTUz": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Studio_Service_Menu_as_of_March_2026_6.jpg",
+            "link": ""
+          }
+        },
+        "template--14463335596131__b8d6fa10-0c77-4290-a774-be0fecb038f3-image-2": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/8_-_HairMNL_Studio_Service_Menu_as_of_Jan_5_2026.jpg",
+            "link": ""
+          }
+        },
+        "image_xG6D9h": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Studio_Service_Menu_as_of_Aug_13_2025_10.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14463335596131__b8d6fa10-0c77-4290-a774-be0fecb038f3-image-1",
+        "template--14463335596131__b8d6fa10-0c77-4290-a774-be0fecb038f3-image-3",
+        "image_cVwTUz",
+        "template--14463335596131__b8d6fa10-0c77-4290-a774-be0fecb038f3-image-2",
+        "image_xG6D9h"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": false,
+        "aspect_ratio": 0.9,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12
+      }
+    },
+    "4fd7c52d-b0e7-4f04-be83-26ee1bf28ffd": {
+      "type": "section-gallery",
+      "blocks": {
+        "image_zPAW3D": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/9_-_HairMNL_Studio_Service_Menu_as_of_Jan_5_2026.jpg",
+            "link": ""
+          }
+        },
+        "2c70f518-36f5-4e0e-a402-d07191393904": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/10_-_HairMNL_Studio_Service_Menu_as_of_Jan_5_2026.jpg",
+            "link": ""
+          }
+        },
+        "image_j7Fd3H": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/11_-_HairMNL_Studio_Service_Menu_as_of_Jan_5_2026.jpg",
+            "link": ""
+          }
+        },
+        "e06050e8-b194-4cad-a85b-131119e2630d": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/12_-_HairMNL_Studio_Service_Menu_as_of_Jan_5_2026.jpg",
+            "link": ""
+          }
+        },
+        "2da035e9-3618-47bc-b96e-a5cc8e8cc314": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2023-08-09_at_9.01.37_AM.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_zPAW3D",
+        "2c70f518-36f5-4e0e-a402-d07191393904",
+        "image_j7Fd3H",
+        "e06050e8-b194-4cad-a85b-131119e2630d",
+        "2da035e9-3618-47bc-b96e-a5cc8e8cc314"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": false,
+        "aspect_ratio": 0.9,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 80,
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_double_yELgWX": {
+      "type": "section-double",
+      "blocks": {
+        "text_TfQrra": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Anniversary Treat",
+            "text": "<p>This month, we have an exclusive treat for you! Celebrate HairMNL Studio’s anniversary with 10% OFF any service booked for <strong>Sept 6–14.</strong></p><p>The universe says it’s time to book an appointment online at <a href=\"http://studio.hairmnl.com/?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBEwV21MSWZ2cG5JVkdXY2pUQQEegN5UmsnqbxGBBa9IvVvj19G1PdNfrZr88q1rAhssAzLofw-2l4qqlWzNxFk_aem_PomUnPOAWj_hqfUvq84vdg\" target=\"_blank\"><em><strong>studio.hairmnl.com</strong></em></a></p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Book your Appointment",
+            "button_url": "http://studio.hairmnl.com",
+            "button_color": "btn--neutral",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "image_4CkPAb": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Studio_Birthday_Campaign_Sep_2025_mobile.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "text_TfQrra",
+        "image_4CkPAb"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "height": "image-height",
+        "padding": true,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "section_double_LjYDXQ": {
+      "type": "section-double",
+      "blocks": {
+        "text_dfb4kR": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Kérastase Services in HairMNL Studio -Serendra",
+            "text": "<p>Located in <a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" title=\"HairMNL Studio - Serendra\">2F Serendra Mall, BGC, Taguig</a></p><p>Above Teppanya</p><p>9AM-8PM on weekdays, 9AM-7PM on weekends</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Book your Appointment",
+            "button_url": "http://studio.hairmnl.com",
+            "button_color": "btn--neutral",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "image_eNkDjc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/KR_in_Serendra.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "text_dfb4kR",
+        "image_eNkDjc"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "image-height",
+        "padding": true,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "section_richtext_zCejKP": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h1>Promos</h1><p><em>All promos cannot be combined with other offers or promotions unless stated. Valid until supplies last.</em></p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Book Your Appointment",
+        "button_url": "http://studio.hairmnl.com",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "23e244b0-cd4f-4cc0-8b1f-f7cd99124b0e": {
+      "type": "section-page",
+      "settings": {
+        "home_page_content": "hairmnl-studio-service-menu",
+        "home_page_show_title": false,
+        "text_size": 1,
+        "align_title": "text-center",
+        "align_text": "text-center",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_gallery_text_QYdEdy": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "text_UHmbHp": {
+          "type": "text",
+          "settings": {
+            "title": "10% Off Cut, Color and Treatment",
+            "text": "",
+            "text_align": "text-left"
+          }
+        },
+        "text_NX44Bi": {
+          "type": "text",
+          "settings": {
+            "title": "10% Off Color and Treatment",
+            "text": "<h5>10% Off Color and Treatment</h5>",
+            "text_align": "text-left"
+          }
+        },
+        "text_ACRPDX": {
+          "type": "text",
+          "settings": {
+            "title": "Custom Text",
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "text_MAMhDq": {
+          "type": "text",
+          "settings": {
+            "title": "Custom Text",
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "text_UHmbHp",
+        "text_NX44Bi",
+        "text_ACRPDX",
+        "text_MAMhDq"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 24,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 32,
+        "mobile_padding_bottom": 32
+      }
+    },
+    "eb75fc74-e630-431b-a301-5ad3e98c3337": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "How to Book Your Hair Color Service",
+        "text": "",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "https://studio.hairmnl.com",
+        "button_color": "btn--black",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "9776c023-55f6-4645-98b2-80c6739af708": {
+      "type": "section-icons",
+      "blocks": {
+        "template--14463335596131__9776c023-55f6-4645-98b2-80c6739af708-16890677407ca6055a-0": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-chat",
+            "icon_color": "#aaaaaa",
+            "title": "Cost Estimate",
+            "text": "<p>Show us your peg and send a photo of your current hair under daylight or natural light.</p><p>Receive a cost estimate for the service.</p><p>Need options? Ask us for recommendations.</p>"
+          }
+        },
+        "template--14463335596131__9776c023-55f6-4645-98b2-80c6739af708-16890677407ca6055a-2": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-store",
+            "icon_color": "#aaaaaa",
+            "title": "BRANCHES",
+            "text": "<p><strong>HairMNL Studio - Kapitolyo<br/></strong><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">2F The Vantage at Kapitolyo,<br/>West Capitol Dr. cor. United St., Pasig City</a></p><p>Open daily, 10AM to 7PM<br/></p><p><strong>HairMNL Studio - Serendra<br/></strong><a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" title=\"HairMNL Studio - Serendra\">2F Serendra Mall,<br/>Bonifacio Global City, Taguig</a></p><p>9AM-8PM on weekdays, 9AM-7PM on weekends</p>"
+          }
+        },
+        "template--14463335596131__9776c023-55f6-4645-98b2-80c6739af708-16890677407ca6055a-1": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-phone",
+            "icon_color": "#aaaaaa",
+            "title": "Contact Us",
+            "text": "<p><strong>Chat</strong>: <a href=\"https://facebook.com/hairmnlstudio\" target=\"_blank\">Facebook</a> / <a href=\"https://instagram.com/hairmnlstudio\" target=\"_blank\">Instagram</a></p><p><strong>Kapitolyo</strong>: <a href=\"tel:+639177904455\" target=\"_blank\" title=\"tel:+639177904455\">0917-790-4455</a></p><p><strong>Serendra</strong>: <a href=\"tel:+639171179935\" title=\"tel:+639171179935\">0917-117-9935</a> / <a href=\"tel:+69399268325\" title=\"tel:+69399268325\">0939-9268-325</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463335596131__9776c023-55f6-4645-98b2-80c6739af708-16890677407ca6055a-0",
+        "template--14463335596131__9776c023-55f6-4645-98b2-80c6739af708-16890677407ca6055a-2",
+        "template--14463335596131__9776c023-55f6-4645-98b2-80c6739af708-16890677407ca6055a-1"
+      ],
+      "settings": {
+        "title": "",
+        "bg": "palette--light bg--neutral",
+        "icon_size": "icon--medium",
+        "icon_alignment": "icon--top",
+        "align_text": "text-center"
+      }
+    },
+    "section_richtext_g39xXK": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Frequently Asked Questions",
+        "button_url": "shopify://pages/hairmnl-studio-frequently-asked-questions-faqs",
+        "button_color": "btn--black",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_richtext_UCxRKn": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "HairMNL Studio",
+        "text": "<p>HairMNL Studio is a beauty salon that offers premium services to care for your hair.</p><p><a href=\"/pages/hairmnl-studios-salon-portfolio\" target=\"_blank\" title=\"HairMNL Studio's Salon Portfolio\">Browse our portfolio</a></p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "BOOK YOUR APPOINTMENT",
+        "button_url": "https://studio.hairmnl.com",
+        "button_color": "btn--black",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_double_FfHCpz": {
+      "type": "section-double",
+      "blocks": {
+        "text_nU7JCH": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "HairMNL Studio Services Gift Card",
+            "text": "<p>Looking for the perfect present? Treat them to an experience with a HairMNL & HairMNL Studio gift cards!</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Add to cart",
+            "button_url": "shopify://collections/hairmnl-hairmnl-studio-e-gift-cards",
+            "button_color": "btn--neutral",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "image_U8cRaq": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hairmnl-studio-services-gift-cards-mobile.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "Shop Now",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "text_nU7JCH",
+        "image_U8cRaq"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "image-height",
+        "padding": true,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "show_title": true,
+        "show_content": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-center",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "2bb538fd-00e9-4620-a766-45e343ea4292": {
+      "type": "section-blog",
+      "disabled": true,
+      "settings": {
+        "title": "Tousled Online Magazine",
+        "homepage_blog": "salon-services",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "17b7d449-d0b8-458f-b933-492bd443e599": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14463335596131__17b7d449-d0b8-458f-b933-492bd443e599-168906698303ed2207-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "volumizing-haircuts-and-hairstyles-for-thin-or-fine-hair-achieve-fuller-looks-at-hairmnl-studio"
+          }
+        },
+        "0dfe5fc9-88fa-445b-85da-86dc1a360f99": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "2026-best-in-beauty-hair-protocols-essentials"
+          }
+        },
+        "template--14463335596131__17b7d449-d0b8-458f-b933-492bd443e599-168906698303ed2207-2": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "budget-friendly-looks-at-hairmnl-studio-achieve-style-without-breaking-the-bank"
+          }
+        },
+        "template--14463335596131__17b7d449-d0b8-458f-b933-492bd443e599-168906698303ed2207-1": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "no-bleach-balayage-for-morena-skin-a-filipina-s-guide-to-sun-kissed-hair"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463335596131__17b7d449-d0b8-458f-b933-492bd443e599-168906698303ed2207-0",
+        "0dfe5fc9-88fa-445b-85da-86dc1a360f99",
+        "template--14463335596131__17b7d449-d0b8-458f-b933-492bd443e599-168906698303ed2207-2",
+        "template--14463335596131__17b7d449-d0b8-458f-b933-492bd443e599-168906698303ed2207-1"
+      ],
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "section_collection_KA6de8": {
+      "type": "section-collection",
+      "name": "Featured collection",
+      "settings": {
+        "title": "Shop Summer Essentials",
+        "title_font_size": 28,
+        "collection": "summer-collection",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "56c6e154-cb05-43f6-bedb-06dc9b9c2112": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "02ca4685-52ae-4a03-9109-fc2178156b23": {
+          "type": "collection",
+          "settings": {
+            "collection": "keratin-treated-hair",
+            "title": "Keratin-Treated Hair"
+          }
+        },
+        "template--14432242237539__56c6e154-cb05-43f6-bedb-06dc9b9c2112-1677035966a8c5edde-0": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-bleached-hair",
+            "title": "Bleached Hair"
+          }
+        },
+        "template--14432242237539__56c6e154-cb05-43f6-bedb-06dc9b9c2112-1677035966a8c5edde-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-rebonded-hair",
+            "title": "Rebonded Hair"
+          }
+        },
+        "79a211b6-8e03-4b83-9140-dcdad0b4245c": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-permed-hair",
+            "title": "Permed Hair"
+          }
+        },
+        "826ead56-f1d7-42a4-8452-44620ae9eab1": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-colored-hair",
+            "title": "Colored Hair"
+          }
+        }
+      },
+      "block_order": [
+        "02ca4685-52ae-4a03-9109-fc2178156b23",
+        "template--14432242237539__56c6e154-cb05-43f6-bedb-06dc9b9c2112-1677035966a8c5edde-0",
+        "template--14432242237539__56c6e154-cb05-43f6-bedb-06dc9b9c2112-1677035966a8c5edde-1",
+        "79a211b6-8e03-4b83-9140-dcdad0b4245c",
+        "826ead56-f1d7-42a4-8452-44620ae9eab1"
+      ],
+      "settings": {
+        "title": "Shop Products for Salon After Care",
+        "title_font_size": 28,
+        "grid": 6,
+        "limit": 6,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "0ed86c72-6942-4519-8477-fb76d025a100": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "template--14463335596131__0ed86c72-6942-4519-8477-fb76d025a100-1689070103775e3968-0": {
+          "type": "collection",
+          "settings": {
+            "collection": "diy-styling-favorites",
+            "title": "Styling Products"
+          }
+        },
+        "template--14463335596131__0ed86c72-6942-4519-8477-fb76d025a100-1689070103775e3968-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "professional-hairdressing-tools-equipment",
+            "title": "Styling Tools"
+          }
+        },
+        "c839e85e-8ffd-4dfa-ab89-d73abebe72d1": {
+          "type": "collection",
+          "settings": {
+            "collection": "faded-hair-color",
+            "title": "Color Refresh"
+          }
+        },
+        "20ea75d2-4c60-4cd7-9145-7fda0fd09fbf": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-men",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14463335596131__0ed86c72-6942-4519-8477-fb76d025a100-1689070103775e3968-0",
+        "template--14463335596131__0ed86c72-6942-4519-8477-fb76d025a100-1689070103775e3968-1",
+        "c839e85e-8ffd-4dfa-ab89-d73abebe72d1",
+        "20ea75d2-4c60-4cd7-9145-7fda0fd09fbf"
+      ],
+      "settings": {
+        "title": "Shop Styling Products & Color Refresh",
+        "title_font_size": 28,
+        "grid": 6,
+        "limit": 6,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "c3d64194-bf6f-4e53-8849-8176b8df2e9c": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently Viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    },
+    "9c93caf3-5fd7-4a1c-b893-99ab57ffe28e": {
+      "type": "section-collection-grid",
+      "blocks": {
+        "template--14432242237539__9c93caf3-5fd7-4a1c-b893-99ab57ffe28e-16770357558d2f4328-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "faded-hair-color",
+            "title": "",
+            "link_text": "",
+            "button_link": ""
+          }
+        },
+        "template--14432242237539__9c93caf3-5fd7-4a1c-b893-99ab57ffe28e-16770357558d2f4328-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "post-salon-smoothing-treatment-maintenance",
+            "title": "",
+            "link_text": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14432242237539__9c93caf3-5fd7-4a1c-b893-99ab57ffe28e-16770357558d2f4328-0",
+        "template--14432242237539__9c93caf3-5fd7-4a1c-b893-99ab57ffe28e-16770357558d2f4328-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Collection list",
+        "grid": 2,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 15,
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7
+      }
+    },
+    "265ee037-e22b-402f-a3c6-850bb893d144": {
+      "type": "section-newsletter",
+      "settings": {
+        "title": "Sign up to our mailing list!",
+        "richtext": "<p>Be part of our hair community. Get regular pro tips, trends, exclusives, and more.</p>",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "section_static_banner_WGXD96",
+    "section_banner_slider_HmYXXg",
+    "6e7e1e0a-e313-4cac-a95b-3e35b9023088",
+    "98c75afb-3c68-4d97-930e-4431d9c2a26f",
+    "b8d6fa10-0c77-4290-a774-be0fecb038f3",
+    "4fd7c52d-b0e7-4f04-be83-26ee1bf28ffd",
+    "section_double_yELgWX",
+    "section_double_LjYDXQ",
+    "section_richtext_zCejKP",
+    "23e244b0-cd4f-4cc0-8b1f-f7cd99124b0e",
+    "section_gallery_text_QYdEdy",
+    "eb75fc74-e630-431b-a301-5ad3e98c3337",
+    "9776c023-55f6-4645-98b2-80c6739af708",
+    "section_richtext_g39xXK",
+    "section_richtext_UCxRKn",
+    "section_double_FfHCpz",
+    "main",
+    "2bb538fd-00e9-4620-a766-45e343ea4292",
+    "17b7d449-d0b8-458f-b933-492bd443e599",
+    "section_collection_KA6de8",
+    "56c6e154-cb05-43f6-bedb-06dc9b9c2112",
+    "0ed86c72-6942-4519-8477-fb76d025a100",
+    "c3d64194-bf6f-4e53-8849-8176b8df2e9c",
+    "9c93caf3-5fd7-4a1c-b893-99ab57ffe28e",
+    "265ee037-e22b-402f-a3c6-850bb893d144"
+  ]
+}

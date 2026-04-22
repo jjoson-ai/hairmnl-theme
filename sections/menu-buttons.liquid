@@ -1,0 +1,70 @@
+{% unless section.settings.menu_list == blank or section.settings.menu_list.empty? %}
+  {% assign menu_list = section.settings.menu_list | handleize %}
+  <div class="wrapper">
+    <div class="mb-box">
+      <div class="mb-menu">
+        {% for link in linklists[menu_list].links %}
+        <div class="mb-menu-item">
+          <a href="{{ link.url }}" class="mb-menu-item-link">{{ link.title }}</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endunless %}
+
+<style>
+  .menu-buttons {
+    margin-top: {{ section.settings.space_top }}px;
+    margin-bottom: {{ section.settings.space_bottom }}px;
+  }
+</style>
+
+{% schema %}
+
+{
+  "name": "Menu Buttons",
+  "class": "menu-buttons",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Menu List"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_list",
+      "label": "Menu list"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "space_top",
+      "label": "Top spacing",
+      "unit": "px",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "space_bottom",
+      "label": "Bottom spacing",
+      "unit": "px",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    }
+  ],
+  "presets": [
+      {
+        "name": "Menu Buttons",
+        "category": "Menu"
+      }
+    ]
+}
+{% endschema %}

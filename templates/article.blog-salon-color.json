@@ -1,0 +1,188 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "0863f1f1-afa1-42f7-8409-3f2dbbf6a21c": {
+      "type": "tousled-header",
+      "settings": {
+        "tousled_menu_linklist": "tousled-v2",
+        "tousled_logo_max_limit": 100,
+        "tousled_logo_max_limit_menu": 100,
+        "header_bg": "#e7d8c3",
+        "underline": "#333333",
+        "underline_current": false
+      }
+    },
+    "main": {
+      "type": "article",
+      "settings": {
+        "title_alignment": "center",
+        "blog_show_meta": true,
+        "author_alignment": "center",
+        "content_alignment": "left",
+        "tags": false,
+        "social": true,
+        "blog_show_featured_image": false,
+        "image_height": "use_screen_three_quarters",
+        "bg_position": "center-center",
+        "sidebar_tags": false,
+        "recent": true
+      }
+    },
+    "0b76f2a5-f7ba-47b4-83cc-59becb677c4e": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "For Colored Hair",
+        "title_font_size": 28,
+        "featured_collection": "products-for-colored-hair"
+      }
+    },
+    "d25742f0-60a0-4a16-9df3-913154137522": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "Sulfate-Free Shampoo",
+        "title_font_size": 28,
+        "featured_collection": "sulfate-free-shampoos"
+      }
+    },
+    "4a72984f-3773-4e3b-87c0-e34e9b43b438": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "Color Refresh",
+        "title_font_size": 28,
+        "featured_collection": "faded-hair-color"
+      }
+    },
+    "e04d52b6-b5f9-4a39-9c2d-fd0ce4ad7c7b": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "For Bleached Hair",
+        "title_font_size": 28,
+        "featured_collection": "products-for-bleached-hair"
+      }
+    },
+    "6eb188fe-e8e4-4513-9306-d2e296e19b5b": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "f1f1dcd7-acfd-42a3-9890-7caf0cfceeb6": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "not-ready-to-go-full-blonde-here-are-alternatives-that-don-t-scrimp-on-style"
+          }
+        },
+        "template--14447406284899__6eb188fe-e8e4-4513-9306-d2e296e19b5b-1680693284f825c9e8-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "post-color-care-best-pro-products-and-tips-for-lasting-hair-color"
+          }
+        },
+        "5c2a06e7-3c6a-402e-b190-b127a52d2212": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "make-your-balayage-last-longer-top-salon-secrets-you-can-do-at-home"
+          }
+        },
+        "template--14447406284899__6eb188fe-e8e4-4513-9306-d2e296e19b5b-1680693284f825c9e8-1": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "15-top-sulfate-free-shampoos-in-the-philippines-2023"
+          }
+        },
+        "template--14447406284899__6eb188fe-e8e4-4513-9306-d2e296e19b5b-1680693284f825c9e8-2": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "tips-to-choose-the-best-hair-color-for-you"
+          }
+        }
+      },
+      "block_order": [
+        "f1f1dcd7-acfd-42a3-9890-7caf0cfceeb6",
+        "template--14447406284899__6eb188fe-e8e4-4513-9306-d2e296e19b5b-1680693284f825c9e8-0",
+        "5c2a06e7-3c6a-402e-b190-b127a52d2212",
+        "template--14447406284899__6eb188fe-e8e4-4513-9306-d2e296e19b5b-1680693284f825c9e8-1",
+        "template--14447406284899__6eb188fe-e8e4-4513-9306-d2e296e19b5b-1680693284f825c9e8-2"
+      ],
+      "settings": {
+        "title": "Tousled Online Magazine",
+        "homepage_blog": "",
+        "homepage_blog_count": 5,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "ad9cfc7c-9e8e-4fd7-bca0-93b534cff8bc": {
+      "type": "section-blog",
+      "disabled": true,
+      "settings": {
+        "title": "Salon Services",
+        "homepage_blog": "salon-services",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "0af38192-713f-4828-a246-23a8c2fe7bce": {
+      "type": "section-newsletter",
+      "settings": {
+        "title": "Sign up to our mailing list!",
+        "richtext": "<p>Be part of our hair community.<br/>Get regular pro tips, trends, exclusives, and more.</p>",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "eabe20ea-46ab-4f70-9f0e-f54087dd29d6": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "0863f1f1-afa1-42f7-8409-3f2dbbf6a21c",
+    "main",
+    "0b76f2a5-f7ba-47b4-83cc-59becb677c4e",
+    "d25742f0-60a0-4a16-9df3-913154137522",
+    "4a72984f-3773-4e3b-87c0-e34e9b43b438",
+    "e04d52b6-b5f9-4a39-9c2d-fd0ce4ad7c7b",
+    "6eb188fe-e8e4-4513-9306-d2e296e19b5b",
+    "ad9cfc7c-9e8e-4fd7-bca0-93b534cff8bc",
+    "0af38192-713f-4828-a246-23a8c2fe7bce",
+    "eabe20ea-46ab-4f70-9f0e-f54087dd29d6"
+  ]
+}

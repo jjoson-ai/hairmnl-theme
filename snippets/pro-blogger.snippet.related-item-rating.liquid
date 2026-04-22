@@ -1,0 +1,12 @@
+{% comment %}
+    Static file for the addition of custom ratings widgets.
+    Use variable {{ ProdID }} to represent product.id
+{% endcomment %}
+
+{% assign prod = all_products[ProdHandle] %}
+
+<div style='' class='jdgm-widget jdgm-preview-badge' data-id='{{ prod.id }}'
+data-template='manual-installation'
+data-auto-install='false'>
+  {{ prod.metafields.judgeme.badge }}
+</div>

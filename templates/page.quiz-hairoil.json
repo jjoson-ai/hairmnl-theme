@@ -1,0 +1,180 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "settings": {
+        "kicker": "",
+        "show_title": true,
+        "show_content": false,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-center",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "4898b462-fd04-4f26-b7d6-96b6f2e1cd98": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "Your Hair & Scalp Care Matchmaker",
+        "title": "Find Your HairMNL Routine Here",
+        "text": "<p>Understand your hair and scalp better. Take our online quizzes to know which products might work for you.<br/></p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "93990bc8-b1c4-4eec-9eb9-9616b950d841": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14536359084131__93990bc8-b1c4-4eec-9eb9-9616b950d841-article_block-2": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "hair-oil-vs-hair-serum-know-the-difference"
+          }
+        },
+        "template--14536359084131__93990bc8-b1c4-4eec-9eb9-9616b950d841-article_block-3": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "discover-the-kerastase-elixir-ultime-oils-the-ultimate-hair-care-elixir"
+          }
+        },
+        "template--14536359084131__93990bc8-b1c4-4eec-9eb9-9616b950d841-article_block-1": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "best-hair-serums-for-frizzy-hair-available-in-the-philippines"
+          }
+        }
+      },
+      "block_order": [
+        "template--14536359084131__93990bc8-b1c4-4eec-9eb9-9616b950d841-article_block-2",
+        "template--14536359084131__93990bc8-b1c4-4eec-9eb9-9616b950d841-article_block-3",
+        "template--14536359084131__93990bc8-b1c4-4eec-9eb9-9616b950d841-article_block-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Featured Articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000",
+        "aspect_ratio": 0.5,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "6703a774-864d-4bfa-bdb4-326ea6114363": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Hair_Quiz.png",
+            "title": "Hair Quiz",
+            "text": "<p>Discover which products will suit your hair's needs</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/hair-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Scalp_Quiz.png",
+            "title": "Scalp Quiz",
+            "text": "<p>Discover targeted solutions for your scalp</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/scalp-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Purple_Toning_Shampoo_Quiz.png",
+            "title": "Purple / Blue Toning Quiz",
+            "text": "<p>Find out which product is perfect for your hair</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/purple-toning-shampoo-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "3f70b188-a009-4b6e-8fe9-3c9cc51a4939": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Hair_Oil_Quiz.png",
+            "title": "Hair Oil Quiz",
+            "text": "<p>Find out which hair oil is right for you</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/hair-oil-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-0",
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-1",
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-2",
+        "3f70b188-a009-4b6e-8fe9-3c9cc51a4939"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Browse All Quizzes",
+        "title_font_size": 24,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 72,
+        "desktop_padding_bottom": 72,
+        "mobile_padding_top": 24,
+        "mobile_padding_bottom": 16
+      }
+    }
+  },
+  "order": [
+    "main",
+    "4898b462-fd04-4f26-b7d6-96b6f2e1cd98",
+    "93990bc8-b1c4-4eec-9eb9-9616b950d841",
+    "6703a774-864d-4bfa-bdb4-326ea6114363"
+  ]
+}

@@ -1,0 +1,302 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 25,
+        "banner_desktop": "shopify://shop_images/best-for-travel_banner-1400-x-500-px.jpg",
+        "banner_mobile": "shopify://shop_images/best-for-travel_banner-552-x-502-px.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 64
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/Colored_Hair_-_Desktop_Banner_1400_x_500_px.png",
+            "slide_image_mobile": "shopify://shop_images/Colored_Hair_-_Mobile_Banner.png",
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_AVEDA_New_Color_Control_Desktop_b9d46e90-d4cb-4dfd-938e-aa58f30b2437.jpg",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_AVEDA_New_Color_Control_Mobile_aee9c4c0-ab0f-44ed-a8f9-1ff16d318681.jpg",
+            "slide_image_url": "shopify://collections/aveda-color-control"
+          }
+        },
+        "f4a7b305-9b37-40af-bb66-b99f42844750": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Davines_Heart_of_Glass_Desktop_3d3f59f7-da3f-44e1-a611-d16fd8dc9e20.jpg",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Davines_Heart_of_Glass_Mobile_21c676c5-081a-44a7-942d-39110ffbf0c0.jpg",
+            "slide_image_url": "shopify://collections/davines-heart-of-glass-for-blonde-hair"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "f4a7b305-9b37-40af-bb66-b99f42844750"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h1>Best for Travel</h1>",
+        "text_size": 1,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-left",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": true,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "ea75268b-cf83-40f1-a367-065a1808abc2": {
+      "type": "collection",
+      "blocks": {
+        "ce06d61c-e22e-4290-a4d2-37be7dba2179": {
+          "type": "group",
+          "settings": {
+            "title": "Brand",
+            "group_tags": "Argila Amazonia, AVEDA, American Crew, BaByliss, Brazilian Blowout, Davines, Denman, Dyson, Kérastase, L'Oréal Professionnel, Olaplex, Reuzel, Revlon Professional, Schwarzkopf Professional, TIGI, TUFT, TYMO, Wella Professionals"
+          }
+        },
+        "ddf81e12-c094-4a3b-9b5d-d7d14e043257": {
+          "type": "group",
+          "settings": {
+            "title": "Product Type",
+            "group_tags": "Shampoo, Conditioner, Mask, Serum, Hair Oil, Styling, Hair Straightener, Curling Iron, Hair Dryer, Sun Protection"
+          }
+        },
+        "b7489bf0-08d7-4083-864b-8158e5575a1d": {
+          "type": "group",
+          "settings": {
+            "title": "Hair Concern",
+            "group_tags": "Damaged, Dandruff, Frizz, Thinning Hair, Volume, Curly Girl Method"
+          }
+        },
+        "a662d6cb-2614-4b32-af5d-8f6a998f1802": {
+          "type": "group",
+          "settings": {
+            "title": "Hold",
+            "group_tags": "No Hold,Light Hold,Medium Hold,Strong Hold,Extra Strong Hold"
+          }
+        },
+        "9b263a47-95d7-4e56-9bbe-747ca65cd26c": {
+          "type": "group",
+          "settings": {
+            "title": "Look",
+            "group_tags": "Natural,Matte,Shine"
+          }
+        },
+        "c9e3cd57-60eb-44ff-a2f2-c94b316725e0": {
+          "type": "group",
+          "disabled": true,
+          "settings": {
+            "title": "Natural Curly Hair",
+            "group_tags": "Enhance without Hold, Define with Hold, Frizz-Control,"
+          }
+        },
+        "0256b3f1-d0b2-4107-9c96-b0bbc60b55a7": {
+          "type": "group",
+          "disabled": true,
+          "settings": {
+            "title": "Size",
+            "group_tags": "Travel,Value,Refill"
+          }
+        },
+        "bef3de1e-0afa-4d5f-b54f-d5a10ab7a966": {
+          "type": "group",
+          "settings": {
+            "title": "Others",
+            "group_tags": "Vegan"
+          }
+        }
+      },
+      "block_order": [
+        "ce06d61c-e22e-4290-a4d2-37be7dba2179",
+        "ddf81e12-c094-4a3b-9b5d-d7d14e043257",
+        "b7489bf0-08d7-4083-864b-8158e5575a1d",
+        "a662d6cb-2614-4b32-af5d-8f6a998f1802",
+        "9b263a47-95d7-4e56-9bbe-747ca65cd26c",
+        "c9e3cd57-60eb-44ff-a2f2-c94b316725e0",
+        "0256b3f1-d0b2-4107-9c96-b0bbc60b55a7",
+        "bef3de1e-0afa-4d5f-b54f-d5a10ab7a966"
+      ],
+      "settings": {
+        "grid_setting_large": 4,
+        "grid_setting_small": 2,
+        "product_limit": 28,
+        "enable_layout_toggle": true,
+        "collection_sorting": true,
+        "hide_sidebar": false
+      }
+    },
+    "e4d10257-2e6a-4ee6-8b8d-c077464c197a": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "81555a88-698a-4394-8635-86fcefdf2cf1": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "hair-care-for-filipinos-travelling-abroad-adjusting-to-different-climates"
+          }
+        },
+        "7904dbc7-abd6-4bb4-be3f-5f20ebfde28d": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "why-dry-shampoo-is-a-must-have-in-the-philippines-hot-summer"
+          }
+        },
+        "template--14411676778595__e4d10257-2e6a-4ee6-8b8d-c077464c197a-1676002138d56f4b61-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "hair-treatments-to-bring-hair-back-to-life-after-the-summer"
+          }
+        },
+        "3c080d12-1719-4bbe-b10d-c5a71134005c": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "post-vacation-hair-care-routine-for-dull-and-tired-hair"
+          }
+        },
+        "6e091d23-4e68-47b3-8976-ed933a50de2f": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "tymo-porta-portable-hair-straightening-brush-your-troubleshooting-guide"
+          }
+        }
+      },
+      "block_order": [
+        "81555a88-698a-4394-8635-86fcefdf2cf1",
+        "7904dbc7-abd6-4bb4-be3f-5f20ebfde28d",
+        "template--14411676778595__e4d10257-2e6a-4ee6-8b8d-c077464c197a-1676002138d56f4b61-0",
+        "3c080d12-1719-4bbe-b10d-c5a71134005c",
+        "6e091d23-4e68-47b3-8976-ed933a50de2f"
+      ],
+      "settings": {
+        "title": "Related Articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 5,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "af2b07a1-cff3-46ec-8449-11caca7a2642": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Need help deciding?",
+        "text": "<p>Feel free to send us a message for an online consultation.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Chat Now",
+        "button_url": "https://m.me/hairmnl",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "7313cc6a-91a7-4ca6-8577-e1859706e634": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "subcollections",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "hero",
+    "ea75268b-cf83-40f1-a367-065a1808abc2",
+    "e4d10257-2e6a-4ee6-8b8d-c077464c197a",
+    "af2b07a1-cff3-46ec-8449-11caca7a2642",
+    "7313cc6a-91a7-4ca6-8577-e1859706e634"
+  ]
+}

@@ -1,0 +1,87 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "form": {
+          "type": "form",
+          "settings": {}
+        },
+        "pickup": {
+          "type": "pickup",
+          "disabled": true,
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "sharing": {
+          "type": "sharing",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "form",
+        "pickup",
+        "description",
+        "sharing"
+      ],
+      "settings": {}
+    },
+    "image-with-text": {
+      "type": "section-double",
+      "blocks": {
+        "text": {
+          "type": "text",
+          "settings": {
+            "button_text": ""
+          }
+        },
+        "image": {
+          "type": "image",
+          "settings": {
+            "link_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "image",
+        "text"
+      ],
+      "settings": {
+        "padding": true,
+        "wrapper": true
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {}
+    },
+    "related": {
+      "type": "related",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "image-with-text",
+    "reviews",
+    "related"
+  ]
+}

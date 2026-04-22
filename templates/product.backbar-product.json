@@ -1,0 +1,193 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "title_GqdQQH": {
+          "type": "title",
+          "disabled": true,
+          "settings": {
+            "product_show_vendor": false,
+            "show_rating": true,
+            "show_rating_count": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "read_more": true,
+            "style": "accordions",
+            "title_1": "{{ product.metafields.hmnl.product_tab_benefits_title.value }}",
+            "raw_content_1": "<p>{{ product.metafields.hmnl.product_benefits_tab_description | metafield_tag }}</p>",
+            "title_2": "{{ product.metafields.hmnl.product_howto_tab_title.value }}",
+            "raw_content_2": "<p>{{ product.metafields.hmnl.product_how_to_use_tab_title | metafield_tag }}</p>",
+            "title_3": "{{ product.metafields.hmnl.product_ingredients_tab_title.value }}",
+            "raw_content_3": "<p>{{ product.metafields.hmnl.product_ingredients_tab_content | metafield_tag }}</p>",
+            "title_4": "{{ product.metafields.hmnl.product_tab_faq_title.value }}",
+            "raw_content_4": "<p>{{ product.metafields.hmnl.product_faqs_tab_description | metafield_tag }}</p>",
+            "title_5": "",
+            "raw_content_5": ""
+          }
+        }
+      },
+      "block_order": [
+        "title_GqdQQH",
+        "description"
+      ],
+      "settings": {
+        "image_width": "narrow",
+        "align": "left",
+        "product_breadcrumbs": false,
+        "enable_video_looping": true,
+        "zoom_enable": false,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "1678342261d4506769": {
+      "type": "apps",
+      "blocks": {
+        "a7ff5fed-ff2a-42c0-9f91-6c70428eb015": {
+          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_product_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "disabled": true,
+          "settings": {
+            "blog_name": "",
+            "display_style": "owl-carousel",
+            "custom_class": "",
+            "pb_related_posts_title": "Related Articles",
+            "pb_related_posts_title_style": "H3",
+            "pb_related_post_items": 5,
+            "pb_related_post_item_display": 3,
+            "slider_autoplay": "2",
+            "pb_item_style": "1",
+            "image_display": "cover",
+            "pb_color_image_bg": "",
+            "pb_color_text_bg": "",
+            "pb_color_line": "",
+            "pb_extras": "",
+            "pb_related_post_length": 10,
+            "read_more": "",
+            "display_tags": "0",
+            "keyword": "",
+            "key_match_scoring": "no",
+            "pb_related_posts_matching": "3",
+            "pb_related_posts_tag_match": "10",
+            "pb_related_posts_title_match": "5"
+          }
+        }
+      },
+      "block_order": [
+        "a7ff5fed-ff2a-42c0-9f91-6c70428eb015"
+      ],
+      "disabled": true,
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "1676140253843cda8a": {
+      "type": "apps",
+      "blocks": {
+        "d6ef5904-b9bf-4261-8cad-77fbc78445a5": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "d6ef5904-b9bf-4261-8cad-77fbc78445a5"
+      ],
+      "disabled": true,
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dea3397a-2bf3-4c6e-91e1-2d4b58b44556": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "disabled": true,
+      "settings": {
+        "product_reviews_enable": true,
+        "bg": "palette--light bg--accent"
+      }
+    },
+    "related": {
+      "type": "related",
+      "disabled": true,
+      "settings": {
+        "heading": "You Might Also Like",
+        "bg": "palette--light bg--neutral",
+        "related_products_enable": true,
+        "limit": 8,
+        "product_recommendations_heading": "Related Products",
+        "show_recently_viewed": false,
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4,
+        "product_recently_heading": "Recently viewed"
+      }
+    },
+    "164447037586b39747": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently Viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    },
+    "1676916647a7e1c786": {
+      "type": "apps",
+      "blocks": {
+        "766ebb5a-2aff-407f-9780-e674843a2a94": {
+          "type": "shopify://apps/judge-me-reviews/blocks/all_reviews_text/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "766ebb5a-2aff-407f-9780-e674843a2a94"
+      ],
+      "disabled": true,
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1678342261d4506769",
+    "1676140253843cda8a",
+    "dea3397a-2bf3-4c6e-91e1-2d4b58b44556",
+    "reviews",
+    "related",
+    "164447037586b39747",
+    "1676916647a7e1c786"
+  ]
+}

@@ -1,0 +1,282 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "show_title": false,
+        "show_content": false,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-center",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "4898b462-fd04-4f26-b7d6-96b6f2e1cd98": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "Your Hair & Scalp Care Matchmaker",
+        "title": "",
+        "text": "<h1>Find Your HairMNL Routine</h1><p><em>Take These Easy Online Quizzes and Find Your Hair Care Match!</em></p><p><strong>What's your hair concern?</strong></p><p>Whether you're dealing with thinning hair, seeking frizzy hair solutions, or experiencing scalp issues, our expert-designed hair quizzes will guide you to your ideal routine.</p><p>Discover which products from top brands like Davines, TYMO, Kérastase, L'Oréal Professionnel, and more are suited for your unique hair needs!<br/></p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "260e9701-031a-4312-b7fe-a0a30966f92b": {
+      "type": "section-custom-content",
+      "blocks": {
+        "7a4148eb-a3d3-4d91-b8b2-777c6b88ac2b": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "kicker": "Your Hair & Scalp Care Matchmaker",
+            "title": "",
+            "text": "<h1>Find Your HairMNL Routine</h1><p><em>Take These Easy Online Quizzes and Find Your Hair Care Match!</em></p><p><strong>What's your hair concern?</strong></p><p>Whether you're dealing with thinning hair, seeking frizzy hair solutions, or experiencing scalp issues, our expert-designed hair quizzes will guide you to your ideal routine.</p><p>Discover which products from top brands like Davines, TYMO, Kérastase, L'Oréal Professionnel, and more are suited for your unique hair needs!<br/></p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "ff992d42-370a-49db-8fcc-299dc9ae38d6": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Quizzes.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "7a4148eb-a3d3-4d91-b8b2-777c6b88ac2b",
+        "ff992d42-370a-49db-8fcc-299dc9ae38d6"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "96b81cd6-c160-437f-86f1-182aa62b5459": {
+      "type": "section-double",
+      "blocks": {
+        "template--14417641701475__96b81cd6-c160-437f-86f1-182aa62b5459-16733471305442c6d4-0": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "kicker": "Your Hair & Scalp Care Matchmaker",
+            "title": "",
+            "text": "<h1>Find Your HairMNL Routine</h1><p><em>Take These Easy Online Quizzes and Find Your Hair Care Match!</em></p><p><strong>What's your hair concern?</strong></p><p>Whether you're dealing with thinning hair, seeking frizzy hair solutions, or experiencing scalp issues, our expert-designed hair quizzes will guide you to your ideal routine.</p><p>Discover which products from top brands like Davines, TYMO, Kérastase, L'Oréal Professionnel, and more are suited for your unique hair needs!<br/></p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "template--14417641701475__96b81cd6-c160-437f-86f1-182aa62b5459-16733471305442c6d4-1": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/0.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "template--14417641701475__96b81cd6-c160-437f-86f1-182aa62b5459-16733471305442c6d4-0",
+        "template--14417641701475__96b81cd6-c160-437f-86f1-182aa62b5459-16733471305442c6d4-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "6703a774-864d-4bfa-bdb4-326ea6114363": {
+      "type": "section-columns",
+      "blocks": {
+        "text_block_znfKxe": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Frizzy_Hair_Quiz.png",
+            "title": "Frizzy Hair Quiz",
+            "text": "<p><strong>Struggling with frizzy hair?<br/></strong>Find the best solutions to tame your frizz and achieve smooth, manageable hair based on your preferences</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/frizzy-hair-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "3f70b188-a009-4b6e-8fe9-3c9cc51a4939": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Hair_Oil_Quiz.png",
+            "title": "Hair Oil Quiz",
+            "text": "<p><strong>Wondering which hair oil suits you best?<br/></strong>Discover which to use for controlling frizz, boosting shine, enhancing color, or strengthening damaged hair</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/hair-oil-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_wUEM8g": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Color_Refresh_Quiz.png",
+            "title": "Color Refresh Quiz",
+            "text": "<p><strong>Looking to refresh your faded hair color at home?</strong><br/>Discover the perfect products to revive your hue in between salon visits</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/color-refresh-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_WfXNhP": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Quiz_Thinning_Hair.png",
+            "title": "Thinning Hair Quiz",
+            "text": "<p><strong>Dealing with thinning hair?<br/></strong>Take this quiz to find products tailored to your hair loss cause and discover solutions for thicker, fuller hair</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/thinning-hair-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Hair_Quiz.png",
+            "title": "Hair Quiz",
+            "text": "<p><strong>Not sure where to start with your hair care routine?<br/></strong>This quiz will guide you to products ideal for your hair concerns, from dandruff, frizzy hair, faded hair color, or thinning hair</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/hair-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Scalp_Quiz.png",
+            "title": "Scalp Quiz",
+            "text": "<p><strong>Troubled by scalp issues like dandruff or dry scalp?</strong><br/>Learn which targeted solutions to use based on how your scalp feels and get recommendations for a healthier scalp</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/scalp-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Purple_Toning_Shampoo_Quiz.png",
+            "title": "Purple / Blue Toning Quiz",
+            "text": "<p><strong>Want to keep your bleached hair free of brassy tones?</strong><br/>Take this quiz to find the ideal solution for neutralizing unwanted hues and enhancing golden locks</p>",
+            "button_label": "",
+            "button_link": "shopify://pages/purple-toning-shampoo-quiz",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "text_block_znfKxe",
+        "3f70b188-a009-4b6e-8fe9-3c9cc51a4939",
+        "text_block_wUEM8g",
+        "text_block_WfXNhP",
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-0",
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-1",
+        "template--14240176504931__6703a774-864d-4bfa-bdb4-326ea6114363-16708418713355b4cf-2"
+      ],
+      "settings": {
+        "title": "Browse All HairMNL Quizzes",
+        "title_font_size": 20,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 72,
+        "desktop_padding_bottom": 72,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    }
+  },
+  "order": [
+    "main",
+    "4898b462-fd04-4f26-b7d6-96b6f2e1cd98",
+    "260e9701-031a-4312-b7fe-a0a30966f92b",
+    "96b81cd6-c160-437f-86f1-182aa62b5459",
+    "6703a774-864d-4bfa-bdb4-326ea6114363"
+  ]
+}

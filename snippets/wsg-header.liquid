@@ -1,0 +1,358 @@
+{% assign wsgActive = true %}
+{% assign wsgAjax = false %}
+{%- assign wsgTestMode = false -%}
+
+<!-- check for active ws customer -->
+{%- assign isWsgCustomer = false -%}
+{%- if customer.tags != blank -%}
+      {%- for tag in customer.tags -%}
+          {%- if shop.metafields.wsg_data.excludeCollections contains tag -%}
+              {%- assign isWsgCustomer = true -%}
+              {%- continue -%}
+      {%- endif -%}
+	{%- endfor -%}
+{%- endif -%}
+
+<!-- add querystring to search in test mode -->
+{% if wsgTestMode == true %}
+	{% if template == "search" %}
+		<script>
+          var wsgPrevUrl = document.referrer;
+          var wsgCurrentUrl = window.location.href;
+          if(wsgCurrentUrl.indexOf("wsgTestMode") == -1){
+            if(wsgPrevUrl.indexOf("wsgTestMode") > -1){
+              let wsgRedirectUrl = wsgCurrentUrl;
+              if(wsgRedirectUrl.indexOf("?") > -1){
+                wsgRedirectUrl += "&wsgTestMode"
+              } else {
+                wsgRedirectUrl += "?wsgTestMode"	 
+              }
+              window.location.href = wsgRedirectUrl;
+            }            
+          }
+		</script>
+	{% endif %}
+{% endif %}
+<!-- redirect to ws-cart -->
+{% if wsgTestMode == true or isWsgCustomer == true %}
+	{% if template == "cart" %}
+		<script>
+          var wsgCurrentUrl = window.location.href;
+          var wsgCartUrl = "/a/wsg/proxy/ws-cart";
+          if(wsgCurrentUrl.indexOf("wsgTestMode") > -1){
+			      wsgCartUrl += "?wsgTestMode"; 
+            window.location.href = wsgCartUrl;
+          }
+          {% if isWsgCustomer == true %}
+            window.location.href = wsgCartUrl;
+          {% endif %}
+		</script>
+	{% endif %}
+{% endif %}
+<!-- ajax data  -->
+{% if wsgAjax == true and template != "cart" %}
+  {% if wsgTestMode == true or isWsgCustomer == true %}
+    <script>
+      var wsgAjaxCol = {};
+      var wsgMultiAjax = false;  //set to true if there are multiple iterations of an ajax cart with the same selectors
+    </script>
+    <div>
+      {% for item in cart.items %}
+      <div class="wsg-collections-list-{{item.id}}" style="display:none">
+        {{item.product.collections | json}}
+      </div>
+      <div class="wsg-product-tags-{{item.id}}" style="display:none">
+        {{item.product.tags | json}}
+      </div>
+      {% endfor %}
+    </div>
+    <!-- hidden div to hold ajax load listener -->
+    <div class="wsgAjaxLoad"></div>
+  {% endif %}
+{% endif %}
+
+<!-- product data -->
+{% if template == "product" %}
+  {% if product.tags contains "wholesale-only" %}
+    <meta name="robots" content="noindex">
+    {% if isWsgCustomer == false %}
+      <script> window.location.href = "/a/wsg/proxy/restricted-product"; </script>
+	  {% endif %}
+  {% endif %}
+   <span id="wsgReloadPrices_Window" style="display: none"></span>
+  <div class="wsg-collections-list-{{product.id}}" style="display:none">{{product.collections | json}}</div>
+  <div class="wsg-product-tags-{{product.id}}" style="display:none">{{product.tags | json}}</div>
+{% endif %}
+
+<script>
+//==========================================
+//      Set global liquid variables
+//==========================================
+  //general variables
+  var wsgVersion = 4.82;
+  var wsgActive = true;
+  var isWsgCustomer = {% if isWsgCustomer == true %}true{% else %}false{% endif %};
+  var wsgRunCollection;
+  var wsgBetaRestrictedCart = true;
+  var wsgCollectionObserver;
+  var wsgRunProduct;
+  var wsgRunCart;
+  var wsgCartObserver = false;
+  var wsgShopCountryCode = {{shop.address.country_code | json}};
+  var wsgRunSinglePage;
+  var wsgRunSignup;
+  //AJAX variables
+  var wsgRunAjax;
+  var wsgAjaxCart; 
+  var runProxy;
+  var hideDomElements = [".hideWsg"]; 
+  var wsgData = {{ shop.metafields.wsg_data.discount_rules }}    
+  var wsgProdData = {{product | json}}	
+  //product variables
+  var wsgCustomerTags = {{ customer.tags | json}}
+  var wsgCollectionsList = {{product.collections | json}} 
+
+  //money formatting
+  var wsgMoneyFormat = "{{ shop.money_format | strip_html }}";
+
+  {% if product.selected_or_first_available_variant.id %}
+    var wsgCurrentVariant = {{ product.selected_or_first_available_variant.id }};
+  {% else %}
+    var wsgCurrentVariant = null;
+  {% endif %}
+  var wsgAjaxSettings = {};
+  var wsgSwatch = "";
+  var wsgPriceSelectors = {
+    productPrice: ["prodPrice"],
+    collectionPrices: ["colPrice"]
+  };
+  
+//Load WSG script
+(function(){
+  {% include 'wsg-dependencies' %}
+
+    var loadWsg = function(url, callback){
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    
+    // If the browser is Internet Explorer.
+    if (script.readyState){ 
+      script.onreadystatechange = function(){
+        if (script.readyState == "loaded" || script.readyState == "complete"){
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    // For any other browser.
+    } else {
+      script.onload = function(){
+        callback();
+      };
+    }
+    
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+    };
+  
+  loadWsg(wsgData.server_link, function(){
+  })
+})();
+
+//init appropriate WSG process
+document.addEventListener("DOMContentLoaded", function(event) {
+  //=== PRODUCT===
+  {% if template contains "product" %}
+    wsgRunProduct = true;
+    wsgRunCollection = true;
+  {% endif %}
+  
+	//=== COLLECTION ===
+  {% if template contains "collection" %}
+  	wsgRunCollection = true;
+  	wsgCollectionObserver = false;
+  {% endif %}
+  
+	//=== SEARCH ===
+  {% if template == "search" %}
+  	wsgRunCollection = true;
+  {% endif %}  
+
+	//=== Home ===  
+  {% if template == "index" %}
+  	wsgRunCollection = true;
+  {% endif %}
+
+	//=== AJAX CART ===
+  {% if wsgAjax == true and template != "cart" %}
+  	wsgRunAjax = true;
+  {% endif %}
+
+  //update button classes
+
+  jQuery(".wsg-button-fix").addClass("xxButtonClassesHerexx")
+  if(jQuery(".wsg-proxy-container").length > 0){
+    //update select backgrounds
+    let inputBG = jQuery('.wsg-input').css('background-color');
+    jQuery('.wsg-proxy-container select').attr('style', 'background-color:' + inputBG + ';');
+  }
+  
+  //=========================
+  //         CUSTOM JS
+  //==========================
+  {% if isWsgCustomer == true %}
+  	wsgCustomJs();
+  {% elsif wsgTestMode == true %}
+    if(window.location.href.indexOf("wsgTestMode") > -1){
+      wsgCustomJs();
+    }
+  {% endif %}
+})  //end DOM content loaded listener
+
+function wsgCustomJs(){
+  jQuery(window).on("load", function(){
+    //wsgCustomJs window placeholder
+    //update secondary btn color on proxy cart
+    if(jQuery("#wsg-checkout-one").length > 0){
+        let wsgBtnColor = jQuery("#wsg-checkout-one").css("background-color");
+        let wsgBtnBackground = "none";
+        let wsgBtnBorder = "thin solid " + wsgBtnColor;
+      	let wsgPaddingTop = jQuery("#wsg-checkout-one").css("padding-top");
+      	let wsgPaddingLeft = jQuery("#wsg-checkout-one").css("padding-left");
+      	let wsgBtnPadding = wsgPaddingTop + " " + wsgPaddingLeft;
+        jQuery(".spof-btn").css("background", wsgBtnBackground).css("color", wsgBtnColor).css("border", wsgBtnBorder).css("padding", wsgBtnPadding)
+    }  
+  })
+  //placeholder here
+  //----------------------------------------------------------
+  //add custom js that only runs for wholesale below this line
+  //----------------------------------------------------------
+}
+
+function checkAjaxChange(){
+    setTimeout(function(){
+      if(jQuery("#wsgAjaxChange").length == 0){
+        updateWsgAjax();
+      } else {
+        setTimeout(function(){
+        	if(jQuery("#wsgAjaxChange").length == 0){
+              updateWsgAjax();
+            } else {
+              setTimeout(function(){
+                if(jQuery("#wsgAjaxChange").length == 0){
+                  updateWsgAjax();
+                }
+              }, 3000)
+            }
+        }, 1250)
+      }
+    },500) 
+
+}
+function updateWsgAjax(){
+  setTimeout(function(){
+    jQuery(".wsgAjaxLoad").trigger("click");
+  }, 750)
+}
+</script>
+
+<style>
+/*   Signup/login */
+  #wsg-signup select, 
+  #wsg-signup input, 
+  #wsg-signup textarea {
+    height: 46px;
+    border: thin solid #d1d1d1;
+    padding: 6px 10px;
+  }
+  #wsg-signup textarea {
+    min-height: 100px;
+  }
+  .wsg-login-input {
+    height: 46px;
+    border: thin solid #d1d1d1;
+    padding: 6px 10px;
+  }
+  .wsg-submit-copy {
+  }
+  #wsg-signup select {
+  }
+/*   Quick Order Form */
+  .wsg-table td {
+   border: none;
+   min-width: 150px;
+  }
+  .wsg-table tr {
+   border-bottom: thin solid #d1d1d1; 
+    border-left: none;
+  }
+  .wsg-table input[type="number"] {
+    border: thin solid #d1d1d1;
+    padding: 5px 15px;
+    min-height: 42px;
+  }
+  #wsg-spof-link a {
+    text-decoration: inherit;
+    color: inherit;
+  }
+  .wsg-proxy-container a {
+    text-decoration: inherit;
+    color: inherit;    
+  }
+  @media screen and (max-width:768px){
+    .wsg-proxy-container .wsg-table input[type="number"] {
+     	max-width: 80%; 
+    }
+    .wsg-center img {
+    	width: 50px !important;
+    }
+    .wsg-variant-price-area {
+      min-width: 70px !important;
+    }
+  }
+  /* Submit button */
+  #wsg-cart-update{
+    padding: 8px 10px;
+    min-height: 45px;
+    max-width: 100% !important;
+  }
+  .wsg-table {
+    background: inherit !important;
+  }
+  .wsg-spof-container-main {
+    background: inherit !important;
+  }
+  /* General fixes */
+  .wsg-one-half {
+    
+  }
+  .wsg-button-fix {
+  
+  }
+
+  .wsg-hide-prices {
+    opacity: 0;
+    
+  }
+  {% if isWsgCustomer == true %}
+  /* wholesale only CSS */
+  .wsgPriceFix {
+    
+  }
+  .additional-checkout-buttons, .shopify-payment-button {
+    display: none !important;
+  }
+  {% endif %}
+</style>
+
+{% comment %}//=== INCLUDE TRANSITION SNIPPET ==={% endcomment %}
+{% if isWsgCustomer == true %}  
+  {% assign transitions = shop.metafields.wsg_data.discount_rules | string %}
+  {% if transitions contains '"showTransitions":true' %}
+      {% capture transition_snippet %}
+        {% include 'wsg-transitions'%}
+      {% endcapture %}
+      {% unless transition_snippet contains "Liquid error" %}
+        {{ transition_snippet }}
+      {% endunless %}
+  {% endif %}
+{% endif %}

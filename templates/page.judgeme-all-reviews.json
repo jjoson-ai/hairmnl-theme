@@ -1,0 +1,157 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "6a6be7ef-8c1c-4f6a-a757-c3ecc6aa6e17": {
+      "type": "section-banner-slider",
+      "disabled": true,
+      "blocks": {
+        "template--14461812015203__6a6be7ef-8c1c-4f6a-a757-c3ecc6aa6e17-168414526977231b6f-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/Schwarzkopf_Brand_Spotlight_Free_Paddle_Brush_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/Schwarzkopf_Brand_Spotlight_Free_Paddle_Brush_mobile.jpg",
+            "slide_image_url": ""
+          }
+        },
+        "f0c86569-9921-461d-b6db-831867d44330": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/Schwarzkopf_Brand_Spotlight_May_15-19__Desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/Schwarzkopf_Brand_Spotlight_May_15-19__Mobile_552x502_ca5913a9-f835-4c33-b03e-b79a889874c5.jpg",
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14461812015203__6a6be7ef-8c1c-4f6a-a757-c3ecc6aa6e17-168414526977231b6f-0",
+        "f0c86569-9921-461d-b6db-831867d44330"
+      ],
+      "settings": {
+        "enable_section": false,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "4e72afb5-4211-437e-8eca-36c0d00efa01": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/HairMNL_Real_Reviews_Desktop.png",
+        "banner_mobile": "shopify://shop_images/HairMNL_Real_Reviews_Mobile.png",
+        "banner_url": "https://www.hairmnl.com/pages/rewards"
+      }
+    },
+    "5915455f-1042-4a7d-a336-5aa2f304b233": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "Introducing",
+        "title": "",
+        "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "8ed09056-8aa4-42b1-810f-85114dfcc822": {
+      "type": "section-gallery",
+      "disabled": true,
+      "blocks": {
+        "template--14463335661667__8ed09056-8aa4-42b1-810f-85114dfcc822-168437256576b3bbf3-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/woman-applying-lipstick_ddd70f1b-f5da-4cba-adbe-66ab7afa3b4b.jpg",
+            "link": ""
+          }
+        },
+        "template--14463335661667__8ed09056-8aa4-42b1-810f-85114dfcc822-168437256576b3bbf3-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/fashion-model-looks-at-camera_d7845b74-9742-4615-9423-7596abf20a6f.jpg",
+            "link": ""
+          }
+        },
+        "template--14463335661667__8ed09056-8aa4-42b1-810f-85114dfcc822-168437256576b3bbf3-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pink-neon-lights-fashion-model.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14463335661667__8ed09056-8aa4-42b1-810f-85114dfcc822-168437256576b3bbf3-0",
+        "template--14463335661667__8ed09056-8aa4-42b1-810f-85114dfcc822-168437256576b3bbf3-1",
+        "template--14463335661667__8ed09056-8aa4-42b1-810f-85114dfcc822-168437256576b3bbf3-2"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "main": {
+      "type": "page",
+      "settings": {
+        "kicker": "",
+        "show_title": true,
+        "show_content": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "16841421425d746676": {
+      "type": "apps",
+      "blocks": {
+        "2c68c13a-3d4d-495c-93bb-60cbd30443cb": {
+          "type": "shopify://apps/judge-me-product-reviews/blocks/all_reviews_page/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "extra_wrapper_classes": "page-width page-width--narrow"
+          }
+        }
+      },
+      "block_order": [
+        "2c68c13a-3d4d-495c-93bb-60cbd30443cb"
+      ],
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "6a6be7ef-8c1c-4f6a-a757-c3ecc6aa6e17",
+    "4e72afb5-4211-437e-8eca-36c0d00efa01",
+    "5915455f-1042-4a7d-a336-5aa2f304b233",
+    "8ed09056-8aa4-42b1-810f-85114dfcc822",
+    "main",
+    "16841421425d746676"
+  ]
+}

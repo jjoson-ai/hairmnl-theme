@@ -1,0 +1,249 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "settings": {
+        "kicker": "",
+        "show_title": true,
+        "show_content": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-center",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "3675fefa-961f-465a-a718-dc2aeff9d9fc": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-colored-hair",
+            "title": "Colored Hair"
+          }
+        },
+        "template--14494847336547__6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b-collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "Bleached Hair"
+          }
+        },
+        "cdcbf3a5-87de-4d5c-9d1b-ebc1bfde8dd3": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-rebonded-hair",
+            "title": "Rebonded Hair"
+          }
+        },
+        "template--14494847336547__6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b-collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "keratin-treated-hair",
+            "title": "Keratin-Treated Hair"
+          }
+        },
+        "a25db454-4121-4abc-89ff-d3a319a33613": {
+          "type": "collection",
+          "settings": {
+            "collection": "brazilian-blowout",
+            "title": "Brazilian Blowout-Treated Hair"
+          }
+        },
+        "819393f1-bcd6-4262-a93a-a89b88d97409": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-permed-hair",
+            "title": "Permed Hair"
+          }
+        }
+      },
+      "block_order": [
+        "3675fefa-961f-465a-a718-dc2aeff9d9fc",
+        "template--14494847336547__6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b-collection-2",
+        "cdcbf3a5-87de-4d5c-9d1b-ebc1bfde8dd3",
+        "template--14494847336547__6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b-collection-1",
+        "a25db454-4121-4abc-89ff-d3a319a33613",
+        "819393f1-bcd6-4262-a93a-a89b88d97409"
+      ],
+      "settings": {
+        "title": "Shop Salon Aftercare",
+        "title_font_size": 28,
+        "grid": 6,
+        "limit": 6,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "711251ea-79bc-4838-b49b-0bdba473ee79": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "5116e9b2-cf6a-407f-8e05-f8a393bd385f": {
+          "type": "collection",
+          "settings": {
+            "collection": "professional-hairdressing-tools-equipment",
+            "title": "Styling Tools"
+          }
+        },
+        "6ca54811-8193-443f-a68f-3e1afe203deb": {
+          "type": "collection",
+          "settings": {
+            "collection": "diy-styling-favorites",
+            "title": "Styling Products"
+          }
+        },
+        "320e5e99-1a81-4a35-a316-0c9f802fcbc3": {
+          "type": "collection",
+          "settings": {
+            "collection": "faded-hair-color",
+            "title": "Color Refresh"
+          }
+        },
+        "884d18c5-33e5-4615-90d7-a156eaf0ab7b": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-men",
+            "title": "Men's Styling"
+          }
+        }
+      },
+      "block_order": [
+        "5116e9b2-cf6a-407f-8e05-f8a393bd385f",
+        "6ca54811-8193-443f-a68f-3e1afe203deb",
+        "320e5e99-1a81-4a35-a316-0c9f802fcbc3",
+        "884d18c5-33e5-4615-90d7-a156eaf0ab7b"
+      ],
+      "settings": {
+        "title": "Shop Styling Products & Color Refresh",
+        "title_font_size": 28,
+        "grid": 6,
+        "limit": 6,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "2bb538fd-00e9-4620-a766-45e343ea4292": {
+      "type": "section-blog",
+      "settings": {
+        "title": "Salon Services",
+        "homepage_blog": "salon-services",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "b6905906-69e9-4da2-a493-4e74d96c1d73": {
+      "type": "section-blog",
+      "settings": {
+        "title": "Hair Education",
+        "homepage_blog": "hair-education",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "37cdf8a7-5d8f-4b60-ad5e-c2046282caad": {
+      "type": "section-blog",
+      "settings": {
+        "title": "Trends",
+        "homepage_blog": "trends",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "715a109b-ed21-48cc-be44-23261e30565b": {
+      "type": "section-blog",
+      "disabled": true,
+      "settings": {
+        "title": "Hair Tutorials",
+        "homepage_blog": "hair-tutorials",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "265ee037-e22b-402f-a3c6-850bb893d144": {
+      "type": "section-newsletter",
+      "settings": {
+        "title": "Tousled Online Magazine",
+        "richtext": "<p>Be part of our hair community.<br/>Get regular pro tips, trends, exclusives, and more.</p>",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "c3d64194-bf6f-4e53-8849-8176b8df2e9c": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently Viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "main",
+    "6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b",
+    "711251ea-79bc-4838-b49b-0bdba473ee79",
+    "2bb538fd-00e9-4620-a766-45e343ea4292",
+    "b6905906-69e9-4da2-a493-4e74d96c1d73",
+    "37cdf8a7-5d8f-4b60-ad5e-c2046282caad",
+    "715a109b-ed21-48cc-be44-23261e30565b",
+    "265ee037-e22b-402f-a3c6-850bb893d144",
+    "c3d64194-bf6f-4e53-8849-8176b8df2e9c"
+  ]
+}

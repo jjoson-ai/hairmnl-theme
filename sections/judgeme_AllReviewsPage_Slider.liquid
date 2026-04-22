@@ -1,0 +1,129 @@
+{% if page.handle  == 'reviews' %}
+ <div class="custom-banner swiper-container" style="text-align: center !important; margin-top: 20px !important;">
+              <!-- Additional required wrapper -->
+              <div class="swiper-wrapper">
+                  <!-- Slides -->
+                  {% for block in section.blocks limit: section.blocks.size %}
+                	<div class="swiper-slide">
+                      <a href="{{block.settings.slide_image_url}}">
+                        <img class="banner-slide-img hidden-pocket lazyload" data-src="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="Banner Slide 1">
+                        <img class="banner-slide-img hidden-lap-and-up lazyload" data-src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1">
+                      </a>
+                    </div>
+                  {% endfor %}
+              </div>
+              <!-- If we need pagination -->
+              <div class="custom-banner swiper-pagination"></div>
+              <div class="custom-banner swiper-button-next"></div>
+              <div class="custom-banner swiper-button-prev"></div>
+            </div>
+
+<style>
+  .custom-banner {
+    margin-bottom: 30px;
+  }
+</style>
+
+<script>
+  var customBannerSlider = new Swiper ('.custom-banner.swiper-container', {
+    direction: 'horizontal',
+    autoplay: {
+      delay: {{section.settings.slide_delay}},
+    },
+    loop: true,
+    pagination: {
+      el: '.custom-banner.swiper-pagination',
+      dynamicBullets: true,
+      clickable: true
+    },
+    navigation: {
+      nextEl: '.custom-banner.swiper-button-next',
+      prevEl: '.custom-banner.swiper-button-prev',
+    },
+  })
+  
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Brand Banner Slider",
+  "class": "brand-banner-slider",
+  "max_blocks": 10,
+  "settings": [
+	{
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": false
+    },
+	{
+      "type":    "range",
+      "id":      "section_margin_top",
+      "min":     0,
+      "max":     100,
+      "step":    1,
+      "label":   "Section margin top",
+      "default": 20
+    },
+	{
+      "type":    "range",
+      "id":      "section_margin_bottom",
+      "min":     0,
+      "max":     100,
+      "step":    1,
+      "label":   "Section margin bottom",
+      "default": 20
+    },
+    {
+      "type":    "range",
+      "id":      "slide_delay",
+      "min":     1000,
+      "max":     5000,
+      "step":    1000,
+      "label":   "Slide delay",
+      "info": "Slide delay uses milliseconds, so 1 second is equal to 1000",
+      "default": 3000
+    }
+  ],
+  "blocks": [
+	{
+      "type": "banner_slide",
+      "name": "Banner Slide",
+	  "settings": [
+        {
+          "type": "image_picker",
+          "id": "slide_image_desktop",
+          "label": "Banner Slide Image (Desktop)",
+          "info": "1400px width x 788px height recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "slide_image_mobile",
+          "label": "Banner Slide Image (Mobile)",
+          "info": "552px width x 502px height recommended"
+        },
+        {
+          "type": "url",
+          "id": "slide_image_url",
+          "label": "Banner Slide URL"
+        }
+	  ]
+	}
+  ],
+  "presets": [
+    {
+      "name": "Brand Banner Slider",
+	  "category": "Banners",
+	  "blocks": [
+		{
+		  "type": "banner_slide"
+		},
+		{
+		  "type": "banner_slide"
+		}
+	  ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,346 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/opi-duo-sets_1.jpg",
+            "slide_image_mobile": "shopify://shop_images/opi-duo-sets.jpg",
+            "slide_image_url": "shopify://collections/opi-nature-strong"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/woman-applying-lipstick_ddd70f1b-f5da-4cba-adbe-66ab7afa3b4b.jpg",
+        "banner_url": ""
+      }
+    },
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95": {
+      "type": "section-double",
+      "disabled": true,
+      "blocks": {
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Olaplex",
+            "title": "THE COMPLETE HAIR REPAIR SYSTEM",
+            "text": "<p>The only patented system to noticeably repair extreme damage—turn dry, brittle hair into soft, shiny, and more resilient hair.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "Shop Now",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0",
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "disabled": true,
+      "blocks": {
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0": {
+          "type": "text",
+          "settings": {
+            "title": "The Original Bond Builder",
+            "text": "<p>Repairs the broken bonds and rejuvenate hair.</p><p>Increases tensile strength and restore elasticity.</p><p>Protects the hair follicle from further breakage.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "OLAPLEX works to repair broken bonds.",
+            "text": "<p>Our hair contains millions of disulfide bonds. These bonds give the hair its structure, strength and stability. When disulfide bonds are broken, it results in damage.</p><p>OLAPLEX restores damaged and compromised hair by repairing from the inside out with our patented single ingredient, <em>Bis-Aminopropyl Diglycol Dimaleate</em>.</p><p>Once all the bonds are intact and in alignment, you have healthy, beautiful, shiny, touchable hair.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e": {
+          "type": "text",
+          "settings": {
+            "title": "OLAPLEX repairs all types of hair damage.",
+            "text": "<p>Thermal factors: High levels of heat from curling irons, blow dryers, flat irons.</p><p>Chemical factors: Colors, perms, relaxers and keratin treatments.<br/>Mechanical factors: Brushing, friction, tugging and pulling on wet hair.</p><p>Environmental factors: UV Damage from the sun, humidity, extreme hot/ cold weather conditions, pollution.</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0",
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2",
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e"
+      ],
+      "settings": {
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "OPI Nail Lacquer",
+        "title": "2022 Glamour Beauty Award winner for The Best Nail Polish",
+        "text": "<p>OPI Nail Lacquer is the original formula you already know and love — this tried-and-true system combines high quality and fashion-forward shades with witty and iconic names making it one of the ultimate DIY nail systems.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "collection": "opi-nail-lacquer",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "3ae2ccaa-b780-4255-aa5c-66c20bcf6b02": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "OPI Nature Strong",
+        "title": "OPI's first plant-based, natural origin nail lacquers",
+        "text": "<p>Featuring 30 natural nail polish shades and a natural top coat, these nail lacquers are ready to empower, inspire, and save the planet with every manicure. With bold colors rooted in nature, these natural origin nail polishes wear and shine just like the classic nail lacquers you love.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "collection": "opi-nature-strong",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "ca40eef5-1dbc-4dc7-adea-b6b8362425ca": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "OPI Infinite Shine",
+        "title": "3-step system to long-lasting nail polish color.",
+        "text": "<p>With OPI's ProStay Technology, this polish remains vibrant for up to 11 days.</p><p>This system not only includes those signature shades you love like Bubble Bath and I’ll Have a Gin & Tectonic but it also delivers continuous shine that is on-trend and easily removed – all without the use of the LED light a gel set requires. Imagine long-lasting wear without the long-term commitment – the perfect combination for today’s modern woman, especially those of us that work in high-touch and hands-on fields (ie: nurses, teachers, busy parents, etc.)</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "collection": "opi-infinite-shine",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "477f7e1d-df7d-4f25-820a-30f488f3ec82": {
+      "type": "section-double",
+      "disabled": true,
+      "blocks": {
+        "template--14411659903075__477f7e1d-df7d-4f25-820a-30f488f3ec82-1675352549b64c7fc6-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Image with text",
+            "title": "",
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "1d7e3cb2-d93b-482e-94e2-e0c285212ee8": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14411659903075__477f7e1d-df7d-4f25-820a-30f488f3ec82-1675352549b64c7fc6-0",
+        "1d7e3cb2-d93b-482e-94e2-e0c285212ee8"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "d6bb0db4-92c0-4108-999c-8ae8892d6aa9": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    },
+    "164244339393e3ebe3": {
+      "type": "apps",
+      "blocks": {
+        "7162c3c2-7cdf-445c-bbba-741f897a370a": {
+          "type": "shopify://apps/judge-me-product-reviews/blocks/medals/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "7162c3c2-7cdf-445c-bbba-741f897a370a"
+      ],
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "hero",
+    "subcollections",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "1642442735c9bd4274",
+    "3ae2ccaa-b780-4255-aa5c-66c20bcf6b02",
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4",
+    "ca40eef5-1dbc-4dc7-adea-b6b8362425ca",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "477f7e1d-df7d-4f25-820a-30f488f3ec82",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "d6bb0db4-92c0-4108-999c-8ae8892d6aa9",
+    "164244339393e3ebe3"
+  ]
+}

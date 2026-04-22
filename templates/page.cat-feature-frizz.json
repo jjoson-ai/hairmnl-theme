@@ -1,0 +1,1149 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "show_title": false,
+        "show_content": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "f522c2fc-635e-4015-aaa1-3bc5117bdd75": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h1>Frizz Control Solutions</h1>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "a6cf4d41-55a8-451f-b5a2-710c134b6c67": {
+      "type": "section-custom-content",
+      "blocks": {
+        "9b9d8d81-826e-4711-8763-2f6ab8ecbd45": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/End_the_stress_of_frizzy_hair.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        },
+        "c53fc9fb-25ad-49d0-8668-b19d451f8ce3": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h1>End the stress of <em>frizzy</em> hair</h1><p>Imagine a day without the constant battle with frizzy hair. No more <strong>frustration</strong>, no more <strong>stress</strong>. At HairMNL, we understand the emotional toll of <strong>unruly locks</strong>, and we're here to help you take <strong>control</strong>.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f0e6d0"
+          }
+        }
+      },
+      "block_order": [
+        "9b9d8d81-826e-4711-8763-2f6ab8ecbd45",
+        "c53fc9fb-25ad-49d0-8668-b19d451f8ce3"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 8,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "02d58603-4894-4cee-87ce-825dd6441a3b": {
+      "type": "section-custom-content",
+      "blocks": {
+        "78eafa14-7188-4bd0-b640-ee7ad3c707ff": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h2>Find your perfect <em>solution</em></h2><p>At HairMNL, we believe in solutions tailored to your unique lifestyle and budget. We understand that frizzy hair can be a source of stress and frustration, and we're here to empower you with choices that suit your needs. Whether you're short on time and budget-conscious or ready to invest in a luxurious experience, we have the perfect solution for you.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "78eafa14-7188-4bd0-b640-ee7ad3c707ff"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "5a5b4256-5694-4adc-94d6-b3a64db3cbe9": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Quick_easy_1150x900_502039bf-05f4-4316-abe8-0cfc36d85e4e.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "I WANT A QUICK & EASY SOLUTION.",
+            "button_link": "#quickandeasy",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Luxury_pampering_1150x900_e369c898-c46a-41e3-bb50-c942441fde9c.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "I WANT TO BE PAMPERED WITH A LUXURIOUS ROUTINE.",
+            "button_link": "#luxuryandpampering",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-3": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Extended_Results_Low_Maintenance_1150x900_0ac7beba-6ff5-4dcc-8899-421200927feb.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "I WANT EXTENDED & LOW MAINTENANCE RESULTS.",
+            "button_link": "#lowmaintenance",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "9bc6db9b-a0ed-49a5-ac8f-e6ca81ea8a6e": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Immediate_Results_1150x900_e43a7ba1-c3d8-4e94-861c-ec6388ab21f1.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "I WANT IMMEDIATE RESULTS.",
+            "button_link": "#immediateresults",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-1",
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-2",
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-3",
+        "9bc6db9b-a0ed-49a5-ac8f-e6ca81ea8a6e"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 0.5,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "78f51e81-ebce-42e2-8efa-844a30765807": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div id=\"quickandeasy\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "5db44cb8-499b-46f1-bd71-f2b32f9b9ce5": {
+      "type": "section-custom-content",
+      "blocks": {
+        "1f0622ba-a759-4e69-9ee5-864d2ee721a9": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Quick & easy",
+            "text": "<p>For those who need quick fixes on a budget, explore our range of <strong>easy-to-use hair oils</strong> that deliver instant results without breaking the bank.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "#quickandeasy",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f0e6d0"
+          }
+        },
+        "7c065e93-e44d-43ed-98fc-595cde16e828": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Quick_easy_1150x900_502039bf-05f4-4316-abe8-0cfc36d85e4e.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "1f0622ba-a759-4e69-9ee5-864d2ee721a9",
+        "7c065e93-e44d-43ed-98fc-595cde16e828"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "0cf4c6b8-2608-4eaf-a964-5b88debe89d7": {
+      "type": "section-custom-content",
+      "blocks": {
+        "fce590f8-4cf1-4406-b1b6-f9c1819abb8d": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h2>Try our easy-to-use <em>hair oils</em></h2><p>Instantly tame frizz and add shine with lightweight, non-greasy formula for daily use. A little goes a long way with hair oils - use only a few pumps with every use so you can enjoy its benefits for a longer period of time.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        },
+        "ef7f3d89-8cb8-482b-85c5-514a532b4680": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "fce590f8-4cf1-4406-b1b6-f9c1819abb8d",
+        "ef7f3d89-8cb8-482b-85c5-514a532b4680"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 28,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 24
+      }
+    },
+    "33c898c8-a0b3-434d-be07-94875b6df45b": {
+      "type": "section-custom-content",
+      "blocks": {
+        "f29acbf6-2618-4b33-860c-ed0afeffa1b7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Davines_OI_Oil.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--bottom-center",
+            "text_color": "text--white",
+            "link_text": "Shop Now",
+            "link": "shopify://products/davines-oi-oil-absolute-beautifying-potion-with-roucou-oil",
+            "button_color": "btn--black",
+            "button_style": "btn uppercase"
+          }
+        },
+        "41694353-ca96-4859-af24-1842d849500c": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Kerastase_Oleo-Relax_Oil.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--bottom-center",
+            "text_color": "text--white",
+            "link_text": "Shop Now",
+            "link": "shopify://products/kerastase-discipline-oleo-relax-serum",
+            "button_color": "btn--black",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "f29acbf6-2618-4b33-860c-ed0afeffa1b7",
+        "41694353-ca96-4859-af24-1842d849500c"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": true,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "89aa4766-8f6f-4210-a80e-6a349e74e43a": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div id=\"luxuryandpampering\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "8639bd1e-0282-472a-950d-d6cb7dc2853f": {
+      "type": "section-custom-content",
+      "blocks": {
+        "083eda2e-df3e-4f5d-a69c-f0b687fe469f": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Luxury & pampering",
+            "text": "<p>Indulge in a luxurious experience with our <strong>premium hair care routines</strong>, perfect for those who have the time and budget to pamper themselves.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f0e6d0"
+          }
+        },
+        "beb683bf-3305-4aeb-a603-60b9305c55b6": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Luxury_pampering_1150x900_e369c898-c46a-41e3-bb50-c942441fde9c.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "083eda2e-df3e-4f5d-a69c-f0b687fe469f",
+        "beb683bf-3305-4aeb-a603-60b9305c55b6"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "4d063512-3486-4c1d-aaaa-a9a251b6f8a1": {
+      "type": "section-custom-content",
+      "blocks": {
+        "ccd4c63a-2c4d-4b60-8c83-8fb6fbbb320d": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/FOR_FINE_HAIR_1.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--bottom-center",
+            "text_color": "text--white",
+            "link_text": "You have Fine Hair if you can barely feel your strands if you pinch and roll them with your fingers.",
+            "link": "",
+            "button_color": "btn--black",
+            "button_style": "btn uppercase"
+          }
+        },
+        "ff7db436-6ae5-4899-9bb9-b8c5e2d2820f": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h2>For fine hair: Try these premium <em>routines</em>.</h2><p>Experience the luxury of salon-quality hair care at home, with gentle and lightweight formulas that lovingly smooth your strands without weighing them down.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "shopify://collections/fine-hair-that-is-frizzy",
+            "button_color": "btn--black",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "ccd4c63a-2c4d-4b60-8c83-8fb6fbbb320d",
+        "ff7db436-6ae5-4899-9bb9-b8c5e2d2820f"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 28,
+        "desktop_padding_bottom": 28,
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 24
+      }
+    },
+    "95e5ee5e-c347-47c9-a0f4-5b24234f0f10": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14547012649059__95e5ee5e-c347-47c9-a0f4-5b24234f0f10-text_block-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/DAVINES_LOVE_SMOOTH_COLLECTION_1150_x_1000.jpg",
+            "title": "THE PLANT-BASED CHOICE",
+            "text": "<h4>Davines LOVE Smooth Collection</h4>",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/davines-love-smoothing",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "template--14547012649059__95e5ee5e-c347-47c9-a0f4-5b24234f0f10-text_block-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/KERASTASE_FLUIDEALISTE_COLLECTION_1150_x_1000.jpg",
+            "title": "THE LUXURY CHOICE",
+            "text": "<h4>Kérastase Fluidealiste Collection</h4>",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/kerastase-discipline-fluidealiste",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14547012649059__95e5ee5e-c347-47c9-a0f4-5b24234f0f10-text_block-1",
+        "template--14547012649059__95e5ee5e-c347-47c9-a0f4-5b24234f0f10-text_block-2"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 24,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 0.8,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 4,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "e44c2639-1e9b-4295-a87a-6bab997660e4": {
+      "type": "section-custom-content",
+      "blocks": {
+        "5f570282-d705-40db-967d-cb57a81fd90a": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/FOR_MEDIUM_TO_COARSE_HAIR_1.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--bottom-center",
+            "text_color": "text--white",
+            "link_text": "You have Medium to Coarse Hair if you noticeably feel your strands if you pinch and roll them with your fingers",
+            "link": "",
+            "button_color": "btn--black",
+            "button_style": "btn uppercase"
+          }
+        },
+        "e9bfa257-ae96-4089-adc4-7a703518fc8b": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h2>For medium to coarse hair: Try these premium <em>routines</em>.</h2><p>Tailored to your specific hair type, these products are enriched with powerful oils that effectively manage frizz, ensuring your locks are not only pampered but also beautifully frizz-free and manageable.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "shopify://collections/medium-to-coarse-hair-that-is-frizzy",
+            "button_color": "btn--black",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "5f570282-d705-40db-967d-cb57a81fd90a",
+        "e9bfa257-ae96-4089-adc4-7a703518fc8b"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 28,
+        "desktop_padding_bottom": 28,
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 24
+      }
+    },
+    "5c19ad44-6c4d-4a3f-ba36-a59df203672a": {
+      "type": "section-columns",
+      "blocks": {
+        "b370173e-4eb4-4076-9f5d-e7bc2cb852dc": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/DAVINES_OI_COLLECTION_1150_x_1000.jpg",
+            "title": "THE PLANT-BASED CHOICE",
+            "text": "<h4>Davines OI Collection</h4>",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/davines-oi",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "79d6019d-2f60-4253-bbb9-217f80908dbf": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/KERASTASE_OLEO-RELAX_COLLECTION_1150_x_1000.jpg",
+            "title": "THE LUXURY CHOICE",
+            "text": "<h4>Kérastase Oléo-Relax Collection</h4>",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/kerastase-discipline-oleo-relax",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "b370173e-4eb4-4076-9f5d-e7bc2cb852dc",
+        "79d6019d-2f60-4253-bbb9-217f80908dbf"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 24,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 0.8,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "67346d30-1c5a-41cc-909e-e96de18ccb2f": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div id=\"lowmaintenance\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "ed0acd2f-b604-439e-a511-b99fa5c480e7": {
+      "type": "section-custom-content",
+      "blocks": {
+        "3f8f3662-eba8-462c-939f-d61b21f3143e": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Extended Results & Low Maintenance",
+            "text": "<p>Looking for long-lasting, low-maintenance results? Discover our <strong>salon treatment</strong> that provides the ultimate in frizz control.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f0e6d0"
+          }
+        },
+        "34b16eba-c0a6-4bb2-87ff-911901b96e18": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Extended_Results_Low_Maintenance_1150x900_0ac7beba-6ff5-4dcc-8899-421200927feb.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "3f8f3662-eba8-462c-939f-d61b21f3143e",
+        "34b16eba-c0a6-4bb2-87ff-911901b96e18"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "93b6dccf-2dfa-4c82-8976-6dff11b2cf65": {
+      "type": "section-custom-content",
+      "blocks": {
+        "663591b3-a269-4f62-9317-a48a25423843": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h2>Try our in-salon <em>smoothing treatment</em></h2><p>Achieve frizz-free, salon-worthy hair that lasts. Go for a professional-grade treatment for superior results.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "https://m.me/hairmnlstudio",
+            "button_color": "btn--black",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "663591b3-a269-4f62-9317-a48a25423843"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 28,
+        "desktop_padding_bottom": 28,
+        "mobile_padding_top": 28,
+        "mobile_padding_bottom": 28
+      }
+    },
+    "d5a54557-0355-4d74-88bd-2ed9a1de7148": {
+      "type": "section-custom-content",
+      "blocks": {
+        "185dfe40-7093-4486-8f03-1b653f8f211b": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/1_ac37122d-7d25-444f-92a4-fe1a4237a061.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        },
+        "0a42bee7-7d91-4db5-be49-bcc8d8639e12": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h4>Argila Amazonia Smoothing Keratin Treatment</h4><p><strong>✓ </strong>All-natural ingredients & no harsh chemicals</p><p><strong>✓ </strong>Easy, quick and efficient application process</p><p><strong>✓ </strong>Process takes 2 to 3 hours</p><p><strong>✓ </strong>Lasts for up to 3 months</p><h5>Available at HairMNL Studio.</h5><p>📍<a href=\"https://maps.app.goo.gl/DZTaSC7vmdn6crMJA\" target=\"_blank\" title=\"https://maps.app.goo.gl/DZTaSC7vmdn6crMJA\">HairMNL Studio Serendra - 2F Serendra, BGC</a></p><p>📍<a href=\"https://maps.app.goo.gl/te4817zJ2KmSSJ5u6\" target=\"_blank\" title=\"https://maps.app.goo.gl/te4817zJ2KmSSJ5u6\">HairMNL Studio Kapitolyo - 2F The Vantage at Kapitolyo, Pasig</a></p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Book Now",
+            "button_url": "https://m.me/hairmnlstudio",
+            "button_color": "btn--neutral",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#e7daeb"
+          }
+        }
+      },
+      "block_order": [
+        "185dfe40-7093-4486-8f03-1b653f8f211b",
+        "0a42bee7-7d91-4db5-be49-bcc8d8639e12"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 8,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 24,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "35f007da-c91f-490e-8614-bd26be8f08ee": {
+      "type": "section-html",
+      "custom_css": [],
+      "settings": {
+        "html": "<div id=\"immediateresults\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "ed576186-27c1-4a12-823d-d67461a578f1": {
+      "type": "section-custom-content",
+      "blocks": {
+        "ac9ae29c-d004-4f3e-a0ca-cdfa0b0f57b2": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Immediate Results",
+            "text": "<p>If you're budget-conscious and seek immediate effects, use <strong>powerful hair tools</strong> that won't break the bank.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f0e6d0"
+          }
+        },
+        "b8b065c7-7a54-4965-8425-f42c998cafbc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Immediate_Results_1150x900_e43a7ba1-c3d8-4e94-861c-ec6388ab21f1.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "ac9ae29c-d004-4f3e-a0ca-cdfa0b0f57b2",
+        "b8b065c7-7a54-4965-8425-f42c998cafbc"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "b0b51ffd-4d16-4447-9758-77c6816de103": {
+      "type": "section-custom-content",
+      "blocks": {
+        "4b5a5a8e-b7ed-440a-b267-172c8e2cb767": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h2>Try these powerful <em>hair tools</em>.</h2><p>Get salon-style results in the comfort of your home with innovative technology for efficient styling.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "https://m.me/hairmnlstudio",
+            "button_color": "btn--black",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "4b5a5a8e-b7ed-440a-b267-172c8e2cb767"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 28,
+        "desktop_padding_bottom": 28,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 24
+      }
+    },
+    "0441e42a-c8ed-488b-a389-07e9587580d5": {
+      "type": "section-custom-content",
+      "blocks": {
+        "f370a95c-474c-4baa-865d-e24d35eb1ebd": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Porta.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--bottom-center",
+            "text_color": "text--neutral",
+            "link_text": "Shop Now",
+            "link": "shopify://products/tymo-porta-portable-hair-straightening-brush-hc-120",
+            "button_color": "btn--black",
+            "button_style": "btn uppercase"
+          }
+        },
+        "a5ddf601-7219-45ae-9df1-8353cb399ff7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Ring_Plus.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--bottom-center",
+            "text_color": "text--white",
+            "link_text": "Shop Now",
+            "link": "shopify://products/tymo-ring-plus-ionic-straightening-comb-hc-103",
+            "button_color": "btn--black",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "f370a95c-474c-4baa-865d-e24d35eb1ebd",
+        "a5ddf601-7219-45ae-9df1-8353cb399ff7"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": true,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "49f8dca0-2b47-4e79-a961-d98e521ecc19": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14547012649059__49f8dca0-2b47-4e79-a961-d98e521ecc19-text_block-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Dav_Oi_Oil_50ml.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": true,
+            "video_link": "https://youtu.be/4Eo4BdvvG6E?si=ErpYFjpdLxOirKVf"
+          }
+        },
+        "template--14547012649059__49f8dca0-2b47-4e79-a961-d98e521ecc19-text_block-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Kerastase_Oleo-Relax_Oil_33f52034-30d5-475b-844b-049fe409fb33.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": true,
+            "video_link": "https://youtu.be/gwOlAjrwOE4?si=qPZGXUyFXfBriZAH"
+          }
+        },
+        "template--14547012649059__49f8dca0-2b47-4e79-a961-d98e521ecc19-text_block-3": {
+          "type": "text_block",
+          "disabled": true,
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Davines_OI_Oil_135ml.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "bf2b16f0-c9ca-4b77-98da-4ccc56929660": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Kerastase_Oleo-Relax_Ritual.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": true,
+            "video_link": "https://youtu.be/O2mZqNKy9wc?si=RyALFCePoqf9FPBz"
+          }
+        },
+        "9b174871-17db-4508-92e3-f1ab1b4e93b2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/TYMO_Porta.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": true,
+            "video_link": "https://youtu.be/adhbdAcXoX0?si=SXSKdnTOP93s49dU"
+          }
+        },
+        "34f229e5-4bef-4717-adc9-300834b45dbf": {
+          "type": "text_block",
+          "disabled": true,
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/TYMO_Porta_and_Ring_Plus.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14547012649059__49f8dca0-2b47-4e79-a961-d98e521ecc19-text_block-1",
+        "template--14547012649059__49f8dca0-2b47-4e79-a961-d98e521ecc19-text_block-2",
+        "template--14547012649059__49f8dca0-2b47-4e79-a961-d98e521ecc19-text_block-3",
+        "bf2b16f0-c9ca-4b77-98da-4ccc56929660",
+        "9b174871-17db-4508-92e3-f1ab1b4e93b2",
+        "34f229e5-4bef-4717-adc9-300834b45dbf"
+      ],
+      "settings": {
+        "title": "Join our community of frizz fighters",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 0.8,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "8e0bafaf-beab-4332-a8ca-bf225b83a567": {
+      "type": "section-custom-content",
+      "blocks": {
+        "826877e4-4b78-44f2-bba8-241498056833": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Unlock smooth, stress-free hair with HairMNL's tailored solutions",
+            "text": "<p>Frizzy hair should never control your day. Embrace smooth, confident locks today and embark on a journey to beautiful, frizz-free hair with HairMNL. Don't let frizz hold you back – take charge and shine!</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "NEED HELP? CHAT WITH AN EXPERT.",
+            "button_url": "https://m.me/hairmnl",
+            "button_color": "btn--neutral",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#f0e6d0"
+          }
+        },
+        "1ec2ac0b-a1b9-40a3-a566-de70cb869561": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Unlock_smooth_stress-free_hair_with_HairMNL_s_tailored_solutions.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "https://m.me/hairmnlstudio",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "826877e4-4b78-44f2-bba8-241498056833",
+        "1ec2ac0b-a1b9-40a3-a566-de70cb869561"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 24,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "f522c2fc-635e-4015-aaa1-3bc5117bdd75",
+    "a6cf4d41-55a8-451f-b5a2-710c134b6c67",
+    "02d58603-4894-4cee-87ce-825dd6441a3b",
+    "5a5b4256-5694-4adc-94d6-b3a64db3cbe9",
+    "78f51e81-ebce-42e2-8efa-844a30765807",
+    "5db44cb8-499b-46f1-bd71-f2b32f9b9ce5",
+    "0cf4c6b8-2608-4eaf-a964-5b88debe89d7",
+    "33c898c8-a0b3-434d-be07-94875b6df45b",
+    "89aa4766-8f6f-4210-a80e-6a349e74e43a",
+    "8639bd1e-0282-472a-950d-d6cb7dc2853f",
+    "4d063512-3486-4c1d-aaaa-a9a251b6f8a1",
+    "95e5ee5e-c347-47c9-a0f4-5b24234f0f10",
+    "e44c2639-1e9b-4295-a87a-6bab997660e4",
+    "5c19ad44-6c4d-4a3f-ba36-a59df203672a",
+    "67346d30-1c5a-41cc-909e-e96de18ccb2f",
+    "ed0acd2f-b604-439e-a511-b99fa5c480e7",
+    "93b6dccf-2dfa-4c82-8976-6dff11b2cf65",
+    "d5a54557-0355-4d74-88bd-2ed9a1de7148",
+    "35f007da-c91f-490e-8614-bd26be8f08ee",
+    "ed576186-27c1-4a12-823d-d67461a578f1",
+    "b0b51ffd-4d16-4447-9758-77c6816de103",
+    "0441e42a-c8ed-488b-a389-07e9587580d5",
+    "49f8dca0-2b47-4e79-a961-d98e521ecc19",
+    "8e0bafaf-beab-4332-a8ca-bf225b83a567"
+  ]
+}

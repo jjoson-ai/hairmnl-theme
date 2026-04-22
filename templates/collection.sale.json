@@ -1,0 +1,391 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/hairmnl-anniversary-sep-2024-banner-desktop.jpg",
+        "banner_mobile": "shopify://shop_images/hairmnl-anniversary-sep-2024-banner-mobile.jpg",
+        "banner_url": "shopify://collections/special-offers",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "3634b225-2f38-4e3f-abaa-9dacb5954492": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14408712126563__3634b225-2f38-4e3f-abaa-9dacb5954492-16755364347e1aad9b-1": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "",
+            "blog_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14408712126563__3634b225-2f38-4e3f-abaa-9dacb5954492-16755364347e1aad9b-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Featured articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "11842552-3c9d-4004-90e3-0b0fcc5556f6": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "bf07efff-56f3-4df2-9277-fd69463c63c1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Anniversary_Sept_2024_-_Davines_Banner_Desktop_2da41e7d-c815-4496-9e9c-f07a99f47852.png",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Anniversary_Sept_2024_-_Davines_Banner_Mobile_e6a96ad9-84ac-40fe-b3c1-7873fdd93c76.png",
+            "slide_image_url": "shopify://collections/davines"
+          }
+        },
+        "template--14408712126563__11842552-3c9d-4004-90e3-0b0fcc5556f6-16708351307994b0e4-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Anniversary_Sept_2024_-_TYMO_Banner_Desktop_8c7a5ea0-82c1-4fa1-aee7-6178f0d689ce.png",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Anniversary_Sept_2024_-_TYMO_Banner_Mobile_f19821ad-4ab7-4ea1-9bfb-387bc4193286.png",
+            "slide_image_url": "shopify://collections/tymo"
+          }
+        },
+        "986816ef-bd40-47ce-ad6c-5755b478be5d": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/kerastase-hairmnl-anniversary-sale-sept-9-30-2024-_2_25b0ee84-e948-4015-bfe4-0d1fbb92481b.jpg",
+            "slide_image_mobile": "shopify://shop_images/kerastase-hairmnl-anniversary-sale-sept-9-30-2024_a3077a97-28d4-4300-b395-bb174b1c9100.jpg",
+            "slide_image_url": "shopify://collections/kerastase"
+          }
+        },
+        "277c0261-81a5-43e6-8938-fb6796e27006": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/loreal-hairmnl-anniversary-sale-sept-9-30-2024-arm_28c53963-f158-4778-abdb-74bf15d13cf1.jpg",
+            "slide_image_mobile": "shopify://shop_images/loreal-hairmnl-anniversary-sale-sept-9-30-2024-arm_1_c9e20c0e-356b-424a-896d-b6f92d237172.jpg",
+            "slide_image_url": "shopify://collections/lorealprofessionnel"
+          }
+        },
+        "template--14408712126563__11842552-3c9d-4004-90e3-0b0fcc5556f6-16708351307994b0e4-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/hairmnl-babyliss-intro-sale-15-sep-1-30-2024-deskt_15242aae-f49e-45f2-adc4-b17a71e438c9.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-babyliss-intro-sale-15-sep-1-30-2024-mobil_db326fa2-6269-4de4-90f3-bfa756869f4c.jpg",
+            "slide_image_url": "shopify://collections/babyliss"
+          }
+        },
+        "5a7583ae-8c72-4d3a-a671-dc0af52db0e9": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_GC_Banner_-_Desktop.png",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_GC_Banner_-_Mobile.png",
+            "slide_image_url": "shopify://collections/gift-guide"
+          }
+        },
+        "4de2bf8b-1bb6-4af4-8f01-15342dd4e73c": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/holiday-notecard_desktop-banner-1400x500.jpg",
+            "slide_image_mobile": "shopify://shop_images/holiday-mobile-banner-552x502.jpg",
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "bf07efff-56f3-4df2-9277-fd69463c63c1",
+        "template--14408712126563__11842552-3c9d-4004-90e3-0b0fcc5556f6-16708351307994b0e4-0",
+        "986816ef-bd40-47ce-ad6c-5755b478be5d",
+        "277c0261-81a5-43e6-8938-fb6796e27006",
+        "template--14408712126563__11842552-3c9d-4004-90e3-0b0fcc5556f6-16708351307994b0e4-1",
+        "5a7583ae-8c72-4d3a-a671-dc0af52db0e9",
+        "4de2bf8b-1bb6-4af4-8f01-15342dd4e73c"
+      ],
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 0,
+        "section_margin_bottom": 10,
+        "slide_delay": 3000
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Holiday Gift Sets",
+        "title_font_size": 28,
+        "collection": "holiday-gift-sets",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "b3a0a82c-8fb0-454b-94c1-55d3d3acc617": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines Special Offers",
+        "title_font_size": 28,
+        "collection": "davines-featured-products",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_VyKB84": {
+      "type": "section-collection",
+      "settings": {
+        "title": "TYMO",
+        "title_font_size": 28,
+        "collection": "tymo",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "47d5f4f2-b632-48cc-b165-554dede9c0a4": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Kérastase Special Offers",
+        "title_font_size": 28,
+        "collection": "kerastase-special-offers",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "40d7c677-cec4-4194-9c92-65900956fc28": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Kérastase Rituals and Programs",
+        "title_font_size": 28,
+        "collection": "kerastase-rituals-and-programs",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "e45fbb29-5921-4d43-bd5f-5a97ec9a6cec": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/loreal-hairmnl-anniversary-sale-sept-9-30-2024-arm.jpg",
+        "banner_mobile": "shopify://shop_images/loreal-hairmnl-anniversary-sale-sept-9-30-2024-arm_1.jpg",
+        "banner_url": "shopify://collections/lorealprofessionnel",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "e87b81da-182c-46cc-8caf-cb9413dc64b6": {
+      "type": "section-collection",
+      "settings": {
+        "title": "L'Oreal Professionnel Special Offers",
+        "title_font_size": 28,
+        "collection": "loreal-professionnel-special-offers",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "b64e6f7a-f3d9-43f3-8af6-260d1d9f192d": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/hairmnl-babyliss-intro-sale-15-sep-1-30-2024-deskt_15242aae-f49e-45f2-adc4-b17a71e438c9.jpg",
+        "banner_mobile": "shopify://shop_images/hairmnl-babyliss-intro-sale-15-sep-1-30-2024-mobil_db326fa2-6269-4de4-90f3-bfa756869f4c.jpg",
+        "banner_url": "shopify://collections/babyliss",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "9b059c66-9ab2-473c-ad5a-756d08906529": {
+      "type": "section-collection",
+      "settings": {
+        "title": "BaByliss Pro",
+        "title_font_size": 28,
+        "collection": "babyliss",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "16d77ca5-8632-4a2f-a14f-9dd1f9584c85": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Best for Travel",
+        "title_font_size": 28,
+        "collection": "best-for-travel",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "ab7b6d37-c3d3-49d1-a56f-e7f0a7eea2cd": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Professional Styling Products",
+        "title_font_size": 28,
+        "collection": "special-offers-on-styling-products",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "1df7470f-53a2-40ef-a18b-fbab0c240993": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Shop All Special Offers",
+        "title_font_size": 28,
+        "collection": "special-offers",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "45e82d77-f07c-45e8-9ed8-614d15bd69c4": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "3634b225-2f38-4e3f-abaa-9dacb5954492",
+    "11842552-3c9d-4004-90e3-0b0fcc5556f6",
+    "1642442735c9bd4274",
+    "b3a0a82c-8fb0-454b-94c1-55d3d3acc617",
+    "section_collection_VyKB84",
+    "47d5f4f2-b632-48cc-b165-554dede9c0a4",
+    "40d7c677-cec4-4194-9c92-65900956fc28",
+    "e45fbb29-5921-4d43-bd5f-5a97ec9a6cec",
+    "e87b81da-182c-46cc-8caf-cb9413dc64b6",
+    "b64e6f7a-f3d9-43f3-8af6-260d1d9f192d",
+    "9b059c66-9ab2-473c-ad5a-756d08906529",
+    "16d77ca5-8632-4a2f-a14f-9dd1f9584c85",
+    "ab7b6d37-c3d3-49d1-a56f-e7f0a7eea2cd",
+    "1df7470f-53a2-40ef-a18b-fbab0c240993",
+    "45e82d77-f07c-45e8-9ed8-614d15bd69c4"
+  ]
+}

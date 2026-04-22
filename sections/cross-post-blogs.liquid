@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <div class="cross-post-blogs">
+    <h3 class="home__subtitle">{{ section.settings.header_title }}</h3>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        {% for link in linklists['cross-post-blogs'].links %}
+          {% assign blog = link.object %}
+          {% for article in blog.articles %}
+            {% for tag in tags %}
+              {% if tag contains 'article:' %}
+                {% assign article_id = tag | remove: 'article:' | plus: 0 %}
+                {% if article.id == article_id %}
+                  <div class="swiper-slide">
+                    <article>
+                      <a target="_blank" href="{{ article.url }}">
+                        <img src="{{article.image | img_url: '300x'}}">
+                        <h5 class="article-title">{{article.title}}</h5>
+                      </a>
+                    </article>
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Cross Post Blogs",
+    "settings": [
+      {
+        "type": "text",
+        "id": "header_title",
+        "label": "Heading",
+        "default": "Related Articles"
+      }
+    ],
+    "presets": [
+      {
+        "category": "Blogs",
+        "name": "Cross Post Blogs",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}

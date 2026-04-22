@@ -1,0 +1,185 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "section-banner-slider": {
+      "type": "section-banner-slider",
+      "disabled": true,
+      "blocks": {
+        "template--14386034049123__section-banner-slider-1666401432e7d81ab8-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/DIY-beard-balm.jpg",
+            "slide_image_mobile": "shopify://shop_images/reds-for-lips.jpg",
+            "slide_image_url": ""
+          }
+        },
+        "template--14386034049123__section-banner-slider-1666401432e7d81ab8-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/makeup-beauty-flatlay_33faccb1-cf4c-4ea0-98dd-d1757115824e.jpg",
+            "slide_image_mobile": "shopify://shop_images/bright-eye-makeup-brushes.jpg",
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14386034049123__section-banner-slider-1666401432e7d81ab8-0",
+        "template--14386034049123__section-banner-slider-1666401432e7d81ab8-1"
+      ],
+      "settings": {
+        "enable_section": false,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "20f30000-6d1e-4dec-9b2e-61fd8ea5e80b": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/TheBackbar_Retail_1400x500_Desktop_ca673a74-958c-434e-bf38-98cceae20b0a.jpg",
+        "banner_mobile": "shopify://shop_images/TheBackbar_Retail_552x502_Mobile_906e0e34-d009-41b2-9648-3a7b0eb03aab.jpg",
+        "banner_url": ""
+      }
+    },
+    "63738231-0cf2-4149-9f6f-88f0c5b3754a": {
+      "type": "menu-buttons",
+      "disabled": true,
+      "settings": {
+        "menu_list": "backbar-middle-menu",
+        "space_top": 20,
+        "space_bottom": 20
+      }
+    },
+    "8203aa1b-0a2a-4cd6-8db9-15f386a860ff": {
+      "type": "section-collection-slider",
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "featured_collection": "the-backbar-retail-products"
+      }
+    },
+    "c3f2236d-0a0b-4862-a398-300af7b18fcf": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "The Backbar",
+        "title": "Retail Products",
+        "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "6c63e638-43ab-4387-a734-cf613d196bf3": {
+      "type": "collection",
+      "settings": {
+        "grid_setting_large": 6,
+        "grid_setting_small": 2,
+        "product_limit": 36,
+        "enable_layout_toggle": true,
+        "collection_sorting": true,
+        "hide_sidebar": true
+      }
+    },
+    "dea8e373-ffc4-4026-84fe-03d05283077f": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "the-backbar-retail-products",
+        "grid": 6,
+        "rows": 8,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false
+      }
+    },
+    "f6cabdd8-7175-4e23-9fe5-079923686074": {
+      "type": "section-collection-grid",
+      "disabled": true,
+      "settings": {
+        "title": "Shop by Brand",
+        "grid": 2,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 15,
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7
+      }
+    },
+    "f3cf2c25-7710-45e7-9185-d0dbb539904b": {
+      "type": "section-featured-articles",
+      "disabled": true,
+      "blocks": {
+        "template--14416546005091__f3cf2c25-7710-45e7-9185-d0dbb539904b-167299118798884cf7-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "",
+            "blog_title": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14416546005091__f3cf2c25-7710-45e7-9185-d0dbb539904b-167299118798884cf7-0"
+      ],
+      "settings": {
+        "title": "Featured articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "12fb19e4-abdf-48e7-ab30-5d70a9e0b4d3": {
+      "type": "cross-post-blogs",
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    }
+  },
+  "order": [
+    "section-banner-slider",
+    "20f30000-6d1e-4dec-9b2e-61fd8ea5e80b",
+    "63738231-0cf2-4149-9f6f-88f0c5b3754a",
+    "8203aa1b-0a2a-4cd6-8db9-15f386a860ff",
+    "c3f2236d-0a0b-4862-a398-300af7b18fcf",
+    "6c63e638-43ab-4387-a734-cf613d196bf3",
+    "dea8e373-ffc4-4026-84fe-03d05283077f",
+    "f6cabdd8-7175-4e23-9fe5-079923686074",
+    "f3cf2c25-7710-45e7-9185-d0dbb539904b",
+    "12fb19e4-abdf-48e7-ab30-5d70a9e0b4d3"
+  ]
+}

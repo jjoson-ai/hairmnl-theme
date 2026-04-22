@@ -1,0 +1,171 @@
+{% if page.handle  == 'reviews' %}
+
+{%- if section.settings.enable_section -%}
+<div style="text-align: center !important; margin-top: 20px; margin-bottom: 10px;">
+{%- render 'section-static-banner' 
+              banner_url: section.settings.brandsis_banner_url
+              banner_desktop: section.settings.brandsis_banner_desktop
+              banner_mobile: section.settings.brandsis_banner_mobile
+              banner_text: section.settings.brandsis_banner_text
+              banner_text_font: banner_text_font 
+              banner_text_font_size: section.settings.banner_text_font_size
+              banner_text_alignment: section.settings.banner_text_alignment
+              banner_text_margin_top: section.settings.banner_text_margin_top
+              banner_text_margin_bottom: section.settings.banner_text_margin_bottom -%}
+  </div>
+{% endif %}
+
+{% endif %}
+{% schema %}
+{
+  "name": " Brand Static Banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Section",
+      "default": false
+    },
+	  {
+      "type":    "range",
+      "id":      "section_margin_top",
+      "min":     0,
+      "max":     100,
+      "step":    1,
+      "label":   "Section margin top",
+      "default": 20
+    },
+	  {
+      "type":    "range",
+      "id":      "section_margin_bottom",
+      "min":     0,
+      "max":     100,
+      "step":    1,
+      "label":   "Section margin bottom",
+      "default": 20
+    },
+    {
+      "type": "image_picker",
+      "id": "brandsis_banner_desktop",
+      "label": "Salon Banner(Desktop)",
+      "info": "1400px width x 788px height recommended"
+    },
+    {
+      "type": "image_picker",
+      "id": "brandsis_banner_mobile",
+      "label": "Banner(Mobile)",
+      "info": "552px width x 502px height recommended"
+    },
+    {
+      "type": "url",
+      "id": "brandsis_banner_url",
+      "label": "Banner URL"
+    },
+    {
+      "type": "textarea",
+      "id": "brandsis_banner_text",
+      "label": "Banner Text"
+    },
+    {
+      "type":    "range",
+      "id":      "banner_text_margin_top",
+      "min":     0,
+      "max":     100,
+      "step":    1,
+      "label":   "Banner text margin top",
+      "default": 20
+    },
+	  {
+      "type":    "range",
+      "id":      "banner_text_margin_bottom",
+      "min":     0,
+      "max":     100,
+      "step":    1,
+      "label":   "Banner text margin bottom",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "banner_text_alignment",
+      "label": "Banner text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_custom_banner_text_font",
+      "label": "Use custom font for banner text",
+      "default": false
+    },
+    {
+      "type":    "font_picker",
+      "label":   "Banner text font",
+      "id":      "banner_text_font",
+      "default": "questrial_n4"
+    },
+    {
+      "type": "select",
+      "id": "custom_banner_text_font",
+      "label": "Custom banner text font",
+      "options": [
+        {
+          "value": "SelfModern",
+          "label": "SelfModern"
+        },
+        {
+          "value": "SelfModernItalic",
+          "label": "SelfModernItalic"
+        },
+        {
+          "value": "BasisGrotesqueProMono-Regular",
+          "label": "BasisGrotesqueProMono-Regular"
+        },
+        {
+          "value": "BasisGrotesquePro-Regular",
+          "label": "BasisGrotesquePro-Regular"
+        },
+        {
+          "value": "BasisGrotesquePro-Bold",
+          "label": "BasisGrotesquePro-Bold"
+        },
+        {
+          "value": "BasisGrotesquePro-Black",
+          "label": "BasisGrotesquePro-Black"
+        },
+        {
+          "value": "BasisGrotesquePro-Medium",
+          "label": "BasisGrotesquePro-Medium"
+        },
+        {
+          "value": "FontAwesome5Brands-Regular-400",
+          "label": "FontAwesome5Brands-Regular-400"
+        }
+      ],
+      "default": "SelfModern"
+    },
+    {
+      "type":    "range",
+      "id":      "banner_text_font_size",
+      "min":     10,
+      "max":     50,
+      "step":    1,
+      "label":   "Banner text font size",
+      "default": 14
+    }
+  ]
+}
+
+{% endschema %}

@@ -1,0 +1,166 @@
+{% if false %}
+						{% assign excluded_vat_text = "exc. VAT | " %}
+						{% assign included_vat_text = "inc. VAT" %}
+				<div class="bss-b2b-product-vat" data-product-id="{{ product.id }}" data-selected-variant-id="{{ product.selected_or_first_available_variant.id }}" data-product-collections="{% for collection in product.collections %}{{ collection.id }}{% unless forloop.last %},{% endunless %}{% endfor %}">
+        <span class="bss-b2b-product-vat-price-no-vat" data-excluded-vat-text="{{ excluded_vat_text }}">
+
+        </span>
+        <span class="bss-b2b-product-vat-price-has-vat" data-included-vat-text="{{ included_vat_text }}">
+
+        </span>
+        <script id="bss-b2b-product-data" type="application/json">
+        {
+            "id": {{ product.id | json }},
+            "collections": [
+                {% for collection in product.collections %}
+                {{ collection.id | json }}{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+            ],
+            "tags": [
+                {% for tag in product.tags %}
+                {{ tag | json }}{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+            ],
+            "variantIdArrayMap": {
+                {% for variant in product.variants %}
+                "{{ variant.id }}": {
+                    "product_id": {{ product.id | json }},
+                    "taxable": {{ variant.taxable | json }},
+                    "price": {{ variant.price | json }},
+                    "price_formatted": {{ variant.price | money | json }},
+                    "price_formatted_without_trailing_zeros": {{ variant.price | money_without_trailing_zeros | json }},
+                    "compare_at_price_formatted": {{ variant.compare_at_price | money | json }},
+                    "compare_at_price_formatted_without_trailing_zeros": {{ variant.compare_at_price | money_without_trailing_zeros | json }}
+                }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+            }
+        }
+        </script>
+</div>
+<style id="bss-b2b-tax-inc-excl" type="text/css">
+ [data-price-container],
+.product-single__meta-list,
+.shopify-section .product__price,
+.shopify-section .product__policies.rte,
+.shopify-section .ProductMeta__PriceList.Heading ,
+.product-template-section .inline-list,
+.product-single__prices,
+.product-single__policies,
+ #shopify-section-product [data-price],
+ #shopify-section-product-template [data-price],
+ .current-price,
+ .shopify-section .price.price--large,
+ .shopify-section .product-page--pricing,
+ .product-page__policies.rte,
+ #shopify-section-product-template .product-details .offers,
+ .product-main .price-box,
+ .product-page-info__price,
+ .detail-price,
+ [data-key="p-price"] .module,
+ #shopify-section-product-template .modal_price,
+ .product-page-row .product-meta-block .product-price .price-list,
+ .product-page-row .product-meta-block .product-price #price-info,
+ .product-default .product_top .product-shop .prices,
+ .abz-main-product div[data-spark="b2c-only"] #product-price,
+ .price-container #ProductPrice,
+ .tt-product-single-info .tt-price .new-price,
+ .product_prices #ProductPrice,
+ .product-details_price .product-details_price-wrapper .price-sale,
+ .product-card_price_action .product-price .price del,
+ .product-card_price_action .product-price .price span,
+ .double-variant .product-varient .product-price,
+ .product-varient .bss-b2b-customized-compare-at-price,
+ .price__container .price__regular .price-item [bss-b2b-variant-price],
+ .product-details_price-inner .bss-b2b-customized-compare-at-price,
+ .product-details_price-inner .price-sale,
+ .product-pricing .price.product__price .price__current,
+ .product-pricing .price.product__price .price__current--hidden,
+ .price-ui,
+ .product-form__info-content .price-list,
+ .text-size--xlarge > [bss-b2b-product-id]
+ {
+  display: none !important;
+}
+ meta[itemprop="price"] {
+  display: none !important;
+ }
+ .bss-b2b-product-vat {
+    padding: 5px 0;
+ }
+ {% if shop.permanent_domain == "barlibrary.myshopify.com" %}
+  [data-product-blocks] [data-product-blocks] .product__price {
+    display: block !important;
+}
+{% endif %}
+  {% if shop.permanent_domain == "stelzlagergigant.myshopify.com" %}
+    .product__policies.rte, .shopify-section, .product-details_price-inner{
+        display: block !important;
+      }
+    .product-details_price-inner .price-sale span{
+      display: none !important;
+    }
+    .product-details_price-inner .price-sale{
+      margin-right: 10px !important;
+    }
+ {% endif %}
+ {% if shop.permanent_domain == "fodaboxwholesale.myshopify.com" %}
+  [data-price-container],
+  .product-pricing .price__current,
+  .shopify-section .product__price
+  {
+      display: block !important;
+  }
+  {% endif %}
+  {% if shop.permanent_domain == "pro-northernspirit-sport-com.myshopify.com" %}
+  .shopify-section .product__price
+  {
+    display: block !important;
+  }
+  {% endif %}
+  {% if shop.permanent_domain == "wodabox.myshopify.com" %}
+  .shopify-section .product__price
+  {
+    display: block !important;
+  }
+  {% endif %}
+  {% if shop.permanent_domain == "nuoka.myshopify.com" %}
+  [data-price-container],
+  .shopify-section .product__price{
+      display: block !important;
+  }
+  .price__current .money{
+    display: none !important;
+  }
+   {% endif %}
+</style>
+<script>
+    var bssB2BProduct = {{ product | json }};
+
+    bssB2BProduct.page_type = {{ request.page_type | json }};
+
+    bssB2BProduct.collections = [
+            {% for collection in product.collections %}
+                "{{ collection.id }}"{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+    ] ;
+
+    bssB2BProduct.variantIdArrayMap = (function() {
+      var item = {};
+
+      {% for variant in product.variants %}
+        {% assign variant_id = variant.id %}
+        item[{{ variant_id }}] = {{ variant | json }};
+        item[{{ variant_id }}].taxable = {{ variant.taxable | json }};
+        item[{{ variant_id }}].price = {{ variant.price | json }};
+        item[{{ variant_id }}].price_formatted = {{ variant.price | money | json }};
+        item[{{ variant_id }}].price_formatted_without_trailing_zeros = {{ variant.price | money_without_trailing_zeros | json }};
+        item[{{ variant_id }}].compare_at_price_formatted = {{ variant.compare_at_price | money | json }};
+        item[{{ variant_id }}].compare_at_price_formatted_without_trailing_zeros = {{ variant.compare_at_price | money_without_trailing_zeros | json }};
+        item[{{ variant_id }}].product_id = {{ product.id | json }};
+
+      {% endfor %}
+
+      return item;
+    })();
+</script>
+{% endif %}

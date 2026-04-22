@@ -1,0 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "cart",
+      "settings": {}
+    },
+    "cd287ffa-cf2d-4b35-8975-cc2f688c1f65": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    }
+  },
+  "order": [
+    "main",
+    "cd287ffa-cf2d-4b35-8975-cc2f688c1f65"
+  ]
+}

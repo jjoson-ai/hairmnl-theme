@@ -1,0 +1,924 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "show_title": true,
+        "show_content": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "4e72afb5-4211-437e-8eca-36c0d00efa01": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/HairMNL_Dandruff_Solution_Intro_Desktop.png",
+        "banner_mobile": "shopify://shop_images/HairMNL_Dandruff_Solution_Intro_Mobile.png",
+        "banner_url": "",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "a6cf4d41-55a8-451f-b5a2-710c134b6c67": {
+      "type": "section-custom-content",
+      "blocks": {
+        "c53fc9fb-25ad-49d0-8668-b19d451f8ce3": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Embarrassed by flaky, itchy scalp?",
+            "text": "<p>Dandruff can wreak havoc on your hair and self-esteem. It's time to put an end to the constant battle with dandruff and experience the freedom of a clean, healthy scalp.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "c53fc9fb-25ad-49d0-8668-b19d451f8ce3"
+      ],
+      "settings": {
+        "height": "use_screen_one_fifth",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "02d58603-4894-4cee-87ce-825dd6441a3b": {
+      "type": "section-custom-content",
+      "blocks": {
+        "803a94a8-c5b0-421a-8cf3-eae8c2fe2f6e": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BG.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "We understand the frustration.",
+            "richtext": "Trying countless dandruff remedies that promise results but deliver disappointment. From over-the-counter shampoos to home remedies, you've tried them all. But nothing seems to work effectively.",
+            "text_align": "align--middle-left",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "803a94a8-c5b0-421a-8cf3-eae8c2fe2f6e"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "28664cdc-2e5f-488e-a38d-a4bfd4d0f3da": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "⭐⭐⭐⭐⭐",
+            "text": "<p><em>\"My husband has been quietly irritated by recurring dandruff for five months. We already tried products bought from drugstores and even home remedies to remove his dandruff, but to no avail.\"</em></p><p><strong>Joy D., HairMNL Customer</strong></p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "⭐⭐⭐⭐⭐",
+            "text": "<p><em>\"I have had dandruff since college and I have tried every dandruff shampoo out in the market... from medicated ones to natural/herbal shampoos but to no avail.\" </em></p><p><strong>Trina, HairMNL Customer</strong></p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "⭐⭐⭐⭐⭐",
+            "text": "<p><em>\"I have patchy, dry, itchy portions on my scalp. I tried anti dandruff shampoos, vegan, sulfate-free, baby shampoo, skin sensitive shampoo, mild, virgin coconut oil, lemon, oatmeal water, gugo, etc. EVERYTHING!\"</em></p><p><strong>Alyssa, HairMNL Customer</strong></p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-0",
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-1",
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-2"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 14,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": false,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 12,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "5db44cb8-499b-46f1-bd71-f2b32f9b9ce5": {
+      "type": "section-custom-content",
+      "blocks": {
+        "1f0622ba-a759-4e69-9ee5-864d2ee721a9": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Reclaim your confidence.",
+            "text": "<p>Discover this powerful solution to combat dandruff.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f0e6d0"
+          }
+        },
+        "7c065e93-e44d-43ed-98fc-595cde16e828": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Reclaim_your_confidence_9b6792e0-d0d1-45ee-902d-57f784a55d04.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "1f0622ba-a759-4e69-9ee5-864d2ee721a9",
+        "7c065e93-e44d-43ed-98fc-595cde16e828"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 12,
+        "desktop_padding_bottom": 12,
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12
+      }
+    },
+    "7ddba84c-ffd0-4e6b-93a6-66bc41bea0ec": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div id=\"the-ultimate-solution\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 4,
+        "desktop_padding_bottom": 4,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "33c898c8-a0b3-434d-be07-94875b6df45b": {
+      "type": "section-custom-content",
+      "blocks": {
+        "b577b0ef-f5ef-433c-9efa-4ac64a9c8112": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Davines_Purifying_Shampoo_250ml_HairMNL.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        },
+        "2d564156-4741-4c85-ba2f-76fd1415dca1": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Introducing the ultimate solution.",
+            "text": "<p>The Davines Purifying Shampoo targets the root causes of dandruff, providing you with long-lasting relief and a scalp that feels refreshed and rejuvenated.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Buy Now",
+            "button_url": "#quickbuy",
+            "button_color": "btn--primary",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "b577b0ef-f5ef-433c-9efa-4ac64a9c8112",
+        "2d564156-4741-4c85-ba2f-76fd1415dca1"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "0edda6ca-a9d6-4d82-9781-ea8467d51ea4": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Designed to Solve Scalp & Hair Conditions the Natural Way",
+        "text": "<p>Phytoceuticals are plant compounds with protective action against external attacks: they are anti-oxidant, anti-free radicals and anti-inflammatory agents.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "17128f2b-c1b9-4a1c-a5dc-73bc66b04315": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/Davines_Purifying_Shampoo_Key_Ingredients_Desktop.png",
+        "banner_mobile": "shopify://shop_images/Davines_Purifying_Shampoo_Key_Ingredients_Mobile.png",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "dfe5195c-2a16-4041-b4bc-f88fb0d19b02": {
+      "type": "section-icons",
+      "blocks": {
+        "template--14479934128227__dfe5195c-2a16-4041-b4bc-f88fb0d19b02-1687975167e85ae721-1": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-basket-like",
+            "icon_alt": "shopify://shop_images/Paraben_free.png",
+            "icon_color": "#aaaaaa",
+            "title": "Paraben free",
+            "text": ""
+          }
+        },
+        "template--14479934128227__dfe5195c-2a16-4041-b4bc-f88fb0d19b02-1687975167e85ae721-0": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-award",
+            "icon_alt": "shopify://shop_images/Sulfate_free.png",
+            "icon_color": "#aaaaaa",
+            "title": "Sulfate free",
+            "text": ""
+          }
+        },
+        "template--14479934128227__dfe5195c-2a16-4041-b4bc-f88fb0d19b02-1687975167e85ae721-2": {
+          "type": "icon_block",
+          "disabled": true,
+          "settings": {
+            "icon_name": "icon-leaf",
+            "icon_alt": "shopify://shop_images/Pregnancy_safe.png",
+            "icon_color": "#aaaaaa",
+            "title": "Pregnancy Safe",
+            "text": ""
+          }
+        },
+        "f56daafc-520c-4d66-9637-141899a9cf65": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-rating",
+            "icon_alt": "shopify://shop_images/Color_safe.png",
+            "icon_color": "#aaaaaa",
+            "title": "Color safe",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14479934128227__dfe5195c-2a16-4041-b4bc-f88fb0d19b02-1687975167e85ae721-1",
+        "template--14479934128227__dfe5195c-2a16-4041-b4bc-f88fb0d19b02-1687975167e85ae721-0",
+        "template--14479934128227__dfe5195c-2a16-4041-b4bc-f88fb0d19b02-1687975167e85ae721-2",
+        "f56daafc-520c-4d66-9637-141899a9cf65"
+      ],
+      "settings": {
+        "title": "",
+        "bg": "palette--light bg--neutral",
+        "icon_size": "icon--large",
+        "icon_alignment": "icon--top",
+        "align_text": "text-center"
+      }
+    },
+    "d8db1c93-18aa-4a3d-b84c-ea9d204d4c00": {
+      "type": "section-custom-content",
+      "blocks": {
+        "2ffe7a05-0291-4043-87a3-9ecfe5fc4245": {
+          "type": "text",
+          "settings": {
+            "kicker": "Natural beauty's next step",
+            "title": "From harvest to formula",
+            "text": "<p><em>“By creating beauty sustainably, we encourage people to take care of themselves, the environment in which they live & work, and of the things they love.”</em></p><p>Davide Bollati, Davines President</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f0e6d0"
+          }
+        },
+        "12ecf7a6-46eb-4896-9472-e4a0d8c8d102": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Harvest_to_formula.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "2ffe7a05-0291-4043-87a3-9ecfe5fc4245",
+        "12ecf7a6-46eb-4896-9472-e4a0d8c8d102"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "d7733e96-2878-46b0-bce9-650c89775bf1": {
+      "type": "section-logos",
+      "blocks": {
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-0": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/GQ.png",
+            "link": ""
+          }
+        },
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-2": {
+          "type": "logo_image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Who_What_Wear.png",
+            "link": ""
+          }
+        },
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-1": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Forbes.png",
+            "link": ""
+          }
+        },
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-3": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Vanity_Fair.png",
+            "link": ""
+          }
+        },
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-4": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Refinery29.png",
+            "link": ""
+          }
+        },
+        "16e33441-5924-400c-a3d1-6090450aca96": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Cosmopolitan.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-0",
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-2",
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-1",
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-3",
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-4",
+        "16e33441-5924-400c-a3d1-6090450aca96"
+      ],
+      "settings": {
+        "title": "In The Press",
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 32,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "1eec4efb-6b56-468f-9694-f471df7b0f29": {
+      "type": "section-custom-content",
+      "blocks": {
+        "62449b79-1c14-49fb-bd9a-b081f0ea3f22": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BG300.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "Imagine a life without pesky flakes and constant itching.",
+            "richtext": "With the Davines Purifying Shampoo, you can expect a significant reduction in dandruff, a calmed and balanced scalp, and hair that looks and feels healthier than ever.",
+            "text_align": "align--middle-left",
+            "text_color": "text--neutral",
+            "link_text": "Buy Now",
+            "link": "#quickbuy",
+            "button_color": "btn--primary",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "62449b79-1c14-49fb-bd9a-b081f0ea3f22"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 12
+      }
+    },
+    "12ac3cf2-d6f2-4003-98cb-82f8aeca6363": {
+      "type": "section-gallery",
+      "blocks": {
+        "0f591199-47c2-4ecc-9fa5-702bfb912d11": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Brandi_Said_Bye-Bye_to_Dandruff_with_Davines_Purifying.jpg",
+            "link": "https://youtube.com//watch?v=zeHeWC3mjbo"
+          }
+        },
+        "f8dcea39-a7a7-4d52-966d-60279dccec7d": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Davines_Purifying_Shampoo_Reviews.jpg",
+            "link": "https://youtube.com//watch?v=kWatFjjAUyY"
+          }
+        },
+        "template--14479934128227__12ac3cf2-d6f2-4003-98cb-82f8aeca6363-168975699833d4be96-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Andrea_s_Davines_Purifying_Shampoo_Experience.jpg",
+            "link": "https://youtube.com/watch?v=B9lqeEnSrng"
+          }
+        },
+        "template--14479934128227__12ac3cf2-d6f2-4003-98cb-82f8aeca6363-168975699833d4be96-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Angela_s_Dandruff_Story.jpg",
+            "link": "https://www.youtube.com/watch?v=CgyqCDKa0a4"
+          }
+        },
+        "template--14479934128227__12ac3cf2-d6f2-4003-98cb-82f8aeca6363-168975699833d4be96-2": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Purifying_Shampoo.jpg",
+            "link": ""
+          }
+        },
+        "fe4643cb-291e-4d9e-b309-89559698d3a9": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/davines_purifying_shampoo_sorella_hair_salon.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "0f591199-47c2-4ecc-9fa5-702bfb912d11",
+        "f8dcea39-a7a7-4d52-966d-60279dccec7d",
+        "template--14479934128227__12ac3cf2-d6f2-4003-98cb-82f8aeca6363-168975699833d4be96-0",
+        "template--14479934128227__12ac3cf2-d6f2-4003-98cb-82f8aeca6363-168975699833d4be96-1",
+        "template--14479934128227__12ac3cf2-d6f2-4003-98cb-82f8aeca6363-168975699833d4be96-2",
+        "fe4643cb-291e-4d9e-b309-89559698d3a9"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 0.9,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "6574e1c9-0295-4965-9790-71262ecd0f98": {
+      "type": "section-custom-content",
+      "blocks": {
+        "0cea95ca-6e30-4f92-8baf-3451f611b310": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Dandruff-free_1d458933-d74a-4e09-adae-fde2964700f3.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        },
+        "ecf043a6-1055-49d2-8cd6-807a731e7ec8": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Experience the joy of being dandruff-free.",
+            "text": "<p>No more avoiding social gatherings or feeling self-conscious about flakes on your shoulders. With a clean and confident scalp, you can embrace every moment, wear your favorite outfits with confidence, and let your true beauty shine.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f0e6d0"
+          }
+        }
+      },
+      "block_order": [
+        "0cea95ca-6e30-4f92-8baf-3451f611b310",
+        "ecf043a6-1055-49d2-8cd6-807a731e7ec8"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "1d60682c-8de6-4229-991c-c2f72552fbaf": {
+      "type": "section-custom-content",
+      "blocks": {
+        "d713077d-88bc-438d-ab84-3cd87ec7950e": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BG.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "Don't let dandruff hold you back any longer.",
+            "richtext": "Shop now and reclaim your healthy, flake-free hair today.",
+            "text_align": "align--middle-left",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "d713077d-88bc-438d-ab84-3cd87ec7950e"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 4,
+        "mobile_padding_bottom": 4
+      }
+    },
+    "67346d30-1c5a-41cc-909e-e96de18ccb2f": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div id=\"quickbuy\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "abfee678-44df-415d-9e86-07a48169bf4d": {
+      "type": "section-product",
+      "blocks": {
+        "template--14479934128227__abfee678-44df-415d-9e86-07a48169bf4d-1687973816b4566171-0": {
+          "type": "title",
+          "settings": {
+            "product_show_vendor": false
+          }
+        },
+        "template--14479934128227__abfee678-44df-415d-9e86-07a48169bf4d-1687973816b4566171-1": {
+          "type": "form",
+          "settings": {
+            "variant_form": "button",
+            "show_quantity": true,
+            "show_remaining": false,
+            "enable_payment_button": true,
+            "subscriptions_enable_selectors": false,
+            "info_page": ""
+          }
+        },
+        "e9e415dc-b453-4d14-bdcb-d088d2c7b9d1": {
+          "type": "text",
+          "settings": {
+            "title": "<p><a href=\"#the-ultimate-solution\" title=\"#the-ultimate-solution\">⬆ Back to top</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14479934128227__abfee678-44df-415d-9e86-07a48169bf4d-1687973816b4566171-0",
+        "template--14479934128227__abfee678-44df-415d-9e86-07a48169bf4d-1687973816b4566171-1",
+        "e9e415dc-b453-4d14-bdcb-d088d2c7b9d1"
+      ],
+      "settings": {
+        "title": "",
+        "home_product": "davines-naturaltech-purifying-shampoo-for-scalp-with-oily-or-dry-dandruff",
+        "bg": "palette--light bg--neutral",
+        "image_width": "half",
+        "align": "left",
+        "enable_video_looping": true,
+        "zoom_enable": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 4,
+        "mobile_padding_bottom": 4
+      }
+    },
+    "416e5ad7-4a20-42af-b1ee-313c7a9a3dd2": {
+      "type": "section-custom-content",
+      "blocks": {
+        "bb79e3e9-190f-4bcc-8596-ef50222beb38": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BG.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "Don't take our word for it.",
+            "richtext": "We’ve got over 1,600 raving reviews from HairMNL customers who find this product effective and WORTH IT.",
+            "text_align": "align--middle-left",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "bb79e3e9-190f-4bcc-8596-ef50222beb38"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 4,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "17476398-7a54-4a6d-b84e-9fbd4cc27c3d": {
+      "type": "section-columns",
+      "blocks": {
+        "76b72c60-4b06-4387-9877-946eb22961cf": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h4><em>Great product, it really works</em></h4><p>\"I was skeptical at first, but after using it 2x a week for 3 weeks, I really felt a difference. I had relief from all the itching. The product really works for me, so it's 100% worth the price\"</p><p>Cath L. from Quezon City</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "857bc470-b409-4c29-9d8c-cb5f009efcbd": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h4><em>Worth it!</em></h4><p>\"I've been struggling with dandruff for years and Davines' Purifying line is the only that worked for me. Despite being more expensive than other brands, it's worth it!\"</p><p>Mon L. from Quezon City</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "94b16482-c0a4-424f-9321-bd9824f597e2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h4><em>Worth it. Effective against Scalp Psoriasis</em></h4><p>\"I've tried every product you can think of for my scalp psoriasis. But this is the only one I found to be effective! With consistent use, I am (mostly) flake free :) I used it everyday for the first 1-2 weeks then I started alternating it with a gentle shampoo. Highly recommend!\"</p><p>Jamie from Caloocan City</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "76b72c60-4b06-4387-9877-946eb22961cf",
+        "857bc470-b409-4c29-9d8c-cb5f009efcbd",
+        "94b16482-c0a4-424f-9321-bd9824f597e2"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 14,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": false,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 12,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 12
+      }
+    },
+    "6d251997-bec2-4c4a-bb5a-4a66525db653": {
+      "type": "section-custom-content",
+      "blocks": {
+        "f841698e-aa5f-4305-bad7-aff787dea960": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Davines_Purifying_Shampoo_100ml_HairMNL.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        },
+        "148c4e60-e45e-415d-a30c-75efc6718e05": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Get it in trial size.",
+            "text": "<p>Want to start small first? The Davines Purifying Shampoo is also available in 100ml variant. </p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Buy Trial Size",
+            "button_url": "#quickbuy",
+            "button_color": "btn--primary",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "f841698e-aa5f-4305-bad7-aff787dea960",
+        "148c4e60-e45e-415d-a30c-75efc6718e05"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 12,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "main",
+    "4e72afb5-4211-437e-8eca-36c0d00efa01",
+    "a6cf4d41-55a8-451f-b5a2-710c134b6c67",
+    "02d58603-4894-4cee-87ce-825dd6441a3b",
+    "28664cdc-2e5f-488e-a38d-a4bfd4d0f3da",
+    "5db44cb8-499b-46f1-bd71-f2b32f9b9ce5",
+    "7ddba84c-ffd0-4e6b-93a6-66bc41bea0ec",
+    "33c898c8-a0b3-434d-be07-94875b6df45b",
+    "0edda6ca-a9d6-4d82-9781-ea8467d51ea4",
+    "17128f2b-c1b9-4a1c-a5dc-73bc66b04315",
+    "dfe5195c-2a16-4041-b4bc-f88fb0d19b02",
+    "d8db1c93-18aa-4a3d-b84c-ea9d204d4c00",
+    "d7733e96-2878-46b0-bce9-650c89775bf1",
+    "1eec4efb-6b56-468f-9694-f471df7b0f29",
+    "12ac3cf2-d6f2-4003-98cb-82f8aeca6363",
+    "6574e1c9-0295-4965-9790-71262ecd0f98",
+    "1d60682c-8de6-4229-991c-c2f72552fbaf",
+    "67346d30-1c5a-41cc-909e-e96de18ccb2f",
+    "abfee678-44df-415d-9e86-07a48169bf4d",
+    "416e5ad7-4a20-42af-b1ee-313c7a9a3dd2",
+    "17476398-7a54-4a6d-b84e-9fbd4cc27c3d",
+    "6d251997-bec2-4c4a-bb5a-4a66525db653"
+  ]
+}

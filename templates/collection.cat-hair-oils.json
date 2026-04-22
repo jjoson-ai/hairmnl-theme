@@ -1,0 +1,298 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<p>Revitalize your hair with HairMNL’s selection of premium hair oils and serums. Our curated collection features top brands offering products that nourish, protect, and enhance your hair's natural beauty.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<p>Whether you need to repair damage, add shine, or control frizz, we have the perfect solution for every hair type. Rich in natural ingredients, these oils and serums provide deep hydration and strength from root to tip.</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0",
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/hair-oils-serums_banner-1400-x-500-px.jpg",
+        "banner_mobile": "shopify://shop_images/hair-oils-serums_banner-552-x-502-px.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Hair Oils and Serums",
+        "text": "",
+        "text_size": 1,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--zero",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--top-left",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": true,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "section_collection_wbEmze": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Hair Oils",
+        "title_font_size": 28,
+        "collection": "hair-oils",
+        "grid": 5,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 24,
+        "desktop_padding_bottom": 24,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_CCCqiV": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Hair Serums",
+        "title_font_size": 28,
+        "collection": "hair-serums",
+        "grid": 5,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 24,
+        "desktop_padding_bottom": 24,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_4Gx9TF": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Scalp Serums",
+        "title_font_size": 28,
+        "collection": "scalp-serums",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 24,
+        "desktop_padding_bottom": 24,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Shop Hair Oils & Serums",
+        "title_font_size": 17,
+        "collection": "hair-oils-and-serums",
+        "grid": 6,
+        "rows": 4,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 24,
+        "desktop_padding_bottom": 24,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_featured_articles_nRyq83": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "article_block_VfFcFd": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "hair-oil-vs-hair-serum-know-the-difference"
+          }
+        },
+        "article_block_jgJ8w7": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "heaven-scent-bloom-with-floral-scented-hair-care"
+          }
+        },
+        "article_block_7pVyMa": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "fresh-starts-add-these-shower-scents-to-your-great-morning-routine"
+          }
+        },
+        "article_block_C3kK8A": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "your-nose-knows-the-hairmnl-guide-to-the-finest-fragrant-hair-care"
+          }
+        },
+        "article_block_txgkMV": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "how-to-air-dry-your-hair-without-the-frizz"
+          }
+        }
+      },
+      "block_order": [
+        "article_block_VfFcFd",
+        "article_block_jgJ8w7",
+        "article_block_7pVyMa",
+        "article_block_C3kK8A",
+        "article_block_txgkMV"
+      ],
+      "settings": {
+        "title": "Featured Articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 5,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "54a83991-36f8-42db-9b26-59642a7e2ba9": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently Viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "hero",
+    "section_collection_wbEmze",
+    "section_collection_CCCqiV",
+    "section_collection_4Gx9TF",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "section_featured_articles_nRyq83",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "54a83991-36f8-42db-9b26-59642a7e2ba9"
+  ]
+}

@@ -1,0 +1,746 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "show_title": false,
+        "show_content": false,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "cdee95a2-1184-4b75-9ff5-6aabde4ddd83": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14463462735971__cdee95a2-1184-4b75-9ff5-6aabde4ddd83-16844451016f75c9ec-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/hairmnl-academy-desktop-banner.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-academy-mobile-banner.jpg",
+            "slide_image_url": "shopify://pages/hairmnl-academy-workshops-by-mud-studio-hairmnl-2023"
+          }
+        },
+        "template--14463462735971__cdee95a2-1184-4b75-9ff5-6aabde4ddd83-16844451016f75c9ec-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/hairmnl-studio-aftercare-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-studio-aftercare-mobile.jpg",
+            "slide_image_url": "shopify://products/hairmnl-products-gift-cards"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463462735971__cdee95a2-1184-4b75-9ff5-6aabde4ddd83-16844451016f75c9ec-0",
+        "template--14463462735971__cdee95a2-1184-4b75-9ff5-6aabde4ddd83-16844451016f75c9ec-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": false,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "section_static_banner_4CaTXA": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/hairmnl-academy-desktop-banner.jpg",
+        "banner_mobile": "shopify://shop_images/hairmnl-academy-mobile-banner.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "c45148da-c65c-4411-970b-15ed03342eb9": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "HairMNL Academy Workshops",
+        "text": "<h5>by MUD Studio x HairMNL</h5><p><strong>Hands-on Learning for Real World Success</strong></p><p>Invest in your craft. Join this community led by a team of experienced hair experts and learn techniques for exceptional hairstyling. From flawless hair cuts to beginner blowouts and many more, our workshops cover it all.</p><p>Classes for all skill levels are available. Join us on this exciting educational hair journey!</p><p></p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Sign Up",
+        "button_url": "https://docs.google.com/forms/d/1pq60I6dY6zKSIqsJjonydMONtmcvNDG6uTcZssyfdC0/viewform?ts=64b16c15&edit_requested=true",
+        "button_color": "btn--black",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "1ded42af-5a79-4ea6-9543-92b811af1d4e": {
+      "type": "section-gallery",
+      "blocks": {
+        "template--14463462735971__1ded42af-5a79-4ea6-9543-92b811af1d4e-16844481686c7c878f-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Academy_Workshops_by_MUD_Studio_2023_-_Pro_Classes_1.png",
+            "link": ""
+          }
+        },
+        "template--14463462735971__1ded42af-5a79-4ea6-9543-92b811af1d4e-16844481686c7c878f-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Academy_Workshops_by_MUD_Studio_2023_Pro_Classes_2.png",
+            "link": ""
+          }
+        },
+        "6a608fe7-9c16-4eb5-95d3-59695fd71a0d": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Academy_Workshops_by_MUD_Studio_2023_-_Personal_Classes.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14463462735971__1ded42af-5a79-4ea6-9543-92b811af1d4e-16844481686c7c878f-1",
+        "template--14463462735971__1ded42af-5a79-4ea6-9543-92b811af1d4e-16844481686c7c878f-2",
+        "6a608fe7-9c16-4eb5-95d3-59695fd71a0d"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "padding": true,
+        "scale_image": false,
+        "aspect_ratio": 0.9,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "cf6eeae3-b655-44d5-950d-4b02f73ee9b8": {
+      "type": "section-gallery",
+      "blocks": {
+        "e9b94f17-c9b0-4731-a100-de4d0b1e7f8d": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Academy_Workshops_by_MUD_Studio_2023_Pro_Classes_2.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "e9b94f17-c9b0-4731-a100-de4d0b1e7f8d"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "padding": true,
+        "scale_image": false,
+        "aspect_ratio": 0.9,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "7f54e419-5bb5-4626-8753-083fa2022116": {
+      "type": "section-gallery",
+      "blocks": {
+        "536cde3b-38f8-474f-93f6-74468606dfb3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Academy_Workshops_by_MUD_Studio_2023_-_Personal_Classes.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "536cde3b-38f8-474f-93f6-74468606dfb3"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "padding": true,
+        "scale_image": false,
+        "aspect_ratio": 0.9,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "section_product_6HXjAr": {
+      "type": "section-product",
+      "blocks": {
+        "title_URLYHe": {
+          "type": "title",
+          "settings": {
+            "product_show_vendor": false
+          }
+        },
+        "form_KhFCHe": {
+          "type": "form",
+          "settings": {
+            "variant_form": "button",
+            "show_quantity": false,
+            "show_remaining": false,
+            "enable_payment_button": true,
+            "subscriptions_enable_selectors": true,
+            "info_page": ""
+          }
+        },
+        "description_EN7YkY": {
+          "type": "description",
+          "settings": {
+            "read_more": true,
+            "style": "accordions",
+            "title_1": "Key Information",
+            "raw_content_1": "<p><strong>Educator</strong>: <a href=\"https://www.hairmnl.com/blogs/tousled-online-magazine/educator-spotlight-isabel-cortez-for-hairmnl-academy-workshops-by-mud-studio-x-hairmnl\"><span style=\"text-decoration:underline\">Isabel Cortez</span></a></p><p><strong>Schedules</strong><br/>10:00AM - 6:00PM<br/>Monday-Thursday</p><ol><li>April 15 to 18</li><li>June 17 to 20</li><li>August 19 to 22</li><li>October 21 to 24</li><li>November 25 to 27</li></ol><p><strong>Venue:</strong><br/>MUD Studio Manila, Shangri-la Plaza<br/>📍 <span style=\"text-decoration:underline\">https://maps.app.goo.gl/qc81Cz4DFbMdNFKL9</span></p><p><em>Rates exclude equipment to be used</em></p>",
+            "title_2": "",
+            "raw_content_2": "",
+            "title_3": "",
+            "raw_content_3": "",
+            "title_4": "",
+            "raw_content_4": "",
+            "title_5": "",
+            "raw_content_5": ""
+          }
+        }
+      },
+      "block_order": [
+        "title_URLYHe",
+        "form_KhFCHe",
+        "description_EN7YkY"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "home_product": "hairmnl-academy-pro-advanced-hair-styling-for-events",
+        "bg": "palette--light bg--neutral",
+        "image_width": "narrow",
+        "align": "left",
+        "enable_video_looping": false,
+        "zoom_enable": false,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_product_zKM8Eg": {
+      "type": "section-product",
+      "blocks": {
+        "title_mEMpTD": {
+          "type": "title",
+          "settings": {
+            "product_show_vendor": false
+          }
+        },
+        "form_8xHgAt": {
+          "type": "form",
+          "settings": {
+            "variant_form": "button",
+            "show_quantity": false,
+            "show_remaining": false,
+            "enable_payment_button": true,
+            "subscriptions_enable_selectors": true,
+            "info_page": ""
+          }
+        },
+        "description_MnKGpP": {
+          "type": "description",
+          "settings": {
+            "read_more": true,
+            "style": "accordions",
+            "title_1": "Key Information",
+            "raw_content_1": "<p><strong>Educator</strong>: <a href=\"https://www.hairmnl.com/blogs/tousled-online-magazine/educator-spotlight-nicole-santos-for-hairmnl-academy-workshops-by-mud-studio-x-hairmnl\">Nicole Santos</a></p><p><strong>Schedules </strong><br/>9:00AM-1:00PM<br/>Saturday-Sunday</p><ol><li>April 20-21 </li><li>June 22-23 </li><li>August 17-18 </li><li>October 19-20</li><li>November 16-17 </li></ol><p><strong>Venue: </strong>HairMNL Studio - Serendra<br/>2F Serendra Mall, BGC, Taguig (Above the old Conti's / Wang Fu)<br/>📍 <a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\"><span style=\"text-decoration:underline\">https://maps.app.goo.gl/JendSjjfJDWcriKK7</span></a></p><p><em>Rates exclude equipment to be used</em></p>",
+            "title_2": "",
+            "raw_content_2": "",
+            "title_3": "",
+            "raw_content_3": "",
+            "title_4": "",
+            "raw_content_4": "",
+            "title_5": "",
+            "raw_content_5": ""
+          }
+        }
+      },
+      "block_order": [
+        "title_mEMpTD",
+        "form_8xHgAt",
+        "description_MnKGpP"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "home_product": "hairmnl-academy-personal-blowouts",
+        "bg": "palette--light bg--neutral",
+        "image_width": "narrow",
+        "align": "left",
+        "enable_video_looping": false,
+        "zoom_enable": false,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_product_KBND4f": {
+      "type": "section-product",
+      "blocks": {
+        "title_xK7hDt": {
+          "type": "title",
+          "settings": {
+            "product_show_vendor": false
+          }
+        },
+        "form_kCH789": {
+          "type": "form",
+          "settings": {
+            "variant_form": "button",
+            "show_quantity": false,
+            "show_remaining": false,
+            "enable_payment_button": true,
+            "subscriptions_enable_selectors": true,
+            "info_page": ""
+          }
+        },
+        "description_aGgC68": {
+          "type": "description",
+          "settings": {
+            "read_more": true,
+            "style": "accordions",
+            "title_1": "Key Information",
+            "raw_content_1": "<p><strong>Educator</strong>: <a href=\"https://www.hairmnl.com/blogs/tousled-online-magazine/educator-spotlight-nicole-santos-for-hairmnl-academy-workshops-by-mud-studio-x-hairmnl\">Nicole Santos</a></p><p><strong>Schedules </strong><br/>9:00AM-1:00PM<br/>Saturday-Sunday</p><ol><li>April 27-28</li><li>June 29-30</li><li>August 24-25</li><li>October 26-27</li><li>November 23-24</li></ol><p><strong>Venue: </strong>HairMNL Studio - Serendra<br/>2F Serendra Mall, BGC, Taguig (Above the old Conti's / Wang Fu)<br/>📍 <a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\"><span style=\"text-decoration:underline\">https://maps.app.goo.gl/JendSjjfJDWcriKK7</span></a></p><p><em>Rates exclude equipment to be used</em></p>",
+            "title_2": "",
+            "raw_content_2": "",
+            "title_3": "",
+            "raw_content_3": "",
+            "title_4": "",
+            "raw_content_4": "",
+            "title_5": "",
+            "raw_content_5": ""
+          }
+        }
+      },
+      "block_order": [
+        "title_xK7hDt",
+        "form_kCH789",
+        "description_aGgC68"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "home_product": "hairmnl-academy-personal-flat-iron-and-curls",
+        "bg": "palette--light bg--neutral",
+        "image_width": "narrow",
+        "align": "left",
+        "enable_video_looping": false,
+        "zoom_enable": false,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "09360586-8eca-47c7-a1df-40dd9aad3984": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Classes for All Skill Levels",
+        "title_font_size": 30,
+        "collection": "hairmnl-academy",
+        "grid": 2,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "492b3395-364b-4953-885d-264e016a1774": {
+      "type": "section-double",
+      "blocks": {
+        "template--14463462735971__492b3395-364b-4953-885d-264e016a1774-1684451892278a7b06-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "HairMNL Academy Workshops 2023",
+            "title": "Learn directly from hair experts on how to prep and style hair.",
+            "text": "",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Sign Up",
+            "button_url": "https://docs.google.com/forms/d/1pq60I6dY6zKSIqsJjonydMONtmcvNDG6uTcZssyfdC0/viewform?ts=64b16c15&edit_requested=true",
+            "button_color": "btn--black",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "template--14463462735971__492b3395-364b-4953-885d-264e016a1774-1684451892278a7b06-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Academy_class_1.png",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://products/hairmnl-products-gift-cards",
+            "button_color": "btn--black",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463462735971__492b3395-364b-4953-885d-264e016a1774-1684451892278a7b06-0",
+        "template--14463462735971__492b3395-364b-4953-885d-264e016a1774-1684451892278a7b06-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_pixels_500",
+        "padding": true,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "a42abf84-bd09-4df8-b8e9-770f9971e928": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14476669091939__a42abf84-bd09-4df8-b8e9-770f9971e928-1688711417dc69dd9f-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Academy_Workshops_4.png",
+            "title": "Pro Classes",
+            "text": "<p>This service combines the best of both worlds, seamlessly blending expertly crafted highlights with personalized hair color, resulting in a radiant and dynamic look that reflects your individuality and style.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14476669091939__a42abf84-bd09-4df8-b8e9-770f9971e928-1688711417dc69dd9f-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Academy_Workshops_2.png",
+            "title": "Personal Classes",
+            "text": "<p>We offer a wide range of customizable hues and expert application techniques, allowing you to express your unique personality and revitalize your hair with a vibrant and head-turning color transformation.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14476669091939__a42abf84-bd09-4df8-b8e9-770f9971e928-1688711417dc69dd9f-2": {
+          "type": "text_block",
+          "disabled": true,
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Academy_Workshops_1.png",
+            "title": "Ammonia-Free Hair Color",
+            "text": "<p>We offer a gentle and nourishing solution for vibrant hair transformations, providing rich, long-lasting color without the harshness of ammonia, resulting in beautiful, healthy-looking locks.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "8a336397-7e2d-48d2-aeb9-e40111bb7ba7": {
+          "type": "text_block",
+          "disabled": true,
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Academy_Workshops_3.png",
+            "title": "Full Bleach",
+            "text": "<p>This is the ultimate solution for achieving bold and transformative hair looks by expertly lifting and lightening your hair to create a blank canvas for vibrant and creative color expressions that turn heads wherever you go.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14476669091939__a42abf84-bd09-4df8-b8e9-770f9971e928-1688711417dc69dd9f-0",
+        "template--14476669091939__a42abf84-bd09-4df8-b8e9-770f9971e928-1688711417dc69dd9f-1",
+        "template--14476669091939__a42abf84-bd09-4df8-b8e9-770f9971e928-1688711417dc69dd9f-2",
+        "8a336397-7e2d-48d2-aeb9-e40111bb7ba7"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "ae2b71d6-13c5-4717-b21c-d5048b7a9b31": {
+      "type": "section-map",
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "heading": "HairMNL Studio",
+        "address": "<p><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">Unit 204 The Vantage at Kapitolyo,</a></p><p><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">West Capitol Dr. cor. United St., Pasig City</a></p><p>Daily, 10am - 6pm</p>",
+        "button": "Directions",
+        "button_style": "btn",
+        "style": "light",
+        "zoom": 11,
+        "bg": "palette--light bg--neutral",
+        "api_key": "",
+        "map_address": "Unit 204 The Vantage at Kapitolyo,West Capitol Dr. cor. United St., Pasig City",
+        "image": "shopify://shop_images/HairMNL_Studio_Map_57a2f01d-9bc4-4fe1-97ee-662b6f65ca7b.png",
+        "enable_latlong": false,
+        "lat": "",
+        "long": ""
+      }
+    },
+    "8d9664ed-1f70-48cf-bdfc-7da3326b6245": {
+      "type": "section-double",
+      "blocks": {
+        "template--14476669091939__8d9664ed-1f70-48cf-bdfc-7da3326b6245-1688613804aa18e327-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Location",
+            "title": "HairMNL Studio",
+            "text": "<p><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">Unit 204 The Vantage at Kapitolyo, </a></p><p><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">West Capitol Dr. cor. United St., Pasig City</a></p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "https://g.page/TheVantageAtKapitolyo",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "template--14476669091939__8d9664ed-1f70-48cf-bdfc-7da3326b6245-1688613804aa18e327-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Studio_Map_57a2f01d-9bc4-4fe1-97ee-662b6f65ca7b.png",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "https://g.page/TheVantageAtKapitolyo",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "template--14476669091939__8d9664ed-1f70-48cf-bdfc-7da3326b6245-1688613804aa18e327-0",
+        "template--14476669091939__8d9664ed-1f70-48cf-bdfc-7da3326b6245-1688613804aa18e327-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "d1ec4eec-5b8e-447c-bdea-bd77d0029aaf": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14240176504931__d1ec4eec-5b8e-447c-bdea-bd77d0029aaf-1673422048cdf6cf02-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "tousled-online-magazine",
+            "blog_handle": "educator-spotlight-isabel-cortez-for-hairmnl-academy-workshops-by-mud-studio-x-hairmnl"
+          }
+        },
+        "8bce0c7e-30a0-4567-83c9-365eb3d85fa2": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "tousled-online-magazine",
+            "blog_handle": "educator-spotlight-nicole-santos-for-hairmnl-academy-workshops-by-mud-studio-x-hairmnl"
+          }
+        },
+        "efbcc8ad-c293-4596-b1eb-020de5387419": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "tousled-online-magazine",
+            "blog_handle": "educator-spotlight-valerie-corpuz-for-hairmnl-academy-workshops-by-mud-studio-x-hairmnl"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176504931__d1ec4eec-5b8e-447c-bdea-bd77d0029aaf-1673422048cdf6cf02-0",
+        "8bce0c7e-30a0-4567-83c9-365eb3d85fa2",
+        "efbcc8ad-c293-4596-b1eb-020de5387419"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Educator Spotlight",
+        "homepage_blog": "salon-services",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "10a9c2de-db00-4f4c-8342-8dc1c7380ee1": {
+      "type": "section-icons",
+      "blocks": {
+        "template--14489636601955__10a9c2de-db00-4f4c-8342-8dc1c7380ee1-icon_block-1": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-phone",
+            "icon_color": "#aaaaaa",
+            "title": "Contact Us",
+            "text": "<p>Email: academy@hairmnl.com<br/>Mobile: 09171801133 (Ycar)</p>"
+          }
+        },
+        "template--14489636601955__10a9c2de-db00-4f4c-8342-8dc1c7380ee1-icon_block-3": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-earth",
+            "icon_color": "#aaaaaa",
+            "title": "Location",
+            "text": "<p><strong>HairMNL Studio - The Vantage</strong></p><p><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio - The Vantage at Kapitolyo\">2F The Vantage, Kapitolyo, Pasig</a></p><p><strong>HairMNL Studio - Serendra</strong></p><p><a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" title=\"HairMNL Studio - Serendra\">2F Serendra Mall, BGC, Taguig</a></p><p>Open daily from 10am-6pm</p>"
+          }
+        },
+        "template--14489636601955__10a9c2de-db00-4f4c-8342-8dc1c7380ee1-icon_block-2": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-support-headphones",
+            "icon_color": "#aaaaaa",
+            "title": "FAQ",
+            "text": "<p><a href=\"https://creations-gdc.reamaze.com/kb/hairmnl-academy\" target=\"_blank\" title=\"https://creations-gdc.reamaze.com/kb/hairmnl-academy\">Frequently Asked Questions</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14489636601955__10a9c2de-db00-4f4c-8342-8dc1c7380ee1-icon_block-1",
+        "template--14489636601955__10a9c2de-db00-4f4c-8342-8dc1c7380ee1-icon_block-3",
+        "template--14489636601955__10a9c2de-db00-4f4c-8342-8dc1c7380ee1-icon_block-2"
+      ],
+      "settings": {
+        "title": "Reach Us",
+        "bg": "palette--light bg--neutral",
+        "icon_size": "icon--medium",
+        "icon_alignment": "icon--top",
+        "align_text": "text-center"
+      }
+    },
+    "a1727897-0d90-4388-a42c-80b4244b52a3": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "title": "Contact Us",
+        "text": "<p>Learn directly from hair experts on how to prep and style hair.</p><p>For inquiries, email academy@hairmnl.com or SMS/call 09171801133 (Ycar)</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Frequently Asked Questions",
+        "button_url": "https://creations-gdc.reamaze.com/kb/hairmnl-academy",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "453427f0-d35c-49c3-ad15-f3c9d5ae9a1a": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Professional Tools",
+        "title_font_size": 28,
+        "collection": "professional-hairdressing-tools-equipment",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "9770fa01-118e-4be4-bdff-21b9e99e0513": {
+      "type": "section-newsletter",
+      "disabled": true,
+      "settings": {
+        "title": "Newsletter",
+        "richtext": "<p>Join to get special offers, free giveaways, and once-in-a-lifetime deals.</p>",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "cdee95a2-1184-4b75-9ff5-6aabde4ddd83",
+    "section_static_banner_4CaTXA",
+    "c45148da-c65c-4411-970b-15ed03342eb9",
+    "1ded42af-5a79-4ea6-9543-92b811af1d4e",
+    "cf6eeae3-b655-44d5-950d-4b02f73ee9b8",
+    "7f54e419-5bb5-4626-8753-083fa2022116",
+    "section_product_6HXjAr",
+    "section_product_zKM8Eg",
+    "section_product_KBND4f",
+    "09360586-8eca-47c7-a1df-40dd9aad3984",
+    "492b3395-364b-4953-885d-264e016a1774",
+    "a42abf84-bd09-4df8-b8e9-770f9971e928",
+    "ae2b71d6-13c5-4717-b21c-d5048b7a9b31",
+    "8d9664ed-1f70-48cf-bdfc-7da3326b6245",
+    "d1ec4eec-5b8e-447c-bdea-bd77d0029aaf",
+    "10a9c2de-db00-4f4c-8342-8dc1c7380ee1",
+    "a1727897-0d90-4388-a42c-80b4244b52a3",
+    "453427f0-d35c-49c3-ad15-f3c9d5ae9a1a",
+    "9770fa01-118e-4be4-bdff-21b9e99e0513"
+  ]
+}

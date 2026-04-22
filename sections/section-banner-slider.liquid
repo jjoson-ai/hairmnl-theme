@@ -1,0 +1,105 @@
+<!-- /sections/banner-slider.liquid -->
+
+<div class="wrapper">
+  <div class="swiper" data-slide-delay="{{section.settings.slide_delay}}">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      {% for block in section.blocks limit: section.blocks.size %}
+        <div class="swiper-slide" data-swiper-autoplay="{{section.settings.slide_delay}}">
+          {% if block.settings.slide_image_url != blank %}
+            <a href="{{block.settings.slide_image_url}}">
+              <img class="banner-slide-img hidden-pocket lazyload" data-src="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="Banner Slide 1">
+              <img class="banner-slide-img hidden-lap-and-up lazyload" data-src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1">
+            </a>
+          {%- else -%}
+            <img class="banner-slide-img hidden-pocket lazyload" data-src="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="Banner Slide 1">
+            <img class="banner-slide-img hidden-lap-and-up lazyload" data-src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1">
+          {% endif %}
+
+        </div>
+      {% endfor %}
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Banner Slider",
+    "class": "banner-slider",
+    "max_blocks": 10,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_section",
+        "label": "Enable Section",
+        "default": false
+      }, {
+        "type": "range",
+        "id": "section_margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "label": "Section margin top",
+        "default": 20
+      }, {
+        "type": "range",
+        "id": "section_margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "label": "Section margin bottom",
+        "default": 20
+      }, {
+        "type": "range",
+        "id": "slide_delay",
+        "min": 1000,
+        "max": 5000,
+        "step": 1000,
+        "label": "Slide delay",
+        "info": "Slide delay uses milliseconds, so 1 second is equal to 1000",
+        "default": 3000
+      }
+    ],
+    "blocks": [
+      {
+        "type": "banner_slide",
+        "name": "Banner Slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "slide_image_desktop",
+            "label": "Banner Slide Image (Desktop)",
+            "info": "1400px width x 788px height recommended"
+          }, {
+            "type": "image_picker",
+            "id": "slide_image_mobile",
+            "label": "Banner Slide Image (Mobile)",
+            "info": "552px width x 502px height recommended"
+          }, {
+            "type": "url",
+            "id": "slide_image_url",
+            "label": "Banner Slide URL"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Banner Slider",
+        "category": "Sliders",
+        "blocks": [
+          {
+            "type": "banner_slide"
+          }, {
+            "type": "banner_slide"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

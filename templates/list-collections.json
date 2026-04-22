@@ -1,0 +1,565 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "c88839fb-5adc-4fb0-810a-5e9a61746b55": {
+      "type": "section-page",
+      "disabled": true,
+      "settings": {
+        "home_page_content": "",
+        "home_page_show_title": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "0c1ba922-02a7-4b4b-96ab-772c8c093682": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h1>Shop By Collection</h1>",
+        "text_size": 1,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "main": {
+      "type": "list-collections",
+      "blocks": {
+        "ed94f5da-63b5-4fbd-95ff-7c3fa0ff4fc9": {
+          "type": "collection",
+          "settings": {
+            "collection": "american-crew"
+          }
+        },
+        "dd47f918-86a5-4c51-97a3-177d57f4d3b4": {
+          "type": "collection",
+          "settings": {
+            "collection": "argila-amazonia"
+          }
+        },
+        "4d73fd2c-71e3-4f36-aa81-50ae5741f202": {
+          "type": "collection",
+          "settings": {
+            "collection": "bed-head-by-tigi"
+          }
+        },
+        "fc2bfd03-66db-4f1f-9065-e0b63b5b91c3": {
+          "type": "collection",
+          "settings": {
+            "collection": "brazilian-blowout"
+          }
+        },
+        "350051f4-fe92-4a28-bc5c-f1f773e129c3": {
+          "type": "collection",
+          "settings": {
+            "collection": "cnd"
+          }
+        },
+        "0398e059-698e-46a5-88ea-e28a31c1a3c5": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines"
+          }
+        },
+        "5d8f3d41-5fed-4c76-8df6-15b5b71854c0": {
+          "type": "collection",
+          "settings": {
+            "collection": "gamma-piu"
+          }
+        },
+        "7188ee23-9078-4e37-8a7d-f348e9b69539": {
+          "type": "collection",
+          "settings": {
+            "collection": "kerafill"
+          }
+        },
+        "b0286c26-45b4-47cb-b6fa-d3ceeb849bbb": {
+          "type": "collection",
+          "settings": {
+            "collection": "kerastase"
+          }
+        },
+        "818a805d-7ff9-4409-a86a-4ec7bb4d1efb": {
+          "type": "collection",
+          "settings": {
+            "collection": "le-couleur-professionnel"
+          }
+        },
+        "a9f157f8-510a-4b6e-9626-14a3f898ba8a": {
+          "type": "collection",
+          "settings": {
+            "collection": "lorealprofessionnel"
+          }
+        },
+        "88ddcfa6-8b58-412c-a3a9-f3e25607fc32": {
+          "type": "collection",
+          "settings": {
+            "collection": "marble-bath-products"
+          }
+        },
+        "f66e1cf1-3a8b-410f-84c2-d4f632437548": {
+          "type": "collection",
+          "settings": {
+            "collection": "olaplex"
+          }
+        },
+        "8e4f309b-2425-4497-af8b-01267ab571c6": {
+          "type": "collection",
+          "settings": {
+            "collection": "opi"
+          }
+        },
+        "3e10333b-9607-4694-9632-bbcc169cbc6d": {
+          "type": "collection",
+          "settings": {
+            "collection": "revlon-professional"
+          }
+        },
+        "0b58507b-4f03-4c1b-a335-4964ca3315b8": {
+          "type": "collection",
+          "settings": {
+            "collection": "schwarzkopf-professional"
+          }
+        },
+        "891055fe-397b-40b8-a7fe-9fc7c6b06ba6": {
+          "type": "collection",
+          "settings": {
+            "collection": "tigi"
+          }
+        },
+        "42f6465f-1227-4711-aa4b-cd3a7308219f": {
+          "type": "collection",
+          "settings": {
+            "collection": "tuft"
+          }
+        },
+        "65c03b4b-b3c9-46f9-89ab-f6bf65ed7740": {
+          "type": "collection",
+          "settings": {
+            "collection": "tymo"
+          }
+        },
+        "4d9df159-6f01-42a7-bd9c-bada9c661b23": {
+          "type": "collection",
+          "settings": {
+            "collection": "wella-professionals"
+          }
+        }
+      },
+      "block_order": [
+        "ed94f5da-63b5-4fbd-95ff-7c3fa0ff4fc9",
+        "dd47f918-86a5-4c51-97a3-177d57f4d3b4",
+        "4d73fd2c-71e3-4f36-aa81-50ae5741f202",
+        "fc2bfd03-66db-4f1f-9065-e0b63b5b91c3",
+        "350051f4-fe92-4a28-bc5c-f1f773e129c3",
+        "0398e059-698e-46a5-88ea-e28a31c1a3c5",
+        "5d8f3d41-5fed-4c76-8df6-15b5b71854c0",
+        "7188ee23-9078-4e37-8a7d-f348e9b69539",
+        "b0286c26-45b4-47cb-b6fa-d3ceeb849bbb",
+        "818a805d-7ff9-4409-a86a-4ec7bb4d1efb",
+        "a9f157f8-510a-4b6e-9626-14a3f898ba8a",
+        "88ddcfa6-8b58-412c-a3a9-f3e25607fc32",
+        "f66e1cf1-3a8b-410f-84c2-d4f632437548",
+        "8e4f309b-2425-4497-af8b-01267ab571c6",
+        "3e10333b-9607-4694-9632-bbcc169cbc6d",
+        "0b58507b-4f03-4c1b-a335-4964ca3315b8",
+        "891055fe-397b-40b8-a7fe-9fc7c6b06ba6",
+        "42f6465f-1227-4711-aa4b-cd3a7308219f",
+        "65c03b4b-b3c9-46f9-89ab-f6bf65ed7740",
+        "4d9df159-6f01-42a7-bd9c-bada9c661b23"
+      ],
+      "settings": {
+        "style": "product",
+        "aspect_ratio": 0.5,
+        "grid_collection": 4,
+        "grid": 4,
+        "rows": 1
+      }
+    },
+    "0fe82dfc-5e51-4101-81c4-8e4e6ed68a3a": {
+      "type": "section-collection-grid",
+      "blocks": {
+        "81b84ee0-e9ad-4426-a6ce-4804c196c7e7": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "for-frizz-control-sleek-hair",
+            "title": "Frizzy Hair",
+            "link_text": "",
+            "button_link": "shopify://collections/for-frizz-control-sleek-hair"
+          }
+        },
+        "402d8bd7-db5a-466c-8dce-534215b34d79": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "damaged-hair",
+            "title": "Damaged Hair",
+            "link_text": "",
+            "button_link": "shopify://collections/damaged-hair"
+          }
+        },
+        "c0f604fe-0efc-4617-adba-cee0a175e199": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "for-moisture-dry-hair",
+            "title": "Dry Hair",
+            "link_text": "",
+            "button_link": "shopify://collections/professional-hair-color"
+          }
+        },
+        "d9b542d1-9874-4b2a-ac0f-f868470bc3ba": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "curls-coils",
+            "title": "Curly Hair",
+            "link_text": "",
+            "button_link": "shopify://collections/curls-coils"
+          }
+        },
+        "5cf7133c-2d97-4d0e-9e04-5c3d07867373": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "products-for-colored-hair",
+            "title": "Colored Hair",
+            "link_text": "",
+            "button_link": "shopify://collections/products-for-colored-hair"
+          }
+        },
+        "d08a1aac-83a9-4248-a755-469bf9c78ea7": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "holiday-gifts-for-thinning-hair",
+            "title": "Thinning Hair",
+            "link_text": "",
+            "button_link": "shopify://collections/professional-hair-styling"
+          }
+        },
+        "60df9ca5-fe95-4418-9b95-80ec46249b76": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "stronger-longer-hair",
+            "title": "Weak Hair",
+            "link_text": "",
+            "button_link": "shopify://collections/professional-hairdressing-tools-equipment"
+          }
+        },
+        "2412aa5a-8588-4918-8cf0-d74fd621174d": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "for-men",
+            "title": "For Men",
+            "link_text": "",
+            "button_link": "shopify://collections/for-men"
+          }
+        },
+        "7c84da76-b848-4905-9cd7-b4f5ad2ec4ff": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "professional-nail-care",
+            "title": "Professional Nail Care",
+            "link_text": "",
+            "button_link": "shopify://collections/professional-nail-care"
+          }
+        },
+        "af3b195b-36bb-41b7-b188-7175eb99c4b2": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "purple-toning-products",
+            "title": "For Toning",
+            "link_text": "",
+            "button_link": "shopify://collections/purple-toning-products"
+          }
+        },
+        "036f62c0-1dd3-49a3-8474-f0ad433bd5a9": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "holiday-gifts-for-thinning-hair",
+            "title": "For Hairfall / Hairloss",
+            "link_text": "",
+            "button_link": "shopify://collections/holiday-gifts-for-thinning-hair"
+          }
+        },
+        "e9c75f6c-a9c6-4412-ba38-2fe107790a3c": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "products-for-dandruff-control",
+            "title": "For Dandruff Control",
+            "link_text": "",
+            "button_link": "shopify://collections/products-for-dandruff-control"
+          }
+        }
+      },
+      "block_order": [
+        "81b84ee0-e9ad-4426-a6ce-4804c196c7e7",
+        "402d8bd7-db5a-466c-8dce-534215b34d79",
+        "c0f604fe-0efc-4617-adba-cee0a175e199",
+        "d9b542d1-9874-4b2a-ac0f-f868470bc3ba",
+        "5cf7133c-2d97-4d0e-9e04-5c3d07867373",
+        "d08a1aac-83a9-4248-a755-469bf9c78ea7",
+        "60df9ca5-fe95-4418-9b95-80ec46249b76",
+        "2412aa5a-8588-4918-8cf0-d74fd621174d",
+        "7c84da76-b848-4905-9cd7-b4f5ad2ec4ff",
+        "af3b195b-36bb-41b7-b188-7175eb99c4b2",
+        "036f62c0-1dd3-49a3-8474-f0ad433bd5a9",
+        "e9c75f6c-a9c6-4412-ba38-2fe107790a3c"
+      ],
+      "settings": {
+        "title": "Browse by Hair Condition",
+        "grid": 4,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 15,
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7
+      }
+    },
+    "44351be4-10ff-4041-a646-b7eb1dbbac78": {
+      "type": "section-collection-grid",
+      "blocks": {
+        "1306f12b-0072-4295-acb8-220fac83ff1a": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "products-for-dandruff-control",
+            "title": "For Dandruff Control",
+            "link_text": "",
+            "button_link": "shopify://collections/products-for-dandruff-control"
+          }
+        },
+        "template--14240176373859__44351be4-10ff-4041-a646-b7eb1dbbac78-1671790169afdde596-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "holiday-gifts-for-thinning-hair",
+            "title": "For Hairfall / Hairloss",
+            "link_text": "",
+            "button_link": "shopify://collections/holiday-gifts-for-thinning-hair"
+          }
+        },
+        "template--14240176373859__44351be4-10ff-4041-a646-b7eb1dbbac78-1671790169afdde596-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "for-dry-scalps",
+            "title": "Dry Scalps",
+            "link_text": "",
+            "button_link": "shopify://collections/damaged-hair"
+          }
+        },
+        "b01c219e-87a7-4aaf-a0bb-46b9f9e1854a": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "for-oily-scalps",
+            "title": "Oily Scalps",
+            "link_text": "",
+            "button_link": "shopify://collections/for-frizz-control-sleek-hair"
+          }
+        },
+        "9605210c-cbe5-49ed-95a3-b5670528bb8e": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "for-sensitive-scalps",
+            "title": "Sensitive Scalps",
+            "link_text": "",
+            "button_link": "shopify://collections/products-for-colored-hair"
+          }
+        },
+        "d986476f-1b6c-4c1e-b26d-79cf66f8faef": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "curls-coils",
+            "title": "For Curls",
+            "link_text": "",
+            "button_link": "shopify://collections/curls-coils"
+          }
+        }
+      },
+      "block_order": [
+        "1306f12b-0072-4295-acb8-220fac83ff1a",
+        "template--14240176373859__44351be4-10ff-4041-a646-b7eb1dbbac78-1671790169afdde596-0",
+        "template--14240176373859__44351be4-10ff-4041-a646-b7eb1dbbac78-1671790169afdde596-1",
+        "b01c219e-87a7-4aaf-a0bb-46b9f9e1854a",
+        "9605210c-cbe5-49ed-95a3-b5670528bb8e",
+        "d986476f-1b6c-4c1e-b26d-79cf66f8faef"
+      ],
+      "settings": {
+        "title": "Browse by Scalp Condition",
+        "grid": 3,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 15,
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7
+      }
+    },
+    "fbaf8e81-b88c-410c-9bab-d2a190d1bb67": {
+      "type": "section-collection",
+      "settings": {
+        "title": "New Arrivals",
+        "title_font_size": 28,
+        "collection": "new-arrivals",
+        "grid": 4,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 52
+      }
+    },
+    "898c3b55-880b-4c1b-906c-c2cd13e6156b": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Value Superstars Under Php999",
+        "title_font_size": 28,
+        "collection": "products-under-1000",
+        "grid": 4,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 60,
+        "mobile_padding_top": 52,
+        "mobile_padding_bottom": 52
+      }
+    },
+    "44c2d431-b4fd-4a08-baec-7532abc12fbd": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "template--14240176373859__44c2d431-b4fd-4a08-baec-7532abc12fbd-1671790169a8fa6215-0": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-for-colored-hair",
+            "title": "Colored Hair"
+          }
+        },
+        "template--14240176373859__44c2d431-b4fd-4a08-baec-7532abc12fbd-1671790169a8fa6215-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-for-damaged-hair",
+            "title": "Damaged Hair"
+          }
+        },
+        "318b30b8-e662-4609-9a66-56d2d92aef57": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-for-thinning-hair",
+            "title": "Thinning Hair"
+          }
+        },
+        "0a641ac6-20e7-4722-b5b5-8bf770847f64": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-on-scalp-care",
+            "title": "Dandruff"
+          }
+        },
+        "1e5afec5-2a3b-46df-8e11-916843b6581b": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-for-frizzy-hair",
+            "title": "Frizz Control"
+          }
+        },
+        "de22e14f-3ad7-4eaa-873d-9388a1d3bf5e": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-for-curls",
+            "title": "Curls"
+          }
+        },
+        "b2c275ab-f74e-4734-9d68-4ad0424b03bf": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-for-dry-hair",
+            "title": "Dry Hair"
+          }
+        },
+        "80acf380-b172-42e0-8ac2-99ef3430f766": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-for-men",
+            "title": "For Men"
+          }
+        },
+        "94777540-c0ba-4d11-9e78-424eca6ad4d3": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-for-anti-aging",
+            "title": "Anti-Aging"
+          }
+        },
+        "1488a0f8-421e-49af-836b-7ed646ce4820": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-on-styling-products",
+            "title": "Styling"
+          }
+        },
+        "2463c4a9-185c-4055-aec0-ec75bc1bb1be": {
+          "type": "collection",
+          "settings": {
+            "collection": "special-offers-on-styling-tools",
+            "title": "Tools"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176373859__44c2d431-b4fd-4a08-baec-7532abc12fbd-1671790169a8fa6215-0",
+        "template--14240176373859__44c2d431-b4fd-4a08-baec-7532abc12fbd-1671790169a8fa6215-1",
+        "318b30b8-e662-4609-9a66-56d2d92aef57",
+        "0a641ac6-20e7-4722-b5b5-8bf770847f64",
+        "1e5afec5-2a3b-46df-8e11-916843b6581b",
+        "de22e14f-3ad7-4eaa-873d-9388a1d3bf5e",
+        "b2c275ab-f74e-4734-9d68-4ad0424b03bf",
+        "80acf380-b172-42e0-8ac2-99ef3430f766",
+        "94777540-c0ba-4d11-9e78-424eca6ad4d3",
+        "1488a0f8-421e-49af-836b-7ed646ce4820",
+        "2463c4a9-185c-4055-aec0-ec75bc1bb1be"
+      ],
+      "settings": {
+        "title": "Shop Special Offers",
+        "title_font_size": 28,
+        "grid": 4,
+        "limit": 8,
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "c88839fb-5adc-4fb0-810a-5e9a61746b55",
+    "0c1ba922-02a7-4b4b-96ab-772c8c093682",
+    "main",
+    "0fe82dfc-5e51-4101-81c4-8e4e6ed68a3a",
+    "44351be4-10ff-4041-a646-b7eb1dbbac78",
+    "fbaf8e81-b88c-410c-9bab-d2a190d1bb67",
+    "898c3b55-880b-4c1b-906c-c2cd13e6156b",
+    "44c2d431-b4fd-4a08-baec-7532abc12fbd"
+  ]
+}

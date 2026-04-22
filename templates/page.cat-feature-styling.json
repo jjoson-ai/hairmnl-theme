@@ -1,0 +1,760 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "show_title": false,
+        "show_content": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "f522c2fc-635e-4015-aaa1-3bc5117bdd75": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h1>Styling Solutions</h1>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "a6cf4d41-55a8-451f-b5a2-710c134b6c67": {
+      "type": "section-custom-content",
+      "blocks": {
+        "c53fc9fb-25ad-49d0-8668-b19d451f8ce3": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h1>Discover your signature style with <em>HairMNL</em></h1><p>ELEVATE YOUR LOOK WITH OUR CURATED SELECTION OF PRO-APPROVED STYLING ESSENTIALS.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#efe6e3"
+          }
+        },
+        "video_HA83YA": {
+          "type": "video",
+          "settings": {
+            "video_link_bg": "https://cdn.shopify.com/videos/c/o/v/5df0dcabd8e841bd8aa755d790a270b4.mp4",
+            "object_position": "center-center",
+            "bg_position": "center-center",
+            "video_link": "",
+            "popup_text": "",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        }
+      },
+      "block_order": [
+        "c53fc9fb-25ad-49d0-8668-b19d451f8ce3",
+        "video_HA83YA"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 8,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "02d58603-4894-4cee-87ce-825dd6441a3b": {
+      "type": "section-custom-content",
+      "blocks": {
+        "image_H6yFeq": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/styling-story.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        },
+        "78eafa14-7188-4bd0-b640-ee7ad3c707ff": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h2>We have tailored solutions for every style goal</h2><p>From the right prep products to must-have finishing touches, HairMNL’s expert recommendations are here to guide you. Whether you want an easy fix or a complete routine, we’ve got you covered</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "image_H6yFeq",
+        "78eafa14-7188-4bd0-b640-ee7ad3c707ff"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "0cf4c6b8-2608-4eaf-a964-5b88debe89d7": {
+      "type": "section-custom-content",
+      "blocks": {
+        "fce590f8-4cf1-4406-b1b6-f9c1819abb8d": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h2>What’s your desired look?</h2><p>Don’t worry, we’ve broken down styling into easy-to-follow routines for different hair goals. Each routine is carefully curated with HairMNL’s recommended products and tools to make sure you get the best results, every time.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        },
+        "ef7f3d89-8cb8-482b-85c5-514a532b4680": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "fce590f8-4cf1-4406-b1b6-f9c1819abb8d",
+        "ef7f3d89-8cb8-482b-85c5-514a532b4680"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 28,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 24
+      }
+    },
+    "section_html_VC6zcn": {
+      "type": "section-html",
+      "custom_css": [
+        ".video-section-container {display: flex; gap: 20px; flex-wrap: wrap; padding: 10px;}",
+        ".video-block {flex: 1 1 calc(33.33% - 20px); text-align: center; display: flex; flex-direction: column; padding: 0 5px;}",
+        ".video-block video {width: 100%; object-fit: cover;}",
+        ".video-button {margin-top: 8px; color: #333; font-size: 16px; text-transform: uppercase; text-decoration: none;}",
+        ".video-button:hover {text-decoration: underline;}",
+        "@media (max-width: 768px) {.video-section-container {flex-direction: column; gap: 10px; } .video-block {flex: 1 1 100%; padding: 0; }}"
+      ],
+      "settings": {
+        "html": "<div class=\"video-section-container\">\n\n  <!-- Added Volume Section -->\n  <div class=\"video-block\">\n    <a href=\"#volume\" class=\"video-button\">\n      <video autoplay muted loop width=\"100%\">\n        <source src=\"https://cdn.shopify.com/videos/c/o/v/f808ccc5da664698acd35343721fdd30.mp4\" type=\"video/mp4\">\n      </video>\n      <h5>Added Volume</h5>\n    </a>\n  </div>\n\n  <!-- Sleek & Polished Section -->\n  <div class=\"video-block\">\n    <a href=\"#polished\" class=\"video-button\">\n      <video autoplay muted loop width=\"100%\">\n        <source src=\"https://cdn.shopify.com/videos/c/o/v/9a4c53aeb62b4c5babab506ff8616a2d.mp4\" type=\"video/mp4\">\n      </video>\n      <h5>Sleek & Polished</h5>\n    </a>\n  </div>\n\n  <!-- Defined Curls Section -->\n  <div class=\"video-block\">\n    <a href=\"#curls\" class=\"video-button\">\n      <video autoplay muted loop width=\"100%\">\n        <source src=\"https://cdn.shopify.com/videos/c/o/v/1507777d2adb46ffb9754268e6ffa2f7.mp4\" type=\"video/mp4\">\n      </video>\n      <h5>Defined Curls</h5>\n    </a>\n  </div>\n\n</div>",
+        "full_width": false,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "5a5b4256-5694-4adc-94d6-b3a64db3cbe9": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Quick_easy_1150x900_502039bf-05f4-4316-abe8-0cfc36d85e4e.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "Added Volume",
+            "button_link": "#volume",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-3": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Extended_Results_Low_Maintenance_1150x900_0ac7beba-6ff5-4dcc-8899-421200927feb.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "Sleek & Polished",
+            "button_link": "#polished",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Luxury_pampering_1150x900_e369c898-c46a-41e3-bb50-c942441fde9c.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "Defined curls",
+            "button_link": "#curls",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-1",
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-3",
+        "template--14547012649059__5a5b4256-5694-4adc-94d6-b3a64db3cbe9-text_block-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 0.5,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "section_liquid_XcxtDB": {
+      "type": "section-liquid",
+      "settings": {
+        "custom_liquid": "<div id=\"volume\"></div>"
+      }
+    },
+    "section_columns_EHCepG": {
+      "type": "section-columns",
+      "blocks": {
+        "text_block_GYDFPm": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Styling_story_-_Instant_Volume.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "text_block_khhxKP": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Instant_volume.png",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": true,
+            "video_link": "https://youtu.be/2_CAvn8Uh7A?feature=shared"
+          }
+        },
+        "text_block_LAirjJ": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h5><em>STEP 1: PREP</em></h5><p>Apply the product onto dry hair. Focus on the roots, as this area benefits most from added lift and volume.</p><p><a href=\"/products/schwarzkopf-osis-dust-it-mattifying-volume-powder-10g\" target=\"_blank\" title=\"Schwarzkopf OSiS Dust It Mattifying Volume Powder 10g\"><strong>Try the Schwarzkopf OSiS Dust It Mattifying Volume Powder.</strong></a></p><h5><em>STEP 2: STYLE</em></h5><p>Use your fingers or a comb to distribute the product evenly, ensuring that it penetrates well at the base of your hair. This technique will help create a fuller appearance and enhance your overall hairstyle.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_block_GYDFPm",
+        "text_block_khhxKP",
+        "text_block_LAirjJ"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": true,
+        "aspect_ratio": 1.3,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "section_columns_BpHrKf": {
+      "type": "section-columns",
+      "blocks": {
+        "text_block_iPP8JQ": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Styling_story_-_Volume-boosting_routine_1.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "text_block_EzGExc": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Volume_boosting.png",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": true,
+            "video_link": "https://www.youtube.com/watch?v=pxAlNVwbBlw"
+          }
+        },
+        "text_block_WTNFar": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h5><em>STEP 1: PREP</em></h5><p>Start by applying a heat protector to shield your hair from damage.</p><p><a href=\"/products/davines-this-is-a-primer-for-natural-shine-anti-humidity-bodifying-effect\" target=\"_blank\" title=\"Davines This is a Primer: For Natural Shine, Anti-Humidity, Bodifying Effect\"><strong>Try the Davines This Is A Primer.</strong></a></p><h5><em>STEP 2: STYLE</em></h5><p>Use a volumizing hair tool like a hot air styler to lift your roots and add volume.</p><p><a href=\"/products/tymo-volumizer-hot-brush-hc-300\" target=\"_blank\" title=\"TYMO Volumizer Hot Brush HC-300\"><strong>Try the TYMO Volumizing Hot Brush.</strong></a></p><h5><em>STEP 3: FINISH</em></h5><p>Give the roots an extra lift with a texturing powder.</p><p><a href=\"/products/davines-this-is-a-texturizing-dust-for-instant-volume\" target=\"_blank\" title=\"Davines This is a Texturizing Dust: For Instant Volume\"><strong>Try the Davines This is a Texturizing Dust.</strong></a></p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_block_iPP8JQ",
+        "text_block_EzGExc",
+        "text_block_WTNFar"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": true,
+        "aspect_ratio": 1.3,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "section_liquid_k7B9fe": {
+      "type": "section-liquid",
+      "settings": {
+        "custom_liquid": "<div id=\"polished\"></div>"
+      }
+    },
+    "section_columns_KtARek": {
+      "type": "section-columns",
+      "blocks": {
+        "text_block_JwTWqY": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Styling_story_-_Instant_smoothness.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "text_block_Wj9wcd": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Instant_Smoothness.png",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": true,
+            "video_link": "https://www.youtube.com/watch?v=kQKpCkcx2B0"
+          }
+        },
+        "text_block_wVAMri": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h5><em>STEP 1: PREP</em></h5><p>Start with 2-3 pumps, depending on your hair type and length. Rub between your palms and finger pads to warm it.</p><p><a href=\"/products/davines-oi-oil-absolute-beautifying-potion-with-roucou-oil\" target=\"_blank\" title=\"Davines OI Oil: Absolute Beautifying Potion with Roucou Oil\"><strong>Try the Davines OI Oil.</strong></a></p><h5><em>STEP 2: STYLE</em></h5><p>Distribute evenly on the lengths and ends of dry or damp hair. Make sure to avoid roots and scalp.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_block_JwTWqY",
+        "text_block_Wj9wcd",
+        "text_block_wVAMri"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": true,
+        "aspect_ratio": 1.3,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "section_columns_A7wQgU": {
+      "type": "section-columns",
+      "blocks": {
+        "text_block_4qnAzL": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Styling_story_-_polished_routine.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "text_block_LNTqc7": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Sleek_routine.png",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": true,
+            "video_link": "https://youtu.be/adhbdAcXoX0?feature=shared"
+          }
+        },
+        "text_block_3LwECn": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h5><em>STEP 1: PREP</em></h5><p>Start by applying a heat protector to shield your hair from damage.</p><p><a href=\"/products/davines-oi-all-in-one-milk-multi-benefit-beauty-treatment-with-roucou-oil\" target=\"_blank\" title=\"Davines OI All in One Milk: Multi-Benefit Beauty Treatment\"><strong>Try the Davines OI All in One Milk.</strong></a></p><h5><em>STEP 2: STYLE</em></h5><p>Use a straightening brush, working section by section.</p><p><a href=\"/products/tymo-porta-portable-hair-straightening-brush-hc-120\" target=\"_blank\" title=\"TYMO Porta Portable Hair Straightening Brush HC-120\"><strong>Try the TYMO Porta Portable Hair Straightening Brush.</strong></a></p><h5><em>STEP 3: FINISH</em></h5><p>Smooth a hair oil over the ends to add shine and control flyaways.</p><p><a href=\"/products/davines-oi-oil-absolute-beautifying-potion-with-roucou-oil\" target=\"_blank\" title=\"Davines OI Oil: Absolute Beautifying Potion with Roucou Oil\"><strong>Try the Davines OI Oil.</strong></a></p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_block_4qnAzL",
+        "text_block_LNTqc7",
+        "text_block_3LwECn"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": true,
+        "aspect_ratio": 1.3,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "section_liquid_AAwDrT": {
+      "type": "section-liquid",
+      "settings": {
+        "custom_liquid": "<div id=\"curls\"></div>"
+      }
+    },
+    "section_columns_7drPBk": {
+      "type": "section-columns",
+      "blocks": {
+        "text_block_QHi8D9": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Styling_story_-_instant_curl_definition.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "text_block_tFzg4F": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Instant_curl.png",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": true,
+            "video_link": "https://www.youtube.com/watch?feature=shared&t=18&v=OQYR1AiEifE"
+          }
+        },
+        "text_block_9aTykh": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h5><em>STEP 1: PREP</em></h5><p>Apply a curl-defining cream to damp hair.</p><p><a href=\"/products/schwarzkopf-osis-bounty-balm-rich-curl-cream-150ml\" target=\"_blank\" title=\"Schwarzkopf OSiS Bounty Balm Rich Curl Cream 150ml\"><strong>Try the Schwarzkopf OSiS Bounty Balm Rich Curl Cream.</strong></a></p><h5><em>STEP 2: STYLE</em></h5><p>Scrunch gently to shape curls and let air-dry.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_block_QHi8D9",
+        "text_block_tFzg4F",
+        "text_block_9aTykh"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": true,
+        "aspect_ratio": 1.3,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "section_columns_MXyUzh": {
+      "type": "section-columns",
+      "blocks": {
+        "text_block_g66EHL": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Styling_story_-_Bouncy_curls_routine.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "text_block_QzRGtt": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Bouncy_curls.png",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": true,
+            "video_link": "https://www.youtube.com/watch?v=UxA-96PWmig"
+          }
+        },
+        "text_block_TGwFx4": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h5><em>STEP 1: PREP</em></h5><p>Apply a lightweight styling product with built-in heat protection on damp hair, focusing on mid-lengths to ends for hold and texture.</p><p><a href=\"/products/schwarzkopf-osis-grip-extreme-hold-mousse-200ml\" target=\"_blank\" title=\"Schwarzkopf OSiS Grip Extreme Hold Mousse 200ml\"><strong>Try the Schwarzkopf OSiS Grip Extreme Hold Mousse.</strong></a></p><h5><em>STEP 2: STYLE</em></h5><p>After drying your hair all the way, use a curling iron, wrapping small sections around the barrel. Hold for a few seconds and release for perfectly defined curls.</p><p><a href=\"/products/tymo-rota-ionic-rotating-curling-iron-hc-501\" target=\"_blank\" title=\"TYMO Rota Ionic Rotating Curling Iron HC-501\"><strong>Try the TYMO Rota Ionic Rotating Curling Iron.</strong></a></p><h5><em>STEP 3: FINISH</em></h5><p>Spray from a 30 cm distance in short bursts for long-lasting yet invisible, strong hold.</p><p><a href=\"/products/schwarzkopf-silhouette-super-hold-hairspray-500ml\" target=\"_blank\" title=\"Schwarzkopf Silhouette Super Hold Hairspray 500ml\"><strong>Try the Schwarzkopf Silhouette Super Hold Hairspray.</strong></a></p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_block_g66EHL",
+        "text_block_QzRGtt",
+        "text_block_TGwFx4"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": true,
+        "aspect_ratio": 1.3,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "93b6dccf-2dfa-4c82-8976-6dff11b2cf65": {
+      "type": "section-custom-content",
+      "blocks": {
+        "663591b3-a269-4f62-9317-a48a25423843": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h1>Your styling essentials, all in one place.</h1><p>EXPLORE HAIRMNL’S CURATED COLLECTION OF STYLING PRODUCTS AND TOOLS. FIND EVERYTHING YOU NEED TO CREATE YOUR PERFECT LOOK.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "https://m.me/hairmnlstudio",
+            "button_color": "btn--black",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "663591b3-a269-4f62-9317-a48a25423843"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 28,
+        "desktop_padding_bottom": 28,
+        "mobile_padding_top": 28,
+        "mobile_padding_bottom": 28
+      }
+    },
+    "section_collection_YPjng9": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Styling Products",
+        "title_font_size": 28,
+        "collection": "styling-products",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_Wg6FYV": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Hair Tools",
+        "title_font_size": 28,
+        "collection": "professional-hairdressing-tools-equipment",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "main",
+    "f522c2fc-635e-4015-aaa1-3bc5117bdd75",
+    "a6cf4d41-55a8-451f-b5a2-710c134b6c67",
+    "02d58603-4894-4cee-87ce-825dd6441a3b",
+    "0cf4c6b8-2608-4eaf-a964-5b88debe89d7",
+    "section_html_VC6zcn",
+    "5a5b4256-5694-4adc-94d6-b3a64db3cbe9",
+    "section_liquid_XcxtDB",
+    "section_columns_EHCepG",
+    "section_columns_BpHrKf",
+    "section_liquid_k7B9fe",
+    "section_columns_KtARek",
+    "section_columns_A7wQgU",
+    "section_liquid_AAwDrT",
+    "section_columns_7drPBk",
+    "section_columns_MXyUzh",
+    "93b6dccf-2dfa-4c82-8976-6dff11b2cf65",
+    "section_collection_YPjng9",
+    "section_collection_Wg6FYV"
+  ]
+}

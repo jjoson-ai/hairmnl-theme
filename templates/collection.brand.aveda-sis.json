@@ -1,0 +1,592 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "dbcce546-61a8-449d-8ee8-d83e3b7b80fd": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "banner_slide_4B3WPd": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/aveda-promo-sep-2025-banner-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/aveda-promo-sep-2025-banner-mobile.jpg",
+            "slide_image_url": "shopify://collections/aveda-special-offers"
+          }
+        },
+        "ad06cda9-8339-4af2-a663-d696d95f8294": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/aveda-invati-bundle-feb-2025-desktop-banner.jpg",
+            "slide_image_mobile": "shopify://shop_images/aveda-invati-bundle-feb-2025-mobile.jpg",
+            "slide_image_url": "shopify://collections/aveda-invati-ultra-advanced"
+          }
+        },
+        "template--14409599254627__dbcce546-61a8-449d-8ee8-d83e3b7b80fd-16709968404e7ce54d-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/aveda-pure-formance-bundle-feb-2025-desktop-banner.jpg",
+            "slide_image_mobile": "shopify://shop_images/aveda-pure-formance-bundle-feb-2025-moblie-banner.jpg",
+            "slide_image_url": "shopify://collections/aveda-for-men"
+          }
+        },
+        "a9cfd25a-c4d4-42f0-94d6-034dbc6698ed": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/aveda-botanical-repair-bundle-feb-2025-desktop-ban.jpg",
+            "slide_image_mobile": "shopify://shop_images/aveda-botanical-repair-bundle-feb-2025-moblie-bann.jpg",
+            "slide_image_url": "shopify://collections/aveda-botanical-repair"
+          }
+        },
+        "template--14409599254627__dbcce546-61a8-449d-8ee8-d83e3b7b80fd-16709968404e7ce54d-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/aveda-scalp-solutions-bundle-feb-2025-desktop-bann_1.jpg",
+            "slide_image_mobile": "shopify://shop_images/aveda-scalp-solutions-bundle-feb-2025-moblie-banne_1.jpg",
+            "slide_image_url": "shopify://collections/aveda-scalp-solutions"
+          }
+        },
+        "d8772a16-bf67-4d0c-bff3-a1b5d7b5b07b": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/aveda-be-curly-feb-2025-desktop-banner.jpg",
+            "slide_image_mobile": "shopify://shop_images/aveda-be-curly-feb-2025-moblie-banner.jpg",
+            "slide_image_url": "shopify://collections/aveda-be-curly-advanced"
+          }
+        }
+      },
+      "block_order": [
+        "banner_slide_4B3WPd",
+        "ad06cda9-8339-4af2-a663-d696d95f8294",
+        "template--14409599254627__dbcce546-61a8-449d-8ee8-d83e3b7b80fd-16709968404e7ce54d-0",
+        "a9cfd25a-c4d4-42f0-94d6-034dbc6698ed",
+        "template--14409599254627__dbcce546-61a8-449d-8ee8-d83e3b7b80fd-16709968404e7ce54d-1",
+        "d8772a16-bf67-4d0c-bff3-a1b5d7b5b07b"
+      ],
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "slide_delay": 3000
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 50,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/1111-2023-aveda_desktop.jpg",
+        "banner_mobile": "shopify://shop_images/1111-2023-aveda_mobile.jpg",
+        "banner_url": "shopify://collections/aveda-special-offers",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "c14d087f-82c3-4800-9273-bc14e208c059": {
+      "type": "menu-buttons",
+      "settings": {
+        "menu_list": "aveda-menu",
+        "space_top": 20,
+        "space_bottom": 10
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Special Offers",
+        "title_font_size": 17,
+        "collection": "aveda-special-offers",
+        "grid": 5,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 52,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "12391e34-5ee8-4dec-94f8-111439321ecd": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Invati Ultra advanced",
+        "title_font_size": 17,
+        "collection": "aveda-invati-ultra-advanced",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "14527f82-a0c6-4169-bac0-a8db5845f1c0": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Damaged Hair Collection",
+        "title_font_size": 17,
+        "collection": "aveda-damaged-hair-collection",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "45becb5e-869a-4c6e-b664-7519af06317e": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Scalp Solutions",
+        "title_font_size": 28,
+        "collection": "aveda-scalp-solutions",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "11702c0f-a5ef-4eb3-93eb-17a0b8b1cce7": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Styling",
+        "title_font_size": 17,
+        "collection": "aveda-styling",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "fa49e8d3-ed7e-4271-9ef2-522a61d9f348": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Travel Sizes",
+        "title_font_size": 17,
+        "collection": "aveda-travel-sizes",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "9f2907a8-c5e2-4f23-9cc3-031e4676258f": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Smooth Infusion",
+        "title_font_size": 17,
+        "collection": "aveda-smooth-infusion",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "f47843af-a419-411c-82ef-42abf9fb5c5e": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Nutriplenish",
+        "title_font_size": 28,
+        "collection": "aveda-nutriplenish",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "60d92722-3424-43dd-bcb1-bfe9941c918b": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Color Care Collection",
+        "title_font_size": 17,
+        "collection": "aveda-color-care-collection",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "98c47773-7f49-4c44-8dda-0a037ab1bc0b": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA For Men",
+        "title_font_size": 17,
+        "collection": "aveda-for-men",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "b933560c-8b8e-4fb5-bbef-02020ca35a97": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA x 3.1 Phillip Lim Limited-Edition Gifts",
+        "title_font_size": 17,
+        "collection": "aveda-x-3-1-phillip-lim-limited-edition-gift-sets",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "13153914-551f-46f6-b1e6-18c5d6abbcf3": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14422643572835__13153914-551f-46f6-b1e6-18c5d6abbcf3-1679456893c73eb78d-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "",
+            "blog_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14422643572835__13153914-551f-46f6-b1e6-18c5d6abbcf3-1679456893c73eb78d-0"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "b93d00d4-1882-4158-a28c-e8568471c9b9": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Rosemary Mint",
+        "title_font_size": 28,
+        "collection": "aveda-rosemary-mint",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "125afca6-b77e-44ab-97a7-9e1ebf5fb521": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Shampure",
+        "title_font_size": 28,
+        "collection": "aveda-shampure",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "3f591406-6704-45da-8a3d-cbd393e85254": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Be Curly Advanced",
+        "title_font_size": 17,
+        "collection": "aveda-be-curly-1",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "a3952045-e738-47ba-8598-a84749f72526": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "AVEDA Cherry Almond",
+        "title_font_size": 28,
+        "collection": "aveda-cherry-almond",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "3befb32f-de42-429f-b0e6-41d8dc0a6474": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Lifestyle",
+        "title_font_size": 17,
+        "collection": "aveda-lifestyle",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "7368fb1c-d117-4b61-8018-3c0e58124108": {
+      "type": "section-collection-grid",
+      "blocks": {
+        "template--14409599254627__7368fb1c-d117-4b61-8018-3c0e58124108-16709971888eec4932-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "aveda-hairloss-collection",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/aveda-hairloss-collection"
+          }
+        },
+        "template--14409599254627__7368fb1c-d117-4b61-8018-3c0e58124108-16709971888eec4932-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "aveda-color-care-collection",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/aveda-color-care-collection"
+          }
+        },
+        "ad422b5e-38d5-40db-ac60-23281423af49": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "aveda-damaged-hair-collection",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/aveda-damaged-hair-collection"
+          }
+        },
+        "31163213-c9ba-4a82-a0f8-79bcfabdde92": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "aveda-nutriplenish",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/aveda-dry-hair-collection"
+          }
+        },
+        "0e49e692-e8bc-49f5-936c-81f416674cc8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "aveda-straightening-collection",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/aveda-straightening-collection"
+          }
+        },
+        "0711b26b-9181-4b23-9883-cf0d98f0c66e": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "aveda-curly-hair-collection",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/aveda-curly-hair-collection"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409599254627__7368fb1c-d117-4b61-8018-3c0e58124108-16709971888eec4932-0",
+        "template--14409599254627__7368fb1c-d117-4b61-8018-3c0e58124108-16709971888eec4932-1",
+        "ad422b5e-38d5-40db-ac60-23281423af49",
+        "31163213-c9ba-4a82-a0f8-79bcfabdde92",
+        "0e49e692-e8bc-49f5-936c-81f416674cc8",
+        "0711b26b-9181-4b23-9883-cf0d98f0c66e"
+      ],
+      "settings": {
+        "title": "AVEDA Product Lines",
+        "grid": 3,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 0,
+        "overlay_color": "#fcfaf7",
+        "aspect_ratio": 1
+      }
+    },
+    "af960679-45b5-4d8d-8977-33a4a242f839": {
+      "type": "section-double",
+      "blocks": {
+        "template--14422643572835__af960679-45b5-4d8d-8977-33a4a242f839-16746403235224aea2-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "100% Vegan Now and Forever",
+            "title": "At Aveda, being vegan doesn't stop with a label.",
+            "text": "<p><strong>It’s a verb we can perform everyday.</strong></p><p>Through choosing to make our high-performance formulas using only naturally-derived* ingredients and cruelty-free methods, our vegan means taking action to best serve you, your hair and the planet. </p><p></p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "cb869788-ddf0-45d5-a992-b8fb320e2781": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": "w_UolYfMQEQ"
+          }
+        }
+      },
+      "block_order": [
+        "template--14422643572835__af960679-45b5-4d8d-8977-33a4a242f839-16746403235224aea2-0",
+        "cb869788-ddf0-45d5-a992-b8fb320e2781"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "7487ca9c-b0bd-4a67-ac7b-a33394f5f704": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14409661644899__7487ca9c-b0bd-4a67-ac7b-a33394f5f704-16710966953b747893-0": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<p><em>*Naturally derived on average, per ISO 16128 standard, from plant sources, non-petroleum mineral sources, and/or water.</em></p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661644899__7487ca9c-b0bd-4a67-ac7b-a33394f5f704-16710966953b747893-0"
+      ],
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "dbcce546-61a8-449d-8ee8-d83e3b7b80fd",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "c14d087f-82c3-4800-9273-bc14e208c059",
+    "1642442735c9bd4274",
+    "12391e34-5ee8-4dec-94f8-111439321ecd",
+    "14527f82-a0c6-4169-bac0-a8db5845f1c0",
+    "45becb5e-869a-4c6e-b664-7519af06317e",
+    "11702c0f-a5ef-4eb3-93eb-17a0b8b1cce7",
+    "fa49e8d3-ed7e-4271-9ef2-522a61d9f348",
+    "9f2907a8-c5e2-4f23-9cc3-031e4676258f",
+    "f47843af-a419-411c-82ef-42abf9fb5c5e",
+    "60d92722-3424-43dd-bcb1-bfe9941c918b",
+    "98c47773-7f49-4c44-8dda-0a037ab1bc0b",
+    "b933560c-8b8e-4fb5-bbef-02020ca35a97",
+    "13153914-551f-46f6-b1e6-18c5d6abbcf3",
+    "b93d00d4-1882-4158-a28c-e8568471c9b9",
+    "125afca6-b77e-44ab-97a7-9e1ebf5fb521",
+    "3f591406-6704-45da-8a3d-cbd393e85254",
+    "a3952045-e738-47ba-8598-a84749f72526",
+    "3befb32f-de42-429f-b0e6-41d8dc0a6474",
+    "7368fb1c-d117-4b61-8018-3c0e58124108",
+    "af960679-45b5-4d8d-8977-33a4a242f839",
+    "7487ca9c-b0bd-4a67-ac7b-a33394f5f704"
+  ]
+}

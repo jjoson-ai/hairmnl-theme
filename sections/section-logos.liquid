@@ -1,0 +1,174 @@
+<div class="homepage-logos {{ section.settings.bg }}{% if section.settings.title != blank %} homepage-logos--tall{% endif %}">
+  <div class="wrapper">
+
+    {% if section.settings.title != blank %}
+      <h2 class="home__subtitle">{{ section.settings.title | escape }}</h2>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="logo-bar">
+        {% for block in section.blocks %}
+          <div class="logo-bar__item" {{ block.shopify_attributes }}>
+            {% if block.settings.link != blank %}
+              <a href="{{ block.settings.link }}" class="logo-bar__link" target="_blank" rel="noopener">
+            {% endif %}
+            {% if block.settings.image != blank %}
+              {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+              <div class="lazy-image logo-bar__image" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%; background-image:  url('{{ block.settings.image | img_url: '1x1' }}');">
+                <img class="lazyload fade-in"
+                  alt="{{ block.settings.image.alt | strip_html | escape }}"
+                  src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                  data-src="{{ img_url }}"
+                  data-widths="[110, 160, 220, 320, 480]"
+                  data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                  data-parent-fit="cover"
+                  data-sizes="auto"/>
+              </div>
+              <noscript>
+                <img src="{{ block.settings.image | img_url: '160x' }}" alt="{{ block.settings.image.alt | default: block.settings.title | strip_html | escape }}"/>
+              </noscript>
+            {% else %}
+              {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+            {% if block.settings.link != blank %}
+              </a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size == 0 %}
+      <div class="text-center">{{ 'home_page.onboarding.no_content' | t }}</div>
+    {% endif %}
+
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} .homepage-logos {
+    padding-top: {{ section.settings.desktop_padding_top }}px;
+    padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+  }
+
+  @media screen and (max-width: 640px) {
+    #shopify-section-{{ section.id }} .homepage-logos {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Logo list",
+    "max_blocks": 20,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Logo list"
+      },
+      {
+        "type": "select",
+        "id": "bg",
+        "label": "Background color",
+        "default": "palette--light bg--neutral",
+        "options": [
+          { "value": "palette--light bg--neutral", "label": "Default"},
+          { "value": "palette--light bg--accent", "label": "Light"},
+          { "value": "palette--dark bg--invert", "label": "Dark"},
+          { "value": "palette--dark bg--invert--accent", "label": "Dark accent"}
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Section Padding(Desktop)"
+      }, {
+        "type": "range",
+        "id": "desktop_padding_top",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top(Desktop)",
+        "default": 16
+      }, {
+        "type": "range",
+        "id": "desktop_padding_bottom",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding bottom(Desktop)",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Section Padding(Mobile)"
+      }, {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding top(Mobile)",
+        "default": 96
+      }, {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding bottom(Mobile)",
+        "default": 96
+      }
+    ],
+    "blocks": [
+      {
+        "type": "logo_image",
+        "name": "Logo",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "640 x 640px .png recommended"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Logo list",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

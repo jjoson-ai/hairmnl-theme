@@ -1,0 +1,891 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": false,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "1642434745b9c6aafa": {
+      "type": "section-slideshow",
+      "blocks": {
+        "1642434744ca1d026a-0": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/kerastase-genesis",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "1642434744ca1d026a-1": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/loreal-professionnel-serioxyl-advanced",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "37f15030-0f98-4d36-8646-64e7a4bcc6a8": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/wella-professionals",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        }
+      },
+      "block_order": [
+        "1642434744ca1d026a-0",
+        "1642434744ca1d026a-1",
+        "37f15030-0f98-4d36-8646-64e7a4bcc6a8"
+      ],
+      "disabled": true,
+      "settings": {
+        "autoplay": false,
+        "autoplay_speed": 8,
+        "height": "use_image"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/hairmnl-olaplex-desktop.jpg",
+        "banner_mobile": "shopify://shop_images/hairmnl-olaplex-mobile.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "ebf40f3a-3fb6-44a8-86a0-13f229fb01ed": {
+      "type": "section-html",
+      "settings": {
+        "html": "<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"HOW DOES OLAPLEX WORK?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"All hair types (natural, curly, fine, straight, etc.) derive most of their integrity from healthy, properly paired, disulfide bonds. When hair is damaged via thermal, chemical, mechanical or environmental factors, these disulfide bonds are broken apart resulting in single sulfur hydrogen bonds. OLAPLEX works by pairing with the single sulfur hydrogen bond faster than the three oxygen molecules can.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"WHO IS OLAPLEX FOR?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"OLAPLEX is beneficial for all hair types. It helps to repair existing damage while protecting it from thermal, mechanical and environmental damage. OLAPLEX strengthens and prepares the hair for future services and is compatible with all manufacturers chemical service products.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"WHAT CAN I EXPECT WHEN I START USING OLAPLEX PRODUCTS?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"OLAPLEX begins repairing hair bonds upon first use. Users can protect their hair and expect visibly healthier, stronger, and more vibrant hair. OLAPLEX’s patented ingredient is designed to target the millions of disulfide bonds within hair that give it structure and stability.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"DO OLAPLEX PRODUCTS CONTAIN LILIAL?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"OLAPLEX does not currently manufacture or sell products containing lilial. Lilial was previously used in small amounts as a fragrance but was removed proactively from OLAPLEX products globally, even though the phase-out was initially limited to the EU.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"HOW LONG ARE OLAPLEX PRODUCTS SAFE TO USE AFTER OPENING?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"All OLAPLEX products contain a recommendation on the packaging for how long the product is safe and effective to use after opening, indicated by a period-after-opening symbol. Once this time period has passed, the product should be discarded and re-purchased for maximum safety and effectiveness.\"\n      }\n    }\n  ]\n}\n</script>",
+        "full_width": false,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "OLAPLEX",
+        "title": "",
+        "text": "<h1>The Original Bond Builder</h1><p>Repairs the broken bonds and rejuvenate hair. Increases tensile strength and restore elasticity. Protects the hair follicle from further breakage.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "The Original Bond Builder",
+            "text": "<p>Repairs the broken bonds and rejuvenate hair.</p><p>Increases tensile strength and restore elasticity.</p><p>Protects the hair follicle from further breakage.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "OLAPLEX works to repair broken bonds.",
+            "text": "<p>Our hair contains millions of disulfide bonds. These bonds give the hair its structure, strength and stability. When disulfide bonds are broken, it results in damage.</p><p>OLAPLEX restores damaged and compromised hair by repairing from the inside out with our patented single ingredient, <em>Bis-Aminopropyl Diglycol Dimaleate</em>.</p><p>Once all the bonds are intact and in alignment, you have healthy, beautiful, shiny, touchable hair.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e": {
+          "type": "text",
+          "settings": {
+            "title": "OLAPLEX repairs all types of hair damage.",
+            "text": "<p>Thermal factors - High levels of heat from curling irons, blow dryers, flat irons.</p><p>Chemical factors - Colors, perms, relaxers and keratin treatments.</p><p>Mechanical factors - Brushing, friction, tugging and pulling on wet hair.</p><p>Environmental factors - UV Damage from the sun, humidity, extreme hot/ cold weather conditions, pollution.</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0",
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2",
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e"
+      ],
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "7e1f3a68-740f-4a80-ab55-b7da23713fb3": {
+      "type": "section-custom-content",
+      "blocks": {
+        "88d08ef3-6732-45db-9a51-be3dac8f465a": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Olaplex_Range_1.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "88d08ef3-6732-45db-9a51-be3dac8f465a"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "image-height",
+        "padding": false,
+        "borders": false,
+        "wrapper": false,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "OLAPLEX Best Sellers",
+        "title_font_size": 28,
+        "collection": "olaplex",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "f43bf8af-1f75-4bce-af97-777a2f297efb": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Cleanse, Refresh & Hydrate",
+        "text": "<p>A comprehensive haircare aimed at improving the health and appearance of colored, bleached, damaged and prone to breakage hair.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "0ca872b5-7b10-4121-9e52-1fc2244db325": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "olaplex-cleanses-tones-hydrates",
+        "grid": 5,
+        "rows": 3,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "b766837f-095c-4f9e-88ba-b8d02bfc5676": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "fba46b64-67aa-4af2-9009-ac1d9b77cdfe": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "a-comprehensive-guide-on-olaplex-products-in-the-philippines"
+          }
+        },
+        "ae551cae-59ae-4515-9ee7-a78f71624895": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "olaplex_home_treatment_for_you_no4_no5_no6"
+          }
+        },
+        "6d9724ae-0918-4f11-bcc2-366bb9970463": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "this-is-what-you-need-to-know-about-olaplex-n-0"
+          }
+        },
+        "bd285643-a543-4ce5-a842-e6fcffb98bb0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "treatments-that-are-better-together-olaplex-n-3-and-n-8"
+          }
+        },
+        "a651ea2b-2b65-48ca-903d-6be78fe2791e": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "top-5-things-to-know-about-olaplex"
+          }
+        },
+        "4796100f-de70-477c-921e-b0336975b956": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "fba46b64-67aa-4af2-9009-ac1d9b77cdfe",
+        "ae551cae-59ae-4515-9ee7-a78f71624895",
+        "6d9724ae-0918-4f11-bcc2-366bb9970463",
+        "bd285643-a543-4ce5-a842-e6fcffb98bb0",
+        "a651ea2b-2b65-48ca-903d-6be78fe2791e",
+        "4796100f-de70-477c-921e-b0336975b956"
+      ],
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "7da8c7ea-2a82-4f39-8700-752c0f1aed63": {
+      "type": "section-double",
+      "blocks": {
+        "template--14463332974691__7da8c7ea-2a82-4f39-8700-752c0f1aed63-text-1": {
+          "type": "text",
+          "settings": {
+            "kicker": "Treatment",
+            "title": "Olaplex No.3: Hair Perfector",
+            "text": "<p><strong>At-home treatment to repair, protect and strengthen damaged hair.</strong></p><p>Global best-selling at-home treatment that reduces breakage and visibly strengthens hair, improving its look and feel. It will restore your hair's healthy appearance and texture by repairing damage and protecting hair structure.</p><p><strong>No.3 Hair Perfector</strong> works to help repair damage to all hair types, and it can also be applied once a week between chemical services to further lock-in the results of any given salon treatment.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "c0ad1b5d-ca5c-4924-8b97-66bb1e40d801": {
+          "type": "product",
+          "settings": {
+            "product": "olaplex-no-3",
+            "kicker": "",
+            "badge_string": "BEST SELLER",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff",
+            "bg_accent": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463332974691__7da8c7ea-2a82-4f39-8700-752c0f1aed63-text-1",
+        "c0ad1b5d-ca5c-4924-8b97-66bb1e40d801"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "21faf20e-53d3-42b2-ba92-dfbafc3ac98f": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14463332974691__21faf20e-53d3-42b2-ba92-dfbafc3ac98f-text-1": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<h4>★★★★★</h4><p><em>\"My hair is badly damaged after bleaching it to platinum blonde. I've used it just once and I already saw a big difference. Transaction was fast and I received the product in just 2 days. Will definitely buy again once available!\"</em></p><p><strong>~Aijie, HairMNL Customer</strong></p>",
+            "text_align": "text-left"
+          }
+        },
+        "0e375c02-dca7-4966-979e-191c84de423d": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<h4>★★★★★</h4><p><em>\"My hair got frizzy ever since I bleached my hair. But this really helped it go back to being smooth. Highly recommended!\"</em></p><p><strong>~Donn, HairMNL Customer</strong></p>",
+            "text_align": "text-left"
+          }
+        },
+        "ad2c5cd7-f3d1-4481-b772-90d31be13a88": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<h4>★★★★★</h4><p><em>\"I use this (& the No. 0) when I get color that requires several rounds of bleaching (e.g., ash gray, purple) -- I leave it on overnight (wearing a showercap as I sleep) & it significantly helps take my bleached strands from 'walis' texture to being more touchable & almost normal texture.\"</em></p><p><strong>~Nik, HairMNL Customer</strong></p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463332974691__21faf20e-53d3-42b2-ba92-dfbafc3ac98f-text-1",
+        "0e375c02-dca7-4966-979e-191c84de423d",
+        "ad2c5cd7-f3d1-4481-b772-90d31be13a88"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "9c74b5c2-223d-417b-b317-74e4fd31b7be": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Repair & Strengthen",
+        "text": "<p>A comprehensive system designed to repair and strengthen damaged hair. Collectively works to transform and rejuvenate hair, leaving it healthier, smoother, and more resilient.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "88e1c5c5-e5de-4765-9722-976baeca2996": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "olaplex-repair-strengthen",
+        "grid": 5,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "8f3a14a1-e48d-4d2d-932a-f09177f608ed": {
+      "type": "section-double",
+      "blocks": {
+        "template--14463332974691__8f3a14a1-e48d-4d2d-932a-f09177f608ed-text-1": {
+          "type": "text",
+          "settings": {
+            "kicker": "Heat Protector",
+            "title": "Olaplex No.9: Bond Protector Nourishing Hair Serum",
+            "text": "<p><strong>The anti-damage hair shield</strong></p><p>Seeing dull hair, tangles, or poor style retention? These could be signs of pollution or heat damage. Protect your hair from daily damage with this weightless, leave-in, silicone-free hair serum to shield hair from pollution for 48 hours and provide heat protection up to 450°F (232°C).</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "68a9ccf4-559e-476a-a64e-bc14e4678d7e": {
+          "type": "product",
+          "settings": {
+            "product": "olaplex-no-9-bond-protector-nourishing-hair-serum",
+            "kicker": "",
+            "badge_string": "",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff",
+            "bg_accent": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463332974691__8f3a14a1-e48d-4d2d-932a-f09177f608ed-text-1",
+        "68a9ccf4-559e-476a-a64e-bc14e4678d7e"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "75ecd5ba-c2f5-4455-9255-fcfe587fd94a": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Shine & Style",
+        "text": "<p>These Olaplex products not only aid in styling but also contribute to the overall health and appearance of the hair, making it more resilient, smooth, and shiny.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "0fc22c4d-a800-4ae4-99a6-51e97765fd3e": {
+      "type": "section-faq",
+      "blocks": {
+        "template--14463332974691__0fc22c4d-a800-4ae4-99a6-51e97765fd3e-text-1": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "What are bonds?",
+            "content": "<p>Disulfide bonds are in all three main parts of the hair:</p><p>• Cuticle • Cortex • Medulla (if the hair has one)</p><p>Most people think about how Keratin (proteins) make up the hair, forming polypeptide bonds (long chains) that are kept in alignment by hydrogen, salt and disulfide bonds.</p><p>The overall internal structure resembles ladders that have been twisted into a shape resembling a multi-fiber cable called microfibrils. These then combine to form macrofibrils which are contained in the cortex. These “cables” stay in alignment, resisting twisting and bending, as a result of disulfide bonds. They are held together in the cortex with a microcellular cement that also contains an abundance of disulfide bonds.</p><p>All hair contains millions of disulfide bonds which give the hair its structure, strength and stability. When all the bonds, especially the disulfide bonds, are intact and in alignment, you have healthy, beautiful, shiny, touchable hair. When disulfide bonds are broken, it results in damage.</p><p>Hair is damaged daily. Split ends, frizz, lackluster Color, thinning and dryness can all be related to broken disulfide bonds.</p><p>• Flat irons, curling irons, and blow dryers all cause damage due to the high levels of heat being used.</p><p>• Mechanical damage such as brushing, friction, tugging and pulling on wet hair affect the bonds.</p><p>• UV damage from the sun, humidity, extreme hot/cold weather conditioners, pollution, etc. all have a negative impact on the hair’s bonds.</p><p>• Chemical services can also cause damage. These services include Color, Lighteners, Perms, Relaxers, Keratin Treatments, and Japanese Straighteners/Thermal Reconditioners.</p><p>The chemicals and/or thermal tools being used react with the disulfide bonds breaking them and causing protein loss, leaving behind damaged hair. When damage occurs, it affects the disulfide bonds throughout the entire hair fiber.</p>"
+          }
+        },
+        "template--14463332974691__0fc22c4d-a800-4ae4-99a6-51e97765fd3e-text-2": {
+          "type": "text",
+          "settings": {
+            "title": "How does Olaplex work?",
+            "content": "<p>All hair types (natural, curly, fine, straight, etc.) derive most of their integrity from healthy, properly paired, disulfide bonds. When hair is damaged via thermal, chemical, mechanical or environmental factors, these disulfide bonds are broken apart resulting in single sulfur hydrogen bonds.</p><p>What happens after a disulfide bond breaks? There are two reactions that can take place. The first reaction is that the single sulfur hydrogen component pairs with a single oxygen molecule. This makes a perfect pair with no further damage taking place.</p><p>The second reaction is where damage occurs. A single sulfur hydrogen molecule will pair with three oxygen molecules creating S03, or what is known as a sulfate group. The protonated sulfate is known as Cysteic Acid. Cysteic acid then eats the protein out of the hair.</p><p>In the case of chemical services, OLAPLEX works by pairing with the single sulfur hydrogen bond faster than the three oxygen molecules can.</p>"
+          }
+        },
+        "template--14463332974691__0fc22c4d-a800-4ae4-99a6-51e97765fd3e-text-3": {
+          "type": "text",
+          "settings": {
+            "title": "Who is Olaplex for?",
+            "content": "<p>OLAPLEX is beneficial for all hair types. Whether your hair is Color Treated, Texture Treated, Virgin or anything in between, it is damaged on a daily basis. OLAPLEX assists in both preventing that damage and repairing it, returning the hair to a virgin like state. OLAPLEX is compatible with all manufacturers chemical service products. Your hair is an investment, and the only accessory that you never take off. In fact, it’s the only thing short of plastic surgery that can change the way you feel about yourself. Everyone wants beautiful, healthy, manageable shiny hair and with OLAPLEX, that can become a reality!</p><p>VIRGIN HAIR</p><p>OLAPLEX is great for virgin hair. It helps to repair existing damage while protecting it from thermal, mechanical and environmental damage. OLAPLEX strengthens and prepares the hair for future services.</p><p>COLOR TREATED HAIR</p><p>OLAPLEX can be mixed into all Colors and Lighteners to lessen the damage caused by these services. OLAPLEX is also used to maintain and repair Color Treated hair for healthy, beautiful looking hair.</p><p>CURLY AND NATURALLY TEXTURED HAIR</p><p>OLAPLEX rebuilds, restructures and improves moisture retention to curls that have lost their shape. OLAPLEX infuses curly hair with added moisture and condition for beautiful bouncy, resilient curls. Fragile curly hair has more lightening and chemical service options when OLAPLEX is used.</p><p>STRAIGHT HAIR</p><p>OLAPLEX will strengthen straight hair, improving manageability, movement and shine. The condition of the hair won’t be compromised using thermal styling options such as curling irons, hot rollers, etc. when the hair is treated prior with OLAPLEX.</p><p>TEXTURE SERVICES (PERMANENT WAVES, RELAXERS, THERMAL STRAIGHTENING/RECONDITIONING)</p><p>OLAPLEX helps to maintain the integrity of the hair before, during and after all texture services. Texture services last longer, and the hair stays in better condition when OLAPLEX is used correctly. Damage-free Color and Lightening Services performed after any texture service are possible when properly using them with OLAPLEX.</p><p>EXTENSIONS</p><p>OLAPLEX can be used on all 100% human hair extensions. Some extensions have a Keratin coating on them which can sometimes act as a barrier to the OLAPLEX Treatment. Extensions sometimes are treated with textile dyes which can lead to unpredictable results with Color or lightening. With any type of glued in or taped in extensions, we recommend keeping OLAPLEX off those areas to avoid possibly loosening them. When in doubt, always perform a Strand Test on extensions as results may vary.</p>"
+          }
+        },
+        "969c49d0-49c1-4d42-91e6-b1d258794220": {
+          "type": "text",
+          "settings": {
+            "title": "What can I expect when I start using Olaplex products?",
+            "content": "<p>OLAPLEX begins repairing hair bonds upon first use! OLAPLEX’s patented ingredient, Bis- Aminopropyl Diglycol Dimaleate, is designed to target the millions of disulfide bonds within our hair that give it structure and stability. These bonds can be damaged or broken in numerous ways, including heat from styling tools, color and chemical treatments, brushing, environmental factors and the natural aging process. Users of OLAPLEX can protect their hair and expect visibly healthier, stronger and more vibrant hair.</p>"
+          }
+        },
+        "2f16fcd6-9e41-4bdf-8d53-6a5c0789232e": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "Can you \"over bond\" hair with Olaplex products?",
+            "content": "<p>All OLAPLEX products are labeled with instructions for recommended use. It is not possible to “over bond” hair when using OLAPLEX products as instructed.</p><p>OLAPLEX’s products work to protect hair and relink existing bonds, not create new ones. As bonds constantly face damaging forces like heat from styling tools, color and chemical treatments, brushing, environmental factors and the natural aging process, they need to be strengthened on a continuous basis. Everyone has broken hair bonds to some extent! Even if you have healthy hair, you will have some level of damage that OLAPLEX would be able to repair.</p>"
+          }
+        },
+        "5009fac3-d361-4fc7-8f5c-41b1855b4a65": {
+          "type": "text",
+          "settings": {
+            "title": "Do Olaplex products contain lilial?",
+            "content": "<p>OLAPLEX does not currently manufacture or sell products containing lilial. In September 2020, the EU regulatory authority announced their intent to phase out Butylphenyl methylpropional commonly referred to as \"lilial\" by March of 2022. At OLAPLEX, lilial was previously used in small amounts as a fragrance in N°.3 Hair Perfector and N°.2 Bond Perfector. It is not an active or functional ingredient. While this phase out is limited to the EU, out of an abundance of caution, OLAPLEX proactively removed lilial from our N°.3 Hair Perfector and N°.2 Bond Perfector globally.</p><p>Read more detailed information <a href=\"https://www.today.com/health/skin-beauty/olaplex-infertility-experts-explain-rcna18353\" target=\"_blank\"><strong>here</strong></a>. Please be advised the experts are not affiliated with OLAPLEX.</p>"
+          }
+        },
+        "4e6a0ddc-19b6-47cc-9bea-b919564e7932": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "Do Olaplex contain protein?",
+            "content": "<p>OLAPLEX products <a href=\"/products/olaplex-no-4-bond-maintenance-shampoo\" target=\"_blank\" title=\"Olaplex No.4: Bond Maintenance Shampoo\">Olaplex No. 4</a> and <a href=\"/products/olaplex-no-6-bond-smoother\" target=\"_blank\" title=\"Olaplex No.6: Bond Smoother\">Olaplex No. 6</a> contain minimal hydrolyzed vegetable protein, also known as peptides, at very low levels (0.0025% in No. 4 and 0.000625% in No. 6). Our other products do not contain any forms of protein. Peptides such as those in OLAPLEX’s No. 4 and No. 6 are chemically very different than standard proteins, and therefore do not weigh down hair.</p><p>Keratin, for example, is a naturally occurring protein in hair and makes up about 95% of hair mass. Haircare products use fragments of keratin to supplement damaged hair keratin and restore the hair’s strength and shine.</p>"
+          }
+        },
+        "0a9a5eb4-d64f-4af8-9e0a-3849663bafd6": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "Why are some Olaplex products only approved for salon use? Are they stronger than the products for home use?",
+            "content": "<p>OLAPLEX offers professional grade products only approved for salon use, including our Nº.1 and Nº.2 products, which use OLAPLEX’s patented formula to rebuild broken bonds to strengthen the hair. In addition, OLAPLEX’S 4-In-1 is an in-salon mask that protects hair while adding intense moisture, shine, smoothness and body.</p><p>OLAPLEX’s salon-grade products are highly concentrated in order to provide the most optimal results. However, this high concentration means that these products should be handled and applied by expert stylists who have knowledge of the science behind OLAPLEX and understand the unique needs of every individual’s hair. Olaplex offers and encourages professional stylists to become certified in use of the Olaplex professional products. In order to be certified, a stylist must study a product knowledge training manual and pass a test.</p>"
+          }
+        },
+        "83ab04ad-d500-4a74-a93c-d4a2c69620dc": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "Is Olaplex safe to use in coordination with other non-Olaplex hair products?",
+            "content": "<p>OLAPLEX takes the health and safety of our customers very seriously, and our products are formulated to be safe and effective when used as instructed. Although we cannot speak to the safety and effectiveness of non-OLAPLEX products, we recommend individuals consult their hair stylist for advice on creating a hair care regimen suitable for achieving their desired results, which may include products from different brands.</p>"
+          }
+        },
+        "8594899e-2f1c-4c7e-ac0a-ede8aa36156a": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "Can I use Olaplex on my extensions?",
+            "content": "<p>OLAPLEX products work on extensions that are 100% human hair. The bonds in human hair used for extensions can be damaged just like the hair on our heads, and OLAPLEX’s products are scientifically formulated to penetrate and repair hair from the inside out by rebuilding broken bonds at the molecular level.</p><p>When treating extensions with any products, OLAPLEX or otherwise, we recommend testing the product on a few strands before using it on the full set of extensions. Companies can label extensions as being 100% human hair as long as they contain 80% human hair or more, which can prevent OLAPLEX from being fully effective.</p>"
+          }
+        },
+        "b5ebcf41-2017-4acf-b215-0029da260f52": {
+          "type": "text",
+          "settings": {
+            "title": "How long are Olaplex products safe to use after opening?",
+            "content": "<p>All OLAPLEX products contain a recommendation on the packaging for how long the product is safe and effective to use after opening. The period-after opening symbol looks like a pot with an open lid and has a number inside or underneath (6M, 12M, 24M or longer).</p><p>Once this time period has passed, the product should be discarded and re-purchased for maximum safety and effectiveness.</p><p></p>"
+          }
+        },
+        "b4fed7ca-20da-44f4-a678-fc61e8230001": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "Should Olaplex products be stored in any specific way?",
+            "content": "<p>Yes. Like most cosmetic products, OLAPLEX should be stored in a cool, dry place away from high temperatures or direct sunlight. Conditions such as prolonged high moisture or heat have the potential to chemically alter the product, causing a negative formulaic reaction.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463332974691__0fc22c4d-a800-4ae4-99a6-51e97765fd3e-text-1",
+        "template--14463332974691__0fc22c4d-a800-4ae4-99a6-51e97765fd3e-text-2",
+        "template--14463332974691__0fc22c4d-a800-4ae4-99a6-51e97765fd3e-text-3",
+        "969c49d0-49c1-4d42-91e6-b1d258794220",
+        "2f16fcd6-9e41-4bdf-8d53-6a5c0789232e",
+        "5009fac3-d361-4fc7-8f5c-41b1855b4a65",
+        "4e6a0ddc-19b6-47cc-9bea-b919564e7932",
+        "0a9a5eb4-d64f-4af8-9e0a-3849663bafd6",
+        "83ab04ad-d500-4a74-a93c-d4a2c69620dc",
+        "8594899e-2f1c-4c7e-ac0a-ede8aa36156a",
+        "b5ebcf41-2017-4acf-b215-0029da260f52",
+        "b4fed7ca-20da-44f4-a678-fc61e8230001"
+      ],
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "90292dff-d5ee-4957-992b-4aeefe952082": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "olaplex-styling",
+        "grid": 5,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "04f87bb4-18dd-4b84-9e11-89d72ae8e0d2": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "93639822-27eb-40a1-b239-ccec6a21b30f": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "olaplex_home_treatment_for_you_no4_no5_no6"
+          }
+        },
+        "template--14410121379939__04f87bb4-18dd-4b84-9e11-89d72ae8e0d2-16753282058e1dd242-0": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "this-is-what-you-need-to-know-about-olaplex-n-0"
+          }
+        },
+        "603b3cd2-4592-4eb5-8a62-1747045f113a": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "olaplex-n-3-our-hair-hero"
+          }
+        },
+        "b0e56eb4-ded9-4e01-9b68-efec01081725": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "all-about-olaplex-no-7-how-it-works"
+          }
+        },
+        "3898b307-0fa4-4e69-b7b8-9fff3420eb96": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "why-curls-really-love-olaplex"
+          }
+        },
+        "27c2049f-1d0c-476b-98f0-f9e4bae65338": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "top-5-things-to-know-about-olaplex"
+          }
+        },
+        "2bbc556f-10b9-4e3f-ad66-ac0dd54b8036": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "attention-moisture-lovers-experience-the-award-winning-olaplex-n-8-bond-intense-moisture-mask"
+          }
+        },
+        "d44a0f34-3595-4382-a0aa-ef72ec5fd02f": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "olaplex-routine-for-short-coarse-dry-hair"
+          }
+        }
+      },
+      "block_order": [
+        "93639822-27eb-40a1-b239-ccec6a21b30f",
+        "template--14410121379939__04f87bb4-18dd-4b84-9e11-89d72ae8e0d2-16753282058e1dd242-0",
+        "603b3cd2-4592-4eb5-8a62-1747045f113a",
+        "b0e56eb4-ded9-4e01-9b68-efec01081725",
+        "3898b307-0fa4-4e69-b7b8-9fff3420eb96",
+        "27c2049f-1d0c-476b-98f0-f9e4bae65338",
+        "2bbc556f-10b9-4e3f-ad66-ac0dd54b8036",
+        "d44a0f34-3595-4382-a0aa-ef72ec5fd02f"
+      ],
+      "settings": {
+        "title": "Featuring OLAPLEX",
+        "homepage_blog": "",
+        "homepage_blog_count": 5,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": false,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95": {
+      "type": "section-double",
+      "blocks": {
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "The Complete Hair Repair System",
+            "title": "OLAPLEX",
+            "text": "<p>The only patented system to noticeably repair extreme damage—turn dry, brittle hair into soft, shiny, and more resilient hair.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "baededb6-6189-4c89-9f7d-b93ed4d5b9b9": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0",
+        "baededb6-6189-4c89-9f7d-b93ed4d5b9b9"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "image-height",
+        "padding": true,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "section_collection_VkGA88": {
+      "type": "section-collection",
+      "name": "Featured collection",
+      "settings": {
+        "title": "You May Also Like",
+        "title_font_size": 28,
+        "collection": "k18",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "55e0fa42-56e9-4022-b56a-1547541d0d28": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "1642434745b9c6aafa",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "ebf40f3a-3fb6-44a8-86a0-13f229fb01ed",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "7e1f3a68-740f-4a80-ab55-b7da23713fb3",
+    "1642442735c9bd4274",
+    "f43bf8af-1f75-4bce-af97-777a2f297efb",
+    "0ca872b5-7b10-4121-9e52-1fc2244db325",
+    "b766837f-095c-4f9e-88ba-b8d02bfc5676",
+    "7da8c7ea-2a82-4f39-8700-752c0f1aed63",
+    "21faf20e-53d3-42b2-ba92-dfbafc3ac98f",
+    "9c74b5c2-223d-417b-b317-74e4fd31b7be",
+    "88e1c5c5-e5de-4765-9722-976baeca2996",
+    "8f3a14a1-e48d-4d2d-932a-f09177f608ed",
+    "75ecd5ba-c2f5-4455-9255-fcfe587fd94a",
+    "90292dff-d5ee-4957-992b-4aeefe952082",
+    "0fc22c4d-a800-4ae4-99a6-51e97765fd3e",
+    "04f87bb4-18dd-4b84-9e11-89d72ae8e0d2",
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95",
+    "section_collection_VkGA88",
+    "55e0fa42-56e9-4022-b56a-1547541d0d28"
+  ]
+}

@@ -1,0 +1,181 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "60123d8a-fe32-4887-b1e6-46b3cdfee4c9": {
+      "type": "tousled-header",
+      "settings": {
+        "tousled_menu_linklist": "tousled-v2",
+        "tousled_logo_mobile": "shopify://shop_images/Tousled_Logo_Stacked.png",
+        "tousled_logo_max_limit": 100,
+        "tousled_logo_mobile_menu": "shopify://shop_images/Tousled_Horizontal_300X100_Opt2-01_2696dd41-bec8-449d-8077-94ffa86eb2c0.png",
+        "tousled_logo_max_limit_menu": 100,
+        "header_bg": "#e7d8c3",
+        "underline": "#333333",
+        "underline_current": true
+      }
+    },
+    "main": {
+      "type": "blog",
+      "disabled": true,
+      "settings": {
+        "layout": "grid",
+        "blog_show_meta": true,
+        "overlay_opacity": 30,
+        "overlay_color": "#000000",
+        "image_height": "use_screen_one_third",
+        "text_color": "text--white",
+        "tags": false
+      }
+    },
+    "f14eaaac-4f75-4a5f-99e7-bd49fdb31a0a": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 0,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/tousled-rebonding-101-desktop.jpg",
+        "banner_mobile": "shopify://shop_images/tousled-rebonding-101.jpg",
+        "banner_url": "shopify://blogs/hair-education/rebonding-101-everything-you-need-to-know-about-rebonding-your-hair",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 76
+      }
+    },
+    "1642402147c9edb11a": {
+      "type": "section-slideshow",
+      "blocks": {
+        "efff45c3-b6be-4b6c-bf4d-2d95e3931ba8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/tousled-online-magazine-desktop.jpg",
+            "mobile_image": "shopify://shop_images/tousled-online-magazine.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "675adfab-456c-4ccb-8497-59c09946e057": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/tousled-rebonding-101-desktop.jpg",
+            "mobile_image": "shopify://shop_images/tousled-rebonding-101.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://blogs/hair-education/rebonding-101-everything-you-need-to-know-about-rebonding-your-hair",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "4be9c022-1630-4ccf-855c-84b732d21d72": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/tousled-sulfate-free-shampoo-desktop.jpg",
+            "mobile_image": "shopify://shop_images/tousled-sulfate-free-shampoo.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://blogs/product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines-2023",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        }
+      },
+      "block_order": [
+        "efff45c3-b6be-4b6c-bf4d-2d95e3931ba8",
+        "675adfab-456c-4ccb-8497-59c09946e057",
+        "4be9c022-1630-4ccf-855c-84b732d21d72"
+      ],
+      "disabled": true,
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": 8,
+        "height": "use_image"
+      }
+    },
+    "c3f4bd27-bb66-42cf-a552-f2ef2cbc1287": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h1>Tousled Online Magazine</h1><p>Get ready to transform your hair game with our <strong>Hair Tutorials</strong>.</p><p>Step-by-step guides and video demonstrations will help you achieve salon-worthy styles from the comfort of your home.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "40bb9f1b-aa97-4ec0-89ed-239103119919": {
+      "type": "section-blog-category",
+      "settings": {
+        "title": "",
+        "homepage_blog": "hair-education",
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "excerpt_alignment": "left",
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "16444988664b5dd7df": {
+      "type": "section-newsletter",
+      "settings": {
+        "title": "Sign up to our mailing list!",
+        "richtext": "<p>Be part of our hair community.<br/>Get regular pro tips, trends, exclusives, and more.</p>",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "60123d8a-fe32-4887-b1e6-46b3cdfee4c9",
+    "main",
+    "f14eaaac-4f75-4a5f-99e7-bd49fdb31a0a",
+    "1642402147c9edb11a",
+    "c3f4bd27-bb66-42cf-a552-f2ef2cbc1287",
+    "40bb9f1b-aa97-4ec0-89ed-239103119919",
+    "16444988664b5dd7df"
+  ]
+}

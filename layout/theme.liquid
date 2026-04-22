@@ -1,0 +1,456 @@
+{% capture bsscommerce_login_require_template %}{% include 'bsscommerce_login_require' %}{% endcapture %}{% unless bsscommerce_login_require_template contains "Liquid error" %}{{ bsscommerce_login_require_template }}{% endunless %}
+
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+
+  {%- assign title_override = false -%}
+  {%- assign default_description = false -%}
+    <head>{{ 'bss-hide-variant.css' | asset_url | stylesheet_tag }}
+{{ 'tiny.content.min.css' | asset_url | stylesheet_tag }}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_secondary }}">
+    <meta name='Petal-Search-site-verification' content='4f7006225d'/>
+    {% render 'canonical' %}
+
+      <!-- Hotjar Tracking Code for https://www.hairmnl.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3697619,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+    <!-- ======================= Pipeline Theme V6.1.3 ========================= -->
+
+    <link
+      rel="preconnect"
+      href="https://cdn.shopify.com"
+      crossorigin>
+    <link
+      rel="preconnect"
+      href="https://fonts.shopify.com"
+      crossorigin>
+    <link
+      rel="preconnect"
+      href="https://monorail-edge.shopifysvc.com"
+      crossorigin>
+
+
+    <link
+      rel="preload"
+      href="{{ 'lazysizes.js' | asset_url }}"
+      as="script">
+    <link
+      rel="preload"
+      href="{{ 'vendor.js' | asset_url }}"
+      as="script">
+    <link
+      rel="preload"
+      href="{{ 'theme.js' | asset_url }}"
+      as="script">
+    <link rel="preload"
+      href="{{ 'theme.css' | asset_url }}"
+      as="style">
+    {% capture bsscommerce_login_require_template %}
+      {% include 'bsscommerce_login_require' %}{% endcapture %}
+    {% unless bsscommerce_login_require_template contains "Liquid error" %}
+      {{ bsscommerce_login_require_template }}{% endunless %}
+
+
+    {{ 'tiny.content.min.css' | asset_url | stylesheet_tag }}
+    
+    {% include 'pro-blogger-section-wrapper' %}
+    <link rel="stylesheet" href="https://obscure-escarpment-2240.herokuapp.com/stylesheets/bcpo-front.css">
+    <script>
+      var bcpo_product = {{ product | json }};{% if product.metafields.bcpo.bcpo_data %}
+        var bcpo_data = {{ product.metafields.bcpo.bcpo_data }};{% endif %}{% if shop.metafields.bcpo.bcpo_settings %}
+        var bcpo_settings = {{ shop.metafields.bcpo.bcpo_settings }};{% endif %}var inventory_quantity = [];{% for v in product.variants %}inventory_quantity.push({{v.inventory_quantity}});{% endfor %}if (bcpo_product) {
+        for (var i = 0; i < bcpo_product.variants.length; i += 1) {
+          bcpo_product.variants[i].inventory_quantity = inventory_quantity[i];
+        }
+      }
+      window.bcpo = window.bcpo || {};
+      bcpo.cart = {{cart | json}};
+      bcpo.ogFormData = FormData;
+    </script>
+
+    {% include 'shop-sheriff-pwa' %}
+    {% include 'shop-sheriff-amp' %}
+
+    <script src="//www.searchanise.com/widgets/shopify/init.js?a=7K0f1C4k5q"></script>
+
+    {% include 'limespot' %}
+
+    {% render 'treedify' %}
+    
+
+    {% if product.featured_media.preview_image %}
+      {%- assign media = product.featured_media -%}
+      <link
+        rel="preload"
+        as="image"
+        href="{{ media.preview_image | img_url: '550' }}"
+        srcset="{%- if media.preview_image.width >= 550 -%}
+        {{ media.preview_image | img_url: '550x' }} 550w,{%- endif -%}
+      {%- if media.preview_image.width >= 1100 -%}
+        {{ media.preview_image | img_url: '1100x' }} 1100w,{%- endif -%}
+      {%- if media.preview_image.width >= 1680 -%}
+        {{ media.preview_image | img_url: '1680x' }} 1680w,{%- endif -%}
+      {%- if media.preview_image.width >= 2048 -%}
+        {{ media.preview_image | img_url: '2048x' }} 2048w,{%- endif -%}
+      {%- if media.preview_image.width >= 4096 -%}
+        {{ media.preview_image | img_url: '4096x' }} 4096w{%- endif -%}"
+      sizes="(min-width: 768px), 50vw, 100vw">
+    {% endif %}
+
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="shortcut icon"
+        href="{{ settings.favicon | img_url: '32x32' }}"
+        type="image/png">
+    {%- else -%}
+      <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    {%- endif -%}
+
+    <!-- Title and description ================================================ -->
+    {% capture seo_title %}
+      {%- assign title_content = page_title -%}
+      {% if title_override %}
+        {%- assign title_content = title_override -%}
+      {% endif %}
+      {{ title_content }}
+      {%- if current_tags -%}
+        {%- assign meta_tags = current_tags | join: ', ' -%}
+        &ndash;
+        {{ 'general.meta.tags' | t: tags: meta_tags }}
+      {%- endif -%}
+      {%- if current_page != 1 -%}
+        &ndash;
+        {{ 'general.meta.page' | t: page: current_page }}
+      {%- endif -%}
+      {%- assign title_downcase = title_content | downcase | strip -%}
+      {%- assign name_downcase = shop.name | downcase | strip -%}
+      {%- unless title_downcase contains name_downcase -%}
+        &ndash;
+        {{ shop.name }}
+      {%- endunless -%}
+    {% endcapture %}
+    {%- comment smartseo_integration_begin_meta_data -%}<title>
+      {{ seo_title }}
+    </title>{%- endcomment smartseo_integration_end_meta_data -%}
+
+    {%- if page_description -%}
+      {%- comment smartseo_integration_begin_meta_data -%}{%- comment smartseo_integration_begin_meta_data -%}<meta name="description" content="{{ page_description | escape }}">{%- endcomment smartseo_integration_end_meta_data -%}{%- endcomment smartseo_integration_end_meta_data -%}
+    {% elsif default_description %}
+      {%- comment smartseo_integration_begin_meta_data -%}{%- comment smartseo_integration_begin_meta_data -%}<meta name="description" content="{{ default_description | escape }}">{%- endcomment smartseo_integration_end_meta_data -%}{%- endcomment smartseo_integration_end_meta_data -%}
+    {%- endif -%}
+
+    {%- render 'social-meta-tags' -%}
+
+    <!-- CSS ================================================================== -->
+    {% render 'custom-fonts' %}
+
+    {{ 'font-settings.css' | asset_url | stylesheet_tag }}
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+
+    {% render 'css-variables' %}
+
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'custom-theme.css' | asset_url | stylesheet_tag }}
+    {% render 'css-overrides' %}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      let root = '{{ routes.root_url }}';
+      if (root[root.length - 1] !== '/') {
+        root = `${root}/`;
+      }
+      var theme = {
+        routes: {
+          root_url: root,
+          cart: '{{ routes.cart_url }}',
+          cart_add_url: '{{ routes.cart_add_url }}',
+          product_recommendations_url: '{{ routes.product_recommendations_url }}'
+        },
+        assets: {
+          photoswipe: '{{ "photoswipe.js" | asset_url }}',
+          smoothscroll: '{{ "smoothscroll.js" | asset_url }}',
+          swatches: '{{ "swatches.json" | asset_url }}',
+          noImage: '{{ "nil" | img_url: "master" }}',
+          base: '{{ "nil.jpg" | asset_url | split: "nil.jpg" | first }}'
+        },
+        strings: {
+          swatchesKey: {{ 'general.swatches.color' | t | json }},
+          addToCart: {{ 'products.product.add_to_cart' | t | json }},
+          estimateShipping: {{ 'cart.shipping.estimate_shipping' | t | json }},
+          noShippingAvailable: {{ 'cart.shipping.no_shipping_available' | t | json }},
+          free: {{ 'cart.shipping.free' | t | json }},
+          from: {{ 'products.general.from' | t | json }},
+          preOrder: {{ 'products.product.pre_order' | t | json }},
+          soldOut: {{ 'products.product.sold_out' | t | json }},
+          sale: {{ 'products.product.sale' | t | json }},
+          subscription: {{ 'products.product.subscription' | t | json }},
+          unavailable: {{ 'products.product.unavailable' | t | json }},
+          unitPrice: {{ 'products.product.unit_price_label' | t | json }},
+          unitPriceSeparator: {{ 'general.accessibility.unit_price_separator' | t | json }},
+          stockout: {{ 'cart.general.stockout' | t | json }},
+          products: {{ 'products.general.products' | t | json }},
+          pages: {{ 'general.page.pages' | t | json }},
+          collections: {{ 'collections.sidebar.collections' | t | json }},
+          resultsFor: {{ 'general.search.results_for' | t | json }},
+          noResultsFor: {{ 'general.search.no_results_for' | t | json }},
+          articles: {{ 'blogs.article.articles' | t | json }}
+        },
+        settings: {
+          badge_sale_type: {{ settings.badge_sale_type | json }},
+          search_products: {{ settings.search_products | json }},
+          search_collections: {{ settings.search_collections | json }},
+          search_pages: {{ settings.search_pages | json }},
+          search_articles: {{ settings.search_articles | json }},
+          animate_hover: {{ settings.animations_hover_enable | json }},
+          animate_scroll: {{ settings.animations_scroll_enable | json }}
+        },
+        info: {
+          name: 'pipeline'
+        },
+        moneyFormat: {{ shop.money_format | json }},
+        version: '6.1.3'
+      }
+      let windowInnerHeight = window.innerHeight;
+      document.documentElement.style.setProperty('--full-screen', `${windowInnerHeight}px`);
+      document.documentElement.style.setProperty('--three-quarters', `${
+        windowInnerHeight * 0.75
+      }px`);
+      document.documentElement.style.setProperty('--two-thirds', `${
+        windowInnerHeight * 0.66
+      }px`);
+      document.documentElement.style.setProperty('--one-half', `${
+        windowInnerHeight * 0.5
+      }px`);
+      document.documentElement.style.setProperty('--one-third', `${
+        windowInnerHeight * 0.33
+      }px`);
+      document.documentElement.style.setProperty('--one-fifth', `${
+        windowInnerHeight * 0.2
+      }px`);
+
+      window.lazySizesConfig = window.lazySizesConfig || {};
+      window.lazySizesConfig.loadHidden = false;
+    </script>
+
+    {%- if request.page_type contains 'customers/' -%}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    <!-- Theme Javascript ============================================================== -->
+    <script src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
+    <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+    <!-- jQuery v2.2.3 ======================================================== -->
+    {{ 'jquery.min.js' | asset_url | script_tag }}
+
+    <script>
+      (function() {
+        function onPageShowEvents() {
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(initCartEvent)
+          } else {
+            initCartEvent()
+          }
+          function initCartEvent() {
+            document.documentElement.dispatchEvent(new CustomEvent('theme:cart:init', {bubbles: true}));
+          }
+        };
+        window.onpageshow = onPageShowEvents;
+      })();
+    </script>
+
+    <script type="text/javascript">
+      if (window.MSInputMethodContext && document.documentMode) {
+      var scripts = document.getElementsByTagName('script')[0];
+              var polyfill = document.createElement("script");
+              polyfill.defer = true;
+              polyfill.src = "{{ 'ie11.js' | asset_url }}";
+      scripts.parentNode.insertBefore(polyfill, scripts);
+            }
+    </script>
+
+    {% include "loyaltylion" %}
+
+    <!-- Shopify app scripts =========================================================== -->
+    {{ content_for_header }}
+
+    {{ 'bold-brain-widget.css' | asset_url | stylesheet_tag }}
+
+    {%- render 'bold-common' -%}
+
+    <!-- Zapiet | Store Pickup + Delivery -->
+    {% include 'storepickup' %}
+    <!-- Zapiet | Store Pickup + Delivery -->
+    {% render 'judgeme_core' %}
+
+    {% include 'gsf-conversion-pixels' %}
+
+
+    {% render 'gsf-conversion-pixels' %}
+
+      
+      
+    <!-- AUTO GENERATED BY CODE CUSTOMIZER -->
+    {% include "code-customizer-header" %}
+    <!-- END CODE CUSTOMIZER -->
+    {% render 'aaa-announcementbar-configuration' %} <script src="//staticxx.s3.amazonaws.com/aio_stats_lib_v1.min.js?v=1.0"></script>
+    {% include 'bss-product-labels-configs' %}
+  
+
+</head>
+
+  <body id="{{ page_title | handle }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {{ settings.default_background }}{% if customer %} customer-logged-in{% endif %}">
+  
+    <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}
+    </a>
+
+    {% section 'announcement' %}
+    {% if template contains 'thebackbar' %}
+      {% section 'thebackbar-master-header' %}
+    {% else %}
+      {% section 'header' %}
+    {% endif %}
+
+    <main class="main-content" id="MainContent">
+      {{ content_for_layout }}<!-- End of layout -->
+	<noscript class="endOfLayoutContentX" type="text/mark"></noscript>
+      {% render 'treedify_script' %}
+      <limespot></limespot>
+      
+    {% capture bsscommerce_passcode_to_see_price_product_custom %}{% render 'bss-passcode-to-see-price-js.liquid' %}{% endcapture %}{% unless bsscommerce_passcode_to_see_price_product_custom contains "Liquid error" %}{% render 'bss-passcode-to-see-price-js.liquid' %}{% endunless %}{% capture bsscommerce_login_to_see_price_product_custom %}{% render 'bsscommerce-login-to-see-price-custom-js.liquid' %}{% endcapture %}{% unless bsscommerce_login_to_see_price_product_custom contains "Liquid error" %}{% render 'bsscommerce-login-to-see-price-custom-js.liquid' %}{% endunless %}{% capture bss_ltap_fl_redirect %}{% render 'bss-ltap-fl-redirect.liquid' %}{% endcapture %}{% unless bss_ltap_fl_redirect contains "Liquid error" %}{% render 'bss-ltap-fl-redirect.liquid' %}{% endunless %}</main>
+
+    {% section 'footer' %}
+
+    {% section 'popups' %}
+
+    <div class="search--popdown">
+      {% render 'search-predictive', version: 'search-popdown' %}
+    </div>
+
+
+    {% render 'template-swatch' %}
+
+    <div data-modal-container></div>
+
+    {%- comment -%}
+    In order to use your custom javascript file at assets/custom.js
+    just cut this next line and paste it outside this comment.
+    <script src="{{ 'custom.js?enable_js_minification=1' | asset_url }}" defer="defer"></script>
+    {%- endcomment -%}
+    <script src="{{ 'custom-theme.js' | asset_url }}" defer="defer"></script>
+
+    <!-- Paste popup code or third party scripts below this comment line ============== -->
+    <script>
+      {% if newHash %}
+        $(function() {
+          timber.updateHash('{{ newHash }}');
+        });
+      {% endif %}
+      {% if resetPassword %}
+        $(function() {
+          timber.resetPasswordSuccess();
+        });
+      {% endif %}
+    </script>
+    {% include 'smile-initializer' %}
+    {% include 'subscribe-it-helper' %}
+    <!-- Klaviyo Signup Script ============================================================== -->  
+    <script>
+      window.addEventListener("klaviyoForms", function(e) { 
+        if (e.detail.type == 'open' || e.detail.type == 'embedOpen') {
+          gtag('event', 'form_open', 'Klaviyo form', e.detail.formId);
+        }
+        if (e.detail.type == 'submit') {
+          gtag('event', 'form_submit', 'Klaviyo form', e.detail.formId);
+        }
+        if (e.detail.type == 'close') {
+          gtag('event', 'form_close', 'Klaviyo form', e.detail.formId);
+        }
+      });
+    </script>
+    <!-- End of Klaviyo Signup ============================================================== -->
+    <!-- **BEGIN** Hextom CTB Integration // Main Include - DO NOT MODIFY -->
+    {% render 'hextom_ctb_main', product: product, customer: customer %}
+    <!-- **END** Hextom CTB Integration // Main Include - DO NOT MODIFY -->
+    {% render 'mbc-bundles' %}
+    {{ '//cdn.shopify.com/s/files/1/0194/1736/6592/t/1/assets/booster-page-speed-optimizer.js?23' | script_tag }}
+   
+    <!-- Shop.js ============================================================== -->
+    {{ 'shop.js' | asset_url | script_tag }}
+
+    <!-- And above this comment line ================================================== -->
+    {% if content_for_header contains 'bss-b2b' %}
+      
+    {% endif %}
+    {% if content_for_header contains 'product_label' %}
+      {% include 'bss-product-label-js' %}{% include 'bss-label-style-css' %}
+    {% endif %}
+    <script>
+      // BSs custom style /pages/the-backbar-account-registration
+      if (window.location.pathname == '/pages/the-backbar-account-registration') {
+        $('.rte').after($('.section-header.text-center'));
+        $('.grid').css('padding', '0 21%');
+        $('.grid').css('margin-left', '0px');
+        $('.grid__item').css('padding-left', '0px');
+        $('.rte img').css('width', '-webkit-fill-available');
+        $('div#shopify-section-bss-b2b-wholesaler-form-1959 .formbuilder-radio').css('cssText', 'display: flex;align-items: center;');
+        $('.site-footer-wrapper .section-header.text-center').remove();
+        var width = $(window).width();
+        if (width < 1400) {
+          $('.grid').css('padding', '0 6%');
+        }
+      }
+    </script>
+  {% if content_for_header contains 'bss-b2b-cp' %}{% include 'bss-b2b-jquery-341-js' %}{% include 'bss-b2b-js' %}{% endif %}{% if content_for_header contains 'product_label' %}{% include 'bss-product-label-js' %}{% include 'bss-label-style-css' %}{% include 'bss-product-label-fonts' %}{% endif %}
+  
+  
+    <style>
+
+  .jdgm-all-reviews-text {
+    text-align: center !important;
+}
+.jdgm-carousel-wrapper {
+    width: 100% !important;
+}
+.jdgm-carousel-item__review {
+  padding-bottom: 10px !important; 
+}
+.jdgm-carousel-item {  
+  padding-bottom: 10px !important; 
+}
+
+      /*   bogos CSS  */
+      @media (max-width:600px){
+        .content-promotion-message {
+          font-size: 14px;
+        } 
+      }
+      .content-promotion-message {
+          font-size: 16px;
+          font-family: 'BasisGrotesquePro-Regular';
+      }
+      a.sca-msg {
+            text-decoration: underline;
+      }
+      .slide-container.sca-modal-dialog-fg {
+            font-family: BasisGrotesquePro-Medium
+    , sans-serif !important;
+        }
+  </style>
+
+  <script src="https://satcb.azureedge.net/Scripts/satcb.min.js?shop=creations-gdc.myshopify.com" async="async" defer="defer"></script>
+  </body>
+    {% render 'freegifts-snippet-change' %}
+</html>

@@ -1,0 +1,33 @@
+{%- assign product_description_content = product.description | split: '<h6>' | first -%}
+
+<div class="new-product-description wrapper">
+  <div class="tab-menu-wrapper">
+    <center>
+      <ul class="tab-menu">
+        <li class="tab-button active-tab" data-tab="benefits">Benefits</li>
+        <li class="tab-button" data-tab="how-to-use">How to Use</li>
+        <li class="tab-button" data-tab="ingredients">Ingredients</li>
+      </ul>
+    </center>
+  </div>
+  
+  <ul class="description--tabs" itemprop="description">
+    {% assign content = product_description_content | replace: '<p>[split]</p>', '[split]' | split: '[split]' | last | replace: '<p>[tab]</p>', '[tab]' | split: '[tab]' %}
+   
+    <!-- benefits -->
+    <li class="benefits tabs active-tab">
+      <div>{{ content[2] | replace: '</div>', "" }}</div>
+    </li>
+    
+    <!-- how-to-use -->
+    <li class="how-to-use tabs">
+      <div>{{ content[1] | replace: '</div>', "" }}</div>
+    </li>      
+    
+    <!-- ingredients -->
+    <li class="ingredients tabs">
+      <div>{{ content[3] | replace: '</div>', "" }}</div>
+    </li>      
+  </ul> 
+
+</div>

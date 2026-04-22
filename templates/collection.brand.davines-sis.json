@@ -1,0 +1,793 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "dbcce546-61a8-449d-8ee8-d83e3b7b80fd": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14409599254627__dbcce546-61a8-449d-8ee8-d83e3b7b80fd-16709968404e7ce54d-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/dav-min-spend-promo-oct-2025-desktop-banner.jpg",
+            "slide_image_mobile": "shopify://shop_images/dav-min-spend-promo-oct-2025-mobile-banner.jpg",
+            "slide_image_url": "shopify://collections/davines-special-offers"
+          }
+        },
+        "9e4d4243-4c2e-4520-94cf-0c79588ee661": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/dav-promos-feb-2026-site-banners-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/dav-promos-feb-2026-site-banners-mobile.jpg",
+            "slide_image_url": "shopify://collections/davines-featured-products"
+          }
+        },
+        "232f35a8-778f-488f-a8e9-8d4f4bb6599d": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Davines_Heart_of_Glass_Desktop_3d3f59f7-da3f-44e1-a611-d16fd8dc9e20.jpg",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Davines_Heart_of_Glass_Mobile_21c676c5-081a-44a7-942d-39110ffbf0c0.jpg",
+            "slide_image_url": "shopify://collections/davines-heart-of-glass-for-blonde-hair"
+          }
+        },
+        "template--14409599254627__dbcce546-61a8-449d-8ee8-d83e3b7b80fd-16709968404e7ce54d-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Omnibus_Davines_Banner_-_Jul_2024_Update_-_Desktop.png",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Omnibus_Davines_Banner_-_Jul_2024_Update_-_Mobile.png",
+            "slide_image_url": "shopify://collections/davines-special-offers"
+          }
+        },
+        "0cab4267-b74e-420d-98ab-fd9379848e88": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/davines-april25-always-on-bundles-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/davines-april25-always-on-bundles-mobile.jpg",
+            "slide_image_url": "shopify://collections/davines-featured-products"
+          }
+        },
+        "ad016f75-04ba-439e-a868-287675978dfa": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/Shampoo_Bars_desktop_banner_e18b0a28-9e02-42a3-9dfe-5e9bc33d4b6a.png",
+            "slide_image_mobile": "shopify://shop_images/Shampoo_Bars_mobile_banner_7a652b0b-8d58-407c-988e-25bbddf9174a.png",
+            "slide_image_url": "shopify://collections/davines-shampoo-bars"
+          }
+        },
+        "59e2815f-d6d1-49a6-aa36-c82a43273676": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Davines_Holiday_Speciai_Gift_Sets_Desktop.png",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Davines_Holiday_Speciai_Gift_Sets_Mobile.png",
+            "slide_image_url": "shopify://collections/davines-gift-sets"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409599254627__dbcce546-61a8-449d-8ee8-d83e3b7b80fd-16709968404e7ce54d-1",
+        "9e4d4243-4c2e-4520-94cf-0c79588ee661",
+        "232f35a8-778f-488f-a8e9-8d4f4bb6599d",
+        "template--14409599254627__dbcce546-61a8-449d-8ee8-d83e3b7b80fd-16709968404e7ce54d-0",
+        "0cab4267-b74e-420d-98ab-fd9379848e88",
+        "ad016f75-04ba-439e-a868-287675978dfa",
+        "59e2815f-d6d1-49a6-aa36-c82a43273676"
+      ],
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "c14d087f-82c3-4800-9273-bc14e208c059": {
+      "type": "menu-buttons",
+      "settings": {
+        "menu_list": "shop-davines",
+        "space_top": 20,
+        "space_bottom": 10
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines Featured Products",
+        "title_font_size": 17,
+        "collection": "davines-featured-products",
+        "grid": 5,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "9f2907a8-c5e2-4f23-9cc3-031e4676258f": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines Gift Sets",
+        "title_font_size": 28,
+        "collection": "davines-gift-sets",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_tabs_tic9bC": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "collection_4XtBjN": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-naturaltech-purifying-anti-dandruff",
+            "title": "Davines Purifying for Dandruff"
+          }
+        },
+        "collection_RbaJkj": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-energizing-collection",
+            "title": "Davines Energizing for Thinning Hair"
+          }
+        },
+        "collection_ffwWzx": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-naturaltech-well-being",
+            "title": "Davines Well-Being for All Hair Types"
+          }
+        },
+        "collection_3Rawfi": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-naturaltech-nourishing",
+            "title": "Davines Nourishing for Brittle Hair"
+          }
+        },
+        "collection_pK9Rq4": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-naturaltech-rebalancing",
+            "title": "Davines Rebalancing for Oily Scalps"
+          }
+        },
+        "collection_iqNmhd": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-naturaltech-renewing",
+            "title": "Davines Renewing for Anti-Aging"
+          }
+        },
+        "collection_r8UdHX": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-naturaltech-calming",
+            "title": "Davines Calming for Sensitive Scalps"
+          }
+        },
+        "collection_jbAQQR": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-naturaltech-replumping",
+            "title": "Davines Replumping for Volume"
+          }
+        },
+        "collection_p6Jhqp": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-naturaltech-detoxifying",
+            "title": "Davines Detoxifying for Atonic Scalps"
+          }
+        }
+      },
+      "block_order": [
+        "collection_4XtBjN",
+        "collection_RbaJkj",
+        "collection_ffwWzx",
+        "collection_3Rawfi",
+        "collection_pK9Rq4",
+        "collection_iqNmhd",
+        "collection_r8UdHX",
+        "collection_jbAQQR",
+        "collection_p6Jhqp"
+      ],
+      "settings": {
+        "title": "Davines Naturaltech Scalp Solutions",
+        "title_font_size": 28,
+        "grid": 4,
+        "limit": 10,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "60d92722-3424-43dd-bcb1-bfe9941c918b": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines OI for Superior Softness & Shine",
+        "title_font_size": 17,
+        "collection": "davines-oi",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "f47843af-a419-411c-82ef-42abf9fb5c5e": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines Alchemic for Colored Hair",
+        "title_font_size": 28,
+        "collection": "davines-alchemic",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_tabs_cr7Abp": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "collection_4WmhHm": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-nounou",
+            "title": "Davines NOUNOU for Damaged Hair"
+          }
+        },
+        "collection_fEipPf": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-momo",
+            "title": "Davines MOMO for Dry Hair"
+          }
+        },
+        "collection_6Wxp88": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-minu",
+            "title": "Davines MINU for Colored Hair"
+          }
+        },
+        "collection_epLK6q": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-essential-haircare-melu",
+            "title": "Davines MELU for Long or Damaged Hair"
+          }
+        },
+        "collection_73UEw4": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-essential-haircare-volu",
+            "title": "Davines VOLU for Fine or Limp Hair"
+          }
+        },
+        "collection_7k7RJW": {
+          "type": "collection",
+          "settings": {
+            "collection": "davinessolu",
+            "title": "Davines SOLU for Clarifying"
+          }
+        },
+        "collection_VkDtWy": {
+          "type": "collection",
+          "settings": {
+            "collection": "davinesdede",
+            "title": "Davines DEDE for Fine Hair"
+          }
+        }
+      },
+      "block_order": [
+        "collection_4WmhHm",
+        "collection_fEipPf",
+        "collection_6Wxp88",
+        "collection_epLK6q",
+        "collection_73UEw4",
+        "collection_7k7RJW",
+        "collection_VkDtWy"
+      ],
+      "settings": {
+        "title": "Davines Essential Hair Care for All Hair Types",
+        "title_font_size": 28,
+        "grid": 4,
+        "limit": 10,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "12391e34-5ee8-4dec-94f8-111439321ecd": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines Essential Haircare Refill Pouches",
+        "title_font_size": 28,
+        "collection": "davines-essential-haircare-refill-pouches",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "b933560c-8b8e-4fb5-bbef-02020ca35a97": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines Essentials LOVE Curl and LOVE Smooth",
+        "title_font_size": 28,
+        "collection": "davines-love",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "14527f82-a0c6-4169-bac0-a8db5845f1c0": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines More Inside Styling",
+        "title_font_size": 28,
+        "collection": "davines-more-inside-styling",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "015f468b-b626-43f4-8912-9edceafce4f3": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines Travel Sizes",
+        "title_font_size": 28,
+        "collection": "davines-travel-sizes",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "11702c0f-a5ef-4eb3-93eb-17a0b8b1cce7": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines Heart of Glass for Blonde Hair",
+        "title_font_size": 28,
+        "collection": "davines-heart-of-glass-for-blonde-hair",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "fa49e8d3-ed7e-4271-9ef2-522a61d9f348": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines The Circle Chronicles",
+        "title_font_size": 28,
+        "collection": "davines-the-circle-chronicles",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "98c47773-7f49-4c44-8dda-0a037ab1bc0b": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines Shampoo Bars",
+        "title_font_size": 28,
+        "collection": "davines-shampoo-bars",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_tabs_fi794h": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "collection_QRVchY": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-bath-and-body",
+            "title": "Davines Bath & Body"
+          }
+        },
+        "collection_8zJPYE": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-su-sun-protection",
+            "title": "Davines SU Hair & Skin Sun Protection"
+          }
+        }
+      },
+      "block_order": [
+        "collection_QRVchY",
+        "collection_8zJPYE"
+      ],
+      "settings": {
+        "title": "Davines Lifestyle",
+        "title_font_size": 28,
+        "grid": 4,
+        "limit": 10,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 50,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/davines-june23-always-on_desktop-1400x500.jpg",
+        "banner_mobile": "shopify://shop_images/davines-june23-always-on_mobile-552x502.jpg",
+        "banner_url": "shopify://collections/davines-featured-products",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "1c95b66b-f6ed-4f5f-8344-14c2660e3341": {
+      "type": "section-double",
+      "blocks": {
+        "template--14409599287395__1c95b66b-f6ed-4f5f-8344-14c2660e3341-167449681102607b06-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "HairMNL Real Reviews",
+            "title": "Dandruff Success Story with Davines",
+            "text": "<p>Learn more about Angela's scalp journey and the Davines Purifying & Well-Being Anti-Dandruff Shampoo.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "2f60bb4a-5602-4c70-b503-a5fd4eaf7a2e": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": "OnrXzZcDxoE"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409599287395__1c95b66b-f6ed-4f5f-8344-14c2660e3341-167449681102607b06-0",
+        "2f60bb4a-5602-4c70-b503-a5fd4eaf7a2e"
+      ],
+      "settings": {
+        "height": "use_screen_one_fifth",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "7368fb1c-d117-4b61-8018-3c0e58124108": {
+      "type": "section-collection-grid",
+      "blocks": {
+        "template--14409599254627__7368fb1c-d117-4b61-8018-3c0e58124108-16709971888eec4932-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "davines-essential-haircare",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/davines-essential-haircare"
+          }
+        },
+        "template--14409599254627__7368fb1c-d117-4b61-8018-3c0e58124108-16709971888eec4932-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "davines-naturaltech-line",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/davines-naturaltech-line"
+          }
+        },
+        "ad422b5e-38d5-40db-ac60-23281423af49": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "davines-oi",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/davines-oi"
+          }
+        },
+        "17eb81a8-2658-472f-99e8-ffc95ff35161": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "davines-more-inside-styling",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/davines-more-inside-styling"
+          }
+        },
+        "0711b26b-9181-4b23-9883-cf0d98f0c66e": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "davines-heart-of-glass-for-blonde-hair",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/davines-heart-of-glass-for-blonde-hair"
+          }
+        },
+        "0e49e692-e8bc-49f5-936c-81f416674cc8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "davines-alchemic",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/davines-alchemic"
+          }
+        },
+        "31163213-c9ba-4a82-a0f8-79bcfabdde92": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "davines-shampoo-bars",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/davines-shampoo-bars"
+          }
+        },
+        "a4fc73ac-54e2-4b50-a11b-2014e1b12e42": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "davines-the-circle-chronicles",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/davines-the-circle-chronicles"
+          }
+        },
+        "86a94e06-3571-4585-954c-9b85efd02d80": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "davines-su-sun-protection",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/davines-su-sun-protection"
+          }
+        },
+        "88efd7e0-f1bf-4467-b9b5-827c759d9dee": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "davines-liquid-spell",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/davines-liquid-spell"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409599254627__7368fb1c-d117-4b61-8018-3c0e58124108-16709971888eec4932-0",
+        "template--14409599254627__7368fb1c-d117-4b61-8018-3c0e58124108-16709971888eec4932-1",
+        "ad422b5e-38d5-40db-ac60-23281423af49",
+        "17eb81a8-2658-472f-99e8-ffc95ff35161",
+        "0711b26b-9181-4b23-9883-cf0d98f0c66e",
+        "0e49e692-e8bc-49f5-936c-81f416674cc8",
+        "31163213-c9ba-4a82-a0f8-79bcfabdde92",
+        "a4fc73ac-54e2-4b50-a11b-2014e1b12e42",
+        "86a94e06-3571-4585-954c-9b85efd02d80",
+        "88efd7e0-f1bf-4467-b9b5-827c759d9dee"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Davines Product Lines",
+        "grid": 4,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 0,
+        "overlay_color": "#fcfaf7",
+        "aspect_ratio": 0.9
+      }
+    },
+    "section_featured_articles_qnxAxp": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "article_block_z6NtFt": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "top-davines-products-in-the-philippines-a-deep-dive-into-sustainable-beauty"
+          }
+        },
+        "article_block_KrHEQk": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "this-top-rated-dandruff-treatment-continues-to-be-the-center-of-attention-here-s-why"
+          }
+        },
+        "article_block_MKWkai": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "fragile-and-delicate-hair-here-are-the-remedies-for-you"
+          }
+        },
+        "article_block_QEe9DE": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "discover-exceptional-natural-hair-care-with-davines-shampoo"
+          }
+        },
+        "article_block_bwAKTN": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "achieve-perfectly-smooth-hair-with-davines-anti-frizz-products"
+          }
+        },
+        "article_block_ad9UHR": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "davines-the-circle-chronicles-hair-masks-how-and-why-to-use-it"
+          }
+        }
+      },
+      "block_order": [
+        "article_block_z6NtFt",
+        "article_block_KrHEQk",
+        "article_block_MKWkai",
+        "article_block_QEe9DE",
+        "article_block_bwAKTN",
+        "article_block_ad9UHR"
+      ],
+      "settings": {
+        "title": "Featuring Davines",
+        "homepage_blog": "",
+        "homepage_blog_count": 6,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": false,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "c02af5db-a0d2-461a-abf1-a2ec40e12274": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "About Davines",
+        "title": "",
+        "text": "<h1>Davines</h1><p>“BY CREATING <em>BEAUTY SUSTAINABLY,</em> WE ENCOURAGE PEOPLE TO TAKE CARE OF THEMSELVES, OF THE ENVIRONMENT IN WHICH THEY LIVE & WORK, AND OF THE THINGS THEY LOVE.” -<em>Davide Bollati, President</em><br/></p><p>Davines shampoos, conditioners, hair masks, and treatments are <strong>paraben- and sulfate-free</strong>, made with ingredients of <strong>natural origin</strong>, and sourced from organic farms.</p><p>Davines not only creates products that are on the cutting edge of research for treating dandruff or thinning, damaged, or frizzy hair, but also ensures that its products and packaging have the least impact on the environment through the use of <strong>natural ingredients, eco-friendly packaging & 100% renewable energy</strong>.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "972f8bb6-0e7d-4806-b859-6e4942dcaaf8": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "dbcce546-61a8-449d-8ee8-d83e3b7b80fd",
+    "c14d087f-82c3-4800-9273-bc14e208c059",
+    "1642442735c9bd4274",
+    "9f2907a8-c5e2-4f23-9cc3-031e4676258f",
+    "section_collection_tabs_tic9bC",
+    "60d92722-3424-43dd-bcb1-bfe9941c918b",
+    "f47843af-a419-411c-82ef-42abf9fb5c5e",
+    "section_collection_tabs_cr7Abp",
+    "12391e34-5ee8-4dec-94f8-111439321ecd",
+    "b933560c-8b8e-4fb5-bbef-02020ca35a97",
+    "14527f82-a0c6-4169-bac0-a8db5845f1c0",
+    "015f468b-b626-43f4-8912-9edceafce4f3",
+    "11702c0f-a5ef-4eb3-93eb-17a0b8b1cce7",
+    "fa49e8d3-ed7e-4271-9ef2-522a61d9f348",
+    "98c47773-7f49-4c44-8dda-0a037ab1bc0b",
+    "section_collection_tabs_fi794h",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "1c95b66b-f6ed-4f5f-8344-14c2660e3341",
+    "7368fb1c-d117-4b61-8018-3c0e58124108",
+    "section_featured_articles_qnxAxp",
+    "c02af5db-a0d2-461a-abf1-a2ec40e12274",
+    "972f8bb6-0e7d-4806-b859-6e4942dcaaf8"
+  ]
+}

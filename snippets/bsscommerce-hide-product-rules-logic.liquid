@@ -1,0 +1,31 @@
+{%- comment %}
+    Author: BSS B2B Login
+
+    DO NOT MODIFY. The contents of BSS B2B Login 
+    will overwrite any changes in the next update.
+
+    Updated at: Fri Dec 13 2024
+{% endcomment -%}
+{% assign bss_product_is_hide = false %}
+{% assign bss_hide_product_redirect_page = "/" %}
+{% assign bss_hide_product_redirect_type = 0 %}
+{% assign bss_hide_product_on_pages = "" %}
+{% assign bss_login_to_day_date = 'now' | date: '%s' %}
+{% assign bss_product_collection = "" | split: ',' %}
+
+{% for collection in product.collections %}
+    {% assign collection_id = collection.id | split:',' %}
+    {% assign delimeter = "|" | split:',' %}
+    {% assign bss_product_collection = bss_product_collection | concat:delimeter %}
+    {% assign bss_product_collection = bss_product_collection | concat:collection_id %}
+{% endfor %}
+{% if collec_id_custom %}
+    {% assign collection_id_custom = collec_id_custom | split: ',' %}
+    {% assign bss_product_collection = bss_product_collection | concat: collection_id_custom %}
+{% endif %}
+{% unless request.design_mode or request.visual_preview_mode %}
+    
+{% endunless %}
+{% unless no_data_returned %}
+    {{ bss_product_is_hide }}
+  {% endunless %}

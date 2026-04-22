@@ -1,0 +1,57 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "90eb640c-f684-4135-a6e1-c116af93f163": {
+      "type": "tousled-header",
+      "settings": {
+        "tousled_menu_linklist": "tousled-v2",
+        "tousled_logo_mobile": "shopify://shop_images/Tousled_Logo_Stacked.png",
+        "tousled_logo_max_limit": 100,
+        "tousled_logo_mobile_menu": "shopify://shop_images/Tousled_Horizontal_300X100_Opt2-01_2696dd41-bec8-449d-8077-94ffa86eb2c0.png",
+        "tousled_logo_max_limit_menu": 100,
+        "header_bg": "#e7d8c3",
+        "underline": "#333333",
+        "underline_current": true
+      }
+    },
+    "main": {
+      "type": "section-blog-category",
+      "settings": {
+        "title": "News",
+        "homepage_blog": "",
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "excerpt_alignment": "left",
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "6290eebc-d769-4dae-8706-8611d1e37c0e": {
+      "type": "section-newsletter",
+      "settings": {
+        "title": "Tousled Online Magazine",
+        "richtext": "<p>Your leading source for professional hair care solutions</p>",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "90eb640c-f684-4135-a6e1-c116af93f163",
+    "main",
+    "6290eebc-d769-4dae-8706-8611d1e37c0e"
+  ]
+}

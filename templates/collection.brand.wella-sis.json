@@ -1,0 +1,445 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "2ea301f3-ab23-48ec-8985-a836afe9a7b4": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Wella_CFM_10_Off_June_2023_Desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Wella_CFM_10_Off_June_2023_Mobile.jpg",
+            "slide_image_url": "shopify://collections/wella-professionals-color-fresh-mask"
+          }
+        },
+        "a073ca77-c8bd-4cee-bb5f-133d7e86c2fc": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/wella-nutri-enrich-10-off_june23-ao_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/wella-nutri-enrich-10-off_june23-ao_mobile.jpg",
+            "slide_image_url": "shopify://collections/wella-professionals-invigo-nutri-enrich"
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/wella-oil-reflections-10-off_june23-ao_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/wella-oil-reflections-10-off_june23-ao_mobile.jpg",
+            "slide_image_url": "shopify://collections/wella-professionals-oil-reflections"
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Wella_Professionals_Fusion_Intense_Repair_Discovery_Set_Desktop_401a924f-0f1d-4568-976b-ecc24b6e177c.jpg",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Wella_Professionals_Fusion_Intense_Repair_Discovery_Set_Mobile_aa780452-fe5a-4de4-b507-01881e37c6a0.jpg",
+            "slide_image_url": "shopify://collections/wella-professionals-oil-reflections"
+          }
+        }
+      },
+      "block_order": [
+        "2ea301f3-ab23-48ec-8985-a836afe9a7b4",
+        "a073ca77-c8bd-4cee-bb5f-133d7e86c2fc",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/HairMNL_Wella_Professionals_Fusion_Intense_Repair_Discovery_Set_Desktop_401a924f-0f1d-4568-976b-ecc24b6e177c.jpg",
+        "banner_mobile": "shopify://shop_images/HairMNL_Wella_Professionals_Fusion_Intense_Repair_Discovery_Set_Mobile_aa780452-fe5a-4de4-b507-01881e37c6a0.jpg",
+        "banner_url": "shopify://collections/wella-professionals-invigo",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": true,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95": {
+      "type": "section-double",
+      "blocks": {
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Olaplex",
+            "title": "THE COMPLETE HAIR REPAIR SYSTEM",
+            "text": "<p>The only patented system to noticeably repair extreme damage—turn dry, brittle hair into soft, shiny, and more resilient hair.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "Shop Now",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0",
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "THE COMPLETE HAIR REPAIR SYSTEM",
+        "title": "The Original Bond Builder",
+        "text": "<p>The only patented system to noticeably repair extreme damage—turn dry, brittle hair into soft, shiny, and more resilient hair.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "The Original Bond Builder",
+            "text": "<p>Repairs the broken bonds and rejuvenate hair.</p><p>Increases tensile strength and restore elasticity.</p><p>Protects the hair follicle from further breakage.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "OLAPLEX works to repair broken bonds.",
+            "text": "<p>Our hair contains millions of disulfide bonds. These bonds give the hair its structure, strength and stability. When disulfide bonds are broken, it results in damage.</p><p>OLAPLEX restores damaged and compromised hair by repairing from the inside out with our patented single ingredient, <em>Bis-Aminopropyl Diglycol Dimaleate</em>.</p><p>Once all the bonds are intact and in alignment, you have healthy, beautiful, shiny, touchable hair.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e": {
+          "type": "text",
+          "settings": {
+            "title": "OLAPLEX repairs all types of hair damage.",
+            "text": "<p>Thermal factors: High levels of heat from curling irons, blow dryers, flat irons.</p><p>Chemical factors: Colors, perms, relaxers and keratin treatments.<br/>Mechanical factors: Brushing, friction, tugging and pulling on wet hair.</p><p>Environmental factors: UV Damage from the sun, humidity, extreme hot/ cold weather conditions, pollution.</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0",
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2",
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Wella Professionals Color Fresh Mask",
+        "title_font_size": 17,
+        "collection": "wella-professionals-color-fresh-mask",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "c3d2224b-69c6-4a05-97a8-85a26911c5ef": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Wella Professionals Koleston Perfect PPD-Free Hair Color",
+        "title_font_size": 17,
+        "collection": "wella-professionals-koleston-perfect-permanent-hair-color",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_VdpdTh": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Wella Professionals Special Offers",
+        "title_font_size": 17,
+        "collection": "wella-professionals-special-offers",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "27c86d62-a30c-4174-bdf5-573e26bd17ee": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "9d3761e1-88bf-4fdd-9245-ec1ab73dea36": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-tutorials",
+            "blog_handle": "tone-color-and-refresh-your-hair-in-just-4-easy-steps-with-wella"
+          }
+        },
+        "template--14410121412707__27c86d62-a30c-4174-bdf5-573e26bd17ee-16753529261b1558ff-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "introducing-wella-professionals-new-koleston-perfect-permanent-color"
+          }
+        },
+        "a5119368-9d0a-44dc-a074-a24bbaa17de3": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "5-foolproof-ways-to-brighten-dull-hair-with-wella-professionals"
+          }
+        },
+        "d99ca7cb-6e51-4b27-a68a-ba09ac4b69f4": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "what-does-damaged-hair-look-like-5-signs-to-watch-out-for"
+          }
+        }
+      },
+      "block_order": [
+        "9d3761e1-88bf-4fdd-9245-ec1ab73dea36",
+        "template--14410121412707__27c86d62-a30c-4174-bdf5-573e26bd17ee-16753529261b1558ff-0",
+        "a5119368-9d0a-44dc-a074-a24bbaa17de3",
+        "d99ca7cb-6e51-4b27-a68a-ba09ac4b69f4"
+      ],
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": false,
+        "excerpt_alignment": "left",
+        "show_readmore": false,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Wella Professionals Fusion Intense Repair",
+        "title_font_size": 17,
+        "collection": "wella-professionals-fusion",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "7b977b8c-2c4a-43da-921c-ec849e0e11aa": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Wella Professionals Invigo",
+        "title_font_size": 17,
+        "collection": "wella-professionals-invigo",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "c0ae6548-a9f4-4a56-a91b-0baef28a3a01": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Wella Professionals Oil Reflections",
+        "title_font_size": 17,
+        "collection": "wella-professionals-oil-reflections",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "babd7064-30c7-4363-af70-187bcac5d4b1": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Wella Professionals Elements",
+        "title_font_size": 17,
+        "collection": "wella-professionals-elements",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "7041471f-050a-4331-ba6c-16d046e2ef9e": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Wella Professionals ColorMotion+",
+        "title_font_size": 17,
+        "collection": "wella-professionals-color-motion",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "5a8e4bee-f497-4a6b-a300-2f109e6f42a5": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    }
+  },
+  "order": [
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "hero",
+    "subcollections",
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4",
+    "c3d2224b-69c6-4a05-97a8-85a26911c5ef",
+    "section_collection_VdpdTh",
+    "27c86d62-a30c-4174-bdf5-573e26bd17ee",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "babd7064-30c7-4363-af70-187bcac5d4b1",
+    "7041471f-050a-4331-ba6c-16d046e2ef9e",
+    "7b977b8c-2c4a-43da-921c-ec849e0e11aa",
+    "c0ae6548-a9f4-4a56-a91b-0baef28a3a01",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "5a8e4bee-f497-4a6b-a300-2f109e6f42a5"
+  ]
+}

@@ -1,0 +1,120 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "4e72afb5-4211-437e-8eca-36c0d00efa01": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/HairMNL_Rewards_Desktop_5.12.23.png",
+        "banner_mobile": "shopify://shop_images/HairMNL_Rewards_Mobile_5.12.23.png",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "8cdc1a09-4214-4975-9d36-81e7b7156ee3": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "HairMNL",
+        "title": "",
+        "text": "<h1>Terms & Conditions</h1>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "main": {
+      "type": "page",
+      "settings": {
+        "kicker": "",
+        "show_title": false,
+        "show_content": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "7643dd9c-4d16-4ca9-b469-9fa21a949a22": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Related Products",
+        "title_font_size": 28,
+        "collection": "hair-oils-and-serums",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "d1ec4eec-5b8e-447c-bdea-bd77d0029aaf": {
+      "type": "section-featured-articles",
+      "disabled": true,
+      "settings": {
+        "title": "Related Articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "c82bac1b-13b4-4e9e-b3b3-898d8ebe130b": {
+      "type": "section-recent-products",
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "4e72afb5-4211-437e-8eca-36c0d00efa01",
+    "8cdc1a09-4214-4975-9d36-81e7b7156ee3",
+    "main",
+    "7643dd9c-4d16-4ca9-b469-9fa21a949a22",
+    "d1ec4eec-5b8e-447c-bdea-bd77d0029aaf",
+    "c82bac1b-13b4-4e9e-b3b3-898d8ebe130b"
+  ]
+}

@@ -1,0 +1,442 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/scalp-care-jan-feb-2025-dandruff-banner-desktop.jpg",
+        "banner_mobile": "shopify://shop_images/scalp-care-jan-feb-2025-dandruff-banner.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "e3c7ace8-bbee-4818-bfa0-5507212ad9ff": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/scalp-care-jan-feb-2025-dandruff-banner-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/Storytelling_Dandruff_Dec_2023_-_Mobile_Banner.png",
+            "slide_image_url": "https://www.hairmnl.com/pages/effective-dandruff-solution-davines"
+          }
+        },
+        "c98d3c61-3e6b-42be-806c-53b940cae039": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/davines-birthday-sale-sep-2025-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/davines-birthday-sale-sep-2025-mobile.jpg",
+            "slide_image_url": "shopify://collections/davines-naturaltech-purifying-anti-dandruff"
+          }
+        },
+        "banner_slide_EG7GAy": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/kerastase-jan25-always-on-chroma-absolu-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/kerastase-jan25-always-on-chroma-absolu-mobile.jpg",
+            "slide_image_url": "shopify://collections/kerastase"
+          }
+        }
+      },
+      "block_order": [
+        "e3c7ace8-bbee-4818-bfa0-5507212ad9ff",
+        "c98d3c61-3e6b-42be-806c-53b940cae039",
+        "banner_slide_EG7GAy"
+      ],
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 5000
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": true,
+        "show_description": true,
+        "show_description_below": true,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95": {
+      "type": "section-double",
+      "blocks": {
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "0b4e9ad4-6fad-4801-81a2-e32a681514df": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0",
+        "0b4e9ad4-6fad-4801-81a2-e32a681514df"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "",
+            "text_align": "text-left"
+          }
+        },
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0",
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "title": "For Frizz Control / Sleek Hair",
+        "text": "<p>Browse our collection of products for frizzy hair.</p><p>For lighter formulations (best for fine hair), we suggest looking into Davines Love Smoothing, Aveda Smooth Infusion, and Kérastase Discipline. </p><p>For medium to heavy formulations (best for medium to thick hair), we suggest looking into Davines Oi, L'Oréal Mythic Oil and Kérastase Oleo Relax.</p><p>Need help deciding? Send us a message <a href=\"http://www.m.me/hairmnl\" target=\"_blank\"><strong>here</strong></a> or through the Messenger icon below</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "600d82f8-e027-446d-aa41-56d01947d240": {
+      "type": "collection",
+      "blocks": {
+        "b1c23eef-9f81-4cde-b28a-44dc16a029cd": {
+          "type": "group",
+          "settings": {
+            "title": "Ingredients",
+            "group_tags": "95% Natural Origin Ingredients,Cruelty-Free,Free of Harsh Sulfates (SLS and SLES),Free of Parebens,Free of PPD/PTD,Free of Pthalates\t,Free of Silicones,Plant-Based,Vegan"
+          }
+        },
+        "885b362e-ba6e-467f-86e6-77ff86ef80c5": {
+          "type": "group",
+          "settings": {
+            "title": "Size",
+            "group_tags": "Travel,Value,Refill"
+          }
+        },
+        "759d6f9d-8534-4d47-81dc-547d8b6bd564": {
+          "type": "group",
+          "settings": {
+            "title": "Others",
+            "group_tags": "Brand Best Seller,HairMNL Best Seller,Special Offer,New Arrival,HairMNL Exclusive"
+          }
+        },
+        "8d30bc53-2896-432d-ba08-dc11ea418a82": {
+          "type": "filters",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "b1c23eef-9f81-4cde-b28a-44dc16a029cd",
+        "885b362e-ba6e-467f-86e6-77ff86ef80c5",
+        "759d6f9d-8534-4d47-81dc-547d8b6bd564",
+        "8d30bc53-2896-432d-ba08-dc11ea418a82"
+      ],
+      "settings": {
+        "grid_setting_large": 4,
+        "grid_setting_small": 2,
+        "product_limit": 36,
+        "enable_layout_toggle": true,
+        "collection_sorting": true,
+        "hide_sidebar": false
+      }
+    },
+    "e5fdd828-845d-4575-9967-a6939c3cbc7d": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14413235224675__e5fdd828-845d-4575-9967-a6939c3cbc7d-1675367436d4747a3e-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "an-ultimate-guide-to-anti-dandruff-shampoos-in-the-philippines"
+          }
+        },
+        "53a0acec-3c17-430c-8b1a-52f2dd0b9fa7": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "don-t-flake-out-on-your-scalp-hairmnl-s-guide-to-choosing-the-right-anti-dandruff-shampoo"
+          }
+        },
+        "b2e82d83-f9cc-4eec-9fbb-ef9a2d6f7aea": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "this-top-rated-dandruff-treatment-continues-to-be-the-center-of-attention-here-s-why"
+          }
+        }
+      },
+      "block_order": [
+        "template--14413235224675__e5fdd828-845d-4575-9967-a6939c3cbc7d-1675367436d4747a3e-0",
+        "53a0acec-3c17-430c-8b1a-52f2dd0b9fa7",
+        "b2e82d83-f9cc-4eec-9fbb-ef9a2d6f7aea"
+      ],
+      "settings": {
+        "title": "Related Articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "section_featured_articles_GBehBV": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "article_block_XxNQ6E": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "spot-the-difference-is-it-dry-scalp-or-dandruff"
+          }
+        },
+        "article_block_YkDfzh": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "whattheflake-what-causes-dandruff-and-how-to-get-rid-of-it"
+          }
+        },
+        "article_block_CLHf6r": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "best-of-the-best-dandruff-remedies-that-experts-recommend"
+          }
+        }
+      },
+      "block_order": [
+        "article_block_XxNQ6E",
+        "article_block_YkDfzh",
+        "article_block_CLHf6r"
+      ],
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "All Products For Dandruff Control",
+        "title_font_size": 17,
+        "collection": "products-for-dandruff-control",
+        "grid": 6,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "7a270b7d-2599-42c7-ba52-5681e1d57193": {
+      "type": "section-collection-grid",
+      "blocks": {
+        "eed98b11-ac8c-41a0-8eb9-836970fd9513": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "davines-naturaltech-purifying-anti-dandruff",
+            "title": "",
+            "link_text": "",
+            "button_link": ""
+          }
+        },
+        "3182c7bf-e670-423f-9c15-44a5b7ca7658": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "",
+            "title": "Featured collection",
+            "link_text": "View products",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "eed98b11-ac8c-41a0-8eb9-836970fd9513",
+        "3182c7bf-e670-423f-9c15-44a5b7ca7658"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "grid": 4,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.9
+      }
+    },
+    "b9bb3f50-0048-4542-bd43-7ffc67cd3ea9": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Need help deciding?",
+        "text": "<p>Feel free to send us a message for an online consultation.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Chat Now",
+        "button_url": "http://m.me/hairmnl",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "b570a06c-5af3-47f5-88f0-2366adb7264a": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    }
+  },
+  "order": [
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "hero",
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "600d82f8-e027-446d-aa41-56d01947d240",
+    "e5fdd828-845d-4575-9967-a6939c3cbc7d",
+    "section_featured_articles_GBehBV",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "7a270b7d-2599-42c7-ba52-5681e1d57193",
+    "b9bb3f50-0048-4542-bd43-7ffc67cd3ea9",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "b570a06c-5af3-47f5-88f0-2366adb7264a"
+  ]
+}

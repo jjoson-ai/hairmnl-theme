@@ -1,0 +1,456 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "a0127ace-c487-46d6-8fe2-5f7f5385987b": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/Kerastase_Gloss_Absolu_desktop.jpg",
+        "banner_mobile": "shopify://shop_images/Kerastase_Gloss_Absolu_mobile.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/Wella_Professionals_Color_Fresh_Masks_Banner_Desktop_b2b8c78b-b446-4add-b714-88c54756d074.jpg",
+        "banner_mobile": "shopify://shop_images/Wella_Professionals_Color_Fresh_Masks_Banner_Mobile_ffd6731f-2e0a-4698-8055-2e02a1f2a621.jpg",
+        "banner_url": "shopify://collections/wella-professionals-color-fresh-mask",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/kerastase-hairmnl-anniversary-sale-sept-9-30-2024-_2_25b0ee84-e948-4015-bfe4-0d1fbb92481b.jpg",
+            "slide_image_mobile": "shopify://shop_images/kerastase-hairmnl-anniversary-sale-sept-9-30-2024_a3077a97-28d4-4300-b395-bb174b1c9100.jpg",
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/Kerastase_Premiere_Sidney_SIS_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/Kerastase_Premiere_Sidney_SIS_mobile.jpg",
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "a83c7fb5-a342-4a07-83d9-c0de76bb58fb": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "Kérastase",
+        "title": "Kérastase Gloss Absolu",
+        "text": "<p>Powered by hyaluronic acid, glycolic acid, and wild rose in oil, this range hydrates, smooths, and enhances shine while leaving hair light, bouncy, and beautifully fragrant. Perfect for long hair prone to frizz, each formula promotes hair alignment for a sleek, radiant finish.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_richtext_UGNdqH": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h4>Complete Your Routine</h4><p>At Kérastase, we believe in the power of a complete haircare routine. Discover the products of this range and maximize your results.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_columns_mdRA3c": {
+      "type": "section-columns",
+      "blocks": {
+        "text_block_hD8QjW": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Kerastase_Gloss_Absolu_Step_1_Bathe.jpg",
+            "title": "",
+            "text": "<p>A high-foaming, gel-like shampoo that deeply cleanses the scalp and hair while tightening the cuticle for a smooth, high-shine finish.</p>",
+            "button_label": "Shop Shampoo",
+            "button_link": "shopify://products/kerastase-gloss-absolu-hydra-illuminating-shampoo",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "text_block_NJ6UQ8": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Kerastase_Gloss_Absolu_Step_2_Treat.jpg",
+            "title": "",
+            "text": "<p>A gloss-enhancing conditioner that hydrates and plumps each fiber, improving suppleness, manageability, and shine.</p>",
+            "button_label": "Shop Conditioner",
+            "button_link": "shopify://products/kerastase-gloss-absolu-hydra-illuminating-conditioner-250ml",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_mtXynY": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Kerastase_Gloss_Absolu_Step_3_Glaze_Milk.jpg",
+            "title": "",
+            "text": "<p>A multi-benefit, lightweight milk after wash that hydrates, smooths, detangles, and protects against frizz and flyaways.</p>",
+            "button_label": "Shop Hair Milk",
+            "button_link": "shopify://products/kerastase-gloss-absolu-anti-frizz-glaze-milk-190ml",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_MDTWLx": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Kerastase_Gloss_Absolu_Step_3_Texturize_Oil.jpg",
+            "title": "",
+            "text": "<p>A lightweight, high-gloss oil that glazes the hair with shine and softness, smoothing lengths and ends.</p>",
+            "button_label": "Shop Hair Oil",
+            "button_link": "shopify://products/kerastase-gloss-absolu-glaze-drops-45ml",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "text_block_hD8QjW",
+        "text_block_NJ6UQ8",
+        "text_block_mtXynY",
+        "text_block_MDTWLx"
+      ],
+      "name": "Text columns with images",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Shop Kérastase Gloss Absolu",
+        "title_font_size": 28,
+        "collection": "kerastase-gloss-absolu",
+        "grid": 6,
+        "rows": 3,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "3b3ab117-386d-45d0-be7e-a34eceb25bd3": {
+      "type": "section-double",
+      "blocks": {
+        "template--14412995723363__3b3ab117-386d-45d0-be7e-a34eceb25bd3-167532793062adbbcc-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Wella Color Fresh Mask",
+            "title": "Tone, Color, and Refresh Your Hair in Just 4 Easy Steps With Wella!",
+            "text": "<p>Need to refresh you hair color or looking to change up your look easily at home? With Wella Professionals Color Fresh Mask, safely change up your look at home. In just a few steps, get vibrant color and amazing softness for your healthy, refreshed locks.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "146e3af0-99df-4f77-b9b2-f34ca86a0424": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": "wDFLz9cRS8Q"
+          }
+        }
+      },
+      "block_order": [
+        "template--14412995723363__3b3ab117-386d-45d0-be7e-a34eceb25bd3-167532793062adbbcc-0",
+        "146e3af0-99df-4f77-b9b2-f34ca86a0424"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "section_custom_content_Ghhbee": {
+      "type": "section-custom-content",
+      "blocks": {
+        "text_ATCEXA": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Discover the New Kérastase Gloss Absolu: Shine-Boosting, Frizz-Fighting Haircare Now at HairMNL",
+            "text": "<p><strong>Shiny, frizz-free hair is no longer a dream—it’s a reality.</strong>Introducing the<strong>newest line from Kérastase:</strong><a href=\"https://www.hairmnl.com/collections/kerastase-gloss-absolu\" target=\"_blank\"><strong>Gloss Absolu</strong></a>, now available at<a href=\"https://www.hairmnl.com/collections/kerastase-gloss-absolu\" target=\"_blank\">HairMNL</a>. Designed for<em>all hair types</em>—but especially fine, long hair—this innovative collection transforms dull, frizzy strands into radiant, silky-smooth hair with every use.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Read more",
+            "button_url": "shopify://blogs/product-spotlight/kerastase-gloss-absolu-philippines",
+            "button_color": "btn--neutral",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "image_mHtTHf": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Discover_the_New_Kerastase_Gloss_Absolu.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "text_ATCEXA",
+        "image_mHtTHf"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": true,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "386dcc4e-dd29-4949-aaa3-f6d01f814235": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14412995723363__386dcc4e-dd29-4949-aaa3-f6d01f814235-16753282058e1dd242-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "discover-the-new-kerastase-premiere-line-now-available-at-hairmnl-in-the-philippines"
+          }
+        }
+      },
+      "block_order": [
+        "template--14412995723363__386dcc4e-dd29-4949-aaa3-f6d01f814235-16753282058e1dd242-0"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Featured articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "8b484beb-0bb5-43e5-a90b-220aa5414373": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    },
+    "164244339393e3ebe3": {
+      "type": "apps",
+      "blocks": {
+        "7162c3c2-7cdf-445c-bbba-741f897a370a": {
+          "type": "shopify://apps/judge-me-reviews/blocks/medals/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "7162c3c2-7cdf-445c-bbba-741f897a370a"
+      ],
+      "disabled": true,
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "17213213179dbb929d": {
+      "type": "apps",
+      "blocks": {
+        "pro_blogger_pb_collection_related_posts_BrVVQd": {
+          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_collection_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "settings": {
+            "blog_name": "",
+            "pb_related_posts_title": "Related Posts",
+            "pb_related_posts_title_style": "H3",
+            "pb_related_post_items": 6,
+            "pb_related_post_item_display": 4,
+            "slider_autoplay": "2",
+            "custom_class": "",
+            "pb_item_style": "1",
+            "image_display": "cover",
+            "pb_color_image_bg": "",
+            "pb_color_text_bg": "",
+            "pb_color_line": "",
+            "pb_extras": "",
+            "pb_related_post_length": 10,
+            "read_more": "",
+            "display_tags": "0",
+            "keyword": "",
+            "key_match_scoring": "no",
+            "pb_related_posts_matching": "0",
+            "pb_related_posts_tag_match": "10",
+            "pb_related_posts_title_match": "5"
+          }
+        }
+      },
+      "block_order": [
+        "pro_blogger_pb_collection_related_posts_BrVVQd"
+      ],
+      "disabled": true,
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "a0127ace-c487-46d6-8fe2-5f7f5385987b",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "a83c7fb5-a342-4a07-83d9-c0de76bb58fb",
+    "section_richtext_UGNdqH",
+    "section_columns_mdRA3c",
+    "1642442735c9bd4274",
+    "3b3ab117-386d-45d0-be7e-a34eceb25bd3",
+    "section_custom_content_Ghhbee",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "386dcc4e-dd29-4949-aaa3-f6d01f814235",
+    "8b484beb-0bb5-43e5-a90b-220aa5414373",
+    "164244339393e3ebe3",
+    "17213213179dbb929d"
+  ]
+}

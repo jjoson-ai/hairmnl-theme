@@ -1,0 +1,218 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "0863f1f1-afa1-42f7-8409-3f2dbbf6a21c": {
+      "type": "tousled-header",
+      "settings": {
+        "tousled_menu_linklist": "tousled-v2",
+        "tousled_logo_max_limit": 100,
+        "tousled_logo_max_limit_menu": 100,
+        "header_bg": "#e7d8c3",
+        "underline": "#333333",
+        "underline_current": false
+      }
+    },
+    "main": {
+      "type": "article",
+      "custom_css": [],
+      "settings": {
+        "title_alignment": "center",
+        "blog_show_meta": true,
+        "author_alignment": "center",
+        "content_alignment": "center",
+        "tags": false,
+        "social": false,
+        "blog_show_featured_image": false,
+        "image_height": "use_screen_three_quarters",
+        "bg_position": "center-center",
+        "sidebar_tags": false,
+        "recent": true
+      }
+    },
+    "166965158331b88ba2": {
+      "type": "apps",
+      "blocks": {
+        "94d08438-4484-498f-b5a7-fe63a131c52b": {
+          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_post_related_products/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "settings": {
+            "pb_related_products_title": "Related Products",
+            "pb_related_products_title_style": "H5",
+            "pb_related_product_items": 12,
+            "pb_related_product_item_display": 6,
+            "slider_autoplay": "2",
+            "custom_class": "",
+            "pb_mid_display": false,
+            "pb_mid_display_para": 4,
+            "pb_item_style": "1",
+            "pb_color_image_bg": "",
+            "pb_color_text_bg": "",
+            "pb_color_line": "",
+            "pb_out_of_stock": true,
+            "pb_related_products_matching": "3",
+            "pb_related_products_tag_match": "10",
+            "pb_related_products_title_match": "5",
+            "pb_related_products_adv_match": "3",
+            "pb_show_product": "reviews, price",
+            "pb_product_reviews": "JudgeMe",
+            "pb_product_sale": false,
+            "pb_product_sale_color": "#ea0606",
+            "pb_product_buy_button": "2",
+            "pb_product_buy_action": "0",
+            "pb_product_buy_button_text": "Buy Now",
+            "related_metafield": "{{ article.metafields.custom.related_products.value }}"
+          }
+        },
+        "7cb62b8e-a295-4935-aed1-f9417b1ef443": {
+          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_post_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "settings": {
+            "pb_related_posts_title": "Related Articles",
+            "pb_related_posts_title_style": "H5",
+            "pb_related_post_items": 6,
+            "pb_related_post_item_display": 5,
+            "slider_autoplay": "2",
+            "pb_all_blog_link": true,
+            "pb_all_blog_link_text": "View All",
+            "custom_class": "",
+            "pb_item_style": "1",
+            "image_display": "cover",
+            "pb_color_image_bg": "",
+            "pb_color_text_bg": "",
+            "pb_color_line": "",
+            "pb_extras": "",
+            "pb_related_post_length": 10,
+            "read_more": "",
+            "display_tags": "0",
+            "keyword": "",
+            "key_match_scoring": "no",
+            "pb_related_posts_matching": "3",
+            "pb_related_posts_tag_match": "5",
+            "pb_related_posts_title_match": "1",
+            "pb_related_posts_author_match": "0"
+          }
+        }
+      },
+      "block_order": [
+        "94d08438-4484-498f-b5a7-fe63a131c52b",
+        "7cb62b8e-a295-4935-aed1-f9417b1ef443"
+      ],
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--small",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "0af38192-713f-4828-a246-23a8c2fe7bce": {
+      "type": "section-newsletter",
+      "settings": {
+        "title": "Sign up to our mailing list!",
+        "richtext": "<p>Be part of our hair community.<br/>Get regular pro tips, trends, exclusives, and more.</p>",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "173527545266e502e6": {
+      "type": "apps",
+      "blocks": {
+        "pro_blogger_pb_post_related_posts_4w3xNC": {
+          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_post_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "settings": {
+            "pb_related_posts_title": "Related Posts",
+            "pb_related_posts_title_style": "H3",
+            "pb_related_post_items": 6,
+            "pb_related_post_item_display": 4,
+            "slider_autoplay": "2",
+            "pb_all_blog_link": true,
+            "pb_all_blog_link_text": "View All",
+            "custom_class": "",
+            "pb_item_style": "1",
+            "image_display": "cover",
+            "pb_color_image_bg": "",
+            "pb_color_text_bg": "",
+            "pb_color_line": "",
+            "pb_extras": "",
+            "pb_related_post_length": 10,
+            "read_more": "",
+            "display_tags": "0",
+            "keyword": "",
+            "key_match_scoring": "no",
+            "pb_related_posts_matching": "0",
+            "pb_related_posts_tag_match": "10",
+            "pb_related_posts_title_match": "5",
+            "pb_related_posts_author_match": "1"
+          }
+        }
+      },
+      "block_order": [
+        "pro_blogger_pb_post_related_posts_4w3xNC"
+      ],
+      "disabled": true,
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "1744278568b9121df1": {
+      "type": "apps",
+      "blocks": {
+        "lfs_pro_blogger_pb_post_related_products_7eb6zi": {
+          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_post_related_products/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "settings": {
+            "pb_related_products_title": "Related Products",
+            "pb_related_products_title_style": "H3",
+            "pb_related_product_items": 6,
+            "pb_related_product_item_display": 4,
+            "slider_autoplay": "2",
+            "custom_class": "",
+            "pb_mid_display": false,
+            "pb_mid_display_para": 4,
+            "pb_item_style": "1",
+            "pb_color_image_bg": "",
+            "pb_color_text_bg": "",
+            "pb_color_line": "",
+            "pb_out_of_stock": false,
+            "pb_related_products_matching": "0",
+            "pb_related_products_tag_match": "10",
+            "pb_related_products_title_match": "5",
+            "pb_related_products_adv_match": "3",
+            "pb_show_product": "vendor, reviews, price",
+            "pb_product_reviews": "None",
+            "pb_product_sale": true,
+            "pb_product_sale_color": "#ea0606",
+            "pb_product_buy_button": "0",
+            "pb_product_buy_action": "0",
+            "pb_product_buy_button_text": "Buy Now",
+            "related_metafield": "{{ article.metafields.custom.related_products.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "lfs_pro_blogger_pb_post_related_products_7eb6zi"
+      ],
+      "disabled": true,
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "0863f1f1-afa1-42f7-8409-3f2dbbf6a21c",
+    "main",
+    "166965158331b88ba2",
+    "0af38192-713f-4828-a246-23a8c2fe7bce",
+    "173527545266e502e6",
+    "1744278568b9121df1"
+  ]
+}

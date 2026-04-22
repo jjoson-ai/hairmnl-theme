@@ -1,0 +1,119 @@
+{%- comment -%}
+  ----------------------------------------------------------------------------------
+   Plug in SEO Plus for Shopify
+
+   Copyright (c) 2018 Pemberton Rank Ltd, a company registered in England 7341337
+
+   This file is subject to the license at https://www.pluginseo.com/eula
+  ----------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- assign pTF = 's' -%}
+{%- assign pageTitleManuallyEntered = true -%}
+{%- assign defaultPageTitle = nil -%}
+
+{%- if hasLangify == true and detectedLanguage != shop.metafields["languages"]["default"] -%}
+  {%- assign pTF = pTF | append: '-lf' -%}
+  {%- if rootTemplate == 'index' -%}
+    <title>[Homepage page title]</title>
+  {%- elsif rootTemplate == '404' -%}
+    <title>[404 page title]</title>
+  {%- elsif rootTemplate == 'search' -%}
+    <title>[Search page title]</title>
+  {%- else -%}
+    {%- assign pTF = pTF | append: '-ap' -%}
+    <title>{{ langify_title | strip_html | strip_newlines }} [Append]</title>
+  {%- endif -%}
+{%- else -%}
+  {%- case rootTemplate -%}
+    {%- when 'index' -%}
+      {%- assign defaultPageTitle = ['shop']['name'] -%}
+      {%- assign pageTitleTemplate = settings.pluginseo_pageTitleIndexTemplate -%}
+      {%- assign pTFTemp = '-te_ix' -%}
+    {%- when 'page' -%}
+      {%- assign defaultPageTitle = page.title | escape -%}
+      {%- assign pageTitleTemplate = settings.pluginseo_pageTitlePageTemplate -%}
+      {%- assign pTFTemp = '-te_pg' -%}
+    {%- when 'search' -%}
+      {%- if search.terms == empty -%}
+        {%- assign defaultPageTitle = 'Search' -%}
+      {%- else -%}
+        {%- assign defaultPageTitle = search.terms | escape -%}
+      {%- endif -%}
+      {%- assign pageTitleTemplate = settings.pluginseo_pageTitleSearchTemplate -%}
+      {%- assign pTFTemp = '-te_se' -%}
+    {%- when 'product' -%}
+      {%- assign defaultPageTitle = product.title | escape -%}
+      {%- assign pageTitleTemplate = settings.pluginseo_pageTitleProductTemplate -%}
+      {%- assign pTFTemp = '-te_pr' -%}
+    {%- when 'collection' -%}
+      {%- assign defaultPageTitle = collection.title | escape -%}
+      {%- if collection.handle == 'all' -%}
+        {%- assign pageTitleTemplate = settings.pluginseo_pageTitleCatalogTemplate -%}
+      {%- else -%}
+        {%- assign pageTitleTemplate = settings.pluginseo_pageTitleCollectionTemplate -%}
+      {%- endif -%}
+      {%- assign pTFTemp = '-te_co' -%}
+    {%- when 'blog' -%}
+      {%- assign defaultPageTitle = blog.title | escape -%}
+      {%- assign pageTitleTemplate = settings.pluginseo_pageTitleBlogTemplate -%}
+      {%- assign pTFTemp = '-te_bl' -%}
+    {%- when 'article' -%}
+      {%- assign defaultPageTitle = article.title | escape -%}
+      {%- assign pageTitleTemplate = settings.pluginseo_pageTitleArticleTemplate -%}
+      {%- assign pTFTemp = '-te_ar' -%}
+    {%- when '404' -%}
+      {%- assign pageTitleTemplate = settings.pluginseo_pageTitle404Template -%}
+      {%- assign pTFTemp = '-te_44' -%}
+    {%- else -%}
+  {%- endcase -%}
+
+  {%- capture defaultPageTitle -%}{{ defaultPageTitle | truncate: 70, "" | strip_html }}{%- endcapture -%}
+  {%- capture escapedPageUnderscoreTitle -%}{{ [pageUnderscoreTitle] | escape }}{%- endcapture -%}
+  {%- if escapedPageUnderscoreTitle == blank or escapedPageUnderscoreTitle == nil or escapedPageUnderscoreTitle == defaultPageTitle  -%}
+    {%- assign pageTitleManuallyEntered = false -%}
+  {%- endif -%}
+
+  {%- if pageTitleTemplate == blank or pageTitleTemplate == nil -%}
+    {%- assign pageTitleTemplate = settings.pluginseo_pageTitleDefaultTemplate -%}
+    {%- assign pTFTemp = '-te_df' -%}
+  {%- endif -%}
+
+  {%- if pageTitleTemplate != nil -%}
+    {%- if pageTitleManuallyEntered == false or settings.pluginseo_pageTitleTemplateApplyToAll == true -%}
+      {%- assign pTF = pTF | append: pTFTemp -%}
+      {%- capture pageTitle -%}{% include 'pluginseo-parse' template:pageTitleTemplate %}{%- endcapture -%}
+    {%- else -%}
+      {%- assign pTF = pTF | append: '-me' -%}
+      {%- capture pageTitle -%}{% include 'pluginseo-parse' template:escapedPageUnderscoreTitle %}{%- endcapture -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- assign pTF = pTF | append: '-me' -%}
+    {%- capture pageTitle -%}{% include 'pluginseo-parse' template:escapedPageUnderscoreTitle %}{%- endcapture -%}
+  {%- endif -%}
+
+  {%- if settings.pluginseo_pageTitleEnableAppender == true -%}
+    {%- capture pageTitleAppend -%}{% include 'pluginseo-parse' template:settings.pluginseo_pageTitleAppenderTemplate %}{%- endcapture -%}
+    {%- capture pageTitleWithAppendage -%}{{ pageTitle }} {{ pageTitleAppend }}{%- endcapture -%}
+
+    {%- assign pluginseo_pageTitleTruncateChars = settings.pluginseo_pageTitleTruncateChars | plus: 0 -%}
+    {%- assign pluginseo_pageTitleAppenderTargetLength = settings.pluginseo_pageTitleAppenderTargetLength | plus: 0 -%}
+    {%- assign pageTitleLength = pageTitle | size | plus: 0 -%}
+    {%- assign pageTitleWithAppendageLength = pageTitleWithAppendage | size | plus: 0 -%}
+
+    {%- if pageTitleLength < pluginseo_pageTitleAppenderTargetLength and pageTitleWithAppendageLength < pluginseo_pageTitleTruncateChars -%}
+      {%- assign pTF = pTF | append: '-ap' -%}
+      {%- capture pageTitle -%}{{ pageTitleWithAppendage }}{%- endcapture -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if settings.pluginseo_pageTitleTruncateChars != nil -%}
+    {%- assign finalPageTitleLength = pageTitle | size | plus: 0 -%}
+    {%- assign pluginseo_pageTitleTruncateChars = settings.pluginseo_pageTitleTruncateChars | plus: 0 -%}
+    {%- if finalPageTitleLength > pluginseo_pageTitleTruncateChars -%}
+      {%- assign pTF = pTF | append: '-tr' -%}
+    {%- endif -%}
+    {%- capture pageTitle -%}{{ pageTitle | truncate: settings.pluginseo_pageTitleTruncateChars, "" }}{%- endcapture -%}
+  {%- endif -%}
+  <title>{{ pageTitle | strip_html | strip_newlines }}</title>
+{%- endif -%}

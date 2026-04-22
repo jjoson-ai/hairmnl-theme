@@ -1,0 +1,309 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "section-banner-slider": {
+      "type": "section-banner-slider",
+      "disabled": true,
+      "blocks": {
+        "template--14386034049123__section-banner-slider-1666401432e7d81ab8-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/DIY-beard-balm.jpg",
+            "slide_image_mobile": "shopify://shop_images/reds-for-lips.jpg",
+            "slide_image_url": ""
+          }
+        },
+        "template--14386034049123__section-banner-slider-1666401432e7d81ab8-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/makeup-beauty-flatlay_33faccb1-cf4c-4ea0-98dd-d1757115824e.jpg",
+            "slide_image_mobile": "shopify://shop_images/bright-eye-makeup-brushes.jpg",
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14386034049123__section-banner-slider-1666401432e7d81ab8-0",
+        "template--14386034049123__section-banner-slider-1666401432e7d81ab8-1"
+      ],
+      "settings": {
+        "enable_section": false,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "20f30000-6d1e-4dec-9b2e-61fd8ea5e80b": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/BackbarStylist1_1400x500_DesktopBanner_0b8ab810-0b22-4500-8636-94fa0a08e5b2.png",
+        "banner_mobile": "shopify://shop_images/BackbarStylist1_552x502_MobileBanner_892e7d89-3b82-47a0-89c6-f57fba49acca.png",
+        "banner_url": ""
+      }
+    },
+    "63738231-0cf2-4149-9f6f-88f0c5b3754a": {
+      "type": "menu-buttons",
+      "settings": {
+        "menu_list": "backbar-middle-menu",
+        "space_top": 20,
+        "space_bottom": 20
+      }
+    },
+    "34a83865-3726-4bd6-abac-1c8f62f778cb": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "Introducing",
+        "title": "",
+        "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "99d21e93-b35a-431e-9853-f838b1967ebe": {
+      "type": "section-gallery-text",
+      "disabled": true,
+      "blocks": {
+        "template--14386034049123__99d21e93-b35a-431e-9853-f838b1967ebe-16729958702687ee7e-0": {
+          "type": "text",
+          "settings": {
+            "title": "Custom Text",
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "402fb820-19e3-497e-a117-7d68e0850e03": {
+          "type": "text",
+          "settings": {
+            "title": "Custom Text",
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14386034049123__99d21e93-b35a-431e-9853-f838b1967ebe-16729958702687ee7e-0",
+        "402fb820-19e3-497e-a117-7d68e0850e03"
+      ],
+      "settings": {
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "92f62b25-da76-4b14-ab8d-a054c37c2085": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Styling",
+        "title_font_size": 28,
+        "collection": "the-backbar-styling",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "1b4c9280-f0f5-4032-962b-b9945a6a8893": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Hair Color",
+        "title_font_size": 28,
+        "collection": "the-backbar-hair-color",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "8361213f-3961-4da9-9881-191f2b65cfdb": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Ammonia-Free Hair Color",
+        "title_font_size": 28,
+        "collection": "the-backbar-ammonia-free-hair-color",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "18654a3b-e475-4a07-8171-7c9426be7ab8": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Bleach",
+        "title_font_size": 28,
+        "collection": "the-backbar-bleach",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "415a0175-942d-4511-9f43-451487350a89": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Tools",
+        "title_font_size": 28,
+        "collection": "the-backbar-tools",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "0ae919e7-19ea-45de-8b2e-6de7cfd06154": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Texture",
+        "title_font_size": 28,
+        "collection": "the-backbar-texture",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "e5329ead-e326-4028-9c6f-53d3c5c3c6a6": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Hair & Scalp Care",
+        "title_font_size": 28,
+        "collection": "the-backbar-hair-scalp-care",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "e0b2f3d7-d548-4e05-b966-ed957273aadc": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Extra Care",
+        "title_font_size": 28,
+        "collection": "the-backbar-extra-care",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true
+      }
+    },
+    "16bac0ad-6ab1-4f68-95d5-abfe763c393d": {
+      "type": "section-collection-grid",
+      "disabled": true,
+      "blocks": {
+        "template--14386034049123__16bac0ad-6ab1-4f68-95d5-abfe763c393d-1669636124f01e3031-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "",
+            "title": "Featured collection",
+            "link_text": "View products",
+            "button_link": ""
+          }
+        },
+        "template--14386034049123__16bac0ad-6ab1-4f68-95d5-abfe763c393d-1669636124f01e3031-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "",
+            "title": "Featured collection",
+            "link_text": "View products",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14386034049123__16bac0ad-6ab1-4f68-95d5-abfe763c393d-1669636124f01e3031-0",
+        "template--14386034049123__16bac0ad-6ab1-4f68-95d5-abfe763c393d-1669636124f01e3031-1"
+      ],
+      "settings": {
+        "title": "Hair Color",
+        "grid": 2,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 15,
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7
+      }
+    },
+    "12025ed8-590d-4c04-986b-4079ea31522a": {
+      "type": "section-featured-articles",
+      "disabled": true,
+      "blocks": {
+        "template--14386034049123__12025ed8-590d-4c04-986b-4079ea31522a-16729913093f5d992d-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "",
+            "blog_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14386034049123__12025ed8-590d-4c04-986b-4079ea31522a-16729913093f5d992d-0"
+      ],
+      "settings": {
+        "title": "Featured articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "6b48a6c2-b067-4350-a3f5-61bbc6887baa": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 2
+      }
+    }
+  },
+  "order": [
+    "section-banner-slider",
+    "20f30000-6d1e-4dec-9b2e-61fd8ea5e80b",
+    "63738231-0cf2-4149-9f6f-88f0c5b3754a",
+    "34a83865-3726-4bd6-abac-1c8f62f778cb",
+    "99d21e93-b35a-431e-9853-f838b1967ebe",
+    "92f62b25-da76-4b14-ab8d-a054c37c2085",
+    "1b4c9280-f0f5-4032-962b-b9945a6a8893",
+    "8361213f-3961-4da9-9881-191f2b65cfdb",
+    "18654a3b-e475-4a07-8171-7c9426be7ab8",
+    "415a0175-942d-4511-9f43-451487350a89",
+    "0ae919e7-19ea-45de-8b2e-6de7cfd06154",
+    "e5329ead-e326-4028-9c6f-53d3c5c3c6a6",
+    "e0b2f3d7-d548-4e05-b966-ed957273aadc",
+    "16bac0ad-6ab1-4f68-95d5-abfe763c393d",
+    "12025ed8-590d-4c04-986b-4079ea31522a",
+    "6b48a6c2-b067-4350-a3f5-61bbc6887baa"
+  ]
+}

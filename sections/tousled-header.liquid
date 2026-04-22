@@ -1,0 +1,169 @@
+{%- assign tousled_menu = section.settings.tousled_menu_linklist -%}
+
+<div class="tousled-header__wrapper" 
+  data-section-id="{{ section.id }}"
+  data-section-type="header" 
+  data-header-wrapper
+  data-tousled-header-wrapper
+  data-underline-current="{{ section.settings.underline_current }}"
+  style="--bar-opacity: 0; --bar-width: 0; --bar-left: 0;"
+  >
+  <header class="hidden-pocket">
+    <div class="link-list" data-links-wrapper>
+      {% for link in linklists[tousled_menu].links %}
+        {% render 'nav-item', 
+          link: link, 
+          section: section, 
+          index: forloop.index
+        %}
+      {% endfor %}
+      <div class="hover__bar"></div>
+      <div class="hover__bg"></div>
+    </div>
+  </header>
+
+  <div class="mobile-menu-box text-left hidden-lap-and-up"
+    data-drawer-toggle="tousled-hamburger"
+    aria-label="{{ 'general.accessibility.open_menu' | t }}" 
+    aria-haspopup="true" 
+    aria-expanded="false" 
+    aria-controls="tousled-header-menu">
+    <div>
+      {% render 'icon-nav' %}
+    </div>
+    {% if section.settings.tousled_logo_mobile_menu != blank %}
+      {%- assign img_url = section.settings.tousled_logo_mobile_menu | img_url: '1x1' | replace: '_1x1.', '_600x.' -%}
+      <div class="logo-wrapper">
+        <img src="{{img_url}}"
+          class="lazyload tousled-logo" 
+          width="{{ section.settings.tousled_logo_max_limit_menu}}"
+          data-widths="[110, 160, 220, 320, 480, 540, 720, 900]"
+          data-sizes="auto"
+          data-aspectratio="{{ section.settings.tousled_logo_mobile_menu.aspect_ratio }}"
+          alt="{{ section.settings.tousled_logo_mobile_menu.alt | default: shop.name | strip_html | escape }}">
+      </div>
+    {%- else -%}
+      <span>
+        Tousled Menu
+      </span>
+    {% endif %}
+  </div>
+
+  <nav class="drawer header__drawer display-none" 
+    data-drawer="tousled-hamburger"
+    aria-label="{{ 'general.accessibility.tousled_menu' | t }}" 
+    id="tousled-header-menu">
+    <div class="drawer__content">
+      <div class="drawer__top">
+        {% if section.settings.tousled_logo_mobile != blank %}
+          {%- assign img_url = section.settings.tousled_logo_mobile | img_url: '1x1' | replace: '_1x1.', '_600x.' -%}
+          <div class="logo-wrapper">
+            <img src="{{img_url}}"
+              class="lazyload tousled-logo" 
+              width="{{ section.settings.tousled_logo_max_limit}}"
+              data-widths="[110, 160, 220, 320, 480, 540, 720, 900]"
+              data-sizes="auto"
+              data-aspectratio="{{ section.settings.tousled_logo_mobile.aspect_ratio }}"
+              alt="{{ section.settings.tousled_logo_mobile.alt | default: shop.name | strip_html | escape }}">
+          </div>
+        {% endif %}
+        <button class="drawer__button drawer__close"
+          data-drawer-toggle="tousled-hamburger"  
+          aria-label="{{ 'general.accessibility.close' | t }}">
+          {% render 'icon-close' %}
+        </button>
+      </div>
+      <div class="drawer__inner" data-drawer-scrolls>
+        <div class="drawer__menu" data-stagger-animation data-tousled-sliderule-pane data-sliderule-pane="0">
+          {% for link in linklists[tousled_menu].links %}
+            {% render 'tousled-nav-item-mobile', 
+              link: link, 
+              section: section, 
+              index: forloop.index
+            %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <span class="drawer__underlay" data-drawer-underlay>
+      <span class="drawer__underlay__fill"></span>
+      <span class="drawer__underlay__blur"></span>
+    </span>
+  </nav>
+</div>
+
+<style>
+  :root {
+    --tousled-header-bg: {{section.settings.header_bg}};
+    --tousled-menu-size: {{linklists[tousled_menu].links.size}};
+    --tousled-menu-underline-color: {{section.settings.underline}};
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Tousled Header",
+  "class": "tousled-header",
+  "settings": [
+    {
+      "type": "link_list",
+      "label": "Menu",
+      "id": "tousled_menu_linklist"
+    },
+    {
+      "type": "image_picker",
+      "id": "tousled_logo_mobile",
+      "label": "Tousled logo image(Mobile drawer)"
+    },
+    {
+      "type":    "range",
+      "id":      "tousled_logo_max_limit",
+      "min":     5,
+      "max":     495,
+      "step":    5,
+      "unit":    "px",
+      "label":   "Tousled logo width(Mobile drawer)",
+      "default": 100
+    },
+    {
+      "type": "image_picker",
+      "id": "tousled_logo_mobile_menu",
+      "label": "Tousled logo image(Mobile menu)"
+    },
+    {
+      "type":    "range",
+      "id":      "tousled_logo_max_limit_menu",
+      "min":     5,
+      "max":     495,
+      "step":    5,
+      "unit":    "px",
+      "label":   "Tousled logo width(Mobile menu)",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "header_bg",
+      "label": "Header background color",
+      "default": "#E7D8C3"
+    },
+    {
+      "type": "color",
+      "id": "underline",
+      "label": "Menu text underline color",
+      "default": "#333333"
+    },
+    {
+      "type": "checkbox",
+      "id": "underline_current",
+      "default": false,
+      "label": "Underline current page"
+    }
+  ],
+  "presets": [
+      {
+        "category": "Header",
+        "name":"Tousled Header"
+      }
+  ]
+}
+{% endschema %}

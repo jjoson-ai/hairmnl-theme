@@ -1,0 +1,643 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/DAV-AlchemicHP-728X360.jpg",
+            "slide_image_mobile": "shopify://shop_images/Dav_Purifying_SIS_Banner_Mobile.png",
+            "slide_image_url": "shopify://collections/davines-naturaltech-purifying-anti-dandruff"
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/Storytelling_Dandruff_Dec_2023_-_Desktop_Banner.png",
+            "slide_image_mobile": "shopify://shop_images/Storytelling_Dandruff_Dec_2023_-_Mobile_Banner.png",
+            "slide_image_url": "shopify://pages/effective-dandruff-solution-davines"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": false,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "1642434745b9c6aafa": {
+      "type": "section-slideshow",
+      "blocks": {
+        "1642434744ca1d026a-0": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/kerastase-genesis",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "1642434744ca1d026a-1": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/loreal-professionnel-serioxyl-advanced",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "37f15030-0f98-4d36-8646-64e7a4bcc6a8": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/wella-professionals",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        }
+      },
+      "block_order": [
+        "1642434744ca1d026a-0",
+        "1642434744ca1d026a-1",
+        "37f15030-0f98-4d36-8646-64e7a4bcc6a8"
+      ],
+      "disabled": true,
+      "settings": {
+        "autoplay": false,
+        "autoplay_speed": 8,
+        "height": "use_image"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/Storytelling_Dandruff_Dec_2023_-_Desktop_Banner.png",
+        "banner_mobile": "shopify://shop_images/Storytelling_Dandruff_Dec_2023_-_Mobile_Banner.png",
+        "banner_url": "shopify://pages/effective-dandruff-solution-davines",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "Davines",
+        "title": "Davines Alchemic",
+        "text": "<p><em><strong>Davines Alchemic</strong></em> is a system of shampoos and conditioners with pure pigments that can intensify and brighten both natural and cosmetic color.</p><p>This is non-permanent color that gives you free reign to experiment without worrying about long-term effects. These tones can be <strong>creatively mixed together, or used separately</strong> to maintain and enhance natural and cosmetic color.  </p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "7da8c7ea-2a82-4f39-8700-752c0f1aed63": {
+      "type": "section-double",
+      "blocks": {
+        "template--14463332974691__7da8c7ea-2a82-4f39-8700-752c0f1aed63-text-1": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Davines Alchemic Chocolate Shampoo & Conditioner",
+            "text": "<p><strong>Color-enhancing shampoo and conditioner for dark brown or black tones.</strong> Intensifies and illuminates these natural or colored dark brown shades.</p><p>Apply Alchemic Chocolate Shampoo, leave for 5 mins, then rinse. Apply Conditioner on damp lengths, leave for 10–20 mins. *Use on pre-lightened hair for best results.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Add to cart",
+            "button_url": "shopify://products/davines-alchemic-chocolate-shampoo-conditioner",
+            "button_color": "btn--primary",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "c0ad1b5d-ca5c-4924-8b97-66bb1e40d801": {
+          "type": "product",
+          "settings": {
+            "product": "davines-alchemic-chocolate-shampoo-conditioner",
+            "kicker": "",
+            "badge_string": "BEST SELLER",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff",
+            "bg_accent": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463332974691__7da8c7ea-2a82-4f39-8700-752c0f1aed63-text-1",
+        "c0ad1b5d-ca5c-4924-8b97-66bb1e40d801"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "section_liquid_ELgYhB": {
+      "type": "section-liquid",
+      "disabled": true,
+      "custom_css": [
+        ".video-container {display: flex; justify-content: center; align-items: center;}"
+      ],
+      "settings": {
+        "custom_liquid": "<div class=\"video-text-container\">\n    <div class=\"video-container\">\n        <iframe src=\"https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F897519195648742%2F&show_text=false&width=267&t=0\" width=\"267\" height=\"476\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\" allow=\"autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share\"></iframe>\n    </div>\n    <div class=\"text-container\">\n        <p>⭐⭐⭐⭐⭐<br>\n        \"My husband has been quietly irritated by recurring dandruff for five months. We already tried products bought from drugstores and even home remedies to remove his dandruff, but to no avail.\"<br>\n        <strong>Joy D., HairMNL Customer</strong></p>\n\n        <p>⭐⭐⭐⭐⭐<br>\n        \"I have had dandruff since college and I have tried every dandruff shampoo out in the market... from medicated ones to natural/herbal shampoos but to no avail.\"<br>\n        <strong>Trina, HairMNL Customer</strong></p>\n\n        <p>⭐⭐⭐⭐⭐<br>\n        \"I have patchy, dry, itchy portions on my scalp. I tried anti-dandruff shampoos, vegan, sulfate-free, baby shampoo, skin-sensitive shampoo, mild, virgin coconut oil, lemon, oatmeal water, gugo, etc. EVERYTHING!\"<br>\n        <strong>Alyssa, HairMNL Customer</strong></p>\n    </div>\n</div>\n\n<style>\n    .video-text-container {\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        text-align: center;\n        gap: 15px;\n        padding: 10px;\n    }\n\n    .video-container {\n        padding-top: 1.5rem; /* Adds 1.5rem space above the video */\n    }\n\n    .text-container {\n        max-width: 300px;\n        font-family: 'Basis Grotesque Pro', sans-serif;\n        font-size: 14px;\n        line-height: 1.5;\n        text-align: left;\n    }\n\n    .text-container p {\n        background: #f9f9f9;\n        padding: 10px;\n        border-radius: 8px;\n    }\n\n    @media (min-width: 600px) {\n        .video-text-container {\n            flex-direction: row;\n            justify-content: center;\n            align-items: flex-start;\n            text-align: left;\n        }\n\n        .text-container {\n            max-width: 350px;\n        }\n    }\n</style>"
+      }
+    },
+    "21faf20e-53d3-42b2-ba92-dfbafc3ac98f": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14463332974691__21faf20e-53d3-42b2-ba92-dfbafc3ac98f-text-1": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<p>⭐⭐⭐⭐⭐</p><p><em>\"My husband has been quietly irritated by recurring dandruff for five months. We already tried products bought from drugstores and even home remedies to remove his dandruff, but to no avail.\"</em></p><p><strong>Joy D., HairMNL Customer</strong></p>",
+            "text_align": "text-left"
+          }
+        },
+        "0e375c02-dca7-4966-979e-191c84de423d": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<p>⭐⭐⭐⭐⭐</p><p><em>\"I have had dandruff since college and I have tried every dandruff shampoo out in the market... from medicated ones to natural/herbal shampoos but to no avail.\"</em></p><p><strong>Trina, HairMNL Customer</strong></p>",
+            "text_align": "text-left"
+          }
+        },
+        "ad2c5cd7-f3d1-4481-b772-90d31be13a88": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<p>⭐⭐⭐⭐⭐</p><p><em>\"I have patchy, dry, itchy portions on my scalp. I tried anti dandruff shampoos, vegan, sulfate-free, baby shampoo, skin sensitive shampoo, mild, virgin coconut oil, lemon, oatmeal water, gugo, etc. EVERYTHING!\"</em></p><p><strong>Alyssa, HairMNL Customer</strong></p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463332974691__21faf20e-53d3-42b2-ba92-dfbafc3ac98f-text-1",
+        "0e375c02-dca7-4966-979e-191c84de423d",
+        "ad2c5cd7-f3d1-4481-b772-90d31be13a88"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "section_gallery_rm43fV": {
+      "type": "section-gallery",
+      "blocks": {
+        "image_WGxxB3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/011425_-_Purifying_Reviews_5.jpg",
+            "link": ""
+          }
+        },
+        "image_ViUzRF": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/011425_-_Purifying_Reviews_2.jpg",
+            "link": ""
+          }
+        },
+        "image_zwJeB4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/011425_-_Purifying_Reviews_6.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_WGxxB3",
+        "image_ViUzRF",
+        "image_zwJeB4"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "section_video_NGgEEQ": {
+      "type": "section-video",
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_two_thirds",
+        "video_link_bg": "https://youtu.be/Cfqt8EwYTKw?feature=shared",
+        "object_position": "center-center",
+        "image": "shopify://shop_images/Davines_Purifying_Shampoo_Review_UGC.jpg",
+        "bg_position": "center-center",
+        "video_link": "https://youtu.be/Cfqt8EwYTKw?feature=shared",
+        "popup_text": "",
+        "kicker": "",
+        "title": "",
+        "richtext": "",
+        "text_align": "align--middle-center",
+        "text_color": "text--white",
+        "overlay_opacity": 15,
+        "overlay_color": "#000000",
+        "link_text": "",
+        "link": "",
+        "button_color": "btn--white",
+        "button_style": "btn"
+      }
+    },
+    "section_gallery_c9kbCy": {
+      "type": "section-gallery",
+      "blocks": {
+        "image_Tefx87": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Kamilas4am_Dav_Alchemic_Thumbnail.jpg",
+            "link": "https://youtu.be/ElkoNEFd9hQ?feature=shared"
+          }
+        },
+        "image_h4k8Wh": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Refresh_Your_Color_At_Home_Feat_Antoinette_Taus_Thumbnail.jpg",
+            "link": "https://youtu.be/dqGlJCYxbYw?feature=shared"
+          }
+        }
+      },
+      "block_order": [
+        "image_Tefx87",
+        "image_h4k8Wh"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "section_custom_content_CeCWz9": {
+      "type": "section-custom-content",
+      "blocks": {
+        "video_ejmirq": {
+          "type": "video",
+          "settings": {
+            "video_link_bg": "",
+            "object_position": "center-center",
+            "image": "shopify://shop_images/Kamilas4am_Dav_Alchemic_Thumbnail.jpg",
+            "bg_position": "center-center",
+            "video_link": "https://youtu.be/ElkoNEFd9hQ?feature=shared",
+            "popup_text": "",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "overlay_opacity": 15,
+            "overlay_color": "#000",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "video_UzNixq": {
+          "type": "video",
+          "settings": {
+            "video_link_bg": "",
+            "object_position": "center-center",
+            "image": "shopify://shop_images/Refresh_Your_Color_At_Home_Feat_Antoinette_Taus_Thumbnail.jpg",
+            "bg_position": "center-center",
+            "video_link": "https://youtu.be/dqGlJCYxbYw?feature=shared",
+            "popup_text": "",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "overlay_opacity": 15,
+            "overlay_color": "#000",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        }
+      },
+      "block_order": [
+        "video_ejmirq",
+        "video_UzNixq"
+      ],
+      "disabled": true,
+      "name": "Custom content",
+      "settings": {
+        "height": "image-height",
+        "padding": true,
+        "borders": false,
+        "wrapper": false,
+        "desktop_padding_top": 12,
+        "desktop_padding_bottom": 12,
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12
+      }
+    },
+    "88e1c5c5-e5de-4765-9722-976baeca2996": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Shop Davines Alchemic",
+        "title_font_size": 28,
+        "collection": "davines-alchemic",
+        "grid": 5,
+        "rows": 5,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "section_double_6TEVc3": {
+      "type": "section-double",
+      "blocks": {
+        "text_w9kxFy": {
+          "type": "text",
+          "settings": {
+            "kicker": "Davines NaturalTech Well-Being",
+            "title": "",
+            "text": "<h1>Alternative sulfate-free shampoo</h1><h1></h1><p><a href=\"/collections/davines-naturaltech-well-being\" target=\"_blank\" title=\"Davines NaturalTech Well-Being\"><strong>Davines Naturaltech Well-Being</strong></a><strong> </strong>is designed to complement other <a href=\"https://www.hairmnl.com/collections/davines-naturaltech-line\" target=\"_blank\" title=\"HairMNL Davines Naturaltech Scalp Solutions\"><em><strong>Naturaltech </strong></em></a>treatments, serving as an alternate shampoo for the <a href=\"https://www.hairmnl.com/collections/davines-naturaltech-purifying-anti-dandruff\" target=\"_blank\" title=\"Davines NaturalTech Purifying - HairMNL\"><strong>Purifying line.</strong></a></p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Read More",
+            "button_url": "shopify://pages/effective-dandruff-solution-davines",
+            "button_color": "btn--primary",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "product_zjrjKx": {
+          "type": "product",
+          "settings": {
+            "product": "holy-grail-hair-package",
+            "kicker": "",
+            "badge_string": "Sulfate-free",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff",
+            "bg_accent": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "text_w9kxFy",
+        "product_zjrjKx"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "04f87bb4-18dd-4b84-9e11-89d72ae8e0d2": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "93639822-27eb-40a1-b239-ccec6a21b30f": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "mother-nature-knows-best-naturally-derived-purple-blue-toning-products-blonde-heads-are-raving-about"
+          }
+        },
+        "template--14410121379939__04f87bb4-18dd-4b84-9e11-89d72ae8e0d2-16753282058e1dd242-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "purple-toning-101-the-right-way-to-use-purple-toning-products"
+          }
+        },
+        "article_block_b4y6Hy": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "best-hair-color-for-morenas-complement-your-natural-glow"
+          }
+        },
+        "3898b307-0fa4-4e69-b7b8-9fff3420eb96": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "trends",
+            "blog_handle": "embracing-orange-and-copper-tones-the-vibrant-hair-trend-of-2025"
+          }
+        },
+        "article_block_Ld9jNV": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "trends",
+            "blog_handle": "chestnut-brown-highlights-cozy-colors-of-the-holiday-hue"
+          }
+        },
+        "603b3cd2-4592-4eb5-8a62-1747045f113a": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "trends",
+            "blog_handle": "match-the-trending-hair-color-for-your-skin-tone"
+          }
+        }
+      },
+      "block_order": [
+        "93639822-27eb-40a1-b239-ccec6a21b30f",
+        "template--14410121379939__04f87bb4-18dd-4b84-9e11-89d72ae8e0d2-16753282058e1dd242-0",
+        "article_block_b4y6Hy",
+        "3898b307-0fa4-4e69-b7b8-9fff3420eb96",
+        "article_block_Ld9jNV",
+        "603b3cd2-4592-4eb5-8a62-1747045f113a"
+      ],
+      "settings": {
+        "title": "Related Articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 5,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "d94cc6d6-5697-4e78-bbc5-75d06ccf5773": {
+      "type": "section-collection-slider",
+      "disabled": true,
+      "settings": {
+        "title": "Styling Products",
+        "title_font_size": 28,
+        "featured_collection": "styling-products"
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "55e0fa42-56e9-4022-b56a-1547541d0d28": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    },
+    "1739560182b1e933a8": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_Djwdp7": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_Djwdp7"
+      ],
+      "disabled": true,
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "1642434745b9c6aafa",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "7da8c7ea-2a82-4f39-8700-752c0f1aed63",
+    "section_liquid_ELgYhB",
+    "21faf20e-53d3-42b2-ba92-dfbafc3ac98f",
+    "section_gallery_rm43fV",
+    "section_video_NGgEEQ",
+    "section_gallery_c9kbCy",
+    "section_custom_content_CeCWz9",
+    "88e1c5c5-e5de-4765-9722-976baeca2996",
+    "section_double_6TEVc3",
+    "04f87bb4-18dd-4b84-9e11-89d72ae8e0d2",
+    "d94cc6d6-5697-4e78-bbc5-75d06ccf5773",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "55e0fa42-56e9-4022-b56a-1547541d0d28",
+    "1739560182b1e933a8"
+  ]
+}

@@ -1,0 +1,211 @@
+<!-- /sections/section-richtext.liquid-->
+{%- liquid
+assign kicker_line_class = ''
+if section.settings.title == blank
+  assign kicker_line_class = 'kicker__line'
+endif
+
+assign characters = section.settings.text | size
+assign justify_class = ''
+if characters > 400 and section.settings.align_text == 'text-center' and section.settings.text_columns > 1
+  assign justify_class = 'text-justify'
+endif
+
+assign animation_anchor = "[data-section-id='" | append: section.id | append: "']"
+-%}
+
+<section class="{{ section.settings.text_color }} {{ section.settings.height }} {{ section.settings.bg }}" data-section-id="{{ section.id }}" data-section-type="rich-text">
+  <div class="{{ section.settings.width }}">
+    <div class="text__standard {{ section.settings.align_text }}">
+      {% if section.settings.kicker != blank %}
+        <p class="standard__kicker {{ kicker_line_class }}"
+          data-aos="hero"
+          data-aos-anchor="{{ animation_anchor }}"
+          data-aos-order="1">
+          {{ section.settings.kicker }}
+        </p>
+      {% endif %}
+      {% if section.settings.title != blank %}
+        <h2 class="h2 standard__heading"
+          data-aos="hero"
+          data-aos-anchor="{{ animation_anchor }}"
+          data-aos-order="2">
+          {{ section.settings.title }}
+        </h2>
+      {% endif %}
+      {% if section.settings.text != blank %}
+        {% assign font_size_class = section.settings.text_size | plus: 1 | prepend: 'font--' %}
+        {% assign text_columns_class = section.settings.text_columns | prepend: 'columns--' %}
+        <div class="standard__rte {{ font_size_class }} {{ text_columns_class }} {{ justify_class }}"
+          data-aos="hero"
+          data-aos-anchor="{{ animation_anchor }}"
+          data-aos-order="3">
+          {{ section.settings.text }}
+        </div>
+      {% endif %}
+      {% if section.settings.button_text != blank %}
+        <a href="{{ section.settings.button_url }}" 
+          class="standard__cta {{ section.settings.button_style }} {{ section.settings.button_color }}"
+          data-aos="hero"
+          data-aos-anchor="{{ animation_anchor }}"
+          data-aos-order="4">
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Introducing"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type":  "range",
+      "id":    "text_size",
+      "label": "Text size",
+      "min":    1,
+      "max":    5,
+      "step":   1,
+      "default":2
+    },
+    {
+      "type":  "range",
+      "id":    "text_columns",
+      "label": "Columns",
+      "min":    1,
+      "max":    3,
+      "step":   1,
+      "default":1,
+      "info": "Desktop only"
+    },
+    {
+      "type": "select",
+      "id": "align_text",
+      "label": "Text alignment",
+      "default": "text-left",
+      "options": [
+        { "value": "text-left","label": "Left" },
+        { "value": "text-center","label": "Centered" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type":"text",
+      "id":"button_text",
+      "label":"Text"
+    },
+    {
+      "type":"url",
+      "id":"button_url",
+      "label":"Link"
+    },
+    {
+      "type": "select",
+      "id": "button_color",
+      "label": "Color",
+      "default": "btn--neutral",
+      "options": [
+        { "value": "btn--primary", "label": "Bright accent" },
+        { "value": "btn--secondary", "label": "Secondary accent" },
+        { "value": "btn--neutral", "label": "Text color" },
+        { "value": "btn--black", "label": "Black" },
+        { "value": "btn--white", "label": "White" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "default": "caps--link",
+      "options": [
+        { "value": "caps--link", "label": "Capitalized text" },
+        { "value": "btn btn--long uppercase", "label": "Solid button" },
+        { "value": "btn--soft btn--long uppercase", "label": "Soft button" },
+        { "value": "btn--outline btn--long uppercase", "label": "Outlined button" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "default": "margin--medium",
+      "options": [
+        { "value": "margin--large", "label": "Large" },
+        { "value": "margin--medium", "label": "Medium" },
+        { "value": "margin--small", "label": "Small" },
+        { "value": "margin--zero", "label": "Natural" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "wrapper",
+      "options": [
+        { "value": "wrapper--narrow", "label": "Narrow" },
+        { "value": "wrapper", "label": "Wide" },
+        { "value": "wrapper--full", "label": "Full width" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "text--neutral",
+      "options": [
+        { "value": "text--neutral", "label": "Normal text"},
+        { "value": "text--white", "label": "White"},
+        { "value": "text--primary", "label": "Primary accent"},
+        { "value": "text--secondary", "label": "Secondary accent"},
+        { "value": "text--black", "label": "Black"},
+        { "value": "text--invert--primary", "label": "Primary dark accent"},
+        { "value": "text--invert--secondary", "label": "Secondary dark accent"},
+        { "value": "text--invert", "label": "Inverted text color"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Background color",
+      "default": "palette--light bg--neutral",
+      "options": [
+        { "value": "palette--light bg--neutral", "label": "Default"},
+        { "value": "palette--light bg--accent", "label": "Light"},
+        { "value": "palette--dark bg--invert", "label": "Dark"},
+        { "value": "palette--dark bg--invert--accent", "label": "Dark accent"}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

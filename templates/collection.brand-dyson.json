@@ -1,0 +1,591 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": false,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "1642434745b9c6aafa": {
+      "type": "section-slideshow",
+      "blocks": {
+        "1642434744ca1d026a-0": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/kerastase-genesis",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "1642434744ca1d026a-1": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/loreal-professionnel-serioxyl-advanced",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "37f15030-0f98-4d36-8646-64e7a4bcc6a8": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/wella-professionals",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        }
+      },
+      "block_order": [
+        "1642434744ca1d026a-0",
+        "1642434744ca1d026a-1",
+        "37f15030-0f98-4d36-8646-64e7a4bcc6a8"
+      ],
+      "disabled": true,
+      "settings": {
+        "autoplay": false,
+        "autoplay_speed": 8,
+        "height": "use_image"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/dyson-desktop-banner-1400-x-500.jpg",
+        "banner_mobile": "shopify://shop_images/dyson-mobile-banner-552-x-502.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "Dyson",
+        "title": "Dyson Hair Care & Purifiers",
+        "text": "<p>Dyson's hair care and purifier fans represent a fusion of cutting-edge technology and functional design. In the realm of hair care, Dyson offers revolutionary products such as the <strong>Supersonic Hair Dryer</strong>, <strong>Airwrap Multi-Styler & Dryer </strong>and <strong>Corrale Hair Straightener</strong>, integrating intelligent features for efficient styling while prioritizing hair health. Additionally, Dyson's <strong>purifier fans</strong> combine air purification with effective cooling or heating, ensuring a comfortable and cleaner indoor environment with features like HEPA filtration and air quality sensors.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "Established in 2019",
+            "text": "<p>TYMO specializes in developing innovative hair styling tools. Established in 2019, TYMO brings together refined design, manufacturing, worldwide fast shipping and sincere post-sales services. TYMO offers the best to create naturally glamorous looks with diversified possibilities!</p>",
+            "text_align": "text-left"
+          }
+        },
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e": {
+          "type": "text",
+          "settings": {
+            "title": "Professional Hair Styling Tools",
+            "text": "<p>TYMO believes in focusing on design, quality and lived-in beauty that inspire. Our passion for crafting ingenious products drives us to delve beneath the technology and the voice of customers for better results. <a href=\"https://tymobeauty.com/\">TYMO</a> encourages all who are able to be themselves in an authentically beautiful way across the world.</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2",
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "7da8c7ea-2a82-4f39-8700-752c0f1aed63": {
+      "type": "section-double",
+      "blocks": {
+        "template--14463332974691__7da8c7ea-2a82-4f39-8700-752c0f1aed63-text-1": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Dyson Airwrap Hair Multi-Styler and Dryer Complete Long",
+            "text": "<p>Dry. Curl. Shape. Smooth and hide flyaways. With no heat damage.</p><p>Re-engineered attachments harness enhanced Coanda airflow to create your styles. Multiple attachments for every style. Suitable for all hair lengths.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "c0ad1b5d-ca5c-4924-8b97-66bb1e40d801": {
+          "type": "product",
+          "settings": {
+            "product": "dyson-airwrap-hair-multi-styler-and-dryer-complete-long-prussian-blue-rich-copper",
+            "kicker": "",
+            "badge_string": "BEST SELLER",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff",
+            "bg_accent": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463332974691__7da8c7ea-2a82-4f39-8700-752c0f1aed63-text-1",
+        "c0ad1b5d-ca5c-4924-8b97-66bb1e40d801"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "section_richtext_CjqfMB": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Supersonic Hair Dryer",
+        "text": "<p>The Dyson Supersonic is a revolutionary hair dryer designed to deliver fast and controlled airflow for efficient drying, while maintaining a sleek and ergonomic design. With its intelligent heat control technology, the Supersonic helps prevent extreme heat damage to protect your hair's natural shine. This hair dryer is equipped with a powerful digital motor that is compact and lightweight, offering a quiet yet high-velocity airflow. </p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "90b49c93-e51a-46f5-889d-9d15724a9a02": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "featured_collection": "dyson-supersonic-hair-dryer"
+      }
+    },
+    "section_richtext_eeXhwH": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Airwrap Hair Multi-Styler and Dryer",
+        "text": "<p>The Dyson Airwrap is a versatile hair styling tool that combines a hair dryer with various attachments to create a range of styles without extreme heat. This multi-styler uses air to style hair, wrapping it around the barrel with the help of the Coanda effect—a phenomenon where high-velocity air attracts and wraps hair around the barrel.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "7e3ac5ac-86a1-4ec3-9af4-b344ef78a44b": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "featured_collection": "dyson-airwrap-hair-multi-styler-and-dryer"
+      }
+    },
+    "section_richtext_DQXEyk": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Corrale Hair Straightener",
+        "text": "<p>The Dyson Corrale is a high-end hair straightener designed to provide effective straightening while minimizing hair damage. Known for its advanced features, including flexible plates, cordless operation, and intelligent heat control, making it a premium option for those looking for a high-performance hair straightener with an emphasis on hair health.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "abba8368-8a73-4d5c-a40d-dc792e2a44f7": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "featured_collection": "dyson-corrale-hair-straightener"
+      }
+    },
+    "section_richtext_WwCzFN": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Purifier Fan",
+        "text": "<p>The Dyson Purifier Fan is known for its combination of air purification and fan functionality, offering a comprehensive solution for improving indoor air quality while providing a comfortable and customizable airflow experience.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_collection_slider_BMnnRm": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "featured_collection": "dyson-purifier-fan"
+      }
+    },
+    "38ff9fd5-db39-493d-b103-65391a84a224": {
+      "type": "section-gallery",
+      "blocks": {
+        "template--14514543689827__38ff9fd5-db39-493d-b103-65391a84a224-image-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_TYMO_Porta_UGC_Thumbnail_Kim.jpg",
+            "link": "https://youtu.be/adhbdAcXoX0?si=QWBrdlhP85j8gG2w"
+          }
+        },
+        "template--14514543689827__38ff9fd5-db39-493d-b103-65391a84a224-image-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_TYMO_Volumizer_Brush_UGC_Thumbnail_Gela.jpg",
+            "link": "https://youtu.be/3pxDZAPRD04?si=nPc3ESbovpTh-zmt"
+          }
+        },
+        "template--14514543689827__38ff9fd5-db39-493d-b103-65391a84a224-image-3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_TYMO_Porta_UGC_Thumbnail_Vikky.jpg",
+            "link": "https://youtube.com/shorts/jP0HvFgT-_0?feature=share"
+          }
+        },
+        "f9bfe1c2-57a3-487f-a853-ecf3bde6822c": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14514543689827__38ff9fd5-db39-493d-b103-65391a84a224-image-1",
+        "template--14514543689827__38ff9fd5-db39-493d-b103-65391a84a224-image-2",
+        "template--14514543689827__38ff9fd5-db39-493d-b103-65391a84a224-image-3",
+        "f9bfe1c2-57a3-487f-a853-ecf3bde6822c"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "21faf20e-53d3-42b2-ba92-dfbafc3ac98f": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14463332974691__21faf20e-53d3-42b2-ba92-dfbafc3ac98f-text-1": {
+          "type": "text",
+          "settings": {
+            "title": "Powerful treatment!",
+            "text": "<p><em>\"My hair is badly damaged after bleaching it to platinum blonde. I've used it just once and I already saw a big difference. Transaction was fast and I received the product in just 2 days. Will definitely buy again once available!\"</em></p><p><strong>~Aijie, HairMNL Customer</strong></p>",
+            "text_align": "text-left"
+          }
+        },
+        "0e375c02-dca7-4966-979e-191c84de423d": {
+          "type": "text",
+          "settings": {
+            "title": "Cure for Frizzy Hair",
+            "text": "<p><em>\"My hair got frizzy ever since I bleached my hair. But this really helped it go back to being smooth. Highly recommended!\"</em></p><p><strong>~Donn, HairMNL Customer</strong></p>",
+            "text_align": "text-left"
+          }
+        },
+        "ad2c5cd7-f3d1-4481-b772-90d31be13a88": {
+          "type": "text",
+          "settings": {
+            "title": "Saved my bleached hair",
+            "text": "<p><em>\"I use this (& the No. 0) when I get color that requires several rounds of bleaching (e.g., ash gray, purple) -- I leave it on overnight (wearing a showercap as I sleep) & it significantly helps take my bleached strands from 'walis' texture to being more touchable & almost normal texture.\"</em></p><p><strong>~Nik, HairMNL Customer</strong></p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463332974691__21faf20e-53d3-42b2-ba92-dfbafc3ac98f-text-1",
+        "0e375c02-dca7-4966-979e-191c84de423d",
+        "ad2c5cd7-f3d1-4481-b772-90d31be13a88"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "88e1c5c5-e5de-4765-9722-976baeca2996": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Shop Dyson",
+        "title_font_size": 28,
+        "collection": "dyson",
+        "grid": 5,
+        "rows": 5,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "04f87bb4-18dd-4b84-9e11-89d72ae8e0d2": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "93639822-27eb-40a1-b239-ccec6a21b30f": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "tymo-is-here-unlock-stress-free-styling-for-effortless-elegance"
+          }
+        },
+        "3898b307-0fa4-4e69-b7b8-9fff3420eb96": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "tymo-porta-portable-hair-straightening-brush-your-troubleshooting-guide"
+          }
+        },
+        "template--14410121379939__04f87bb4-18dd-4b84-9e11-89d72ae8e0d2-16753282058e1dd242-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "hair-primers-what-they-do-and-why-you-need-one"
+          }
+        },
+        "603b3cd2-4592-4eb5-8a62-1747045f113a": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-tutorials",
+            "blog_handle": "get-big-and-bouncy-hairstyles-with-hair-mousse-a-step-by-step-guide-by-hairmnl"
+          }
+        },
+        "27c2049f-1d0c-476b-98f0-f9e4bae65338": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-tutorials",
+            "blog_handle": "how-to-use-sea-salt-spray-to-style-filipino-hair"
+          }
+        },
+        "b0e56eb4-ded9-4e01-9b68-efec01081725": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "93639822-27eb-40a1-b239-ccec6a21b30f",
+        "3898b307-0fa4-4e69-b7b8-9fff3420eb96",
+        "template--14410121379939__04f87bb4-18dd-4b84-9e11-89d72ae8e0d2-16753282058e1dd242-0",
+        "603b3cd2-4592-4eb5-8a62-1747045f113a",
+        "27c2049f-1d0c-476b-98f0-f9e4bae65338",
+        "b0e56eb4-ded9-4e01-9b68-efec01081725"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Related Articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 5,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "d94cc6d6-5697-4e78-bbc5-75d06ccf5773": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "Styling Products",
+        "title_font_size": 28,
+        "featured_collection": "styling-products"
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "55e0fa42-56e9-4022-b56a-1547541d0d28": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "1642434745b9c6aafa",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "7da8c7ea-2a82-4f39-8700-752c0f1aed63",
+    "section_richtext_CjqfMB",
+    "90b49c93-e51a-46f5-889d-9d15724a9a02",
+    "section_richtext_eeXhwH",
+    "7e3ac5ac-86a1-4ec3-9af4-b344ef78a44b",
+    "section_richtext_DQXEyk",
+    "abba8368-8a73-4d5c-a40d-dc792e2a44f7",
+    "section_richtext_WwCzFN",
+    "section_collection_slider_BMnnRm",
+    "38ff9fd5-db39-493d-b103-65391a84a224",
+    "21faf20e-53d3-42b2-ba92-dfbafc3ac98f",
+    "88e1c5c5-e5de-4765-9722-976baeca2996",
+    "04f87bb4-18dd-4b84-9e11-89d72ae8e0d2",
+    "d94cc6d6-5697-4e78-bbc5-75d06ccf5773",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "55e0fa42-56e9-4022-b56a-1547541d0d28"
+  ]
+}

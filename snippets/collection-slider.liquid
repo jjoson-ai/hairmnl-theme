@@ -1,0 +1,24 @@
+<div class="wrapper">
+  <div class="spinner-wrapper">
+    <div class="spinner">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+  </div>
+  <div class="swiper collection" data-slide-delay="{{section.settings.slide_delay}}">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      {% for product in products limit: products.size %}
+        <div class="swiper-slide">
+          {% render 'product-grid-item', product: product %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="navigator-box">
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev swiper-button-disabled"></div>
+  </div>
+</div>

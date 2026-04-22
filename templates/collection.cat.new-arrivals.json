@@ -1,0 +1,358 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/New_Arrivals_Collection_Banners_1400_x_500_px_85292c4b-b68d-43dd-9549-1dc02d118e6a.png",
+        "banner_mobile": "shopify://shop_images/New_Arrivals_Collection_Banners_552_x_502_px_3b968d04-55d7-4a04-8195-f14f77b3a714.png",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 32,
+        "collection": "new-arrivals",
+        "grid": 6,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "c72c20a0-5e6f-4be4-89e9-43801e926b3a": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Kérastase New Arrivals",
+        "title_font_size": 28,
+        "collection": "kerastase-new-arrivals",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "5f384523-7bbb-4e9e-bbb9-4fbbc5343984": {
+      "type": "section-collection",
+      "settings": {
+        "title": "TYMO",
+        "title_font_size": 28,
+        "collection": "tymo",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "b4a80e5b-a1db-47f7-9e48-0b8376353e08": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines New Arrivals",
+        "title_font_size": 28,
+        "collection": "davines-new-arrivals",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_3cJRGa": {
+      "type": "section-collection",
+      "settings": {
+        "title": "L'Oreal Professionnel Tecni.Art",
+        "title_font_size": 28,
+        "collection": "loreal-professionnel-tecni-art",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "0a944de3-a0eb-49bd-8d60-5ba19b1fa856": {
+      "type": "section-collection",
+      "settings": {
+        "title": "L'Oréal Professionnel New Arrivals",
+        "title_font_size": 28,
+        "collection": "loreal-professionnel-new-arrivals",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "ae36ca13-c6dc-40d5-8666-c09138dcebe4": {
+      "type": "section-collection",
+      "settings": {
+        "title": "AVEDA Special Offers",
+        "title_font_size": 28,
+        "collection": "aveda-special-offers",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "e2f2ea1e-281e-4875-8a7b-371e26c2dd6f": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/Loreal_Absolut_Repair_Molecular_Banner_2.jpg",
+        "banner_mobile": "shopify://shop_images/Loreal_Absolut_Repair_Molecular_Banner_3.jpg",
+        "banner_url": "shopify://collections/davines-gift-sets",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "164244299150503795": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "AVEDA Invati Ultra Advanced",
+        "title_font_size": 28,
+        "collection": "aveda-invati-ultra-advanced",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "7208fcbe-9d89-4d37-a6e4-c9b2516767b9": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_url": "shopify://collections/k18",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_banner_slider_j9rD8j": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "banner_slide_4mthqt": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/revlon-pro-restart-curls-2024-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/revlon-pro-restart-curls-2024-mobile.jpg",
+            "slide_image_url": "shopify://collections/revlon-professional-restart-curls"
+          }
+        },
+        "banner_slide_MCR8nt": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/revlon-pro-restart-density-2024-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/revlon-pro-restart-density-2024-mobile.jpg",
+            "slide_image_url": "shopify://collections/revlon-professional-restart-density"
+          }
+        },
+        "banner_slide_EDpfRk": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/revlon-pro-restart-color-2024-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/revlon-pro-restart-color-2024-mobile.jpg",
+            "slide_image_url": "shopify://collections/revlon-professional-restart-color"
+          }
+        }
+      },
+      "block_order": [
+        "banner_slide_4mthqt",
+        "banner_slide_MCR8nt",
+        "banner_slide_EDpfRk"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "fac55bb3-50d2-4d0d-9930-9fe0b4895cd4": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Kérastase Gloss Absolu",
+        "title_font_size": 28,
+        "collection": "kerastase-gloss-absolu",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "ffdff19e-40ac-45fb-947b-6294443e6fa4": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Sally Hansen",
+        "title_font_size": 28,
+        "collection": "sally-hansen",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_JTVXpG": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Make-up Designory",
+        "title_font_size": 28,
+        "collection": "make-up-designory",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "3a163592-909d-44d7-aa7f-8417ff172cd7": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 9,
+        "banner_desktop": "shopify://shop_images/TUFT_-_Nov_2023_Promo_Banner_Desktop.png",
+        "banner_mobile": "shopify://shop_images/tuft-nov-2023-promo-banner-mobile.jpg",
+        "banner_url": "shopify://collections/tuft",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "ab91f97d-1837-4fed-bedf-178a24dd1287": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "TUFT",
+        "title_font_size": 28,
+        "collection": "tuft",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "subcollections",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "hero",
+    "1642442735c9bd4274",
+    "c72c20a0-5e6f-4be4-89e9-43801e926b3a",
+    "5f384523-7bbb-4e9e-bbb9-4fbbc5343984",
+    "b4a80e5b-a1db-47f7-9e48-0b8376353e08",
+    "0a944de3-a0eb-49bd-8d60-5ba19b1fa856",
+    "section_collection_3cJRGa",
+    "ae36ca13-c6dc-40d5-8666-c09138dcebe4",
+    "e2f2ea1e-281e-4875-8a7b-371e26c2dd6f",
+    "164244299150503795",
+    "7208fcbe-9d89-4d37-a6e4-c9b2516767b9",
+    "section_banner_slider_j9rD8j",
+    "fac55bb3-50d2-4d0d-9930-9fe0b4895cd4",
+    "ffdff19e-40ac-45fb-947b-6294443e6fa4",
+    "section_collection_JTVXpG",
+    "3a163592-909d-44d7-aa7f-8417ff172cd7",
+    "ab91f97d-1837-4fed-bedf-178a24dd1287"
+  ]
+}

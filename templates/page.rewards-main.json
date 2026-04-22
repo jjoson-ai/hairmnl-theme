@@ -1,0 +1,146 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "c1d11ec9-462a-4f74-a1c7-25113c46de16": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/hairmnl-rewards-main-banner-june-2025-desktop.jpg",
+        "banner_mobile": "shopify://shop_images/hairmnl-rewards-main-banner-june-2025-mobile.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "main": {
+      "type": "page",
+      "settings": {
+        "kicker": "",
+        "show_title": true,
+        "show_content": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-center",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "4b3b9ca5-616f-46b6-bec2-40e63924b640": {
+      "type": "section-custom-content",
+      "blocks": {
+        "d3d32051-280c-4adc-8b52-d727fd26e697": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h1>HairMNL Rewards Catalog</h1><p>Discover a range of premium hair care samples and travel sizes from top-notch brands with HairMNL Rewards.<br/><br/>Treat yourself to luxurious products that cater to your specific hair needs. Enhance your self-care rituals, and pamper your locks with our exclusive rewards catalog.</p>",
+            "text_size": 1,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "View Catalog",
+            "button_url": "https://www.hairmnl.com/pages/rewards-catalog",
+            "button_color": "btn--black",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "24b913ce-efa5-4851-b142-1de5484f08e1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hairmnl-rewards-catalog-banner-june-2025-mobile.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "d3d32051-280c-4adc-8b52-d727fd26e697",
+        "24b913ce-efa5-4851-b142-1de5484f08e1"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 92,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "d1ec4eec-5b8e-447c-bdea-bd77d0029aaf": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14240176504931__d1ec4eec-5b8e-447c-bdea-bd77d0029aaf-1673422048cdf6cf02-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "",
+            "blog_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176504931__d1ec4eec-5b8e-447c-bdea-bd77d0029aaf-1673422048cdf6cf02-0"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Related Articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "c82bac1b-13b4-4e9e-b3b3-898d8ebe130b": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "c1d11ec9-462a-4f74-a1c7-25113c46de16",
+    "main",
+    "4b3b9ca5-616f-46b6-bec2-40e63924b640",
+    "d1ec4eec-5b8e-447c-bdea-bd77d0029aaf",
+    "c82bac1b-13b4-4e9e-b3b3-898d8ebe130b"
+  ]
+}

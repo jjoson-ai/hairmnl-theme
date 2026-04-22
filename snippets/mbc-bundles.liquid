@@ -1,0 +1,18 @@
+<script>
+    window.MAKEBECOOL_BUNDLES = {
+        version: 1649423145673,
+        isPhysicalBundle: {% if product.metafields.mbc_bundle != blank or product.type == 'mbcBundle' %}true{% else %}false{% endif %},
+        cart: {{ cart | json }},
+        product: {{ product | json }},
+        moneyFormat: {{ shop.money_format | json }},
+        assetUrl: '{{ "filename.png" | asset_url }}'
+    };
+
+    try {
+      (()=>{"use strict";function r(r){return function(r){if(Array.isArray(r))return t(r)}(r)||function(r){if("undefined"!=typeof Symbol&&null!=r[Symbol.iterator]||null!=r["@@iterator"])return Array.from(r)}(r)||function(r,n){if(!r)return;if("string"==typeof r)return t(r,n);var e=Object.prototype.toString.call(r).slice(8,-1);"Object"===e&&r.constructor&&(e=r.constructor.name);if("Map"===e||"Set"===e)return Array.from(r);if("Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e))return t(r,n)}(r)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function t(r,t){(null==t||t>r.length)&&(t=r.length);for(var n=0,e=new Array(t);n<t;n++)e[n]=r[n];return e}var n,e='[type="submit"], [name="add"], .lh-buy-now, .btn-addtocart, .mbc-bundle-button-atc',o=function(){var t=function(t){if(t){var n=document.querySelectorAll('form[action*="/cart/add"]'),e=null;if(n.length){if(e=Array.from(n).find((function(r){return r.hasAttribute("data-mbc-bundle-product-form")})))return e;if(e=Array.from(n).find((function(r){return r.closest("product-form")})))return e;e=Array.from(n).find((function(n){var e=[n].concat(r(function(r){for(var t=[],n=r&&r.parentElement;n;n=n.parentElement)t.push(n);return t}(n)));if(Array.from(e).some((function(r){return"none"===window.getComputedStyle(r,null).display})))return!1;if(n.classList.contains("pf-product-form"))return!0;var o=n.querySelector('[name="id"], [name="id[]"]');if(!o)return!1;var i,u,a=Number(o.value),d=t.variants.find((function(r){return r.id===a}));return d||(i=o.querySelectorAll("option"),u=Array.from(i).find((function(r){var n=r.value;return Number(n)===t.variants[0].id}))),!(!d&&!u&&"rc_duplicate_selector"!==o.id)||void 0}))}return e}}(window.MAKEBECOOL_BUNDLES.product),n=Array.from((null==t?void 0:t.querySelectorAll(e))||[]);window.MAKEBECOOL_BUNDLES.productSubmitBtnObserver=window.MAKEBECOOL_BUNDLES.productSubmitBtnObserver||[];return{disable:function(){n.forEach((function(r){r.setAttribute("disabled","disabled");var t=new MutationObserver((function(t,n){r.disabled||r.setAttribute("disabled","disabled")}));t.observe(r,{attributes:!0}),window.MAKEBECOOL_BUNDLES.productSubmitBtnObserver.push(t)}))},enable:function(){window.MAKEBECOOL_BUNDLES.productSubmitBtnObserver.forEach((function(r){return r.disconnect()})),delete window.MAKEBECOOL_BUNDLES.productSubmitBtnObserver,n.forEach((function(r){r.removeAttribute("disabled")}))}}}();null!==(n=window.MAKEBECOOL_BUNDLES)&&void 0!==n&&n.isPhysicalBundle&&o.disable()})();
+    } catch (e) {
+      console.error(e)
+    }
+</script>
+
+<script src='https://apps-bundles-cluster.makebecool.com/js/app.js?v=1649423145673' defer></script>

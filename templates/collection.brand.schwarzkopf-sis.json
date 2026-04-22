@@ -1,0 +1,595 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/brand-spotlight-schwarzkopf-pro-mar-14-17-2024-ban_1.jpg",
+            "slide_image_mobile": "shopify://shop_images/brand-spotlight-schwarzkopf-pro-mar-14-17-2024-ban.jpg",
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/schwarz-osis-oct-2025-promo-banner-desktop.jpg",
+        "banner_mobile": "shopify://shop_images/schwarz-osis-oct-2025-promo-banner-mobile.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "section_richtext_g9UfNC": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h1>Schwarzkopf Professional </h1>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<p>Schwarzkopf Professional presents a diverse array of premier products, including BC Bonacure Scalp Genesis, BC Bonacure Clean Performance, OSIS+, Silhouette, and Goodbye Yellow. Crafted to cater to both salon professionals and consumers worldwide, these offerings embody excellence and innovation.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<p>Whether it's nurturing scalp health, achieving clean performance, mastering styling with OSIS+, achieving sleek silhouettes, or banishing unwanted yellow tones, Schwarzkopf Professional's range empowers individuals to express their unique style and confidence with impeccably healthy hair.</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0",
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2"
+      ],
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "bd8c18e1-3236-4f2b-84ce-f24d258dadab": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "collection": "all-schwarzkopf-professional",
+        "grid": 6,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_double_xx4c6a": {
+      "type": "section-double",
+      "blocks": {
+        "text_hryUDa": {
+          "type": "text",
+          "settings": {
+            "kicker": "Hair Styling",
+            "title": "Schwarzkopf OSiS Dust It Mattifying Volume Powder 10g",
+            "text": "<p><strong>Mattifying volume powder for strong, rough and matte results.</strong></p><p>The lightweight powder provides long-lasting hold, strong control and strong texture for 24 hours of volume control.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "product_HNwarg": {
+          "type": "product",
+          "settings": {
+            "product": "schwarzkopf-osis-dust-it-mattifying-volume-powder-10g",
+            "kicker": "",
+            "badge_string": "BEST SELLER",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff",
+            "bg_accent": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "text_hryUDa",
+        "product_HNwarg"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "section_gallery_Mhw6EJ": {
+      "type": "section-gallery",
+      "blocks": {
+        "image_7HEhHK": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Osis_Soft_Dust_Feat._Julie_SIS_Thumbnail_1.jpg",
+            "link": "https://youtu.be/XGv07NwLzHw?feature=shared"
+          }
+        },
+        "image_DPrYtX": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Osis_Dust_It_Feat._Aria_SIS_Thumbnail.jpg",
+            "link": "https://youtu.be/545umytMl9Q?feature=shared"
+          }
+        }
+      },
+      "block_order": [
+        "image_7HEhHK",
+        "image_DPrYtX"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "Hair Styling",
+        "title": "OSiS+",
+        "text": "<p>Made to create truly individual signature styles, OSiS+ is the creative looks-based styling range that pushes boundaries.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "collection": "schwarzkopf-professional-osis",
+        "grid": 5,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "3ae2ccaa-b780-4255-aa5c-66c20bcf6b02": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "Hair Styling",
+        "title": "Silhouette",
+        "text": "<p><strong>For long-lasting yet invisible hold.</strong></p><p>Delivered by high quality, purified ingredients and micro-sized film-forming agents.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "collection": "schwarzkopf-professional-silhouette",
+        "grid": 3,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "2faaab7f-d297-40b2-851d-762f0bdf7481": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "b16db243-0155-4912-90a9-e9d69b490290": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-tutorials",
+            "blog_handle": "create-fuller-looks-with-volumizing-powder"
+          }
+        },
+        "93ee98ce-829f-43fe-9edf-4488437be23d": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-tutorials",
+            "blog_handle": "how-to-use-schwarzkopf-s-osis-hair-wax-the-all-in-one-styling-aid"
+          }
+        },
+        "df3a6714-d045-4f33-a166-f4f688ed7558": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-tutorials",
+            "blog_handle": "schwarzkopf-hairsprays-tips-tricks-for-proper-use"
+          }
+        },
+        "template--14417613062243__2faaab7f-d297-40b2-851d-762f0bdf7481-167576218968303df9-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-tutorials",
+            "blog_handle": "quick-and-easy-claw-clip-hairstyles-with-schwarzkopf-osis"
+          }
+        }
+      },
+      "block_order": [
+        "b16db243-0155-4912-90a9-e9d69b490290",
+        "93ee98ce-829f-43fe-9edf-4488437be23d",
+        "df3a6714-d045-4f33-a166-f4f688ed7558",
+        "template--14417613062243__2faaab7f-d297-40b2-851d-762f0bdf7481-167576218968303df9-0"
+      ],
+      "settings": {
+        "title": "Featuring Schwarzkopf Professional Hair Styling",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "8f90d474-614d-41cf-8a0a-6b941edca2ab": {
+      "type": "section-double",
+      "blocks": {
+        "template--14461704536163__8f90d474-614d-41cf-8a0a-6b941edca2ab-168429804772b053d6-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Scalp Care",
+            "title": "Schwarzkopf BC Bonacure Root Activating Serum 7ml x 8",
+            "text": "<p>This Root Activating Serum is designed for weak, thinning hair and helps prevent pathological hair loss. Its fast-absorbing, vegan formula with a superfood complex stimulates the scalp, activates roots, and promotes volume. Enriched with guarana and biotin, it enhances hair quality and vitality. Ideal for daily use to balance the scalp and improve hair condition.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "285ba387-5b71-4267-b8ac-25d605330262": {
+          "type": "product",
+          "settings": {
+            "product": "schwarzkopf-bc-bonacure-root-activating-serum-7ml-x-8",
+            "kicker": "",
+            "badge_string": "NEW PACKAGING",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff",
+            "bg_accent": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "template--14461704536163__8f90d474-614d-41cf-8a0a-6b941edca2ab-168429804772b053d6-0",
+        "285ba387-5b71-4267-b8ac-25d605330262"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "7b7c7eac-ae3b-4978-acad-2a16e00602f6": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "BC Bonacure Scalp Genesis",
+        "title_font_size": 28,
+        "collection": "schwarzkopf-professional-bc-bonacure-scalp-genesis",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "ca40eef5-1dbc-4dc7-adea-b6b8362425ca": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "Scalp Care",
+        "title": "BC Bonacure Scalp Genesis",
+        "text": "<p><strong>A transformative hair care range designed to revitalize and nourish your scalp.</strong></p><p>Crafted with precision, our innovative formulas target the root cause of scalp concerns, promoting a healthy environment for optimal hair growth. From soothing sensitive scalps to balancing excess oil production, each product is expertly formulated to deliver visible results. </p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_collection_8JiXVc": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "schwarzkopf-professional-bc-bonacure-scalp-genesis",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_richtext_eLb9yN": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "Hair Care",
+        "title": "BC Bonacure Clean Performance",
+        "text": "<p><strong>The power of Vegan Keratin in a professional clean formula.</strong></p><p>Formulated with advanced vegan technology to create formulas that are full of what's good and free of what's not. Using sustainable packaging and ingredients you trust. Free from sulphates, silicones, and parabens.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "44ddc921-1248-4982-a076-6f48decfc612": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "schwarzkopf-professional-bc-bonacure-clean-performance",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Schwarzkopf Professional BC Bonacure",
+        "title_font_size": 17,
+        "collection": "schwarzkopf-professional-bc-bonacure",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "f23cb7a7-5333-42e7-8013-68a76b218042": {
+      "type": "section-double",
+      "blocks": {
+        "template--14417613062243__f23cb7a7-5333-42e7-8013-68a76b218042-16757626674174dca6-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Color Toning",
+            "title": "Goodbye Yellow",
+            "text": "<p>A highly-pigmented wash that offers an instant tonal deposit to counteract and neutralize underlying yellow tones.</p><p>It cleanses hair gently while strengthening thanks to integrated Bonding Technology.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "d7b4b525-e8f0-4028-815f-afde545d739a": {
+          "type": "product",
+          "settings": {
+            "product": "schwarzkopf-goodbye-yellow-neutralizing-bonding-wash-300ml",
+            "kicker": "",
+            "badge_string": "",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff",
+            "bg_accent": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "template--14417613062243__f23cb7a7-5333-42e7-8013-68a76b218042-16757626674174dca6-0",
+        "d7b4b525-e8f0-4028-815f-afde545d739a"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "675500b2-37c5-4bfe-9b8f-b96e52b7a44e": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    }
+  },
+  "order": [
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "hero",
+    "subcollections",
+    "section_richtext_g9UfNC",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "bd8c18e1-3236-4f2b-84ce-f24d258dadab",
+    "section_double_xx4c6a",
+    "section_gallery_Mhw6EJ",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "1642442735c9bd4274",
+    "3ae2ccaa-b780-4255-aa5c-66c20bcf6b02",
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4",
+    "2faaab7f-d297-40b2-851d-762f0bdf7481",
+    "8f90d474-614d-41cf-8a0a-6b941edca2ab",
+    "7b7c7eac-ae3b-4978-acad-2a16e00602f6",
+    "ca40eef5-1dbc-4dc7-adea-b6b8362425ca",
+    "section_collection_8JiXVc",
+    "section_richtext_eLb9yN",
+    "44ddc921-1248-4982-a076-6f48decfc612",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "f23cb7a7-5333-42e7-8013-68a76b218042",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "675500b2-37c5-4bfe-9b8f-b96e52b7a44e"
+  ]
+}

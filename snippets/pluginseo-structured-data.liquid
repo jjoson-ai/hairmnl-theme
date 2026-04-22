@@ -1,0 +1,379 @@
+{% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
+{% assign base_product = product %}
+{% assign base_variant = product.selected_or_first_available_variant %}
+{% if shop.metafields.sawholesale['base_price'] == blank %}
+  {% assign base_price = 'compare_at_price' %}
+{% else %}
+  {% assign base_price = shop.metafields.sawholesale['base_price'] %}
+{% endif %}
+
+{% assign saw_discount = 0 %}{% assign saw_has_discount = false %}
+
+{% if customer.tags != blank %}
+  {% for mf in base_product.metafields.sawholesale %}
+    {% capture product_customer_tag %}{{ mf | first | replace: 'discount_', '' }}{% endcapture %}
+    {% if customer.tags contains product_customer_tag %}
+      {% assign saw_has_discount = true %}
+      {% assign discount_key = product_customer_tag | prepend: 'discount_' %}
+      {% assign price_key = product_customer_tag | prepend: 'price_' %}
+      {% assign saw_discount = base_product.metafields.sawholesale[discount_key] | divided_by: 100.0 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% assign saw_discount = 1 | minus: saw_discount %}
+
+{% if base_price == 'price' or base_variant.compare_at_price == blank  or base_variant.compare_at_price == 0 or base_variant.compare_at_price < base_variant.price %}
+  {% assign saw_variant_compare_at_price = base_variant.price %}
+{% else %}
+  {% assign saw_variant_compare_at_price = base_variant.compare_at_price %}
+{% endif %}
+
+{% assign cpe = shop.metafields.sawholesale['cpe'] | default: "true" %}
+{% if base_variant.metafields.sawholesale[price_key] != blank and cpe == "true" %}
+  {% assign saw_variant_price = base_variant.metafields.sawholesale[price_key] %}
+{% else %}
+  {% assign saw_variant_price = saw_variant_compare_at_price | times: saw_discount %}
+{% endif %}
+
+{% if saw_has_discount == false or saw_variant_price >= saw_variant_compare_at_price %}
+  {% assign WCProduct_Price = product.price %}
+  {% assign WCProduct_ComparePrice = product.compare_at_price %}
+  {% assign WCProduct_PriceMin = product.price_min %}
+  {% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}
+  {% assign WCProduct_PriceMax = product.price_max %}
+  {% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}
+  {% assign WCProduct_VariantPrice = base_variant.price %}
+  {% assign WCProduct_VariantComparePrice = base_variant.compare_at_price %}
+{% else %}   
+  {% assign WCProduct_Price = saw_variant_price %}
+  {% assign WCProduct_PriceMin = product.price_min | times: saw_discount %}
+  {% assign WCProduct_PriceMax = product.price_max | times: saw_discount %}
+  {% assign WCProduct_ComparePrice = saw_variant_compare_at_price %}
+  {% if product.compare_at_price_min != 0 %}{% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}{% else %}{% assign WCProduct_ComparePriceMin = product.price_min %}{% endif %}
+  {% if product.compare_at_price_max != 0 %}{% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}{% else %}{% assign WCProduct_ComparePriceMax = product.price_max %}{% endif %}
+  {% assign WCProduct_VariantPrice = saw_variant_price %}
+  {% assign WCProduct_VariantComparePrice = saw_variant_compare_at_price %}
+{% endif %}
+{% comment %} Wholesale_Club_Product_Prices End {% endcomment %}
+{%- comment -%}
+  ----------------------------------------------------------------------------------
+   Plug in SEO Plus for Shopify
+
+   Copyright (c) 2018 Pemberton Rank Ltd, a company registered in England 7341337
+
+   This file is subject to the license at https://www.pluginseo.com/eula
+  ----------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- assign logoUrl = 'pluginseo_structuredDataLogo.png' | asset_img_url  -%}
+
+{%- assign shopName = shop.name  -%}
+{%- assign shopDescription = shop.description  -%}
+{%- if hasLangify == true and language != shop.metafields["languages"]["default"] -%}
+ {%- assign shopName = langify_shop_name  -%}
+ {%- assign shopDescription = langify_shop_description  -%}
+{%- endif -%}
+
+{%- comment -%}
+  https://developers.google.com/search/docs/data-types/articles
+{%- endcomment -%}
+{%- if rootTemplate == 'article' -%}
+
+ {%- assign articleTitle = article.title  -%}
+ {%- assign articleContent = article.content  -%}
+ {%- if hasLangify == true and language != shop.metafields["languages"]["default"] -%}
+  {%- assign articleTitle = langify_title  -%}
+  {%- assign articleContent = langify_description  -%}
+ {%- endif -%}
+
+{%- comment smartseo_integration_begin_meta_data -%}
+  <script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{- shop.url -}}"
+    },
+    "headline": "{{- articleTitle -}}",
+    {%- if article.image -%}
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:{{- article | img_url: '800x800' -}}",
+      "height": "800px",
+      "width": "800px"
+    },
+    {%- endif -%}
+    "dateModified": "{{- article.published_at -}}",
+    "datePublished": "{{- article.created_at -}}",
+    "author": {
+      "@type": "Person",
+      "name": "{{- article.author -}}"
+    },
+     "publisher": {
+      "@type": "Organization",
+      "name": "{{- shopName -}}"
+      {%- if settings.pluginseo_structuredDataDisplayLogo == true  -%}
+        ,"logo": {
+          "@type": "ImageObject",
+          "url": "https:{{- logoUrl -}}"
+        }
+      {%- endif -%}
+    },
+    "description": "{{- articleContent | strip_html | escape | truncate: 163 -}}"
+    }
+  </script>
+{%- endcomment smartseo_integration_end_meta_data -%}
+{%- endif -%}
+
+{%- comment -%}
+https://developers.google.com/search/docs/data-types/breadcrumbs
+https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
+{%- endcomment -%}
+
+{%- unless rootTemplate == 'index' or rootTemplate == 'cart' or rootTemplate == 'list-collections' -%}
+
+{%- comment smartseo_integration_begin_meta_data -%}
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {%- if rootTemplate == 'page' -%}
+      {%- assign pageTitle = page.title  -%}
+      {%- if hasLangify == true and language != shop.metafields["languages"]["default"] -%}
+       {%- assign pageTitle = langify_title  -%}
+      {%- endif -%}
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "{{- shop.url -}}{{- page.url -}}",
+          "name": "{{- pageTitle -}}"
+        }
+      }
+    {%- elsif rootTemplate == 'product' -%}
+      {%- assign productTitle = product.title  -%}
+      {%- if hasLangify == true and language != shop.metafields["languages"]["default"] -%}
+       {%- assign productTitle = langify_title  -%}
+      {%- endif -%}
+      {%- if collection.url -%}
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "{{- shop.url -}}{{- collection.url -}}",
+            "name": "{{- collection.title -}}"
+          }
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@id": "{{- shop.url -}}{{- product.url -}}",
+            "name": "{{- productTitle -}}"
+          }
+        }
+      {%- else -%}
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "{{- shop.url -}}{{- product.url -}}",
+            "name": "{{- productTitle -}}"
+          }
+        }
+      {%- endif -%}
+    {%- elsif template contains 'collection' and collection.handle -%}
+      {%- assign collectionTitle = collection.title  -%}
+      {%- if hasLangify == true and language != shop.metafields["languages"]["default"] -%}
+       {%- assign collectionTitle = langify_title  -%}
+      {%- endif -%}
+      {%- if current_tags -%}
+        {%- capture url -%}/collections/{{- collection.handle -}}{%- endcapture -%}
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "{{- shop.url -}}{{- url -}}",
+            "name": "{{- collectionTitle -}} {{- current_tags | join: " + " -}}"
+          }
+        }
+      {%- else -%}
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "{{- shop.url -}}{{- collection.url -}}",
+            "name": "{{- collectionTitle -}}"
+          }
+        }
+      {%- endif -%}
+    {%- elsif rootTemplate == 'blog' -%}
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "{{- shop.url -}}{{- blog.url -}}",
+          "name": "{{- blog.title -}}"
+        }
+      }
+    {%- elsif rootTemplate == 'article' -%}
+      {%- assign articleTitle = article.title  -%}
+      {%- if hasLangify == true and language != shop.metafields["languages"]["default"] -%}
+       {%- assign articleTitle = langify_title  -%}
+      {%- endif -%}
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "{{- shop.url -}}{{- blog.url -}}",
+          "name": "{{- blog.title -}}"
+        }
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@id": "{{- shop.url -}}{{- article.url -}}",
+          "name": "{{- articleTitle -}}"
+        }
+      }
+    {%- else -%}
+
+    {%- endif -%}
+  ]
+}
+</script>
+{%- endcomment smartseo_integration_end_meta_data -%}
+
+{%- endunless -%}
+
+
+{%- comment -%}
+  https://developers.google.com/search/docs/data-types/logo
+  https://developers.google.com/search/docs/data-types/corporate-contacts
+  https://developers.google.com/search/docs/data-types/social-profile-links
+{%- endcomment -%}
+
+{%- assign links = settings.pluginseo_structuredDataSocialProfileLinks | newline_to_br | split: '<br />' -%}
+
+{%- comment smartseo_integration_begin_meta_data -%}
+<script type="application/ld+json">
+  { "@context" : "http://schema.org",
+    "@type" : "Organization",
+    "name" : "{{- shopName -}}",
+    "url" : "{{- shop.url -}}",
+    {%- if settings.pluginseo_structuredDataDisplayLogo == true  -%}
+      "logo": "https:{{- logoUrl -}}",
+    {%- endif -%}
+    "sameAs" : [
+      {%- for sociallink in links -%}
+        "{{- sociallink -}}"{%- if forloop.last == false -%},{%- endif -%}
+      {%- endfor -%}
+    ]
+  }
+</script>
+{%- endcomment smartseo_integration_end_meta_data -%}
+
+{%- comment -%}
+  https://developers.google.com/search/docs/data-types/products
+{%- endcomment -%}
+{%- if rootTemplate == 'product' -%}
+  {%- assign productTitle = product.title -%}
+  {%- assign productDescription = product.description  -%}
+  {%- if hasLangify == true and language != shop.metafields["languages"]["default"] -%}
+   {%- assign productTitle = langify_title -%}
+   {%- assign productDescription = langify_description -%}
+  {%- endif -%}
+{%- comment smartseo_integration_begin_meta_data -%}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org/",
+      "@type": "Product",
+      "@id": {{- canonical_url | append: '#product' | json -}},
+      "name": "{{- productTitle -}}",
+      "image": "https:{{- product.featured_image | product_img_url: '450x450' -}}",
+      "description": "{{- productDescription | strip_html | escape -}}",
+      "mpn": "{{- product.id -}}",
+      "brand": {
+        "@type": "Thing",
+        "name": "{{- product.vendor -}}"
+      },
+    {%- if product.metafields.spr.reviews -%}
+        {%- comment -%}
+          These are perhaps legacy...
+        {%- endcomment -%}
+        {%- assign sprAverage = product.metafields.spr.reviews | split: '<meta itemprop="average" content="' -%}
+    {%- assign sprAverage = sprAverage[1] | split: '" />' -%}
+        {%- assign sprVotes = product.metafields.spr.reviews | split: '<meta itemprop="votes" content="' -%}
+    {%- assign sprVotes = sprVotes[1] | split: '" />' -%}
+        {%- assign sprBest = product.metafields.spr.reviews | split: '<meta itemprop="best" content="' -%}
+    {%- assign sprBest = sprBest[1] | split: '" />' -%}
+        {%- assign sprWorst = product.metafields.spr.reviews | split: '<meta itemprop="worst" content="' -%}
+    {%- assign sprWorst = sprWorst[1] | split: '" />' -%}
+        {%- if sprAverage[0] -%}
+      "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "{{- sprAverage[0] -}}",
+            "ratingCount": "{{- sprVotes[0] -}}",
+            "reviewCount": "{{- sprVotes[0] -}}",
+            "bestRating": "{{- sprBest[0] -}}",
+            "worstRating": "{{- sprWorst[0] -}}"
+          },
+        {%- else -%}
+          {%- comment -%}
+            ...and these are perhaps new:
+          {%- endcomment -%}
+          {%- assign sprBestRating = product.metafields.spr.reviews | split: '<meta itemprop="bestRating" content="' -%}
+          {%- assign sprBestRating = sprBestRating[1] | split: '">' -%}
+          {%- assign sprWorstRating = product.metafields.spr.reviews | split: '<meta itemprop="worstRating" content="' -%}
+          {%- assign sprWorstRating = sprWorstRating[1] | split: '">' -%}
+          {%- assign sprReviewCount = product.metafields.spr.reviews | split: '<meta itemprop="reviewCount" content="' -%}
+          {%- assign sprReviewCount = sprReviewCount[1] | split: '">' -%}
+          {%- assign sprRatingValue = product.metafields.spr.reviews | split: '<meta itemprop="ratingValue" content="' -%}
+          {%- assign sprRatingValue = sprRatingValue[1] | split: '">' -%}
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "{{- sprRatingValue[0] -}}",
+            "ratingCount": "{{- sprReviewCount[0] -}}",
+            "reviewCount": "{{- sprReviewCount[0] -}}",
+            "bestRating": "{{- sprBestRating[0] -}}",
+            "worstRating": "{{- sprWorstRating[0] -}}"
+          },
+        {%- endif -%}
+      {%- endif -%}
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "{{- shop.currency -}}",
+        "price": "{{- WCProduct_VariantPrice | money_without_currency | remove: "," -}}",
+        "availability": "{%- if product.selected_or_first_available_variant.available -%}InStock{%- else -%}OutOfStock{%- endif -%}",
+        "seller": {
+          "@type": "Organization",
+          "name": "{{- shopName -}}"
+        }
+      }
+    }
+  </script>
+{%- endcomment smartseo_integration_end_meta_data -%}
+{%- endif -%}
+
+
+{%- comment -%}
+https://developers.google.com/search/docs/data-types/sitename
+https://developers.google.com/search/docs/data-types/sitelinks-searchbox
+{%- endcomment -%}
+{%- comment smartseo_integration_begin_meta_data -%}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "{{- shopName -}}",
+    "url": "{{- shop.url -}}",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{- shop.url -}}/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+</script>
+{%- endcomment smartseo_integration_end_meta_data -%}

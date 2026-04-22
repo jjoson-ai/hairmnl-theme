@@ -1,0 +1,291 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "section-hero",
+      "settings": {
+        "image": "shopify://shop_images/HairMNL_YourManeAuthority_2150x400_0552000d-dc5b-42e1-93c9-3115d75b37a1.png",
+        "mobile_image": "shopify://shop_images/HairMNL_YourManeAuthority_552x400_a81a8790-7a8a-40be-90d3-567e70a313fb.png",
+        "bg_position": "center-center",
+        "height": "use_image",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "kicker": "",
+        "title": "",
+        "richtext": "",
+        "text_align": "align--middle-center",
+        "text_color": "text--white",
+        "link_text": "",
+        "link": "",
+        "button_color": "btn--white",
+        "button_style": "btn"
+      }
+    },
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "show_title": false,
+        "show_content": true,
+        "text_size": 2,
+        "align_text": "text-left",
+        "height": "margin--small",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "ac63e0cb-fcd7-499f-9e0d-674a54d64012": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Need help?",
+        "text": "<p>We're happy to answer any questions you have about hair - feel free to send us a message.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "contact": {
+      "type": "section-contact",
+      "blocks": {
+        "name": {
+          "type": "text",
+          "settings": {
+            "title": "Full Name"
+          }
+        },
+        "email": {
+          "type": "email",
+          "settings": {
+            "title": "Email"
+          }
+        },
+        "93c419b9-7c3c-4e19-ab7c-73bf7e1b1a64": {
+          "type": "telephone",
+          "settings": {
+            "title": "Mobile Number"
+          }
+        },
+        "message": {
+          "type": "body",
+          "settings": {
+            "title": "Message"
+          }
+        }
+      },
+      "block_order": [
+        "name",
+        "email",
+        "93c419b9-7c3c-4e19-ab7c-73bf7e1b1a64",
+        "message"
+      ],
+      "settings": {
+        "title": "Contact us",
+        "align_text": "text-left",
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "faq": {
+      "type": "section-faq",
+      "disabled": true,
+      "blocks": {
+        "faq-0": {
+          "type": "text",
+          "settings": {
+            "title": "Frequently asked question",
+            "content": "<p>Share details about your shipping policies, item returns, or customer service.</p>"
+          }
+        },
+        "faq-1": {
+          "type": "text",
+          "settings": {
+            "title": "Frequently asked question",
+            "content": "<p>Share details about your shipping policies, item returns, or customer service.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "text",
+          "settings": {
+            "title": "Frequently asked question",
+            "content": "<p>Share details about your shipping policies, item returns, or customer service.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "text",
+          "settings": {
+            "title": "Frequently asked question",
+            "content": "<p>Share details about your shipping policies, item returns, or customer service.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq-0",
+        "faq-1",
+        "faq-2",
+        "faq-3"
+      ],
+      "settings": {
+        "title": "",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "icons": {
+      "type": "section-icons",
+      "blocks": {
+        "icons-2": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-phone",
+            "icon_color": "#aaaaaa",
+            "title": "Phone",
+            "text": "<p><a href=\"tel:+639177904455\" target=\"_blank\" title=\"tel:+639177904455\">+63 917 790 4455<br/></a></p>"
+          }
+        },
+        "88853c32-1968-4202-b3e9-5b1185cf0acf": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-email",
+            "icon_color": "#AAAAAA",
+            "title": "Email",
+            "text": "<p>hello@hairmnl.com</p>"
+          }
+        },
+        "icons-1": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-chat",
+            "icon_color": "#aaaaaa",
+            "title": "Chat",
+            "text": "<p><a href=\"https://m.me/hairmnl\" title=\"HairMNL Messenger Chat\">https://m.me/hairmnl</a></p>"
+          }
+        },
+        "icons-0": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-store",
+            "icon_color": "#aaaaaa",
+            "title": "Address",
+            "text": "<p><strong>HairMNL Studio<br/></strong><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" title=\"HairMNL Studio Address\">Unit 204, The Vantage at Kapitolyo<br/>50 West Capitol Drive cor. United Street, Brgy. Kapitolyo<br/>Pasig City 1603</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "icons-2",
+        "88853c32-1968-4202-b3e9-5b1185cf0acf",
+        "icons-1",
+        "icons-0"
+      ],
+      "settings": {
+        "title": "Contact Us",
+        "bg": "palette--light bg--accent",
+        "icon_size": "icon--medium",
+        "icon_alignment": "icon--left",
+        "align_text": "text-left"
+      }
+    },
+    "f065e5fc-3b6f-4a73-bb65-0c99de3e9bfd": {
+      "type": "section-featured-articles",
+      "disabled": true,
+      "blocks": {
+        "template--14240176439395__f065e5fc-3b6f-4a73-bb65-0c99de3e9bfd-16734138685cf3c1af-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hairmnl-rewards",
+            "blog_handle": ""
+          }
+        },
+        "30f112c7-3663-4f7f-85b5-570fac129896": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hairmnl-rewards",
+            "blog_handle": ""
+          }
+        },
+        "1fc5a93f-7535-4f6d-a3dc-e75ad7e39a51": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hairmnl-rewards",
+            "blog_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176439395__f065e5fc-3b6f-4a73-bb65-0c99de3e9bfd-16734138685cf3c1af-0",
+        "30f112c7-3663-4f7f-85b5-570fac129896",
+        "1fc5a93f-7535-4f6d-a3dc-e75ad7e39a51"
+      ],
+      "settings": {
+        "title": "HairMNL Rewards",
+        "homepage_blog": "",
+        "homepage_blog_count": 2,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "464abd80-d742-4645-9914-705b19d4338e": {
+      "type": "section-blog-category",
+      "settings": {
+        "title": "HairMNL Rewards",
+        "homepage_blog": "hairmnl-rewards",
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "excerpt_alignment": "left",
+        "btn_readmore_alignment": "left"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "main",
+    "ac63e0cb-fcd7-499f-9e0d-674a54d64012",
+    "contact",
+    "faq",
+    "icons",
+    "f065e5fc-3b6f-4a73-bb65-0c99de3e9bfd",
+    "464abd80-d742-4645-9914-705b19d4338e"
+  ]
+}

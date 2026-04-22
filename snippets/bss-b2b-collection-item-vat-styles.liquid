@@ -1,0 +1,125 @@
+{% if false %}{% if shop.permanent_domain == "b2b-packraftnorge-no.myshopify.com" %}
+    <style class="bss-b2b-collection-item-vat-style">
+        .price__regular,
+        .price__unit,
+        .price__badges,
+        .price-item.price-item--sale
+        {
+            display: none !important;
+        }
+    </style>
+{% else %}
+    <style class="bss-b2b-collection-item-vat-style">
+        .ProductItem__Price.Price,
+        .price__regular,
+        .price__sale,
+        .price__unit,
+        .price__badges,
+        .product-price,
+        .price--on-sale .price__sale,
+        #collection-main .product-content .price-wrapper,
+        .grid__item .card-information__wrapper .price,
+        .product-collection__price,
+        .gf_product-prices,
+        #shopify-section-collection-template .thumbnail__price,
+        #shopify-section-product-recommendations .thumbnail__price,
+        .collection-list .product-link .price,
+        .related__wrapper .product-link .price,
+        .collection__products .product-link .price,
+        .collection-content .collection-grid__wrapper .grid-product__price,
+        .template-search .grid-product__content .grid-product__price,
+        .productgrid--wrapper .productitem__price .price__current,
+        .product-collection .products .grid-link__meta .product_price,
+        .search-products .products .grid-link__meta .product_price,
+        .main-block .swiper-wrapper .product-grid-item .products .grid-link__meta .product_price,
+        .related-products-container .swiper-wrapper .products .grid-link__meta .product_price,
+        .grid-overflow-wrapper .grid-product__content .grid-product__meta .grid-product__price,
+        .product-details .pricing.lht,
+        .product-list .product-info .product-price .product-price__item,
+        .product-detail .content-divider .bss-fix-cp-price,
+        .price__current--hidden,
+        .rokkedal-product-price,
+        .grid-product__price,
+      	.product-list-item-price,
+        .product-item--price small,
+        .product__page .grid__item .bss-b2b-customized-compare-at-price,
+        .product-price__price,
+        .price.productitem__price,
+        .price--main .money,
+        .t4s-product-price,
+        .t4s-widget__pr-price,
+        .t4s-cart_price,
+        .product-item-meta__price-list-container .price-list.price-list--centered .price,
+        .t4s-sticky-atc__price,
+        #CollectionProductGrid .f-price-item.f-price-item--regular,
+        .product-item .product-item__info-inner .product-item__price-list .money,
+        .tt-description .tt-price > [bss-b2b-product-id],
+        .grid-product__wrapper .price-compare .money,
+        .line-item__info .product-item-meta__price-list-container .price-list .price,
+        .product-item__inner .product-item__meta .product-item__price,
+        .quick-search__result .quick-search__result-details .quick-search__result-price,
+        .transcy-money:not(.bss-b2b-collection-item-vat .transcy-money, .bss-b2b-product-vat .transcy-money, .bss-b2b-cart-vat .transcy-money, .bss-b2b-qty-table-wrapper .transcy-money),
+        .card-information .price,
+        .product-card__container .price.mt5 .h5,
+        .product-item__info-inner .price-list,
+        .product-item__info-inner del.bss-b2b-customized-original-price,
+        .search-bar__item-info .search-bar__item-price,
+        .search-bar__item-info del.bss-b2b-customized-original-price,
+        .product-item__text.gutter-top--small .text-size--small,
+        .product-related-item__price
+        {
+            display: none !important;
+        }
+        {% if shop.permanent_domain == "ryan-s-eu.myshopify.com" or shop.permanent_domain == "axessorize-com-au.myshopify.com" %}
+        .price__regular{
+            display: block !important
+        }
+        .price-item [bss-b2b-variant-price]{
+           display: none !important;
+        }
+        {% endif %}
+        
+        {% if shop.permanent_domain == "fodaboxwholesale.myshopify.com" %}
+            .productgrid--wrapper .productitem__price .price__current,
+            [data-price-container],
+            .price.productitem__price
+            {
+                display: block !important
+            }
+            {% endif %}
+        {% if shop.permanent_domain == "the-candle-brand-trade.myshopify.com" %}
+        .price__regular{
+            display: block !important
+        }
+        .price-item [bss-b2b-variant-price]{
+           display: none !important;
+        }
+        {% endif %}
+        {% if shop.permanent_domain == "suacosmetics.myshopify.com" %}
+        .price__regular{
+            display: block !important
+        }
+        .price-item[bss-b2b-variant-price]{
+           display: none !important;
+        }
+        {% endif %}
+        
+        {% if shop.permanent_domain == "valera-prod.myshopify.com" %}
+        .price__regular{
+            display: block !important;
+        }
+        .price-item [bss-b2b-product-price]{
+           display: none !important;
+        }
+        {% endif %}
+        {% if shop.permanent_domain == "pro-northernspirit-sport-com.myshopify.com" %}
+        .product-single__prices {
+          display: block !important;
+        }
+        .bss-b2b-customized-original-price ~ span,
+        .bss-b2b-customized-compare-at-price ~ span {
+          display: none !important;
+        }
+        {% endif %}
+    </style>
+{% endif %}{% endif %}

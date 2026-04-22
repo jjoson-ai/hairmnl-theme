@@ -1,0 +1,43 @@
+{% comment %}
+* An article block that fills the container with an image with overlayed title
+{% render 'article-grid-item', article: article, aspect_ratio: 0.7, color: section.settings.color, overlay_color: section.settings.overlay_color %}{% endcomment %}
+<div class="article__card section--image {{ color | default: 'text--white' }}">
+
+  <a
+    href="{{ article.url }}"
+    class="link-over-image"
+    aria-label="{{ article.title | strip_html | escape }}">
+    <div class="hero__content__wrapper align--bottom-left">
+      <div class="article__card__title">{%- comment -%}
+        <h3 class="h4 mb0">{{ article.title }}</h3>
+        {%- endcomment -%}
+      </div>
+    </div>
+  </a>
+  {% if article.image %}
+    <div class="image-overlay--bottom" style="--bg:{{ overlay_color | default: '#000' }}; --opacity: 0.45;"></div>
+    {%- render 'image-fill', img_object: article.image, aspect_ratio: aspect_ratio -%}
+  {% else %}
+    <div class="image__fill" style="padding-top: {{ aspect_ratio | times: 100 }}%;
+                                                                                                                                                                                                                                       background: var(--muted);"></div>
+  {% endif %}
+</div>
+<div class="article__card section--details {{ color | default: 'text--white' }}">
+  {% if show_category %}
+    <span class="category {{category_alignment}}">{{ blog_title }}
+    </span>
+  {% endif %}
+  <a href="{{ article.url }}">
+    <h3 class="h5 mb0 title {{title_alignment}}">{{ article.title }}
+    </h3>
+  </a>
+  {% if show_excerpt %}
+    <p class="excerpt {{excerpt_alignment}}">{{ article.excerpt | strip_html | strip_newlines | truncatewords: 25 }}
+    </p>
+  {% endif %}
+</div>
+{% if show_readmore %}
+  <a href="{{ article.url }}" class="btn--readmore btn--outline {{btn_readmore_alignment}}">
+    Read More
+  </a>
+{% endif %}

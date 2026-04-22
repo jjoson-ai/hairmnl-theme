@@ -1,0 +1,470 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "section-hero",
+      "disabled": true,
+      "settings": {
+        "bg_position": "center-center",
+        "height": "use_screen_one_fifth",
+        "overlay_opacity": 50,
+        "overlay_color": "#000000",
+        "kicker": "",
+        "title": "FAQ",
+        "richtext": "",
+        "text_align": "align--middle-center",
+        "text_color": "text--white",
+        "link_text": "",
+        "link": "",
+        "button_color": "btn--white",
+        "button_style": "btn"
+      }
+    },
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "show_title": false,
+        "show_content": true,
+        "text_size": 2,
+        "align_text": "text-left",
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "7c94ebf1-c451-48e9-a159-38a4af75a38f": {
+      "type": "section-accordion",
+      "blocks": {
+        "template--14240176472163__7c94ebf1-c451-48e9-a159-38a4af75a38f-167604524121dd449a-0": {
+          "type": "text",
+          "settings": {
+            "title": "How do I place an order?",
+            "text": "<p>Use this to answer some common questions you hear from your customers. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your products. This section will appear across all products.</p>"
+          }
+        },
+        "template--14240176472163__7c94ebf1-c451-48e9-a159-38a4af75a38f-167604524121dd449a-1": {
+          "type": "text",
+          "settings": {
+            "title": "Frequently asked question",
+            "text": "<p>Use this to answer some common questions you hear from your customers. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your products. This section will appear across all products.</p>"
+          }
+        },
+        "template--14240176472163__7c94ebf1-c451-48e9-a159-38a4af75a38f-167604524121dd449a-2": {
+          "type": "text",
+          "settings": {
+            "title": "Frequently asked question",
+            "text": "<p>Use this to answer some common questions you hear from your customers. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your products. This section will appear across all products.</p>"
+          }
+        },
+        "template--14240176472163__7c94ebf1-c451-48e9-a159-38a4af75a38f-167604524121dd449a-3": {
+          "type": "text",
+          "settings": {
+            "title": "Frequently asked question",
+            "text": "<p>Use this to answer some common questions you hear from your customers. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your products. This section will appear across all products.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176472163__7c94ebf1-c451-48e9-a159-38a4af75a38f-167604524121dd449a-0",
+        "template--14240176472163__7c94ebf1-c451-48e9-a159-38a4af75a38f-167604524121dd449a-1",
+        "template--14240176472163__7c94ebf1-c451-48e9-a159-38a4af75a38f-167604524121dd449a-2",
+        "template--14240176472163__7c94ebf1-c451-48e9-a159-38a4af75a38f-167604524121dd449a-3"
+      ],
+      "settings": {
+        "title": "Orders",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "faq": {
+      "type": "section-faq",
+      "blocks": {
+        "faq-2": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "What areas do you cover?",
+            "content": "<p>We deliver nationwide</p>"
+          }
+        },
+        "faq-1": {
+          "type": "text",
+          "settings": {
+            "title": "How much is shipping?",
+            "content": "<p><strong>METRO MANILA<br/></strong>Standard shipping for paid orders - ₱50*<br/>Cash On Delivery - ₱150</p><p>*For paid orders, we offer FREE standard shipping within Metro Manila for orders ₱1500+ and for orders with <a href=\"https://www.hairmnl.com/collections/kerastase\" target=\"_blank\">Kérastase</a></p><p><strong>PROVINCES</strong><br/>Standard shipping  - ₱150<br/>COD is <em>not</em> available for provinces</p><p>FREE standard shipping for orders ₱3500+ and for orders with orders with <a href=\"https://www.hairmnl.com/collections/kerastase\" target=\"_blank\">Kérastase</a></p>"
+          }
+        },
+        "d9095303-621a-4923-9401-7487ea47b88d": {
+          "type": "text",
+          "settings": {
+            "title": "When can I expect my order?",
+            "content": "<p>Cut off for orders is at <strong>5PM</strong> daily. Please expect your parcels to arrive based on the following lead times per area:</p><p><strong>METRO MANILA<br/></strong>• Paid - standard delivery within 3 days<br/>• Cash on Delivery (COD) - within 6 days</p><p><strong>PROVINCES<br/></strong>• Major cities - within 3 to 20 working days *every Saturday for Rizal<br/>• Islands (Batanes, Coron, Puerto Princesa, Marinduque, Masbate, Mindoro, Catanduanes) - within 15 working days</p>"
+          }
+        },
+        "faq-0": {
+          "type": "text",
+          "settings": {
+            "title": "Can I change my delivery details?",
+            "content": "<p>For changes in delivery details, you can reach out to us at hello@hairmnl or <a href=\"https://m.me/hairmnl\" target=\"_blank\" title=\"HairMNL Messenger Chat\">m.me/hairmnl.</a></p>"
+          }
+        },
+        "9dcbe5b4-4734-4ec9-ac9a-d12691b92311": {
+          "type": "text",
+          "settings": {
+            "title": "Can I pick up my order instead?",
+            "content": "<p>For store pick up, choose 'Pick Up' under Delivery method.</p><p>To ensure stock availability, please send us a message at <a href=\"https://m.me/hairmnl\" target=\"_blank\" title=\"HairMNL Messenger Chat\">m.me/hairmnl.</a></p><p>Before arranging order pick up, kindly confirm order status with us at <a href=\"https://m.me/hairmnl\" target=\"_blank\" title=\"HairMNL Messenger Chat\">m.me/hairmnl</a> or +69177904455.<br/><br/><strong>STORE PICK UP DETAILS</strong><br/>• Pick up hours: 10AM -6PM daily<br/>• Customers book their own courier for store pick up.<br/>• See exact pick-up location on Google Maps - https://goo.gl/maps/5fBkMr6wudy</p><p><strong>RESERVATION<br/></strong>Orders placed under Pick Up delivery method will remain reserved for <em>3 days.</em> Orders will be cancelled after the 3-day grace period. </p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq-2",
+        "faq-1",
+        "d9095303-621a-4923-9401-7487ea47b88d",
+        "faq-0",
+        "9dcbe5b4-4734-4ec9-ac9a-d12691b92311"
+      ],
+      "settings": {
+        "title": "Delivery",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--small",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "40b70678-0961-4faa-a333-d639347a8503": {
+      "type": "section-faq",
+      "blocks": {
+        "402abe47-2834-405c-bf23-bec2557d4f25": {
+          "type": "text",
+          "settings": {
+            "title": "What payment options do you accept?",
+            "content": "<p>1. Credit Card (Visa, Mastercard, Amex, Diners Club)</p><p>2. Wallets (<a href=\"https://www.hairmnl.com/pages/hairmnl-gcash-qr-code\" target=\"_blank\">GCash</a>, Maya)</p><p>3. 7Eleven</p><p>4. Online Banks (BDO, BPI, Metrobank, Chinabank, Landbank, RCBC, Robinsons Bank, UnionBank, UCPB, PSBank, Coins.ph)</p><p>6. Bank Deposit (BDO, BPI, Metrobank, AUB, Chinabank, EastWest, Landbank, PNB, RCBC, Robinsons Bank, Security Bank, UnionBank, UCPB)</p><p>7. Over the counter (Bayad Center, LBC, SM Dep/Smkt Counter, Robinsons Dep Store, Cebuana Lhuillier, M. Lhuiller, RuralNet Banks and Coops)</p>"
+          }
+        },
+        "template--14240176472163__40b70678-0961-4faa-a333-d639347a8503-1676030332ea49b710-0": {
+          "type": "text",
+          "settings": {
+            "title": "Do you accept COD payment?",
+            "content": "<p>Cash on delivery (COD) is available only within Metro Manila and selected areas in Rizal. Delivery within 6 days. Cut off for orders is at 5PM daily.</p><p><em>Note: Failure to receive orders placed via COD will mean the customer will no longer be allowed to order via COD. Subsequent orders will be allowed only through other PAID options (credit card, bank deposit, 7Eleven, GCash, others).</em></p>"
+          }
+        },
+        "b19aceb0-9ab3-4082-a92b-58e21b4150ac": {
+          "type": "text",
+          "settings": {
+            "title": "How do I pay through credit card?",
+            "content": "<p>To pay via credit card, under Payment method: select 'Secure Payments via PayMongo.'</p>"
+          }
+        },
+        "70c448de-d6d3-4a2b-aa0f-cc820bc3fb43": {
+          "type": "text",
+          "settings": {
+            "title": "How do I pay through GCash?",
+            "content": "<p>To pay via GCash, under Payment method: select 'Secure Payments via PayMongo.'</p>"
+          }
+        },
+        "template--14240176472163__40b70678-0961-4faa-a333-d639347a8503-1676030332ea49b710-1": {
+          "type": "text",
+          "settings": {
+            "title": "Do you accept payments by installments?",
+            "content": "<p>Yes! Through <a href=\"https://www.hairmnl.com/blogs/news/installment-payments-now-available-at-hairmnl\" target=\"_blank\"><strong>BillEase</strong></a> and <a href=\"https://www.hairmnl.com/blogs/news/enjoy-your-hair-care-essentials-now-pay-later-with-0-interest\" target=\"_blank\"><strong>Atome</strong></a> (0% Interest for 3 months using your Visa, Mastercard, Amex, Diners Club credit card)</p>"
+          }
+        },
+        "3225ab47-99fe-486f-88c0-b130c07a9158": {
+          "type": "text",
+          "settings": {
+            "title": "What is Atome?",
+            "content": "<p>Please check out the link below to find out how to use Atome:</p><p><a href=\"https://www.hairmnl.com/blogs/news/enjoy-your-hair-care-essentials-now-pay-later-with-0-interest\" target=\"_blank\" title=\"HairMNL How to use Atome\">https://www.hairmnl.com/blogs/news/enjoy-your-hair-care-essentials-now-pay-later-with-0-interest</a></p>"
+          }
+        },
+        "fd4c8cc5-50b0-41e1-a79b-aefae5445c63": {
+          "type": "text",
+          "settings": {
+            "title": "What is BillEase?",
+            "content": "<p>Please check out the link below to find out how to use BillEase:</p><p>https://billease.ph/blog/get-your-hair-care-products-from-hairmnl-and-pay-later-in-installment/</p>"
+          }
+        },
+        "c125d163-a209-48cc-bfc2-0b71e630c717": {
+          "type": "text",
+          "settings": {
+            "title": "Can I change my payment details?",
+            "content": "<p>To change your payment method, you can reach out to us at hello@hairmnl or <a href=\"https://m.me/hairmnl\" target=\"_blank\" title=\"HairMNL Messenger Chat\">m.me/hairmnl.</a></p>"
+          }
+        },
+        "7e8e50f9-1e4b-4a90-bcee-b39454a1950b": {
+          "type": "text",
+          "settings": {
+            "title": "Frequently asked question",
+            "content": "<p>Share details about your shipping policies, item returns, or customer service.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "402abe47-2834-405c-bf23-bec2557d4f25",
+        "template--14240176472163__40b70678-0961-4faa-a333-d639347a8503-1676030332ea49b710-0",
+        "b19aceb0-9ab3-4082-a92b-58e21b4150ac",
+        "70c448de-d6d3-4a2b-aa0f-cc820bc3fb43",
+        "template--14240176472163__40b70678-0961-4faa-a333-d639347a8503-1676030332ea49b710-1",
+        "3225ab47-99fe-486f-88c0-b130c07a9158",
+        "fd4c8cc5-50b0-41e1-a79b-aefae5445c63",
+        "c125d163-a209-48cc-bfc2-0b71e630c717",
+        "7e8e50f9-1e4b-4a90-bcee-b39454a1950b"
+      ],
+      "settings": {
+        "title": "Payment",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "a65e6ea5-5aa3-4708-88d9-3eea70b4ea32": {
+      "type": "section-faq",
+      "blocks": {
+        "template--14240176472163__a65e6ea5-5aa3-4708-88d9-3eea70b4ea32-1676030332ea49b710-1": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "How do I use a voucher code?",
+            "content": "<p>Share details about your shipping policies, item returns, or customer service.</p>"
+          }
+        },
+        "template--14240176472163__a65e6ea5-5aa3-4708-88d9-3eea70b4ea32-1676030332ea49b710-0": {
+          "type": "text",
+          "settings": {
+            "title": "How do I use a voucher code?",
+            "content": "<p>To use an voucher code, proceed with Checkout, then place the code in the 'GIFT CARD OR DISCOUNT CODE' field under Order Summary.</p>"
+          }
+        },
+        "template--14240176472163__a65e6ea5-5aa3-4708-88d9-3eea70b4ea32-1676030332ea49b710-2": {
+          "type": "text",
+          "settings": {
+            "title": "How do I purchase a HairMNL gift card?",
+            "content": "<p>You can purchase HairMNL gift cards online: <a href=\"https://www.hairmnl.com/products/hairmnl-gift-cards\" target=\"_blank\" title=\"HairMNL Gift Cards\">https://www.hairmnl.com/products/hairmnl-gift-cards</a></p><p>E-gift cards are delivered by email and contain instructions to redeem them at checkout.<br/>Our e-gift cards have no additional processing fees.<br/>COD is <em>not</em> allowed for e-gift cards.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176472163__a65e6ea5-5aa3-4708-88d9-3eea70b4ea32-1676030332ea49b710-1",
+        "template--14240176472163__a65e6ea5-5aa3-4708-88d9-3eea70b4ea32-1676030332ea49b710-0",
+        "template--14240176472163__a65e6ea5-5aa3-4708-88d9-3eea70b4ea32-1676030332ea49b710-2"
+      ],
+      "settings": {
+        "title": "Vouchers and Discounts",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "3166bbff-c3b8-475e-95c9-e74544236bb3": {
+      "type": "section-faq",
+      "blocks": {
+        "template--14240176472163__3166bbff-c3b8-475e-95c9-e74544236bb3-1676030332ea49b710-1": {
+          "type": "text",
+          "settings": {
+            "title": "What is your return process?",
+            "content": "<p>Please contact our Customer Service us at hello@hairmnl or <a href=\"https://m.me/hairmnl\" target=\"_blank\" title=\"HairMNL Messenger Chat\">m.me/hairmnl</a> and include the following details in your request:<br/>• Order number<br/>• Name of the Item<br/>• Reason for return<br/>• Item photo and video </p>"
+          }
+        },
+        "template--14240176472163__3166bbff-c3b8-475e-95c9-e74544236bb3-1676030332ea49b710-0": {
+          "type": "text",
+          "settings": {
+            "title": "What is your return, refund and exchange policy?",
+            "content": "<p><strong>EXCHANGES<br/></strong>We only replace items if they are defective, damaged, or you were sent the wrong item by mistake.</p><p>To be eligible for an exchange, the item must be unused and in the same condition that you received it. It must also be in the original packaging. If 7 days have gone by since the delivery of your purchase, unfortunately we cannot offer you an exchange.</p><p>If the reason for an exchange is valid and the product is unused, we will request you to send us the item in the same condition as you received this. Once your returned item is received and inspected, and the reason for an exchange is valid, the item may be exchanged for another item of equal, higher, or lower value. If higher in value, the excess should be paid. If lower in value, the deficit will be issued as store credits. Kindly note that delivery fees for returns and exchanges will be incurred in full by the buyer.</p><p>If you need to exchange an item, send us a message through hello@hairmnl.com or <a href=\"https://m.me/hairmnl\" target=\"_blank\" title=\"HairMNL Messenger Chat\">m.me/hairmnl</a>. We will get in touch with you regarding next steps. </p><p><strong>REFUNDS<br/></strong><em>For orders that have been shipped out</em></p><p>To be eligible for a refund, your item must be unused and in the same condition that you received it. It must also be in the original packaging. If 7 days have gone by since the delivery of your purchase, unfortunately we can no longer offer you a refund. Kindly note that delivery fees for refunds will be incurred in full by the buyer. This will either be billed directly to a customer or deducted from a refund.</p><p>If the reason for a refund is valid, we will request you to send us the item in the same condition as you received this. Once your returned item is received and inspected, and the reason for a refund is valid, please expect your refund issued as store credits. Should any other mode of payment be requested (i.e. GCash, cash, credit card reversal), payment gateway fees will be deducted from the refund.</p><p><em>For cancelled orders<br/></em>For cancellations on paid orders, please expect your refund issued as store credits. Should any other mode of payment be requested (i.e. GCash, cash, credit card reversal), payment gateway fees will be deducted from the refund.</p><p>If you need to request for a refund, please send us a message through hello@hairmnl.com or <a href=\"https://m.me/hairmnl\" target=\"_blank\" title=\"HairMNL Messenger Chat\">m.me/hairmnl</a>. We will get in touch with you regarding next steps.  </p>"
+          }
+        },
+        "template--14240176472163__3166bbff-c3b8-475e-95c9-e74544236bb3-1676030332ea49b710-2": {
+          "type": "text",
+          "settings": {
+            "title": "What if my item was missing, incorrect, defective, or damaged?",
+            "content": "<p>We apologize you received an order with a missing, incorrect or defective item. Please message us through hello@hairmnl.com or <a href=\"https://m.me/hairmnl\" target=\"_blank\" title=\"HairMNL Messenger Chat\">m.me/hairmnl</a> so we can arrange for the next steps.</p><p>Kindly include the following details:<br/>• Order number<br/>• Name of the Item<br/>• Matter of issue (i.e. missing item, wrong item, defective/expired item)<br/>• Item photo and video </p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176472163__3166bbff-c3b8-475e-95c9-e74544236bb3-1676030332ea49b710-1",
+        "template--14240176472163__3166bbff-c3b8-475e-95c9-e74544236bb3-1676030332ea49b710-0",
+        "template--14240176472163__3166bbff-c3b8-475e-95c9-e74544236bb3-1676030332ea49b710-2"
+      ],
+      "settings": {
+        "title": "Exchange and Returns/Refunds",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "16444913507626cb98": {
+      "type": "section-faq",
+      "blocks": {
+        "164449135099ccdef0-0": {
+          "type": "text",
+          "settings": {
+            "title": "How can I create a HairMNL Rewards account?",
+            "content": "<p>Creating a HairMNL Rewards account is quick and simple! Just visit the <a href=\"https://www.hairmnl.com/pages/rewards\"><span style=\"text-decoration:underline\">HairMNL Rewards page</span></a> and click the Join Now button. Fill in your email address or use your Facebook or Gmail account details to create your account. </p><p>Once you successfully create your account, you will automatically receive 10,000 HairMNL Rewards points.</p>"
+          }
+        },
+        "164449135099ccdef0-1": {
+          "type": "text",
+          "settings": {
+            "title": "How can I earn points for HairMNL Rewards?",
+            "content": "<p>There are multiple ways you can earn points for HairMNL Rewards.</p><p>- Just by signing up for a HairMNL Rewards account, you instantly earn 10,000 points</p><p>-When you make a purchase, you get 1 point for every Php 1 spent</p><p>- If you refer your friends to purchase products, you earn 1,000 points if they spend at least Php 1,500. <em>To find your referral link, visit the </em><a href=\"https://www.hairmnl.com/pages/rewards\"><span style=\"text-decoration:underline\"><em>HairMNL Rewards page</em></span></a><em> and go to the How to Earn Points section. Under Refer Friends, click the Complete Activity button to get your link</em>.</p><p>- Get at least 10,000 points on your birthday. The higher your tier is, the more points you can earn - Ash Tier gets 15,000 points, Silver Tier gets 20,000 points, and Platinum Tier gets 25,000 points.</p><p>- Leave a review on HairMNL.com and earn 1,000 points. <em>Review must be verified by HairMNL first. You may leave a maximum of 10 reviews a month. </em></p><p>- Like <a href=\"https://www.facebook.com/hairmnl\"><span style=\"text-decoration:underline\">HairMNL on Facebook </span></a>and earn 50 points.</p><p>- <a href=\"https://www.instagram.com/hairmnl\"><span style=\"text-decoration:underline\">Follow HairMNL on Instagram</span></a> and earn 50 points.</p>"
+          }
+        },
+        "164449135099ccdef0-2": {
+          "type": "text",
+          "settings": {
+            "title": "How can I redeem my rewards?",
+            "content": "<p>Visit the <a href=\"https://www.hairmnl.com/pages/rewards\"><span style=\"text-decoration:underline\">HairMNL Rewards page</span></a> and go to the Rewards section. You will be able to view which Rewards are redeemable based on your current number of points. If you are eligible to claim a reward, simply click the Get Reward button to redeem your chosen gift.</p>"
+          }
+        },
+        "64a106ad-e70a-4909-9fdc-c8a0406c5c80": {
+          "type": "text",
+          "settings": {
+            "title": "Can I redeem more than one gift at a time?",
+            "content": "<p>Yes, you may choose more than 1 free gift at a time, provided that you have enough valid points and purchase requirement is met.</p>"
+          }
+        },
+        "24cfe88e-2c62-4346-8368-889d98dfc3c2": {
+          "type": "text",
+          "settings": {
+            "title": "Will my points expire?",
+            "content": "<p>Your HairMNL Rewards points will expire 12 months after your last order. </p>"
+          }
+        },
+        "4e6404e0-841c-4ff6-ae1b-a626e94e676f": {
+          "type": "text",
+          "settings": {
+            "title": "When will my points be credited to my account?",
+            "content": "<p>Your HairMNL Rewards points will be usable 30 days after your purchase to give time for the system to verify your orders. If you would like to redeem your pending points right away, please <a href=\"http://m.me/hairmnl\"><span style=\"text-decoration:underline\">send us a message</span></a> and we will be happy to help you out.</p>"
+          }
+        },
+        "7821ccfd-f248-4110-ab3a-ba93dcaad506": {
+          "type": "text",
+          "settings": {
+            "title": "How do I upgrade to the different tiers?",
+            "content": "<p>There are four different HairMNL Rewards tiers - Welcome, Ash, Silver, and Platinum. You can enjoy more perks as you upgrade to higher tiers. </p><p>To be part of the Ash Tier, you must spend Php 5,000 in a year. To be part of the Silver Tier, you must spend Php 15,000 in a year. To be part of the Platinum Tier, you must spend Php 50,000 in a year. </p><p>To maintain being part of your tier, you must spend the required amount within a 12-month period.</p>"
+          }
+        },
+        "97852205-b78e-4b96-906f-3d23c6da71c7": {
+          "type": "text",
+          "settings": {
+            "title": "How do I check my points balance?",
+            "content": "<p>Log in to your <a href=\"https://www.hairmnl.com/pages/rewards\"><span style=\"text-decoration:underline\">HairMNL Rewards account</span></a> and once you do, you will be able to see your points balance at the top of the page.</p>"
+          }
+        },
+        "21970e19-595d-4ea3-97d4-74402ca35429": {
+          "type": "text",
+          "settings": {
+            "title": "Will my tier be downgraded if I use my points?",
+            "content": "<p>Your tier will not downgrade after redeeming your points. You may continue enjoying the perks of your tier as long as you meet the required yearly minimum total spend.</p>"
+          }
+        },
+        "8ef80f16-be4c-4320-b620-62d148fb66cc": {
+          "type": "text",
+          "settings": {
+            "title": "Can I return my rewards?",
+            "content": "<p>Unfortunately, rewards may not be returned in exchange for another gift or for points.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "164449135099ccdef0-0",
+        "164449135099ccdef0-1",
+        "164449135099ccdef0-2",
+        "64a106ad-e70a-4909-9fdc-c8a0406c5c80",
+        "24cfe88e-2c62-4346-8368-889d98dfc3c2",
+        "4e6404e0-841c-4ff6-ae1b-a626e94e676f",
+        "7821ccfd-f248-4110-ab3a-ba93dcaad506",
+        "97852205-b78e-4b96-906f-3d23c6da71c7",
+        "21970e19-595d-4ea3-97d4-74402ca35429",
+        "8ef80f16-be4c-4320-b620-62d148fb66cc"
+      ],
+      "settings": {
+        "title": "HairMNL Rewards",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--large",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "icons": {
+      "type": "section-icons",
+      "disabled": true,
+      "blocks": {
+        "icons-0": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-basket-return",
+            "icon_color": "#aaaaaa",
+            "title": "Free returns",
+            "text": "<p>Returns within 30 days receive a full refund.</p>"
+          }
+        },
+        "icons-1": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-shipment-world",
+            "icon_color": "#aaaaaa",
+            "title": "Worldwide shipping",
+            "text": "<p>Ship anywhere, rates available at checkout.</p>"
+          }
+        },
+        "icons-2": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-phone",
+            "icon_color": "#aaaaaa",
+            "title": "24/7 support",
+            "text": "<p>Call us anytime at 1(800) 555-1234.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "icons-0",
+        "icons-1",
+        "icons-2"
+      ],
+      "settings": {
+        "title": "",
+        "bg": "palette--light bg--accent",
+        "icon_size": "icon--medium",
+        "icon_alignment": "icon--top",
+        "align_text": "text-left"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "main",
+    "7c94ebf1-c451-48e9-a159-38a4af75a38f",
+    "faq",
+    "40b70678-0961-4faa-a333-d639347a8503",
+    "a65e6ea5-5aa3-4708-88d9-3eea70b4ea32",
+    "3166bbff-c3b8-475e-95c9-e74544236bb3",
+    "16444913507626cb98",
+    "icons"
+  ]
+}

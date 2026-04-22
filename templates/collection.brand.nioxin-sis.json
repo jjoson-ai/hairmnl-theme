@@ -1,0 +1,233 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Nioxin_The_1_Salon_Brand_for_Fuller_Thicker_Hair_Desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Nioxin_The_1_Salon_Brand_for_Fuller_Thicker_Hair_Mobile.jpg",
+            "slide_image_url": ""
+          }
+        },
+        "b648ba19-aaf9-45e9-ad0a-25b6a5773e4f": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Nioxin_My_Daily_Anti-Thinning_Routine_Desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Nioxin_My_Daily_Anti-Thinning_Routine_Square.jpg",
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "b648ba19-aaf9-45e9-ad0a-25b6a5773e4f"
+      ],
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "slide_delay": 3000
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/woman-applying-lipstick_ddd70f1b-f5da-4cba-adbe-66ab7afa3b4b.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
+      "type": "section-collection",
+      "settings": {
+        "title": "NIOXIN",
+        "title_font_size": 17,
+        "collection": "nioxin",
+        "grid": 5,
+        "rows": 3,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95": {
+      "type": "section-double",
+      "blocks": {
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h1>NIOXIN</h1><p>With 30 years of expertise in thicker and fuller hair, Nioxin offers a wide range of hair products and treatments that help optimize the health of the scalp.</p><p>It gives to your hair the best possible foundation from which to grow, resulting in strong and youthful hair. Improve your hair by properly caring for your scalp.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "7b17a874-7050-4884-aa71-a11da4c78df1": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": "CWsOu12kubU"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0",
+        "7b17a874-7050-4884-aa71-a11da4c78df1"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "OPI Nail Lacquer",
+        "title": "2022 Glamour Beauty Award winner for The Best Nail Polish",
+        "text": "<p>OPI Nail Lacquer is the original formula you already know and love — this tried-and-true system combines high quality and fashion-forward shades with witty and iconic names making it one of the ultimate DIY nail systems.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "",
+            "text_align": "text-left"
+          }
+        },
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "",
+            "text": "",
+            "text_align": "text-left"
+          }
+        },
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0",
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2",
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "3a589407-c117-4c45-a322-aeeb58d48a03": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "3a589407-c117-4c45-a322-aeeb58d48a03"
+  ]
+}

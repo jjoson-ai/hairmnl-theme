@@ -1,0 +1,233 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "section-hero",
+      "disabled": true,
+      "settings": {
+        "bg_position": "center-center",
+        "height": "use_screen_one_fifth",
+        "overlay_opacity": 50,
+        "overlay_color": "#000000",
+        "kicker": "",
+        "title": "FAQ",
+        "richtext": "",
+        "text_align": "align--middle-center",
+        "text_color": "text--white",
+        "link_text": "",
+        "link": "",
+        "button_color": "btn--white",
+        "button_style": "btn"
+      }
+    },
+    "main": {
+      "type": "page",
+      "settings": {
+        "kicker": "",
+        "show_title": false,
+        "show_content": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-center",
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "faq": {
+      "type": "section-faq",
+      "blocks": {
+        "faq-1": {
+          "type": "text",
+          "settings": {
+            "title": "How can I book an appointment?",
+            "content": "<p>We offer convenient booking options. You can call us, or book online through our website, Instagram and Facebook account.</p><ul><li><strong>Website: </strong><a href=\"http://studio.hairmnl.com\" title=\"http://studio.hairmnl.com\">studio.hairmnl.com</a></li><li><strong>Facebook: </strong><a href=\"https://www.facebook.com/HairMNLStudio\" target=\"_blank\" title=\"HairMNL Studio Facebook\">https://www.facebook.com/HairMNLStudio</a></li><li><strong>Instagram: </strong><a href=\"https://www.instagram.com/hairmnlstudio/\" target=\"_blank\" title=\"HairMNL Studio Instagram\">https://www.instagram.com/hairmnlstudio/</a></li></ul><p><strong>Kapitolyo, Pasig Branch</strong><br/>0917-790-4455<br/>2F The Vantage, Pasig City<br/>📍 <a href=\"https://g.page/TheVantageAtKapitolyo\" target=\"_blank\" title=\"HairMNL Studio The Vantage at Kapitolyo Maps Location\">https://g.page/TheVantageAtKapitolyo</a><br/><br/><strong>Serendra, BGC Branch</strong><br/>0917-117-9935 / 0939-9268-325<br/>2F Serendra Mall, BGC, Taguig City (Above Wang Fu)<br/>📍 <a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" title=\"HairMNL Studio Serendra Location\">https://maps.app.goo.gl/JendSjjfJDWcriKK7</a></p>"
+          }
+        },
+        "d9095303-621a-4923-9401-7487ea47b88d": {
+          "type": "text",
+          "settings": {
+            "title": "Do you have evening or weekend appointments?",
+            "content": "<p>We are open daily from 9AM to 7PM, Monday to Sunday.</p>"
+          }
+        },
+        "faq-0": {
+          "type": "text",
+          "settings": {
+            "title": "Do you accept walk-ins?",
+            "content": "<p>While walk-ins are welcome, we recommend booking an appointment to guarantee your preferred stylist and avoid wait times.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq-1",
+        "d9095303-621a-4923-9401-7487ea47b88d",
+        "faq-0"
+      ],
+      "settings": {
+        "title": "Appointments & Booking",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "a65e6ea5-5aa3-4708-88d9-3eea70b4ea32": {
+      "type": "section-faq",
+      "blocks": {
+        "template--14240176472163__a65e6ea5-5aa3-4708-88d9-3eea70b4ea32-1676030332ea49b710-0": {
+          "type": "text",
+          "settings": {
+            "title": "What if I need to reschedule or cancel my appointment?",
+            "content": "<p>We understand things come up. If you need to move or cancel your appointment, please try to give us at least 24 hours notice for rescheduling or canceling.</p><p>You can chat with us on Facebook/IG, Viber, or even send an email or SMS. Please check the link below for the availability of schedule and services.</p><p>Website: <a href=\"http://studio.hairmnl.com\" target=\"_blank\" title=\"http://studio.hairmnl.com\">studio.hairmnl.com</a></p><p></p>"
+          }
+        },
+        "template--14240176472163__a65e6ea5-5aa3-4708-88d9-3eea70b4ea32-1676030332ea49b710-2": {
+          "type": "text",
+          "settings": {
+            "title": "What is your late policy?",
+            "content": "<p>We appreciate your punctuality. We offer a 15-minute grace period for your arrival. After 15 minutes, your appointment may be rescheduled or your time slot might get given to the next client waiting.</p><p>Please let us know if you're running late so we can try our best to accommodate you.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176472163__a65e6ea5-5aa3-4708-88d9-3eea70b4ea32-1676030332ea49b710-0",
+        "template--14240176472163__a65e6ea5-5aa3-4708-88d9-3eea70b4ea32-1676030332ea49b710-2"
+      ],
+      "settings": {
+        "title": "Rescheduling & Cancellation",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "3166bbff-c3b8-475e-95c9-e74544236bb3": {
+      "type": "section-faq",
+      "blocks": {
+        "template--14240176472163__3166bbff-c3b8-475e-95c9-e74544236bb3-1676030332ea49b710-1": {
+          "type": "text",
+          "settings": {
+            "title": "What services do you offer?",
+            "content": "<p>From haircuts and styling to coloring, highlights, treatments, hair straightening, and digital perm, our skilled stylists can tailor the look you desire. We also offer hair and makeup services.</p><p>Please visit this link to view our Service Menu:<br/><a href=\"https://www.hairmnl.com/pages/hairmnl-studio-service-menu\">https://www.hairmnl.com/pages/hairmnl-studio-service-menu</a></p>"
+          }
+        },
+        "template--14240176472163__3166bbff-c3b8-475e-95c9-e74544236bb3-1676030332ea49b710-0": {
+          "type": "text",
+          "settings": {
+            "title": "Can I bring in a picture of the hairstyle I want?",
+            "content": "<p>Yes, bringing in a picture is a great way to communicate your vision. Our stylists will discuss your hair type and texture to ensure the style translates beautifully.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176472163__3166bbff-c3b8-475e-95c9-e74544236bb3-1676030332ea49b710-1",
+        "template--14240176472163__3166bbff-c3b8-475e-95c9-e74544236bb3-1676030332ea49b710-0"
+      ],
+      "settings": {
+        "title": "Services",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "b3ce9b85-ba85-47c1-953e-b943717f44bb": {
+      "type": "section-faq",
+      "blocks": {
+        "07a9af8d-2110-4c0b-82ba-7bfe01fcb996": {
+          "type": "text",
+          "settings": {
+            "title": "Is there parking available?",
+            "content": "<p>Yes. Both branches have available parking space however we cannot reserve or guarantee you a parking space as our parking space is shared with the rest of the tenants and customers of the building.</p><p><strong>Kapitolyo, Pasig</strong></p><p>The entrance to the basement parking of The Vantage is along West Capitol Drive, right after the drop-off in front of Mo’s Burger.</p><p><strong>Serendra, BGC</strong></p><p>The entrance to Serendra Basement Parking is located along 11th Ave. at Two Serendra drop-off (opposite Fully Booked, Bonifacio High Street) or in front of Hanamaruken Ramen Serendra.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "07a9af8d-2110-4c0b-82ba-7bfe01fcb996"
+      ],
+      "settings": {
+        "title": "Salon Amenities",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "105ac567-0283-4e51-910d-889de7416ccf": {
+      "type": "section-faq",
+      "blocks": {
+        "57181b26-be63-4cad-9af2-fa4fe1103155": {
+          "type": "text",
+          "settings": {
+            "title": "What are your payment options?",
+            "content": "<p>We accept cash, GCash, Maya, Credit cards (Visa, Mastercard, JCB), and Debit Cards (Bancnet) for your convenience.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "57181b26-be63-4cad-9af2-fa4fe1103155"
+      ],
+      "settings": {
+        "title": "Payment",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "bcf9abb7-3c69-45b6-85fb-f24afd53f7f3": {
+      "type": "section-faq",
+      "blocks": {
+        "94cf444b-8fad-459e-be61-4a9b04e7882a": {
+          "type": "text",
+          "settings": {
+            "title": "7-Day Redo Policy:",
+            "content": "<p>We're confident you'll love your new look, but for any reason, if you're not completely satisfied within 7 days, we offer a complimentary redo or adjustment. Just let us know your concerns, and we'll work with you to ensure you leave happy.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "94cf444b-8fad-459e-be61-4a9b04e7882a"
+      ],
+      "settings": {
+        "title": "7-Day Redo Policy",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--small",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "main",
+    "faq",
+    "a65e6ea5-5aa3-4708-88d9-3eea70b4ea32",
+    "3166bbff-c3b8-475e-95c9-e74544236bb3",
+    "b3ce9b85-ba85-47c1-953e-b943717f44bb",
+    "105ac567-0283-4e51-910d-889de7416ccf",
+    "bcf9abb7-3c69-45b6-85fb-f24afd53f7f3"
+  ]
+}

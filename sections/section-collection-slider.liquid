@@ -1,0 +1,91 @@
+{% assign featured_products_collection = collections[section.settings.featured_collection] %}
+{% assign collection_title = featured_products_collection.title %}
+{% assign featured_products = featured_products_collection.products %}
+
+{%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
+
+{% if section.settings.is_custom_title_font %}
+  {%- assign title_font = section.settings.custom_title_font -%}
+{% else %}
+  {%- assign title_font = section.settings.title_font.family -%}
+{% endif %}
+
+{% if section.settings.is_custom_product_title_font %}
+  {%- assign product_title_font = section.settings.custom_product_title_font -%}
+{% else %}
+  {%- assign product_title_font = section.settings.product_title_font.family -%}
+{% endif %}
+
+{% if section.settings.is_custom_product_price_font %}
+  {%- assign product_price_font = section.settings.custom_product_price_font -%}
+{% else %}
+  {%- assign product_price_font = section.settings.product_price_font.family -%}
+{% endif %}
+
+<div class="wrapper">
+  <div class="data-section-id=" {{ section.id }} ">
+    <div class="section-header text-center">
+      {% comment %}<!-- replaced w/ dynamic 'block' <h2 class="h2--body rte section-header__title">New Arrivals</h2> -->{% endcomment %}
+      <h2 class="h2--body rte section-header__title home__subtitle">{{ collection_title }}
+      </h2>
+      {% comment %}
+        <div class="text-center"><a href="{{ featured_products_collection.url }}" class="collection-view-all">View All</a></div>
+      {% endcomment %}
+    </div>
+
+    {%- if featured_products.size <= 6 -%}
+      <style > :root
+      {
+        --productsCount: {{ featured_products.size }};
+      }
+    </style>
+    <div class="collection-grid__box">
+      {% for product in featured_products %}
+        <div class="collection-grid__item">
+          {% render 'product-grid-item', product: product %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    {% render 'collection-slider' products: featured_products %}
+  {%- endif -%}
+
+  {%- if featured_products.size > 6 -%}
+    <div class="btn-box text-center">
+      <a href="{{ featured_products_collection.url }}" class="btn--outline uppercase">
+        {{ 'collections.general.view_all' | t }}
+      </a>
+    </div>
+  {%- endif -%}
+</div></div>{% schema %}
+{
+  "name": "Collection Slider",
+  "class": "collection-slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured Collection Slider"
+    }, {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "label": "Title font size",
+      "default": 28
+    }, {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Select Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Slider",
+      "category": "Slider"
+    }
+  ]
+}
+{% endschema %}

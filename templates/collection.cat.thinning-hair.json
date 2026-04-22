@@ -1,0 +1,443 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/HairMNL_Award-Winning_Thinning_Hair_Treatments_Desktop_213b479c-d331-4347-ba28-388c04a47843.jpg",
+        "banner_mobile": "shopify://shop_images/HairMNL_Award-Winning_Thinning_Hair_Treatments_Mobile_789f3cc0-a958-4e87-ab97-42017dd283f9.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": true,
+        "show_description_below": true,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/scalp-care-jan-mar-2025-thinning-hair-banner-deskt.jpg",
+            "slide_image_mobile": "shopify://shop_images/scalp-care-jan-mar-2025-thinning-hair-banner-mobil.jpg",
+            "slide_image_url": ""
+          }
+        },
+        "banner_slide_jUVHUC": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Thinning_Hair_Quiz_Desktop_Banner.png",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Thinning_Hair_Quiz_Mobile_Banner.png",
+            "slide_image_url": "shopify://pages/thinning-hair-quiz"
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/storytelling-thinning-hair-sep-2023-desktop-banner.jpg",
+            "slide_image_mobile": "shopify://shop_images/storytelling-thinning-hair-sep-2023-mobile-banner.jpg",
+            "slide_image_url": "https://www.hairmnl.com/pages/general-hairfall-personalized-solutions-davines-energizing-kerastase-genesis"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "banner_slide_jUVHUC",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 4000
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Professional Solutions for Thinning Hair",
+        "text": "<p>HairMNL carries a variety of professional products that address concerns on hairfall, hairloss, and thin hair.</p><p>Check out each collection to see which product line is best for you.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95": {
+      "type": "section-double",
+      "blocks": {
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "Shop Now",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0",
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "",
+            "text_align": "text-left"
+          }
+        },
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0",
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "7a270b7d-2599-42c7-ba52-5681e1d57193": {
+      "type": "section-collection-grid",
+      "blocks": {
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "hairfall",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/hairfall"
+          }
+        },
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "for-hairloss-prevention",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/for-hairloss-prevention"
+          }
+        },
+        "94b07b62-0251-4166-a21f-eb8ceb5fa000": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "treatments-for-increased-hair-density",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/treatments-for-increased-hair-density"
+          }
+        },
+        "8b9f931e-7bed-4331-84e7-42be19b980ef": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "hair-thickness",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/hair-thickness"
+          }
+        },
+        "c6b924e4-aea4-4ce4-9c02-99adfd385f13": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "receding-hairline",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/receding-hairline"
+          }
+        }
+      },
+      "block_order": [
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-0",
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-1",
+        "94b07b62-0251-4166-a21f-eb8ceb5fa000",
+        "8b9f931e-7bed-4331-84e7-42be19b980ef",
+        "c6b924e4-aea4-4ce4-9c02-99adfd385f13"
+      ],
+      "settings": {
+        "title": "",
+        "grid": 3,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.9
+      }
+    },
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Davines NaturalTech Energizing",
+        "title_font_size": 17,
+        "collection": "davines-energizing-collection",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_BCwMW7": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Kérastase Genesis",
+        "title_font_size": 17,
+        "collection": "kerastase-genesis",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_WAGN6q": {
+      "type": "section-collection",
+      "settings": {
+        "title": "L'Oréal Professionnel Serioxyl Advanced",
+        "title_font_size": 17,
+        "collection": "loreal-professionnel-serioxyl-advanced",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_WWUmjb": {
+      "type": "section-collection",
+      "settings": {
+        "title": "All Products For Thinning Hair",
+        "title_font_size": 17,
+        "collection": "products-for-thinning-hair",
+        "grid": 6,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "e4d10257-2e6a-4ee6-8b8d-c077464c197a": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14411676778595__e4d10257-2e6a-4ee6-8b8d-c077464c197a-1676002138d56f4b61-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "best-award-winning-pro-treatments-at-home-for-every-unique-hair-fall-experience"
+          }
+        },
+        "3c080d12-1719-4bbe-b10d-c5a71134005c": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "falling-losing-or-thinning-hair-what-really-is-the-difference"
+          }
+        },
+        "7904dbc7-abd6-4bb4-be3f-5f20ebfde28d": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-tutorials",
+            "blog_handle": "pumped-and-plumped-up-pro-tips-on-adding-volume-to-thinning-hair-for-women"
+          }
+        },
+        "5af7f94a-d8a4-435b-8fc1-ea3e8c2cac20": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "4-ways-to-deal-with-seasonal-hair-fall"
+          }
+        }
+      },
+      "block_order": [
+        "template--14411676778595__e4d10257-2e6a-4ee6-8b8d-c077464c197a-1676002138d56f4b61-0",
+        "3c080d12-1719-4bbe-b10d-c5a71134005c",
+        "7904dbc7-abd6-4bb4-be3f-5f20ebfde28d",
+        "5af7f94a-d8a4-435b-8fc1-ea3e8c2cac20"
+      ],
+      "settings": {
+        "title": "Featured articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "af2b07a1-cff3-46ec-8449-11caca7a2642": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Need help deciding?",
+        "text": "<p>Feel free to send us a message for an online consultation.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Chat Now",
+        "button_url": "https://m.me/hairmnl",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "7313cc6a-91a7-4ca6-8577-e1859706e634": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "hero",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "7a270b7d-2599-42c7-ba52-5681e1d57193",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "section_collection_BCwMW7",
+    "section_collection_WAGN6q",
+    "section_collection_WWUmjb",
+    "e4d10257-2e6a-4ee6-8b8d-c077464c197a",
+    "af2b07a1-cff3-46ec-8449-11caca7a2642",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "7313cc6a-91a7-4ca6-8577-e1859706e634"
+  ]
+}

@@ -1,0 +1,1129 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "show_title": false,
+        "show_content": false,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "cdee95a2-1184-4b75-9ff5-6aabde4ddd83": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "banner_slide_PdeJ3b": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/2026-mar-apr-salon-site-banners-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/2026-mar-apr-salon-site-banners-mobile.jpg",
+            "slide_image_url": "http://studio.hairmnl.com"
+          }
+        },
+        "banner_slide_UDxwDf": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/kerastase-hairmnlcom-x-hairmnl-studio-anniversary.jpg",
+            "slide_image_mobile": "shopify://shop_images/kerastase-hairmnlcom-x-hairmnl-studio-anniversary-_1.jpg",
+            "slide_image_url": "shopify://collections/kerastase"
+          }
+        },
+        "banner_slide_jqmUqe": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/hairmnl-studio-cut-above-the-rest-june-2025-deskto.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-studio-cut-above-the-rest-june-2025-mobile.jpg",
+            "slide_image_url": "https://studio.hairmnl.com"
+          }
+        },
+        "template--14463462735971__cdee95a2-1184-4b75-9ff5-6aabde4ddd83-16844451016f75c9ec-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/hairmnl-studio-banners_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-studio-banners_mobile-552-x-502-px.jpg",
+            "slide_image_url": "shopify://pages/hairmnl-studio"
+          }
+        },
+        "template--14463462735971__cdee95a2-1184-4b75-9ff5-6aabde4ddd83-16844451016f75c9ec-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/hairmnl-studio-aftercare-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-studio-aftercare-mobile.jpg",
+            "slide_image_url": "shopify://products/hairmnl-products-gift-cards"
+          }
+        },
+        "097c64da-e4ea-4b18-a42d-1541dccc5a7a": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/hairmnl-academy-desktop-banner.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-academy-mobile-banner.jpg",
+            "slide_image_url": "shopify://pages/hairmnl-academy-workshops-by-mud-studio-hairmnl-2023"
+          }
+        }
+      },
+      "block_order": [
+        "banner_slide_PdeJ3b",
+        "banner_slide_UDxwDf",
+        "banner_slide_jqmUqe",
+        "template--14463462735971__cdee95a2-1184-4b75-9ff5-6aabde4ddd83-16844451016f75c9ec-0",
+        "template--14463462735971__cdee95a2-1184-4b75-9ff5-6aabde4ddd83-16844451016f75c9ec-1",
+        "097c64da-e4ea-4b18-a42d-1541dccc5a7a"
+      ],
+      "settings": {
+        "enable_section": false,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "c45148da-c65c-4411-970b-15ed03342eb9": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h2><a href=\"/pages/hairmnl-studio\" target=\"_blank\" title=\"HairMNL Studio\">HairMNL Studio's Portfolio</a></h2><p>HairMNL Studio is a beauty salon that offers premium services.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Service Menu",
+        "button_url": "shopify://pages/hairmnl-studio-service-menu",
+        "button_color": "btn--black",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "2739197d-1006-445a-a2dc-512a3d856212": {
+      "type": "section-columns",
+      "blocks": {
+        "text_block_99TeY7": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "Color, Cut & Treatment",
+            "text": "<p>At HairMNL Studio, we specialize in expert hair color, cut, smoothing and perming services to enhance your natural beauty. From personalized treatments to precision cuts, our skilled stylists will craft a look that suits your style and personality.</p>",
+            "button_label": "See More",
+            "button_link": "#colorandcut",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "template--14665088925795__2739197d-1006-445a-a2dc-512a3d856212-text_block-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "Hair & Makeup",
+            "text": "<p>Elevate your natural beauty with our professional hair and make-up services. Whether it’s for a wedding, a corporate event, or any special occasion, we’ll make you look and feel like your best self. Our team can craft flawless looks for you, from glowing makeup to stylish updos, and many more.</p>",
+            "button_label": "See More",
+            "button_link": "#hairandmakeup",
+            "enable_video": false,
+            "video_link": ""
+          }
+        },
+        "template--14665088925795__2739197d-1006-445a-a2dc-512a3d856212-text_block-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "Styling",
+            "text": "<p>Look flawless at any occasion by having your hair styled professionally. Our expert stylists specialize in creating stunning hairstyles to complement and enhance your natural features. At HairMNL Studio, we’ll curate the perfect style to match your event.</p>",
+            "button_label": "See More",
+            "button_link": "#styling",
+            "enable_video": false,
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_block_99TeY7",
+        "template--14665088925795__2739197d-1006-445a-a2dc-512a3d856212-text_block-1",
+        "template--14665088925795__2739197d-1006-445a-a2dc-512a3d856212-text_block-2"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "section_html_EHqr9k": {
+      "type": "section-html",
+      "disabled": true,
+      "settings": {
+        "html": "<div id=\"colorandcut\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "section_richtext_LxQFgG": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h3><strong>Volumized Haircut</strong></h3>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "shopify://pages/hairmnl-studio-service-menu",
+        "button_color": "btn--black",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_custom_content_RLEzNg": {
+      "type": "section-custom-content",
+      "blocks": {
+        "video_bQwyAe": {
+          "type": "video",
+          "settings": {
+            "video_link_bg": "",
+            "object_position": "center-center",
+            "image": "shopify://shop_images/Volumized_Cuts_-_Camille.jpg",
+            "bg_position": "center-center",
+            "video_link": "",
+            "popup_text": "",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "link_text": "Watch Here",
+            "link": "https://www.youtube.com/shorts/1A2GZk6dlYI",
+            "button_color": "btn--black",
+            "button_style": "btn"
+          }
+        },
+        "video_PWjCxy": {
+          "type": "video",
+          "settings": {
+            "video_link_bg": "",
+            "object_position": "center-center",
+            "image": "shopify://shop_images/Haircut_for_Volume_-_Ethel.jpg",
+            "bg_position": "center-center",
+            "video_link": "",
+            "popup_text": "",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "link_text": "Watch Here",
+            "link": "https://youtube.com/shorts/IuN-Cg8F9no",
+            "button_color": "btn--black",
+            "button_style": "btn"
+          }
+        }
+      },
+      "block_order": [
+        "video_bQwyAe",
+        "video_PWjCxy"
+      ],
+      "name": "Custom content",
+      "settings": {
+        "height": "use_pixels_500",
+        "padding": true,
+        "borders": false,
+        "wrapper": false,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "section_columns_GAjt3P": {
+      "type": "section-columns",
+      "blocks": {
+        "text_block_if6wpV": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/AUGUST_2025_HAIRMNL_STUDIO_HAIR_1.jpg",
+            "title": "Argila Amazonia Treatment",
+            "text": "<p>Reveal smoother, healthier hair with the Argila Amazonia Treatment, a vegan smoothing ritual that tames frizz, boosts shine, and enhances manageability. Infused with natural clays and botanical extracts, this treatment transforms unruly strands into soft, silky perfection.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_ytY9M6": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Digital_Perm.jpg",
+            "title": "Digital Perm",
+            "text": "<p>Transform your hair using advanced perm technology that allows you to achieve natural waves or bouncy curls. See long-lasting volume and effortless texture through this service.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_Rnxc7F": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Hair_Color.jpg",
+            "title": "Classic Full Color",
+            "text": "<p>Achieve timeless elegance with a single, all-over color tailored to enhance your features. Whether you’re refreshing your current shade or trying something new, this classic service delivers rich, even tones for a polished, cohesive look.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_XR9kdD": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Balayage_7f515270-f842-4ba0-9bc0-36d87140c52b.jpg",
+            "title": "Color & Balayage",
+            "text": "<p>Achieve a stunning color transformation with depth and dimension in any tone. Enhance your brand new hue with a matching balayage and finish it off with an expert cut by our stylists to achieve a new you.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_K7d6zp": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Julie_Highlights_1.jpg",
+            "title": "Full Highlights",
+            "text": "<p>Brighten your entire look with full highlights, carefully placed from roots to ends for maximum dimension and radiance. This technique creates a sun-kissed effect that adds depth, movement, and a luminous finish to your hair.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_8EJHwN": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Highlights_2_c9bc546a-98ea-4dcb-a937-4959769f668b.jpg",
+            "title": "Partial Highlights",
+            "text": "<p>Brighten your look with partial highlights that add soft dimension and light-catching accents. Focused around the face or crown, this technique offers a natural glow and subtle lift without the commitment of full highlights, perfect for a refreshed, sun-kissed finish.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_iTCJqa": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/AUGUST_2025_HAIRMNL_STUDIO_HAIR_3.jpg",
+            "title": "Ash Blonde Highlights",
+            "text": "<p>Add a touch of cool elegance to your hair with ash blonde highlights. Embrace a chic and contemporary look as our skilled stylists craft a seamless blend of tones that perfectly complements your individual style.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_Kr76wX": {
+          "type": "text_block",
+          "disabled": true,
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Hair_Color_and_Highlights_3.jpg",
+            "title": "High Contrast Highlights",
+            "text": "<p>Add a touch of cool elegance to your hair with ash blonde highlights that create depth and dimension. Embrace a chic and contemporary look as our skilled stylists craft a seamless blend of tones that perfectly complements your individual style.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_cmwCFQ": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/JULY_2025_HAIRMNL_STUDIO_HAIR_8.jpg",
+            "title": "Fashion Color",
+            "text": "<p>Make a bold statement with vibrant, head-turning hues. Whether you're going for soft pastels, striking vivids, or edgy unconventional tones, our expert colorists will craft your perfect shade. Elevate your look with customized techniques and a precision finish for a truly standout transformation.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "text_block_VpWCAW": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Peekaboo_-_Chaddy.jpg",
+            "title": "Custom Hair Color",
+            "text": "<p>Add a playful pop of personality with a custom peekaboo color, hidden hues that reveal themselves with every movement. Whether bold or subtle, our stylists will create a vibrant, one-of-a-kind look tailored to your style.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "text_block_if6wpV",
+        "text_block_ytY9M6",
+        "text_block_Rnxc7F",
+        "text_block_XR9kdD",
+        "text_block_K7d6zp",
+        "text_block_8EJHwN",
+        "text_block_iTCJqa",
+        "text_block_Kr76wX",
+        "text_block_cmwCFQ",
+        "text_block_VpWCAW"
+      ],
+      "settings": {
+        "title": "Color & Treatment",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1.1,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "20a70a4d-4902-4bbf-930c-edc3b4cd1575": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div id=\"hairandmakeup\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "b3a390c3-286a-4930-a215-50c684bb565e": {
+      "type": "section-columns",
+      "blocks": {
+        "639354a6-3c7d-42a5-a462-0d4215ef02e0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_works_3.jpg",
+            "title": "Sun-Kissed Perfection",
+            "text": "<p>Feel like it’s golden hour at any time with bronzed makeup and cascading curls.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "ad98e614-b1a1-4fa8-99e9-87d4bd93ed36": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/OCT_2025_HAIRMNL_STUDIO_MAKEUP_4.jpg",
+            "title": "Soft Glam",
+            "text": "<p>Elevate your look with a soft glam cat eye. Defined yet delicate, this makeup style features softly blended shadows and a precise wing that elongates the eyes. </p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "4c98dae7-f036-456e-a9ba-4f6c195b005b": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/MAY_2025_HAIRMNL_STUDIO_SOCIAL_POSTS_1080_x_1350_px.jpg",
+            "title": "Pinkish Glow",
+            "text": "<p>Pair an elegant hairstyle with soft pinks to bring out a fresh, youthful glow.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "13455fb7-25ee-40ec-96a5-13c216ec6e1d": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/AUGUST_2025_HAIRMNL_STUDIO_MAKEUP_2.jpg",
+            "title": "Glossy Glow-up",
+            "text": "<p>Enhance your look with a glossy shine that shows off your best features. Complete your look with luxurious curls for an overall luminous glow.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "9a9fd5a6-09aa-49e3-8304-2ede8c731296": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Makeup_-_Kyle_6.jpg",
+            "title": "Soft Chic",
+            "text": "<p>A subtle blush and a nude lip, striking the perfect balance between sophistication and a gentle, effortless charm.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "03fac4b6-42f2-4ae8-a65f-42107aa05559": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/viber_image_2023-06-24_10-43-22-223.jpg",
+            "title": "Defined Eyes",
+            "text": "<p>Precise liner, blended shadows, and subtle depth that make your eyes stand out. This look adds intensity and polish while keeping the overall effect soft and sophisticated.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "bc098b1f-1a99-4c1a-ba8d-752b52b11b05": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Makeup_-_Kyle_13.jpg",
+            "title": "Naturally Radiant",
+            "text": "<p>Glow naturally with dewy makeup and a soft half-up hairstyle, an effortless look that feels fresh, polished, and perfectly you.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "63468c72-34b9-44f5-837f-5a0d612b113e": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/OCT_2025_HAIRMNL_STUDIO_MAKEUP_3.jpg",
+            "title": "Red and Radiant",
+            "text": "<p>Go bold and glam with red lips and smokey eye makeup. Paired with a beautiful waves, you’ll exude poise and grace.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "197b6bee-157f-402a-9fb4-4f49ed1f540f": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Makeup_-_Kyle_9.jpg",
+            "title": "Sophisticated Glamour",
+            "text": "<p>Elevate your allure with a natural but elegant makeup that stands out at any occasion. Complete the look with a sophisticated hairstyle that compliments your features.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "639354a6-3c7d-42a5-a462-0d4215ef02e0",
+        "ad98e614-b1a1-4fa8-99e9-87d4bd93ed36",
+        "4c98dae7-f036-456e-a9ba-4f6c195b005b",
+        "13455fb7-25ee-40ec-96a5-13c216ec6e1d",
+        "9a9fd5a6-09aa-49e3-8304-2ede8c731296",
+        "03fac4b6-42f2-4ae8-a65f-42107aa05559",
+        "bc098b1f-1a99-4c1a-ba8d-752b52b11b05",
+        "63468c72-34b9-44f5-837f-5a0d612b113e",
+        "197b6bee-157f-402a-9fb4-4f49ed1f540f"
+      ],
+      "settings": {
+        "title": "Hair & Makeup",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1.1,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "a70cda54-5d96-4191-9739-04afbab00a78": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div id=\"styling\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "c407da0f-d696-4f63-8a43-ec059d08452a": {
+      "type": "section-columns",
+      "blocks": {
+        "706a14c6-cb03-4fc1-ab95-bb10bac45263": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_Signature_Blowout.jpg",
+            "title": "Blowout Locks",
+            "text": "<p>Showcasing a textured and dynamic finish with enhanced volume and movement.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "a325f476-5774-4104-bcb5-8f93e6245a3d": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/JUNE_2025_HAIRMNL_STUDIO_MAKEUP.jpg",
+            "title": "Sculpted waves",
+            "text": "<p>Add movement and texture with defined waves. Smooth, sculpted strands that bring out the natural flow of your hair for a polished yet effortless finish.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "b059ee13-b3d5-432b-bfa2-798e66719e2b": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/viber_image_2023-06-28_11-29-15-808_ad4aff60-a871-4faf-a393-2aed922f4c6c.jpg",
+            "title": "Lush Volumized Curls",
+            "text": "<p>Step into the spotlight with captivating curls. Perfect for any occasion, this versatile style can make a strong impression.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "5cfae8d1-5d4a-4b58-8cc6-eb42b9491386": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Make_up_Ej.jpg",
+            "title": "Chic Loose Waves",
+            "text": "<p>Add a touch of elegance and achieve everyday glamour with charming yet sophisticated waves.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "3bf34d83-a3bd-40b0-a24a-53e6b4c78e89": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Studio_work_6.jpg",
+            "title": "Modern 60s",
+            "text": "<p>This 60s-inspired look features elegantly tucked sides and a teased crown, embodying the signature retro charm of the era with a touch of timeless sophistication.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "a94d77e3-f67d-4e83-98b3-207db27e0567": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Updo_22a8c91d-7cf2-4fc9-89ab-30d5c2cfabbf.jpg",
+            "title": "Bridal Updo",
+            "text": "<p>Turn heads with a modern bridal updo. This versatile style enhances your natural beauty while keeping your look effortlessly sophisticated for the big day.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "706a14c6-cb03-4fc1-ab95-bb10bac45263",
+        "a325f476-5774-4104-bcb5-8f93e6245a3d",
+        "b059ee13-b3d5-432b-bfa2-798e66719e2b",
+        "5cfae8d1-5d4a-4b58-8cc6-eb42b9491386",
+        "3bf34d83-a3bd-40b0-a24a-53e6b4c78e89",
+        "a94d77e3-f67d-4e83-98b3-207db27e0567"
+      ],
+      "settings": {
+        "title": "Styling",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1.1,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "9a52a278-ca50-49f7-89b1-235d1b1880f8": {
+      "type": "section-icons",
+      "blocks": {
+        "template--14463462735971__9a52a278-ca50-49f7-89b1-235d1b1880f8-1684447672f4a1fac2-0": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-chat",
+            "icon_color": "#aaaaaa",
+            "title": "Message Us",
+            "text": "<p><a href=\"https://facebook.com/hairmnlstudio\" target=\"_blank\">Facebook</a> / <a href=\"https://instagram.com/hairmnlstudio\" target=\"_blank\">Instagram</a> or, at <a href=\"tel:+639177904455\" target=\"_blank\" title=\"tel:+639177904455\">0917 790 4455</a> / <a href=\"tel:+639399268325\" target=\"_blank\" title=\"tel:+639399268325\">0939 9268 325</a>. </p><p>Show us your peg or ask for recommendation.</p>"
+          }
+        },
+        "template--14463462735971__9a52a278-ca50-49f7-89b1-235d1b1880f8-1684447672f4a1fac2-1": {
+          "type": "icon_block",
+          "disabled": true,
+          "settings": {
+            "icon_name": "icon-payment",
+            "icon_color": "#aaaaaa",
+            "title": "Cost estimate",
+            "text": "<p>Receive a cost estimate for the service.</p><p>Need options? Ask us for recommendations.</p>"
+          }
+        },
+        "template--14463462735971__9a52a278-ca50-49f7-89b1-235d1b1880f8-1684447672f4a1fac2-2": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-phone",
+            "icon_color": "#aaaaaa",
+            "title": "Book your appointment",
+            "text": "<p><strong>Website: </strong><a href=\"http://studio.hairmnl.com/\">studio.hairmnl.com</a></p><p><strong>Kapitolyo, Pasig Branch</strong></p><p>0917-790-4455<br/><a href=\"https://g.page/TheVantageAtKapitolyo\" target=\"_blank\">2F The Vantage, Pasig City</a><br/>📍<a href=\"https://g.page/TheVantageAtKapitolyo\">https://g.page/TheVantageAtKapitolyo</a></p><p>Open daily, 10AM to 7PM</p><p><strong>Serendra, BGC Branch</strong></p><p>0917-117-9935 / 0939-9268-325<br/><a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\">2F Serendra Mall, BGC, Taguig City</a><br/>📍<a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\">https://maps.app.goo.gl/JendSjjfJDWcriKK7</a></p><p>9AM-8PM on weekdays, 9AM-7PM on weekends</p>"
+          }
+        },
+        "05499800-6958-4d59-8003-4df14ed683ff": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-rating",
+            "icon_color": "#aaaaaa",
+            "title": "Leave a Review",
+            "text": "<p>If you enjoyed your visit, we would appreciate a simple review on our <a href=\"https://www.facebook.com/HairMNLStudio/\" target=\"_blank\" title=\"https://www.facebook.com/HairMNLStudio/\">Facebook</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463462735971__9a52a278-ca50-49f7-89b1-235d1b1880f8-1684447672f4a1fac2-0",
+        "template--14463462735971__9a52a278-ca50-49f7-89b1-235d1b1880f8-1684447672f4a1fac2-1",
+        "template--14463462735971__9a52a278-ca50-49f7-89b1-235d1b1880f8-1684447672f4a1fac2-2",
+        "05499800-6958-4d59-8003-4df14ed683ff"
+      ],
+      "settings": {
+        "title": "Glam With Us",
+        "bg": "palette--light bg--neutral",
+        "icon_size": "icon--medium",
+        "icon_alignment": "icon--top",
+        "align_text": "text-center"
+      }
+    },
+    "98289d71-8cfd-4aac-9f67-5e5a92327b17": {
+      "type": "section-custom-content",
+      "blocks": {
+        "9270e77e-91df-4ea3-bde8-304d4f48b51c": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h4>Book your hair and makeup with our trained and certified team of beauty professionals.</h4>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Book Your Appointment",
+            "button_url": "http://studio.hairmnl.com",
+            "button_color": "btn--neutral",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#f0e6d0"
+          }
+        },
+        "33bde9b3-6c60-4a66-a06e-9c280546ff33": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Studio_Portfolio.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "9270e77e-91df-4ea3-bde8-304d4f48b51c",
+        "33bde9b3-6c60-4a66-a06e-9c280546ff33"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "adb43312-2ac0-48b9-8bd1-b03a553fbeb9": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "HairMNL Studio - The Vantage",
+        "text": "<p>Located in <a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">2F The Vantage, Kapitolyo, Pasig</a></p><p>Above Starbucks / escalator</p><p>Open daily, 10AM to 7PM</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "https://m.me/hairmnlstudio",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "c67de18e-8314-49c6-8011-7978a9b48953": {
+      "type": "section-columns",
+      "blocks": {
+        "1fa5816c-3034-4f8f-bcb1-c8907bcb9c9c": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Client_Reviews_-_Kapitolyo.png",
+            "title": "Client Reviews",
+            "text": "<p>Our clients are at the heart of everything we do. Here’s what they have to say about their experiences with our team and services.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "bbde1f1b-11f8-4693-bc64-e653b30147c2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Professional_Friendly_Stylists_-_Kapitolyo.png",
+            "title": "High Quality yet Friendly Service",
+            "text": "<p>Our team of skilled stylists combines expertise with a personal touch. They listen and offer advice, giving clients the perfect look with a warm experience.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "f3f670cb-8e44-485f-8826-d762996e418c": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/High_Quality_Salon_Products_-_Kapitolyo.png",
+            "title": "Premium Products",
+            "text": "<p>We believe in quality at every step, which is why we only use premium, authentic products. We offer plant-based, vegan, and ammonia-free services that deliver exceptional results while being gentle on your hair.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "f62876d4-7dee-4787-862d-55729314636e": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Aftercare_-_Kapitolyo.png",
+            "title": "Wide Assortment of Aftercare",
+            "text": "<p>We have curated a range of premium salon aftercare and styling products. Drop by HairMNL Studio to try them yourself before purchasing!</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "eb84555c-9d25-4c95-b2d8-5ab33dde9a53": {
+          "type": "text_block",
+          "disabled": true,
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/0639ea16-2e34-43eb-8ebd-ebf1135f9040.jpg",
+            "title": "Bar Area",
+            "text": "<p>We offer a stylish and vibrant space where we cater to your beauty needs while providing a perfect setting for special events, ensuring an unforgettable experience for you and your guests.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "1fa5816c-3034-4f8f-bcb1-c8907bcb9c9c",
+        "bbde1f1b-11f8-4693-bc64-e653b30147c2",
+        "f3f670cb-8e44-485f-8826-d762996e418c",
+        "f62876d4-7dee-4787-862d-55729314636e",
+        "eb84555c-9d25-4c95-b2d8-5ab33dde9a53"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "94f46a7f-c124-4afb-a6cc-556adc8a09da": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "HairMNL Studio - Serendra",
+        "text": "<p>Located in <a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" title=\"HairMNL Studio - Serendra\">2F Serendra Mall, BGC, Taguig</a></p><p>Above Teppanya</p><p>9AM-8PM on weekdays, 9AM-7PM on weekends</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "https://m.me/hairmnlstudio",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "deed0ba5-a262-4076-8490-9bffe723c6a4": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14476669091939__deed0ba5-a262-4076-8490-9bffe723c6a4-1688711417dc69dd9f-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Client_Reviews_-_Serendra_1.png",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14476669091939__deed0ba5-a262-4076-8490-9bffe723c6a4-1688711417dc69dd9f-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Professional_Friendly_Stylists_-_Serendra.png",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "928ff434-0358-4666-9b08-fca741300bd6": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/High_Quality_Salon_Products_-_Serendra.png",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14476669091939__deed0ba5-a262-4076-8490-9bffe723c6a4-1688711417dc69dd9f-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Aftercare_-_Serendra.png",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "9c3c05bf-e46e-4c90-9bc5-bca001c9c42d": {
+          "type": "text_block",
+          "disabled": true,
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/0639ea16-2e34-43eb-8ebd-ebf1135f9040.jpg",
+            "title": "Bar Area",
+            "text": "<p>We offer a stylish and vibrant space where we cater to your beauty needs while providing a perfect setting for special events, ensuring an unforgettable experience for you and your guests.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14476669091939__deed0ba5-a262-4076-8490-9bffe723c6a4-1688711417dc69dd9f-0",
+        "template--14476669091939__deed0ba5-a262-4076-8490-9bffe723c6a4-1688711417dc69dd9f-1",
+        "928ff434-0358-4666-9b08-fca741300bd6",
+        "template--14476669091939__deed0ba5-a262-4076-8490-9bffe723c6a4-1688711417dc69dd9f-2",
+        "9c3c05bf-e46e-4c90-9bc5-bca001c9c42d"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "section_richtext_9RHVwj": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Book Your Appointment",
+        "button_url": "https://studio.hairmnl.com",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "ae2b71d6-13c5-4717-b21c-d5048b7a9b31": {
+      "type": "section-map",
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "heading": "HairMNL Studio",
+        "address": "<p><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">Unit 204 The Vantage at Kapitolyo,</a></p><p><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">West Capitol Dr. cor. United St., Pasig City</a></p><p>Daily, 10am - 6pm</p>",
+        "button": "Directions",
+        "button_style": "btn",
+        "style": "light",
+        "zoom": 11,
+        "bg": "palette--light bg--neutral",
+        "api_key": "",
+        "map_address": "Unit 204 The Vantage at Kapitolyo,West Capitol Dr. cor. United St., Pasig City",
+        "image": "shopify://shop_images/HairMNL_Studio_Map_57a2f01d-9bc4-4fe1-97ee-662b6f65ca7b.png",
+        "enable_latlong": false,
+        "lat": "",
+        "long": ""
+      }
+    },
+    "694b387e-32bf-48f9-ac01-f498f1b2235d": {
+      "type": "section-blog",
+      "settings": {
+        "title": "",
+        "homepage_blog": "salon-services",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "9770fa01-118e-4be4-bdff-21b9e99e0513": {
+      "type": "section-newsletter",
+      "settings": {
+        "title": "Newsletter",
+        "richtext": "<p>Join to get special offers, free giveaways, and once-in-a-lifetime deals.</p>",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_liquid_JcfEni": {
+      "type": "section-liquid",
+      "disabled": true,
+      "name": "Custom Liquid",
+      "settings": {
+        "custom_liquid": "<iframe src=\"https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F884707263280051%2F&show_text=false&width=267&t=0\" width=\"267\" height=\"476\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\" allow=\"autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share\" allowFullScreen=\"true\"></iframe>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "cdee95a2-1184-4b75-9ff5-6aabde4ddd83",
+    "c45148da-c65c-4411-970b-15ed03342eb9",
+    "2739197d-1006-445a-a2dc-512a3d856212",
+    "section_html_EHqr9k",
+    "section_richtext_LxQFgG",
+    "section_custom_content_RLEzNg",
+    "section_columns_GAjt3P",
+    "20a70a4d-4902-4bbf-930c-edc3b4cd1575",
+    "b3a390c3-286a-4930-a215-50c684bb565e",
+    "a70cda54-5d96-4191-9739-04afbab00a78",
+    "c407da0f-d696-4f63-8a43-ec059d08452a",
+    "9a52a278-ca50-49f7-89b1-235d1b1880f8",
+    "98289d71-8cfd-4aac-9f67-5e5a92327b17",
+    "adb43312-2ac0-48b9-8bd1-b03a553fbeb9",
+    "c67de18e-8314-49c6-8011-7978a9b48953",
+    "94f46a7f-c124-4afb-a6cc-556adc8a09da",
+    "deed0ba5-a262-4076-8490-9bffe723c6a4",
+    "section_richtext_9RHVwj",
+    "ae2b71d6-13c5-4717-b21c-d5048b7a9b31",
+    "694b387e-32bf-48f9-ac01-f498f1b2235d",
+    "9770fa01-118e-4be4-bdff-21b9e99e0513",
+    "section_liquid_JcfEni"
+  ]
+}

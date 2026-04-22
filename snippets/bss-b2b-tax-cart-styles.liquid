@@ -1,0 +1,174 @@
+{% if false %}<style id="bss-b2b-cart-vat-style">
+    .CartItem__Price.Price,
+    .bss-qb-total-price-item,
+    .totals__subtotal-value,
+    .bss-qb-cart-subtotal,
+    {% if shop.permanent_domain != "wiedemann-manufaktur.myshopify.com" %}
+    .price.price--end,
+    .cart-item .cart-item__details .product-option,
+    .cart-item .cart-item__details .product-option.bss-fix-tax,
+    {% endif %}
+    .cart__final-price,
+    {% if shop.permanent_domain != "barlibrary.myshopify.com" %}
+    [data-subtotal],
+    .cart__page .cart__item-sub.cart__item-row div[data-subtotal],
+    {% endif %}
+    .cart-subtotal__price,
+    [bss-b2b-item-original-price],
+    {% if shop.permanent_domain != "brazil-beauty-brands.myshopify.com" %}
+    [bss-b2b-final-line-price],
+    {% endif %}
+    [bss-b2b-original-line-price],
+    [bss-b2b-cart-total-price],
+    .bss-qb-price-item,
+    [data-cart-total],
+    .cart__page .cart__item-details .cart__price,
+    .cart_table .cart__items .product-info .cart-item-price,
+    .cart_table .cart__items .product-info .cart-item-subtotal,
+    .cart_table .shipping-section .cart_total_price .cart__subtotal,
+    #shopify-section-cart-template .line-items .price.item-price.converted,
+    #shopify-section-cart-template .line-items .price.converted,
+    #shopify-section-cart-template .total.row .wcp-original-cart-total,
+    .cart-item-list__body .cart-item__column.cart-item__price .theme-money,
+    .cart-item__price__amount .theme-money.struck-out-price,
+    .cart-item__price__amount .cart-item__price-current,
+    .cart-item__total .cart-item__total__amount,
+    .cart-wrapper span.ymq-price-span,
+    {% if shop.permanent_domain == "scandipaws.myshopify.com" %}
+	.ajaxcart__product .ajaxcart__row .ajaxcart__price [bss-b2b-cart-item-key],
+	.cart__price [bss-b2b-cart-item-key],
+	{% else %}
+	.ajaxcart__product .ajaxcart__row .ajaxcart__price,
+    {% if shop.permanent_domain != "morelabs-eu.myshopify.com" %}
+	.cart__price,
+    {% endif %}
+	{% endif %}
+	.drawer__footer.drawer__footer--fixed  .ajaxcart__price,
+	.cart__row #revy-cart-subtotal-price,
+	.cart-item-price .final-price.money,
+	.cartTable--heading-price .product-price .cart-original-price,
+	.saw-cart-original-total,
+    .cartTable--heading-price > .product-price > .order-discount,
+    .drawer__contents .drawer__footer .ajaxcart__price,
+    .cart-item .bss-b2b-compare-at-price,
+    .cart-item__price-wrapper .unit-price.caption,
+    .product-info__inner .price,
+    .cart_meta_price .cart_price,
+    .price-review .price_range,
+    .widget_if_pr .price-search,
+    dd[data-cart-item-regular-price],
+    div[data-cart-item-regular-price-group] span[data-cart-item-regular-price],
+    div.subtotal p.subtotal-price span.cart-original-total span,
+    .product-price__price.regular,
+    .cart-table .cart__price-unit-price,
+    .cart-item .cart-item--content .cart-item--content-price .money  > span,
+    .cart-item .cart-item--inner .cart-item--info .cart-item--total .money > span,
+    .t4s-cart-item-price,
+    .t4s-cart_price,
+    .line-item-table__list .price-list.hidden-phone,
+    .line-item-table__list .price,
+    .cart__recap-block .cart__total-container .heading.h6,
+    .line-item__price-list-container .price-list.price-list--stack .price,
+    .f-price-item.f-price-item--regular:not(.prod__sticky-atc .f-price-item.f-price-item--regular, .quick-view__info .f-price-item.f-price-item--regular),
+    .line-item__price-list .line-item__price:not([style*="text-decoration: line-through"]) .money:not([style*="text-decoration: line-through"]),
+    .line-item__line-price > span .money:not([style*="text-decoration: line-through"]),
+    .cart-recap__price-line-price > .money:not([style*="text-decoration: line-through"]),
+    .tt-product-total .tt-total.total-product-js,
+    .tt-total .tt-price.full-total-js,
+    .cart-item__price-wrapper .price.price--end,
+    .totals .totals__subtotal-value,
+    .cart-item__details .product-option,
+    #cartForm .grid__item .cart__price .cart__price--compare,
+    #cartForm .grid__item .cart__price .money,
+    .bss-b2b-compare-at-price,
+    .ajax-cart__final-details div > p,
+    .cart-subtotal-info .product-price-and-shipping .money,
+    .bss-bogo-cart-subtotal,
+    [data-cart-item-key] .tt-price,
+     .cart__cell--total .cart__item-total,
+    #CartFooter #CartSubtotal,
+    .cart-summary_footer .cart-summary_total .total .cart-summary_price,
+    .art-line-item_price_remove .cart-line-item_price,
+    .cart-item--content-price,
+    .cart-item__info .cart-item__total,
+    .cart-notification-product__price .price__regular .price-item.price-item--regular,
+    .transcy-money:not(.bss-b2b-cart-vat .transcy-money, .bss-b2b-collection-item-vat .transcy-money, .bss-b2b-product-vat .transcy-money, .bss-b2b-cart-vat-subtotal .transcy-money, td > .transcy-money, .bss-b2b-qty-table-wrapper .transcy-money),
+    .modal_price, .price_total .money, .cart_subtotal .right,
+    #grandtotal div:not(.bss-b2b-cart-vat-subtotal), #subtotal div:not(.bss-b2b-cart-vat-subtotal),
+    .tt-cart-box .tt-price span, #subtotal > td > span, #grandtotal > td > span,
+    .cart__items .cart-item__content .cart-item__price,
+    #AjaxCartSubtotal .cart__total strong
+    {
+        display: none !important
+    }
+    {% if shop.permanent_domain == "chef-morel.myshopify.com" %}
+        .cart-item > .cart-item__totals > .cart-item__price-wrapper > .price.price--end {
+            display: block !important
+        }
+        .cart-item__price-wrapper > .unit-price.caption {
+            display: block !important
+        }
+    {% endif %}
+    {% if shop.permanent_domain == "ryan-s-eu.myshopify.com" %}
+        .cart-item__price-wrapper .price.price--end, .cart-item__details .product-option,.cart-item .cart-item__details .product-option{
+            display: block !important
+        }
+    {% endif %}
+    {% if shop.permanent_domain == "paloma-living-australia.myshopify.com" %}
+        .bss-b2b-cart-vat-subtotal {
+            font-size: 18px !important;
+            font-weight: 500 !important;
+            margin-left: 8px;
+        }
+        .bss-b2b-cart-vat {
+            font-weight: 500 !important;
+        }
+    {% endif %}
+      {% if shop.permanent_domain == "stelzlagergigant.myshopify.com" %}
+        .line-item_price [bss-b2b-item-final-price] {
+           display: none !important;
+        }
+        .bss-custom-price{
+          display: block !important;
+        }
+    {% endif %}
+    {% if shop.permanent_domain == "suacosmetics.myshopify.com" %}
+        .bss-bogo-cart-subtotal,
+        .cart-item .cart-item__details .product-option {
+            display: block !important;
+        }
+    {% endif %}
+    {% if shop.permanent_domain == "koppi-1841.myshopify.com" %}
+        .bss-bogo-cart-subtotal,
+        .cart-item .cart-item__details .product-option {
+            display: block !important;
+        }
+    {% endif %}
+    {% if shop.permanent_domain == "www-dschinni-shisha-com.myshopify.com" %}
+        .bss-qb-total-price-item .transcy-money,
+        [bss-b2b-cart-total-price] .transcy-money {
+            display: none !important;
+        }
+    {% endif %}
+    {% if shop.permanent_domain == "pro-northernspirit-sport-com.myshopify.com" %}
+        [bss-b2b-item-original-price],
+        .bss-b2b-compare-at-price {
+          display: block !important;
+        }
+        .bss-b2b-compare-at-price ~ span,
+        .bss-b2b-customized-compare-at-price ~ span {
+          display: none !important;
+        }
+    {% endif %}
+    {% if shop.permanent_domain == "vapebaseau.myshopify.com" %}
+        [data-cart-item-key] .tt-price,
+        .bss-qb-total-price-item {
+          display: block !important;
+        }
+    {% endif %}
+    {% if shop.permanent_domain == "lagertechnik-direkt.myshopify.com" %}
+        [data-cart-item-key] .tt-price {
+          display: block !important;
+        }
+    {% endif %}
+</style>{% endif %}

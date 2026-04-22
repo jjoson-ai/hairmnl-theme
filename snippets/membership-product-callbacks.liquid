@@ -1,0 +1,77 @@
+<script>
+  var chargeRabbitOptions = {};
+  {% for variant in product.variants %}
+
+
+{% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
+{% assign base_product = product %}
+{% assign base_variant = variant %}
+{% if shop.metafields.sawholesale['base_price'] == blank %}
+  {% assign base_price = 'compare_at_price' %}
+{% else %}
+  {% assign base_price = shop.metafields.sawholesale['base_price'] %}
+{% endif %}
+
+{% assign saw_discount = 0 %}{% assign saw_has_discount = false %}
+
+{% if customer.tags != blank %}
+  {% for mf in base_product.metafields.sawholesale %}
+    {% capture product_customer_tag %}{{ mf | first | replace: 'discount_', '' }}{% endcapture %}
+    {% if customer.tags contains product_customer_tag %}
+      {% assign saw_has_discount = true %}
+      {% assign discount_key = product_customer_tag | prepend: 'discount_' %}
+      {% assign price_key = product_customer_tag | prepend: 'price_' %}
+      {% assign saw_discount = base_product.metafields.sawholesale[discount_key] | divided_by: 100.0 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% assign saw_discount = 1 | minus: saw_discount %}
+
+{% if base_price == 'price' or base_variant.compare_at_price == blank  or base_variant.compare_at_price == 0 or base_variant.compare_at_price < base_variant.price %}
+  {% assign saw_variant_compare_at_price = base_variant.price %}
+{% else %}
+  {% assign saw_variant_compare_at_price = base_variant.compare_at_price %}
+{% endif %}
+
+{% assign cpe = shop.metafields.sawholesale['cpe'] | default: "true" %}
+{% if base_variant.metafields.sawholesale[price_key] != blank and cpe == "true" %}
+  {% assign saw_variant_price = base_variant.metafields.sawholesale[price_key] %}
+{% else %}
+  {% assign saw_variant_price = saw_variant_compare_at_price | times: saw_discount %}
+{% endif %}
+
+{% if saw_has_discount == false or saw_variant_price >= saw_variant_compare_at_price %}
+  {% assign WCProduct_Price = product.price %}
+  {% assign WCProduct_ComparePrice = product.compare_at_price %}
+  {% assign WCProduct_PriceMin = product.price_min %}
+  {% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}
+  {% assign WCProduct_PriceMax = product.price_max %}
+  {% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}
+  {% assign WCProduct_VariantPrice = base_variant.price %}
+  {% assign WCProduct_VariantComparePrice = base_variant.compare_at_price %}
+{% else %}   
+  {% assign WCProduct_Price = saw_variant_price %}
+  {% assign WCProduct_PriceMin = product.price_min | times: saw_discount %}
+  {% assign WCProduct_PriceMax = product.price_max | times: saw_discount %}
+  {% assign WCProduct_ComparePrice = saw_variant_compare_at_price %}
+  {% if product.compare_at_price_min != 0 %}{% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}{% else %}{% assign WCProduct_ComparePriceMin = product.price_min %}{% endif %}
+  {% if product.compare_at_price_max != 0 %}{% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}{% else %}{% assign WCProduct_ComparePriceMax = product.price_max %}{% endif %}
+  {% assign WCProduct_VariantPrice = saw_variant_price %}
+  {% assign WCProduct_VariantComparePrice = saw_variant_compare_at_price %}
+{% endif %}
+{% comment %} Wholesale_Club_Product_Prices End {% endcomment %}
+
+    chargeRabbitOptions[{{ variant.id }}] = {};
+    {% if variant.metafields.charge_rabbit.amount %}
+      chargeRabbitOptions[{{ variant.id }}]['amount'] = {{ variant.metafields.charge_rabbit.amount }};
+      chargeRabbitOptions[{{ variant.id }}]['interval'] = '/{{ variant.metafields.charge_rabbit.interval }}';
+    {% else %}
+      chargeRabbitOptions[{{ variant.id }}]['amount'] = 0;
+      chargeRabbitOptions[{{ variant.id }}]['interval'] = "/month";
+    {% endif %}
+
+  {% endfor %}
+
+  $("<script type='application/json' id='MembershipJson-{{ section.id }}'>" + JSON.stringify(chargeRabbitOptions) + "<\/script>").insertAfter('#ProductJson-{{ section.id }}')
+</script>

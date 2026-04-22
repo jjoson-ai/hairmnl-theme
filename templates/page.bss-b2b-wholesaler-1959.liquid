@@ -1,0 +1,105 @@
+<script id="bss-b2b-wholesaler-form">
+  if (typeof BSS_B2B == 'undefined') {
+    var BSS_B2B = {};
+  }
+  BSS_B2B.formDataRender = [
+    {
+      "type": "text",
+      "required": true,
+      "label": "Mobile No.",
+      "description": "Please expect a call from us to confirm your registration",
+      "placeholder": "0917",
+      "className": "form-control phone-field",
+      "name": "phone-field",
+      "access": false,
+      "subtype": "text",
+      "maxlength": 11,
+      "placement": "bottom"
+    },
+    {
+      "type": "radio-group",
+      "required": true,
+      "label": "What is your preferred schedule for a 3-minute phone call screening?",
+      "inline": false,
+      "name": "radio-group-1627025934684",
+      "access": false,
+      "other": false,
+      "values": [
+        {
+          "label": "MWF Morning (9AM-12NN)",
+          "value": "MWF-AM",
+          "selected": true
+        }, {
+          "label": "MWF Afternoon (1PM-5PM)",
+          "value": "MWF-PM",
+          "selected": false
+        }, {
+          "label": "TTh Morning (9AM-12NN)",
+          "value": "TTh-AM",
+          "selected": false
+        }, {
+          "label": "TTh Afternoon (1PM-5PM)",
+          "value": "TTh-PM",
+          "selected": false
+        }
+      ],
+      "placement": "bottom"
+    },
+    {
+      "type": "file",
+      "required": true,
+      "label": "Please upload 1 valid ID",
+      "className": "form-control",
+      "name": "file-1627024766180",
+      "access": false,
+      "placement": "bottom"
+    },
+    {
+      "type": "textarea",
+      "required": false,
+      "label": "What is your Facebook and/ or Instagram name?",
+      "className": "form-control",
+      "name": "textarea-1627025746701",
+      "access": false,
+      "subtype": "textarea",
+      "rows": 4,
+      "placement": "bottom"
+    }, {
+      "type": "text",
+      "required": false,
+      "label": "How did you hear about The Backbar?",
+      "className": "form-control",
+      "name": "text-1627026458698",
+      "access": false,
+      "subtype": "text",
+      "placement": "bottom"
+    }
+  ];
+  BSS_B2B.formId = 1959;
+  BSS_B2B.reCAPCHA = 0;
+  BSS_B2B.CAPCHA_SITE_KEY = "6LcYPEgbAAAAAKEQdimI1PPA4vuOJHxNb5p6eLUo";
+  BSS_B2B.status = 1;
+  BSS_B2B.created_account = 0;
+  BSS_B2B.redirect_url = "/";
+  BSS_B2B.taxExempt = 0;
+</script>
+<style>
+  #RegisterForm {
+    max-width: 600px;
+    margin: auto;
+  }
+</style>
+{% assign bss-b2b-include-password = true %}
+<div class="page-width">
+  <div class="grid">
+    <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
+      <div class="section-header text-center">
+        <h1>{{ page.title }}</h1>
+      </div>
+      <div class="rte">
+        {{ page.content }}
+      </div>
+    </div>
+    {% section 'bss-b2b-wholesaler-form-1959' %}
+  </div>
+</div>

@@ -1,0 +1,337 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_Summer_Haircare_Essentials_desktop.png",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_Summer_Haircare_Essentials_mobile.png",
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/HairMNL_Summer_Haircare_Essentials_desktop.png",
+        "banner_mobile": "shopify://shop_images/HairMNL_Summer_Haircare_Essentials_mobile.png",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "section_richtext_qL4RF8": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Summer Hair Travel Collection",
+        "text": "",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "collection_wVxxQq": {
+      "type": "collection",
+      "blocks": {
+        "group_g3NTbP": {
+          "type": "group",
+          "settings": {
+            "title": "Brands",
+            "group_tags": "Argila Amazonia, AVEDA, American Crew, BaByliss, BaByliss Pro, Brazilian Blowout, Davines, Denman, Dyson, Kérastase, L'Oréal Professionnel, Olaplex, Reuzel, Revlon Professional, Schwarzkopf Professional, TIGI, TUFT, TYMO, Wella Professionals"
+          }
+        },
+        "group_QUpAAJ": {
+          "type": "group",
+          "settings": {
+            "title": "Product Type",
+            "group_tags": "Sun Protection, Shampoo, Conditioner, Mask, Serum, Hair Oil, Styling, Hair Straightener, Curling Iron, Hair Dryer, Combs and Brushes"
+          }
+        },
+        "group_B3EnbK": {
+          "type": "group",
+          "settings": {
+            "title": "Hair Concern",
+            "group_tags": "Damaged, Dandruff, Frizz, Thinning Hair, Volume, Curly Girl Method"
+          }
+        },
+        "group_3xrtwc": {
+          "type": "group",
+          "settings": {
+            "title": "Size",
+            "group_tags": "Travel,Value,Refill"
+          }
+        },
+        "group_EWeqGT": {
+          "type": "group",
+          "settings": {
+            "title": "Others",
+            "group_tags": "Vegan, Special Offer"
+          }
+        }
+      },
+      "block_order": [
+        "group_g3NTbP",
+        "group_QUpAAJ",
+        "group_B3EnbK",
+        "group_3xrtwc",
+        "group_EWeqGT"
+      ],
+      "settings": {
+        "grid_setting_large": 4,
+        "grid_setting_small": 2,
+        "product_limit": 36,
+        "enable_layout_toggle": true,
+        "collection_sorting": true,
+        "hide_sidebar": false
+      }
+    },
+    "bd8c18e1-3236-4f2b-84ce-f24d258dadab": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "collection": "summer-collection",
+        "grid": 6,
+        "rows": 3,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "f14f6b07-56d0-49a7-8d95-eb059e8c24e5": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14413235355747__f14f6b07-56d0-49a7-8d95-eb059e8c24e5-16755364347e1aad9b-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "trends",
+            "blog_handle": "packed-ready-for-summer-top-hair-care-you-need-for-your-travels"
+          }
+        },
+        "4e16f9f8-a662-4dd6-ab40-03ab3849c4d3": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "here-comes-the-sun-time-to-protect-your-hair-from-sun-damage"
+          }
+        },
+        "fd3267d7-0bd0-4d48-8b77-81f6a9d63121": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "pack-light-with-your-favorite-vegan-travel-sized-essentials"
+          }
+        },
+        "3d96ceab-c181-454b-9f37-f9fee67a326d": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "how-to-use-and-preserve-davines-shampoo-bars"
+          }
+        }
+      },
+      "block_order": [
+        "template--14413235355747__f14f6b07-56d0-49a7-8d95-eb059e8c24e5-16755364347e1aad9b-0",
+        "4e16f9f8-a662-4dd6-ab40-03ab3849c4d3",
+        "fd3267d7-0bd0-4d48-8b77-81f6a9d63121",
+        "3d96ceab-c181-454b-9f37-f9fee67a326d"
+      ],
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": false,
+        "excerpt_alignment": "left",
+        "show_readmore": false,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Best for Travel",
+        "title_font_size": 17,
+        "collection": "best-for-travel",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Sun Protection",
+        "title_font_size": 17,
+        "collection": "sun-protection",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_R4aaPc": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Special Offers on Summer",
+        "title_font_size": 28,
+        "collection": "special-offers-for-summer",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "On-the-Go Styling",
+        "title_font_size": 17,
+        "collection": "on-the-go-styling",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "45b23664-3386-4ae2-9a31-ec459143b9bc": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "hero",
+    "section_richtext_qL4RF8",
+    "collection_wVxxQq",
+    "bd8c18e1-3236-4f2b-84ce-f24d258dadab",
+    "f14f6b07-56d0-49a7-8d95-eb059e8c24e5",
+    "1642442735c9bd4274",
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4",
+    "section_collection_R4aaPc",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "45b23664-3386-4ae2-9a31-ec459143b9bc"
+  ]
+}

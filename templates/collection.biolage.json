@@ -1,0 +1,210 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": true,
+        "show_description": true,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "disabled": true,
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_url": "shopify://collections/wella-professionals-color-fresh-mask"
+      }
+    },
+    "a83c7fb5-a342-4a07-83d9-c0de76bb58fb": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "biolage",
+        "grid": 2,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false
+      }
+    },
+    "3b3ab117-386d-45d0-be7e-a34eceb25bd3": {
+      "type": "section-double",
+      "blocks": {
+        "template--14412995723363__3b3ab117-386d-45d0-be7e-a34eceb25bd3-167532793062adbbcc-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "DISCOVER BIOLAGE",
+            "title": "Our Commitment to Nurturing the Future",
+            "text": "<p>At Biolage, ‘being green’ is a journey of continuous improvement.<br/><br/>Striving to be sustainable means meeting the needs of the present without compromising the ability of future generations to meet their needs.<br/><br/>Our mission is to support what it important to you, your salon and your clients today and tomorrow. We will continue to provide you with high performance and consciously-crafted products and services.<br/><br/><strong>THIS IS OUR COMMITMENT.</strong></p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "146e3af0-99df-4f77-b9b2-f34ca86a0424": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": "7KSZshyM-68"
+          }
+        }
+      },
+      "block_order": [
+        "template--14412995723363__3b3ab117-386d-45d0-be7e-a34eceb25bd3-167532793062adbbcc-0",
+        "146e3af0-99df-4f77-b9b2-f34ca86a0424"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "386dcc4e-dd29-4949-aaa3-f6d01f814235": {
+      "type": "section-featured-articles",
+      "disabled": true,
+      "blocks": {
+        "template--14412995723363__386dcc4e-dd29-4949-aaa3-f6d01f814235-16753282058e1dd242-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "",
+            "blog_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14412995723363__386dcc4e-dd29-4949-aaa3-f6d01f814235-16753282058e1dd242-0"
+      ],
+      "settings": {
+        "title": "Featured articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "8b484beb-0bb5-43e5-a90b-220aa5414373": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "a83c7fb5-a342-4a07-83d9-c0de76bb58fb",
+    "1642442735c9bd4274",
+    "3b3ab117-386d-45d0-be7e-a34eceb25bd3",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "386dcc4e-dd29-4949-aaa3-f6d01f814235",
+    "8b484beb-0bb5-43e5-a90b-220aa5414373"
+  ]
+}

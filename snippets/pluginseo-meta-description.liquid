@@ -1,0 +1,108 @@
+{%- comment -%}
+  ----------------------------------------------------------------------------------
+   Plug in SEO Plus for Shopify
+
+   Copyright (c) 2018 Pemberton Rank Ltd, a company registered in England 7341337
+
+   This file is subject to the license at https://www.pluginseo.com/eula
+  ----------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- assign mDF = 's' -%}
+{%- assign metaDescriptionManuallyEntered = true -%}
+{%- assign defaultMetaDescription = nil -%}
+
+{%- if hasLangify == true and detectedLanguage != shop.metafields["languages"]["default"] -%}
+  {%- assign mDF = mDF | append: '-lf' -%}
+  {%- if rootTemplate == 'index' -%}
+    <meta name="description" content="[Homepage meta description]" />
+  {%- elsif rootTemplate == '404' -%}
+    <meta name="description" content="[404 meta description]" />
+  {%- elsif rootTemplate == 'search' -%}
+    <meta name="description" content="[Search meta description]" />
+  {%- else -%}
+    <meta name="description" content="{{- langify_description -}}" />
+  {%- endif -%}
+{%- else -%}
+  {%- case rootTemplate -%}
+    {%- when 'index' -%}
+      {%- assign defaultMetaDescription = ['shop']['description'] -%}
+      {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionIndexTemplate -%}
+      {%- assign mDFTemp = '-te_ix' -%}
+    {%- when 'page' -%}
+      {%- assign defaultMetaDescription = page.content -%}
+      {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionPageTemplate -%}
+      {%- assign mDFTemp = '-te_pg' -%}
+    {%- when 'search' -%}
+      {%- assign defaultMetaDescription = ['shop']['description'] -%}
+      {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionSearchTemplate -%}
+      {%- assign mDFTemp = '-te_se' -%}
+    {%- when 'product' -%}
+      {%- assign defaultMetaDescription = product.description -%}
+      {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionProductTemplate -%}
+      {%- assign mDFTemp = '-te_pr' -%}
+    {%- when 'collection' -%}
+      {%- assign defaultMetaDescription = collection.description -%}
+      {%- if collection.handle == 'all' -%}
+        {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionCatalogTemplate -%}
+      {%- else -%}
+        {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionCollectionTemplate -%}
+      {%- endif -%}
+      {%- assign mDFTemp = '-te_co' -%}
+    {%- when 'blog' -%}
+      {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionBlogTemplate -%}
+      {%- assign mDFTemp = '-te_bl' -%}
+    {%- when 'article' -%}
+      {%- assign defaultMetaDescription = article.content -%}
+      {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionArticleTemplate -%}
+      {%- assign mDFTemp = '-te_ar' -%}
+    {%- when '404' -%}
+      {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescription404Template -%}
+      {%- assign mDFTemp = '-te_44' -%}
+    {%- else -%}
+  {%- endcase -%}
+
+  {%- capture pageUnderscoreDescriptionForCompare -%}{{ [pageUnderscoreDescription] | replace: ' ','' }}{%- endcapture -%}
+  {%- capture truncateLength -%}{{ pageUnderscoreDescriptionForCompare | size }}{%- endcapture -%}
+  {%- capture defaultMetaDescriptionForCompare -%}{{ defaultMetaDescription | replace: ' ','' | strip_newlines | strip_html | escape | truncate: truncateLength, '' }}{%- endcapture -%}
+
+  {%- if pluginseoVerbose == true -%}
+    <!-- pageUnderscoreDescriptionForCompare: {{- pageUnderscoreDescriptionForCompare -}} -->
+    <!-- defaultMetaDescriptionForCompare   : {{- defaultMetaDescriptionForCompare -}} -->
+  {%- endif -%}
+
+  {%- if [pageUnderscoreDescription] == blank or [pageUnderscoreDescription] == nil or pageUnderscoreDescriptionForCompare == defaultMetaDescriptionForCompare -%}
+    {%- assign metaDescriptionManuallyEntered = false -%}
+  {%- endif -%}
+
+  {%- if metaDescriptionTemplate == blank or metaDescriptionTemplate == nil -%}
+    {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionDefaultTemplate -%}
+    {%- assign mDFTemp = '-te_df' -%}
+  {%- endif -%}
+
+  {%- if metaDescriptionTemplate != nil -%}
+    {%- if metaDescriptionManuallyEntered == false or settings.pluginseo_metaDescriptionTemplateApplyToAll == true -%}
+      {%- assign mDF = mDF | append: mDFTemp -%}
+      {%- capture metaDescription -%}{% include 'pluginseo-parse' template:metaDescriptionTemplate %}{%- endcapture -%}
+    {%- else -%}
+      {%- assign mDF = mDF | append: '-me' -%}
+      {%- capture metaDescription -%}{% include 'pluginseo-parse' template:[pageUnderscoreDescription] %}{%- endcapture -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- assign mDF = mDF | append: '-me' -%}
+    {%- capture metaDescription -%}{% include 'pluginseo-parse' template:[pageUnderscoreDescription] %}{%- endcapture -%}
+  {%- endif -%}
+
+  {%- if settings.pluginseo_metaDescriptionTruncateChars != nil -%}
+    {%- assign finalMetaDescription = metaDescription | size | plus: 0 -%}
+    {%- assign pluginseo_metaDescriptionTruncateChars = settings.pluginseo_metaDescriptionTruncateChars | plus: 0 -%}
+    {%- if finalMetaDescription > pluginseo_metaDescriptionTruncateChars -%}
+      {%- assign mDF = mDF | append: '-tr' -%}
+    {%- endif -%}
+    {%- capture metaDescription -%}{{ metaDescription | truncate: settings.pluginseo_metaDescriptionTruncateChars, "" }}{%- endcapture -%}
+  {%- endif -%}
+
+  {%- if metaDescription != blank -%}
+    <meta name="description" content="{{ metaDescription | strip_html | strip_newlines }}" />
+  {%- endif -%}
+{%- endif -%}

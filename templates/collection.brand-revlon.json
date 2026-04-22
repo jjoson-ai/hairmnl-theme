@@ -1,0 +1,450 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/brand-spotlight-revlon-pro-may-28-31-2024-banner-d.jpg",
+            "slide_image_mobile": "shopify://shop_images/brand-spotlight-revlon-pro-may-28-31-2024-banner-m.jpg",
+            "slide_image_url": ""
+          }
+        },
+        "banner_slide_cBhm84": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/revlon-pro-restart-density-2024-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/revlon-pro-restart-density-2024-mobile.jpg",
+            "slide_image_url": "shopify://collections/revlon-professional-restart-density"
+          }
+        },
+        "banner_slide_MyjdwN": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/revlon-pro-restart-curls-2024-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/revlon-pro-restart-curls-2024-mobile.jpg",
+            "slide_image_url": "shopify://collections/revlon-professional-restart-curls"
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/revlon-pro-restart-color-2024-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/revlon-pro-restart-color-2024-mobile.jpg",
+            "slide_image_url": "shopify://collections/revlon-professional-restart-color"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "banner_slide_cBhm84",
+        "banner_slide_MyjdwN",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "c05eaaa3-dcf9-4a17-aad3-d49b3eb2a852": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Revlon Professional",
+        "text": "<p>Revlon Professional is the epitome of luxury and innovation in haircare. With specialized categories in haircare, color and styling, it addresses diverse hair needs while empowering both professionals and enthusiasts.</p><p>Dive into Revlon Professional's curated range and let your hair experience unparalleled excellence!</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "bd8c18e1-3236-4f2b-84ce-f24d258dadab": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "collection": "revlon-professional",
+        "grid": 6,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "3ae2ccaa-b780-4255-aa5c-66c20bcf6b02": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Styling & Color",
+        "text": "<p>Revlon Professional's <a href=\"/collections/revlon-professional-style-masters\" target=\"_blank\" title=\"Revlon Professional Style Masters\">Style Masters</a> empowers professionals with tools for impeccable hair sculpting, <a href=\"/collections/revlon-professional-hair-color\" target=\"_blank\" title=\"Revlon Professional Hair Color\">Nutri Color Creme</a> merges luminous shades with nourishment, and <a href=\"/collections/revlon-professional-hair-color\" target=\"_blank\" title=\"Revlon Professional Hair Color\">Revlonissimo™ Technics</a> seamlessly integrates advanced treatments, setting new standards in haircare and styling innovation.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Revlon Professional Style Masters",
+        "title_font_size": 17,
+        "collection": "revlon-professional-style-masters",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "8f90d474-614d-41cf-8a0a-6b941edca2ab": {
+      "type": "section-double",
+      "blocks": {
+        "template--14461704536163__8f90d474-614d-41cf-8a0a-6b941edca2ab-168429804772b053d6-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Color Refresh",
+            "title": "Semi Permanent Nutri Color Creme",
+            "text": "<p>Colour, care and shine - all in one.</p><p>Revlon Professional Nutri Color Crème is a unique 3-in-1 product for colour treated hair. This innovative and nourishing colour concentrate treatment helps to<strong>refresh your colour in between salon visits</strong>.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "285ba387-5b71-4267-b8ac-25d605330262": {
+          "type": "product",
+          "settings": {
+            "product": "revlon-professionnel-nutri-color-creme-100ml",
+            "kicker": "",
+            "badge_string": "BEST SELLER",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff",
+            "bg_accent": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "template--14461704536163__8f90d474-614d-41cf-8a0a-6b941edca2ab-168429804772b053d6-0",
+        "285ba387-5b71-4267-b8ac-25d605330262"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "edf1eacf-d9d2-422c-880c-99c25d00de0a": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Revlon Professional Hair Color",
+        "title_font_size": 17,
+        "collection": "revlon-professional-hair-color",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "2faaab7f-d297-40b2-851d-762f0bdf7481": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "article_block_EidBYf": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "trends",
+            "blog_handle": "how-to-achieve-your-perfect-red-hair-color-like-these-celebs"
+          }
+        },
+        "93ee98ce-829f-43fe-9edf-4488437be23d": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "revlon-professional-restart-curls-line-your-cgm-partner"
+          }
+        },
+        "template--14417613062243__2faaab7f-d297-40b2-851d-762f0bdf7481-167576218968303df9-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "tips-to-choose-the-best-hair-color-for-you"
+          }
+        },
+        "df3a6714-d045-4f33-a166-f4f688ed7558": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "how-to-keep-your-red-hair-fresh-vibrant"
+          }
+        },
+        "b16db243-0155-4912-90a9-e9d69b490290": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "how-to-protect-treated-hair-from-sun-salt-water-and-chlorine"
+          }
+        }
+      },
+      "block_order": [
+        "article_block_EidBYf",
+        "93ee98ce-829f-43fe-9edf-4488437be23d",
+        "template--14417613062243__2faaab7f-d297-40b2-851d-762f0bdf7481-167576218968303df9-0",
+        "df3a6714-d045-4f33-a166-f4f688ed7558",
+        "b16db243-0155-4912-90a9-e9d69b490290"
+      ],
+      "settings": {
+        "title": "Featuring Revlon Professional",
+        "homepage_blog": "",
+        "homepage_blog_count": 5,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": false,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Hair Care",
+        "text": "<p>Premium haircare that addresses unique hair needs, ensuring unmatched radiance, vitality, and strength. <a href=\"/collections/revlon-professional-restart\" target=\"_blank\" title=\"Revlon Professional ReStart\"><strong>ReStart™</strong></a> rejuvenates and refreshes hair from its roots, <a href=\"/collections/revlon-professional-be-fabulous\" target=\"_blank\" title=\"Revlon Professional Be Fabulous\"><strong>Be Fabulous™</strong></a> is an advanced treatment that enhances hair's youthful beauty, and <a href=\"/collections/revlon-professional-equave\" target=\"_blank\" title=\"Revlon Professional Equave\"><strong>Equave</strong></a><strong> </strong>provides a harmonizing blend for balanced and nourished strands.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/revlon-professional-restart-desktop-1400px-w-x-500.jpg",
+        "banner_mobile": "shopify://shop_images/revlon-professional-restart-mobile-552px-w-x-502px.jpg",
+        "banner_url": "shopify://collections/revlon-professional-restart-curls",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Revlon Professional ReStart",
+        "title_font_size": 28,
+        "collection": "revlon-professional-restart",
+        "grid": 5,
+        "rows": 3,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "9c72c136-aaf6-4ecc-b168-7929543cf3ef": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Revlon Professional Equave",
+        "title_font_size": 28,
+        "collection": "revlon-professional-equave",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "44ddc921-1248-4982-a076-6f48decfc612": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Revlon Professional Be Fabulous",
+        "title_font_size": 28,
+        "collection": "revlon-professional-be-fabulous",
+        "grid": 5,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "f23cb7a7-5333-42e7-8013-68a76b218042": {
+      "type": "section-double",
+      "blocks": {
+        "template--14417613062243__f23cb7a7-5333-42e7-8013-68a76b218042-16757626674174dca6-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Color Toning",
+            "title": "Goodbye Yellow",
+            "text": "<p>A highly-pigmented wash that offers an instant tonal deposit to counteract and neutralize underlying yellow tones.</p><p>It cleanses hair gently while strengthening thanks to integrated Bonding Technology.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "d7b4b525-e8f0-4028-815f-afde545d739a": {
+          "type": "product",
+          "settings": {
+            "product": "schwarzkopf-goodbye-yellow-neutralizing-bonding-wash-300ml",
+            "kicker": "",
+            "badge_string": "",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff",
+            "bg_accent": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "template--14417613062243__f23cb7a7-5333-42e7-8013-68a76b218042-16757626674174dca6-0",
+        "d7b4b525-e8f0-4028-815f-afde545d739a"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "675500b2-37c5-4bfe-9b8f-b96e52b7a44e": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    }
+  },
+  "order": [
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "hero",
+    "c05eaaa3-dcf9-4a17-aad3-d49b3eb2a852",
+    "subcollections",
+    "bd8c18e1-3236-4f2b-84ce-f24d258dadab",
+    "3ae2ccaa-b780-4255-aa5c-66c20bcf6b02",
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4",
+    "8f90d474-614d-41cf-8a0a-6b941edca2ab",
+    "edf1eacf-d9d2-422c-880c-99c25d00de0a",
+    "2faaab7f-d297-40b2-851d-762f0bdf7481",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "1642442735c9bd4274",
+    "9c72c136-aaf6-4ecc-b168-7929543cf3ef",
+    "44ddc921-1248-4982-a076-6f48decfc612",
+    "f23cb7a7-5333-42e7-8013-68a76b218042",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "675500b2-37c5-4bfe-9b8f-b96e52b7a44e"
+  ]
+}

@@ -1,0 +1,653 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "article",
+      "disabled": true,
+      "settings": {
+        "title_alignment": "center",
+        "blog_show_meta": true,
+        "author_alignment": "center",
+        "content_alignment": "left",
+        "tags": false,
+        "social": true,
+        "blog_show_featured_image": false,
+        "image_height": "use_screen_three_quarters",
+        "bg_position": "center-center",
+        "sidebar_tags": false,
+        "recent": true
+      }
+    },
+    "49eb3a1f-6866-48bc-93f3-9d70f4cae240": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/HairMNLRewardsDesktop1400X500.png",
+        "banner_mobile": "shopify://shop_images/HairMNLRewardsMobile552X502.png",
+        "banner_url": ""
+      }
+    },
+    "2cce07af-9da2-432d-ba93-d60d2da9d838": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "HairMNL Rewards",
+        "title": "Exclusive Freebies",
+        "text": "<p>Discover a range of premium hair care samples and travel sizes from top-notch brands with HairMNL Rewards. Treat yourself to luxurious products that cater to your specific hair needs. Enhance your self-care rituals, and pamper your locks with our exclusive rewards catalog.</p><p>Start earning points today, and unlock a world of possibilities for healthier, more beautiful hair.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "Sign Up / log in",
+        "button_url": "https://www.hairmnl.com/pages/rewards",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "70387894-a301-447a-a1c3-5b6a8e0b0df6": {
+      "type": "section-custom-content",
+      "disabled": true,
+      "blocks": {
+        "18b5585e-0c79-4af4-8d9b-88b7b46e392d": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/AVEDA_Damage_Remedy_Daily_Hair_Repair_25ml_Lifestyle_sample.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://pages/rewards",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        },
+        "5b9b4a75-d63d-4524-8229-3ae12656cf2c": {
+          "type": "text",
+          "settings": {
+            "kicker": "Kicker",
+            "title": "Heading",
+            "text": "<p>Text</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "18b5585e-0c79-4af4-8d9b-88b7b46e392d",
+        "5b9b4a75-d63d-4524-8229-3ae12656cf2c"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "d4a0f3f9-1162-41af-9272-7bfd9f0ee525": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14460043526243__d4a0f3f9-1162-41af-9272-7bfd9f0ee525-16836276226ebd1c0d-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Davines_Heart_of_Glass_Sheer_Glaze_4ml_Lifestyle_Sample.jpg",
+            "title": "Davines Heart of Glass Sheer Glaze 4ml",
+            "text": "<p><strong>4,000 POINTS</strong></p><p>Brightening thermal leave-on fluid for blondes. Provides hydration, shine, and heat protection. Thanks to the patented Fortifying Botanical Shield, it gives elasticity and vigour to the hair fiber, helping to extend the duration of the blowdry.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14460043526243__d4a0f3f9-1162-41af-9272-7bfd9f0ee525-16836276226ebd1c0d-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/AVEDA_Damage_Remedy_Daily_Hair_Repair_25ml_Lifestyle_sample.jpg",
+            "title": "4,000 points",
+            "text": "<p><strong>AVEDA Damage Remedy Daily Hair Repair 25ml</strong></p><p>Instantly repair damaged hair with this 98% naturally derived* leave-in treatment. Visibly repairs, detangles and protects hair from heat styling, reducing breakage by 90% in just 1 week.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14460043526243__d4a0f3f9-1162-41af-9272-7bfd9f0ee525-16836276226ebd1c0d-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Kerastase_Blond_Absolu_Cicaextrame_Masque_75ml_Lifestyle_sample.jpg",
+            "title": "40,000 points",
+            "text": "<p><strong>Kérastase Blond Absolu Cicaextreme Masque 75mlI</strong></p><p>ntense conditioning and deep restorative post-bleaching procedure masque for sensitized lightened or highlighted hair.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14460043526243__d4a0f3f9-1162-41af-9272-7bfd9f0ee525-16836276226ebd1c0d-2",
+        "template--14460043526243__d4a0f3f9-1162-41af-9272-7bfd9f0ee525-16836276226ebd1c0d-0",
+        "template--14460043526243__d4a0f3f9-1162-41af-9272-7bfd9f0ee525-16836276226ebd1c0d-1"
+      ],
+      "settings": {
+        "title": "[Featured Free Products]",
+        "title_font_size": 20,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": true,
+        "aspect_ratio": 1
+      }
+    },
+    "c233a23b-0d4d-415a-b787-083604cd445f": {
+      "type": "section-gallery",
+      "disabled": true,
+      "blocks": {
+        "template--14460043526243__c233a23b-0d4d-415a-b787-083604cd445f-1683627003853b41cf-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/AVEDA_Nutriplenish_Conditioner_Deep_Moisture_50ml_-_Reward.jpg",
+            "link": ""
+          }
+        },
+        "template--14460043526243__c233a23b-0d4d-415a-b787-083604cd445f-1683627003853b41cf-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/AVEDA_Nutriplenish_Shampoo_Light_Moisture_50ml_-_Reward.jpg",
+            "link": ""
+          }
+        },
+        "template--14460043526243__c233a23b-0d4d-415a-b787-083604cd445f-1683627003853b41cf-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/AVEDA_Nutriplenish_Conditioner_Deep_Moisture_50ml_-_Reward.jpg",
+            "link": ""
+          }
+        },
+        "53a3860a-b5ab-487a-af44-6207f24e154b": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/AVEDA_Rosemary_Mint_Hand_and_Body_Wash_50ml_-_Reward.jpg",
+            "link": ""
+          }
+        },
+        "532b034b-3a90-44fc-ae81-b402984d93b7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/AVEDA_Shampure_Body_Lotion_50ml_-_Reward.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14460043526243__c233a23b-0d4d-415a-b787-083604cd445f-1683627003853b41cf-0",
+        "template--14460043526243__c233a23b-0d4d-415a-b787-083604cd445f-1683627003853b41cf-1",
+        "template--14460043526243__c233a23b-0d4d-415a-b787-083604cd445f-1683627003853b41cf-2",
+        "53a3860a-b5ab-487a-af44-6207f24e154b",
+        "532b034b-3a90-44fc-ae81-b402984d93b7"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "9afd2fa8-2941-462b-8e63-bb47951db7c6": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Browse HairMNL Rewards",
+        "title_font_size": 28,
+        "collection": "hairmnl-rewards",
+        "grid": 6,
+        "rows": 5,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false
+      }
+    },
+    "2e46f706-08a7-4f61-b026-2a44ad2160a0": {
+      "type": "section-accordion",
+      "blocks": {
+        "6e2d3645-4424-4536-bf22-ed0abd3faf82": {
+          "type": "image",
+          "settings": {
+            "title": "Davines Heart of Glass Sheer Glaze 4ml",
+            "text": "<p>Brightening thermal leave-on fluid for blondes. Provides hydration, shine, and heat protection. </p>",
+            "image": "shopify://shop_images/Davines_Heart_of_Glass_Sheer_Glaze_4ml.jpg",
+            "bg_position": "left-center",
+            "aspect_ratio": 1
+          }
+        },
+        "5af0fb81-7b65-4771-b4ea-0cb3fb4988a6": {
+          "type": "image",
+          "settings": {
+            "title": "Revlon Professional UniqOne All in One Hair Treatment Classic Fragrance 10ml",
+            "text": "<p>The 10 real benefits that the hair needs in one single product. Because great hair is not a matter of time.</p>",
+            "image": "shopify://shop_images/RevlonProfessionalUniqOneAllinOneHairTreatmentClassicFragrance10ml-Reward.jpg",
+            "bg_position": "left-center",
+            "aspect_ratio": 1
+          }
+        },
+        "dc773eeb-c40f-48a2-9262-387644969c3f": {
+          "type": "image",
+          "settings": {
+            "title": "American Crew Daily Deep Moisturizing Shampoo 7.4ml",
+            "text": "<p>Hair and scalp wash rich in conditioning emollients that leaves hair feeling soft all day without causing build-up or greasy hair.</p>",
+            "image": "shopify://shop_images/American_Crew_Daily_Deep_Moisturizing_Shampoo_7.4ml_-_Reward.jpg",
+            "bg_position": "left-center",
+            "aspect_ratio": 1
+          }
+        },
+        "7126d903-9858-4849-855d-12f3ac0a1276": {
+          "type": "image",
+          "settings": {
+            "title": "Davines LOVE Curl Enhancing Conditioner 12ml",
+            "text": "<p>Conditioner to enhance and control wavy or curly hair. Its formula makes the hair soft and light giving elasticity and volume without weighing it down.</p>",
+            "image": "shopify://shop_images/Davines_LOVE_Curl_Enhancing_Conditioner_12ml.jpg",
+            "bg_position": "left-center",
+            "aspect_ratio": 1
+          }
+        }
+      },
+      "block_order": [
+        "6e2d3645-4424-4536-bf22-ed0abd3faf82",
+        "5af0fb81-7b65-4771-b4ea-0cb3fb4988a6",
+        "dc773eeb-c40f-48a2-9262-387644969c3f",
+        "7126d903-9858-4849-855d-12f3ac0a1276"
+      ],
+      "settings": {
+        "title": "2,000 Points",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "433417cc-bcf0-4fe4-a555-54b22fccaf28": {
+      "type": "section-accordion",
+      "blocks": {
+        "024babf0-e431-449c-a1e6-b63569f9bade": {
+          "type": "image",
+          "settings": {
+            "title": "AVEDA Nutriplenish Shampoo Light Moisture 10ml",
+            "text": "<p>Creamy lightweight formula, with a vegan superfood blend, cleanses and replenishes dry hair with nutrient-powered hydration.</p>",
+            "image": "shopify://shop_images/AVEDA_Nutriplenish_Shampoo_Light_Moisture_10ml.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 0.6
+          }
+        },
+        "3ff8ab9b-1c7e-4ceb-8569-e761ebca23ef": {
+          "type": "image",
+          "settings": {
+            "title": "AVEDA Nutriplenish Conditioner Light Moisture 10ml",
+            "text": "<p>Creamy lightweight formula, with a vegan superfood blend, conditions and replenishes dry hair with nutrient-powered hydration.</p>",
+            "image": "shopify://shop_images/AVEDA_Nutriplenish_Shampoo_Light_Moisture_10ml.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 0.6
+          }
+        },
+        "066b151d-318d-4fd7-b698-c9e674d0d245": {
+          "type": "image",
+          "settings": {
+            "title": "Davines Nourishing Hair Building Pak 12ml",
+            "text": "<p>Restructures and nourishes the hair shaft leaving the hair soft, shiny and full-bodied. Treatment for hair that is very dry, brittle, and hard to comb without breaking.</p>",
+            "image": "shopify://shop_images/Davines_Nourishing_Hair_Building_Pak_12ml_-_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 0.6
+          }
+        }
+      },
+      "block_order": [
+        "024babf0-e431-449c-a1e6-b63569f9bade",
+        "3ff8ab9b-1c7e-4ceb-8569-e761ebca23ef",
+        "066b151d-318d-4fd7-b698-c9e674d0d245"
+      ],
+      "settings": {
+        "title": "4,000 Points",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "274a5df2-9de3-4dca-9a5b-231d9b074a64": {
+      "type": "section-accordion",
+      "blocks": {
+        "ca37c409-756d-4749-b178-6f2c70b34c1f": {
+          "type": "image",
+          "settings": {
+            "title": "Image heading",
+            "text": "<p>Use this to answer some common questions you hear from your customers. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your products. This section will appear across all products.</p>",
+            "image": "shopify://shop_images/AVEDA_Damage_Remedy_Daily_Hair_Repair_25ml.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 0.6
+          }
+        },
+        "b196edc2-9730-40dd-810f-cfc2ef3ea51f": {
+          "type": "image",
+          "settings": {
+            "title": "Image heading",
+            "text": "<p>Use this to answer some common questions you hear from your customers. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your products. This section will appear across all products.</p>",
+            "image": "shopify://shop_images/AVEDA_Sap_Moss_Weightless_Hydration_Shampoo_40ml.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 0.6
+          }
+        },
+        "214d4b3f-21b4-4200-8919-fd402e002309": {
+          "type": "image",
+          "settings": {
+            "title": "Image heading",
+            "text": "<p>Use this to answer some common questions you hear from your customers. You could discuss product details, size fit, shipping policies, or anything you think would help merchants make an informed decision about your products. This section will appear across all products.</p>",
+            "image": "shopify://shop_images/AVEDA_Phomollient_Styling_Foam_50ml-Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 0.6
+          }
+        },
+        "9a4de72a-1d67-44c9-84f2-5174e1b7ad54": {
+          "type": "image",
+          "settings": {
+            "title": "Davines SU Hair & Body Wash 75ml",
+            "text": "<p>Multi-benefit shower shampoo. The formula characterized by a full-bodied foam moisturizes and gently cleanses the skin and hair exposed to the sun with an anti-oxidant and anti-inflammatory action.</p>",
+            "image": "shopify://shop_images/Davines_SU_Hair_Body_Wash_75ml_old_edit.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 0.6
+          }
+        }
+      },
+      "block_order": [
+        "ca37c409-756d-4749-b178-6f2c70b34c1f",
+        "b196edc2-9730-40dd-810f-cfc2ef3ea51f",
+        "214d4b3f-21b4-4200-8919-fd402e002309",
+        "9a4de72a-1d67-44c9-84f2-5174e1b7ad54"
+      ],
+      "settings": {
+        "title": "20,000 Points",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "e2ce61c0-6bb8-44ce-8327-a42e9abc4857": {
+      "type": "section-page",
+      "disabled": true,
+      "settings": {
+        "home_page_content": "rewards",
+        "home_page_show_title": false,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "d044c592-48f3-4e92-b569-8d916b3718d0": {
+      "type": "section-blog",
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "homepage_blog": "hairmnl-rewards",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "7bf5da5d-d3ea-4e98-810b-9ebf03a4bde8": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14460043526243__7bf5da5d-d3ea-4e98-810b-9ebf03a4bde8-1683653678211b6bd2-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "title": "STEP 1",
+            "text": "<p>Log in to your HairMNL Rewards Account</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14460043526243__7bf5da5d-d3ea-4e98-810b-9ebf03a4bde8-1683653678211b6bd2-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "title": "STEP 2",
+            "text": "<p>Check your rewards points at the top of the screen.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14460043526243__7bf5da5d-d3ea-4e98-810b-9ebf03a4bde8-1683653678211b6bd2-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "title": "STEP 3",
+            "text": "<p>Scroll down and choose which one to redeem based on your available points. </p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "cc82436a-6c83-4bc8-9bd4-0c12a1ec2194": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "title": "STEP 4",
+            "text": "<p>Redeem your chosen reward. The free product will be added to your cart.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "3f615b5a-b318-440e-8472-5fef12ec4a57": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "title": "STEP 5",
+            "text": "<p>Complete your order with the delivery and payment details, then congratulate yourself on being such a savvy hair care shopper!</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14460043526243__7bf5da5d-d3ea-4e98-810b-9ebf03a4bde8-1683653678211b6bd2-0",
+        "template--14460043526243__7bf5da5d-d3ea-4e98-810b-9ebf03a4bde8-1683653678211b6bd2-1",
+        "template--14460043526243__7bf5da5d-d3ea-4e98-810b-9ebf03a4bde8-1683653678211b6bd2-2",
+        "cc82436a-6c83-4bc8-9bd4-0c12a1ec2194",
+        "3f615b5a-b318-440e-8472-5fef12ec4a57"
+      ],
+      "settings": {
+        "title": "How to Redeem Free Products",
+        "title_font_size": 20,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1
+      }
+    },
+    "32e22fa3-f0a9-46bd-8156-33bff5d903f2": {
+      "type": "section-double",
+      "blocks": {
+        "template--14460043526243__32e22fa3-f0a9-46bd-8156-33bff5d903f2-1683630311fea5e6ee-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Level_up_your_hair_game_9e27e23b-919a-456a-8552-a4c83adc5415.png",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        },
+        "template--14460043526243__32e22fa3-f0a9-46bd-8156-33bff5d903f2-1683630311fea5e6ee-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "How to Earn Points",
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "template--14460043526243__32e22fa3-f0a9-46bd-8156-33bff5d903f2-1683630311fea5e6ee-1",
+        "template--14460043526243__32e22fa3-f0a9-46bd-8156-33bff5d903f2-1683630311fea5e6ee-0"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "77a0e814-759b-4a87-a3ef-5b7a6636ef4b": {
+      "type": "section-gallery",
+      "blocks": {
+        "template--14460043526243__77a0e814-759b-4a87-a3ef-5b7a6636ef4b-1683627003853b41cf-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Create_an_account.png",
+            "link": ""
+          }
+        },
+        "template--14460043526243__77a0e814-759b-4a87-a3ef-5b7a6636ef4b-1683627003853b41cf-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Make_a_purchase.png",
+            "link": ""
+          }
+        },
+        "template--14460043526243__77a0e814-759b-4a87-a3ef-5b7a6636ef4b-1683627003853b41cf-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Celebrate_your_birthday.png",
+            "link": ""
+          }
+        },
+        "a7b24c01-f274-4f5e-88d0-d8d65d129f97": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Leave_a_review.png",
+            "link": ""
+          }
+        },
+        "ad829ca2-4712-4679-bcf5-8fce3f167bac": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Refer_your_friends.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14460043526243__77a0e814-759b-4a87-a3ef-5b7a6636ef4b-1683627003853b41cf-1",
+        "template--14460043526243__77a0e814-759b-4a87-a3ef-5b7a6636ef4b-1683627003853b41cf-0",
+        "template--14460043526243__77a0e814-759b-4a87-a3ef-5b7a6636ef4b-1683627003853b41cf-2",
+        "a7b24c01-f274-4f5e-88d0-d8d65d129f97",
+        "ad829ca2-4712-4679-bcf5-8fce3f167bac"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "cacae97f-cbbd-49bb-8dcf-114047bda74c": {
+      "type": "section-hero",
+      "settings": {
+        "image": "shopify://shop_images/HairMNLRewardsDesktop1400X500.png",
+        "mobile_image": "shopify://shop_images/HairMNLRewardsMobile552X502.png",
+        "bg_position": "center-center",
+        "height": "use_screen_two_thirds",
+        "overlay_opacity": 25,
+        "overlay_color": "#000000",
+        "kicker": "Introducing",
+        "title": "Image with text overlay",
+        "richtext": "<p>This area is used to describe your store.</p>",
+        "text_align": "align--middle-center",
+        "text_color": "text--white",
+        "link_text": "Sign Up / log in",
+        "link": "https://www.hairmnl.com/pages/rewards",
+        "button_color": "btn--white",
+        "button_style": "btn"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "49eb3a1f-6866-48bc-93f3-9d70f4cae240",
+    "2cce07af-9da2-432d-ba93-d60d2da9d838",
+    "70387894-a301-447a-a1c3-5b6a8e0b0df6",
+    "d4a0f3f9-1162-41af-9272-7bfd9f0ee525",
+    "c233a23b-0d4d-415a-b787-083604cd445f",
+    "9afd2fa8-2941-462b-8e63-bb47951db7c6",
+    "2e46f706-08a7-4f61-b026-2a44ad2160a0",
+    "433417cc-bcf0-4fe4-a555-54b22fccaf28",
+    "274a5df2-9de3-4dca-9a5b-231d9b074a64",
+    "e2ce61c0-6bb8-44ce-8327-a42e9abc4857",
+    "d044c592-48f3-4e92-b569-8d916b3718d0",
+    "7bf5da5d-d3ea-4e98-810b-9ebf03a4bde8",
+    "32e22fa3-f0a9-46bd-8156-33bff5d903f2",
+    "77a0e814-759b-4a87-a3ef-5b7a6636ef4b",
+    "cacae97f-cbbd-49bb-8dcf-114047bda74c"
+  ]
+}

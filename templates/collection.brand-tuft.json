@@ -1,0 +1,429 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_url": ""
+          }
+        },
+        "762ed30d-6625-4574-b7e9-7b4209a4d936": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1",
+        "762ed30d-6625-4574-b7e9-7b4209a4d936"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/TUFT_-_Nov_2023_Promo_Banner_Desktop.png",
+        "banner_mobile": "shopify://shop_images/TUFT_-_Nov_2023_Promo_Banner_Mobile.png",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": true,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "27c9d18f-1828-4b29-b9f6-dd8157f950a1": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<h1>TUFT</h1><p>Introducing TUFT, an innovative brand committed to revolutionizing the hair and beauty industry with cutting-edge tools and accessories. Through extensive collaboration with hairdressers, beauty therapists, and distributors worldwide, TUFT has refined its expertise to develop products that significantly enhance the efficacy and performance of hair care routines.</p><p>Tailored for professional stylists and discerning individuals seeking salon-quality results, our range of sleek and functional tools ensures effortless styling experiences anytime, anywhere.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "ae06cdf6-d685-464d-a42b-5ac67da6f3aa": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14240176308323__ae06cdf6-d685-464d-a42b-5ac67da6f3aa-16753282058e1dd242-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "",
+            "blog_handle": ""
+          }
+        },
+        "5677df6f-5144-4a21-a78b-a2f30fc7ddf7": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "",
+            "blog_handle": ""
+          }
+        },
+        "66d3e23a-8b5f-4a78-8af7-3354253aa0d4": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "",
+            "blog_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__ae06cdf6-d685-464d-a42b-5ac67da6f3aa-16753282058e1dd242-0",
+        "5677df6f-5144-4a21-a78b-a2f30fc7ddf7",
+        "66d3e23a-8b5f-4a78-8af7-3354253aa0d4"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": false,
+        "excerpt_alignment": "left",
+        "show_readmore": false,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "461da711-ba6d-42a0-b49f-850e66bdce74": {
+      "type": "section-double",
+      "blocks": {
+        "template--14240176308323__461da711-ba6d-42a0-b49f-850e66bdce74-167536837611d66cf7-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Image with text",
+            "title": "",
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "cb1608dc-d7eb-4608-b94a-193296c72393": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__461da711-ba6d-42a0-b49f-850e66bdce74-167536837611d66cf7-0",
+        "cb1608dc-d7eb-4608-b94a-193296c72393"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "164244299150503795": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Special Offers for Damaged Hair",
+        "title_font_size": 28,
+        "collection": "special-offers-for-damaged-hair",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "main": {
+      "type": "collection",
+      "blocks": {
+        "ab4f9823-02d9-4934-ad2c-8fc93ce0b293": {
+          "type": "nav_links",
+          "disabled": true,
+          "settings": {
+            "collection_linklist": ""
+          }
+        },
+        "2332bcc5-c7e5-47c3-b269-35cee6a0e86c": {
+          "type": "filters",
+          "disabled": true,
+          "settings": {}
+        },
+        "870f76a8-df44-4133-81b4-c261d22c0757": {
+          "type": "nav_links",
+          "disabled": true,
+          "settings": {
+            "collection_linklist": "browse-by-hair-type"
+          }
+        },
+        "a54be99d-1a5f-4659-8eed-87f6abd55f6c": {
+          "type": "nav_links",
+          "disabled": true,
+          "settings": {
+            "collection_linklist": "browse-by-hair-condition"
+          }
+        },
+        "c2ffb21a-c273-4a08-909d-648c1398de59": {
+          "type": "nav_links",
+          "disabled": true,
+          "settings": {
+            "collection_linklist": "browse-by-desired-result"
+          }
+        },
+        "6ac911a5-ead2-4c4c-831d-e1c818fc6813": {
+          "type": "nav_links",
+          "disabled": true,
+          "settings": {
+            "collection_linklist": "browse-by-product-type"
+          }
+        },
+        "304269c5-c626-40b3-96f4-cd7b6feafb51": {
+          "type": "group",
+          "settings": {
+            "title": "Hair Type",
+            "group_tags": "Fine Hair,Thick Hair,Curly Hair"
+          }
+        },
+        "9de51308-e5cc-4445-9d72-b0b3f418fb48": {
+          "type": "group",
+          "settings": {
+            "title": "Hair Color",
+            "group_tags": "Ammonia-Free Permanent Hair Color,Permanent Hair Color,Semi-Permanent Color"
+          }
+        },
+        "7bad0925-8676-4890-abbb-c28bcee1245a": {
+          "type": "group",
+          "settings": {
+            "title": "Toning",
+            "group_tags": "Contains More Blue Pigments,Contains Purple Pigments"
+          }
+        },
+        "2b4847dc-9e75-4def-81e2-5eff0c21f326": {
+          "type": "group",
+          "settings": {
+            "title": "Formulation",
+            "group_tags": ""
+          }
+        },
+        "67b2e498-5353-464e-b61c-add608ec1841": {
+          "type": "group",
+          "settings": {
+            "title": "Ingredients",
+            "group_tags": "95% Natural Origin Ingredients,Cruelty-Free,Free of Harsh Sulfates (SLS and SLES),Free of Parabens,Free of PPD/PTD,Free of Pthalates,Free of Silicones,Plant-Based,Vegan"
+          }
+        },
+        "9e3067e2-2936-48e3-8f60-8a67658c0666": {
+          "type": "group",
+          "disabled": true,
+          "settings": {
+            "title": "Fragrance",
+            "group_tags": ""
+          }
+        },
+        "eb68f00d-af7c-4454-8c1b-955cdb2fbaf0": {
+          "type": "group",
+          "settings": {
+            "title": "Size",
+            "group_tags": "Travel,Value,Refill"
+          }
+        },
+        "358dc0c2-2f87-4124-b13a-73f45fe96be7": {
+          "type": "nav_links",
+          "disabled": true,
+          "settings": {
+            "collection_linklist": "brands"
+          }
+        },
+        "6c9eada6-445e-4068-b52c-f2a943f3921b": {
+          "type": "group",
+          "settings": {
+            "title": "Others",
+            "group_tags": "Brand Best Seller,HairMNL Best Seller,Special Offer,New Arrival,HairMNL Exclusive"
+          }
+        }
+      },
+      "block_order": [
+        "ab4f9823-02d9-4934-ad2c-8fc93ce0b293",
+        "2332bcc5-c7e5-47c3-b269-35cee6a0e86c",
+        "870f76a8-df44-4133-81b4-c261d22c0757",
+        "a54be99d-1a5f-4659-8eed-87f6abd55f6c",
+        "c2ffb21a-c273-4a08-909d-648c1398de59",
+        "6ac911a5-ead2-4c4c-831d-e1c818fc6813",
+        "304269c5-c626-40b3-96f4-cd7b6feafb51",
+        "9de51308-e5cc-4445-9d72-b0b3f418fb48",
+        "7bad0925-8676-4890-abbb-c28bcee1245a",
+        "2b4847dc-9e75-4def-81e2-5eff0c21f326",
+        "67b2e498-5353-464e-b61c-add608ec1841",
+        "9e3067e2-2936-48e3-8f60-8a67658c0666",
+        "eb68f00d-af7c-4454-8c1b-955cdb2fbaf0",
+        "358dc0c2-2f87-4124-b13a-73f45fe96be7",
+        "6c9eada6-445e-4068-b52c-f2a943f3921b"
+      ],
+      "settings": {
+        "grid_setting_large": 4,
+        "grid_setting_small": 2,
+        "product_limit": 36,
+        "enable_layout_toggle": true,
+        "collection_sorting": true,
+        "hide_sidebar": false
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "168692372735522490": {
+      "type": "apps",
+      "blocks": {
+        "017cc543-7259-46c1-a951-55eb92d5d3a0": {
+          "type": "shopify://apps/pro-blogger/blocks/pb_collection_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "settings": {
+            "blog_name": "hair-education",
+            "pb_related_posts_title": "Related Articles",
+            "pb_related_posts_title_style": "H5",
+            "pb_related_post_items": 6,
+            "pb_related_post_item_display": 5,
+            "slider_autoplay": "2",
+            "custom_class": "",
+            "pb_item_style": "1",
+            "image_display": "cover",
+            "pb_color_image_bg": "",
+            "pb_color_text_bg": "",
+            "pb_color_line": "",
+            "pb_extras": "",
+            "pb_related_post_length": 10,
+            "read_more": "",
+            "display_tags": "0",
+            "keyword": "",
+            "key_match_scoring": "no",
+            "pb_related_posts_matching": "2",
+            "pb_related_posts_tag_match": "10",
+            "pb_related_posts_title_match": "5"
+          }
+        }
+      },
+      "block_order": [
+        "017cc543-7259-46c1-a951-55eb92d5d3a0"
+      ],
+      "custom_css": [
+        ".related_product_articles_header {text-align: center;}"
+      ],
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "a887c88a-f0dd-46ac-b6db-055d3adfeab7": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently Viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    }
+  },
+  "order": [
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "hero",
+    "subcollections",
+    "27c9d18f-1828-4b29-b9f6-dd8157f950a1",
+    "ae06cdf6-d685-464d-a42b-5ac67da6f3aa",
+    "461da711-ba6d-42a0-b49f-850e66bdce74",
+    "164244299150503795",
+    "main",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "168692372735522490",
+    "a887c88a-f0dd-46ac-b6db-055d3adfeab7"
+  ]
+}

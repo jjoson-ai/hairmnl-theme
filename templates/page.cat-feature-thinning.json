@@ -1,0 +1,986 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {
+        "kicker": "",
+        "show_title": true,
+        "show_content": true,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "a6cf4d41-55a8-451f-b5a2-710c134b6c67": {
+      "type": "section-custom-content",
+      "blocks": {
+        "c53fc9fb-25ad-49d0-8668-b19d451f8ce3": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "The emotional struggles of general hair fall",
+            "text": "<p>General hair fall is more than just a physical experience; it takes an <strong>emotional toll</strong> on individuals from all walks of life. The struggle goes beyond strands, affecting <strong>confidence and self-esteem</strong>.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#e5dee7"
+          }
+        },
+        "9b9d8d81-826e-4711-8763-2f6ab8ecbd45": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Emotional_struggles_of_general_hairfall.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "c53fc9fb-25ad-49d0-8668-b19d451f8ce3",
+        "9b9d8d81-826e-4711-8763-2f6ab8ecbd45"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "02d58603-4894-4cee-87ce-825dd6441a3b": {
+      "type": "section-custom-content",
+      "blocks": {
+        "78eafa14-7188-4bd0-b640-ee7ad3c707ff": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Prepare yourself for a wakeup call",
+            "text": "<p>General fall isn't just a passing concern, it's a battle for your confidence. Imagine the horror of seeing <strong>clumps of hair in your brush</strong>, the distress of finding your <strong>shower drain clogged</strong>, and the silent despair that comes with <strong>hair breakage</strong>. This is the harsh reality our customers faced before discovering HairMNL.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        }
+      },
+      "block_order": [
+        "78eafa14-7188-4bd0-b640-ee7ad3c707ff"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 12,
+        "desktop_padding_bottom": 12,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "28664cdc-2e5f-488e-a38d-a4bfd4d0f3da": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Review_-_Apple_R.jpg",
+            "title": "",
+            "text": "<p>\"Early last year, I noticed that my hair easily breaks during styling, I got scared when my partner called me out on my excessive hair fall all over the house, on the bed, in the shower; just everywhere<em>.\"</em></p><p><strong>Apple R.</strong></p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Review_-_Vanessa_O.jpg",
+            "title": "",
+            "text": "<p><em>\"</em>I was losing literally like a puddle of hair. Every time I would touch my hair, a few strands will fall off. It got me so worried since it has been going on for weeks.<em>\" </em></p><p><strong>Vanessa O.</strong></p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Review_-_Margarita_B.jpg",
+            "title": "",
+            "text": "<p><em>\"</em>I have thick hair but I've always had an issue with falling hair. As in the type that clogs that shower drain.\"</p><p><strong>Margarita B.</strong></p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-0",
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-1",
+        "template--14479934128227__28664cdc-2e5f-488e-a38d-a4bfd4d0f3da-168970321933a19e69-2"
+      ],
+      "settings": {
+        "title": "Real Stories from HairMNL Customers",
+        "title_font_size": 20,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": true,
+        "aspect_ratio": 0.6,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "5db44cb8-499b-46f1-bd71-f2b32f9b9ce5": {
+      "type": "section-custom-content",
+      "blocks": {
+        "1f0622ba-a759-4e69-9ee5-864d2ee721a9": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Unveiling the culprits",
+            "text": "<p>Hair fall isn't a mere coincidence – it's a consequence of various <strong>factors that often go unnoticed</strong>. Behind every strand lost is a story of underlying causes.</p><p><em>Disclaimer: Hair loss can be caused by a variety of factors including genetics, hormonal imbalances, medical conditions, medications, and more. If you're experiencing significant hair loss, it's recommended to consult a dermatologist or a healthcare professional.</em></p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#e5dee7"
+          }
+        },
+        "7c065e93-e44d-43ed-98fc-595cde16e828": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Unveiling_the_culprits.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "1f0622ba-a759-4e69-9ee5-864d2ee721a9",
+        "7c065e93-e44d-43ed-98fc-595cde16e828"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "d7733e96-2878-46b0-bce9-650c89775bf1": {
+      "type": "section-logos",
+      "blocks": {
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-0": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Stress_Overload.jpg",
+            "link": ""
+          }
+        },
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-2": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Nutrient_Deficiencies.jpg",
+            "link": ""
+          }
+        },
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-1": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Improper_Hair_Scalp_Care.jpg",
+            "link": ""
+          }
+        },
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-3": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Environmental_Factors.jpg",
+            "link": ""
+          }
+        },
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-4": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Sleep_Deprivation.jpg",
+            "link": ""
+          }
+        },
+        "16e33441-5924-400c-a3d1-6090450aca96": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Hormonal_Changes.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-0",
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-2",
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-1",
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-3",
+        "template--14479934128227__d7733e96-2878-46b0-bce9-650c89775bf1-168975745124e5214e-4",
+        "16e33441-5924-400c-a3d1-6090450aca96"
+      ],
+      "settings": {
+        "title": "",
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "6e105f01-8ddb-488a-bbdc-2ce7a1449514": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div id=\"davVSkr\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "0cf4c6b8-2608-4eaf-a964-5b88debe89d7": {
+      "type": "section-custom-content",
+      "blocks": {
+        "fce590f8-4cf1-4406-b1b6-f9c1819abb8d": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Personalized solutions for unique you",
+            "text": "<p>Your hair's uniqueness deserves <strong>tailored care</strong>. At HairMNL, we understand the diverse needs of different hair types. Discover your perfect match with these customer <strong>favorites</strong>.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#f3ebe6"
+          }
+        },
+        "ef7f3d89-8cb8-482b-85c5-514a532b4680": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "fce590f8-4cf1-4406-b1b6-f9c1819abb8d",
+        "ef7f3d89-8cb8-482b-85c5-514a532b4680"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 8,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "33c898c8-a0b3-434d-be07-94875b6df45b": {
+      "type": "section-custom-content",
+      "blocks": {
+        "f29acbf6-2618-4b33-860c-ed0afeffa1b7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Davines_Energizing_Shampoo_100ml.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--bottom-center",
+            "text_color": "text--white",
+            "link_text": "Learn More",
+            "link": "#learnmore-dav",
+            "button_color": "btn--black",
+            "button_style": "btn uppercase"
+          }
+        },
+        "41694353-ca96-4859-af24-1842d849500c": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Kerastase_Genesis_Serum_30ml.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--bottom-center",
+            "text_color": "text--white",
+            "link_text": "Learn More",
+            "link": "#learnmore-kr",
+            "button_color": "btn--black",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "f29acbf6-2618-4b33-860c-ed0afeffa1b7",
+        "41694353-ca96-4859-af24-1842d849500c"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": true,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 12,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "67346d30-1c5a-41cc-909e-e96de18ccb2f": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div id=\"learnmore-dav\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "section_custom_content_LtFn37": {
+      "type": "section-custom-content",
+      "blocks": {
+        "text_xB8YjQ": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h3><em>Plant-Based Option:</em> Davines Energizing Shampoo</h3><p>Experience the <strong>power of nature</strong> with the Davines Energizing Shampoo, <strong>revitalizing your scalp and promoting healthy growth</strong>.</p><p>Use it every other day for 1 month for an intensive treatment. Use 2x/week for 2 months for maintenance.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Buy Now",
+            "button_url": "#quickbuy-dav",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#e5dee7"
+          }
+        },
+        "image_4h8cdU": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Plant-Based_Option_Davines_Energizing_Shampoo.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "text_xB8YjQ",
+        "image_4h8cdU"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "be6d083c-4018-4b01-936d-20ff594b37a9": {
+      "type": "section-custom-content",
+      "blocks": {
+        "17eab3a6-ef75-426e-a718-d243fd530348": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BG.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "Don't take our word for it.",
+            "richtext": "Hear from our satisfied customers who have triumphed over hair fall with <b>Davines Energizing Shampoo</b>. \n<br>",
+            "text_align": "align--middle-left",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "17eab3a6-ef75-426e-a718-d243fd530348"
+      ],
+      "settings": {
+        "height": "use_screen_one_fifth",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "a537a701-a6b0-434f-b729-2894bbf9997d": {
+      "type": "section-columns",
+      "blocks": {
+        "cd2316ba-aaa4-41a8-a195-f5b60f6d5a9c": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h5><em>Definitely works!</em></h5><p>⭐ ⭐ ⭐ ⭐ ⭐ </p><p>\"This shampoo helped me a lot with reducing my hairfall!! Definitely worth every peso that I paid\"</p><p>C from Marikina</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "63f247cc-4f73-468f-95bb-4b8247c11134": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h5><em>Staple</em></h5><p>⭐ ⭐ ⭐ ⭐ ⭐ </p><p>\"I've reordered this shampoo more than 4 times already from this site. Started using this shampoo in 2019 and still using it until today because it's effective for me.\"</p><p>Anonymous from Ampid Primero</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "726ab135-1ec7-428a-a5a4-80fedb9629a2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": false,
+            "title": "",
+            "text": "<h5><em>Very effective</em></h5><p>⭐ ⭐ ⭐ ⭐ ⭐ </p><p>\"I've been using this for 3 weeks and I can totally see the result! Satisfied!\"</p><p>Jelly A.F. from Quezon City</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "cd2316ba-aaa4-41a8-a195-f5b60f6d5a9c",
+        "63f247cc-4f73-468f-95bb-4b8247c11134",
+        "726ab135-1ec7-428a-a5a4-80fedb9629a2"
+      ],
+      "settings": {
+        "title": "Real Reviews From Our Customers",
+        "title_font_size": 22,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": false,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 12,
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12
+      }
+    },
+    "78f51e81-ebce-42e2-8efa-844a30765807": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div id=\"learnmore-kr\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "section_custom_content_QBEzYY": {
+      "type": "section-custom-content",
+      "blocks": {
+        "text_aGAwnn": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<h3><em>Luxury Choice: </em>Kérastase Genesis Serum</h3><p>Infused with potent ingredients, the Kérastase Genesis Serum is designed to <strong>nourish your hair from root to tip, strengthen against breakage</strong>, and empower you to embrace a future of <strong>vibrant, resilient hair</strong>.</p><p>Use it once daily in the morning or before going to bed during a 6 week period.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Buy Now",
+            "button_url": "#quickbuy-kr",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#e5dee7"
+          }
+        },
+        "image_if7UmB": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Luxury_Choice_Kerastase_Genesis_Serum.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "text_aGAwnn",
+        "image_if7UmB"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "416e5ad7-4a20-42af-b1ee-313c7a9a3dd2": {
+      "type": "section-custom-content",
+      "blocks": {
+        "bb79e3e9-190f-4bcc-8596-ef50222beb38": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BG.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "Don't take our word for it.",
+            "richtext": "Hear from our satisfied customers who have embraced the change with <b>Kérastase Genesis Serum</b>.",
+            "text_align": "align--middle-left",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "bb79e3e9-190f-4bcc-8596-ef50222beb38"
+      ],
+      "custom_css": [
+        "h2 {font-size: 28 px;}"
+      ],
+      "settings": {
+        "height": "use_screen_one_fifth",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 28,
+        "desktop_padding_bottom": 28,
+        "mobile_padding_top": 8,
+        "mobile_padding_bottom": 8
+      }
+    },
+    "c981cb8a-093e-4598-98c9-b8cd402b64db": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "template--14505711239267__c981cb8a-093e-4598-98c9-b8cd402b64db-text-1": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<h5><em>It worked on my mom! 💯</em></h5><p>⭐ ⭐ ⭐ ⭐ ⭐ </p><p>\"Mom (49 y/o) was on keto diet which caused her hairfall. Then she tried this and it significantly lessened her hairfall after a week. It was over a month after finishing the bottle when she noticed the baby hairs around her hairline.\"</p><p>Arielle from Marikina</p>",
+            "text_align": "text-left"
+          }
+        },
+        "efae9050-381b-4e9a-a476-6fe99b49bf17": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<h5><em>It’s more than anti hair fall!</em></h5><p>⭐ ⭐ ⭐ ⭐ ⭐ </p><p>\"This is the one worth buying from the Genesis line. I was experiencing hair fall and my hair seemed lifeless. I decided to give this a try and the first thing I noticed was my hair and scalp started to feel healthy again.\"</p><p>Annette from Mandaluyong</p>",
+            "text_align": "text-left"
+          }
+        },
+        "a580a06a-8d0f-4d1d-8be7-8d01d29938e8": {
+          "type": "text",
+          "settings": {
+            "title": "",
+            "text": "<h5><em>Lesser Hair Fall</em></h5><p>⭐ ⭐ ⭐ ⭐ ⭐ </p><p>\"I love this Serum! Smells great and i love the cool effect when applied to the scalp. And most of all, it lessen my hair fall! It's really worth the buy!\"</p><p>Jo A. from Valenzuela</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "template--14505711239267__c981cb8a-093e-4598-98c9-b8cd402b64db-text-1",
+        "efae9050-381b-4e9a-a476-6fe99b49bf17",
+        "a580a06a-8d0f-4d1d-8be7-8d01d29938e8"
+      ],
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 36,
+        "mobile_padding_bottom": 44
+      }
+    },
+    "d5a54557-0355-4d74-88bd-2ed9a1de7148": {
+      "type": "section-custom-content",
+      "blocks": {
+        "185dfe40-7093-4486-8f03-1b653f8f211b": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Unlock_transformation_inside_out.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        },
+        "c54ccd7f-abb4-4997-9e79-bce89954edb0": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Unlock transformation inside out",
+            "text": "<p>HairMNL's solutions reach <strong>beyond the physical</strong>. Experience not just luscious locks, but a <strong>renewed sense of confidence and empowerment</strong>.</p><p>Step out with hair that matches your spirit.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#e5dee7"
+          }
+        }
+      },
+      "block_order": [
+        "185dfe40-7093-4486-8f03-1b653f8f211b",
+        "c54ccd7f-abb4-4997-9e79-bce89954edb0"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 8,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "99912ff8-2054-43ec-9bca-25170fa186d3": {
+      "type": "section-static-banner",
+      "custom_css": [],
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/Your_confidence_awaits_Desktop.jpg",
+        "banner_mobile": "shopify://shop_images/Your_confidence_awaits_mobile.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 4,
+        "desktop_padding_bottom": 4,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "35f007da-c91f-490e-8614-bd26be8f08ee": {
+      "type": "section-html",
+      "custom_css": [],
+      "settings": {
+        "html": "<div id=\"quickbuy-dav\"></div>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "4aa0a3b3-5896-4a1d-9e93-c8c66e489bad": {
+      "type": "section-product",
+      "blocks": {
+        "template--14505711239267__4aa0a3b3-5896-4a1d-9e93-c8c66e489bad-title-1": {
+          "type": "title",
+          "settings": {
+            "product_show_vendor": false
+          }
+        },
+        "template--14505711239267__4aa0a3b3-5896-4a1d-9e93-c8c66e489bad-form-1": {
+          "type": "form",
+          "settings": {
+            "variant_form": "button",
+            "show_quantity": false,
+            "show_remaining": false,
+            "enable_payment_button": true,
+            "subscriptions_enable_selectors": false,
+            "info_page": ""
+          }
+        },
+        "442eb93c-a40f-4040-af6d-fccf9f975bbb": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "<h5>Get P50 OFF<br/>Energizing Shampoo 100ml</h5><h5><strong>USE CODE: ENERGIZING50</strong></h5><p><em>For first time buyers only.</em></p><p><a href=\"#davVSkr\" title=\"Davines Energizing vs Kerastase Genesis\">⬆ <strong>Back to previous section</strong></a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14505711239267__4aa0a3b3-5896-4a1d-9e93-c8c66e489bad-title-1",
+        "template--14505711239267__4aa0a3b3-5896-4a1d-9e93-c8c66e489bad-form-1",
+        "442eb93c-a40f-4040-af6d-fccf9f975bbb"
+      ],
+      "settings": {
+        "title": "",
+        "home_product": "davines-naturaltech-energizing-shampoo-for-scalp-with-fragile-thinning-hair",
+        "bg": "palette--light bg--neutral",
+        "image_width": "narrow",
+        "align": "left",
+        "enable_video_looping": false,
+        "zoom_enable": false,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "section_custom_content_d7LDge": {
+      "type": "section-custom-content",
+      "blocks": {
+        "image_TtEHPT": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Get_P50_Off_Davines_Energizing_Shampoo_100ml.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-right",
+            "text_color": "text--neutral",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        },
+        "text_gjfDx8": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Get P50 OFF",
+            "text": "<h4>Energizing Shampoo 100ml</h4><p><strong>USE CODE: ENERGIZING50 </strong></p><p><em>For first time buyers only.</em></p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#e0e1e0"
+          }
+        }
+      },
+      "block_order": [
+        "image_TtEHPT",
+        "text_gjfDx8"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 8,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "5679f3b6-c592-42d9-97a1-e5d0758c5265": {
+      "type": "section-html",
+      "custom_css": [],
+      "settings": {
+        "html": "<div id=\"quickbuy-kr\"></div>",
+        "full_width": false,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "0174b123-3249-411c-b5d8-bdbc5f5c61f0": {
+      "type": "section-product",
+      "blocks": {
+        "template--14505711239267__0174b123-3249-411c-b5d8-bdbc5f5c61f0-title-1": {
+          "type": "title",
+          "settings": {
+            "product_show_vendor": false
+          }
+        },
+        "template--14505711239267__0174b123-3249-411c-b5d8-bdbc5f5c61f0-form-1": {
+          "type": "form",
+          "settings": {
+            "variant_form": "button",
+            "show_quantity": false,
+            "show_remaining": false,
+            "enable_payment_button": true,
+            "subscriptions_enable_selectors": false,
+            "info_page": ""
+          }
+        },
+        "d96e220f-215a-4bf9-9c57-f45d49af91cc": {
+          "type": "text",
+          "settings": {
+            "title": "<p><a href=\"#davVSkr\" title=\"Davines Energizing vs Kerastase Genesis\">⬆ <strong>Back to previous section</strong></a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--14505711239267__0174b123-3249-411c-b5d8-bdbc5f5c61f0-title-1",
+        "template--14505711239267__0174b123-3249-411c-b5d8-bdbc5f5c61f0-form-1",
+        "d96e220f-215a-4bf9-9c57-f45d49af91cc"
+      ],
+      "settings": {
+        "title": "",
+        "home_product": "kerastase-genesis-anti-hair-fall-fortifying-serum",
+        "bg": "palette--light bg--neutral",
+        "image_width": "narrow",
+        "align": "left",
+        "enable_video_looping": false,
+        "zoom_enable": false,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "a6cf4d41-55a8-451f-b5a2-710c134b6c67",
+    "02d58603-4894-4cee-87ce-825dd6441a3b",
+    "28664cdc-2e5f-488e-a38d-a4bfd4d0f3da",
+    "5db44cb8-499b-46f1-bd71-f2b32f9b9ce5",
+    "d7733e96-2878-46b0-bce9-650c89775bf1",
+    "6e105f01-8ddb-488a-bbdc-2ce7a1449514",
+    "0cf4c6b8-2608-4eaf-a964-5b88debe89d7",
+    "33c898c8-a0b3-434d-be07-94875b6df45b",
+    "67346d30-1c5a-41cc-909e-e96de18ccb2f",
+    "section_custom_content_LtFn37",
+    "be6d083c-4018-4b01-936d-20ff594b37a9",
+    "a537a701-a6b0-434f-b729-2894bbf9997d",
+    "78f51e81-ebce-42e2-8efa-844a30765807",
+    "section_custom_content_QBEzYY",
+    "416e5ad7-4a20-42af-b1ee-313c7a9a3dd2",
+    "c981cb8a-093e-4598-98c9-b8cd402b64db",
+    "d5a54557-0355-4d74-88bd-2ed9a1de7148",
+    "99912ff8-2054-43ec-9bca-25170fa186d3",
+    "35f007da-c91f-490e-8614-bd26be8f08ee",
+    "4aa0a3b3-5896-4a1d-9e93-c8c66e489bad",
+    "section_custom_content_d7LDge",
+    "5679f3b6-c592-42d9-97a1-e5d0758c5265",
+    "0174b123-3249-411c-b5d8-bdbc5f5c61f0"
+  ]
+}

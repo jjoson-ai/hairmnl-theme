@@ -1,0 +1,245 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/Desktop_Banner_Pay_Sale_Value_Superstars_1400_x_500_px_1.png",
+        "banner_mobile": "shopify://shop_images/Mobile_Banner_Pay_Sale_Value_Superstars_552_x_502_px_2.png",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": true,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "bd8c18e1-3236-4f2b-84ce-f24d258dadab": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "collection": "products-under-1000",
+        "grid": 6,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Value Superstars - Frizzy Hair",
+        "title_font_size": 17,
+        "collection": "value-superstars-frizzy-hair",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "cb63dcba-46d6-47fc-989e-35f23df7ef05": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Value Superstars - Damaged Hair",
+        "title_font_size": 17,
+        "collection": "value-superstars-damaged-hair",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Value Superstars - Scalp Care and Dandruff",
+        "title_font_size": 17,
+        "collection": "value-superstars-scalp-care-and-dandruff",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "e8b3b73b-9fe4-4668-ad86-e7c4939cf465": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Value Superstars - Styling",
+        "title_font_size": 17,
+        "collection": "value-superstars-styling",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "5b8d76a3-e631-4eec-a0a5-0e61d7d81901": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Value Superstars - Color and Toning",
+        "title_font_size": 17,
+        "collection": "value-superstars-color-and-toning",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Value Superstars - Colored Hair",
+        "title_font_size": 17,
+        "collection": "value-superstars-colored-hair",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "744121ab-ba36-466f-857b-998121161427": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Value Superstars - Thinning Hair",
+        "title_font_size": 17,
+        "collection": "value-superstars-thinning-hair",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 52,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "4cb49233-a827-43bb-b5f7-724a308484c4": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    }
+  },
+  "order": [
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "hero",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "bd8c18e1-3236-4f2b-84ce-f24d258dadab",
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4",
+    "cb63dcba-46d6-47fc-989e-35f23df7ef05",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "e8b3b73b-9fe4-4668-ad86-e7c4939cf465",
+    "5b8d76a3-e631-4eec-a0a5-0e61d7d81901",
+    "1642442735c9bd4274",
+    "744121ab-ba36-466f-857b-998121161427",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "4cb49233-a827-43bb-b5f7-724a308484c4"
+  ]
+}

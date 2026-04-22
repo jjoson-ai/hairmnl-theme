@@ -1,0 +1,306 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "a0127ace-c487-46d6-8fe2-5f7f5385987b": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/HairMNL_Wella_CFM_10_Off_June_2023_Desktop.jpg",
+        "banner_mobile": "shopify://shop_images/HairMNL_Wella_CFM_10_Off_June_2023_Mobile.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/Wella_Professionals_Color_Fresh_Masks_Banner_Desktop_b2b8c78b-b446-4add-b714-88c54756d074.jpg",
+        "banner_mobile": "shopify://shop_images/Wella_Professionals_Color_Fresh_Masks_Banner_Mobile_ffd6731f-2e0a-4698-8055-2e02a1f2a621.jpg",
+        "banner_url": "shopify://collections/wella-professionals-color-fresh-mask",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "a83c7fb5-a342-4a07-83d9-c0de76bb58fb": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "Wella Professionals",
+        "title": "Color Fresh Mask",
+        "text": "<p><strong>Refresh your salon color.</strong></p><p>The Color Fresh Mask is the perfect combination of temporary color and complete care; a treatment that revives and refreshes your hair color, while keeping strands silky-smooth and moisturized. If you’re looking for a way to boost salon color between pro appointments, this is your go-to, allowing you to get a speedy refresh at home.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "IT GIVES YOU THAT COLOR FRESH FINISH",
+            "text": "<p>If you’ve tried Wella Professionals’ color portfolio – from demi-permanent to permanent color – you’ll know how glossy, rich and lustrous the finish can be. The Color Fresh Mask gives a similar effect, helping to maintain or transform your salon hue with megawatt shine and a dose of temporary pigment.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e": {
+          "type": "text",
+          "settings": {
+            "title": "IT FADES TRUE TO TONE",
+            "text": "<p>Unlike other temporary and semi-permanent colors, the Color Fresh Mask fade true to tone, meaning the hue you choose will maintain the same color direction as it gradually washes out. It simply becomes softer and subtler over time. Plus, because it’s so gentle on locks, you can use it every week. We recommend adding it to your weekly pamper routine for a quick pick-me-up.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0": {
+          "type": "text",
+          "settings": {
+            "title": "IT TRULY CARES FOR HAIR",
+            "text": "<p>This is the kindest color you could choose for your hair. It’s a silicone-free, zero-damage formula that treats your strands to a cocktail of rich moisturizers, from argan oil to avocado oil. The Color Fresh Mask also reduces hair breakage during combing, with the cuticle-smoothing power making strands ultra-manageable. Plus, it’s free from animal-derived ingredients.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "3300d774-2b36-4c2d-983c-40346e8c940c": {
+          "type": "text",
+          "settings": {
+            "title": "IT’S SUPER-QUICK AND SUPER-EASY",
+            "text": "<p>Giving you visible results in just 10 minutes, the Color Fresh Mask is ultra-speedy, with a creamy consistency that makes it easy to apply. This means it’s ideal for first timers who are looking to upgrade their shade</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2",
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e",
+        "template--14409661677667__dbed7715-f158-4728-a6a5-dbb69d616752-16710231498468c60f-0",
+        "3300d774-2b36-4c2d-983c-40346e8c940c"
+      ],
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Shop Wella Professionals Color Fresh Mask",
+        "title_font_size": 28,
+        "collection": "wella-professionals-color-fresh-mask",
+        "grid": 5,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "3b3ab117-386d-45d0-be7e-a34eceb25bd3": {
+      "type": "section-double",
+      "blocks": {
+        "template--14412995723363__3b3ab117-386d-45d0-be7e-a34eceb25bd3-167532793062adbbcc-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Wella Color Fresh Mask",
+            "title": "Tone, Color, and Refresh Your Hair in Just 4 Easy Steps With Wella!",
+            "text": "<p>Need to refresh you hair color or looking to change up your look easily at home? With Wella Professionals Color Fresh Mask, safely change up your look at home. In just a few steps, get vibrant color and amazing softness for your healthy, refreshed locks.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "146e3af0-99df-4f77-b9b2-f34ca86a0424": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": "wDFLz9cRS8Q"
+          }
+        }
+      },
+      "block_order": [
+        "template--14412995723363__3b3ab117-386d-45d0-be7e-a34eceb25bd3-167532793062adbbcc-0",
+        "146e3af0-99df-4f77-b9b2-f34ca86a0424"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "386dcc4e-dd29-4949-aaa3-f6d01f814235": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14412995723363__386dcc4e-dd29-4949-aaa3-f6d01f814235-16753282058e1dd242-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "",
+            "blog_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14412995723363__386dcc4e-dd29-4949-aaa3-f6d01f814235-16753282058e1dd242-0"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Featured articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "8b484beb-0bb5-43e5-a90b-220aa5414373": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    },
+    "164244339393e3ebe3": {
+      "type": "apps",
+      "blocks": {
+        "7162c3c2-7cdf-445c-bbba-741f897a370a": {
+          "type": "shopify://apps/judge-me-reviews/blocks/medals/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "7162c3c2-7cdf-445c-bbba-741f897a370a"
+      ],
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "a0127ace-c487-46d6-8fe2-5f7f5385987b",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "a83c7fb5-a342-4a07-83d9-c0de76bb58fb",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "1642442735c9bd4274",
+    "3b3ab117-386d-45d0-be7e-a34eceb25bd3",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "386dcc4e-dd29-4949-aaa3-f6d01f814235",
+    "8b484beb-0bb5-43e5-a90b-220aa5414373",
+    "164244339393e3ebe3"
+  ]
+}

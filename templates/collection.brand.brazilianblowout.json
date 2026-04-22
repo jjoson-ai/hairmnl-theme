@@ -1,0 +1,409 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/Brazilian_Blowout_-_Desktop_1400_x_500_px.png",
+            "slide_image_mobile": "shopify://shop_images/Brazilian_Blowout_-_Mobile_Banner.png",
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/brazilian-blowout-free-ionic-bonding-spray-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/brazilian-blowout-free-ionic-bonding-spray-mobile.jpg",
+            "slide_image_url": "shopify://collections/brazilian-blowout-anti-aging"
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/Brazilian_Blowout_-_Desktop_1400_x_500_px.png",
+        "banner_mobile": "shopify://shop_images/Brazilian_Blowout_-_Mobile_Banner.png",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 36,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 64
+      }
+    },
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "adad7d77-3711-4027-bc3f-1bd4643e7fb6": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "BRAZILIAN BLOWOUT",
+        "title": "The Only Smoothing Treatment Asked For By Name",
+        "text": "<p>Through the use of breakthrough bonding technologies, these customizable smoothing treatments actually improve the condition of the hair by creating a protective protein layer around the hair shaft to eliminate frizz and smooth the cuticle.</p><p>Browse your favorite Brazilian Blowout Professional Hair Smoothing Treatment aftercare products below!</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95": {
+      "type": "section-double",
+      "blocks": {
+        "26e32f44-3447-44d2-8afd-15c4f42055d1": {
+          "type": "text",
+          "settings": {
+            "kicker": "THE ONLY SMOOTHING TREATMENT ASKED FOR BY NAME",
+            "title": "Why Stylists Choose Brazilian Blowout",
+            "text": "<p>Through the use of breakthrough bonding technologies, these customizable smoothing treatments actually improve the condition of the hair by creating a protective protein layer around the hair shaft to eliminate frizz and smooth the cuticle.</p><p>Browse your favorite Brazilian Blowout Professional Hair Smoothing Treatment aftercare products below!</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "1d3c33e7-57e3-4173-901c-9e4742371add": {
+          "type": "youtube",
+          "settings": {
+            "yt_video_id": "04YxovVPY88"
+          }
+        }
+      },
+      "block_order": [
+        "26e32f44-3447-44d2-8afd-15c4f42055d1",
+        "1d3c33e7-57e3-4173-901c-9e4742371add"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "b8bd18fa-6c51-43c2-a925-18f4a1ca1da2": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Brazilian Blowout Anti-Frizz",
+        "text": "<p>Revitalize your hair with the exclusive Brazilian Super-Nutrient Complex. Fortify, repair, and lock in moisture while keeping frizz at bay. Experience soft, radiant hair and enhanced Brazilian Blowout treatment and color service retention</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "10109bad-6a95-4123-aac6-15895d8b2c2d": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "brazilian-blowout-anti-frizz",
+        "grid": 4,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "56a49d76-3e1b-4684-b7f8-7c946c3efd12": {
+      "type": "section-custom-content",
+      "blocks": {
+        "1c281f2b-392a-4a78-a419-eb9132800378": {
+          "type": "text",
+          "settings": {
+            "kicker": "Heat-Activated Treatment",
+            "title": "Brazilian Blowout Protective Thermal Straightening Balm",
+            "text": "<p>The <strong>Brazilian Blowout Protective Thermal Straightening Balm </strong>is a powerful, heat activated, humidity resistant formulation that straightens waves/curls and tames frizz while protecting hair from heat styling and environmental stresses.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "template--14463332876387__56a49d76-3e1b-4684-b7f8-7c946c3efd12-product-1": {
+          "type": "product",
+          "settings": {
+            "product": "brazilian-blowout-protective-thermal-straightening-balm-240ml",
+            "kicker": "",
+            "badge_string": "",
+            "align_text": "text-center",
+            "text_color": "text--neutral",
+            "bg_color": "#ffe5da",
+            "bg_accent": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "1c281f2b-392a-4a78-a419-eb9132800378",
+        "template--14463332876387__56a49d76-3e1b-4684-b7f8-7c946c3efd12-product-1"
+      ],
+      "settings": {
+        "height": "image-height",
+        "padding": true,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "5c5e7a1c-07b2-4bb1-97bd-c2f462e99208": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Brazilian Blowout Anti-Aging",
+        "text": "<p>Infused with reparative proteins and smoothing agents, it targets signs of aging and damage to leave hair visibly healthier, softer, and more resilient with every use.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "852bd008-9f0f-472e-ae50-7da4127ca9c6": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "brazilian-blowout-anti-aging",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "e28a375c-f5a8-4120-b987-4c75df1a86b9": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Brazilian Blowout Volume",
+        "text": "<p>Elevate thin hair wit the Volume Boost Complex. Infused with amino acids and proteins, it adds long-lasting volume, strength, and shine. Enhance your Brazilian Blowout treatment and color service retention for fuller, healthier hair.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "aa11a7d2-f5ad-457d-8588-f29243c755ed": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "brazilian-blowout-volume",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "bd8c18e1-3236-4f2b-84ce-f24d258dadab": {
+      "type": "section-collection",
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "title_font_size": 17,
+        "collection": "brazilian-blowout",
+        "grid": 5,
+        "rows": 5,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "355daad6-2bcf-4cd0-94f1-23640379f189": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "1caf9733-0a11-4ab0-a842-494f3ae3d9dd": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "the-best-aftercare-products-for-brazilian-blowout-from-hairmnl"
+          }
+        },
+        "template--14428937977955__355daad6-2bcf-4cd0-94f1-23640379f189-168175123732357e58-2": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "hairmnls-definitive-guide-to-the-best-aftercare-products-for-popular-salon-treatments"
+          }
+        },
+        "template--14428937977955__355daad6-2bcf-4cd0-94f1-23640379f189-168175123732357e58-1": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "here-s-everything-you-should-know-about-keratin-treatments"
+          }
+        },
+        "template--14428937977955__355daad6-2bcf-4cd0-94f1-23640379f189-168175123732357e58-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "a-buyers-guide-to-the-best-anti-frizz-serums-and-creams"
+          }
+        },
+        "6661e915-a84c-4064-8ded-440fa8a576db": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "what-s-your-frizz-type-learn-your-frizz-profile-and-what-to-do-about-it"
+          }
+        }
+      },
+      "block_order": [
+        "1caf9733-0a11-4ab0-a842-494f3ae3d9dd",
+        "template--14428937977955__355daad6-2bcf-4cd0-94f1-23640379f189-168175123732357e58-2",
+        "template--14428937977955__355daad6-2bcf-4cd0-94f1-23640379f189-168175123732357e58-1",
+        "template--14428937977955__355daad6-2bcf-4cd0-94f1-23640379f189-168175123732357e58-0",
+        "6661e915-a84c-4064-8ded-440fa8a576db"
+      ],
+      "settings": {
+        "title": "Related Articles",
+        "homepage_blog": "hair-education",
+        "homepage_blog_count": 5,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "cb2a07c4-a9ea-4f0f-a7bb-4a2eac160634": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "hero",
+    "subcollections",
+    "adad7d77-3711-4027-bc3f-1bd4643e7fb6",
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95",
+    "b8bd18fa-6c51-43c2-a925-18f4a1ca1da2",
+    "10109bad-6a95-4123-aac6-15895d8b2c2d",
+    "56a49d76-3e1b-4684-b7f8-7c946c3efd12",
+    "5c5e7a1c-07b2-4bb1-97bd-c2f462e99208",
+    "852bd008-9f0f-472e-ae50-7da4127ca9c6",
+    "e28a375c-f5a8-4120-b987-4c75df1a86b9",
+    "aa11a7d2-f5ad-457d-8588-f29243c755ed",
+    "bd8c18e1-3236-4f2b-84ce-f24d258dadab",
+    "355daad6-2bcf-4cd0-94f1-23640379f189",
+    "cb2a07c4-a9ea-4f0f-a7bb-4a2eac160634"
+  ]
+}

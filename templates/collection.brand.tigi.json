@@ -1,0 +1,313 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "disabled": true,
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": true,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/woman-applying-lipstick_ddd70f1b-f5da-4cba-adbe-66ab7afa3b4b.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95": {
+      "type": "section-double",
+      "blocks": {
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Olaplex",
+            "title": "THE COMPLETE HAIR REPAIR SYSTEM",
+            "text": "<p>The only patented system to noticeably repair extreme damage—turn dry, brittle hair into soft, shiny, and more resilient hair.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "Shop Now",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0",
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "1f62a8aa-817a-42eb-925d-580e1318e1fb": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "TIGI",
+        "text": "<p>Discover the full range of <strong>TIGI</strong> products at HairMNL! From the iconic <strong>Bed Head by TIGI</strong> line to the <strong>Dumb Blonde</strong> collection, find top-tier <strong>styling and haircare essentials</strong> designed for bold, creative looks. Whether you need volumizing sprays, texturizing pastes, or color-enhancing shampoos, TIGI delivers <strong>salon-quality solutions trusted by professionals</strong>. Explore our <strong>100% authentic</strong> collection and achieve runway-ready hair every day!</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_richtext_eURkAe": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Bed Head by TIGI",
+        "text": "<p>Influenced by music and fashion, Bed Head by TIGI products create a strong colour and defining element, as well as adds texture, shape and the desired finish to your hair. Developed at Bed Head Studios by hairdressers for hairdressers, Bed Head offers the best products to express your own personal style. Your hair, your way. </p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "523a18db-0221-4938-95a8-c51d2c247d9a": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "bed-head-by-tigi",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Bed Head for Men by TIGI",
+        "title_font_size": 17,
+        "collection": "bed-head-for-men-by-tigi",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_PUByTh": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Bed Head by TIGI Dumb Blonde Collection",
+        "title_font_size": 28,
+        "collection": "bed-head-by-tigi-dumb-blonde-collection",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "21cdd4fa-8775-442c-b28b-1b51c158d700": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "TIGI Copyright",
+        "text": "<p>Customizable at-home hair care from repairing styling damage and caring for color-treated hair between salon visits.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_collection_4Fg397": {
+      "type": "section-collection",
+      "settings": {
+        "title": "TIGI Copyright",
+        "title_font_size": 28,
+        "collection": "tigi-copyright",
+        "grid": 4,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "S-Factor by TIGI",
+        "text": "<p>S Factor stands for seriously sensational hair with products from its wash & care range, extending to treatments and beautiful, styling and finishing products.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_collection_RTndJJ": {
+      "type": "section-collection",
+      "settings": {
+        "title": "S-Factor by TIGI",
+        "title_font_size": 28,
+        "collection": "s-factor-by-tigi",
+        "grid": 3,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Shop All TIGI",
+        "title_font_size": 28,
+        "collection": "tigi",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "a828f7e1-f9d1-478c-bbb8-222bf5b7a89c": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95",
+    "1f62a8aa-817a-42eb-925d-580e1318e1fb",
+    "section_richtext_eURkAe",
+    "523a18db-0221-4938-95a8-c51d2c247d9a",
+    "38f193c7-04cf-4e39-a8b8-10060a721fb4",
+    "section_collection_PUByTh",
+    "21cdd4fa-8775-442c-b28b-1b51c158d700",
+    "section_collection_4Fg397",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "section_collection_RTndJJ",
+    "1642442735c9bd4274",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
+    "a828f7e1-f9d1-478c-bbb8-222bf5b7a89c"
+  ]
+}

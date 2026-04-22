@@ -1,0 +1,485 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "7df3b2d9-888e-438d-93d9-21f18e246690": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "0515aa43-b504-430e-92e8-635c59df7ad1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/HairMNL_11.11_2025_Banner_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/HairMNL_11.11_2025_Banner_mobile.jpg",
+            "slide_image_url": "shopify://collections/special-offers"
+          }
+        },
+        "2ce9123d-62d7-4f6d-b029-f969c0353bb6": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/2026-mar-apr-e-comm-site-banners-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/2026-mar-apr-e-comm-site-banners-mobile.jpg",
+            "slide_image_url": "shopify://collections/special-offers"
+          }
+        },
+        "banner_slide_F4jBPQ": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/2026-mar-apr-salon-site-banners-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/2026-mar-apr-salon-site-banners-mobile.jpg",
+            "slide_image_url": "shopify://pages/hairmnl-studio"
+          }
+        },
+        "c11b7560-5383-48f5-ae42-ebbf2739fd11": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/k18-brand-spotlight-mar-apr-2026-site-banners-1.jpg",
+            "slide_image_mobile": "shopify://shop_images/k18-brand-spotlight-mar-apr-2026-site-banners.jpg",
+            "slide_image_url": "shopify://collections/davines"
+          }
+        },
+        "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-1": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/dav-promos-feb-2026-site-banners-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/dav-promos-feb-2026-site-banners-mobile.jpg",
+            "slide_image_url": "shopify://collections/davines"
+          }
+        },
+        "37610dcd-b373-4d89-a3e5-cae6fda04ac5": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/kerastase-april-2026-always-on-storewide-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/kerastase-april-2026-always-on-storewide-mobile.jpg",
+            "slide_image_url": "shopify://collections/kerastase"
+          }
+        },
+        "ef834652-e573-46ca-a607-d78f3767abf2": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/loreal-pro-april-2026-always-on-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/loreal-pro-april-2026-always-on-mobile.jpg",
+            "slide_image_url": "shopify://collections/lorealprofessionnel"
+          }
+        },
+        "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/tymo-always-on-march-2026-banner-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/tymo-always-on-march-2026-banner-mobile.jpg",
+            "slide_image_url": "shopify://collections/tymo"
+          }
+        },
+        "d59c3d24-41df-4162-8fe6-fa7083e41145": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/hairmnl-studio-free-kerastase-fusio-dose-treatment.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-studio-free-kerastase-fusio-dose-treatment_1.jpg",
+            "slide_image_url": "shopify://pages/hairmnl-studio"
+          }
+        }
+      },
+      "block_order": [
+        "0515aa43-b504-430e-92e8-635c59df7ad1",
+        "2ce9123d-62d7-4f6d-b029-f969c0353bb6",
+        "banner_slide_F4jBPQ",
+        "c11b7560-5383-48f5-ae42-ebbf2739fd11",
+        "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-1",
+        "37610dcd-b373-4d89-a3e5-cae6fda04ac5",
+        "ef834652-e573-46ca-a607-d78f3767abf2",
+        "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-0",
+        "d59c3d24-41df-4162-8fe6-fa7083e41145"
+      ],
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 4000
+      }
+    },
+    "f9033a8e-14ed-43f4-9efa-22d3369b7424": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "Introducing",
+        "title": "",
+        "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "8e66ad54-68f1-48bf-b688-5be1f7650268": {
+      "type": "menu-buttons",
+      "settings": {
+        "menu_list": "middle-menu-1",
+        "space_top": 20,
+        "space_bottom": 20
+      }
+    },
+    "e0961ca3-7855-47ed-9a02-e46ede5033c7": {
+      "type": "menu-buttons",
+      "settings": {
+        "menu_list": "middle-menu-3",
+        "space_top": 20,
+        "space_bottom": 20
+      }
+    },
+    "2070a358-5e4d-4784-8b58-016e8eb567a2": {
+      "type": "search",
+      "settings": {
+        "show_filters": true
+      }
+    },
+    "164442519884b6f73e": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Best Sellers",
+        "title_font_size": 17,
+        "collection": "best-sellers",
+        "grid": 6,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "eecfa066-3eb9-4223-bd0c-f26f57e4d864": {
+      "type": "section-collection-slider",
+      "disabled": true,
+      "settings": {
+        "title": "For Men",
+        "title_font_size": 28,
+        "featured_collection": "for-men"
+      }
+    },
+    "section_collection_LXHdRf": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Summer Essentials",
+        "title_font_size": 17,
+        "collection": "summer-collection",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "8105fa81-0286-4d5a-8863-0eb87d091990": {
+      "type": "section-collection",
+      "settings": {
+        "title": "For Damaged Hair",
+        "title_font_size": 28,
+        "collection": "damaged-hair",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "4ce3958d-4cdd-49cc-83f6-1ef249b02aeb": {
+      "type": "section-collection",
+      "settings": {
+        "title": "For Frizz-Control",
+        "title_font_size": 28,
+        "collection": "for-frizz-control-sleek-hair",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_slider_GMJGeX": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "Color Refresh for Bleached or Pre-lightened Hair",
+        "title_font_size": 28,
+        "featured_collection": "faded-hair-color"
+      }
+    },
+    "423c024f-47f9-478a-b44b-df4a12bdfeac": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "For Colored Hair",
+        "title_font_size": 28,
+        "featured_collection": "products-for-colored-hair"
+      }
+    },
+    "f650d949-f28d-4f9e-af69-b3cb5ba20a81": {
+      "type": "section-collection",
+      "settings": {
+        "title": "For Thinning Hair",
+        "title_font_size": 17,
+        "collection": "thinning-hair",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "1644430036836806c8": {
+      "type": "section-collection",
+      "settings": {
+        "title": "For Dandruff Control",
+        "title_font_size": 28,
+        "collection": "products-for-dandruff-control",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "1a66d5df-0dee-438a-8d45-55e42322dd1a": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Styling Products",
+        "title_font_size": 28,
+        "collection": "styling-products",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "section_collection_slider_CXyzri": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "Professional Hairdressing Tools",
+        "title_font_size": 28,
+        "featured_collection": "professional-hairdressing-tools-equipment"
+      }
+    },
+    "f12293c1-d565-48ee-b63f-1b5de7c907f5": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Hair Oils & Serums",
+        "title_font_size": 17,
+        "collection": "hair-oils-and-serums",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "eb962ea6-1a93-407d-945c-ad1ae43643f7": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "Best for Travel",
+        "title_font_size": 28,
+        "featured_collection": "best-for-travel"
+      }
+    },
+    "section_collection_slider_7p9q3j": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "Wellness Bath & Body",
+        "title_font_size": 28,
+        "featured_collection": "wellness-bath-and-body"
+      }
+    },
+    "16444209812d61dcca": {
+      "type": "apps",
+      "blocks": {
+        "840a7ee1-7c0b-4ec2-80e8-c66cd44ae1b4": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1500
+          }
+        }
+      },
+      "block_order": [
+        "840a7ee1-7c0b-4ec2-80e8-c66cd44ae1b4"
+      ],
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "e5c9936e-1c85-4ec2-bf1a-818874d78b72": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "Professional Nail Care",
+        "title_font_size": 28,
+        "featured_collection": "professional-nail-care"
+      }
+    },
+    "ad015d1b-a799-4284-8aaa-1cdeb1e5cb5c": {
+      "type": "section-collection-slider",
+      "settings": {
+        "title": "Professional Hair Color for Covering Grays",
+        "title_font_size": 28,
+        "featured_collection": "hair-color"
+      }
+    },
+    "d796386e-8e88-443c-85ba-f27b9af0cb91": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "08b0475e-fe3f-4cbd-81f1-2fe6b5832be2": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "2026-best-in-beauty-hair-protocols-essentials"
+          }
+        },
+        "article_block_qPLmxe": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "15-top-sulfate-free-shampoos-in-the-philippines"
+          }
+        },
+        "article_block_c3WJQ4": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "volumizing-haircuts-and-hairstyles-for-thin-or-fine-hair-achieve-fuller-looks-at-hairmnl-studio"
+          }
+        },
+        "8132ff95-500e-4bb9-894e-63d999ee7197": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "best-hair-color-for-morenas-complement-your-natural-glow"
+          }
+        },
+        "template--14240176341091__d796386e-8e88-443c-85ba-f27b9af0cb91-167133145230c6c776-0": {
+          "type": "article_block",
+          "disabled": true,
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "argila-amazonia-keratin-treatment"
+          }
+        }
+      },
+      "block_order": [
+        "08b0475e-fe3f-4cbd-81f1-2fe6b5832be2",
+        "article_block_qPLmxe",
+        "article_block_c3WJQ4",
+        "8132ff95-500e-4bb9-894e-63d999ee7197",
+        "template--14240176341091__d796386e-8e88-443c-85ba-f27b9af0cb91-167133145230c6c776-0"
+      ],
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "33761cec-acfb-45bd-979f-1da8000409c2": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 1
+      }
+    },
+    "16769131686bd04153": {
+      "type": "apps",
+      "blocks": {
+        "32bb60df-f2b6-4aca-886b-b79e2c68d1cd": {
+          "type": "shopify://apps/judge-me-reviews/blocks/all_reviews_text/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "32bb60df-f2b6-4aca-886b-b79e2c68d1cd"
+      ],
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--medium",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "7df3b2d9-888e-438d-93d9-21f18e246690",
+    "f9033a8e-14ed-43f4-9efa-22d3369b7424",
+    "8e66ad54-68f1-48bf-b688-5be1f7650268",
+    "e0961ca3-7855-47ed-9a02-e46ede5033c7",
+    "2070a358-5e4d-4784-8b58-016e8eb567a2",
+    "164442519884b6f73e",
+    "eecfa066-3eb9-4223-bd0c-f26f57e4d864",
+    "section_collection_LXHdRf",
+    "8105fa81-0286-4d5a-8863-0eb87d091990",
+    "4ce3958d-4cdd-49cc-83f6-1ef249b02aeb",
+    "section_collection_slider_GMJGeX",
+    "423c024f-47f9-478a-b44b-df4a12bdfeac",
+    "f650d949-f28d-4f9e-af69-b3cb5ba20a81",
+    "1644430036836806c8",
+    "1a66d5df-0dee-438a-8d45-55e42322dd1a",
+    "section_collection_slider_CXyzri",
+    "f12293c1-d565-48ee-b63f-1b5de7c907f5",
+    "eb962ea6-1a93-407d-945c-ad1ae43643f7",
+    "section_collection_slider_7p9q3j",
+    "16444209812d61dcca",
+    "e5c9936e-1c85-4ec2-bf1a-818874d78b72",
+    "ad015d1b-a799-4284-8aaa-1cdeb1e5cb5c",
+    "d796386e-8e88-443c-85ba-f27b9af0cb91",
+    "33761cec-acfb-45bd-979f-1da8000409c2",
+    "16769131686bd04153"
+  ]
+}

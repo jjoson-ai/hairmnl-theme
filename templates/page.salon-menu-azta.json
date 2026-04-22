@@ -1,0 +1,629 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "settings": {
+        "kicker": "",
+        "show_title": true,
+        "show_content": false,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-center",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "ba7876d9-12b8-4109-8cae-d8c8842ff7e1": {
+      "type": "section-gallery",
+      "blocks": {
+        "template--14576801513571__ba7876d9-12b8-4109-8cae-d8c8842ff7e1-image-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-02.jpg",
+            "link": ""
+          }
+        },
+        "template--14576801513571__ba7876d9-12b8-4109-8cae-d8c8842ff7e1-image-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-03.jpg",
+            "link": ""
+          }
+        },
+        "template--14576801513571__ba7876d9-12b8-4109-8cae-d8c8842ff7e1-image-3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-04.jpg",
+            "link": ""
+          }
+        },
+        "af438e6f-4165-4749-b531-1f3aacf5e42f": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-05.jpg",
+            "link": ""
+          }
+        },
+        "58f72a20-cf49-4af5-bb4e-a321f9816ac3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-06.jpg",
+            "link": ""
+          }
+        },
+        "1a554e73-3e22-4294-9723-6e90879b2dd3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-07.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14576801513571__ba7876d9-12b8-4109-8cae-d8c8842ff7e1-image-1",
+        "template--14576801513571__ba7876d9-12b8-4109-8cae-d8c8842ff7e1-image-2",
+        "template--14576801513571__ba7876d9-12b8-4109-8cae-d8c8842ff7e1-image-3",
+        "af438e6f-4165-4749-b531-1f3aacf5e42f",
+        "58f72a20-cf49-4af5-bb4e-a321f9816ac3",
+        "1a554e73-3e22-4294-9723-6e90879b2dd3"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": false,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "af36dbde-e5db-4b80-89f1-b8df3d09d702": {
+      "type": "section-gallery",
+      "blocks": {
+        "9a643ee9-13ac-420a-ae08-b2ea1af0cee9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-08.jpg",
+            "link": ""
+          }
+        },
+        "d1a826ce-306f-4e92-9b9e-6347b75e04f4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-09.jpg",
+            "link": ""
+          }
+        },
+        "68567727-c674-4b1e-93a8-840b025403da": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-10.jpg",
+            "link": ""
+          }
+        },
+        "45381daa-feb1-4bbd-93bb-ebb9419b8434": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-11.jpg",
+            "link": ""
+          }
+        },
+        "0f72d8c9-1929-4fb2-b8dc-0bf51a1b1a33": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-12.jpg",
+            "link": ""
+          }
+        },
+        "b8b88f0f-0316-4e5b-9c4b-7bfad609e1a9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-13.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "9a643ee9-13ac-420a-ae08-b2ea1af0cee9",
+        "d1a826ce-306f-4e92-9b9e-6347b75e04f4",
+        "68567727-c674-4b1e-93a8-840b025403da",
+        "45381daa-feb1-4bbd-93bb-ebb9419b8434",
+        "0f72d8c9-1929-4fb2-b8dc-0bf51a1b1a33",
+        "b8b88f0f-0316-4e5b-9c4b-7bfad609e1a9"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": false,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "a6c77670-0765-4af0-b2dc-a97a0e0310b3": {
+      "type": "section-gallery",
+      "blocks": {
+        "template--14576801513571__a6c77670-0765-4af0-b2dc-a97a0e0310b3-image-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-14.jpg",
+            "link": ""
+          }
+        },
+        "template--14576801513571__a6c77670-0765-4af0-b2dc-a97a0e0310b3-image-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-15.jpg",
+            "link": ""
+          }
+        },
+        "template--14576801513571__a6c77670-0765-4af0-b2dc-a97a0e0310b3-image-3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-16_adac6233-9fe8-4bcd-ab93-8740c2f2c05c.jpg",
+            "link": ""
+          }
+        },
+        "9e39d07d-e022-4a43-b943-f18aedabf2e4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-17.jpg",
+            "link": ""
+          }
+        },
+        "897524bd-d0ac-4210-b1de-6b454b87f195": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-18.jpg",
+            "link": ""
+          }
+        },
+        "006303a5-5490-43ef-a7f3-52629fe6b06c": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-19.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14576801513571__a6c77670-0765-4af0-b2dc-a97a0e0310b3-image-1",
+        "template--14576801513571__a6c77670-0765-4af0-b2dc-a97a0e0310b3-image-2",
+        "template--14576801513571__a6c77670-0765-4af0-b2dc-a97a0e0310b3-image-3",
+        "9e39d07d-e022-4a43-b943-f18aedabf2e4",
+        "897524bd-d0ac-4210-b1de-6b454b87f195",
+        "006303a5-5490-43ef-a7f3-52629fe6b06c"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "bbd87bab-7cc7-4d77-bfc3-b1cf5dfbbf4e": {
+      "type": "section-gallery",
+      "blocks": {
+        "1ec80861-b8ae-43ff-a7ca-893b09638ee1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-21.jpg",
+            "link": ""
+          }
+        },
+        "33f6a861-965e-431c-a47a-6c99fa5808bf": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2020_Azta_General_Service_Menu-22.jpg",
+            "link": ""
+          }
+        },
+        "957138c8-6be0-4379-bad7-ebb44ec56cb9": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "link": ""
+          }
+        },
+        "57e79287-5154-467e-9eb0-520eaf2fb115": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "link": ""
+          }
+        },
+        "0e79b7b4-5be5-4f75-b488-d323f7abbc91": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "1ec80861-b8ae-43ff-a7ca-893b09638ee1",
+        "33f6a861-965e-431c-a47a-6c99fa5808bf",
+        "957138c8-6be0-4379-bad7-ebb44ec56cb9",
+        "57e79287-5154-467e-9eb0-520eaf2fb115",
+        "0e79b7b4-5be5-4f75-b488-d323f7abbc91"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "template--14494847336547__6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b-collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-bleached-hair",
+            "title": "Bleached Hair"
+          }
+        },
+        "template--14494847336547__6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b-collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "keratin-treated-hair",
+            "title": "Keratin-Treated Hair"
+          }
+        },
+        "cdcbf3a5-87de-4d5c-9d1b-ebc1bfde8dd3": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-rebonded-hair",
+            "title": "Rebonded Hair"
+          }
+        },
+        "819393f1-bcd6-4262-a93a-a89b88d97409": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-permed-hair",
+            "title": "Permed Hair"
+          }
+        },
+        "3675fefa-961f-465a-a718-dc2aeff9d9fc": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-colored-hair",
+            "title": "Colored Hair"
+          }
+        },
+        "a25db454-4121-4abc-89ff-d3a319a33613": {
+          "type": "collection",
+          "settings": {
+            "collection": "brazilian-blowout",
+            "title": "Brazilian Blowout-Treated Hair"
+          }
+        }
+      },
+      "block_order": [
+        "template--14494847336547__6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b-collection-2",
+        "template--14494847336547__6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b-collection-1",
+        "cdcbf3a5-87de-4d5c-9d1b-ebc1bfde8dd3",
+        "819393f1-bcd6-4262-a93a-a89b88d97409",
+        "3675fefa-961f-465a-a718-dc2aeff9d9fc",
+        "a25db454-4121-4abc-89ff-d3a319a33613"
+      ],
+      "settings": {
+        "title": "Shop Salon Aftercare",
+        "title_font_size": 32,
+        "grid": 6,
+        "limit": 6,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "711251ea-79bc-4838-b49b-0bdba473ee79": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "320e5e99-1a81-4a35-a316-0c9f802fcbc3": {
+          "type": "collection",
+          "settings": {
+            "collection": "faded-hair-color",
+            "title": "Color Refresh"
+          }
+        },
+        "6ca54811-8193-443f-a68f-3e1afe203deb": {
+          "type": "collection",
+          "settings": {
+            "collection": "diy-styling-favorites",
+            "title": "Styling Products"
+          }
+        },
+        "5116e9b2-cf6a-407f-8e05-f8a393bd385f": {
+          "type": "collection",
+          "settings": {
+            "collection": "professional-hairdressing-tools-equipment",
+            "title": "Styling Tools"
+          }
+        },
+        "884d18c5-33e5-4615-90d7-a156eaf0ab7b": {
+          "type": "collection",
+          "settings": {
+            "collection": "products-for-men",
+            "title": "Men's Styling"
+          }
+        }
+      },
+      "block_order": [
+        "320e5e99-1a81-4a35-a316-0c9f802fcbc3",
+        "6ca54811-8193-443f-a68f-3e1afe203deb",
+        "5116e9b2-cf6a-407f-8e05-f8a393bd385f",
+        "884d18c5-33e5-4615-90d7-a156eaf0ab7b"
+      ],
+      "settings": {
+        "title": "Shop Color Refresh & Styling Products",
+        "title_font_size": 32,
+        "grid": 6,
+        "limit": 6,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_featured_articles_nxwPcT": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "article_block_kPXcr8": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "keratin-treatment-vs-rebond-what-s-the-difference"
+          }
+        },
+        "article_block_q6WNrf": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "no-bleach-balayage-for-morena-skin-a-filipina-s-guide-to-sun-kissed-hair"
+          }
+        },
+        "article_block_DLmnm6": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "volumizing-haircuts-and-hairstyles-for-thin-or-fine-hair-achieve-fuller-looks-at-hairmnl-studio"
+          }
+        },
+        "article_block_x86WCC": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "15-top-sulfate-free-shampoos-in-the-philippines-2025"
+          }
+        }
+      },
+      "block_order": [
+        "article_block_kPXcr8",
+        "article_block_q6WNrf",
+        "article_block_DLmnm6",
+        "article_block_x86WCC"
+      ],
+      "name": "Featured articles",
+      "settings": {
+        "title": "Related Articles",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "section_featured_articles_AYnTCB": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "article_block_AQ7tPj": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "best-hair-color-for-morenas-complement-your-natural-glow"
+          }
+        },
+        "article_block_648X7b": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "budget-friendly-looks-at-hairmnl-studio-achieve-style-without-breaking-the-bank"
+          }
+        },
+        "article_block_qw4hae": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "salon-services",
+            "blog_handle": "argila-amazonia-keratin-treatment"
+          }
+        },
+        "article_block_TmJMtG": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "the-ultimate-guide-to-hair-glossing-treatments"
+          }
+        }
+      },
+      "block_order": [
+        "article_block_AQ7tPj",
+        "article_block_648X7b",
+        "article_block_qw4hae",
+        "article_block_TmJMtG"
+      ],
+      "name": "Featured articles",
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "2bb538fd-00e9-4620-a766-45e343ea4292": {
+      "type": "section-blog",
+      "disabled": true,
+      "settings": {
+        "title": "Salon Services",
+        "homepage_blog": "salon-services",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "b6905906-69e9-4da2-a493-4e74d96c1d73": {
+      "type": "section-blog",
+      "disabled": true,
+      "settings": {
+        "title": "Hair Education",
+        "homepage_blog": "hair-education",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "37cdf8a7-5d8f-4b60-ad5e-c2046282caad": {
+      "type": "section-blog",
+      "settings": {
+        "title": "Trends",
+        "homepage_blog": "trends",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "715a109b-ed21-48cc-be44-23261e30565b": {
+      "type": "section-blog",
+      "disabled": true,
+      "settings": {
+        "title": "Hair Tutorials",
+        "homepage_blog": "hair-tutorials",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "265ee037-e22b-402f-a3c6-850bb893d144": {
+      "type": "section-newsletter",
+      "settings": {
+        "title": "Tousled Online Magazine",
+        "richtext": "<p>Be part of our hair community.<br/>Get regular pro tips, trends, exclusives, and more.</p>",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "c3d64194-bf6f-4e53-8849-8176b8df2e9c": {
+      "type": "section-recent-products",
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "product_recently_heading": "Recently Viewed",
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ba7876d9-12b8-4109-8cae-d8c8842ff7e1",
+    "af36dbde-e5db-4b80-89f1-b8df3d09d702",
+    "a6c77670-0765-4af0-b2dc-a97a0e0310b3",
+    "bbd87bab-7cc7-4d77-bfc3-b1cf5dfbbf4e",
+    "6fc7b3e9-c83d-49f7-bc6d-61ec0d865b9b",
+    "711251ea-79bc-4838-b49b-0bdba473ee79",
+    "section_featured_articles_nxwPcT",
+    "section_featured_articles_AYnTCB",
+    "2bb538fd-00e9-4620-a766-45e343ea4292",
+    "b6905906-69e9-4da2-a493-4e74d96c1d73",
+    "37cdf8a7-5d8f-4b60-ad5e-c2046282caad",
+    "715a109b-ed21-48cc-be44-23261e30565b",
+    "265ee037-e22b-402f-a3c6-850bb893d144",
+    "c3d64194-bf6f-4e53-8849-8176b8df2e9c"
+  ]
+}

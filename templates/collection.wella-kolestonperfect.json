@@ -1,0 +1,384 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "settings": {
+        "text_align": "align--middle-center",
+        "show_title": false,
+        "show_title_below": false,
+        "show_description": false,
+        "show_description_below": false,
+        "show_image": false,
+        "bg_position": "center-center",
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "overlay_color": "#000000",
+        "text_color": "text--white"
+      }
+    },
+    "subcollections": {
+      "type": "collection-sub",
+      "disabled": true,
+      "settings": {
+        "show_subcollection": true,
+        "text_color": "text--white",
+        "text_align": "align--middle-center",
+        "select_image": "collection",
+        "bg_position": "center-center",
+        "aspect_ratio": 0.6,
+        "overlay_opacity": 20,
+        "overlay_color": "#000000"
+      }
+    },
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "1642434745b9c6aafa": {
+      "type": "section-slideshow",
+      "blocks": {
+        "1642434744ca1d026a-0": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/kerastase-genesis",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "1642434744ca1d026a-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Loreal_Pro_Serioxyl_Denser_Trio_Free_Instant_Clear_Desktop.jpg",
+            "mobile_image": "shopify://shop_images/HairMNL_Loreal_Pro_Serioxyl_Denser_Trio_Free_Instant_Clear_Mobile.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/loreal-professionnel-serioxyl-advanced",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "37f15030-0f98-4d36-8646-64e7a4bcc6a8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Wella_Invido_Bundle_Promo_Free_Pouch_Desktop_e24f015a-e9dc-4e76-a69f-f8caaa677d84.jpg",
+            "mobile_image": "shopify://shop_images/Wella_Invido_Bundle_Promo_Free_Pouch_Mobile_9623d777-b57f-4914-b257-6f0e0838dd34.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "",
+            "link": "shopify://collections/wella-professionals",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        }
+      },
+      "block_order": [
+        "1642434744ca1d026a-0",
+        "1642434744ca1d026a-1",
+        "37f15030-0f98-4d36-8646-64e7a4bcc6a8"
+      ],
+      "disabled": true,
+      "settings": {
+        "autoplay": false,
+        "autoplay_speed": 8,
+        "height": "use_image"
+      }
+    },
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+      "type": "section-static-banner",
+      "disabled": true,
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/KPME_DESKTOP_BANNER_a38cce09-8395-411f-a1f9-3e4bb71e80df.jpg",
+        "banner_mobile": "shopify://shop_images/KP_ME_MOBILE_BANNER_ef971231-bc82-4330-999b-256d0e6e48b2.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "Wella Professionals",
+        "title": "Koleston Perfect PPD-Free Permanent Hair Color",
+        "text": "<p>Koleston Perfect with ME+ is the first professional hair color brand to feature breakthrough technologies</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95": {
+      "type": "section-double",
+      "blocks": {
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "Olaplex",
+            "title": "THE COMPLETE HAIR REPAIR SYSTEM",
+            "text": "<p>The only patented system to noticeably repair extreme damage—turn dry, brittle hair into soft, shiny, and more resilient hair.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "Shop Now",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0",
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "dbed7715-f158-4728-a6a5-dbb69d616752": {
+      "type": "section-gallery-text",
+      "blocks": {
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2": {
+          "type": "text",
+          "settings": {
+            "title": "Pure Balance Technology",
+            "text": "<p>Designed to minimize the formation of free radicals during the color formation by deactivating impurities like metals present in hair. Free radicals interfere with the color formation during the color development and are a key cause to hair damage. </p><p>With Pure Balance Technology, the result is even pure color results with natural depth and shine and significantly less hair damage, color after color.</p>",
+            "text_align": "text-left"
+          }
+        },
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e": {
+          "type": "text",
+          "settings": {
+            "title": "ME+ Technology",
+            "text": "<p>A scientific breakthrough designed to replace extreme sensitizers, PPD and PTD, reducing the risk of developing a new allergy to hair color*. First patented in the 19th century, PPD and PTD had been the leading ingredients in permanent hair color for over 130 years.</p>",
+            "text_align": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "5c75d1f2-87cc-4639-b0ca-5705467e51a2",
+        "001bc0d1-b54f-4c67-8447-e273adc2f22e"
+      ],
+      "settings": {
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "1642442735c9bd4274": {
+      "type": "section-collection",
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "collection": "wella-professionals-koleston-perfect-permanent-hair-color",
+        "grid": 5,
+        "rows": 2,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": false,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "8f5d6cba-592b-4e8d-b14f-6b17b6065487": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14412995788899__8f5d6cba-592b-4e8d-b14f-6b17b6065487-16753282058e1dd242-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "introducing-wella-professionals-new-koleston-perfect-permanent-color"
+          }
+        }
+      },
+      "block_order": [
+        "template--14412995788899__8f5d6cba-592b-4e8d-b14f-6b17b6065487-16753282058e1dd242-0"
+      ],
+      "settings": {
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 1,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
+    "87a9e200-cf67-45e9-b6bb-f3d0545910b3": {
+      "type": "section-richtext",
+      "disabled": true,
+      "settings": {
+        "kicker": "Introducing",
+        "title": "",
+        "text": "<p>The best hair color results will always come from salon professionals. These products are intended to be used under a hairdresser's supervision. Please consult your hair stylist for the recommended hair colorant and developer to achieve your desired result.</p><p>For inquiries on color recommendations or product usage feel free to send us a message at HairMNL.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Chat Now",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "998bb4bc-4a36-4fb1-9c3a-0b1ba6664079": {
+      "type": "section-custom-content",
+      "blocks": {
+        "779a9ede-3d9f-4144-87bd-81b12439024a": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<p>The best hair color results will always come from salon professionals. These products are intended to be used under a hairdresser's supervision. Please consult your hair stylist for the recommended hair colorant and developer to achieve your desired result.</p><p>For inquiries on color recommendations or product usage feel free to send us a message at HairMNL.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Chat Now",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "779a9ede-3d9f-4144-87bd-81b12439024a"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "subcollections",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "1642434745b9c6aafa",
+    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95",
+    "dbed7715-f158-4728-a6a5-dbb69d616752",
+    "1642442735c9bd4274",
+    "8f5d6cba-592b-4e8d-b14f-6b17b6065487",
+    "87a9e200-cf67-45e9-b6bb-f3d0545910b3",
+    "998bb4bc-4a36-4fb1-9c3a-0b1ba6664079",
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85"
+  ]
+}

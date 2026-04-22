@@ -1,0 +1,11 @@
+{% comment %}
+  This overwrites defautl values with high-contrast equivalents 
+{% endcomment %}
+
+---color-text-dark: {{ settings.color_body_text | color_saturate: 15 | color_darken: 25 }};
+---color-text:{{ settings.color_body_text | color_saturate: 10 | color_darken: 15 }};
+---color-text-light: {{ settings.color_body_text }};
+
+---inverse-text-dark: {{ settings.color_text_inverse | color_lighten: 35 }};
+---inverse-text: {{ settings.color_text_inverse | color_lighten: 25 }};
+---inverse-text-light: {{ settings.color_text_inverse }};

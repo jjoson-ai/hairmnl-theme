@@ -1,0 +1,984 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "c1d11ec9-462a-4f74-a1c7-25113c46de16": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/hairmnl-rewards-catalog-banner-june-2025-desktop.jpg",
+        "banner_mobile": "shopify://shop_images/hairmnl-rewards-catalog-banner-june-2025-mobile.jpg",
+        "banner_url": "",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "main": {
+      "type": "page",
+      "settings": {
+        "kicker": "",
+        "show_title": true,
+        "show_content": false,
+        "text_size": 2,
+        "align_title": "text-center",
+        "align_text": "text-center",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "63bf878e-fa12-4425-bef9-db13bae68f68": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "<p>Discover a range of premium hair care samples and travel sizes from top-notch brands with <strong>HairMNL Rewards</strong>.</p><p>Treat yourself to luxurious products that cater to your specific hair needs. Enhance your self-care rituals, and pamper your locks with our exclusive rewards catalog.</p><p>Start earning points today, and unlock a world of possibilities for healthier, more beautiful hair.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Sign Up / Log In",
+        "button_url": "shopify://pages/rewards",
+        "button_color": "btn--black",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "40819f63-c346-42ee-9789-20990bff6beb": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14463057887331__40819f63-c346-42ee-9789-20990bff6beb-16843128076533c0c8-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/AVEDA_Invati_Advanced_Exfoliating_Shampoo_Light_10ml.png",
+            "title": "AVEDA Invati Advanced Exfoliating Shampoo Light 10ml",
+            "text": "<p><strong>8,000 points</strong></p><p>Gently exfoliates and purifies the scalp to help reduce hair loss due to breakage.</p><p><a href=\"/products/aveda-invati-advanced-exfoliating-shampoo-light-10ml-reward-apply-voucher-code-on-checkout-to-redeem-free-product\" target=\"_blank\" title=\"AVEDA Invati Advanced Exfoliating Shampoo Light 10ml - REWARD (Apply voucher code on checkout to redeem free product)\"><strong>BUY NOW</strong></a></p>",
+            "button_label": "Buy Now",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14463057887331__40819f63-c346-42ee-9789-20990bff6beb-16843128076533c0c8-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/L_Oreal_Pro_Serie_Expert_Silver_Shampoo_10ml.png",
+            "title": "L'Oréal Pro Serie Expert Silver Shampoo 10ml",
+            "text": "<p><strong>5,000 points</strong></p><p>Neutralizes brassiness in blonde, silver, or white hair for a cooler, more radiant tone.<br/><br/><a href=\"/products/loreal-serie-expert-silver-shampoo\" target=\"_blank\" title=\"L'Oréal Professionnel Serie Expert Silver Shampoo\"><strong>BUY NOW</strong></a></p>",
+            "button_label": "Buy Now",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14463057887331__40819f63-c346-42ee-9789-20990bff6beb-16843128076533c0c8-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Kerastase_Specifique_Divalent_Shampoo_10ml.png",
+            "title": "Kérastase Spécifique Divalent Shampoo 10ml",
+            "text": "<p><strong>5,000 points</strong></p><p>Balances oily roots and sensitized ends for fresher, softer hair from scalp to tip.</p><p><a href=\"/products/kerastase-specifique-bain-divalent-shampoo-250ml\" target=\"_blank\" title=\"Kérastase Spécifique Divalent Anti-Oiliness Balancing Shampoo 250ml\"><strong>BUY NOW</strong></a></p>",
+            "button_label": "Buy Now",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "8ec20021-bda9-4a23-a070-f23cb11b98ca": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Revlon_Professional_UniqOne_All_in_One_Hair_Treatment_Classic_Fragrance_10ml.png",
+            "title": "Revlon Professional UniqOne All in One Hair Treatment Classic Fragrance 10ml",
+            "text": "<p><strong>5,000 points</strong></p><p>A multi-benefit leave-in treatment that repairs, smoothens, and protects—all in one spritz.</p><p><a href=\"/products/revlon-uniqone-all-in-one-classic-fragrance-150ml\" target=\"_blank\" title=\"Revlon Professional UniqOne All in One Hair Treatment 150ml - Classic Fragrance\"><strong>BUY NOW</strong></a></p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463057887331__40819f63-c346-42ee-9789-20990bff6beb-16843128076533c0c8-1",
+        "template--14463057887331__40819f63-c346-42ee-9789-20990bff6beb-16843128076533c0c8-2",
+        "template--14463057887331__40819f63-c346-42ee-9789-20990bff6beb-16843128076533c0c8-0",
+        "8ec20021-bda9-4a23-a070-f23cb11b98ca"
+      ],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "section_richtext_TDYGnY": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "All Rewards",
+        "text": "",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--zero",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "2a8d75da-2828-4687-8eff-61cd4165b459": {
+      "type": "section-accordion",
+      "blocks": {
+        "57019892-3221-4a2a-8ce0-9841c6972225": {
+          "type": "image",
+          "settings": {
+            "title": "Revlon Professional UniqOne All in One Hair Treatment Classic Fragrance 10ml",
+            "text": "<p>Delivers 10 essential benefits including shine, frizz control, heat protection, and split-end prevention. Best for all hair types needing an easy, all-in-one solution.</p><p><a href=\"/products/revlon-uniqone-all-in-one-classic-fragrance-150ml\" target=\"_blank\" title=\"Revlon Professional UniqOne All in One Hair Treatment Classic Fragrance 150ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Revlon_Professional_UniqOne_All_in_One_Hair_Treatment_Classic_Fragrance_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "c4f69237-9cc5-4481-88e8-95a7819248f9": {
+          "type": "image",
+          "settings": {
+            "title": "Davines LOVE Curl Enhancing Conditioner 12ml",
+            "text": "<p>Nourishes and defines curls while taming frizz and adding softness. Perfect for wavy to curly hair.</p><p><a href=\"/products/davines-essentials-love-conditioner-lovely-curl-enhancing-conditioner-for-wavy-or-curly-hair\" target=\"_blank\" title=\"Davines LOVE Curl Conditioner: Curl Enhancing Conditioner for Wavy or Curly Hair\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Davines_LOVE_Curl_Enhancing_Conditioner_12ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_UD78aN": {
+          "type": "image",
+          "settings": {
+            "title": "Davines MOMO Moisturizing Conditioner 12ml",
+            "text": "<p>Deeply hydrates and softens dry or dehydrated hair using natural extracts. Ideal for dull, moisture-starved strands.</p><p><a href=\"/products/davines-essentials-momo-conditioner-moisturizing-conditioner-for-dry-or-dehydrated-hair\" target=\"_blank\" title=\"Davines MOMO Conditioner: Moisturizing Conditioner for Dry or Dehydrated Hair 250ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Davines_MOMO_Moisturizing_Conditioner_12ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        }
+      },
+      "block_order": [
+        "57019892-3221-4a2a-8ce0-9841c6972225",
+        "c4f69237-9cc5-4481-88e8-95a7819248f9",
+        "image_UD78aN"
+      ],
+      "settings": {
+        "title": "2,000 Points",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "ea84640a-9140-4efd-a8a4-b9b52647d8e5": {
+      "type": "section-accordion",
+      "blocks": {
+        "image_UXg9f9": {
+          "type": "image",
+          "settings": {
+            "title": "Kérastase Gloss Absolu Glaze Drops 3.5ml",
+            "text": "<p>Boosts shine and smoothness while taming frizz for a radiant finish. Best for dull, color-treated, or sensitized hair.</p><p><a href=\"/products/kerastase-gloss-absolu-glaze-drops-45ml\" target=\"_blank\" title=\"Kérastase Gloss Absolu Glaze Drops 45ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Kerastase_Gloss_Absolu_Glaze_Drops_3.5ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_QBNeez": {
+          "type": "image",
+          "settings": {
+            "title": "Kérastase Gloss Absolu Shampoo 10ml",
+            "text": "<p>Hydra-illuminating shampoo for long hair prone to frizz. Formulated with hyaluronic acid, glycolic acid, and wild rose in oil.</p><p><a href=\"/products/kerastase-gloss-absolu-shampoo-10ml-reward\" target=\"_blank\" title=\"Kérastase Gloss Absolu Shampoo 10ml - REWARD (Apply voucher code on checkout to redeem free product)\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Kerastase_Gloss_Absolu_Shampoo_10ml_-_HairMNL_Rewards.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_FViebG": {
+          "type": "image",
+          "settings": {
+            "title": "Kérastase Premiere Decalcifying Damage Repair Shampoo 10ml",
+            "text": "<p>A decalcifying, repairing shampoo for all types of over-processed or damaged hair.<br/><br/><a href=\"/products/kerastase-premiere-decalcifying-damage-repair-shampoo-250ml\" target=\"_blank\" title=\"Kérastase Premiere Decalcifying Damage Repair Shampoo\">BUY NOW</a></p>",
+            "image": "shopify://shop_images/Kerastase_Premiere_Decalcifying_Damage_Repair_Shampoo_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_7ppFzM": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "Kérastase Genesis Anti Hair-Fall Fortifying Shampoo (Thin) 10ml",
+            "text": "<p>Gently cleanses and reinforces fragile hair to reduce hair fall due to breakage. Best for weakened, fine hair prone to thinning.</p><p><a href=\"/products/kerastase-genesis-anti-hair-fall-fortifying-shampoo-for-thin-hair\" target=\"_blank\" title=\"Kérastase Genesis Anti Hair-Fall Fortifying Shampoo for Thin Hair\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Kerastase_Genesis_Anti_Hair-Fall_Fortifying_Shampoo_Thin_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_AzP4fq": {
+          "type": "image",
+          "settings": {
+            "title": "L'Oréal Professionnel Vitamino Color Spectrum Shampoo 10ml",
+            "text": "<p>An ultra caring shampoo for colored hair that cleanses fiber gently & thoroughly.</p><p><a href=\"/products/loreal-professionnel-serie-expert-vitamino-color-spectrum-sulfate-free-shampoo-300ml\" target=\"_blank\" title=\"L'Oréal Professionnel Serie Expert Vitamino Color Spectrum Sulfate-Free Shampoo 300ml\">BUY NOW</a></p>",
+            "image": "shopify://shop_images/L_Oreal_Professionnel_Vitamino_Color_Spectrum_Shampoo_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_ECUiQf": {
+          "type": "image",
+          "settings": {
+            "title": "L'Oréal Professionnel Vitamino Color Spectrum Mask 15ml",
+            "text": "<p>Protects color vibrancy while deeply nourishing strands for softness and shine. Best for color-treated hair.</p><p><a href=\"/products/loreal-professionnel-serie-expert-vitamino-color-spectrum-masque\" target=\"_blank\" title=\"L'Oréal Professionnel Serie Expert Vitamino Color Spectrum Masque 250ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/L_Oreal_Professionnel_Vitamino_Color_Spectrum_Mask_15ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_xEpw4R": {
+          "type": "image",
+          "settings": {
+            "title": "L'Oréal Professionnel Vitamino Color Spectrum Glass Shine Serum 2ml",
+            "text": "<p>A heat-activated serum that leaves hair with a smooth, glass-like shine while instantly protecting from frizz and humidity for up to 10 washes after application.<br/><br/><a href=\"/products/loreal-professionnel-serie-expert-vitamino-color-spectrum-glass-shine-serum-50ml\" target=\"_blank\" title=\"L'Oréal Professionnel Serie Expert Vitamino Color Spectrum Glass Shine Serum 50ml\">BUY NOW</a></p>",
+            "image": "shopify://shop_images/L_Oreal_Professionnel_Vitamino_Color_Spectrum_Glass_Shine_Serum_2ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_gchE8T": {
+          "type": "image",
+          "settings": {
+            "title": "L'Oréal Professionnel Absolut Repair Molecular Rinse-Off Masque 15ml",
+            "text": "<p>Restores strength and elasticity by repairing hair’s molecular bonds. Perfect for very damaged or overprocessed hair.</p><p><a href=\"/products/loreal-professionnel-serie-expert-absolut-repair-molecular-masque-250ml\" target=\"_blank\" title=\"L'Oréal Professionnel Serie Expert Absolut Repair Molecular Rinse-Off Masque 250ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/L_Oreal_Professionnel_Serie_Expert_Absolut_Repair_Molecular_Rinse-Off_Masque_15ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_xL4NXb": {
+          "type": "image",
+          "settings": {
+            "title": "L'Oréal Professionnel Absolut Repair Molecular Sulfate-Free Shampoo 10ml",
+            "text": "<p>Repairs and strengthens hair at the molecular level for visibly smoother, shinier strands. Ideal for severely damaged or over-processed hair.</p><p><a href=\"/products/loreal-professionnel-serie-expert-absolut-repair-molecular-sulfate-free-shampoo-300ml\" target=\"_blank\" title=\"L'Oréal Professionnel Serie Expert Absolut Repair Molecular Sulfate-Free Shampoo 300ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/L_Oreal_Pro_Serie_Expert_Absolut_Repair_Molecular_Sulfate-Free_Shampoo_10ml-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_ndjztk": {
+          "type": "image",
+          "settings": {
+            "title": "Kérastase Spécifique Divalent Shampoo 10ml",
+            "text": "<p>Balances oily roots and nourishes dry ends to purify and revitalize combination scalps. Great for oily scalp and sensitized hair.</p><p><a href=\"/products/kerastase-specifique-bain-divalent-shampoo-250ml\" target=\"_blank\" title=\"Kérastase Spécifique Divalent Anti-Oiliness Balancing Shampoo 250ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Kerastase_Specifique_Divalent_Shampoo_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_6djfVy": {
+          "type": "image",
+          "settings": {
+            "title": "L'Oréal Professionnel Silver Shampoo 10ml",
+            "text": "<p>Neutralizes unwanted yellow tones to enhance the brightness of gray, white, or blonde hair. Ideal for color-treated or naturally light hair.</p><p><a href=\"/products/loreal-serie-expert-silver-shampoo\" target=\"_blank\" title=\"L'Oréal Professionnel Serie Expert Silver Shampoo\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/L_Oreal_Pro_Serie_Expert_Silver_Shampoo_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_daBcgG": {
+          "type": "image",
+          "settings": {
+            "title": "L'Oréal Professionnel Scalp Advanced Professional 5-in-1 Anti-Oiliness Serum 3.5ml",
+            "text": "<p>Controls excess oil, soothes the scalp, and prevents buildup. Best for oily scalps with sensitivity or flaking.</p>",
+            "image": "shopify://shop_images/L_Oreal_Pro_Scalp_Advanced_Professional_5-in-1_Anti-Oiliness_Serum_3.5ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        }
+      },
+      "block_order": [
+        "image_UXg9f9",
+        "image_QBNeez",
+        "image_FViebG",
+        "image_7ppFzM",
+        "image_AzP4fq",
+        "image_ECUiQf",
+        "image_xEpw4R",
+        "image_gchE8T",
+        "image_xL4NXb",
+        "image_ndjztk",
+        "image_6djfVy",
+        "image_daBcgG"
+      ],
+      "settings": {
+        "title": "5,000 Points",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_accordion_6M8Hp7": {
+      "type": "section-accordion",
+      "blocks": {
+        "image_ijMfja": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "Kérastase Genesis Anti Hair-Fall Fortifying Serum Duo Sample 3.5ml",
+            "text": "<p>Strengthens roots and helps reduce hair fall from breakage with daily use. Perfect for weakened, thinning hair.</p><p><a href=\"/products/kerastase-genesis-anti-hair-fall-fortifying-serum\" target=\"_blank\" title=\"Kérastase Genesis Anti Hair-Fall Fortifying Serum\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Kerastase_Genesis_Anti_Hair-Fall_Fortifying_Serum_Duo_Sample_3.5ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_T6ERhn": {
+          "type": "image",
+          "settings": {
+            "title": "AVEDA Botanical Repair Strengthening Leave-In Treatment 10ml",
+            "text": "<p>Repairs and protects hair from heat damage while preventing breakage. Ideal for weak or damaged hair needing daily strengthening.</p><p><a href=\"/products/aveda-botanical-repair-strengthening-leave-in-treatment-100ml\" target=\"_blank\" title=\"AVEDA Botanical Repair Strengthening Leave-In Treatment 100ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/AVEDA_Botanical_Repair_Strengthening_Leave-In_Treatment_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_MqPGVd": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "AVEDA Botanical Repair Intensive Strengthening Masque: Rich 10ml",
+            "text": "<p>Strengthens and repairs hair from the inside out with plant-based technology. Best for fine to medium hair prone to breakage.</p><p><a href=\"/products/aveda-botanical-repair-intensive-strengthening-masque-rich-200ml\" target=\"_blank\" title=\"AVEDA Botanical Repair Intensive Strengthening Masque: Rich 200ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/AVEDA_Botanical_Repair_Intensive_Strengthening_Masque__Light_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_GUHdCP": {
+          "type": "image",
+          "settings": {
+            "title": "Kérastase Genesis Anti Hair-Fall Fortifying Masque 15ml",
+            "text": "<p>Nourishes and fortifies hair to reduce breakage and promote strength. Perfect for weakened, dry hair experiencing hair fall.</p><p><a href=\"/products/kerastase-genesis-anti-hair-fall-fortifying-mask\" target=\"_blank\" title=\"Kérastase Genesis Anti Hair-Fall Fortifying Mask\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Kerastase_Genesis_Anti_Hair-Fall_Fortifying_Masque_15ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_4iUhzL": {
+          "type": "image",
+          "settings": {
+            "title": "Kérastase Chroma Absolu Anti-Porosity Masque 15ml",
+            "text": "<p>A rich anti-porosity, deep filling masque developed for all types of sensitized or damaged color treated hair, mostly adapted for medium to thick hair.</p><p><a href=\"/products/kerastase-chroma-absolu-masque-200ml\" target=\"_blank\" title=\"Kérastase Chroma Absolu Anti-Porosity Masque 200ml\">BUUY NOW</a></p>",
+            "image": "shopify://shop_images/Kerastase_Chroma_Absolu_Masque_15ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_gcxj4a": {
+          "type": "image",
+          "settings": {
+            "title": "Kérastase Premiere Damage Repair Anti-Breakage Masque 15ml",
+            "text": "<p>An anti-breakage repairing resurfacing hair mask that restores moisture and strengthens all types of damaged hair.</p><p><a href=\"/products/kerastase-premiere-damage-repair-anti-breakage-masque-200ml\" target=\"_blank\" title=\"Kérastase Premiere Damage Repair Anti-Breakage Masque 200ml\">BUY NOW</a></p>",
+            "image": "shopify://shop_images/Kerastase_Premiere_Damage_Repair_Anti-Breakage_Masque_15ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_KY9qAc": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "AVEDA Scalp Solutions Refreshing Protective Mist 10ml",
+            "text": "<p>Refreshes the scalp while protecting it from environmental stressors. Suitable for all scalp types needing extra care.</p><p><a href=\"/products/aveda-scalp-solutions-refreshing-protective-mist-100ml\" target=\"_blank\" title=\"AVEDA Scalp Solutions Refreshing Protective Mist 100ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/AVEDA_Scalp_Solutions_Refreshing_Protective_Mist_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_MQEtwx": {
+          "type": "image",
+          "settings": {
+            "title": "AVEDA Invati Advanced Exfoliating Shampoo Light 10ml",
+            "text": "<p>Gently exfoliates and cleanses to reduce hair loss due to breakage. Ideal for fine, thinning hair.</p><p><a href=\"/products/aveda-invati-ultra-advanced-exfoliating-shampoo-light-200ml\" target=\"_blank\" title=\"AVEDA Invati Ultra Advanced Exfoliating Shampoo Light 200ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/AVEDA_Invati_Advanced_Exfoliating_Shampoo_Light_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_mWALhd": {
+          "type": "image",
+          "settings": {
+            "title": "AVEDA Invati Advanced Intensive Hair and Scalp Masque 10ml",
+            "text": "<p>Deeply nourishes the scalp and strengthens hair to reduce hair loss due to breakage. Perfect for thinning or fragile strands.</p>",
+            "image": "shopify://shop_images/AVEDA_Invati_Advanced_Intensive_Hair_and_Scalp_Masque_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_Gb4VWH": {
+          "type": "image",
+          "settings": {
+            "title": "AVEDA Invati Advanced Exfoliating Shampoo Rich 10ml",
+            "text": "<p>Deeply nourishes while gently cleansing and exfoliating the scalp. Best for medium to thick hair needing fuller volume.</p><p><a href=\"/products/aveda-invati-ultra-advanced-exfoliating-shampoo-rich-200ml\" target=\"_blank\" title=\"AVEDA Invati Ultra Advanced Exfoliating Shampoo Rich 200ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/AVEDA_Invati_Advanced_Exfoliating_Shampoo_Rich_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_4LX7L7": {
+          "type": "image",
+          "settings": {
+            "title": "AVEDA Invati Advanced Thickening Conditioner 10ml",
+            "text": "<p>Thickens and strengthens hair while improving resilience. Designed for thinning or fragile hair types.</p><p><a href=\"/products/aveda-invati-ultra-advanced-thickening-conditioner-light-200ml\" target=\"_blank\" title=\"AVEDA Invati Ultra Advanced Thickening Conditioner Light 200ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/AVEDA_Invati_Advanced_Exfoliating_Shampoo_Rich_10ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_Hba6Y9": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "AVEDA Invati Advanced Scalp Revitalizer 10ml",
+            "text": "<p>Energizes and revitalizes the scalp to help support healthier, fuller-looking hair. Suitable for those with thinning hair concerns.</p><p><a href=\"/products/aveda-invati-ultra-advanced-revitalizing-scalp-serum-150ml\" target=\"_blank\" title=\"AVEDA Invati Ultra Advanced Revitalizing Scalp Serum 150ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/AVEDA_Invati_Advanced_Scalp_Revitalizer_10ml_-_Reward_79536083-a0c2-4b62-bca4-b1dda11f13c2.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        }
+      },
+      "block_order": [
+        "image_ijMfja",
+        "image_T6ERhn",
+        "image_MqPGVd",
+        "image_GUHdCP",
+        "image_4iUhzL",
+        "image_gcxj4a",
+        "image_KY9qAc",
+        "image_MQEtwx",
+        "image_mWALhd",
+        "image_Gb4VWH",
+        "image_4LX7L7",
+        "image_Hba6Y9"
+      ],
+      "settings": {
+        "title": "8,000 Points",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "fbf54df2-1d20-4b40-b0ba-7b937ef69f77": {
+      "type": "section-accordion",
+      "blocks": {
+        "ed69ecaa-4c73-4c1b-96fd-5d1b1d321ace": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "AVEDA Sap Moss Weightless Hydration Shampoo 40ml",
+            "text": "<p>Restores hydration without weighing hair down. Great for dry hair seeking light, natural moisture.</p>",
+            "image": "shopify://shop_images/AVEDA_Sap_Moss_Weightless_Hydration_Shampoo_40ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_6be3GV": {
+          "type": "image",
+          "settings": {
+            "title": "Revlon Professional ReStart Curls Nourishing Cleanser 50ml",
+            "text": "<p>Gently cleanses while maintaining moisture and curl shape. Ideal for wavy to coily hair types.</p><p><a href=\"/products/revlon-professional-restart-curls-nourishing-cleanser-250ml\" target=\"_blank\" title=\"Revlon Professional ReStart Curls Nourishing Cleanser 250ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Revlon_Professional_ReStart_Curls_Nourishing_Cleanser_50ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "e0e65402-2dbf-422b-8424-bfb5b4ccaba2": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "AVEDA Phomollient Styling Foam 50ml",
+            "text": "<p>Adds volume, body, and lightweight hold with a soft finish. Ideal for fine to medium hair needing fuller styles.</p><p><a href=\"/products/aveda-phomollient-styling-foam-50ml\" target=\"_blank\" title=\"AVEDA Phomollient™ Styling Foam 50ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/AVEDA_Phomollient_Styling_Foam_50ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_F9frCQ": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "Revlon Professional ReStart Curls Nourishing Conditioner and Leave-In 30ml",
+            "text": "<p>Hydrates and defines curls as a rinse-out or leave-in formula. Suitable for curly hair needing flexibility and moisture.</p><p><a href=\"/products/revlon-professional-restart-curls-nourishing-conditioner-and-leave-in-200ml\" target=\"_blank\" title=\"Revlon Professional ReStart Curls Nourishing Conditioner and Leave-In 200ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Revlon_Professional_ReStart_Curls_Nourishing_Conditioner_and_Leave-In_30ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_9JLNM8": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "Revlon Professional ReStart Curls Deep Nourishing Buttery Mask 30ml",
+            "text": "<p>Deeply nourishes curls for improved elasticity, shine, and softness. Best for dry, frizz-prone curly hair.</p><p><a href=\"/products/revlon-professional-restart-curls-deep-nourishing-buttery-mask-250ml\" target=\"_blank\" title=\"Revlon Professional ReStart Curls Deep Nourishing Buttery Mask 250ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Revlon_Professional_ReStart_Curls_Deep_Nourishing_Buttery_Mask_30ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        }
+      },
+      "block_order": [
+        "ed69ecaa-4c73-4c1b-96fd-5d1b1d321ace",
+        "image_6be3GV",
+        "e0e65402-2dbf-422b-8424-bfb5b4ccaba2",
+        "image_F9frCQ",
+        "image_9JLNM8"
+      ],
+      "settings": {
+        "title": "15,000 Points",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_accordion_MYcfHF": {
+      "type": "section-accordion",
+      "blocks": {
+        "image_bV8HHx": {
+          "type": "image",
+          "settings": {
+            "title": "Davines OI Hand Balm 30ml",
+            "text": "<p>Nourishing hand cream with antioxidant action, suitable for all skin types. The special formula protects skin from damage caused by sun, wind and cold, and provides long-lasting hydration.</p><p><a href=\"/products/davines-oi-hand-balm-75ml\" target=\"_blank\" title=\"Davines OI Hand Balm: Nourishing Beautifying Hand Cream 75ml\">BUY NOW</a></p>",
+            "image": "shopify://shop_images/Davines_OI_Hand_Balm_30ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_7gPfmV": {
+          "type": "image",
+          "settings": {
+            "title": "AVEDA Texture Tonic 30ml",
+            "text": "<p>Creates natural-looking texture and soft waves with flexible hold. Great for styling straight or wavy hair.</p><p><a href=\"/products/aveda-texture-tonic-30ml\" target=\"_blank\" title=\"AVEDA Texture Tonic 30ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Aveda_Texture_Tonic_30ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_i6dq4V": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "Kérastase Elixir Ultime Rose Hair Oil For Colored Hair 50ml",
+            "text": "<p>Enhances color vibrancy, adds shine, and protects against frizz. Ideal for color-treated hair in need of nourishment and radiance.</p><p><a href=\"/products/kerastase-elixir-ultime-for-colored-hair-100ml\" target=\"_blank\" title=\"Kérastase Elixir Ultime Rose Hair Oil For Colored Hair 100ml\"><strong>BUY NOW</strong></a></p>",
+            "image": "shopify://shop_images/Kerastase_Elixir_Ultime_Rose_Hair_Oil_For_Colored_Hair_50ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_F3Txky": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "Kérastase x Ashley Yap Detangling Brush",
+            "text": "<p>Effortlessly detangles hair while minimizing breakage. Suitable for all hair types and textures.</p>",
+            "image": "shopify://shop_images/Kerastase_x_Ashely_Yap_Black_Detangling_Brush_-_Reward_9bb31587-af7d-42c4-b210-0e3877e9271c.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        }
+      },
+      "block_order": [
+        "image_bV8HHx",
+        "image_7gPfmV",
+        "image_i6dq4V",
+        "image_F3Txky"
+      ],
+      "settings": {
+        "title": "20,000 Points",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "9e78d4f0-2967-48ff-af4d-c13f647a5b06": {
+      "type": "section-accordion",
+      "blocks": {
+        "49a64df0-41db-436a-bd5e-959ad831a589": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "title": "Kérastase Reflection Chromatique Riche Shampoo 80ml",
+            "text": "<p>Color radiance protecting shampoo for color-treated or highlighted hair. Colored hair stays true and vibrant, the hair texture is sublimated.</p><p><a href=\"/products/kerastase-reflection-chromatique-riche-shampoo-80ml-reward\" target=\"_blank\" title=\"Kérastase Reflection Chromatique Riche Shampoo 80ml - Reward\"><strong>LEARN MORE</strong></a></p>",
+            "image": "shopify://shop_images/KerastaseReflectionChromatiqueRicheShampoo80ml.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 0.9
+          }
+        },
+        "image_8kHQWH": {
+          "type": "image",
+          "settings": {
+            "title": "Kérastase Symbiose Soothing Conditioner 30ml",
+            "text": "<p>A sulfate-free and silicone-free conditioner for sensitive scalp, prone to dandruff. Contains salicylic acid for a breathable scalp and bifidus for a healthy scalp.</p>",
+            "image": "shopify://shop_images/Kerastase_Symbiose_Detangling_Soothing_Conditioner_30ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        },
+        "image_JLWrdM": {
+          "type": "image",
+          "settings": {
+            "title": "Davines SU Tan Maximizer 150ml",
+            "text": "<p>Naturally intensifies the normal skin pigmentation process and prepares the skin to sun exposure. The creamy texture favors application and quick absorption.<br/><br/><a href=\"/products/davines-su-tan-maximizer-150ml\" target=\"_blank\" title=\"Davines SU Tan Maximizer 150ml\">BUY NOW</a></p>",
+            "image": "shopify://shop_images/Davines_SU_Tan_Maximizer_150ml_-_HairMNL_Reward.jpg",
+            "bg_position": "center-center",
+            "aspect_ratio": 1
+          }
+        }
+      },
+      "block_order": [
+        "49a64df0-41db-436a-bd5e-959ad831a589",
+        "image_8kHQWH",
+        "image_JLWrdM"
+      ],
+      "settings": {
+        "title": "30,000-40,000 Points",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "ea29a678-ef20-4de2-aafb-bd685a3b9d4a": {
+      "type": "section-double",
+      "blocks": {
+        "51fe02cf-1bcd-401c-b808-9d7024d58224": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "How to Redeem Free Products",
+            "text": "<p>Here’s a step-by-step tutorial on how to redeem free products with your HairMNL Rewards.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "51fe02cf-1bcd-401c-b808-9d7024d58224"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "f9fd61da-63f6-48f8-a53a-60e1904fc27d": {
+      "type": "section-columns",
+      "blocks": {
+        "template--14463057887331__f9fd61da-63f6-48f8-a53a-60e1904fc27d-16843128076533c0c8-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Rewards_How_to_Redeem_1.png",
+            "title": "STEP 1",
+            "text": "<p>Log in to your HairMNL Rewards Account</p>",
+            "button_label": "",
+            "button_link": "https://www.hairmnl.com/pages/rewards",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14463057887331__f9fd61da-63f6-48f8-a53a-60e1904fc27d-16843128076533c0c8-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Rewards_How_to_Redeem_2.png",
+            "title": "STEP 2",
+            "text": "<p>Check your rewards points at the top of the screen.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "template--14463057887331__f9fd61da-63f6-48f8-a53a-60e1904fc27d-16843128076533c0c8-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Rewards_How_to_Redeem_3.png",
+            "title": "STEP 3",
+            "text": "<p>Scroll down and choose which one to redeem based on your available points. </p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "174d9cdd-39c0-4d4a-b900-7b850aa6e76d": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Rewards_How_to_Redeem_4.png",
+            "title": "STEP 4",
+            "text": "<p>Redeem your chosen reward. </p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "9a6156c9-e28a-4839-9203-dddd2068d4b9": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Rewards_How_to_Redeem_5.png",
+            "title": "",
+            "text": "<p>The free product will be added to your cart.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        },
+        "d0e6293b-67eb-46f3-8f2d-86fdab7960c4": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/HairMNL_Rewards_How_to_Redeem_6.png",
+            "title": "STEP 5",
+            "text": "<p>Complete your order with the delivery and payment details, then congratulate yourself on being such a savvy hair care shopper!</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false,
+            "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          }
+        }
+      },
+      "block_order": [
+        "template--14463057887331__f9fd61da-63f6-48f8-a53a-60e1904fc27d-16843128076533c0c8-0",
+        "template--14463057887331__f9fd61da-63f6-48f8-a53a-60e1904fc27d-16843128076533c0c8-1",
+        "template--14463057887331__f9fd61da-63f6-48f8-a53a-60e1904fc27d-16843128076533c0c8-2",
+        "174d9cdd-39c0-4d4a-b900-7b850aa6e76d",
+        "9a6156c9-e28a-4839-9203-dddd2068d4b9",
+        "d0e6293b-67eb-46f3-8f2d-86fdab7960c4"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "title_font_size": 20,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-left",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
+    "22e2100d-3aef-4dba-8741-5e46c89c3cb6": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "How to Earn Points",
+        "text": "<p>Level up your hair game. Here are ways you can earn points like a pro.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-left",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--zero",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "5400c5a4-8b11-426e-982d-d803fc646b84": {
+      "type": "section-gallery",
+      "blocks": {
+        "template--14463057887331__5400c5a4-8b11-426e-982d-d803fc646b84-168432109885e38d91-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Create_an_account.png",
+            "link": ""
+          }
+        },
+        "template--14463057887331__5400c5a4-8b11-426e-982d-d803fc646b84-168432109885e38d91-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Make_a_purchase.png",
+            "link": ""
+          }
+        },
+        "template--14463057887331__5400c5a4-8b11-426e-982d-d803fc646b84-168432109885e38d91-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Celebrate_your_birthday.png",
+            "link": ""
+          }
+        },
+        "2411f42d-9240-42cf-82ee-41951e388dc2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Leave_a_review.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14463057887331__5400c5a4-8b11-426e-982d-d803fc646b84-168432109885e38d91-2",
+        "template--14463057887331__5400c5a4-8b11-426e-982d-d803fc646b84-168432109885e38d91-0",
+        "template--14463057887331__5400c5a4-8b11-426e-982d-d803fc646b84-168432109885e38d91-1",
+        "2411f42d-9240-42cf-82ee-41951e388dc2"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "29a74f85-0274-4b5b-a2a0-f57440a7a433": {
+      "type": "section-gallery",
+      "blocks": {
+        "template--14463057887331__29a74f85-0274-4b5b-a2a0-f57440a7a433-168432109885e38d91-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Refer_your_friends.png",
+            "link": ""
+          }
+        },
+        "template--14463057887331__29a74f85-0274-4b5b-a2a0-f57440a7a433-168432109885e38d91-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Like_us_on_Facebook.png",
+            "link": ""
+          }
+        },
+        "template--14463057887331__29a74f85-0274-4b5b-a2a0-f57440a7a433-168432109885e38d91-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Follow_us_on_Instagram.png",
+            "link": ""
+          }
+        },
+        "35a140d6-f367-4c6a-aa6a-f275deadab44": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_-_Get_rewarded.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14463057887331__29a74f85-0274-4b5b-a2a0-f57440a7a433-168432109885e38d91-2",
+        "template--14463057887331__29a74f85-0274-4b5b-a2a0-f57440a7a433-168432109885e38d91-0",
+        "template--14463057887331__29a74f85-0274-4b5b-a2a0-f57440a7a433-168432109885e38d91-1",
+        "35a140d6-f367-4c6a-aa6a-f275deadab44"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
+      }
+    },
+    "7f4a3d7f-ba19-4d61-a46f-a28c5b0c626f": {
+      "type": "section-custom-content",
+      "blocks": {
+        "3ca475e1-65b2-4eb5-abdf-2035a51ad276": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HairMNL_Rewards_Banner_CTA.jpg",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "HairMNL Rewards",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--black",
+            "link_text": "Sign Up / Log In",
+            "link": "shopify://pages/rewards",
+            "button_color": "btn--black",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "3ca475e1-65b2-4eb5-abdf-2035a51ad276"
+      ],
+      "settings": {
+        "height": "use_screen_one_third",
+        "padding": false,
+        "borders": false,
+        "wrapper": true,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    }
+  },
+  "order": [
+    "c1d11ec9-462a-4f74-a1c7-25113c46de16",
+    "main",
+    "63bf878e-fa12-4425-bef9-db13bae68f68",
+    "40819f63-c346-42ee-9789-20990bff6beb",
+    "section_richtext_TDYGnY",
+    "2a8d75da-2828-4687-8eff-61cd4165b459",
+    "ea84640a-9140-4efd-a8a4-b9b52647d8e5",
+    "section_accordion_6M8Hp7",
+    "fbf54df2-1d20-4b40-b0ba-7b937ef69f77",
+    "section_accordion_MYcfHF",
+    "9e78d4f0-2967-48ff-af4d-c13f647a5b06",
+    "ea29a678-ef20-4de2-aafb-bd685a3b9d4a",
+    "f9fd61da-63f6-48f8-a53a-60e1904fc27d",
+    "22e2100d-3aef-4dba-8741-5e46c89c3cb6",
+    "5400c5a4-8b11-426e-982d-d803fc646b84",
+    "29a74f85-0274-4b5b-a2a0-f57440a7a433",
+    "7f4a3d7f-ba19-4d61-a46f-a28c5b0c626f"
+  ]
+}
