@@ -15,7 +15,7 @@
   data-media-slide
   data-media-id="{{ media.id }}"
   data-type="{{ media.media_type }}"
-  aria-label="{{ media.alt | strip_html | escape }}"
+  aria-label="{{ media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}"
   {{ data_player }}>
   {% case media.media_type %}
     {% when 'image' %}
@@ -23,7 +23,7 @@
         <div class="lazy-image mobile-zoom-wrapper" style="padding-top:{{ 1 | divided_by: media.aspect_ratio | times: 100 }}%; background-image:  url('{{ media | img_url: '1x1' }}');">
           <img data-product-image class="srcset"
             data-image-id="{{ media.id }}"
-            alt="{{ media.alt | strip_html | escape }}"
+            alt="{{ media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}"
             srcset="{%- if media.preview_image.width >= 550 -%}{{ media.preview_image | img_url: '550x' }} 550w,{%- endif -%}
                     {%- if media.preview_image.width >= 1100 -%}{{ media.preview_image | img_url: '1100x' }} 1100w,{%- endif -%}
                     {%- if media.preview_image.width >= 1680 -%}{{ media.preview_image | img_url: '1680x' }} 1680w,{%- endif -%}
