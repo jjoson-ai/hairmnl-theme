@@ -7,14 +7,27 @@
       <!-- Slides -->
       {% for block in section.blocks limit: section.blocks.size %}
         <div class="swiper-slide" data-swiper-autoplay="{{section.settings.slide_delay}}">
+          {%- if forloop.first -%}
+            {%- assign slide_loading = 'eager' -%}
+            {%- assign slide_fetchpriority = 'high' -%}
+            {%- assign slide_class_desktop = 'banner-slide-img hidden-pocket' -%}
+            {%- assign slide_class_mobile = 'banner-slide-img hidden-lap-and-up' -%}
+            {%- assign slide_src_attr = 'src' -%}
+          {%- else -%}
+            {%- assign slide_loading = 'lazy' -%}
+            {%- assign slide_fetchpriority = 'auto' -%}
+            {%- assign slide_class_desktop = 'banner-slide-img hidden-pocket lazyload' -%}
+            {%- assign slide_class_mobile = 'banner-slide-img hidden-lap-and-up lazyload' -%}
+            {%- assign slide_src_attr = 'data-src' -%}
+          {%- endif -%}
           {% if block.settings.slide_image_url != blank %}
             <a href="{{block.settings.slide_image_url}}">
-              <img class="banner-slide-img hidden-pocket lazyload" data-src="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="Banner Slide 1">
-              <img class="banner-slide-img hidden-lap-and-up lazyload" data-src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1">
+              <img class="{{ slide_class_desktop }}" {{ slide_src_attr }}="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="{{ block.settings.slide_image_desktop.alt | default: shop.name | strip_html | escape }}" loading="{{ slide_loading }}" fetchpriority="{{ slide_fetchpriority }}">
+              <img class="{{ slide_class_mobile }}" {{ slide_src_attr }}="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="{{ block.settings.slide_image_mobile.alt | default: shop.name | strip_html | escape }}" loading="{{ slide_loading }}" fetchpriority="{{ slide_fetchpriority }}">
             </a>
           {%- else -%}
-            <img class="banner-slide-img hidden-pocket lazyload" data-src="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="Banner Slide 1">
-            <img class="banner-slide-img hidden-lap-and-up lazyload" data-src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1">
+            <img class="{{ slide_class_desktop }}" {{ slide_src_attr }}="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="{{ block.settings.slide_image_desktop.alt | default: shop.name | strip_html | escape }}" loading="{{ slide_loading }}" fetchpriority="{{ slide_fetchpriority }}">
+            <img class="{{ slide_class_mobile }}" {{ slide_src_attr }}="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="{{ block.settings.slide_image_mobile.alt | default: shop.name | strip_html | escape }}" loading="{{ slide_loading }}" fetchpriority="{{ slide_fetchpriority }}">
           {% endif %}
 
         </div>

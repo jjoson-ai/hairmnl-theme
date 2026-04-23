@@ -122,7 +122,7 @@
 
 <div class="grid__item {{ grid_offset }} {{ grid_width_small }} {{ grid_width_medium }} {{ grid_width_large }}{% if tagged %} tagged{% endif %} product-grid-item">
   <a href="{{ product.url | within: collection }}" class="grid__image">
-    <img src="{{ product_img_url }}" alt="{{ product.featured_image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
+    <img src="{{ product_img_url }}" loading="lazy" alt="{{ product.featured_image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
     {{ sticker }}
   </a>
 
