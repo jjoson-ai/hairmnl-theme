@@ -4715,6 +4715,7 @@
         product.image = null;
         if (product.featured_image) {
           product.thumb = getSizedImageUrl(product.featured_image.url, '360x360');
+          product.featured_image.alt = (product.featured_image.alt || product.title || '').replace(/^(HairMNL|Hair MNL|hairmnl|HAIRMNL)\s*/, '').trim();
         }
         formatted.push(product);
       });

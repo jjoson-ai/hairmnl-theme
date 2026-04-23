@@ -3184,7 +3184,7 @@ if((typeof Shopify.getCart) === 'undefined'){
                     }
                 }(i),
                 i.image = null,
-                i.featured_image && (i.thumb = Bi(i.featured_image.url, "360x360")),
+                i.featured_image && (i.thumb = Bi(i.featured_image.url, "360x360"), i.featured_image.alt = (i.featured_image.alt || i.title || "").replace(/^(HairMNL|Hair MNL|hairmnl|HAIRMNL)\s*/, "").trim()),
                 e.push(i)
             }
             ));
