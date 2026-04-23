@@ -34,6 +34,38 @@
   </div>
 </section>
 
+{%- assign faq_valid_count = 0 -%}
+{%- for block in section.blocks -%}
+  {%- if block.settings.title != blank and block.settings.content != blank -%}
+    {%- assign faq_valid_count = faq_valid_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if faq_valid_count > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- assign faq_emitted = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.settings.title != blank and block.settings.content != blank -%}
+        {%- if faq_emitted > 0 -%},{%- endif -%}
+        {
+          "@type": "Question",
+          "name": {{ block.settings.title | strip_html | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ block.settings.content | json }}
+          }
+        }
+        {%- assign faq_emitted = faq_emitted | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Accordion group",
