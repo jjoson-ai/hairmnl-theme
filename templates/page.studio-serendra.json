@@ -40,7 +40,7 @@
         "address": {
           "type": "icon_block",
           "settings": {
-            "icon_name": "icon-phone",
+            "icon_name": "icon-store",
             "icon_color": "#aaaaaa",
             "title": "Visit Us",
             "text": "<p><a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" rel=\"noopener\" title=\"HairMNL Studio Serendra on Google Maps\">2F Serendra<br/>McKinley Parkway, Post Proper Northside<br/>Taguig, 1634 Metro Manila</a></p>"

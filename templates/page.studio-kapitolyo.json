@@ -40,7 +40,7 @@
         "address": {
           "type": "icon_block",
           "settings": {
-            "icon_name": "icon-phone",
+            "icon_name": "icon-store",
             "icon_color": "#aaaaaa",
             "title": "Visit Us",
             "text": "<p><a href=\"https://maps.app.goo.gl/bqWfAxqJmyLSyqiJA\" target=\"_blank\" rel=\"noopener\" title=\"HairMNL Studio Kapitolyo on Google Maps\">2F The Vantage at Kapitolyo<br/>W. Capitol Drive, Pasig<br/>1603 Metro Manila</a></p>"
