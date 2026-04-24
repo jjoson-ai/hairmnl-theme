@@ -1,5 +1,20 @@
 {
   "sections": {
+    "hero_image": {
+      "type": "section-static-banner",
+      "settings": {
+        "section_margin_top": 0,
+        "section_margin_bottom": 0,
+        "banner_desktop": "shopify://shop_images/hairmnl-studio-banners_desktop.jpg",
+        "banner_mobile": "shopify://shop_images/hairmnl-studio-banners_mobile-552-x-502-px.jpg",
+        "banner_alt": "HairMNL Studio Serendra salon interior — hair color, cut, smoothing, digital perm, and makeup services at 2F Serendra, McKinley Parkway, BGC, Taguig",
+        "banner_url": "",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
     "hero": {
       "type": "section-richtext",
       "settings": {
@@ -207,5 +222,5 @@
       }
     }
   },
-  "order": ["hero", "main", "info", "map", "features", "also", "menu_cta"]
+  "order": ["hero_image", "hero", "main", "info", "map", "features", "also", "menu_cta"]
 }

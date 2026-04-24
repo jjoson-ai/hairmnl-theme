@@ -1,13 +1,14 @@
+{%- assign banner_alt = section.settings.banner_alt | default: page.title | default: 'Banner' | escape -%}
 <div class="wrapper">
   <div class="static-banner-box">
     {% if section.settings.banner_url != blank %}
       <a href="{{section.settings.banner_url}}">
-        <img class="static-banner-img hidden-pocket" src="{{ section.settings.banner_desktop | img_url: 'x788' }}" alt="Static Banner">
-        <img class="static-banner-img hidden-lap-and-up" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="Static Banner">
+        <img class="static-banner-img hidden-pocket" src="{{ section.settings.banner_desktop | img_url: 'x788' }}" alt="{{ banner_alt }}">
+        <img class="static-banner-img hidden-lap-and-up" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="{{ banner_alt }}">
       </a>
     {% else %}
-      <img class="static-banner-img hidden-pocket" src="{{ section.settings.banner_desktop | img_url: 'x788' }}" alt="Static Banner">
-      <img class="static-banner-img hidden-lap-and-up" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="Static Banner">
+      <img class="static-banner-img hidden-pocket" src="{{ section.settings.banner_desktop | img_url: 'x788' }}" alt="{{ banner_alt }}">
+      <img class="static-banner-img hidden-lap-and-up" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="{{ banner_alt }}">
     {% endif %}
   </div>
 </div>
@@ -60,6 +61,11 @@
         "id": "banner_mobile",
         "label": "Banner(Mobile)",
         "info": "552px width x 502px height recommended"
+      }, {
+        "type": "text",
+        "id": "banner_alt",
+        "label": "Image alt text (SEO)",
+        "info": "Describe what's in the image for screen readers and search engines. Falls back to page title if blank."
       }, {
         "type": "url",
         "id": "banner_url",
