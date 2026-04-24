@@ -99,22 +99,18 @@
       }
     },
     "map": {
-      "type": "section-richtext",
+      "type": "section-static-banner",
       "settings": {
-        "kicker": "",
-        "title": "Find us on the map",
-        "text": "<p><a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" rel=\"noopener\" title=\"HairMNL Studio Serendra on Google Maps\">Open in Google Maps</a></p>",
-        "text_size": 2,
-        "text_columns": 1,
-        "align_text": "text-center",
-        "button_text": "",
-        "button_url": "",
-        "button_color": "btn--neutral",
-        "button_style": "caps--link",
-        "height": "margin--small",
-        "width": "wrapper",
-        "text_color": "text--neutral",
-        "bg": "palette--light bg--neutral"
+        "section_margin_top": 0,
+        "section_margin_bottom": 0,
+        "banner_desktop": "shopify://shop_images/HairMNL_Studio_Map_57a2f01d-9bc4-4fe1-97ee-662b6f65ca7b.png",
+        "banner_mobile": "shopify://shop_images/HairMNL_Studio_Map_57a2f01d-9bc4-4fe1-97ee-662b6f65ca7b.png",
+        "banner_alt": "Map showing HairMNL Studio Serendra location at 2F Serendra, McKinley Parkway, BGC, Taguig — click to open in Google Maps",
+        "banner_url": "https://maps.app.goo.gl/JendSjjfJDWcriKK7",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
       }
     },
     "features": {
@@ -222,5 +218,5 @@
       }
     }
   },
-  "order": ["hero_image", "hero", "main", "info", "map", "features", "also", "menu_cta"]
+  "order": ["hero_image", "map", "hero", "main", "info", "features", "also", "menu_cta"]
 }
