@@ -1,212 +1,118 @@
-{%- if canonical_url != blank -%}
-  <link rel="canonical" href="{{ canonical_url }}">
-{%- endif -%}
+{%- comment -%}
+  Canonical URL emission — server-rendered, single source of truth.
 
-<script>
-  (function(window, document) {
-    document.addEventListener("DOMContentLoaded", function() {
-      const canonicalLink = document.querySelector('[rel="canonical"]');
-      const currentHref = window.location.href;
+  Strategy:
+  1. Default to Shopify's {{ canonical_url }}.
+  2. On collection pages, strip query string so ?page, ?filter, ?sort all
+     canonicalize to the base collection URL. Handles ALL collections
+     systematically — no per-collection enumeration needed.
+  3. Apply known product handle overrides (delete/recreate collisions,
+     retired SKUs, etc.). Listed at bottom of this file.
+  4. Yield to LimeSpot's canonical when it owns the page
+     (curated-variation collections) to avoid duplicate canonical tags.
 
-      if (currentHref.includes('collections/shampoos?page=2') || currentHref.includes('collections/shampoos?page=3') || currentHref.includes('collections/shampoos?page=4')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/shampoos');
-      }
+  Maintenance notes:
+  - Product overrides listed here should IDEALLY be 301 redirects in
+    Shopify Admin → Content → Navigation → URL Redirects. Server-side
+    canonical is a strict upgrade over the old JS-rewrite pattern, but
+    301s are stronger. Migrate when bandwidth allows.
+  - New paginated collections no longer need a rule added — handled automatically.
+{%- endcomment -%}
 
-      if (currentHref.includes('collections/all?page=2') || currentHref.includes('collections/all?page=3') || currentHref.includes('collections/all?page=29')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/all');
-      }
+{%- liquid
+  assign canonical_final = canonical_url
+  assign skip_canonical = false
 
-      if (currentHref.includes('collections/aveda-be-curly-1')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/aveda-be-curly');
-      }
+  # --- LimeSpot owns the canonical on curated A/B variant collections
+  if template contains 'collection' and collection.metafields.LimeSpot['CuratedCollectionVariation'] == 'true'
+    assign skip_canonical = true
+  endif
 
-      if (currentHref.includes('collections/bed-head-by-tigi?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/bed-head-by-tigi');
-      }
+  # --- Collection pages: strip query string (pagination, filters, sort)
+  if template contains 'collection'
+    assign canonical_final = canonical_url | split: '?' | first
+  endif
 
-      if (currentHref.includes('collections/conditioners?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/conditioners');
-      }
+  # --- Known collection handle collisions
+  if request.path contains '/collections/aveda-be-curly-1'
+    assign canonical_final = 'https://www.hairmnl.com/collections/aveda-be-curly'
+  endif
 
-      if (currentHref.includes('collections/products-for-men?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/products-for-men');
-      }
+  # --- Product handle overrides (TODO: migrate to 301 redirects in Admin)
+  # Grouped by brand for readability.
+  case request.path
 
-      if (currentHref.includes('collections/treatments?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/treatments');
-      }
+    # L'Oréal Professionnel
+    when '/products/loreal-serie-expert-silver-shampoo-1500ml-1', '/products/loreal-serie-expert-silver-shampoo-300ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/loreal-serie-expert-silver-shampoo'
+    when '/products/loreal-professionnel-inoa-ammonia-free-permanent-hair-color-with-20-vol-developer', '/products/loreal-professionnel-inoa-ammonia-free-permanent-hair-color-tube'
+      assign canonical_final = 'https://www.hairmnl.com/products/loreal-professionnel-inoa-ammonia-free-starter-set-permanent-hair-color-60ml-with-30-vol-developer-1'
+    when '/products/loreal-professionnel-serie-expert-scalp-advanced-anti-discomfort-shampoo-500ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/loreal-professionnel-serie-expert-scalp-advanced-anti-discomfort-shampoo'
+    when '/products/loreal-serie-expert-scalp-advanced-anti-oiliness-shampoo-500ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/loreal-serie-expert-scalp-advanced-anti-oiliness-shampoo'
+    when '/products/loreal-serie-expert-absolut-repair-gold-shampoo-300ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/loreal-serie-expert-absolut-repair-gold-shampoo'
+    when '/products/loreal-professionnel-serioxyl-advanced-denser-hair-shampoo-serum-duo'
+      assign canonical_final = 'https://www.hairmnl.com/products/loreal-professionnel-serioxyl-advanced-denser-hair-serum'
 
-      if (currentHref.includes('llections/styling-products?page=2') || currentHref.includes('llections/styling-products?page=3')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/styling-products');
-      }
+    # Wella Professionals
+    when '/products/wella-professionals-color-fresh-mask-rose-blaze', '/products/wella-professionals-color-fresh-mask-caramel-glaze', '/products/wella-professionals-color-fresh-mask-copper-glow', '/products/wella-professionals-color-fresh-mask-pearl-blonde', '/products/wella-professionals-color-fresh-mask-lilac-frost', '/products/wella-professionals-color-fresh-mask-golden-gloss'
+      assign canonical_final = 'https://www.hairmnl.com/products/wella-professionals-color-fresh-mask-chocolate-touch'
+    when '/products/wella-professionals-koleston-perfect-permanent-ppd-free-hair-color-set-20-vol-developer-60ml-for-covering-greys', '/products/wella-professionals-koleston-perfect-ppd-free-permanent-hair-color-set-20-vol-developer-1l-with-free-mask-30ml-for-covering-greys', '/products/wella-professionals-koleston-perfect-ppd-free-permanent-hair-color-starter-kit-for-covering-grays'
+      assign canonical_final = 'https://www.hairmnl.com/products/wella-professionals-koleston-perfect-ppd-free-permanent-hair-color-tube-all-shades'
 
-      if (currentHref.includes('collections/treatments?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/treatments');
-      }
+    # Davines
+    when '/products/davines-purifying-shampoo-for-oily-or-dry-dandruff-100ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/davines-naturaltech-purifying-shampoo-for-scalp-with-oily-or-dry-dandruff'
+    when '/products/davines-well-being-shampoo-for-all-kinds-of-hair-100ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/davines-naturaltech-well-being-shampoo-for-all-kinds-of-hair'
+    when '/products/davines-alchemic-creative-conditioner-in-coral', '/products/davines-alchemic-creative-conditioner-in-pink', '/products/davines-alchemic-creative-conditioner-in-teal', '/products/davines-alchemic-creative-conditioner-in-marine-blue'
+      assign canonical_final = 'https://www.hairmnl.com/products/davines-alchemic-creative-conditioner-in-lavander'
+    when '/products/davines-the-circle-chronicles-the-renaissance-circle-50ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/davines-the-circle-chronicles-the-renaissance-circle'
+    when '/products/davines-the-circle-chronicles-the-let-it-go-circle-set-of-3'
+      assign canonical_final = 'https://www.hairmnl.com/products/davines-the-circle-chronicles-the-let-it-go-circle'
 
-      if (currentHref.includes('products/loreal-serie-expert-silver-shampoo-1500ml-1') || currentHref.includes('products/loreal-serie-expert-silver-shampoo-300ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/loreal-serie-expert-silver-shampoo');
-      }
+    # Aveda
+    # Note: cool-blonde historically preserved a last-wins quirk from the old JS —
+    # it was canonicalized to warm-blonde, not the cool-brown group target.
+    when '/products/aveda-color-renewal-color-shine-treatment-warm-brown-150ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/aveda-color-renewal-color-shine-treatment-cool-brown-150ml'
+    when '/products/aveda-color-renewal-color-shine-treatment-cool-blonde-150ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/aveda-color-renewal-color-shine-treatment-warm-blonde-150ml'
 
-      if (currentHref.includes('products/loreal-professionnel-inoa-ammonia-free-permanent-hair-color-with-20-vol-developer') || currentHref.includes('products/loreal-professionnel-inoa-ammonia-free-permanent-hair-color-tube')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/loreal-professionnel-inoa-ammonia-free-starter-set-permanent-hair-color-60ml-with-30-vol-developer-1');
-      }
+    # Revlon Professional
+    when '/products/revlon-professional-color-sublime-ammonia-free-hair-color-tube-for-covering-grays'
+      assign canonical_final = 'https://www.hairmnl.com/products/revlon-professional-color-sublime-ammonia-free-hair-color-set-for-covering-grays'
+    when '/products/revlon-professional-nutri-color-creme-ball-270ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/revlon-professionnel-nutri-color-creme-100ml'
 
-      if (currentHref.includes('products/loreal-professionnel-serie-expert-scalp-advanced-anti-discomfort-shampoo-500ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/loreal-professionnel-serie-expert-scalp-advanced-anti-discomfort-shampoo');
-      }
+    # Schwarzkopf
+    when '/products/schwarzkopf-bc-bonacure-scalp-genesis-anti-dandruff-shampoo-200ml'
+      assign canonical_final = 'https://www.hairmnl.com/products/schwarzkopf-bc-bonacure-scalp-genesis-anti-dandruff-duo'
 
-      if (currentHref.includes('products/loreal-serie-expert-scalp-advanced-anti-oiliness-shampoo-500ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/loreal-serie-expert-scalp-advanced-anti-oiliness-shampoo');
-      }
+    # Tuft
+    when '/products/tuft-diamond-plus-6609-2-inch-straightening-hair-iron'
+      assign canonical_final = 'https://www.hairmnl.com/products/tuft-diamond-plus-6608-1-inch-straightening-hair-iron'
 
-      if (currentHref.includes('products/wella-professionals-color-fresh-mask-rose-blaze') || currentHref.includes('products/wella-professionals-color-fresh-mask-caramel-glaze') || currentHref.includes('products/wella-professionals-color-fresh-mask-copper-glow') || currentHref.includes('products/wella-professionals-color-fresh-mask-pearl-blonde') || currentHref.includes('products/wella-professionals-color-fresh-mask-lilac-frost') || currentHref.includes('products/wella-professionals-color-fresh-mask-golden-gloss')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/wella-professionals-color-fresh-mask-chocolate-touch');
-      }
+    # CND
+    when '/products/cnd-vinylux-long-wear-polish-in-wisteria-haze'
+      assign canonical_final = 'https://www.hairmnl.com/products/cnd-vinylux-long-wear-polish-in-whisper'
 
-      if (currentHref.includes('products/davines-purifying-shampoo-for-oily-or-dry-dandruff-100ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/davines-naturaltech-purifying-shampoo-for-scalp-with-oily-or-dry-dandruff');
-      }
+    # American Crew (handle-collision cleanup — belongs in Admin 301s)
+    when '/products/american-crew-fiber-50g-1'
+      assign canonical_final = 'https://www.hairmnl.com/products/american-crew-fiber'
 
-      if (currentHref.includes('products/revlon-professional-color-sublime-ammonia-free-hair-color-tube-for-covering-grays')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/revlon-professional-color-sublime-ammonia-free-hair-color-set-for-covering-grays');
-      }
+    # OPI Infinite Shine — multiple shades consolidated
+    when '/products/opi-infinite-shine-in-bare-my-soul', '/products/opi-infinite-shine-in-tiramisu-for-two', '/products/opi-infinite-shine-in-funny-bunny', '/products/opi-infinite-shine-in-its-a-boy'
+      assign canonical_final = 'https://www.hairmnl.com/products/opi-infinite-shine-in-malaga-wine'
 
-      if (currentHref.includes('products/aveda-color-renewal-color-shine-treatment-warm-blonde-150ml') || currentHref.includes('products/aveda-color-renewal-color-shine-treatment-cool-blonde-150ml') || currentHref.includes('products/aveda-color-renewal-color-shine-treatment-warm-brown-150ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/aveda-color-renewal-color-shine-treatment-cool-brown-150ml');
-      }
+  endcase
+-%}
 
-      if (currentHref.includes('products/davines-alchemic-creative-conditioner-in-coral') || currentHref.includes('products/davines-alchemic-creative-conditioner-in-pink') || currentHref.includes('products/davines-alchemic-creative-conditioner-in-teal') || currentHref.includes('products/davines-alchemic-creative-conditioner-in-marine-blue')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/davines-alchemic-creative-conditioner-in-lavander');
-      }
-
-      if (currentHref.includes('products/davines-the-circle-chronicles-the-renaissance-circle-50ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/davines-the-circle-chronicles-the-renaissance-circle');
-      }
-
-      if (currentHref.includes('/products/schwarzkopf-bc-bonacure-scalp-genesis-anti-dandruff-shampoo-200ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/schwarzkopf-bc-bonacure-scalp-genesis-anti-dandruff-duo');
-      }
-
-      if (currentHref.includes('/products/wella-professionals-koleston-perfect-permanent-ppd-free-hair-color-set-20-vol-developer-60ml-for-covering-greys') || currentHref.includes('/products/wella-professionals-koleston-perfect-ppd-free-permanent-hair-color-set-20-vol-developer-1l-with-free-mask-30ml-for-covering-greys') || currentHref.includes('/products/wella-professionals-koleston-perfect-ppd-free-permanent-hair-color-starter-kit-for-covering-grays')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/wella-professionals-koleston-perfect-ppd-free-permanent-hair-color-tube-all-shades');
-      }
-
-      if (currentHref.includes('/products/loreal-serie-expert-absolut-repair-gold-shampoo-300ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/loreal-serie-expert-absolut-repair-gold-shampoo');
-      }
-
-      if (currentHref.includes('/products/davines-well-being-shampoo-for-all-kinds-of-hair-100ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/davines-naturaltech-well-being-shampoo-for-all-kinds-of-hair');
-      }
-
-      if (currentHref.includes('/products/revlon-professional-nutri-color-creme-ball-270ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/revlon-professionnel-nutri-color-creme-100ml');
-      }
-
-      if (currentHref.includes('/products/tuft-diamond-plus-6609-2-inch-straightening-hair-iron')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/tuft-diamond-plus-6608-1-inch-straightening-hair-iron');
-      }
-
-      if (currentHref.includes('/products/tuft-diamond-plus-6609-2-inch-straightening-hair-iron')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/tuft-diamond-plus-6608-1-inch-straightening-hair-iron');
-      }
-
-      if (currentHref.includes('/products/cnd-vinylux-long-wear-polish-in-wisteria-haze')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/cnd-vinylux-long-wear-polish-in-whisper');
-      }
-
-      if (currentHref.includes('/products/loreal-professionnel-serioxyl-advanced-denser-hair-shampoo-serum-duo')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/loreal-professionnel-serioxyl-advanced-denser-hair-serum');
-      }
-
-      if (currentHref.includes('/products/davines-the-circle-chronicles-the-let-it-go-circle-set-of-3')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/davines-the-circle-chronicles-the-let-it-go-circle');
-      }
-
-      if (currentHref.includes('/products/american-crew-fiber-50g-1')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/american-crew-fiber');
-      }
-
-      if (currentHref.includes('/collections/hair-prone-to-breakage?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/hair-prone-to-breakage');
-      }
-
-      if (currentHref.includes('/collections/products-for-bleached-hair?page=2') || currentHref.includes('/collections/products-for-bleached-hair?page=3')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/products-for-bleached-hair');
-      }
-
-      if (currentHref.includes('/collections/all-special-offers?page=2') || currentHref.includes('/collections/all-special-offers?page=3') || currentHref.includes('/collections/all-special-offers?page=7')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/all-special-offers');
-      }
-
-      if (currentHref.includes('/collections/professional-hair-dressing-tools?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/professional-hair-dressing-tools');
-      }
-
-      if (currentHref.includes('/collections/faded-hair-color?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/faded-hair-color');
-      }
-
-      if (currentHref.includes('/collections/for-volume?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/for-volume');
-      }
-
-      if (currentHref.includes('/collections/sulfate-free-shampoos?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/sulfate-free-shampoos');
-      }
-
-      if (currentHref.includes('/collections/for-moisture-dry-hair?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/for-moisture-dry-hair');
-      }
-
-      if (currentHref.includes('/collections/for-shine?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/for-shine');
-      }
-
-      if (currentHref.includes('/collections/best-for-pregnant-women?page=9')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/best-for-pregnant-women');
-      }
-
-      if (currentHref.includes('/collections/best-for-travel?page=2') || currentHref.includes('/collections/best-for-travel?page=3')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/best-for-travel');
-      }
-
-      if (currentHref.includes('/collections/baby-fine-hair?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/baby-fine-hair');
-      }
-
-      if (currentHref.includes('/collections/products-for-colored-hair?page=2') || currentHref.includes('/collections/products-for-colored-hair?page=3')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/products-for-colored-hair');
-      }
-
-      if (currentHref.includes('/collections/thick-hair?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/thick-hair');
-      }
-
-      if (currentHref.includes('/collections/best-for-pregnant-women?page=2') || currentHref.includes('/collections/best-for-pregnant-women?page=3')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/best-for-pregnant-women');
-      }
-
-      if (currentHref.includes('/collections/curls-coils?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/curls-coils');
-      }
-
-      if (currentHref.includes('/collections/loreal-serie-expert?page=2')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/loreal-serie-expert');
-      }
-
-      if (currentHref.includes('/collections/shop-aveda?page=2') || currentHref.includes('/collections/shop-aveda?page=3') || currentHref.includes('/collections/shop-aveda?page=5')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/collections/shop-aveda');
-      }
-
-      if (currentHref.includes('/products/aveda-color-renewal-color-shine-treatment-cool-blonde-150ml')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/aveda-color-renewal-color-shine-treatment-warm-blonde-150ml');
-      }
-
-      if (currentHref.includes('/products/opi-infinite-shine-in-bare-my-soul') || currentHref.includes('/products/opi-infinite-shine-in-tiramisu-for-two') || currentHref.includes('/products/opi-infinite-shine-in-funny-bunny') || currentHref.includes('/products/opi-infinite-shine-in-its-a-boy')) {
-        canonicalLink.setAttribute('href', 'https://www.hairmnl.com/products/opi-infinite-shine-in-malaga-wine');
-      }
-    });
-  })(window, document);
-</script>
+{%- unless skip_canonical -%}
+  {%- if canonical_final != blank -%}
+    <link rel="canonical" href="{{ canonical_final }}">
+  {%- endif -%}
+{%- endunless -%}
