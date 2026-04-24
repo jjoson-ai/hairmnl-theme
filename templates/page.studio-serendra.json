@@ -1,0 +1,211 @@
+{
+  "sections": {
+    "hero": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "HAIRMNL STUDIO",
+        "title": "Serendra, BGC",
+        "text": "<p>Our BGC branch is on the 2nd floor of Serendra along McKinley Parkway, just above Teppanya — minutes from Bonifacio High Street and Shangri-La at the Fort. It's the same HairMNL experience — expert cuts, color, highlights, smoothing treatments, digital perms, professional makeup, and hairstyling for events — in a calmer, more residential setting.</p><p>We use the same premium aftercare brands you see on hairmnl.com (Davines, Kérastase, Olaplex, and more), so anything you love in-chair you can take home.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Book an appointment",
+        "button_url": "http://studio.hairmnl.com",
+        "button_color": "btn--black",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "main": {
+      "type": "page",
+      "settings": {
+        "kicker": "",
+        "show_title": false,
+        "show_content": true,
+        "text_size": 1,
+        "align_title": "text-center",
+        "align_text": "text-left",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "info": {
+      "type": "section-icons",
+      "blocks": {
+        "address": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-phone",
+            "icon_color": "#aaaaaa",
+            "title": "Visit Us",
+            "text": "<p><a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" rel=\"noopener\" title=\"HairMNL Studio Serendra on Google Maps\">2F Serendra<br/>McKinley Parkway, Post Proper Northside<br/>Taguig, 1634 Metro Manila</a></p>"
+          }
+        },
+        "hours": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-clock",
+            "icon_color": "#aaaaaa",
+            "title": "Open Daily",
+            "text": "<p><strong>10AM – 8PM</strong><br/>Monday to Sunday</p><p><em>Closed on major Philippine holidays (New Year's Day, Good Friday, Christmas Day).</em></p>"
+          }
+        },
+        "contact": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-chat",
+            "icon_color": "#aaaaaa",
+            "title": "Message Us",
+            "text": "<p><strong><a href=\"tel:+639171179935\">0917 117 9935</a></strong></p><p><a href=\"https://facebook.com/hairmnlstudio\" target=\"_blank\" rel=\"noopener\">Facebook</a> / <a href=\"https://instagram.com/hairmnlstudio\" target=\"_blank\" rel=\"noopener\">Instagram</a></p>"
+          }
+        },
+        "book": {
+          "type": "icon_block",
+          "settings": {
+            "icon_name": "icon-rating",
+            "icon_color": "#aaaaaa",
+            "title": "Book Online",
+            "text": "<p><a href=\"http://studio.hairmnl.com\" target=\"_blank\" rel=\"noopener\"><strong>studio.hairmnl.com</strong></a></p><p>Secure your slot in under 2 minutes.</p>"
+          }
+        }
+      },
+      "block_order": ["address", "hours", "contact", "book"],
+      "settings": {
+        "title": "",
+        "bg": "palette--light bg--neutral",
+        "icon_size": "icon--medium",
+        "icon_alignment": "icon--top",
+        "align_text": "text-center"
+      }
+    },
+    "map": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Find us on the map",
+        "text": "<p><a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" rel=\"noopener\" title=\"HairMNL Studio Serendra on Google Maps\">Open in Google Maps</a></p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "",
+        "button_url": "",
+        "button_color": "btn--neutral",
+        "button_style": "caps--link",
+        "height": "margin--small",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "features": {
+      "type": "section-columns",
+      "blocks": {
+        "reviews": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Client_Reviews_-_Serendra_1.png",
+            "title": "Client Reviews",
+            "text": "<p>Our clients are at the heart of everything we do. Here's what they have to say about their experiences with our team and services.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false
+          }
+        },
+        "stylists": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Professional_Friendly_Stylists_-_Serendra.png",
+            "title": "High Quality yet Friendly Service",
+            "text": "<p>Our team of skilled stylists combines expertise with a personal touch. They listen and offer advice, giving clients the perfect look with a warm experience.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false
+          }
+        },
+        "products": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/High_Quality_Salon_Products_-_Serendra.png",
+            "title": "Premium Products",
+            "text": "<p>Quality at every step — premium, authentic products, plus plant-based, vegan, and ammonia-free services that deliver exceptional results while being gentle on your hair.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false
+          }
+        },
+        "aftercare": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify://shop_images/Aftercare_-_Serendra.png",
+            "title": "Wide Assortment of Aftercare",
+            "text": "<p>Try premium salon aftercare and styling products in-studio before you buy — the same brands we carry on hairmnl.com.</p>",
+            "button_label": "",
+            "button_link": "",
+            "enable_video": false
+          }
+        }
+      },
+      "block_order": ["reviews", "stylists", "products", "aftercare"],
+      "settings": {
+        "title": "",
+        "title_font_size": 28,
+        "bg": "palette--light bg--neutral",
+        "align_text": "text-center",
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12
+      }
+    },
+    "also": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "ALSO VISIT",
+        "title": "HairMNL Studio Kapitolyo, Pasig",
+        "text": "<p>Our flagship is on the 2nd floor of The Vantage at Kapitolyo along W. Capitol Drive in Pasig.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Visit Studio Kapitolyo",
+        "button_url": "shopify://pages/studio-kapitolyo",
+        "button_color": "btn--black",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "menu_cta": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "",
+        "text": "",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "View Full Service Menu",
+        "button_url": "shopify://pages/hairmnl-studio-service-menu",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": ["hero", "main", "info", "map", "features", "also", "menu_cta"]
+}

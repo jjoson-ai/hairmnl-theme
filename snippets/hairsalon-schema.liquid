@@ -1,0 +1,109 @@
+{%- comment -%}
+  HairSalon JSON-LD for the two HairMNL Studio branches.
+  Emits only on /pages/studio-kapitolyo and /pages/studio-serendra.
+  Coordinates resolved from the Google Maps place URLs provided by the team.
+{%- endcomment -%}
+
+{%- if template contains 'page' and page.handle == 'studio-kapitolyo' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HairSalon",
+  "@id": "{{ shop.url }}/pages/studio-kapitolyo#hairsalon",
+  "name": "HairMNL Studio Kapitolyo",
+  "alternateName": "HairMNL Studio - The Vantage at Kapitolyo",
+  "description": "HairMNL Studio's flagship salon in Pasig, offering senior-stylist haircuts, expert color and highlights, ammonia-free coloring, smoothing treatments, digital perms, and hair-and-makeup for events.",
+  "url": "{{ shop.url }}/pages/studio-kapitolyo",
+  "telephone": "+63-917-790-4455",
+  "image": [
+    "{{ shop.url }}/cdn/shop/files/Client_Reviews_-_Kapitolyo.png",
+    "{{ shop.url }}/cdn/shop/files/Professional_Friendly_Stylists_-_Kapitolyo.png",
+    "{{ shop.url }}/cdn/shop/files/High_Quality_Salon_Products_-_Kapitolyo.png"
+  ],
+  "priceRange": "₱₱",
+  "currenciesAccepted": "PHP",
+  "paymentAccepted": "Cash, Credit Card, Debit Card, GCash",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2F The Vantage at Kapitolyo, W. Capitol Drive",
+    "addressLocality": "Pasig",
+    "addressRegion": "Metro Manila",
+    "postalCode": "1603",
+    "addressCountry": "PH"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 14.5725587,
+    "longitude": 121.059829
+  },
+  "hasMap": "https://maps.app.goo.gl/bqWfAxqJmyLSyqiJA",
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "10:00",
+    "closes": "19:00"
+  }],
+  "sameAs": [
+    "https://www.facebook.com/HairMNLStudio/",
+    "https://www.instagram.com/hairmnlstudio/"
+  ],
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "HairMNL",
+    "url": "{{ shop.url }}"
+  }
+}
+</script>
+{%- endif -%}
+
+{%- if template contains 'page' and page.handle == 'studio-serendra' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HairSalon",
+  "@id": "{{ shop.url }}/pages/studio-serendra#hairsalon",
+  "name": "HairMNL Studio Serendra",
+  "alternateName": "HairMNL Studio - Serendra BGC",
+  "description": "HairMNL Studio's BGC branch in Taguig, offering expert cuts, color, highlights, smoothing treatments, digital perms, professional makeup, and event hairstyling using premium aftercare brands sold on hairmnl.com.",
+  "url": "{{ shop.url }}/pages/studio-serendra",
+  "telephone": "+63-917-117-9935",
+  "image": [
+    "{{ shop.url }}/cdn/shop/files/Client_Reviews_-_Serendra_1.png",
+    "{{ shop.url }}/cdn/shop/files/Professional_Friendly_Stylists_-_Serendra.png",
+    "{{ shop.url }}/cdn/shop/files/High_Quality_Salon_Products_-_Serendra.png"
+  ],
+  "priceRange": "₱₱",
+  "currenciesAccepted": "PHP",
+  "paymentAccepted": "Cash, Credit Card, Debit Card, GCash",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2F Serendra, McKinley Parkway, Post Proper Northside",
+    "addressLocality": "Taguig",
+    "addressRegion": "Metro Manila",
+    "postalCode": "1634",
+    "addressCountry": "PH"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 14.5498413,
+    "longitude": 121.0543159
+  },
+  "hasMap": "https://maps.app.goo.gl/JendSjjfJDWcriKK7",
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "10:00",
+    "closes": "20:00"
+  }],
+  "sameAs": [
+    "https://www.facebook.com/HairMNLStudio/",
+    "https://www.instagram.com/hairmnlstudio/"
+  ],
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "HairMNL",
+    "url": "{{ shop.url }}"
+  }
+}
+</script>
+{%- endif -%}
