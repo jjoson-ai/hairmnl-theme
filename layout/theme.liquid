@@ -395,8 +395,15 @@
     {% render 'hextom_ctb_main', product: product, customer: customer %}
     <!-- **END** Hextom CTB Integration // Main Include - DO NOT MODIFY -->
     {% render 'mbc-bundles' %}
-    {{ '//cdn.shopify.com/s/files/1/0194/1736/6592/t/1/assets/booster-page-speed-optimizer.js?23' | script_tag }}
-   
+    {%- comment -%}
+      Booster Page Speed Optimizer was uninstalled 2026-04-25.
+      Removed the hardcoded script reference here so we stop pulling
+      ~50-100KB of zombie code from Booster's shared CDN
+      (shop 0194/1736/6592) on every page. Native theme lazy-loading
+      (loading="lazy" on <img>) handles what this app was nominally
+      doing, so no functional regression.
+    {%- endcomment -%}
+
     <!-- Shop.js ============================================================== -->
     {{ 'shop.js' | asset_url | script_tag }}
 
