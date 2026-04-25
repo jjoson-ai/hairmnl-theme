@@ -50,7 +50,7 @@
               </div>
             </a>
             <div class="image-overlay" style="--bg:{{ section.settings.overlay_color }}; opacity:{{ section.settings.overlay_opacity | times: 0.01 }};"></div>
-            {%- render 'image-fill', img_object: img_object, aspect_ratio: section.settings.aspect_ratio -%}
+            {%- render 'image-fill', img_object: img_object, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 33vw, 50vw' -%}
           </div>
         </div>
       {% endfor %}

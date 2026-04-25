@@ -45,7 +45,7 @@
                     </div>
                   </div>
                 </a>
-                {%- render 'image-fill', img_object: img_object, aspect_ratio: section.settings.aspect_ratio -%}
+                {%- render 'image-fill', img_object: img_object, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 33vw, 50vw' -%}
               </div>
             </div>
           {% endif %}
@@ -77,7 +77,7 @@
                   </div>
                 </div>
               </a>
-              {%- render 'image-fill', img_object: img_object, aspect_ratio: section.settings.aspect_ratio -%}
+              {%- render 'image-fill', img_object: img_object, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 33vw, 50vw' -%}
             </div>
           </div>
         {% endif %}
