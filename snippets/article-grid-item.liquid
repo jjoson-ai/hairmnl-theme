@@ -16,7 +16,14 @@
   </a>
   {% if article.image %}
     <div class="image-overlay--bottom" style="--bg:{{ overlay_color | default: '#000' }}; --opacity: 0.45;"></div>
-    {%- render 'image-fill', img_object: article.image, aspect_ratio: aspect_ratio -%}
+    {%- comment -%}
+      Passing an accurate sizes hint (2026-04-26): article cards render
+      at ~25% of viewport width on desktop (4-up grid) and ~50% on
+      mobile (2-up). Without this, image-fill defaults to "100vw" and
+      browsers download 1080x variants for cards that only render at
+      ~300px wide — flagged as OVERSIZED-WASTE in the smoke test.
+    {%- endcomment -%}
+    {%- render 'image-fill', img_object: article.image, aspect_ratio: aspect_ratio, sizes: '(min-width: 768px) 25vw, 50vw' -%}
   {% else %}
     <div class="image__fill" style="padding-top: {{ aspect_ratio | times: 100 }}%;
                                                                                                                                                                                                                                        background: var(--muted);"></div>

@@ -12,6 +12,17 @@
 {%- assign default_image = 'blank.svg' | asset_url -%}
 {%- assign image = img_object | default: default_image -%}
 {%- assign bg_position = bg_position | default: "center-center" -%}
+{%- comment -%}
+  `sizes` parameter (added 2026-04-26): tells the browser the rendered
+  width of the image so it can pick the right srcset variant. Default
+  remains "100vw" for backward compat with full-width hero/banner uses.
+  Card-context callers (article-grid-item, list-collections, etc.)
+  should pass an accurate sizes hint like
+  "(min-width: 768px) 25vw, 50vw" — the OVERSIZED-WASTE finding from
+  the 2026-04-25 smoke test showed cards rendered at 294px wide were
+  loading 720x/1080x variants because of the 100vw hint.
+{%- endcomment -%}
+{%- assign sizes = sizes | default: "100vw" -%}
 
 {%- comment -%}
   Native <img loading="lazy"> instead of the legacy
@@ -57,7 +68,7 @@
               {% if image.width > 1080 %}{{ image | img_url: '1080x' }} 1080w,{% endif %}
               {% if image.width > 1600 %}{{ image | img_url: '1600x' }} 1600w,{% endif %}
               {{ image | img_url: 'master' }} {{ image.width }}w"
-      sizes="100vw"
+      sizes="{{ sizes }}"
       src="{{ image | img_url: 'master' }}"
       width="{{ image.width }}"
       height="{{ image.height }}"
