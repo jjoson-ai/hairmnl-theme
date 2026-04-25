@@ -30,11 +30,45 @@
         style="height: {{  1 | divided_by: aspect_ratio | times: 100 }}vw;"
         data-parallax-img
     {% endif %}>
-      <div class="background-size-cover lazyload"
-        data-bgset="{% render 'bgset', image: image %}"
-        style="background-position: {{ bg_position | replace: '-', ' ' }};"
-        role="img"
-        aria-label="{{ image.alt | strip_html | escape }}"></div>
+      {%- comment -%}
+        Native <img loading="lazy"> (or eager when caller opts in)
+        instead of the legacy <div class="lazyload" data-bgset>
+        background pattern. Object-fit:cover preserves the prior
+        background-size:cover behavior. bg_position becomes
+        object-position so per-instance crops still work.
+
+        Caller can pass `eager: true` to upgrade an above-the-fold
+        hero to loading=eager + fetchpriority=high (LCP candidate).
+        Default is lazy to match the previous lazysizes behavior.
+      {%- endcomment -%}
+      {%- assign img_loading = 'lazy' -%}
+      {%- if eager -%}
+        {%- assign img_loading = 'eager' -%}
+      {%- endif -%}
+      {%- comment -%}
+        Hot fix 2026-04-26: removed `background-size-cover` from the
+        img class. Same root cause as image-fill.liquid — the CSS rule
+        `.fade-in-child .background-size-cover` sets opacity:0 by
+        default and only flips to opacity:1 when lazysizes adds the
+        `.lazyloaded` class. Native <img loading="lazy"> never gets
+        that class. `object-fit:cover` is already applied inline.
+      {%- endcomment -%}
+      <img
+        class=""
+        srcset="{% if image.width > 540 %}{{ image | img_url: '540x' }} 540w,{% endif %}
+                {% if image.width > 900 %}{{ image | img_url: '900x' }} 900w,{% endif %}
+                {% if image.width > 1400 %}{{ image | img_url: '1400x' }} 1400w,{% endif %}
+                {% if image.width > 1800 %}{{ image | img_url: '1800x' }} 1800w,{% endif %}
+                {% if image.width > 2400 %}{{ image | img_url: '2400x' }} 2400w,{% endif %}
+                {{ image | img_url: 'master' }} {{ image.width }}w"
+        sizes="100vw"
+        src="{{ image | img_url: 'master' }}"
+        width="{{ image.width }}"
+        height="{{ image.height }}"
+        loading="{{ img_loading }}"
+        {% if eager %}fetchpriority="high"{% endif %}
+        alt="{{ image.alt | strip_html | escape }}"
+        style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:{{ bg_position | replace: '-', ' ' }};">
     </div>
   </div>
 

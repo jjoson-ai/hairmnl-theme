@@ -13,6 +13,19 @@
 {%- assign image = img_object | default: default_image -%}
 {%- assign bg_position = bg_position | default: "center-center" -%}
 
+{%- comment -%}
+  Native <img loading="lazy"> instead of the legacy
+  <div class="lazyload" data-bgset> CSS-background pattern. Browser
+  handles intersection natively (faster than lazysizes JS), no
+  data-bgset srcset list to evaluate (4 width steps via srcset
+  instead of 18). The aspect-ratio reservation on the parent
+  .image__fill (padding-top) is preserved so there's no CLS;
+  the inner img is positioned absolute to fill it with object-fit:
+  cover, mirroring the prior background-size: cover behavior.
+
+  bg_position param (e.g., "center-center") still honored via
+  object-position so existing per-instance crops are preserved.
+{%- endcomment -%}
 <div class="image__fill fade-in-child"
   {% if image contains 'blank.svg' %}
     style="padding-top: {{ aspect_ratio | times: 100 }}%;
@@ -24,11 +37,34 @@
     style="padding-top: {{ 1 | divided_by: image.aspect_ratio | times: 100}}%;
            background-image: url('{{ image | img_url: '1x1' }}');"
   {% endif %}>
-      <div class="background-size-cover lazyload"
-        data-bgset="{% render 'bgset', image: image %}"
-        style="background-position: {{ bg_position | replace: '-', ' ' }};"
-        role="img"
-        aria-label="{{ image.alt | strip_html | escape }}"></div>
+  {%- if image contains 'blank.svg' -%}
+  {%- else -%}
+    {%- comment -%}
+      Hot fix 2026-04-26: removed `background-size-cover` from the img
+      class. The CSS rule `.fade-in-child .background-size-cover` sets
+      opacity:0 by default and only flips to opacity:1 when lazysizes
+      adds the `.lazyloaded` class. Native <img loading="lazy"> never
+      gets that class, so the image stays invisible forever even after
+      it loads. The class was a leftover from the old CSS-background
+      pattern and isn't needed here — `object-fit:cover` is already
+      applied via inline style. Issue first surfaced on homepage blog
+      cards + article-page recommended-articles sidebar.
+    {%- endcomment -%}
+    <img
+      class="fade-in-child"
+      srcset="{% if image.width > 360 %}{{ image | img_url: '360x' }} 360w,{% endif %}
+              {% if image.width > 720 %}{{ image | img_url: '720x' }} 720w,{% endif %}
+              {% if image.width > 1080 %}{{ image | img_url: '1080x' }} 1080w,{% endif %}
+              {% if image.width > 1600 %}{{ image | img_url: '1600x' }} 1600w,{% endif %}
+              {{ image | img_url: 'master' }} {{ image.width }}w"
+      sizes="100vw"
+      src="{{ image | img_url: 'master' }}"
+      width="{{ image.width }}"
+      height="{{ image.height }}"
+      loading="lazy"
+      alt="{{ image.alt | strip_html | escape }}"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:{{ bg_position | replace: '-', ' ' }};">
+  {%- endif -%}
   <noscript>
     <img src="{{ image | img_url: '720x' }}" alt="{{ image.alt | strip_html | escape }}" class="responsive-wide-image"/>
   </noscript>
