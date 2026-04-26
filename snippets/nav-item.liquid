@@ -63,7 +63,7 @@
       {% if tousled_logo != blank %}
         {%- assign img_url = tousled_logo | img_url: '1x1' | replace: '_1x1.', '_600x.' -%}
         <div>
-          <img src="{{img_url}}" class="lazyload tousled-logo" width="{{ tousled_logo_max_limit}}" height="{{ tousled_logo.height }}" data-widths="[110, 160, 220, 320, 480, 540, 720, 900]" data-sizes="auto" data-aspectratio="{{ tousled_logo.aspect_ratio }}" alt="{{ tousled_logo.alt | default: shop.name | strip_html | escape }}">
+          <img src="{{img_url}}" class="tousled-logo" width="{{ tousled_logo_max_limit}}" height="{{ tousled_logo.height }}" alt="{{ tousled_logo.alt | default: shop.name | strip_html | escape }}" loading="lazy">
         </div>
       {% endif %}
       <span class="navtext {% if link.title == 'TOUSLED MAGAZINE' and img_url != blank %}tousled{% endif %}">{{ link.title | escape }}

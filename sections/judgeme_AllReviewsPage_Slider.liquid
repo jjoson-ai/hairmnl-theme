@@ -6,8 +6,10 @@
                   {% for block in section.blocks limit: section.blocks.size %}
                 	<div class="swiper-slide">
                       <a href="{{block.settings.slide_image_url}}">
-                        <img class="banner-slide-img hidden-pocket lazyload" data-src="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="Banner Slide 1">
-                        <img class="banner-slide-img hidden-lap-and-up lazyload" data-src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1">
+                        <picture>
+                          <source media="(min-width: 1009px)" srcset="{{ block.settings.slide_image_desktop | img_url: 'x788' }}">
+                          <img class="banner-slide-img" src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" loading="lazy" alt="Banner Slide 1">
+                        </picture>
                       </a>
                     </div>
                   {% endfor %}

@@ -35,12 +35,9 @@
       {%- assign img_url = section.settings.tousled_logo_mobile_menu | img_url: '1x1' | replace: '_1x1.', '_600x.' -%}
       <div class="logo-wrapper">
         <img src="{{img_url}}"
-          class="lazyload tousled-logo" 
+          class="tousled-logo" 
           width="{{ section.settings.tousled_logo_max_limit_menu}}"
-          data-widths="[110, 160, 220, 320, 480, 540, 720, 900]"
-          data-sizes="auto"
-          data-aspectratio="{{ section.settings.tousled_logo_mobile_menu.aspect_ratio }}"
-          alt="{{ section.settings.tousled_logo_mobile_menu.alt | default: shop.name | strip_html | escape }}">
+          alt="{{ section.settings.tousled_logo_mobile_menu.alt | default: shop.name | strip_html | escape }}" loading="lazy">
       </div>
     {%- else -%}
       <span>
@@ -59,12 +56,9 @@
           {%- assign img_url = section.settings.tousled_logo_mobile | img_url: '1x1' | replace: '_1x1.', '_600x.' -%}
           <div class="logo-wrapper">
             <img src="{{img_url}}"
-              class="lazyload tousled-logo" 
+              class="tousled-logo" 
               width="{{ section.settings.tousled_logo_max_limit}}"
-              data-widths="[110, 160, 220, 320, 480, 540, 720, 900]"
-              data-sizes="auto"
-              data-aspectratio="{{ section.settings.tousled_logo_mobile.aspect_ratio }}"
-              alt="{{ section.settings.tousled_logo_mobile.alt | default: shop.name | strip_html | escape }}">
+              alt="{{ section.settings.tousled_logo_mobile.alt | default: shop.name | strip_html | escape }}" loading="lazy">
           </div>
         {% endif %}
         <button class="drawer__button drawer__close"
