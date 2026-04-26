@@ -34,11 +34,19 @@
     </div>
 
     {%- if featured_products.size <= 6 -%}
-      <style > :root
-      {
-        --productsCount: {{ featured_products.size }};
-      }
-    </style>
+      {%- comment -%}
+        Scope --productsCount to this section's id, NOT :root. Multiple
+        instances of this section on the same page (e.g. Dyson landing
+        with 3 featured-product blocks) all wrote to :root, so the LAST
+        section's count overwrote the earlier ones — every grid then
+        rendered as 1 column. Scoping to #shopify-section-{id} lets
+        each section keep its own count.
+      {%- endcomment -%}
+      <style>
+        #shopify-section-{{ section.id }} {
+          --productsCount: {{ featured_products.size }};
+        }
+      </style>
     <div class="collection-grid__box">
       {% for product in featured_products %}
         <div class="collection-grid__item">
