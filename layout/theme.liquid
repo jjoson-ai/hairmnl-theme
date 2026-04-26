@@ -76,7 +76,16 @@
     {{ 'tiny.content.min.css' | asset_url | stylesheet_tag }}
     
     {% include 'pro-blogger-section-wrapper' %}
-    <link rel="stylesheet" href="https://obscure-escarpment-2240.herokuapp.com/stylesheets/bcpo-front.css">
+    {%- comment -%}
+      Async-load 2026-04-26 PM: Bold Custom Pricing Options (BCPO)
+      stylesheet from Heroku CDN was unconditionally render-blocking
+      (~1,530ms duration per Lighthouse). Swap to media=print + onload
+      pattern so it loads at low priority without blocking initial
+      paint. BCPO only matters for PDP price display; flash before
+      the swap is acceptable.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="https://obscure-escarpment-2240.herokuapp.com/stylesheets/bcpo-front.css" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="https://obscure-escarpment-2240.herokuapp.com/stylesheets/bcpo-front.css"></noscript>
     <script>
       var bcpo_product = {{ product | json }};{% if product.metafields.bcpo.bcpo_data %}
         var bcpo_data = {{ product.metafields.bcpo.bcpo_data }};{% endif %}{% if shop.metafields.bcpo.bcpo_settings %}
