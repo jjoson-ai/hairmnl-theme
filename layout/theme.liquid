@@ -470,9 +470,10 @@
     {% if content_for_header contains 'bss-b2b' %}
       
     {% endif %}
-    {% if content_for_header contains 'product_label' %}
-      {% include 'bss-product-label-js' %}{% include 'bss-label-style-css' %}
-    {% endif %}
+    {%- comment -%}
+      Removed 2026-04-26: dead conditional include for BSS Product
+      Labels. App not installed; orphan snippet/asset files deleted.
+    {%- endcomment -%}
     {%- comment -%}
       Wrapped in DCL so we can defer jquery.min.js. The B2B account
       registration page styling now applies after DCL instead of at
@@ -497,7 +498,7 @@
         });
       }
     </script>
-  {% if content_for_header contains 'bss-b2b-cp' %}{% include 'bss-b2b-jquery-341-js' %}{% include 'bss-b2b-js' %}{% endif %}{% if content_for_header contains 'product_label' %}{% include 'bss-product-label-js' %}{% include 'bss-label-style-css' %}{% include 'bss-product-label-fonts' %}{% endif %}
+  {% if content_for_header contains 'bss-b2b-cp' %}{% include 'bss-b2b-jquery-341-js' %}{% include 'bss-b2b-js' %}{% endif %}
   
   
     <style>
