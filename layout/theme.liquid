@@ -77,15 +77,17 @@
     
     {% include 'pro-blogger-section-wrapper' %}
     {%- comment -%}
-      Async-load 2026-04-26 PM: Bold Custom Pricing Options (BCPO)
-      stylesheet from Heroku CDN was unconditionally render-blocking
-      (~1,530ms duration per Lighthouse). Swap to media=print + onload
-      pattern so it loads at low priority without blocking initial
-      paint. BCPO only matters for PDP price display; flash before
-      the swap is acceptable.
+      Replaced 2026-04-26 PM (second iteration): the previous attempt
+      deferred 4 separate CSS files (bcpo, font-awesome, bold-upsell
+      x2) via media=print swap. That triggered 4 separate style-recalc
+      events on async load and TBT regressed +2,850ms. Bundling all
+      4 into a single deferred-extras.css = one fetch, one recalc.
+      Loaded right before custom-theme.css so it can be overridden if
+      needed. font-awesome and bcpo are now self-hosted (was Bootstrap
+      CDN + Heroku); cuts 2 third-party origin handshakes too.
     {%- endcomment -%}
-    <link rel="stylesheet" href="https://obscure-escarpment-2240.herokuapp.com/stylesheets/bcpo-front.css" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="https://obscure-escarpment-2240.herokuapp.com/stylesheets/bcpo-front.css"></noscript>
+    <link rel="stylesheet" href="{{ 'deferred-extras.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'deferred-extras.css' | asset_url }}"></noscript>
     <script>
       var bcpo_product = {{ product | json }};{% if product.metafields.bcpo.bcpo_data %}
         var bcpo_data = {{ product.metafields.bcpo.bcpo_data }};{% endif %}{% if shop.metafields.bcpo.bcpo_settings %}

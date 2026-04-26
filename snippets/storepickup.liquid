@@ -11,16 +11,13 @@
 </style>
 
 {%- comment -%}
-  Async-load 2026-04-26 PM: storepickup CSS + Bootstrap font-awesome
-  CDN were render-blocking on every page (font-awesome alone =
-  ~1,050ms duration per Lighthouse). Swap to media=print + onload
-  pattern. font-awesome icons may briefly appear as Unicode glyphs
-  before swap; storepickup widget styles arrive in time for cart.
+  Removed 2026-04-26 PM:
+  - storepickup.scss.css — empty file (Shopify returns 200 + 0 bytes)
+  - font-awesome.min.css from Bootstrap CDN — moved into bundled
+    deferred-extras.css, self-hosted (see layout/theme.liquid)
+  Single fetch + single style-recalc for all deferred CSS instead
+  of multiple separate ones (TBT win).
 {%- endcomment -%}
-<link rel="stylesheet" href="{{ 'storepickup.scss.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-<noscript><link rel="stylesheet" href="{{ 'storepickup.scss.css' | asset_url }}"></noscript>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" media="print" onload="this.media='all';this.onload=null;">
-<noscript><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"></noscript>
 
 {% comment %}
 *** DEFAULT CONFIG ***

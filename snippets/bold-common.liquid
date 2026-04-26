@@ -128,12 +128,7 @@ It may be overwritten and any customizations would be lost.
 {%- comment -%} INCLUDE APP SCRIPTS BELOW {%- endcomment -%}
 
 {%- comment -%}
-  Async-load 2026-04-26 PM: bold-upsell + bold-upsell-custom CSS were
-  render-blocking (~300ms + ~150ms duration). Swap to media=print +
-  onload pattern. Bold Upsell popup styles are below-fold and
-  interaction-triggered, no first-paint risk.
+  Bold Upsell CSS moved 2026-04-26 PM into bundled deferred-extras.css
+  (see layout/theme.liquid). Single fetch + single style-recalc for
+  all deferred CSS instead of 4 separate ones.
 {%- endcomment -%}
-<link rel="stylesheet" href="{{ 'bold-upsell.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-<noscript><link rel="stylesheet" href="{{ 'bold-upsell.css' | asset_url }}"></noscript>
-<link rel="stylesheet" href="{{ 'bold-upsell-custom.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-<noscript><link rel="stylesheet" href="{{ 'bold-upsell-custom.css' | asset_url }}"></noscript>
