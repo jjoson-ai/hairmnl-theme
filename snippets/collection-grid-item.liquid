@@ -1,0 +1,52 @@
+{% comment %}
+* A collection block that mirrors article-grid-item structure.
+* Used by section-featured-articles when the editor adds a collection_block
+* alongside article_block entries (e.g. "Featuring L'Oréal Professionnel"
+* mixing tutorial articles with a featured collection landing page).
+*
+* Usage:
+* {% render 'collection-grid-item',
+*    collection: collection,
+*    aspect_ratio: 0.7,
+*    color: section.settings.color,
+*    overlay_color: section.settings.overlay_color,
+*    show_category: ...,
+*    title_alignment: ...,
+*    show_excerpt: ...,
+*    excerpt_alignment: ...,
+*    show_readmore: ...,
+*    btn_readmore_alignment: ... %}
+{% endcomment %}
+<div class="article__card section--image {{ color | default: 'text--white' }}">
+
+  <a
+    href="{{ collection.url }}"
+    class="link-over-image"
+    aria-label="{{ collection.title | strip_html | escape }}">
+    <div class="hero__content__wrapper align--bottom-left">
+      <div class="article__card__title"></div>
+    </div>
+  </a>
+  {% if collection.image %}
+    <div class="image-overlay--bottom" style="--bg:{{ overlay_color | default: '#000' }}; --opacity: 0.45;"></div>
+    {%- render 'image-fill', img_object: collection.image, aspect_ratio: aspect_ratio, sizes: '(min-width: 768px) 25vw, 50vw' -%}
+  {% else %}
+    <div class="image__fill" style="padding-top: {{ aspect_ratio | times: 100 }}%; background: var(--muted);"></div>
+  {% endif %}
+</div>
+<div class="article__card section--details {{ color | default: 'text--white' }}">
+  {% if show_category %}
+    <span class="category {{ category_alignment }}">Collection</span>
+  {% endif %}
+  <a href="{{ collection.url }}">
+    <h3 class="h5 mb0 title {{ title_alignment }}">{{ collection.title }}</h3>
+  </a>
+  {% if show_excerpt and collection.description != blank %}
+    <p class="excerpt {{ excerpt_alignment }}">{{ collection.description | strip_html | strip_newlines | truncatewords: 25 }}</p>
+  {% endif %}
+</div>
+{% if show_readmore %}
+  <a href="{{ collection.url }}" class="btn--readmore btn--outline {{ btn_readmore_alignment }}">
+    Shop Now
+  </a>
+{% endif %}

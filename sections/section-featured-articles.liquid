@@ -24,45 +24,70 @@
     {% endunless %}
     <div class="grid grid--uniform">
       {% for block in section.blocks %}
-        {% assign blog = blogs[block.settings.blog_category] %}
-        {% assign blog_handle = block.settings.blog_handle | strip %}
-        {% assign article_handle_template = 'blog_category/article_handle' %}
-        {% assign article_handle = article_handle_template | replace: 'blog_category', block.settings.blog_category | replace: 'article_handle', blog_handle %}
-        {% assign article = articles[article_handle] %}
+        {%- case block.type -%}
 
-        {% unless blog == blank or blog.empty? %}
+          {%- when 'collection_block' -%}
+            {%- assign block_collection = collections[block.settings.collection] -%}
+            {%- unless block_collection == blank or block_collection.empty? -%}
+              <div class="grid__item {{ blog_grid }}">
+                {% render 'collection-grid-item'
+                 collection: block_collection
+                 aspect_ratio: section.settings.aspect_ratio
+                 color: section.settings.color
+                 overlay_color: section.settings.overlay_color
+                 show_category: section.settings.show_category
+                 category_alignment: section.settings.category_alignment
+                 title_alignment: section.settings.title_alignment
+                 show_excerpt: section.settings.show_excerpt
+                 excerpt_alignment: section.settings.excerpt_alignment
+                 show_readmore: section.settings.show_readmore
+                 btn_readmore_alignment: section.settings.btn_readmore_alignment %}
+              </div>
+            {%- endunless -%}
 
-          <div class="grid__item {{ blog_grid }}">
-            {% render 'article-grid-item'
-             article: article
-             aspect_ratio: section.settings.aspect_ratio
-             color: section.settings.color
-             overlay_color: section.settings.overlay_color
-             blog_title: blog.title
-             show_category: section.settings.show_category
-             category_alignment: section.settings.category_alignment
-             title_alignment: section.settings.title_alignment
-             show_excerpt: section.settings.show_excerpt
-             excerpt_alignment: section.settings.excerpt_alignment
-             show_readmore: section.settings.show_readmore
-             btn_readmore_alignment: section.settings.btn_readmore_alignment %}
-          </div>
-        {% else %}
-          {% for i in (1..post_count) %}
-            <div class="grid__item {{ blog_grid }}">
-              <div class="blog__link">
-                <div class="blog__article article__card">
-                  <div class="rte blog__article__content">
-                    <h2 class="h3 blog__article__title">{{ 'home_page.onboarding.blog_title' | t }}
-                    </h2>
-                    <p>{{ 'home_page.onboarding.blog_excerpt' | t }}
-                    </p>
+          {%- else -%}
+            {%- comment -%} Default: article_block (legacy) {%- endcomment -%}
+            {% assign blog = blogs[block.settings.blog_category] %}
+            {% assign blog_handle = block.settings.blog_handle | strip %}
+            {% assign article_handle_template = 'blog_category/article_handle' %}
+            {% assign article_handle = article_handle_template | replace: 'blog_category', block.settings.blog_category | replace: 'article_handle', blog_handle %}
+            {% assign article = articles[article_handle] %}
+
+            {% unless blog == blank or blog.empty? %}
+
+              <div class="grid__item {{ blog_grid }}">
+                {% render 'article-grid-item'
+                 article: article
+                 aspect_ratio: section.settings.aspect_ratio
+                 color: section.settings.color
+                 overlay_color: section.settings.overlay_color
+                 blog_title: blog.title
+                 show_category: section.settings.show_category
+                 category_alignment: section.settings.category_alignment
+                 title_alignment: section.settings.title_alignment
+                 show_excerpt: section.settings.show_excerpt
+                 excerpt_alignment: section.settings.excerpt_alignment
+                 show_readmore: section.settings.show_readmore
+                 btn_readmore_alignment: section.settings.btn_readmore_alignment %}
+              </div>
+            {% else %}
+              {% for i in (1..post_count) %}
+                <div class="grid__item {{ blog_grid }}">
+                  <div class="blog__link">
+                    <div class="blog__article article__card">
+                      <div class="rte blog__article__content">
+                        <h2 class="h3 blog__article__title">{{ 'home_page.onboarding.blog_title' | t }}
+                        </h2>
+                        <p>{{ 'home_page.onboarding.blog_excerpt' | t }}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          {% endfor %}
-        {% endunless %}
+              {% endfor %}
+            {% endunless %}
+
+        {%- endcase -%}
       {% endfor %}
 
     </div>
@@ -297,6 +322,17 @@
             "type": "text",
             "id": "blog_handle",
             "label": "Article handle"
+          }
+        ]
+      },
+      {
+        "type": "collection_block",
+        "name": "Collection",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
           }
         ]
       }
