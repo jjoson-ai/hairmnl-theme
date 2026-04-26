@@ -1,4 +1,12 @@
-<script type="text/javascript" src="https://edge.personalizer.io/storefront/2.0.0/js/shopify/storefront.min.js?key=ebkrx-lb1o3gbh8p6nbo8hxo-ldify&shop=creations-gdc.myshopify.com"></script>
+{%- comment -%}
+  Defer LimeSpot SDK 2026-04-26: was render-blocking (no async/defer
+  attr) and contributing to the 6.7s mobile TBT. The inline data setup
+  below uses `window.LimeSpot = window.LimeSpot === undefined ? {} :
+  LimeSpot;` so order-independent — inline can run before or after the
+  SDK and both populate the same window.LimeSpot object. With defer,
+  inline runs first (sets PageInfo), then SDK reads it.
+{%- endcomment -%}
+<script type="text/javascript" src="https://edge.personalizer.io/storefront/2.0.0/js/shopify/storefront.min.js?key=ebkrx-lb1o3gbh8p6nbo8hxo-ldify&shop=creations-gdc.myshopify.com" defer="defer"></script>
 <script>
 window.LimeSpot = window.LimeSpot === undefined ? {} : LimeSpot;{% assign t = template | prepend: '/' | append: '.' %}
 {% if t contains '/product.' %}LimeSpot.PageInfo = { Type: "Product", Template: "{{ template }}", ReferenceIdentifier: "{{ product.id }}" };
