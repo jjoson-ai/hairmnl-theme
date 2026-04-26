@@ -39,14 +39,12 @@
       rel="preconnect"
       href="https://cdn.judge.me"
       crossorigin>
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-      crossorigin>
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
+    {%- comment -%}
+      Removed 2026-04-26 PM: preconnects to fonts.googleapis.com +
+      fonts.gstatic.com. Playfair Display now self-hosted from
+      /assets/ (see snippets/font-settings-inline.liquid). Lighthouse
+      had warned "More than 4 preconnect connections were found".
+    {%- endcomment -%}
 
 
     <link
@@ -194,8 +192,14 @@
       themselves are tiny (~1.5KB) and use font_display: 'swap'.
     {%- endcomment -%}
     <style>{% render 'font-settings-inline' %}</style>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap"></noscript>
+    {%- comment -%}
+      Removed 2026-04-26 PM: Google Fonts <link> for Playfair Display.
+      Now self-hosted via @font-face declarations in
+      snippets/font-settings-inline.liquid (inlined above). Eliminates:
+      - 1 third-party CSS fetch (fonts.googleapis.com)
+      - 1 third-party font fetch (fonts.gstatic.com)
+      - 2 unused preconnects (handled below)
+    {%- endcomment -%}
 
     {% render 'css-variables' %}
 
