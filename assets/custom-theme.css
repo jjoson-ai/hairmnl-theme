@@ -2610,3 +2610,22 @@ img.banner-slide-img,
   font-size: 13px;
   padding: 4px 10px;
 }
+
+/*
+ * Force square aspect ratio on Discover featured-collection cards.
+ * Some collection images on the Kérastase brand page are uploaded at
+ * 380×312 (smaller than the requested 700×700), and Shopify can't
+ * upscale — it returns the natural size. Without this rule the cards
+ * render landscape, breaking the grid alignment.
+ *
+ * object-fit: cover crops the wide image to fit the square frame
+ * (clips left/right edges). Long-term fix is re-uploading the source
+ * images at 700×700 or larger.
+ */
+.discover-collection img,
+.featured-collection img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
