@@ -23,8 +23,17 @@
       role="dialog"
       aria-modal="true">
       <div class="zoom--images">
+        {%- comment -%}
+          Migrated 2026-04-26 PM from lazysizes data-src to native
+          loading="lazy". The .micromodal-slide parent is display:none
+          by default, so the img has no layout box -> IntersectionObserver
+          never fires -> master image (1-3MB) doesn't download until
+          modal opens. Same effective behavior as lazysizes was providing,
+          without needing the lazysizes.js dependency.
+        {%- endcomment -%}
         <img class="zoom__img"
-          data-src="{{ image | img_url: 'master' }}"
+          src="{{ image | img_url: 'master' }}"
+          loading="lazy"
           alt="{{ image.alt | strip_html | escape }}"/>
       </div>
     </div>
