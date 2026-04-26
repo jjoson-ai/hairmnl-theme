@@ -27,6 +27,20 @@
   "@id": {{ canonical_url | append: '#product' | json }},
   "url": {{ canonical_url | json }},
   "name": {{ product.title | json }},
+  {%- if product.featured_image -%}
+  "image": {{ product.featured_image | img_url: '600x' | prepend: 'https:' | json }},
+  {%- endif -%}
+  {%- if product.description != blank -%}
+  "description": {{ product.description | strip_html | truncate: 250 | json }},
+  {%- endif -%}
+  {%- if product.selected_or_first_available_variant.sku != blank -%}
+  "sku": {{ product.selected_or_first_available_variant.sku | json }},
+  "mpn": {{ product.selected_or_first_available_variant.sku | json }},
+  {%- endif -%}
+  "brand": {
+    "@type": "Brand",
+    "name": {{ product.vendor | default: shop.name | json }}
+  },
   "offers": {
     "@type": "Offer",
     "url": {{ canonical_url | json }},
