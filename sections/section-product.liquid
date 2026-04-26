@@ -94,6 +94,7 @@
           {% endfor %}
         </noscript>
         {% if product.media.size > 1 %}
+          {%- comment -%} cls-fix v2 — force cache bust {%- endcomment -%}
           <div data-product-thumbs class="media__thumb__wrapper" style="min-height: 73px">
             {% for media in product.media %}
               <div class="media__thumb"

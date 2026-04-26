@@ -2490,3 +2490,19 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   font-size: calc(10px * var(---font-adjust-accent));
 }
 /*! Avalanche | MIT License | @colourgarden */
+
+/*
+  Disable the AOS "hero" fade-in animation 2026-04-26.
+  The pattern (opacity:0 → 1s heroFade animation when scrolled into
+  view) created a perceived "text fades to white then back" flicker
+  on collection landing pages with section-hero, section-richtext,
+  etc. above the fold. Above-the-fold text shouldn't be invisible
+  for a second waiting for AOS to detect viewport.
+  
+  This override keeps elements visible immediately. Other AOS
+  animation types (svg-dash, fade-up, etc.) are unaffected.
+*/
+.aos-initialized [data-aos="hero"] {
+  opacity: 1 !important;
+  animation-name: none !important;
+}
