@@ -2506,3 +2506,16 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   opacity: 1 !important;
   animation-name: none !important;
 }
+
+/*
+  Disable mega-menu navlink fade-in 2026-04-26.
+  Header dropdown links had `transition: transform 0.15s, opacity 0.35s`
+  with staggered inline delays (0.01s, 0.06s, 0.11s, 0.16s ...) so
+  navlink children fade in one-by-one when the dropdown opens — last
+  item could take 850ms+. Override forces opacity:1 and disables
+  transitions so menu items appear immediately on open.
+*/
+.navlink--child {
+  opacity: 1 !important;
+  transition: none !important;
+}
