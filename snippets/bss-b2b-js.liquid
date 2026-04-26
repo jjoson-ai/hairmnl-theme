@@ -1,2 +1,15 @@
-{{ 'bss-b2b-hook.js' | asset_url | script_tag }}
-{{ 'bss-b2b-js.js' | asset_url | script_tag }}
+{%- comment -%}
+  Defer BSS B2B scripts so they don't render-block the main thread.
+  Original was `{{ 'X' | asset_url | script_tag }}` which emits a
+  blocking <script>. The 930 KB bss-b2b-js.js was preventing
+  lazysizes from running on heavy collection landing pages
+  (Schwarzkopf, TIGI, K18) — product images stayed grey, page hung.
+
+  defer is safe here: BSS B2B init runs inside jQuery DOM-ready
+  handlers (depends on bss-b2b-jquery-341-js inlined earlier in
+  theme.liquid), so it runs at DOMContentLoaded regardless of
+  defer vs blocking. Defer just unblocks initial paint + lets
+  lazysizes hydrate product card images sooner.
+{%- endcomment -%}
+<script src="{{ 'bss-b2b-hook.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'bss-b2b-js.js' | asset_url }}" defer="defer"></script>
