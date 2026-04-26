@@ -1,5 +1,12 @@
-{% capture bsscommerce_login_require_template %}{% include 'bsscommerce_login_require' %}{% endcapture %}{% unless bsscommerce_login_require_template contains "Liquid error" %}{{ bsscommerce_login_require_template }}{% endunless %}
-
+{%- comment -%}
+  Removed 2026-04-27: duplicate bsscommerce_login_require call. The
+  same snippet was being included twice in this file (once here,
+  pre-doctype; once inside <head> at line ~73). Pre-doctype output
+  lands in the document prologue which browsers ignore for meta tags
+  anyway. The in-<head> call (kept) is the correct place. Halves the
+  per-pageview Liquid execution cost of this BSS B2B Login snippet
+  + its 4-5 sub-snippet includes.
+{%- endcomment -%}
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
 

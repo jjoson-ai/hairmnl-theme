@@ -7198,7 +7198,7 @@ if((typeof Shopify.getCart) === 'undefined'){
     i.appendChild(t));
     document.addEventListener("DOMContentLoaded", (function() {
         Ct("*"),
-        window.theme.settings.animate_scroll && (u.init({
+        window.theme.settings.animate_scroll && document.querySelector("[data-aos]") && (u.init({
             once: !0
         }),
         document.body.classList.add("aos-initialized"),
