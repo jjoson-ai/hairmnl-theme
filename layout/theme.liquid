@@ -306,7 +306,15 @@
     <!-- Zapiet | Store Pickup + Delivery -->
     {% include 'storepickup' %}
     <!-- Zapiet | Store Pickup + Delivery -->
-    {% render 'judgeme_core' %}
+    {%- comment -%}
+      Judge.me Core render removed 2026-04-26: the Judge.me app
+      auto-injects an identical jdgm-settings-script + jdgm-script
+      via content_for_header. Verified two byte-identical 32 KB
+      jdgmSettings dumps were emitted per page. Removing the manual
+      render saves ~34 KB inline per page with zero loss in widget
+      functionality (app injection includes more dns-prefetch hints
+      than the snippet did).
+    {%- endcomment -%}
 
     {% render 'gsf-conversion-pixels' %}
 
