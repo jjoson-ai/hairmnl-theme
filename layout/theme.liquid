@@ -187,7 +187,13 @@
     <!-- CSS ================================================================== -->
     {% render 'custom-fonts' %}
 
-    {{ 'font-settings.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}
+      Inlined 2026-04-26 PM: was render-blocking <link href="font-
+      settings.css" /> with ~450ms duration. Rendering inline saves
+      the round-trip + parse latency. The @font-face declarations
+      themselves are tiny (~1.5KB) and use font_display: 'swap'.
+    {%- endcomment -%}
+    <style>{% render 'font-settings-inline' %}</style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap"></noscript>
 
