@@ -1,0 +1,53 @@
+{%- comment -%}
+  Custom product-label overlay. Replaces the BSS Product Labels app
+  (~432KB JS, ~5,000ms script eval, ~9 long main-thread tasks per
+  Lighthouse 2026-04-26 mobile run).
+
+  Renders zero JS — labels are produced server-side from product
+  state at HTML parse time, so they appear in the first paint with
+  no layout shift and no blocking.
+
+  Usage:
+    {% render 'product-labels', product: product %}
+  Optional:
+    extra_class: appended to the wrapper div, e.g. 'product-labels--pdp'
+
+  Label sources (in render order, top-to-bottom on the card):
+  1. Sold Out — when !product.available (always wins visually)
+  2. Sale — when compare_at_price > price (shows discount %)
+  3. Tag-based — any product tag matching `label:<text>` becomes a
+     label with text after the colon. The tag is also handleized to
+     a CSS modifier class so admin can target colors per label, e.g.
+     `label:New`        -> .product-label--new
+     `label:Bestseller` -> .product-label--bestseller
+     `label:Limited Edition` -> .product-label--limited-edition
+{%- endcomment -%}
+
+{%- if product -%}
+  {%- assign label_count = 0 -%}
+  {%- capture labels_html -%}
+    {%- unless product.available -%}
+      <span class="product-label product-label--soldout">{{ 'products.product.sold_out' | t | default: 'Sold Out' }}</span>
+      {%- assign label_count = label_count | plus: 1 -%}
+    {%- else -%}
+      {%- if product.compare_at_price > product.price -%}
+        {%- assign discount_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+        <span class="product-label product-label--sale">-{{ discount_pct }}%</span>
+        {%- assign label_count = label_count | plus: 1 -%}
+      {%- endif -%}
+    {%- endunless -%}
+
+    {%- for tag in product.tags -%}
+      {%- if tag contains 'label:' -%}
+        {%- assign label_text = tag | replace: 'label:', '' | strip -%}
+        {%- assign label_modifier = label_text | downcase | handleize -%}
+        <span class="product-label product-label--{{ label_modifier }}">{{ label_text }}</span>
+        {%- assign label_count = label_count | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  {%- if label_count > 0 -%}
+    <div class="product-labels{% if extra_class %} {{ extra_class }}{% endif %}">{{ labels_html }}</div>
+  {%- endif -%}
+{%- endif -%}

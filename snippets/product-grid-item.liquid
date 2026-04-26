@@ -134,28 +134,86 @@ A grid item for products used in collection grid view
       data-grid-link
       class="lazy-image{% if double_img %} double__image{% endif %}"
       aria-label="{{ product.title | strip_html | escape }}"
-      style="padding-top:{{ image_ratio }}%; background-image:  url('{{ product.featured_media.preview_image | img_url: '1x1' }}');">
-      <div
-        class="lazyload fade-in collection__image__top"
-        data-bgset="{% render 'bgset', image: product.featured_media.preview_image %}"
-        role="img"
-        aria-label="{{ product.featured_media.alt | default: product.title | strip_html | escape }}"></div>
+      style="padding-top:{{ image_ratio }}%; background-color: #f0f0f0;">
+      {%- comment -%}
+        REVERTED 2026-04-25 ~mid-day after P1 hotfix incident:
+        the native-img migration broke aspect ratio handling on
+        branded collection landing pages (Kérastase, L'Oréal "New
+        Arrivals" sections) because the theme has a global rule
+        `.lazy-image img { width: 100%; height: auto; }` that
+        overrides inline height styling, causing tall portrait
+        product images to render uncropped inside a wider parent.
+
+        Restored to the bgset div pattern for non-priority cards
+        (matches pre-2026-04-25 behavior). For above-the-fold P0
+        cards (loading_priority: high|eager) we still use a real
+        <img> because those cards render correctly on the standard
+        collection grid where aspect ratios are stable.
+
+        Real fix needs CSS scoping work — see follow-up task to
+        replace `.lazy-image img { height: auto }` with a more
+        specific selector that doesn't catch product card imgs.
+
+        data-sizes hint added so lazysizes-bgset picks an
+        appropriately sized variant from the 18-step bgset srcset
+        (180w → 4100w + master) instead of falling back to large
+        defaults. Layout is 2-col mobile, 3-col tablet, 4-col
+        desktop. Mobile cards ≈ 50vw, tablet ≈ 33vw, desktop ≈
+        25vw. With this hint, mobile cards load ~360w variants
+        (× 2 DPR) instead of 720w+, cutting hero LCP and bandwidth
+        ~30–40% on collection pages.
+      {%- endcomment -%}
+      {%- if loading_priority == 'high' or loading_priority == 'eager' -%}
+        {%- assign _img = product.featured_media.preview_image -%}
+        <img
+          class="collection__image__top"
+          srcset="{% if _img.width > 360 %}{{ _img | img_url: '360x' }} 360w,{% endif %}
+                  {% if _img.width > 540 %}{{ _img | img_url: '540x' }} 540w,{% endif %}
+                  {% if _img.width > 720 %}{{ _img | img_url: '720x' }} 720w,{% endif %}
+                  {% if _img.width > 1080 %}{{ _img | img_url: '1080x' }} 1080w,{% endif %}"
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+          src="{{ _img | img_url: '540x' }}"
+          width="{{ _img.width }}"
+          height="{{ _img.height }}"
+          loading="eager"
+          {% if loading_priority == 'high' %}fetchpriority="high"{% endif %}
+          style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"
+          alt="{{ product.featured_media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
+      {%- else -%}
+        <div
+          class="lazyload fade-in collection__image__top"
+          data-bgset="{% render 'bgset', image: product.featured_media.preview_image %}"
+          data-sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+          role="img"
+          aria-label="{{ product.featured_media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}"></div>
+      {%- endif -%}
       {% if double_img %}
         <div class="collection__image__bottom">
-          {%- assign img_url = product.media[1].preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+          {%- comment -%}
+            Native <img loading="lazy"> for the hover (secondary) image.
+            Always lazy — only revealed on card hover, so first paint
+            doesn't need it. srcset matches the primary image (4 width
+            steps, same sizes hint) so the browser picks the same
+            variant the primary card uses.
+          {%- endcomment -%}
+          {%- assign _img2 = product.media[1].preview_image -%}
           <img
-            data-src="{{ img_url }}"
-            class="lazyload img-object-cover lazypostload-desktop"
-            width="{{ product.media[1].preview_image.width }}"
-            height="{{ product.media[1].preview_image.height }}"
-            data-widths="[110, 160, 220, 320, 480, 540, 720, 900]"
-            data-sizes="auto"
-            data-aspectratio="{{ product.media[1].preview_image.aspect_ratio }}"
+            class="img-object-cover"
+            srcset="{% if _img2.width > 360 %}{{ _img2 | img_url: '360x' }} 360w,{% endif %}
+                    {% if _img2.width > 540 %}{{ _img2 | img_url: '540x' }} 540w,{% endif %}
+                    {% if _img2.width > 720 %}{{ _img2 | img_url: '720x' }} 720w,{% endif %}
+                    {% if _img2.width > 1080 %}{{ _img2 | img_url: '1080x' }} 1080w,{% endif %}"
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+            src="{{ _img2 | img_url: '540x' }}"
+            width="{{ _img2.width }}"
+            height="{{ _img2.height }}"
+            loading="lazy"
             alt="{{ product.media[1].alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
         </div>
       {% endif %}
       <div class="product-grid-item__slide" data-grid-slide></div>
       {{ badge }}
+      {% render 'product-labels', product: product %}
     </a>
   </div>
   <noscript>

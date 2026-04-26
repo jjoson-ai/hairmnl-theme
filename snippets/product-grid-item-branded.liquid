@@ -144,6 +144,7 @@
       style="height:auto;max-width:100%;"
       alt="{{ product.featured_image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
     {{ sticker }}
+    {% render 'product-labels', product: product %}
   </a>
 
   <div class="figcaption {{ settings.product_grid_style }} {{ settings.collection_text_alignment | default: 'text-center' }}">

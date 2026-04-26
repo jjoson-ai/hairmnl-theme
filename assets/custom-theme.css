@@ -2567,3 +2567,46 @@ img.banner-slide-img,
   max-width: 100%;
   height: auto;
 }
+
+/*
+ * Custom product labels — replacement for BSS Product Labels app.
+ * Renders absolutely-positioned overlay on top of product image.
+ * Container needs `position: relative` (most product cards already do).
+ */
+.product-labels {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: none;
+}
+.product-label {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: #333;
+  border-radius: 2px;
+  pointer-events: auto;
+}
+.product-label--sale { background: #d83a3a; }
+.product-label--new { background: #2a9d6f; }
+.product-label--bestseller { background: #f59e0b; color: #000; }
+.product-label--limited-edition { background: #c9a227; color: #000; }
+.product-label--exclusive { background: #5b21b6; }
+.product-label--soldout { background: #999; }
+.product-labels--pdp {
+  top: 16px;
+  left: 16px;
+}
+.product-labels--pdp .product-label {
+  font-size: 13px;
+  padding: 4px 10px;
+}
