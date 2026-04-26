@@ -340,7 +340,15 @@
       defer keeps it off the critical path.
     {%- endcomment -%}
     {% render 'aaa-announcementbar-configuration' %} <script src="//staticxx.s3.amazonaws.com/aio_stats_lib_v1.min.js?v=1.0" defer="defer"></script>
-    {% include 'bss-product-labels-configs' %}
+    {%- comment -%}
+      Removed 2026-04-26: bss-product-labels-configs unconditional
+      include. BSS Product Labels app was never installed but the
+      theme was loading the configs (3 separate JS asset files
+      bss-file-configdata*.js). Net waste with no functional effect.
+      Conditional includes for the JS itself at lines below already
+      gate on `content_for_header contains 'product_label'`, so if
+      the app is ever installed, BSS still works.
+    {%- endcomment -%}
   
 
 </head>
