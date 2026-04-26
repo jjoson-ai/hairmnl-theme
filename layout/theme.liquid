@@ -186,6 +186,18 @@
     {%- endcomment -%}
     <link rel="preload" href="{{ 'plyr.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      Per-template CSS round 2 (2026-04-26): cart, photoswipe, and 3D
+      model viewer styles all extracted from theme.css and async-loaded
+      so they don't block initial render on pages that don't use them.
+      Total ~17KB pulled out of the synchronous critical path.
+    {%- endcomment -%}
+    <link rel="preload" href="{{ 'cart.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'cart.css' | asset_url }}"></noscript>
+    <link rel="preload" href="{{ 'pswp.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}"></noscript>
+    <link rel="preload" href="{{ 'model_viewer.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'model_viewer.css' | asset_url }}"></noscript>
     {% render 'css-overrides' %}
 
     <script>
