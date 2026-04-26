@@ -1847,6 +1847,16 @@ button.swiper-pagination-bullet {
   min-height: 140px;
   max-height: 180px;
 }
+/*
+ * Discover collections grid uses float:left, so when one card is
+ * shorter than its siblings, the next row's first card slides up into
+ * the gap and the grid skips columns. Clear-left on every 3rd item
+ * (each new row's first card) forces a clean row break regardless of
+ * the previous row's height variance.
+ */
+.discover-collection:nth-child(3n+1) {
+  clear: left;
+}
 .thick-underline {
   border-bottom: 2px solid #333;
 }
