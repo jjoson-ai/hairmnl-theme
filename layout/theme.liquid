@@ -91,7 +91,16 @@
     </script>
 
     {% include 'shop-sheriff-pwa' %}
-    {% include 'shop-sheriff-amp' %}
+    {%- comment -%}
+      Removed 2026-04-26: shop-sheriff-amp include. Was emitting
+      <link rel="amphtml"> on every product/collection/blog/article
+      page, which Google was crawling and using to auto-populate
+      mobile_link in Merchant Center (sending Google Shopping mobile
+      traffic to /a/s/ AMP URLs). Removing the include lets Google
+      drop mobile_link on next crawl (~24-48h). Step 1 of 2 in the
+      AMP sunset — step 2 is uninstall Shop Sheriff AMP app from
+      Shopify admin (saves $99/mo).
+    {%- endcomment -%}
 
     {%- comment -%} Defer Searchanise init.js to unblock first paint; widget enhances after parse. {%- endcomment -%}
     <script src="//www.searchanise.com/widgets/shopify/init.js?a=7K0f1C4k5q" defer="defer"></script>
