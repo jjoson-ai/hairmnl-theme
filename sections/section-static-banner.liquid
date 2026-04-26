@@ -1,14 +1,22 @@
 {%- assign banner_alt = section.settings.banner_alt | default: page.title | default: 'Banner' | escape -%}
 <div class="wrapper">
   <div class="static-banner-box">
+    {%- comment -%}
+      <picture> + <source> so mobile only downloads the mobile image
+      (was both, hidden via display:none — wasted bandwidth).
+    {%- endcomment -%}
     {% if section.settings.banner_url != blank %}
       <a href="{{section.settings.banner_url}}">
-        <img class="static-banner-img hidden-pocket" src="{{ section.settings.banner_desktop | img_url: 'x788' }}" alt="{{ banner_alt }}">
-        <img class="static-banner-img hidden-lap-and-up" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="{{ banner_alt }}">
+        <picture>
+          <source media="(min-width: 1009px)" srcset="{{ section.settings.banner_desktop | img_url: 'x788' }}">
+          <img class="static-banner-img" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="{{ banner_alt }}">
+        </picture>
       </a>
     {% else %}
-      <img class="static-banner-img hidden-pocket" src="{{ section.settings.banner_desktop | img_url: 'x788' }}" alt="{{ banner_alt }}">
-      <img class="static-banner-img hidden-lap-and-up" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="{{ banner_alt }}">
+      <picture>
+        <source media="(min-width: 1009px)" srcset="{{ section.settings.banner_desktop | img_url: 'x788' }}">
+        <img class="static-banner-img" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="{{ banner_alt }}">
+      </picture>
     {% endif %}
   </div>
 </div>

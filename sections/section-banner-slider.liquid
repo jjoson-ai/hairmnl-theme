@@ -46,14 +46,25 @@
           {%- else -%}
             {%- assign img_loading = 'lazy' -%}
           {%- endif -%}
+          {%- comment -%}
+            <picture> + <source> swap so mobile only downloads the
+            mobile image (was both, hidden via display:none — wasted
+            ~80KB on every mobile pageload). Mobile breakpoint matches
+            the hidden-lap-and-up class boundary at 1009px so the
+            picked source aligns with what's actually rendered.
+          {%- endcomment -%}
           {% if block.settings.slide_image_url != blank %}
             <a href="{{block.settings.slide_image_url}}">
-              <img class="banner-slide-img hidden-pocket" src="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
-              <img class="banner-slide-img hidden-lap-and-up" src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
+              <picture>
+                <source media="(min-width: 1009px)" srcset="{{ block.settings.slide_image_desktop | img_url: 'x788' }}">
+                <img class="banner-slide-img" src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
+              </picture>
             </a>
           {%- else -%}
-            <img class="banner-slide-img hidden-pocket" src="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
-            <img class="banner-slide-img hidden-lap-and-up" src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
+            <picture>
+              <source media="(min-width: 1009px)" srcset="{{ block.settings.slide_image_desktop | img_url: 'x788' }}">
+              <img class="banner-slide-img" src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
+            </picture>
           {% endif %}
 
         </div>

@@ -146,10 +146,10 @@
             <div class="collection-brand-image preventOverflow" id="FeaturedImage-{{ section.id }}">
               {% if section.settings.brand_featured_image_link != blank %}
                 <a href="{{ section.settings.brand_featured_image_link }}">
-                  <img src="{{ brand_featured_image | img_url: '1400x' }}" width="{{ brand_featured_image.width }}" height="{{ brand_featured_image.height }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
+                  <img src="{{ brand_featured_image | img_url: '1400x' }}" srcset="{{ brand_featured_image | img_url: '540x' }} 540w, {{ brand_featured_image | img_url: '720x' }} 720w, {{ brand_featured_image | img_url: '1080x' }} 1080w, {{ brand_featured_image | img_url: '1400x' }} 1400w" sizes="100vw" width="{{ brand_featured_image.width }}" height="{{ brand_featured_image.height }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
                 </a>
               {% else %}
-                <img src="{{ brand_featured_image | img_url: '1400x' }}" width="{{ brand_featured_image.width }}" height="{{ brand_featured_image.height }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
+                <img src="{{ brand_featured_image | img_url: '1400x' }}" srcset="{{ brand_featured_image | img_url: '540x' }} 540w, {{ brand_featured_image | img_url: '720x' }} 720w, {{ brand_featured_image | img_url: '1080x' }} 1080w, {{ brand_featured_image | img_url: '1400x' }} 1400w" sizes="100vw" width="{{ brand_featured_image.width }}" height="{{ brand_featured_image.height }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
               {% endif %}
             </div>
           {% endif %}
