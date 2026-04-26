@@ -203,14 +203,29 @@
       for theme.css/custom-theme.css below — browser fetches at LOW
       priority, doesn't block render, doesn't starve LCP.
     {%- endcomment -%}
-    <link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
-    <link rel="stylesheet" href="{{ 'cart.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="{{ 'cart.css' | asset_url }}"></noscript>
-    <link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}"></noscript>
-    <link rel="stylesheet" href="{{ 'model_viewer.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="{{ 'model_viewer.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      Gated 2026-04-26 PM: load each split CSS only on templates that
+      actually use it. After round-2 split + media=print swap, mobile
+      LCP still regressed 6.8s -> 11.3s because 4 extra HTTP fetches
+      add TTFB on Slow 4G even at low priority. Gating reduces the
+      extra-fetch tax to 0 on the homepage and most pages, ~1 fetch
+      on cart, ~3 on PDP. Plyr also fires on collection (video block).
+    {%- endcomment -%}
+    {%- if template contains 'product' -%}
+      <link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
+      <link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}"></noscript>
+      <link rel="stylesheet" href="{{ 'model_viewer.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'model_viewer.css' | asset_url }}"></noscript>
+    {%- elsif template contains 'collection' -%}
+      <link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
+    {%- endif -%}
+    {%- if template == 'cart' -%}
+      <link rel="stylesheet" href="{{ 'cart.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'cart.css' | asset_url }}"></noscript>
+    {%- endif -%}
     {% render 'css-overrides' %}
 
     <script>
