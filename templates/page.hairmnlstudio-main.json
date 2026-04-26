@@ -31,6 +31,7 @@
         },
         "banner_slide_ihmN6V": {
           "type": "banner_slide",
+          "disabled": true,
           "settings": {
             "slide_image_desktop": "shopify://shop_images/hairmnl-studio-cut-above-the-rest-june-2025-deskto.jpg",
             "slide_image_mobile": "shopify://shop_images/hairmnl-studio-cut-above-the-rest-june-2025-mobile.jpg",
@@ -477,7 +478,7 @@
             "icon_name": "icon-phone",
             "icon_color": "#aaaaaa",
             "title": "Book your appointment",
-            "text": "<p><strong><a href=\"/pages/studio-kapitolyo\" title=\"HairMNL Studio Kapitolyo\">HairMNL Studio - The Vantage at Kapitolyo</a></strong></p><p><a href=\"https://maps.app.goo.gl/bqWfAxqJmyLSyqiJA\" target=\"_blank\" rel=\"noopener\" title=\"HairMNL Studio Kapitolyo on Google Maps\">2F The Vantage, W. Capitol Drive, Pasig</a></p><p>Open daily, 10AM to 7PM</p><p><strong><a href=\"/pages/studio-serendra\" title=\"HairMNL Studio Serendra\">HairMNL Studio - Serendra BGC</a></strong></p><p><a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" rel=\"noopener\" title=\"HairMNL Studio Serendra on Google Maps\">2F Serendra, McKinley Parkway, Taguig</a></p><p>Open daily, 10AM to 8PM</p>"
+            "text": "<p><strong>HairMNL Studio - The Vantage</strong></p><p><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio - The Vantage at Kapitolyo\">2F The Vantage, Kapitolyo, Pasig</a></p><p>Open daily, 10AM to 7PM</p><p><strong>HairMNL Studio - Serendra</strong></p><p><a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" title=\"HairMNL Studio - Serendra\">2F Serendra Mall, BGC, Taguig</a></p><p>9AM-8PM on weekdays,</p><p>9AM-7PM on weekends</p>"
           }
         },
         "05499800-6958-4d59-8003-4df14ed683ff": {
@@ -815,7 +816,7 @@
       "settings": {
         "kicker": "",
         "title": "HairMNL Studio - Serendra",
-        "text": "<p>Located in <a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" title=\"HairMNL Studio - Serendra\">2F Serendra, McKinley Parkway, Taguig</a></p><p>Above Teppanya</p><p>Open daily, 10AM to 8PM</p><p><a href=\"/pages/studio-serendra\" title=\"Visit the Serendra studio page\">View studio details →</a></p>",
+        "text": "<p>Located in <a href=\"https://maps.app.goo.gl/JendSjjfJDWcriKK7\" target=\"_blank\" title=\"HairMNL Studio - Serendra\">2F Serendra Mall, BGC, Taguig</a></p><p>Above Teppanya</p><p>9AM-8PM on weekdays, 9AM-7PM on weekends</p>",
         "text_size": 2,
         "text_columns": 1,
         "align_text": "text-center",
@@ -924,7 +925,7 @@
       "settings": {
         "kicker": "",
         "title": "HairMNL Studio - The Vantage",
-        "text": "<p>Located in <a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">2F The Vantage, W. Capitol Drive, Pasig</a></p><p>Above Starbucks / escalator</p><p>Open daily, 10AM to 7PM</p><p><a href=\"/pages/studio-kapitolyo\" title=\"Visit the Kapitolyo studio page\">View studio details →</a></p>",
+        "text": "<p>Located in <a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">2F The Vantage, Kapitolyo, Pasig</a></p><p>Above Starbucks / escalator</p><p>Open daily, 10AM to 7PM</p>",
         "text_size": 2,
         "text_columns": 1,
         "align_text": "text-center",

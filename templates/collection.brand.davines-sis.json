@@ -53,6 +53,7 @@
         },
         "9e4d4243-4c2e-4520-94cf-0c79588ee661": {
           "type": "banner_slide",
+          "disabled": true,
           "settings": {
             "slide_image_desktop": "shopify://shop_images/dav-promos-feb-2026-site-banners-desktop.jpg",
             "slide_image_mobile": "shopify://shop_images/dav-promos-feb-2026-site-banners-mobile.jpg",

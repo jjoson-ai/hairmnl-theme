@@ -38,6 +38,7 @@
         },
         "banner_slide_yTaghd": {
           "type": "banner_slide",
+          "disabled": true,
           "settings": {
             "slide_image_desktop": "shopify://shop_images/hairmnl-studio-cut-above-the-rest-june-2025-deskto.jpg",
             "slide_image_mobile": "shopify://shop_images/hairmnl-studio-cut-above-the-rest-june-2025-mobile.jpg",

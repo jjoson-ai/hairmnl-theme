@@ -47,6 +47,7 @@
         },
         "banner_slide_jqmUqe": {
           "type": "banner_slide",
+          "disabled": true,
           "settings": {
             "slide_image_desktop": "shopify://shop_images/hairmnl-studio-cut-above-the-rest-june-2025-deskto.jpg",
             "slide_image_mobile": "shopify://shop_images/hairmnl-studio-cut-above-the-rest-june-2025-mobile.jpg",
@@ -298,6 +299,7 @@
         },
         "text_block_Rnxc7F": {
           "type": "text_block",
+          "disabled": true,
           "settings": {
             "enable_image": true,
             "image": "shopify://shop_images/HairMNL_Studio_Hair_Color.jpg",
@@ -425,6 +427,68 @@
         "desktop_padding_bottom": 20,
         "mobile_padding_top": 16,
         "mobile_padding_bottom": 16
+      }
+    },
+    "section_gallery_DkaCb3": {
+      "type": "section-gallery",
+      "blocks": {
+        "image_AQcAt8": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_qbTPQe": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_6ChHJJ": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_HCzYMb": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_JN7MJj": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_i8tQgj": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_AQcAt8",
+        "image_qbTPQe",
+        "image_6ChHJJ",
+        "image_HCzYMb",
+        "image_JN7MJj",
+        "image_i8tQgj"
+      ],
+      "disabled": true,
+      "name": "Gallery",
+      "settings": {
+        "full_width": false,
+        "padding": true,
+        "scale_image": true,
+        "aspect_ratio": 1,
+        "bg": "palette--light bg--neutral",
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
       }
     },
     "20a70a4d-4902-4bbf-930c-edc3b4cd1575": {
@@ -1110,6 +1174,7 @@
     "section_richtext_LxQFgG",
     "section_custom_content_RLEzNg",
     "section_columns_GAjt3P",
+    "section_gallery_DkaCb3",
     "20a70a4d-4902-4bbf-930c-edc3b4cd1575",
     "b3a390c3-286a-4930-a215-50c684bb565e",
     "a70cda54-5d96-4191-9739-04afbab00a78",
