@@ -53,16 +53,26 @@
             the hidden-lap-and-up class boundary at 1009px so the
             picked source aligns with what's actually rendered.
           {%- endcomment -%}
+          {%- comment -%}
+            WebP variants added 2026-04-27 via image_url format:'webp'.
+            Modern browsers (~95%+ globally) get WebP (30-50% smaller
+            than JPEG); legacy browsers fall back to JPEG via the <img>
+            below. Shopify CDN generates WebP on-demand from source.
+          {%- endcomment -%}
           {% if block.settings.slide_image_url != blank %}
             <a href="{{block.settings.slide_image_url}}">
               <picture>
+                <source media="(min-width: 1009px)" type="image/webp" srcset="{{ block.settings.slide_image_desktop | image_url: height: 788, format: 'webp' }}">
                 <source media="(min-width: 1009px)" srcset="{{ block.settings.slide_image_desktop | img_url: 'x788' }}">
+                <source type="image/webp" srcset="{{ block.settings.slide_image_mobile | image_url: height: 502, format: 'webp' }}">
                 <img class="banner-slide-img" src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
               </picture>
             </a>
           {%- else -%}
             <picture>
+              <source media="(min-width: 1009px)" type="image/webp" srcset="{{ block.settings.slide_image_desktop | image_url: height: 788, format: 'webp' }}">
               <source media="(min-width: 1009px)" srcset="{{ block.settings.slide_image_desktop | img_url: 'x788' }}">
+              <source type="image/webp" srcset="{{ block.settings.slide_image_mobile | image_url: height: 502, format: 'webp' }}">
               <img class="banner-slide-img" src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
             </picture>
           {% endif %}
