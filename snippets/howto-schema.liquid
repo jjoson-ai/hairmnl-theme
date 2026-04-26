@@ -1,0 +1,95 @@
+{%- comment -%}
+  HowTo schema emitter for tutorial articles.
+
+  Reads from `article.metafields.howto.data` (Shopify JSON metafield,
+  namespace: howto, key: data, type: json). Renders nothing if empty,
+  so this snippet is safe to ship globally before the content team
+  populates the metafield on individual articles.
+
+  Expected metafield JSON shape (matches HairMNL-HowTo-Schema-Workbook.csv
+  columns; the team's filled CSV gets transcribed into this JSON per
+  article via Shopify admin → Articles → [article] → Metafields →
+  howto.data, OR via Matrixify CSV import):
+
+    {
+      "name": "How to Care for Rebonded Hair",
+      "description": "A step-by-step routine for keeping rebonded hair smooth and damage-free at home.",
+      "total_minutes": 15,
+      "estimated_cost_php": 1800,
+      "supplies": ["Sulfate-free shampoo", "Deep conditioner", ...],
+      "tools": ["Wide-tooth comb", "Microfiber towel", ...],
+      "steps": [
+        {"name": "Cleanse", "text": "Wet hair thoroughly...", "image": "https://..."},
+        {"name": "Condition", "text": "Apply deep conditioner...", "image": "https://..."}
+      ]
+    }
+
+  Output: HowTo JSON-LD per Google's spec
+  (https://developers.google.com/search/docs/appearance/structured-data/how-to)
+  — totalTime as ISO 8601 (PT{minutes}M), estimatedCost as MonetaryAmount,
+  supply/tool as HowToSupply/HowToTool, step as HowToStep with position.
+
+  Render this snippet from sections/article.liquid (or wherever the
+  Article schema is emitted) inside article-template scope.
+{%- endcomment -%}
+
+{%- assign howto = article.metafields.howto.data -%}
+{%- if howto != blank and howto.name != blank and howto.steps != blank -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": {{ howto.name | json }},
+  {%- if howto.description != blank -%}
+  "description": {{ howto.description | json }},
+  {%- endif -%}
+  {%- if howto.total_minutes != blank -%}
+  "totalTime": "PT{{ howto.total_minutes }}M",
+  {%- endif -%}
+  {%- if howto.estimated_cost_php != blank and howto.estimated_cost_php > 0 -%}
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "value": "{{ howto.estimated_cost_php }}",
+    "currency": "PHP"
+  },
+  {%- endif -%}
+  {%- if article.image -%}
+  "image": [
+    {{ article.image | img_url: '1200x' | prepend: 'https:' | json }}
+  ],
+  {%- endif -%}
+  {%- if howto.supplies != blank and howto.supplies.size > 0 -%}
+  "supply": [
+    {%- for s in howto.supplies -%}
+    {
+      "@type": "HowToSupply",
+      "name": {{ s | json }}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ],
+  {%- endif -%}
+  {%- if howto.tools != blank and howto.tools.size > 0 -%}
+  "tool": [
+    {%- for t in howto.tools -%}
+    {
+      "@type": "HowToTool",
+      "name": {{ t | json }}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ],
+  {%- endif -%}
+  "step": [
+    {%- for step in howto.steps -%}
+    {
+      "@type": "HowToStep",
+      "position": {{ forloop.index }},
+      "name": {{ step.name | json }},
+      "text": {{ step.text | json }}{% if step.image != blank %},
+      "image": {{ step.image | json }},
+      "url": {{ shop.url | append: article.url | append: '#step-' | append: forloop.index | json }}{% endif %}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
