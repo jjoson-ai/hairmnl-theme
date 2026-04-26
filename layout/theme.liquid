@@ -427,14 +427,14 @@
     <!-- Shop.js ============================================================== -->
     {{ 'shop.js' | asset_url | script_tag }}
 
+    <!-- Core Web Vitals → GA4 reporter -->
     {%- comment -%}
-      Core Web Vitals → GA4 reporter DISABLED 2026-04-26 while
-      investigating heavy collection landing page hangs (Schwarzkopf,
-      TIGI, K18) reported right after this snippet shipped. The
-      snippet + asset stay in the repo; re-enable by uncommenting
-      the render call below once root cause is confirmed.
+      Briefly disabled 2026-04-26 EOD while investigating Schwarzkopf/
+      TIGI/K18 collection page hangs. Confirmed innocent — root cause
+      was pre-existing BSS Product Labels JS blocking lazysizes on
+      heavy collection landing pages. Re-enabled same day.
     {%- endcomment -%}
-    {%- comment -%} {% render 'web-vitals-reporter' %} {%- endcomment -%}
+    {% render 'web-vitals-reporter' %}
 
     <!-- And above this comment line ================================================== -->
     {% if content_for_header contains 'bss-b2b' %}
