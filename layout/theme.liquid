@@ -47,10 +47,15 @@
     {%- endcomment -%}
 
 
-    <link
-      rel="preload"
-      href="{{ 'lazysizes.js' | asset_url }}"
-      as="script">
+    {%- comment -%}
+      Removed 2026-04-26 PM: lazysizes.js preload + script tag below.
+      All theme-side data-src/data-bgset usages migrated to native
+      loading="lazy" earlier today. Theme.js's lazySizes API call is
+      guarded (window.lazySizes && ...) so no-ops cleanly. The
+      "lazyloaded" event listener at theme.js:7207 is now a no-op
+      (event never fires) but only cleared placeholder background-
+      images on .lazy-image elements — cosmetic, no functional break.
+    {%- endcomment -%}
     <link
       rel="preload"
       href="{{ 'vendor.js' | asset_url }}"
@@ -333,7 +338,12 @@
     {%- endif -%}
 
     <!-- Theme Javascript ============================================================== -->
-    <script src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
+    {%- comment -%}
+      Removed 2026-04-26 PM: lazysizes.js (~25 KB JS, 1,680 ms total
+      CPU per Lighthouse). Theme code no longer depends on it after
+      today's data-src + data-bgset migrations to native loading="lazy".
+      Asset file kept in /assets/ for rollback if needed.
+    {%- endcomment -%}
     <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
     {%- comment -%}
       jquery.min.js was loaded via Shopify's script_tag filter (which
@@ -547,7 +557,18 @@
         });
       }
     </script>
-  {% if content_for_header contains 'bss-b2b-cp' %}{% include 'bss-b2b-jquery-341-js' %}{% include 'bss-b2b-js' %}{% endif %}
+  {%- comment -%}
+    Conditionally load BSS B2B Customer Portal JS only for logged-in
+    backbar-approved customers (added 2026-04-26 PM). Was loading 185KB
+    of JS on every page even though Lighthouse measured 179KB / 96% as
+    unused for non-B2B sessions. The 'bss-b2b-cp' header marker fires
+    whenever the BSS app is installed (always true), so the previous
+    gate was a no-op. Now strictly limited to logged-in customers
+    carrying the 'backbar-approved' tag (HairMNL's B2B identifier).
+    Guest sessions and retail logged-in customers skip the load
+    entirely — single biggest mobile JS savings on the site.
+  {%- endcomment -%}
+  {% if content_for_header contains 'bss-b2b-cp' and customer != blank and customer.tags contains 'backbar-approved' %}{% include 'bss-b2b-jquery-341-js' %}{% include 'bss-b2b-js' %}{% endif %}
   
   
     <style>
