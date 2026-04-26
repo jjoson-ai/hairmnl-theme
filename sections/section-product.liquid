@@ -57,7 +57,9 @@
     {% endif %}
 
     <div class="grid product-single">
-      <div class="grid__item product__media__wrapper {{ product_image_width }}">
+      <div class="grid__item product__media__wrapper {{ product_image_width }}" style="position:relative;">
+
+        {% render 'product-labels', product: product, extra_class: 'product-labels--pdp' %}
 
         {% if product.media.size > 0 %}
           {% if product.media.size > 1 %}
