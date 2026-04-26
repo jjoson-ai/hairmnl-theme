@@ -379,8 +379,8 @@
     </div>
   </div>
     <div class="bloggle_rte rte" id="bloggle_rte">
-      {{ article.content }}
-    
+      {{ article.content | replace: '<iframe ', '<iframe loading="lazy" ' }}
+
     </div>
 
           <div id="share-buttons" class="share-buttons" >

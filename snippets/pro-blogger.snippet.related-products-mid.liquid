@@ -1,6 +1,6 @@
 {% capture article_contents %}
-    {{ article.content }}
-{% endcapture %}  
+    {{ article.content | replace: '<iframe ', '<iframe loading="lazy" ' }}
+{% endcapture %}
 
 {% if article_contents contains '<!-- related products -->' %} 
     {% assign char_split = '<!-- related products -->' %}

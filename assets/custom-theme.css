@@ -2532,3 +2532,28 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   opacity: 1 !important;
   transition: none !important;
 }
+
+/*
+  CLS prevention defensive CSS — guarantees correct rendering for hero
+  + featured-collection imgs regardless of width/height attrs on <img>.
+  
+  Without this, adding HTML width="X" height="Y" attrs to imgs whose
+  Shopify-served dimensions differ from the attrs (e.g., natural 380x312
+  with attrs 700x700) causes browsers to interpret height as a fixed
+  pixel value → image stretched. Earlier today I shipped + reverted the
+  attrs because of this. With this CSS in place, attrs become aspect-
+  ratio hints only; CSS controls actual rendered size.
+  
+  Phase 2 (re-adding the attrs) follows in same commit chain, but the
+  CSS rule is the safety net.
+*/
+img.responsive-wide-image,
+img.static-banner-img,
+img.banner-slide-img,
+.featured-collection img,
+.collection-brand-image img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}

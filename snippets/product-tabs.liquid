@@ -24,7 +24,7 @@
               {% if block.settings.read_more %}
                 {{ product_description_content }}
               {% else %}
-                {{ product.description }}
+                {{ product.description | replace: '<iframe ', '<iframe loading="lazy" ' }}
               {% endif %}
             </div>
           </div>
@@ -136,9 +136,9 @@
             <div class="accordion-content__inner">
               <div class="accordion-content__entry" {% if block.settings.read_more %}data-truncated-content="accordion-content__entry--truncate"{% endif %}>
                 {% if block.settings.read_more %}
-                  {{ product_description_content }}  
+                  {{ product_description_content }}
                 {% else %}
-                  {{ product.description }}  
+                  {{ product.description | replace: '<iframe ', '<iframe loading="lazy" ' }}
                 {% endif %}
               </div>
             </div>

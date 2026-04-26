@@ -27,13 +27,30 @@
         <div class="grid__item {{ column_width }} {{ section.settings.align_text }}" {{ block.shopify_attributes }}>
           <div class="icon__column {{ section.settings.icon_alignment }} {{ section.settings.icon_size }}">
             {%- if block.settings.icon_alt != blank -%}
-              <div 
-                class="icon__column__icon lazyload" 
-                data-aos-delay="{{ delay }}" 
-                data-aos="hero" 
-                data-bgset="{% render 'bgset', image: block.settings.icon_alt %}"
-                role="img"
-                aria-label="{{ block.settings.icon_alt.alt | strip_html | escape }}">
+              {%- comment -%}
+                Native <img loading="lazy"> instead of <div class=
+                "lazyload" data-bgset>. AOS animation attributes
+                preserved on the wrapper div so scroll-triggered
+                fade-in still works. The icon image takes its
+                natural aspect ratio (no fixed width/height set
+                here so the existing CSS sizing rules in theme.css
+                continue to control rendered size).
+              {%- endcomment -%}
+              {%- assign _icon = block.settings.icon_alt -%}
+              <div
+                class="icon__column__icon"
+                data-aos-delay="{{ delay }}"
+                data-aos="hero">
+                <img
+                  src="{{ _icon | img_url: '360x' }}"
+                  srcset="{% if _icon.width > 180 %}{{ _icon | img_url: '180x' }} 180w,{% endif %}
+                          {% if _icon.width > 360 %}{{ _icon | img_url: '360x' }} 360w,{% endif %}
+                          {% if _icon.width > 540 %}{{ _icon | img_url: '540x' }} 540w,{% endif %}"
+                  sizes="(min-width: 768px) 200px, 100px"
+                  width="{{ _icon.width }}"
+                  height="{{ _icon.height }}"
+                  loading="lazy"
+                  alt="{{ _icon.alt | strip_html | escape }}">
               </div>
             {%- else -%}
               <div class="icon__column__icon" data-aos-delay="{{ delay }}" data-aos="svg-dash" style="--stroke: {{ block.settings.icon_color }}">

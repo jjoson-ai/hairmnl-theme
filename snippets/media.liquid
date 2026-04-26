@@ -29,10 +29,20 @@
                     {%- if media.preview_image.width >= 1680 -%}{{ media.preview_image | img_url: '1680x' }} 1680w,{%- endif -%}
                     {%- if media.preview_image.width >= 2048 -%}{{ media.preview_image | img_url: '2048x' }} 2048w,{%- endif -%}
                     {%- if media.preview_image.width >= 4096 -%}{{ media.preview_image | img_url: '4096x' }} 4096w{%- endif -%}"
-            sizes="(min-width: 768px), 50vw, 
+            sizes="(min-width: 768px), 50vw,
                    100vw"
             src="{{ media.preview_image | img_url: '1100x' }}"
-            loading="lazy"
+            {%- comment -%}
+              First product media is the LCP element on PDPs — load it
+              eagerly with high fetch priority so the browser starts
+              the request during HTML parse instead of waiting for the
+              lazy-load intersection check (~1s blank-frame delay
+              observed in QA on 2026-04-25). All other variant images
+              keep `loading="lazy"` since they're below-the-fold or
+              swapped in only on variant change.
+            {%- endcomment -%}
+            loading="{% if is_first %}eager{% else %}lazy{% endif %}"
+            {% if is_first %}fetchpriority="high"{% endif %}
             width="1180"
             height="{{ 1180 | divided_by: media.preview_image.aspect_ratio | ceil }}">
 
