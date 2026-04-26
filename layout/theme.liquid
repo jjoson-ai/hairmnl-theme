@@ -184,19 +184,23 @@
       via preload+swap so it arrives async — Plyr JS hydration takes
       seconds anyway, the styles just need to be present by then.
     {%- endcomment -%}
-    <link rel="preload" href="{{ 'plyr.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
     {%- comment -%}
-      Per-template CSS round 2 (2026-04-26): cart, photoswipe, and 3D
-      model viewer styles all extracted from theme.css and async-loaded
-      so they don't block initial render on pages that don't use them.
-      Total ~17KB pulled out of the synchronous critical path.
+      Switched 2026-04-26 PM from `preload as=style` to `media=print
+      + onload swap` for these 4 split CSS bundles. The preload
+      pattern marks the fetch HIGH PRIORITY, which on Slow 4G was
+      competing with the LCP image for bandwidth (Lighthouse showed
+      LCP regression from 6.8s -> 10.2s after the round-2 extraction).
+      The media=print pattern is the same async-load technique we use
+      for theme.css/custom-theme.css below — browser fetches at LOW
+      priority, doesn't block render, doesn't starve LCP.
     {%- endcomment -%}
-    <link rel="preload" href="{{ 'cart.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
+    <link rel="stylesheet" href="{{ 'cart.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'cart.css' | asset_url }}"></noscript>
-    <link rel="preload" href="{{ 'pswp.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}"></noscript>
-    <link rel="preload" href="{{ 'model_viewer.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="{{ 'model_viewer.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'model_viewer.css' | asset_url }}"></noscript>
     {% render 'css-overrides' %}
 
@@ -320,7 +324,7 @@
     <!-- Shopify app scripts =========================================================== -->
     {{ content_for_header }}
 
-    <link rel="preload" href="{{ 'bold-brain-widget.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}"></noscript>
 
     {%- render 'bold-common' -%}
