@@ -391,6 +391,17 @@
     {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'aos.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'aos.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      Per-template CSS round 3 (2026-04-27): account/customer + blog/
+      article + search + password styles extracted from theme.css
+      (94 rules / 11KB / 3% of theme.css). Async-loaded via media=print
+      swap so they don't block render on the homepage / PDP / collection
+      pages where they're never used. Template pages (login, blog post,
+      search results) still get them, just async — content renders
+      first, styles arrive within a few hundred ms.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'deferred-templates.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'deferred-templates.css' | asset_url }}"></noscript>
 
     {%- render 'bold-common' -%}
 
