@@ -123,17 +123,45 @@
 </div>
 
 {%- comment -%}
-  ItemList JSON-LD removed 2026-04-26: SmartSEO/PluginSEO already
-  emits an ItemList block for collection pages (with name + url +
-  CollectionPage mainEntityOfPage + paginated ListItems). Adding
-  ours triggered Google Rich Results Test "Multiple ListItem
-  elements defined on page" critical error, blocking carousel
-  eligibility entirely. The SmartSEO block lacks per-item name +
-  image enrichment that ours had — to add those richly, we'd need
-  to either modify the SmartSEO/PluginSEO config (risk: gets
-  overwritten on app update) or suppress the SmartSEO block
-  entirely. Parking this as a future enhancement.
+  Supplementary ItemList JSON-LD with per-item name + image (the
+  Smart SEO app's collection ItemList only has position + url).
+  Distinguished from Smart SEO's via @id so Google's parser treats
+  them as separate identified entities instead of conflicting
+  duplicates. mainEntityOfPage matches Smart SEO's CollectionPage
+  @id to hint at the relationship.
+
+  If Google still flags "Multiple ListItem elements" critical, the
+  next step is to suppress Smart SEO's collection.jsonld output via
+  the Smart SEO app admin (look for "JSON-LD output" or "Schema"
+  settings) and let this enriched block be the sole ItemList.
 {%- endcomment -%}
+{%- if collection.products.size > 0 -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": {{ canonical_url | append: '#productlist' | json }},
+    "url": {{ canonical_url | json }},
+    "mainEntityOfPage": {
+      "@type": "CollectionPage",
+      "@id": {{ canonical_url | json }}
+    },
+    "itemListOrder": "https://schema.org/ItemListOrderAscending",
+    "numberOfItems": {{ collection.products.size }},
+    "itemListElement": [
+      {%- for product in collection.products -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "url": {{ shop.url | append: product.url | json }},
+        "name": {{ product.title | json }}{% if product.featured_image %},
+        "image": {{ product.featured_image | img_url: '600x' | prepend: 'https:' | json }}{% endif %}
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+  </script>
+{%- endif -%}
 
 {% schema %}
   {
