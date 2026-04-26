@@ -180,12 +180,32 @@ A grid item for products used in collection grid view
           style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"
           alt="{{ product.featured_media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
       {%- else -%}
-        <div
-          class="lazyload fade-in collection__image__top"
-          data-bgset="{% render 'bgset', image: product.featured_media.preview_image %}"
-          data-sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-          role="img"
-          aria-label="{{ product.featured_media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}"></div>
+        {%- comment -%}
+          Migrated 2026-04-26 PM from <div class="lazyload" data-bgset>
+          to native <img loading="lazy">. Mirrors the high-priority
+          branch above (lines 168-181) which has been working in
+          production: inline style="position:absolute;...object-fit:
+          cover" overrides the global `.lazy-image img { height: auto }`
+          rule via specificity, avoiding the P1 incident from the
+          earlier failed migration. Dropped `.fade-in` class — it
+          relied on lazysizes adding `.lazyloaded` to flip opacity 0->1;
+          native <img> never gets that class so the fade-in would
+          leave images permanently invisible.
+        {%- endcomment -%}
+        {%- assign _img = product.featured_media.preview_image -%}
+        <img
+          class="collection__image__top"
+          srcset="{% if _img.width > 360 %}{{ _img | img_url: '360x' }} 360w,{% endif %}
+                  {% if _img.width > 540 %}{{ _img | img_url: '540x' }} 540w,{% endif %}
+                  {% if _img.width > 720 %}{{ _img | img_url: '720x' }} 720w,{% endif %}
+                  {% if _img.width > 1080 %}{{ _img | img_url: '1080x' }} 1080w,{% endif %}"
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+          src="{{ _img | img_url: '540x' }}"
+          width="{{ _img.width }}"
+          height="{{ _img.height }}"
+          loading="lazy"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"
+          alt="{{ product.featured_media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
       {%- endif -%}
       {% if double_img %}
         <div class="collection__image__bottom">

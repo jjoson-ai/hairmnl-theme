@@ -39,13 +39,31 @@
 
   <div data-overflow-frame class="map-section__content map-section__background-wrapper grid__item medium-up--one-half small--one-half double__block section--image {{ block.settings.color }}">
     <div class="map-section__image">
+      {%- comment -%}
+        Migrated 2026-04-26 PM from <div class="lazyload" data-bgset>
+        to native <img loading="lazy"> with object-fit:cover. Inline
+        style avoids the global `.lazy-image img { height: auto }`
+        rule (P1 incident from earlier failed migration).
+      {%- endcomment -%}
       {%- if section.settings.image -%}
         {%- assign img_object = section.settings.image -%}
-        <div class="background-size-cover lazyload" data-bgset="{% render 'bgset', image: img_object %}" role="img" aria-label="{{ img_object.alt | strip_html | escape }}"></div>
+        <img class="background-size-cover"
+             src="{{ img_object | img_url: '720x' }}"
+             srcset="{% if img_object.width > 360 %}{{ img_object | img_url: '360x' }} 360w,{% endif %} {% if img_object.width > 540 %}{{ img_object | img_url: '540x' }} 540w,{% endif %} {% if img_object.width > 720 %}{{ img_object | img_url: '720x' }} 720w,{% endif %} {% if img_object.width > 1080 %}{{ img_object | img_url: '1080x' }} 1080w,{% endif %}"
+             sizes="50vw"
+             width="{{ img_object.width }}"
+             height="{{ img_object.height }}"
+             loading="lazy"
+             alt="{{ img_object.alt | strip_html | escape }}"
+             style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
       {%- else -%}
         {%- assign img_object = 'blank.svg' | asset_url -%}
         <div class="image-overlay" style="--bg: #000; opacity:0.15;"></div>
-        <div class="background-size-cover lazyload" data-bgset="{% render 'bgset', image: img_object %}" role="img" aria-label="{{ img_object.alt | strip_html | escape }}"></div>
+        <img class="background-size-cover"
+             src="{{ img_object }}"
+             alt=""
+             loading="lazy"
+             style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
       {%- endif -%}
     </div>
     <noscript>
