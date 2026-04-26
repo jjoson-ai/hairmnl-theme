@@ -60,7 +60,7 @@
             <div class="product__slides">
           {% endif %}
             {% for media in product.media %}
-              {% render 'media', media: media, section: section %}
+              {% render 'media', media: media, section: section, is_first: forloop.first %}
             {% endfor %}
           </div>
         {% else %}
@@ -82,7 +82,7 @@
 
         <noscript>
           {% for image in product.media %}
-            <img src="{{ image.preview_image | img_url: '900x' }}" alt="{{ image.alt | default: product.title | strip_html | escape }}">
+            <img src="{{ image.preview_image | img_url: '900x' }}" alt="{{ image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
           {% endfor %}
         </noscript>
         {% if product.media.size > 1 %}
@@ -91,7 +91,7 @@
               <div class="media__thumb" 
                 data-slideshow-thumbnail 
                 data-media-select="{{ media.id }}">
-                <img alt="{{ media.alt | strip_html | escape }}" src="{{ media.preview_image.src | img_url: '200x200', crop: 'center' }}">
+                <img alt="{{ media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}" src="{{ media.preview_image.src | img_url: '200x200', crop: 'center' }}">
                 {%- if media.media_type == 'model' -%}
                   {% render 'icon-media-model' %}
                 {%- elsif media.media_type contains 'video' -%}
@@ -240,6 +240,7 @@
 </script>
 {%- endcomment smartseo_integration_end_meta_data -%}
 
+{% render 'product-shipping-return-schema' %}
 
 {% schema %}
 {

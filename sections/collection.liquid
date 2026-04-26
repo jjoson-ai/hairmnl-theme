@@ -82,7 +82,23 @@
 
               {% for product in collection.products %}
                 <div>
-                  {% render 'product-grid-item', product: product %}
+                  {%- comment -%}
+                    First 4 product cards are above-the-fold on
+                    collection pages (4-col desktop, 2-col mobile fits
+                    ~4 cards in initial viewport with the page header).
+                    Pass loading_priority so they render as real <img>
+                    with loading=eager — the first card also gets
+                    fetchpriority=high since it's the LCP candidate on
+                    collection routes. Other cards keep the default
+                    lazysizes bgset path.
+                  {%- endcomment -%}
+                  {%- if forloop.first -%}
+                    {% render 'product-grid-item', product: product, loading_priority: 'high' %}
+                  {%- elsif forloop.index <= 4 -%}
+                    {% render 'product-grid-item', product: product, loading_priority: 'eager' %}
+                  {%- else -%}
+                    {% render 'product-grid-item', product: product %}
+                  {%- endif -%}
                 </div>
               {% else %}
                 {% if collection.handle == 'all' and collection.current_tags == '' %}
@@ -101,6 +117,35 @@
             {% endif %}
           </div>
         {% endpaginate %}
+
+        {%- comment -%}
+          ItemList JSON-LD for SERP product carousel (Google rich result).
+          Lists the products on the current page with their URL + position.
+          Paginated subset only — Google guidance is to mirror what's
+          visible on the page, not the full collection. Kept inside the
+          template so the schema reflects the products the crawler sees.
+        {%- endcomment -%}
+        {%- if collection.products.size > 0 -%}
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListOrder": "https://schema.org/ItemListOrderAscending",
+            "numberOfItems": {{ collection.products.size }},
+            "itemListElement": [
+              {%- for product in collection.products -%}
+              {
+                "@type": "ListItem",
+                "position": {{ forloop.index }},
+                "url": {{ shop.url | append: product.url | json }},
+                "name": {{ product.title | json }}{% if product.featured_image %},
+                "image": {{ product.featured_image | img_url: '600x' | prepend: 'https:' | json }}{% endif %}
+              }{% unless forloop.last %},{% endunless %}
+              {%- endfor -%}
+            ]
+          }
+          </script>
+        {%- endif -%}
       </div>
     </div>
   </div>

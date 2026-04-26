@@ -1,0 +1,104 @@
+{%- comment -%}
+  Emits supplementary Product JSON-LD with shippingDetails and
+  hasMerchantReturnPolicy on PDPs. Rendered outside the smartseo
+  comment wrapper so it survives the SmartSEO server-side rewrite
+  (which strips schema inside its tagged comment blocks).
+
+  Google merges multiple Product JSON-LD blocks for the same URL
+  by @id (or by URL if no @id), so this co-exists with the existing
+  Product schema emitted by SmartSEO/PluginSEO without conflicting.
+
+  Shipping rules: minimum-viable, non-Kerastase assumption.
+  - Metro Manila: PHP 50, 1-3 day transit (after 0-1 day handling)
+  - Rest of Philippines: PHP 205, 3-14 day transit
+  - Free shipping thresholds, COD, Kerastase brand exceptions, and
+    store pickup are intentionally NOT modeled here — they're too
+    dynamic for static schema and Google would only show the cheapest
+    matching tier in the SERP rich result anyway.
+
+  Return policy: 7-day finite window, customer-paid return shipping.
+  The defects-only condition lives in the linked refund-policy page;
+  Google's MerchantReturnFiniteReturnWindow conveys the time window.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": {{ canonical_url | append: '#product' | json }},
+  "url": {{ canonical_url | json }},
+  "name": {{ product.title | json }},
+  "offers": {
+    "@type": "Offer",
+    "url": {{ canonical_url | json }},
+    "priceCurrency": "PHP",
+    "price": {{ product.selected_or_first_available_variant.price | divided_by: 100.00 | json }},
+    "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+    "shippingDetails": [
+      {
+        "@type": "OfferShippingDetails",
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "value": "50",
+          "currency": "PHP"
+        },
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": "PH",
+          "addressRegion": "Metro Manila"
+        },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "handlingTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 0,
+            "maxValue": 1,
+            "unitCode": "DAY"
+          },
+          "transitTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 1,
+            "maxValue": 3,
+            "unitCode": "DAY"
+          }
+        }
+      },
+      {
+        "@type": "OfferShippingDetails",
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "value": "205",
+          "currency": "PHP"
+        },
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": "PH"
+        },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "handlingTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 0,
+            "maxValue": 1,
+            "unitCode": "DAY"
+          },
+          "transitTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 3,
+            "maxValue": 14,
+            "unitCode": "DAY"
+          }
+        }
+      }
+    ],
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "PH",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 7,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/CustomerResponsibleForReturnFees",
+      "merchantReturnLink": "https://www.hairmnl.com/policies/refund-policy"
+    }
+  }
+}
+</script>
