@@ -1,0 +1,109 @@
+{%- comment -%}
+  Core Web Vitals → GA4 reporter.
+
+  What it does:
+  - Loads web-vitals v4 (attribution build) vendored from Shopify CDN, async/idle.
+  - Captures LCP, CLS, INP, FCP, TTFB and pushes each to GTM's dataLayer
+    as its own event (event name = metric name).
+  - Includes the "rating" (good / needs-improvement / poor) matching CrUX thresholds,
+    plus attribution (LCP element, CLS shift target, INP target) for diagnosis.
+
+  Event shape (per metric, flat params for a single GTM GA4 tag):
+    { event: 'LCP',
+      value: 1234,                    // ms, rounded — CLS is value*1000
+      metric_id: 'v4-...-...',        // unique per page-view, for dedup
+      metric_value: 1234.56,          // raw value
+      metric_delta: 12.34,            // change since last report
+      metric_rating: 'good',          // 'good' | 'needs-improvement' | 'poor'
+      metric_navigation_type: 'navigate',
+      debug_target: '#hero img',      // attribution selector (if available)
+      page_path: '/collections/shampoos' }
+
+  GTM wiring (Part 0 of the setup doc):
+    Trigger: Custom Event, Event name = "LCP|CLS|INP|FCP|TTFB" (regex match).
+    Tag: GA4 Event. Event name = {{Event}} built-in variable. Event parameters
+    forwarded 1:1 from dataLayer via {{DLV - metric_rating}}, etc.
+
+  GA4 admin (one-time):
+    Register as event-scoped custom dimensions: metric_rating,
+    metric_navigation_type, debug_target, metric_id.
+    Register metric_value + metric_delta as custom metrics (optional).
+
+  Visibility note:
+    web-vitals v4 intentionally suppresses LCP/CLS/INP/FCP on hidden pages
+    (matches CrUX methodology). TTFB always fires. Preview testing must use
+    a foreground tab; background tabs will only report TTFB.
+
+  Consent:
+    Today, GA4 already fires unconditionally via Shopify's integration. When
+    the Phase 2 cookie consent banner ships, gate this block on consent.
+{%- endcomment -%}
+
+<script>
+(function() {
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') {
+    // If gtag is loaded lazily (GTM / Shopify GA4), queue until it exists.
+    window.dataLayer = window.dataLayer || [];
+  }
+
+  function send(metric) {
+    try {
+      var params = {
+        value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+        metric_id: metric.id,
+        metric_value: metric.value,
+        metric_delta: metric.delta,
+        metric_rating: metric.rating,
+        metric_navigation_type: metric.navigationType,
+        page_path: location.pathname
+      };
+      var attr = metric.attribution || {};
+      if (attr.element) params.debug_target = attr.element;
+      else if (attr.largestShiftTarget) params.debug_target = attr.largestShiftTarget;
+      else if (attr.interactionTargetElement) params.debug_target = attr.interactionTargetElement;
+
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', metric.name, params);
+      } else if (window.dataLayer && window.dataLayer.push) {
+        // GTM path — push as a per-metric event with flat params so a single
+        // GA4 GTM tag (event name = {{Event}}, trigger = Custom Event matching
+        // LCP|CLS|INP|FCP|TTFB) forwards everything without parameter remapping.
+        var payload = { event: metric.name };
+        for (var k in params) { if (Object.prototype.hasOwnProperty.call(params, k)) payload[k] = params[k]; }
+        window.dataLayer.push(payload);
+      }
+    } catch (e) { /* never break the page on reporting */ }
+  }
+
+  function start() {
+    if (!window.webVitals) return;
+    var wv = window.webVitals;
+    // reportAllChanges: fire on every update (not just final values on page
+    // hide). Necessary because idle-deferred subscription happens after
+    // FCP/TTFB have already settled; without this, late bindings miss them.
+    var opts = { reportAllChanges: true };
+    try {
+      wv.onLCP(send, opts);
+      wv.onCLS(send, opts);
+      wv.onINP(send, opts);
+      wv.onFCP(send, opts);
+      wv.onTTFB(send, opts);
+    } catch (e) { /* silent — measurement only */ }
+  }
+
+  // Load the library. Vendored into assets/ (web-vitals@4.2.4 attribution IIFE)
+  // so aggressive ad blockers can't block it by CDN pattern and so the request
+  // rides Shopify's CDN alongside the rest of the theme.
+  var s = document.createElement('script');
+  s.src = {{ 'web-vitals.js' | asset_url | json }};
+  s.async = true;
+  s.onload = start;
+  s.onerror = function() { /* silent — measurement only */ };
+  // Defer load until idle so it never competes with real page work.
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(function() { document.head.appendChild(s); }, { timeout: 3000 });
+  } else {
+    setTimeout(function() { document.head.appendChild(s); }, 1000);
+  }
+})();
+</script>

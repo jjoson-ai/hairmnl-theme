@@ -427,6 +427,9 @@
     <!-- Shop.js ============================================================== -->
     {{ 'shop.js' | asset_url | script_tag }}
 
+    <!-- Core Web Vitals → GA4 reporter -->
+    {% render 'web-vitals-reporter' %}
+
     <!-- And above this comment line ================================================== -->
     {% if content_for_header contains 'bss-b2b' %}
       
