@@ -94,10 +94,10 @@
           {% endfor %}
         </noscript>
         {% if product.media.size > 1 %}
-          <div data-product-thumbs class="media__thumb__wrapper">
+          <div data-product-thumbs class="media__thumb__wrapper" style="min-height: 73px">
             {% for media in product.media %}
-              <div class="media__thumb" 
-                data-slideshow-thumbnail 
+              <div class="media__thumb"
+                data-slideshow-thumbnail
                 data-media-select="{{ media.id }}">
                 <img alt="{{ media.alt | strip_html | escape }}" src="{{ media.preview_image.src | img_url: '200x200', crop: 'center' }}" width="200" height="200">
                 {%- if media.media_type == 'model' -%}
