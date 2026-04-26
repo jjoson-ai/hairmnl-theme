@@ -3,12 +3,12 @@
   <div class="static-banner-box">
     {% if section.settings.banner_url != blank %}
       <a href="{{section.settings.banner_url}}">
-        <img class="static-banner-img hidden-pocket" src="{{ section.settings.banner_desktop | img_url: 'x788' }}" alt="{{ banner_alt }}">
-        <img class="static-banner-img hidden-lap-and-up" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="{{ banner_alt }}">
+        <img class="static-banner-img hidden-pocket" src="{{ section.settings.banner_desktop | img_url: 'x788' }}" width="{{ section.settings.banner_desktop.width }}" height="{{ section.settings.banner_desktop.height }}" alt="{{ banner_alt }}">
+        <img class="static-banner-img hidden-lap-and-up" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" width="{{ section.settings.banner_mobile.width }}" height="{{ section.settings.banner_mobile.height }}" alt="{{ banner_alt }}">
       </a>
     {% else %}
-      <img class="static-banner-img hidden-pocket" src="{{ section.settings.banner_desktop | img_url: 'x788' }}" alt="{{ banner_alt }}">
-      <img class="static-banner-img hidden-lap-and-up" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="{{ banner_alt }}">
+      <img class="static-banner-img hidden-pocket" src="{{ section.settings.banner_desktop | img_url: 'x788' }}" width="{{ section.settings.banner_desktop.width }}" height="{{ section.settings.banner_desktop.height }}" alt="{{ banner_alt }}">
+      <img class="static-banner-img hidden-lap-and-up" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" width="{{ section.settings.banner_mobile.width }}" height="{{ section.settings.banner_mobile.height }}" alt="{{ banner_alt }}">
     {% endif %}
   </div>
 </div>

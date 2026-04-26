@@ -68,7 +68,7 @@
             <div class="product__slides">
           {% endif %}
             {% for media in product.media %}
-              {% render 'media', media: media, section: section %}
+              {% render 'media', media: media, section: section, is_first: forloop.first %}
             {% endfor %}
           </div>
         {% else %}
@@ -99,7 +99,7 @@
               <div class="media__thumb" 
                 data-slideshow-thumbnail 
                 data-media-select="{{ media.id }}">
-                <img alt="{{ media.alt | strip_html | escape }}" src="{{ media.preview_image.src | img_url: '200x200', crop: 'center' }}">
+                <img alt="{{ media.alt | strip_html | escape }}" src="{{ media.preview_image.src | img_url: '200x200', crop: 'center' }}" width="200" height="200">
                 {%- if media.media_type == 'model' -%}
                   {% render 'icon-media-model' %}
                 {%- elsif media.media_type contains 'video' -%}
