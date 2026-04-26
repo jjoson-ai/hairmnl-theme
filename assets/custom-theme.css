@@ -1845,7 +1845,7 @@ button.swiper-pagination-bullet {
 }
 .product-grid-item .figcaption.under {
   min-height: 140px;
-  max-height: 140px;
+  max-height: 180px;
 }
 .thick-underline {
   border-bottom: 2px solid #333;

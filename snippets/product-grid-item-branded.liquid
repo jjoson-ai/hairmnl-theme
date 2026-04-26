@@ -122,14 +122,42 @@
 
 <div class="grid__item {{ grid_offset }} {{ grid_width_small }} {{ grid_width_medium }} {{ grid_width_large }}{% if tagged %} tagged{% endif %} product-grid-item">
   <a href="{{ product.url | within: collection }}" class="grid__image">
-    <img src="{{ product_img_url }}" alt="{{ product.featured_image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
+    {%- comment -%}
+      Replace static 400x400 / 1200x / 900x src with responsive srcset
+      so browsers pick a width-appropriate variant per breakpoint.
+      Was loading 1200w on mobile (overkill); now mobile picks ~540w.
+      width/height attributes added for CLS reservation.
+      loading="lazy" + fetchpriority="auto" since branded grid is below
+      the brand banner (not LCP).
+    {%- endcomment -%}
+    <img
+      src="{{ product.featured_image.src | img_url: '540x' }}"
+      srcset="{{ product.featured_image.src | img_url: '180x' }} 180w,
+              {{ product.featured_image.src | img_url: '360x' }} 360w,
+              {{ product.featured_image.src | img_url: '540x' }} 540w,
+              {{ product.featured_image.src | img_url: '720x' }} 720w,
+              {{ product.featured_image.src | img_url: '1080x' }} 1080w"
+      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+      width="{{ product.featured_image.width }}"
+      height="{{ product.featured_image.height }}"
+      loading="lazy"
+      style="height:auto;max-width:100%;"
+      alt="{{ product.featured_image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
     {{ sticker }}
   </a>
 
   <div class="figcaption {{ settings.product_grid_style }} {{ settings.collection_text_alignment | default: 'text-center' }}">
     <a href="{{ product.url | within: collection | capitalize }}">
       <p class="h6 name_wrapper">
-        {{ product.title }}
+        {%- comment -%}
+          Strip brand prefix from displayed title — on a brand landing
+          page (Kérastase / L'Oreal / Davines etc) the brand is already
+          in the page H1 + sidebar; repeating it on every card wraps
+          long titles into 6+ lines and overflows the 140px figcaption
+          height cap, bleeding content into the next section. Alt text
+          and SEO title remain fully qualified.
+        {%- endcomment -%}
+        {{ product.title | replace: "L'Oréal Professionnel ", '' | replace: "L'Oreal Professionnel ", '' | replace: 'L’Oréal Professionnel ', '' | replace: 'Kérastase ', '' | replace: 'Kerastase ', '' | replace: 'Davines ', '' | replace: 'Naturaltech Davines ', '' | replace: 'AVEDA ', '' | replace: 'Aveda ', '' | replace: 'K18 ', '' | replace: 'Schwarzkopf Professional ', '' | replace: 'Bed Head By TIGI ', '' | replace: 'Wella Professionals ', '' | replace: 'Revlon Professional ', '' }}
       </p>
       <p class="price_wrapper">
         <span class="price{% if on_sale %} on-sale{% endif %}">
