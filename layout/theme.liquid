@@ -427,8 +427,14 @@
     <!-- Shop.js ============================================================== -->
     {{ 'shop.js' | asset_url | script_tag }}
 
-    <!-- Core Web Vitals → GA4 reporter -->
-    {% render 'web-vitals-reporter' %}
+    {%- comment -%}
+      Core Web Vitals → GA4 reporter DISABLED 2026-04-26 while
+      investigating heavy collection landing page hangs (Schwarzkopf,
+      TIGI, K18) reported right after this snippet shipped. The
+      snippet + asset stay in the repo; re-enable by uncommenting
+      the render call below once root cause is confirmed.
+    {%- endcomment -%}
+    {%- comment -%} {% render 'web-vitals-reporter' %} {%- endcomment -%}
 
     <!-- And above this comment line ================================================== -->
     {% if content_for_header contains 'bss-b2b' %}
