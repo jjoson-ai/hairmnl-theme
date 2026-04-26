@@ -2519,3 +2519,16 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   opacity: 1 !important;
   transition: none !important;
 }
+
+/*
+  Extend mega-menu fade override to grandchild links 2026-04-26.
+  Earlier fix covered .navlink--child (top-level dropdown links) but
+  the Products mega-menu has a deeper nesting where category items
+  (Damaged Hair, Oily Scalps, etc.) use .navlink--grandchild with
+  cumulative inline delays up to 0.25s+. With 30+ grandchild items
+  per Products column, the last item could take 600ms+ to fade in.
+*/
+.navlink--grandchild {
+  opacity: 1 !important;
+  transition: none !important;
+}
