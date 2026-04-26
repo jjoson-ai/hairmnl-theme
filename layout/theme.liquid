@@ -504,7 +504,13 @@
         });
       {% endif %}
     </script>
-    {% include 'smile-initializer' %}
+    {%- comment -%}
+      Removed 2026-04-27: smile-initializer. Smile.io app uninstalled
+      (replaced by LoyaltyLion). Snippet was emitting a hidden
+      .smile-shopify-init div with HMAC-SHA256-computed customer data
+      attributes that nothing reads anymore. Removing skips the per-
+      pageview HMAC compute + dead HTML.
+    {%- endcomment -%}
     {% include 'subscribe-it-helper' %}
     <!-- Klaviyo Signup Script ============================================================== -->  
     <script>
