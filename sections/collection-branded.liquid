@@ -146,10 +146,10 @@
             <div class="collection-brand-image preventOverflow" id="FeaturedImage-{{ section.id }}">
               {% if section.settings.brand_featured_image_link != blank %}
                 <a href="{{ section.settings.brand_featured_image_link }}">
-                  <img src="{{ brand_featured_image | img_url: '1400x' }}" width="{{ brand_featured_image.width }}" height="{{ brand_featured_image.height }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
+                  <img src="{{ brand_featured_image | img_url: '1400x' }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
                 </a>
               {% else %}
-                <img src="{{ brand_featured_image | img_url: '1400x' }}" width="{{ brand_featured_image.width }}" height="{{ brand_featured_image.height }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
+                <img src="{{ brand_featured_image | img_url: '1400x' }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
               {% endif %}
             </div>
           {% endif %}
@@ -182,7 +182,7 @@
                   <div class="grid__item large-up--one-third product-grid-item featured-collection">
                     <a href="{{ featured_collection_1.url }}">
                       {% if featured_collection_1.image %}
-                        <img src="{{ featured_collection_1.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_1.title }} Collection Image">
+                        <img src="{{ featured_collection_1.image | img_url: '700x700', crop: 'center' }}" alt="{{ featured_collection_1.title }} Collection Image">
                       {% else %}
                         {{ 'collection-1' | placeholder_svg_tag }}
                       {% endif %}
@@ -199,7 +199,7 @@
                   <div class="grid__item large-up--one-third product-grid-item featured-collection">
                     <a href="{{ featured_collection_2.url }}">
                       {% if featured_collection_2.image %}
-                        <img src="{{ featured_collection_2.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_2.title }} Collection Image">
+                        <img src="{{ featured_collection_2.image | img_url: '700x700', crop: 'center' }}" alt="{{ featured_collection_2.title }} Collection Image">
                       {% else %}
                         {{ 'collection-1' | placeholder_svg_tag }}
                       {% endif %}
@@ -216,7 +216,7 @@
                   <div class="grid__item large-up--one-third product-grid-item featured-collection">
                     <a href="{{ featured_collection_3.url }}">
                       {% if featured_collection_3.image %}
-                        <img src="{{ featured_collection_3.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_3.title }} Collection Image">
+                        <img src="{{ featured_collection_3.image | img_url: '700x700', crop: 'center' }}" alt="{{ featured_collection_3.title }} Collection Image">
                       {% else %}
                         {{ 'collection-1' | placeholder_svg_tag }}
                       {% endif %}
@@ -470,7 +470,26 @@
                       {% endunless %}
                       <div class="text-center"><a href="{{ best_sellers_collection.url }}" class="collection-view-all">View All</a></div>
                     </div>
-                    <div class="grid">
+                    {%- comment -%}
+                      Count-aware rendering:
+                      - >6 products: Swiper carousel (matches the
+                        homepage product strips — auto-init via
+                        .swiper.collection class in custom-theme.js
+                        ~14290, 6 cards desktop, 1.67 mobile, arrows)
+                      - ≤6 products: original static .grid with the
+                        branded snippet (preserves the legacy 3-up
+                        layout brands like Kérastase rely on — a
+                        slider with only 3 slides leaves half the
+                        viewport empty).
+                    {%- endcomment -%}
+                    {%- assign bs_visible = section.settings.grid_setting_large | default: best_selling_products.size -%}
+                    {%- if best_selling_products.size > 6 and bs_visible > 6 -%}
+                    <div class="wrapper">
+                      <div class="spinner-wrapper">
+                        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+                      </div>
+                      <div class="swiper collection">
+                        <div class="swiper-wrapper">
                       {% for product in best_selling_products limit: section.settings.grid_setting_large %}
 {% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
 {% assign base_product = product %}
@@ -532,9 +551,54 @@
 {% endif %}
 {% comment %} Wholesale_Club_Product_Prices End {% endcomment %}
 
+                        <div class="swiper-slide">
+                          {%- comment -%}
+                            Use the regular product-grid-item snippet
+                            inside the swiper-slide (not the branded
+                            variant) — matches the homepage slider
+                            pattern and avoids the branded snippet's
+                            outer .grid__item.small--one-half width
+                            classes which collapse the card content
+                            to 50% of slide width inside Swiper.
+                            Path 2 brand-prefix strip auto-detects
+                            this branded page from collection.handle.
+                          {%- endcomment -%}
+                          {% render 'product-grid-item', product: product %}
+                        </div>
+                      {% endfor %}
+                        </div>
+                      </div>
+                      <div class="navigator-box">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev swiper-button-disabled"></div>
+                      </div>
+                    </div>
+                    {%- else -%}
+                    {%- comment -%}
+                      ≤6 products: render the original static grid with
+                      the branded snippet so brands like Kérastase that
+                      curate small "best of" sets keep their 3-up
+                      legacy layout (a slider with 3 slides leaves half
+                      the viewport empty at desktop).
+                    {%- endcomment -%}
+                    <div class="grid">
+                      {% for product in best_selling_products limit: section.settings.grid_setting_large %}
+{% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
+{% assign base_product = product %}
+{% assign base_variant = product.selected_or_first_available_variant %}
+{% if shop.metafields.sawholesale['base_price'] == blank %}{% assign base_price = 'compare_at_price' %}{% else %}{% assign base_price = shop.metafields.sawholesale['base_price'] %}{% endif %}
+{% assign saw_discount = 0 %}{% assign saw_has_discount = false %}
+{% if customer.tags != blank %}{% for mf in base_product.metafields.sawholesale %}{% capture product_customer_tag %}{{ mf | first | replace: 'discount_', '' }}{% endcapture %}{% if customer.tags contains product_customer_tag %}{% assign saw_has_discount = true %}{% assign discount_key = product_customer_tag | prepend: 'discount_' %}{% assign price_key = product_customer_tag | prepend: 'price_' %}{% assign saw_discount = base_product.metafields.sawholesale[discount_key] | divided_by: 100.0 %}{% endif %}{% endfor %}{% endif %}
+{% assign saw_discount = 1 | minus: saw_discount %}
+{% if base_price == 'price' or base_variant.compare_at_price == blank or base_variant.compare_at_price == 0 or base_variant.compare_at_price < base_variant.price %}{% assign saw_variant_compare_at_price = base_variant.price %}{% else %}{% assign saw_variant_compare_at_price = base_variant.compare_at_price %}{% endif %}
+{% assign cpe = shop.metafields.sawholesale['cpe'] | default: "true" %}
+{% if base_variant.metafields.sawholesale[price_key] != blank and cpe == "true" %}{% assign saw_variant_price = base_variant.metafields.sawholesale[price_key] %}{% else %}{% assign saw_variant_price = saw_variant_compare_at_price | times: saw_discount %}{% endif %}
+{% if saw_has_discount == false or saw_variant_price >= saw_variant_compare_at_price %}{% assign WCProduct_Price = product.price %}{% assign WCProduct_ComparePrice = product.compare_at_price %}{% assign WCProduct_PriceMin = product.price_min %}{% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}{% assign WCProduct_PriceMax = product.price_max %}{% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}{% assign WCProduct_VariantPrice = base_variant.price %}{% assign WCProduct_VariantComparePrice = base_variant.compare_at_price %}{% else %}{% assign WCProduct_Price = saw_variant_price %}{% assign WCProduct_PriceMin = product.price_min | times: saw_discount %}{% assign WCProduct_PriceMax = product.price_max | times: saw_discount %}{% assign WCProduct_ComparePrice = saw_variant_compare_at_price %}{% if product.compare_at_price_min != 0 %}{% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}{% else %}{% assign WCProduct_ComparePriceMin = product.price_min %}{% endif %}{% if product.compare_at_price_max != 0 %}{% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}{% else %}{% assign WCProduct_ComparePriceMax = product.price_max %}{% endif %}{% assign WCProduct_VariantPrice = saw_variant_price %}{% assign WCProduct_VariantComparePrice = saw_variant_compare_at_price %}{% endif %}
+{% comment %} Wholesale_Club_Product_Prices End {% endcomment %}
                         {% include 'product-grid-item-branded' %}
                       {% endfor %}
                     </div>
+                    {%- endif -%}
                   </div>
                 {% endif %}
 
@@ -553,7 +617,18 @@
                       <div class="text-center"><a href="{{ newest_products_collection.url }}" class="collection-view-all">View All</a></div>
                     </div>
 
-                    <div class="grid">
+                    {%- comment -%}
+                      Count-aware rendering — see best_sellers block
+                      above for the rationale.
+                    {%- endcomment -%}
+                    {%- assign na_visible = section.settings.grid_setting_large | default: newest_products.size -%}
+                    {%- if newest_products.size > 6 and na_visible > 6 -%}
+                    <div class="wrapper">
+                      <div class="spinner-wrapper">
+                        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+                      </div>
+                      <div class="swiper collection">
+                        <div class="swiper-wrapper">
                       {% for product in newest_products limit: section.settings.grid_setting_large %}
 {% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
 {% assign base_product = product %}
@@ -615,9 +690,51 @@
 {% endif %}
 {% comment %} Wholesale_Club_Product_Prices End {% endcomment %}
 
+                        <div class="swiper-slide">
+                          {%- comment -%}
+                            Use the regular product-grid-item snippet
+                            inside the swiper-slide (not the branded
+                            variant) — matches the homepage slider
+                            pattern and avoids the branded snippet's
+                            outer .grid__item.small--one-half width
+                            classes which collapse the card content
+                            to 50% of slide width inside Swiper.
+                            Path 2 brand-prefix strip auto-detects
+                            this branded page from collection.handle.
+                          {%- endcomment -%}
+                          {% render 'product-grid-item', product: product %}
+                        </div>
+                      {% endfor %}
+                        </div>
+                      </div>
+                      <div class="navigator-box">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev swiper-button-disabled"></div>
+                      </div>
+                    </div>
+                    {%- else -%}
+                    {%- comment -%}
+                      ≤6 products: original static grid + branded
+                      snippet — see best_sellers block above.
+                    {%- endcomment -%}
+                    <div class="grid">
+                      {% for product in newest_products limit: section.settings.grid_setting_large %}
+{% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
+{% assign base_product = product %}
+{% assign base_variant = product.selected_or_first_available_variant %}
+{% if shop.metafields.sawholesale['base_price'] == blank %}{% assign base_price = 'compare_at_price' %}{% else %}{% assign base_price = shop.metafields.sawholesale['base_price'] %}{% endif %}
+{% assign saw_discount = 0 %}{% assign saw_has_discount = false %}
+{% if customer.tags != blank %}{% for mf in base_product.metafields.sawholesale %}{% capture product_customer_tag %}{{ mf | first | replace: 'discount_', '' }}{% endcapture %}{% if customer.tags contains product_customer_tag %}{% assign saw_has_discount = true %}{% assign discount_key = product_customer_tag | prepend: 'discount_' %}{% assign price_key = product_customer_tag | prepend: 'price_' %}{% assign saw_discount = base_product.metafields.sawholesale[discount_key] | divided_by: 100.0 %}{% endif %}{% endfor %}{% endif %}
+{% assign saw_discount = 1 | minus: saw_discount %}
+{% if base_price == 'price' or base_variant.compare_at_price == blank or base_variant.compare_at_price == 0 or base_variant.compare_at_price < base_variant.price %}{% assign saw_variant_compare_at_price = base_variant.price %}{% else %}{% assign saw_variant_compare_at_price = base_variant.compare_at_price %}{% endif %}
+{% assign cpe = shop.metafields.sawholesale['cpe'] | default: "true" %}
+{% if base_variant.metafields.sawholesale[price_key] != blank and cpe == "true" %}{% assign saw_variant_price = base_variant.metafields.sawholesale[price_key] %}{% else %}{% assign saw_variant_price = saw_variant_compare_at_price | times: saw_discount %}{% endif %}
+{% if saw_has_discount == false or saw_variant_price >= saw_variant_compare_at_price %}{% assign WCProduct_Price = product.price %}{% assign WCProduct_ComparePrice = product.compare_at_price %}{% assign WCProduct_PriceMin = product.price_min %}{% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}{% assign WCProduct_PriceMax = product.price_max %}{% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}{% assign WCProduct_VariantPrice = base_variant.price %}{% assign WCProduct_VariantComparePrice = base_variant.compare_at_price %}{% else %}{% assign WCProduct_Price = saw_variant_price %}{% assign WCProduct_PriceMin = product.price_min | times: saw_discount %}{% assign WCProduct_PriceMax = product.price_max | times: saw_discount %}{% assign WCProduct_ComparePrice = saw_variant_compare_at_price %}{% if product.compare_at_price_min != 0 %}{% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}{% else %}{% assign WCProduct_ComparePriceMin = product.price_min %}{% endif %}{% if product.compare_at_price_max != 0 %}{% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}{% else %}{% assign WCProduct_ComparePriceMax = product.price_max %}{% endif %}{% assign WCProduct_VariantPrice = saw_variant_price %}{% assign WCProduct_VariantComparePrice = saw_variant_compare_at_price %}{% endif %}
+{% comment %} Wholesale_Club_Product_Prices End {% endcomment %}
                         {% include 'product-grid-item-branded' %}
                       {% endfor %}
                     </div>
+                    {%- endif -%}
                   </div>
                 {% endif %}
 

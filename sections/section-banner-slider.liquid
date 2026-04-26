@@ -33,30 +33,27 @@
       {% for block in section.blocks limit: section.blocks.size %}
         <div class="swiper-slide" data-swiper-autoplay="{{section.settings.slide_delay}}">
           {%- comment -%}
-            First slide: eager + fetchpriority=high, plain src (no lazy).
-            Other slides: original lazysizes pattern unchanged.
+            First slide: eager + fetchpriority=high (LCP element).
+            Other slides: native browser lazy loading. Removed legacy
+            lazysizes pattern (`class="lazyload"` + `data-src`) — that
+            required JS hydration before the img had any src to load
+            from, delaying off-screen slides longer than necessary.
+            Native `loading="lazy"` on a plain `src` lets the browser
+            decide intersection without a JS roundtrip.
           {%- endcomment -%}
           {%- if forloop.first -%}
-            {%- assign hp_class = 'banner-slide-img hidden-pocket' -%}
-            {%- assign lap_class = 'banner-slide-img hidden-lap-and-up' -%}
-            {%- assign src_attr = 'src' -%}
             {%- assign img_loading = 'eager' -%}
-            {%- assign img_priority = 'high' -%}
           {%- else -%}
-            {%- assign hp_class = 'banner-slide-img hidden-pocket lazyload' -%}
-            {%- assign lap_class = 'banner-slide-img hidden-lap-and-up lazyload' -%}
-            {%- assign src_attr = 'data-src' -%}
             {%- assign img_loading = 'lazy' -%}
-            {%- assign img_priority = 'auto' -%}
           {%- endif -%}
           {% if block.settings.slide_image_url != blank %}
             <a href="{{block.settings.slide_image_url}}">
-              <img class="{{ hp_class }}" {{ src_attr }}="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" width="{{ block.settings.slide_image_desktop.width }}" height="{{ block.settings.slide_image_desktop.height }}" alt="Banner Slide 1" loading="{{ img_loading }}" fetchpriority="{{ img_priority }}">
-              <img class="{{ lap_class }}" {{ src_attr }}="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" width="{{ block.settings.slide_image_mobile.width }}" height="{{ block.settings.slide_image_mobile.height }}" alt="Banner Slide 1" loading="{{ img_loading }}" fetchpriority="{{ img_priority }}">
+              <img class="banner-slide-img hidden-pocket" src="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
+              <img class="banner-slide-img hidden-lap-and-up" src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
             </a>
           {%- else -%}
-            <img class="{{ hp_class }}" {{ src_attr }}="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" width="{{ block.settings.slide_image_desktop.width }}" height="{{ block.settings.slide_image_desktop.height }}" alt="Banner Slide 1" loading="{{ img_loading }}" fetchpriority="{{ img_priority }}">
-            <img class="{{ lap_class }}" {{ src_attr }}="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" width="{{ block.settings.slide_image_mobile.width }}" height="{{ block.settings.slide_image_mobile.height }}" alt="Banner Slide 1" loading="{{ img_loading }}" fetchpriority="{{ img_priority }}">
+            <img class="banner-slide-img hidden-pocket" src="{{ block.settings.slide_image_desktop | img_url: 'x788' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
+            <img class="banner-slide-img hidden-lap-and-up" src="{{ block.settings.slide_image_mobile | img_url: 'x502' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
           {% endif %}
 
         </div>

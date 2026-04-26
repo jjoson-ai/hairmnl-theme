@@ -159,10 +159,10 @@
               <div class="collection-brand-image preventOverflow" id="FeaturedImage-{{ section.id }}">
                 {% if section.settings.brand_featured_image_link != blank %}
                   <a href="{{ section.settings.brand_featured_image_link }}">
-                    <img src="{{ brand_featured_image | img_url: '1400x' }}" width="{{ brand_featured_image.width }}" height="{{ brand_featured_image.height }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
+                    <img src="{{ brand_featured_image | img_url: '1400x' }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
                   </a>
                 {% else %}
-                  <img src="{{ brand_featured_image | img_url: '1400x' }}" width="{{ brand_featured_image.width }}" height="{{ brand_featured_image.height }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
+                  <img src="{{ brand_featured_image | img_url: '1400x' }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
                 {% endif %}
               </div>
             {% endif %}
@@ -196,7 +196,7 @@
                   <div class="grid__item large-up--one-third product-grid-item featured-collection">
                     <a href="{{ featured_collection_1.url }}">
                       {% if featured_collection_1.image %}
-                        <img src="{{ featured_collection_1.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_1.title }} Collection Image">
+                        <img src="{{ featured_collection_1.image | img_url: '700x700', crop: 'center' }}" alt="{{ featured_collection_1.title }} Collection Image">
                       {% else %}
                         {{ 'collection-1' | placeholder_svg_tag }}
                       {% endif %}
@@ -213,7 +213,7 @@
                   <div class="grid__item large-up--one-third product-grid-item featured-collection">
                     <a href="{{ featured_collection_2.url }}">
                       {% if featured_collection_2.image %}
-                        <img src="{{ featured_collection_2.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_2.title }} Collection Image">
+                        <img src="{{ featured_collection_2.image | img_url: '700x700', crop: 'center' }}" alt="{{ featured_collection_2.title }} Collection Image">
                       {% else %}
                         {{ 'collection-1' | placeholder_svg_tag }}
                       {% endif %}
@@ -230,7 +230,7 @@
                   <div class="grid__item large-up--one-third product-grid-item featured-collection">
                     <a href="{{ featured_collection_3.url }}">
                       {% if featured_collection_3.image %}
-                        <img src="{{ featured_collection_3.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_3.title }} Collection Image">
+                        <img src="{{ featured_collection_3.image | img_url: '700x700', crop: 'center' }}" alt="{{ featured_collection_3.title }} Collection Image">
                       {% else %}
                         {{ 'collection-1' | placeholder_svg_tag }}
                       {% endif %}
