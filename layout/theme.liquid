@@ -381,6 +381,16 @@
 
     <link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      AOS animations CSS extracted 2026-04-27 from theme.css (37KB,
+      8.4% of theme.css, 252 rules). Used on 125 JSON templates (blog,
+      article, some collections); not used on homepage or most PDPs.
+      Async load via media=print swap so non-AOS pages get smaller
+      theme.css critical path. AOS JS init in theme.js is harmlessly
+      no-op when no [data-aos] elements exist on page.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'aos.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'aos.css' | asset_url }}"></noscript>
 
     {%- render 'bold-common' -%}
 
