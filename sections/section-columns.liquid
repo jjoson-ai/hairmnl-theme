@@ -28,9 +28,9 @@
           {% if block.settings.enable_image %}
             <div class="lazy-image column__image">
               {%- if section.settings.scale_image -%}
-                {%- render 'image-fill', img_object: block.settings.image, aspect_ratio: section.settings.aspect_ratio -%}
+                {%- render 'image-fill', img_object: block.settings.image, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 50vw, 50vw' -%}
               {%- else -%}
-                {%- render 'image-fill', img_object: block.settings.image -%}
+                {%- render 'image-fill', img_object: block.settings.image, sizes: '(min-width: 768px) 50vw, 50vw' -%}
               {%- endif -%}
               {% comment %}
                 If there is a video add a play button over the image

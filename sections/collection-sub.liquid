@@ -16,7 +16,7 @@
                   {%- if section.settings.select_image == 'product' or image == blank -%}
                     {%- assign image = sub_collection.products.first.featured_media.preview_image -%}
                   {%- endif -%}
-                  {%- render 'image-fill', img_object: image, aspect_ratio: section.settings.aspect_ratio, bg_position: section.settings.bg_position -%}
+                  {%- render 'image-fill', img_object: image, aspect_ratio: section.settings.aspect_ratio, bg_position: section.settings.bg_position, sizes: '(min-width: 768px) 33vw, 50vw' -%}
                 </div>
                 <div class="image-overlay" style="--bg:{{ section.settings.overlay_color }}; opacity:{{ section.settings.overlay_opacity | times: 0.01 }};"></div>
                 <div class="hero__content__wrapper {{ section.settings.text_align }}">

@@ -59,7 +59,7 @@
                 {%- when 'image' -%}
                   <div class="accordion__block" {{ block.shopify_attributes }}>
                     <div class="accordion__block-image">
-                      {%- render 'image-fill', img_object: block.settings.image, bg_position: block.settings.bg_position, aspect_ratio: block.settings.aspect_ratio -%}
+                      {%- render 'image-fill', img_object: block.settings.image, bg_position: block.settings.bg_position, aspect_ratio: block.settings.aspect_ratio, sizes: '(min-width: 768px) 50vw, 100vw' -%}
                     </div>
                     {{ text_content }}
                   </div>

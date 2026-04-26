@@ -30,9 +30,9 @@
             {% if block.settings.image != blank %}
               <div class="lazy-image has-zoom-animation">
                 {%- if section.settings.scale_image -%}
-                  {%- render 'image-fill', img_object: block.settings.image, aspect_ratio: section.settings.aspect_ratio -%}
+                  {%- render 'image-fill', img_object: block.settings.image, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 50vw, 100vw' -%}
                 {%- else -%}
-                  {%- render 'image-fill', img_object: block.settings.image -%}
+                  {%- render 'image-fill', img_object: block.settings.image, sizes: '(min-width: 768px) 50vw, 100vw' -%}
                 {%- endif -%}
 
                 {% if has_video %}
