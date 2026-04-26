@@ -177,6 +177,15 @@
     <noscript><link rel="stylesheet" href="{{ 'theme.css' | asset_url }}"></noscript>
     <link rel="stylesheet" href="{{ 'custom-theme.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'custom-theme.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      Plyr (video player) styles split out of theme.css 2026-04-26.
+      Was 32.6 KB of render-blocking CSS shipped on every page even
+      though Plyr only renders on PDPs and sections with video. Loaded
+      via preload+swap so it arrives async — Plyr JS hydration takes
+      seconds anyway, the styles just need to be present by then.
+    {%- endcomment -%}
+    <link rel="preload" href="{{ 'plyr.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
     {% render 'css-overrides' %}
 
     <script>
