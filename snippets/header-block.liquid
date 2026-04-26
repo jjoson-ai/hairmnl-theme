@@ -31,7 +31,7 @@ Required params:
             </div>
           </div>
         {%- if block.settings.link != blank -%}</a>{%- endif -%}
-        {%- render 'image-fill', img_object: block.settings.image, aspect_ratio: block.settings.aspect_ratio -%}
+        {%- render 'image-fill', img_object: block.settings.image, aspect_ratio: block.settings.aspect_ratio, sizes: '(min-width: 768px) 50vw, 100vw' -%}
       </div>
     </div>
 
