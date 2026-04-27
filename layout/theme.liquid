@@ -376,41 +376,48 @@
       Asset file kept in /assets/ for rollback if needed.
     {%- endcomment -%}
     {%- comment -%}
-      Drawer-toggle click intercept (added 2026-04-28 — perf-defer race fix).
-      Header cart icon and other [data-drawer-toggle] buttons have BOTH
-      href={routes.cart_url} (link fallback) AND a JS click handler in the
-      deferred theme.js that does e.preventDefault() and opens the drawer.
-      On a fast cold-cache page, a user can click the icon BEFORE deferred
-      scripts finish parsing — the link wins and they navigate to /cart
-      instead of seeing the drawer. After today's perf push (jquery, theme.js,
-      vendor.js, storepickup.js all deferred) the gap is wide enough that
-      desktop users started reporting this.
+      Drawer-toggle click intercept (added 2026-04-28; rewritten 2026-04-28
+      after a Cloudflare-bot-challenge regression).
 
-      This inline stub captures clicks at document level (before theme.js
-      binds), preventDefault to suppress link navigation, queues the click
-      target, and replays it on DOMContentLoaded once theme.js handlers are
-      in place. Self-removes after first replay so it doesn't double-fire
-      with theme.js's real handler. ~400 bytes inline cost; runs before
-      first paint, no JS dependency.
+      Background: header cart icon and other [data-drawer-toggle] buttons
+      have BOTH href={routes.cart_url} (link fallback) AND a click handler
+      bound by deferred theme.js that does preventDefault and opens the
+      drawer. On fast pages — or when theme.js fails to fully load (e.g.,
+      after a Cloudflare bot-detection challenge throttles the user's IP) —
+      the click falls through to link navigation and the user lands on the
+      standalone /cart page instead of seeing the drawer.
+
+      First version (queue + replay on DOMContentLoaded) caused a worse
+      regression: the synthetic queued.click() replay needed theme.js's
+      button-level handler to be bound by replay-time. If theme.js had
+      not bound (Cloudflare-induced loading delay/failure), the replayed
+      click bubbled to the link href and navigated.
+
+      This version is self-contained: capture-phase listener at document
+      level intercepts every [data-drawer-toggle] click, preventDefault +
+      stopImmediatePropagation (suppresses theme.js's redundant button-
+      level handler), and dispatches theme:drawer:toggle DIRECTLY on the
+      matched drawer element. The Drawer instance's listener (bound in
+      theme.js's drawer constructor at section-load time) handles toggle.
+
+      Works whether or not theme.js's connectToggle bound its own click
+      handler — only depends on the Drawer instance existing in DOM and
+      its toggle listener being attached. If theme.js fails entirely
+      (no Drawer instance), click does nothing — better than wrong /cart
+      navigation. ~450 bytes inline cost, runs before first paint.
     {%- endcomment -%}
     <script>
       (function () {
-        var queued = null;
-        function intercept(e) {
+        document.addEventListener('click', function (e) {
           var btn = e.target.closest && e.target.closest('[data-drawer-toggle]');
           if (!btn) return;
+          var key = btn.getAttribute('data-drawer-toggle');
+          var drawer = document.querySelector('[data-drawer="' + key + '"]');
+          if (!drawer) return; // no drawer in DOM, let link fallback navigate
           e.preventDefault();
-          queued = btn;
-        }
-        document.addEventListener('click', intercept, true);
-        document.addEventListener('DOMContentLoaded', function () {
-          document.removeEventListener('click', intercept, true);
-          if (queued) {
-            // theme.js's Drawer.connectToggle() has now bound real handlers;
-            // re-fire the click so its preventDefault + drawer open run.
-            setTimeout(function () { queued.click(); queued = null; }, 0);
-          }
-        });
+          e.stopImmediatePropagation();
+          drawer.dispatchEvent(new CustomEvent('theme:drawer:toggle', { bubbles: false }));
+        }, true);
       })();
     </script>
     <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
