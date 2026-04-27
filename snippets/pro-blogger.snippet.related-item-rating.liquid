@@ -5,8 +5,4 @@
 
 {% assign prod = all_products[ProdHandle] %}
 
-<div style='' class='jdgm-widget jdgm-preview-badge' data-id='{{ prod.id }}'
-data-template='manual-installation'
-data-auto-install='false'>
-  {{ prod.metafields.judgeme.badge }}
-</div>
+{% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: prod %}
