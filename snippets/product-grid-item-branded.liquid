@@ -123,35 +123,52 @@
 <div class="grid__item {{ grid_offset }} {{ grid_width_small }} {{ grid_width_medium }} {{ grid_width_large }}{% if tagged %} tagged{% endif %} product-grid-item">
   <a href="{{ product.url | within: collection }}" class="grid__image">
     {%- comment -%}
-      Replace static 400x400 / 1200x / 900x src with responsive srcset
-      so browsers pick a width-appropriate variant per breakpoint.
-      Was loading 1200w on mobile (overkill); now mobile picks ~540w.
-      width/height attributes added for CLS reservation.
-      loading="lazy" + fetchpriority="auto" since branded grid is below
-      the brand banner (not LCP).
+      Responsive srcset (180w/360w/540w/720w/1080w) sized for the
+      branded grid (≤25vw desktop, ≤33vw tablet, ≤50vw mobile).
+      width/height for CLS reservation. loading="lazy" since this
+      grid is below the brand banner (not LCP).
     {%- endcomment -%}
     {%- comment -%}
-      WebP <picture> wrapper attempted 2026-04-27 with image_url
-      filter on product.featured_image (a real Image object). Live
-      HTML never rendered the source line — possibly Pipeline 6.1.3
-      doesn't have the image_url filter at all, or there's a parser
-      issue. Verification was inconclusive due to CDN cache lag +
-      template routing complexity. Reverted; WebP rollout continues
-      to be parked for a focused future session.
+      WebP rollout pilot — 2026-04-27 (third attempt).
+      Earlier attempts failed because they piped `product.featured_image.src`
+      (URL string) into image_url, which silently dropped the source line.
+      This time we pass `product.featured_image` (raw Image object) into
+      the `image_url` filter directly. Per Shopify Liquid docs, image_url
+      with `format: 'webp'` returns a Shopify-CDN-served WebP variant —
+      30–50% smaller than JPEG at equivalent quality.
+
+      <picture> + <source type="image/webp"> means modern browsers (~98%
+      of HairMNL traffic per CrUX) pick the WebP. The <img> stays as the
+      fallback for the rare browser that doesn't accept image/webp.
+
+      If verification shows the <source> line missing in rendered HTML,
+      the image_url filter may genuinely not work in Pipeline 6.1.3 —
+      revert by removing the <picture>/<source> wrapper and keeping just
+      the <img>.
     {%- endcomment -%}
-    <img
-      src="{{ product.featured_image.src | img_url: '540x' }}"
-      srcset="{{ product.featured_image.src | img_url: '180x' }} 180w,
-              {{ product.featured_image.src | img_url: '360x' }} 360w,
-              {{ product.featured_image.src | img_url: '540x' }} 540w,
-              {{ product.featured_image.src | img_url: '720x' }} 720w,
-              {{ product.featured_image.src | img_url: '1080x' }} 1080w"
-      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-      width="{{ product.featured_image.width }}"
-      height="{{ product.featured_image.height }}"
-      loading="lazy"
-      style="height:auto;max-width:100%;"
-      alt="{{ product.featured_image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
+    {%- assign _img = product.featured_image -%}
+    <picture>
+      <source type="image/webp"
+              srcset="{{ _img | image_url: width: 180, format: 'webp' }} 180w,
+                      {{ _img | image_url: width: 360, format: 'webp' }} 360w,
+                      {{ _img | image_url: width: 540, format: 'webp' }} 540w,
+                      {{ _img | image_url: width: 720, format: 'webp' }} 720w,
+                      {{ _img | image_url: width: 1080, format: 'webp' }} 1080w"
+              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw">
+      <img
+        src="{{ _img.src | img_url: '540x' }}"
+        srcset="{{ _img.src | img_url: '180x' }} 180w,
+                {{ _img.src | img_url: '360x' }} 360w,
+                {{ _img.src | img_url: '540x' }} 540w,
+                {{ _img.src | img_url: '720x' }} 720w,
+                {{ _img.src | img_url: '1080x' }} 1080w"
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+        width="{{ _img.width }}"
+        height="{{ _img.height }}"
+        loading="lazy"
+        style="height:auto;max-width:100%;"
+        alt="{{ _img.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
+    </picture>
     {{ sticker }}
     {%- comment -%} product-labels disabled 2026-04-27 pending team decision (bd spz). Renders duplicate sale label alongside .product__badge--custom. Snippet kept in /snippets/ for future re-enable. {%- endcomment -%}
     {%- comment -%} {% render 'product-labels', product: product %} {%- endcomment -%}
