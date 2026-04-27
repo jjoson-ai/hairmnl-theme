@@ -130,6 +130,15 @@
       loading="lazy" + fetchpriority="auto" since branded grid is below
       the brand banner (not LCP).
     {%- endcomment -%}
+    {%- comment -%}
+      WebP <picture> wrapper attempted 2026-04-27 with image_url
+      filter on product.featured_image (a real Image object). Live
+      HTML never rendered the source line — possibly Pipeline 6.1.3
+      doesn't have the image_url filter at all, or there's a parser
+      issue. Verification was inconclusive due to CDN cache lag +
+      template routing complexity. Reverted; WebP rollout continues
+      to be parked for a focused future session.
+    {%- endcomment -%}
     <img
       src="{{ product.featured_image.src | img_url: '540x' }}"
       srcset="{{ product.featured_image.src | img_url: '180x' }} 180w,
