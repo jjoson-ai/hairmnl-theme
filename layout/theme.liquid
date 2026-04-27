@@ -267,10 +267,22 @@
       <link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
       <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
     {%- endif -%}
-    {%- if template == 'cart' -%}
-      <link rel="stylesheet" href="{{ 'cart.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-      <noscript><link rel="stylesheet" href="{{ 'cart.css' | asset_url }}"></noscript>
-    {%- endif -%}
+    {%- comment -%}
+      cart.css load: NOT gated to template == 'cart' anymore.
+      The 949888a extraction moved .cart__message + .cart__graph (free-
+      shipping promo banner + progress dots) from theme.css into
+      cart.css, but those selectors are also used by the slide-out
+      cart drawer (snippets/cart-drawer.liquid), which appears on
+      PDP/collection/header/every page. Gating cart.css to /cart left
+      the drawer unstyled everywhere else — the promo banner overflowed
+      horizontally, layout broke. Loading cart.css on all templates
+      (still async via media=print swap) costs ~3KB gzipped extra on
+      non-cart pages, no render blocking. Proper fix: split cart.css
+      into cart-shared.css (drawer + page) and cart-page.css (page only).
+      Filed as a follow-up beads issue.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'cart.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'cart.css' | asset_url }}"></noscript>
     {% render 'css-overrides' %}
 
     <script>
