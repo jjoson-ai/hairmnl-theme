@@ -8,3 +8,6 @@ node_modules/
 .dolt/
 *.db
 .beads-credential-key
+
+# Claude Code worktrees (per-session, not project state)
+.claude/worktrees/
