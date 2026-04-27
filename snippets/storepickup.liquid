@@ -149,7 +149,15 @@ storepickup-addons.liquid file.
 
 {% capture cache_identifier %}settings.{{ language_code }}{% endcapture %}
 
-{{ 'storepickup.js' | asset_url | script_tag }}
+{%- comment -%}
+  Defer storepickup.js (90 KB, ~2,100 ms render-blocking per Lighthouse 2026-04-27 PSI).
+  Was using script_tag (renders <script src="..."> with no defer). Switched to
+  manual <script defer> so the file downloads in parallel and executes after HTML parse,
+  freeing the main thread during LCP. Estimated −870 ms LCP per Lighthouse insights.
+  Safe because the inline <script> below sets ZapietCachedSettings before parse
+  reaches storepickup.js — defer reads the already-defined config on init.
+{%- endcomment -%}
+<script src="{{ 'storepickup.js' | asset_url }}" defer></script>
 
 <script type="text/javascript">
 ZapietCachedSettings = {

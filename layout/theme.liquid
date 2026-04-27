@@ -15,7 +15,13 @@
     <head>
     <meta charset="utf-8">
     <style>{%- render 'critical-css' -%}</style>
-    {{ 'bss-hide-variant.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}
+      Deferred 2026-04-27 — was render-blocking 150 ms per Lighthouse PSI.
+      bss-hide-variant.css is BSS-app CSS; only needed once cart/PDP UI hydrates.
+      media=print swap loads at low priority, then promotes to all on load.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'bss-hide-variant.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'bss-hide-variant.css' | asset_url }}"></noscript>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="{{ settings.color_secondary }}">
@@ -83,7 +89,13 @@
       {{ bsscommerce_login_require_template }}{% endunless %}
 
 
-    {{ 'tiny.content.min.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}
+      Deferred 2026-04-27 — was render-blocking 600 ms per Lighthouse PSI.
+      tiny.content.min.css is the largest single render-blocking CSS in the head
+      after critical-css; same media=print swap pattern as the other deferrals.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'tiny.content.min.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'tiny.content.min.css' | asset_url }}"></noscript>
     
     {% include 'pro-blogger-section-wrapper' %}
     {%- comment -%}
