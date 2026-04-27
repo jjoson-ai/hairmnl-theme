@@ -67,10 +67,25 @@ data-auto-install='{% if auto_install != nil %}{{ auto_install }}{% else %}false
 {% endif %}
 
 {% if widget_type == 'judgeme_preview_badge' %}
-<div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}'
+{%- assign _jm_badge_html = product.metafields.judgeme.badge -%}
+{%- assign _jm_avg = 0 -%}
+{%- assign _jm_cnt = 0 -%}
+{%- if _jm_badge_html contains 'data-average-rating="' -%}
+  {%- assign _jm_avg_parts = _jm_badge_html | split: 'data-average-rating="' -%}
+  {%- assign _jm_avg = _jm_avg_parts[1] | split: '"' | first | times: 1.0 -%}
+{%- endif -%}
+{%- if _jm_badge_html contains 'data-number-of-reviews="' -%}
+  {%- assign _jm_cnt_parts = _jm_badge_html | split: 'data-number-of-reviews="' -%}
+  {%- assign _jm_cnt = _jm_cnt_parts[1] | split: '"' | first | times: 1 -%}
+{%- endif -%}
+<div style='{{ jm_style }}' class='jdgm-widget jdgm-prev-badge' data-id='{{ product.id }}'
+data-average-rating='{{ _jm_avg }}'
+data-number-of-reviews='{{ _jm_cnt }}'
 data-template='{% if concierge_install == true or concierge_install == nil %}{{ template }}{% else %}manual-installation{% endif %}'
 data-auto-install='{% if auto_install != nil %}{{ auto_install }}{% else %}false{% endif %}'>
-  {{ product.metafields.judgeme.badge }}
+  {%- if _jm_cnt > 0 -%}
+    {% render 'judgeme_static_stars', rating: _jm_avg, count: _jm_cnt %}
+  {%- endif -%}
 </div>
 {% endif %}
 
