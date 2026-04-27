@@ -55,8 +55,17 @@
   {% assign limit_currency = limit | times: 100 %}
   {% assign subtotal_without_currency = cart.total_price | plus: 0 | divided_by: 100 %}
 
+  {%- comment -%}
+    Clamp left_to_spend at 0. Without this, when cart already qualifies for free
+    shipping (cart.total_price > limit_currency), the math goes negative and the
+    .cart__message-default span renders "Spend ₱-1,150 more for free shipping".
+    The Liquid conditional render below ensures default is only shown when cart
+    hasn't qualified, but the clamp is a backstop in case the conditional drifts.
+  {%- endcomment -%}
+  {%- assign left_cents = limit_currency | minus: cart.total_price -%}
+  {%- if left_cents < 0 -%}{%- assign left_cents = 0 -%}{%- endif -%}
   {% capture left_to_spend %}
-    <span data-left-to-spend>{{ limit_currency | minus: cart.total_price | money_without_trailing_zeros }}</span>
+    <span data-left-to-spend>{{ left_cents | money_without_trailing_zeros }}</span>
   {% endcapture %}
 
   {% assign free_shipping_message = free_shipping_text | replace: '||amount||', left_to_spend %}
@@ -102,13 +111,26 @@
       </small>
     {% endif %}
 
-    {% if qualified_shipping_message != blank %}
+    {%- comment -%}
+      Render only ONE of success/default, NOT both. Prior CSS-only approach
+      relied on .cart__message.is-success .cart__message-success ~ .cart__message-default { display: none }
+      to hide default when cart qualifies. That depended on JS keeping is-success
+      in sync with live cart state — unreliable: if the AJAX rerender path or
+      listener race drops the class, both messages render simultaneously
+      ("Congratulations! ... Spend ₱-1,150 more...") which is what shoppers saw
+      tonight. Liquid-side branch eliminates the dual-message bug at server
+      render. Trade-off: dynamic mid-session cart changes that cross the
+      free-shipping threshold won't swap the message until next page load.
+      Acceptable: most shoppers don't add items inside the drawer mid-session,
+      and any add/remove via PDP triggers a fresh page render.
+    {%- endcomment -%}
+    {%- if class_message == 'is-success' and qualified_shipping_message != blank -%}
       <span class="cart__message-success">{{ qualified_shipping_message }}</span>
-    {% endif %}
-
-    <span class="cart__message-default">
-      {{ free_shipping_message }}
-    </span>
+    {%- else -%}
+      <span class="cart__message-default">
+        {{ free_shipping_message }}
+      </span>
+    {%- endif -%}
   </p>
 {% endif %}
       

@@ -375,6 +375,44 @@
       today's data-src + data-bgset migrations to native loading="lazy".
       Asset file kept in /assets/ for rollback if needed.
     {%- endcomment -%}
+    {%- comment -%}
+      Drawer-toggle click intercept (added 2026-04-28 — perf-defer race fix).
+      Header cart icon and other [data-drawer-toggle] buttons have BOTH
+      href={routes.cart_url} (link fallback) AND a JS click handler in the
+      deferred theme.js that does e.preventDefault() and opens the drawer.
+      On a fast cold-cache page, a user can click the icon BEFORE deferred
+      scripts finish parsing — the link wins and they navigate to /cart
+      instead of seeing the drawer. After today's perf push (jquery, theme.js,
+      vendor.js, storepickup.js all deferred) the gap is wide enough that
+      desktop users started reporting this.
+
+      This inline stub captures clicks at document level (before theme.js
+      binds), preventDefault to suppress link navigation, queues the click
+      target, and replays it on DOMContentLoaded once theme.js handlers are
+      in place. Self-removes after first replay so it doesn't double-fire
+      with theme.js's real handler. ~400 bytes inline cost; runs before
+      first paint, no JS dependency.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        var queued = null;
+        function intercept(e) {
+          var btn = e.target.closest && e.target.closest('[data-drawer-toggle]');
+          if (!btn) return;
+          e.preventDefault();
+          queued = btn;
+        }
+        document.addEventListener('click', intercept, true);
+        document.addEventListener('DOMContentLoaded', function () {
+          document.removeEventListener('click', intercept, true);
+          if (queued) {
+            // theme.js's Drawer.connectToggle() has now bound real handlers;
+            // re-fire the click so its preventDefault + drawer open run.
+            setTimeout(function () { queued.click(); queued = null; }, 0);
+          }
+        });
+      })();
+    </script>
     <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
     {%- comment -%}
       jquery.min.js was loaded via Shopify's script_tag filter (which
@@ -389,18 +427,28 @@
     <script src="{{ 'jquery.min.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
 
+    {%- comment -%}
+      Cart pre-init dispatcher. 2026-04-28: removed the requestIdleCallback
+      wrapper that delayed the cart fetch until the main thread was idle.
+      That delay was several hundred ms on a busy page (especially after
+      today's perf-defer push pushed jquery + theme.js + storepickup.js +
+      vendor.js into the deferred queue). Without the cart pre-fetched,
+      opening the slide-out drawer triggered an on-demand /cart.js fetch
+      and rendered the loading skeleton for several seconds. Eager dispatch
+      starts the fetch the moment pageshow fires, so by user-click time
+      this.cart is usually populated and CartItems.loadHTML() runs instantly.
+
+      Kept the pageshow event (not a one-shot timer) so bfcache restores
+      also re-fire the cart init — important for back-button navigation.
+
+      Cost: a /cart.js fetch a few hundred ms earlier than before. /cart.js
+      is async, never render-blocking, so this doesn't move LCP/FCP.
+    {%- endcomment -%}
     <script>
       (function() {
         function onPageShowEvents() {
-          if ('requestIdleCallback' in window) {
-            requestIdleCallback(initCartEvent)
-          } else {
-            initCartEvent()
-          }
-          function initCartEvent() {
-            document.documentElement.dispatchEvent(new CustomEvent('theme:cart:init', {bubbles: true}));
-          }
-        };
+          document.documentElement.dispatchEvent(new CustomEvent('theme:cart:init', {bubbles: true}));
+        }
         window.onpageshow = onPageShowEvents;
       })();
     </script>
