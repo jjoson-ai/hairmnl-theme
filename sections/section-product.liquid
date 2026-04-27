@@ -59,7 +59,8 @@
     <div class="grid product-single">
       <div class="grid__item product__media__wrapper {{ product_image_width }}" style="position:relative;">
 
-        {% render 'product-labels', product: product, extra_class: 'product-labels--pdp' %}
+        {%- comment -%} product-labels disabled 2026-04-27 pending team decision (bd spz). Renders duplicate sale label alongside .product__badge--custom on PDP. Snippet kept in /snippets/ for future re-enable. {%- endcomment -%}
+        {%- comment -%} {% render 'product-labels', product: product, extra_class: 'product-labels--pdp' %} {%- endcomment -%}
 
         {% if product.media.size > 0 %}
           {% if product.media.size > 1 %}

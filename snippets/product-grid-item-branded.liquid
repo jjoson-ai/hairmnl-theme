@@ -153,7 +153,8 @@
       style="height:auto;max-width:100%;"
       alt="{{ product.featured_image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
     {{ sticker }}
-    {% render 'product-labels', product: product %}
+    {%- comment -%} product-labels disabled 2026-04-27 pending team decision (bd spz). Renders duplicate sale label alongside .product__badge--custom. Snippet kept in /snippets/ for future re-enable. {%- endcomment -%}
+    {%- comment -%} {% render 'product-labels', product: product %} {%- endcomment -%}
   </a>
 
   <div class="figcaption {{ settings.product_grid_style }} {{ settings.collection_text_alignment | default: 'text-center' }}">

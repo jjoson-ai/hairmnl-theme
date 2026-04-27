@@ -233,7 +233,8 @@ A grid item for products used in collection grid view
       {% endif %}
       <div class="product-grid-item__slide" data-grid-slide></div>
       {{ badge }}
-      {% render 'product-labels', product: product %}
+      {%- comment -%} product-labels disabled 2026-04-27 pending team decision (bd spz). Renders duplicate sale label alongside .product__badge--custom. Snippet kept in /snippets/ for future re-enable. {%- endcomment -%}
+      {%- comment -%} {% render 'product-labels', product: product %} {%- endcomment -%}
     </a>
   </div>
   <noscript>
