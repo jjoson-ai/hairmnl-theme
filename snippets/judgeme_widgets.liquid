@@ -84,7 +84,17 @@ data-number-of-reviews='{{ _jm_cnt }}'
 data-template='{% if concierge_install == true or concierge_install == nil %}{{ template }}{% else %}manual-installation{% endif %}'
 data-auto-install='{% if auto_install != nil %}{{ auto_install }}{% else %}false{% endif %}'>
   {%- if _jm_cnt > 0 -%}
-    {% render 'judgeme_static_stars', rating: _jm_avg, count: _jm_cnt %}
+    {%- comment -%}
+      Pass scroll_target only on PDP, where the review widget (id=judgeme_product_reviews)
+      is rendered below. On collection grids / search / related-products / non-product templates,
+      the target anchor doesn't exist, so the link would do nothing — render bare stars instead.
+      This preserves Judge.me's original hydrated-badge click-to-scroll behavior on PDP.
+    {%- endcomment -%}
+    {%- if template == 'product' -%}
+      {% render 'judgeme_static_stars', rating: _jm_avg, count: _jm_cnt, scroll_target: '#judgeme_product_reviews' %}
+    {%- else -%}
+      {% render 'judgeme_static_stars', rating: _jm_avg, count: _jm_cnt %}
+    {%- endif -%}
   {%- endif -%}
 </div>
 {% endif %}

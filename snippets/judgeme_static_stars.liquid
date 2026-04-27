@@ -3,19 +3,26 @@
   preview badges paint with the surrounding product card (improves LCP/CLS).
 
   Params:
-    rating     numeric 0-5 (e.g. 4.5)
-    count      integer review count
-    size       'sm' | 'md' (default 'sm')
-    show_count optional boolean (default true)
+    rating        numeric 0-5 (e.g. 4.5)
+    count         integer review count
+    size          'sm' | 'md' (default 'sm')
+    show_count    optional boolean (default true)
+    scroll_target optional anchor href (e.g. '#judgeme_product_reviews').
+                  When present, wraps the stars in <a> for click-to-scroll
+                  (preserves Judge.me's original hydrated-badge UX).
+                  Caller is responsible for only passing this on pages
+                  that contain the target anchor element.
 {%- endcomment -%}
 {%- assign _jm_rating = rating | default: 0 | times: 1.0 -%}
 {%- assign _jm_count = count | default: 0 | times: 1 -%}
 {%- if _jm_count > 0 -%}
   {%- assign _jm_pct = _jm_rating | divided_by: 5.0 | times: 100 | round: 1 -%}
+  {%- if scroll_target != blank -%}<a href="{{ scroll_target }}" class="jm-stars-static-link">{%- endif -%}
   <span class="jm-stars-static jm-stars-static--{{ size | default: 'sm' }}" style="--jm-pct:{{ _jm_pct }}%" role="img" aria-label="Rated {{ _jm_rating }} out of 5 stars based on {{ _jm_count }} reviews">
     <span class="jm-stars-static__icons" aria-hidden="true">★★★★★</span>
     {%- if show_count != false -%}
       <span class="jm-stars-static__count">({{ _jm_count }})</span>
     {%- endif -%}
   </span>
+  {%- if scroll_target != blank -%}</a>{%- endif -%}
 {%- endif -%}
