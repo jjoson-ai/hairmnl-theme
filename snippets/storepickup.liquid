@@ -209,5 +209,13 @@ ZapietCachedSettings = {
   cached_config: '{{ shop.metafields.zapiet[cache_identifier] }}'
 }
 
-Zapiet.start(ZapietCachedSettings);
+// 2026-04-27 — wrapped in DOMContentLoaded so it runs AFTER the deferred
+// storepickup.js (line 152) has loaded + defined Zapiet. Without this,
+// Zapiet.start() runs sync at HTML-parse time and throws ReferenceError
+// because deferred storepickup.js hasn't executed yet.
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof Zapiet !== 'undefined' && Zapiet.start) {
+    Zapiet.start(ZapietCachedSettings);
+  }
+});
 </script>
