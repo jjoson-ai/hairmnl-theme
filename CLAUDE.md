@@ -117,3 +117,10 @@ bd close <id>         # Complete work
 - NEVER say "ready to push when you are" - YOU must push
 - If push fails, resolve and retry until it succeeds
 <!-- END BEADS INTEGRATION -->
+
+## Companion tools
+
+This project has access to three globally-registered Claude Code companion tools. Use them when relevant:
+- **context7** — live library/framework docs. Include `use context7` in your prompt when asking about external library APIs (React, Next.js, etc.). Avoids hallucinated API signatures.
+- **memory** — knowledge-graph MCP. Use the `create_entities`, `add_observations`, `create_relations`, and `search_nodes` tools to persist facts that should outlive a session (people, decisions, project state). Memory file: ~/.claude/memory.jsonl. This is cross-project, complementary to Beads (which is per-project structured issues).
+- **claude-trace** — record sessions for review. Run `claude-trace` instead of `claude` when you want a transcript; logs go to `./.claude-trace/` in cwd.
