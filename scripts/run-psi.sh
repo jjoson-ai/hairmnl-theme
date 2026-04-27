@@ -24,13 +24,25 @@ STRATEGY="${2:-mobile}"
 N="${3:-3}"
 
 if [[ -z "${PSI_API_KEY:-}" ]]; then
+  # Preferred: read from macOS Keychain (encrypted on disk, biometric-protected)
+  if command -v security >/dev/null 2>&1; then
+    PSI_API_KEY="$(security find-generic-password -a "$USER" -s "psi-api-key" -w 2>/dev/null)" || true
+    [[ -n "${PSI_API_KEY:-}" ]] && export PSI_API_KEY
+  fi
+fi
+
+if [[ -z "${PSI_API_KEY:-}" ]]; then
+  # Legacy fallback: in-session plaintext file (chmod 600). Delete after Keychain is set up.
   if [[ -r /tmp/.psi_env ]]; then source /tmp/.psi_env; fi
 fi
 
 if [[ -z "${PSI_API_KEY:-}" ]]; then
-  echo "ERROR: PSI_API_KEY env var not set."
-  echo "Either: export PSI_API_KEY=AIzaSy..."
-  echo "Or:     write it to /tmp/.psi_env (chmod 600) as 'export PSI_API_KEY=...'"
+  cat <<'EOH'
+ERROR: PSI_API_KEY not available.
+Set it up once with:
+  security add-generic-password -a "$USER" -s "psi-api-key" -w "AIzaSy..."
+Then this script reads it automatically from Keychain on every run.
+EOH
   exit 1
 fi
 
