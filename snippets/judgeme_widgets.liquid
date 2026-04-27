@@ -67,14 +67,32 @@ data-auto-install='{% if auto_install != nil %}{{ auto_install }}{% else %}false
 {% endif %}
 
 {% if widget_type == 'judgeme_preview_badge' %}
+{%- comment -%}
+  Parse rating + review count out of product.metafields.judgeme.badge.
+
+  Judge.me's metafield blob uses SINGLE-quoted attributes (verified 2026-04-27
+  across 12 sampled live products: data-average-rating='1.00' data-number-of-reviews='1').
+  Try single quotes first (current format), fall back to double quotes for future
+  compat. If both fail (format change Judge.me hasn't shipped yet, or empty metafield),
+  _jm_avg/_jm_cnt stay at 0 and we skip rendering — graceful degradation. Loader.js
+  is gated on .jdgm-preview-badge (full word) so it can't see our renamed
+  .jdgm-prev-badge wrappers anyway, meaning a missed parse leaves the card with no
+  stars rather than a flicker race.
+{%- endcomment -%}
 {%- assign _jm_badge_html = product.metafields.judgeme.badge -%}
 {%- assign _jm_avg = 0 -%}
 {%- assign _jm_cnt = 0 -%}
-{%- if _jm_badge_html contains 'data-average-rating="' -%}
+{%- if _jm_badge_html contains "data-average-rating='" -%}
+  {%- assign _jm_avg_parts = _jm_badge_html | split: "data-average-rating='" -%}
+  {%- assign _jm_avg = _jm_avg_parts[1] | split: "'" | first | times: 1.0 -%}
+{%- elsif _jm_badge_html contains 'data-average-rating="' -%}
   {%- assign _jm_avg_parts = _jm_badge_html | split: 'data-average-rating="' -%}
   {%- assign _jm_avg = _jm_avg_parts[1] | split: '"' | first | times: 1.0 -%}
 {%- endif -%}
-{%- if _jm_badge_html contains 'data-number-of-reviews="' -%}
+{%- if _jm_badge_html contains "data-number-of-reviews='" -%}
+  {%- assign _jm_cnt_parts = _jm_badge_html | split: "data-number-of-reviews='" -%}
+  {%- assign _jm_cnt = _jm_cnt_parts[1] | split: "'" | first | times: 1 -%}
+{%- elsif _jm_badge_html contains 'data-number-of-reviews="' -%}
   {%- assign _jm_cnt_parts = _jm_badge_html | split: 'data-number-of-reviews="' -%}
   {%- assign _jm_cnt = _jm_cnt_parts[1] | split: '"' | first | times: 1 -%}
 {%- endif -%}
