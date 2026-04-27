@@ -149,7 +149,15 @@
   <div class="figcaption {{ settings.product_grid_style }} {{ settings.collection_text_alignment | default: 'text-center' }}">
     <a href="{{ product.url | within: collection | capitalize }}">
       <p class="h6 name_wrapper" style="font-family: {{product_title_font}}; font-size: {{product_title_font_size}}px;">
-        {{ product.title }}
+        {%- comment -%}
+          Strip brand prefix from displayed title — same chain as
+          product-grid-item-branded.liquid:171. Brand subcollection pages
+          (Davines / Kérastase / etc.) display the brand in their H1 +
+          sidebar; repeating it on every card wraps long titles into 6+
+          lines and overflows the figcaption. Alt text + SEO title remain
+          fully qualified.
+        {%- endcomment -%}
+        {{ product.title | replace: "L'Oréal Professionnel ", '' | replace: "L'Oreal Professionnel ", '' | replace: 'L’Oréal Professionnel ', '' | replace: 'Kérastase ', '' | replace: 'Kerastase ', '' | replace: 'Davines ', '' | replace: 'Naturaltech Davines ', '' | replace: 'AVEDA ', '' | replace: 'Aveda ', '' | replace: 'K18 ', '' | replace: 'Schwarzkopf Professional ', '' | replace: 'Bed Head By TIGI ', '' | replace: 'Wella Professionals ', '' | replace: 'Revlon Professional ', '' }}
       </p>
       {% include 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true %}
 
