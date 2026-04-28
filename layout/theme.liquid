@@ -168,7 +168,24 @@
     {%- comment -%} Defer Searchanise init.js to unblock first paint; widget enhances after parse. {%- endcomment -%}
     <script src="//www.searchanise.com/widgets/shopify/init.js?a=7K0f1C4k5q" defer="defer"></script>
 
-    {% include 'limespot' %}
+    {%- comment -%}
+      LimeSpot SDK gated 2026-04-28 — was loading on every template
+      including /customers/* (customer-area pages: account, login,
+      addresses, orders, register, reset-password, activate). LimeSpot's
+      own PageInfo init in snippets/limespot.liquid doesn't have a
+      branch for customer-area templates — it just loads the SDK
+      (300+ KB) but doesn't supply PageInfo, so the recs widget
+      silently no-ops. Was contributing to /account's 30% TTFB-good
+      and 44% LCP-good per real-shopper RUM (beads 2t5).
+
+      Skip on customers/* templates (no commercial-discovery context
+      anyway — visitor is logged in, browsing their own account).
+      Real-shopper LimeSpot recs still load on homepage / collection /
+      PDP / cart / search where they actually drive conversion.
+    {%- endcomment -%}
+    {%- unless template contains 'customers/' -%}
+      {% include 'limespot' %}
+    {%- endunless -%}
 
     {% render 'treedify' %}
     
@@ -712,7 +729,17 @@
       {{ content_for_layout }}<!-- End of layout -->
 	<noscript class="endOfLayoutContentX" type="text/mark"></noscript>
       {% render 'treedify_script' %}
-      <limespot></limespot>
+      {%- comment -%}
+        LimeSpot recs widget gated 2026-04-28 — same rationale as the
+        SDK include above. The <limespot> element is the recs container
+        the SDK populates with product cards. On customer-area pages
+        the SDK is also skipped (above), so this element would just
+        sit empty. Skipping the element entirely shaves a tiny bit of
+        DOM + CSS work for those templates.
+      {%- endcomment -%}
+      {%- unless template contains 'customers/' -%}
+        <limespot></limespot>
+      {%- endunless -%}
       
     {% capture bsscommerce_passcode_to_see_price_product_custom %}{% render 'bss-passcode-to-see-price-js.liquid' %}{% endcapture %}{% unless bsscommerce_passcode_to_see_price_product_custom contains "Liquid error" %}{% render 'bss-passcode-to-see-price-js.liquid' %}{% endunless %}{% capture bsscommerce_login_to_see_price_product_custom %}{% render 'bsscommerce-login-to-see-price-custom-js.liquid' %}{% endcapture %}{% unless bsscommerce_login_to_see_price_product_custom contains "Liquid error" %}{% render 'bsscommerce-login-to-see-price-custom-js.liquid' %}{% endunless %}{% capture bss_ltap_fl_redirect %}{% render 'bss-ltap-fl-redirect.liquid' %}{% endcapture %}{% unless bss_ltap_fl_redirect contains "Liquid error" %}{% render 'bss-ltap-fl-redirect.liquid' %}{% endunless %}</main>
 
