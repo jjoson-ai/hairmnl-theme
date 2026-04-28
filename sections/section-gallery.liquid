@@ -29,10 +29,25 @@
 
             {% if block.settings.image != blank %}
               <div class="lazy-image has-zoom-animation">
+                {%- comment -%}
+                  LCP fix 2026-04-28 — first gallery block's image is the
+                  LCP element on /pages/azta-urban-salon-service-menu (per
+                  GA4 RUM debug_target attribution + PSI's lcp-discovery-
+                  insight which scored 0 because it was lazy-loaded). Make
+                  the first image eager + fetchpriority=high so the browser
+                  starts the request during HTML parse instead of waiting
+                  for IntersectionObserver. All later blocks stay lazy.
+                {%- endcomment -%}
+                {%- assign img_loading = 'lazy' -%}
+                {%- assign img_priority = '' -%}
+                {%- if forloop.first -%}
+                  {%- assign img_loading = 'eager' -%}
+                  {%- assign img_priority = 'high' -%}
+                {%- endif -%}
                 {%- if section.settings.scale_image -%}
-                  {%- render 'image-fill', img_object: block.settings.image, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 50vw, 100vw' -%}
+                  {%- render 'image-fill', img_object: block.settings.image, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 50vw, 100vw', loading: img_loading, fetchpriority: img_priority -%}
                 {%- else -%}
-                  {%- render 'image-fill', img_object: block.settings.image, sizes: '(min-width: 768px) 50vw, 100vw' -%}
+                  {%- render 'image-fill', img_object: block.settings.image, sizes: '(min-width: 768px) 50vw, 100vw', loading: img_loading, fetchpriority: img_priority -%}
                 {%- endif -%}
 
                 {% if has_video %}

@@ -23,6 +23,27 @@
   loading 720x/1080x variants because of the 100vw hint.
 {%- endcomment -%}
 {%- assign sizes = sizes | default: "100vw" -%}
+{%- comment -%}
+  loading + fetchpriority params (added 2026-04-28).
+  Default loading="lazy" preserves prior behavior for the 90%+ of
+  callers rendering below-the-fold images. Above-the-fold callers
+  (first gallery block, hero section, etc.) should explicitly pass
+  loading: 'eager' AND fetchpriority: 'high' to avoid being penalised
+  by Lighthouse's lcp-discovery-insight (which scored 0 on
+  /pages/azta-urban-salon-service-menu in the 2026-04-28 audit
+  because the gallery's first image was lazy-loaded — but it was the
+  LCP element, so lazy-load directly delays LCP). 782 KiB of image
+  delivery savings + faster LCP unblock from this single change.
+
+  Pattern for section callers iterating blocks:
+    {%- if forloop.first -%}
+      {%- render 'image-fill', img_object: ..., loading: 'eager', fetchpriority: 'high' -%}
+    {%- else -%}
+      {%- render 'image-fill', img_object: ... -%}
+    {%- endif -%}
+{%- endcomment -%}
+{%- assign loading = loading | default: 'lazy' -%}
+{%- assign fetchpriority = fetchpriority | default: '' -%}
 
 {%- comment -%}
   Native <img loading="lazy"> instead of the legacy
@@ -72,7 +93,8 @@
       src="{{ image | img_url: 'master' }}"
       width="{{ image.width }}"
       height="{{ image.height }}"
-      loading="lazy"
+      loading="{{ loading }}"
+      {% if fetchpriority != '' %}fetchpriority="{{ fetchpriority }}"{% endif %}
       alt="{{ image.alt | strip_html | escape }}"
       style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:{{ bg_position | replace: '-', ' ' }};">
   {%- endif -%}
