@@ -268,21 +268,25 @@
       <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
     {%- endif -%}
     {%- comment -%}
-      cart.css load: NOT gated to template == 'cart' anymore.
-      The 949888a extraction moved .cart__message + .cart__graph (free-
-      shipping promo banner + progress dots) from theme.css into
-      cart.css, but those selectors are also used by the slide-out
-      cart drawer (snippets/cart-drawer.liquid), which appears on
-      PDP/collection/header/every page. Gating cart.css to /cart left
-      the drawer unstyled everywhere else — the promo banner overflowed
-      horizontally, layout broke. Loading cart.css on all templates
-      (still async via media=print swap) costs ~3KB gzipped extra on
-      non-cart pages, no render blocking. Proper fix: split cart.css
-      into cart-shared.css (drawer + page) and cart-page.css (page only).
-      Filed as a follow-up beads issue.
+      cart.css = SHARED rules only (.cart__message free-shipping promo +
+      .cart__graph progress dots). Used by both the slide-out drawer
+      (snippets/cart-drawer.liquid, on every page) AND the standalone
+      /cart page. Loaded on every template here. Down from 465 lines
+      to 199 lines after the 2026-04-28 split (beads hairmnl-theme-5zj).
     {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'cart.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'cart.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      cart-page.css = page-only rules (.cart__template grid layout +
+      .template__cart__footer totals/checkout grid). Only used on the
+      standalone /cart page (sections/cart.liquid). Gated to template ==
+      'cart' to keep ~4KB / ~1KB gzipped off PDP/collection/homepage/etc.
+      Split out 2026-04-28 — see beads hairmnl-theme-5zj.
+    {%- endcomment -%}
+    {%- if template == 'cart' -%}
+      <link rel="stylesheet" href="{{ 'cart-page.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'cart-page.css' | asset_url }}"></noscript>
+    {%- endif -%}
     {% render 'css-overrides' %}
 
     <script>
