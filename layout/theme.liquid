@@ -455,93 +455,23 @@
       })();
     </script>
     {%- comment -%}
-      Web Vitals RUM reporter — added 2026-04-28.
+      RUM removed 2026-04-28 PM — was a duplicate of the existing
+      snippets/web-vitals-reporter.liquid (shipped 2 days earlier in
+      commit 367f920 — uses Google's official web-vitals.js v4
+      attribution build with TTFB + metric_rating + debug_target +
+      navigation_type, richer than this inline block).
 
-      Captures real-shopper CLS, LCP, INP, FCP via PerformanceObserver
-      and pushes to window.dataLayer for GTM forwarding to GA4.
-      Solves the "PSI is too noisy to trust as a perf metric" problem
-      we hit today (single-run PSI swings 19↔37↔PAGE_HUNG within
-      minutes — see beads e4a notes).
+      The existing reporter is rendered at theme.liquid line ~874
+      ({% render 'web-vitals-reporter' %}) and pushes events to GTM
+      as event=LCP|CLS|INP|FCP|TTFB (each metric its own event)
+      with params: value, metric_id, metric_value, metric_delta,
+      metric_rating, metric_navigation_type, debug_target, page_path.
 
-      Why inline in head: PerformanceObserver with buffered:true must
-      be created before the events fire to capture them. Loading from
-      an external file means missing the early entries.
-
-      Cost: ~600 bytes minified inline. Zero network requests, zero
-      user-facing change. Listeners only fire on page lifecycle events
-      (pagehide for LCP/CLS finalization, every interaction for INP).
-
-      Receives in GTM:
-        event: web_vital
-        web_vital_name: CLS | LCP | INP | FCP
-        web_vital_value: number (ms for time metrics, score for CLS)
-        web_vital_id: short attribution string (LCP element tag, INP
-          interaction target, etc) — for slicing in GA4
-
-      GTM tag setup is admin-side: see beads 7fz for the GA4
-      attribution wiring; this commit ships the data emission. Without
-      the GTM tag, dataLayer.push silently no-ops; no-op on browsers
-      missing PerformanceObserver too.
+      My duplicate inline reporter would have double-counted every
+      vital event in GA4. Removing now. The js_error tracking below
+      is genuinely new (existing reporter doesn't track JS errors),
+      so kept.
     {%- endcomment -%}
-    <script>
-      (function () {
-        if (!('PerformanceObserver' in window)) return;
-        var dl = (window.dataLayer = window.dataLayer || []);
-        var send = function (name, value, id) {
-          dl.push({
-            event: 'web_vital',
-            web_vital_name: name,
-            web_vital_value: Math.round(value * 1000) / 1000,
-            web_vital_id: id || ''
-          });
-        };
-        // CLS — sum of all unexpected layout shifts
-        var clsValue = 0;
-        try {
-          new PerformanceObserver(function (l) {
-            l.getEntries().forEach(function (e) { if (!e.hadRecentInput) clsValue += e.value; });
-          }).observe({ type: 'layout-shift', buffered: true });
-        } catch (e) {}
-        // LCP — largest contentful paint
-        var lcpValue = 0, lcpId = '';
-        try {
-          new PerformanceObserver(function (l) {
-            var entries = l.getEntries();
-            var last = entries[entries.length - 1];
-            if (last) {
-              lcpValue = last.startTime;
-              lcpId = (last.element && last.element.tagName) ? last.element.tagName.toLowerCase() : '';
-              if (last.url) lcpId += '|' + last.url.split('/').pop().slice(0, 40);
-            }
-          }).observe({ type: 'largest-contentful-paint', buffered: true });
-        } catch (e) {}
-        // FCP — first contentful paint (one-shot)
-        try {
-          new PerformanceObserver(function (l) {
-            var fcp = l.getEntries()[0];
-            if (fcp) send('FCP', fcp.startTime);
-          }).observe({ type: 'paint', buffered: true });
-        } catch (e) {}
-        // INP — worst Event Timing entry over the page lifetime
-        var worstInp = 0, worstInpId = '';
-        try {
-          new PerformanceObserver(function (l) {
-            l.getEntries().forEach(function (e) {
-              if (e.duration > worstInp) {
-                worstInp = e.duration;
-                worstInpId = e.name + (e.target && e.target.tagName ? ':' + e.target.tagName.toLowerCase() : '');
-              }
-            });
-          }).observe({ type: 'event', buffered: true, durationThreshold: 16 });
-        } catch (e) {}
-        // Send finalized metrics on page hide (bfcache-safe, no double-fire)
-        addEventListener('pagehide', function () {
-          if (lcpValue > 0) send('LCP', lcpValue, lcpId);
-          send('CLS', clsValue);
-          if (worstInp > 0) send('INP', worstInp, worstInpId);
-        }, { once: true });
-      })();
-    </script>
     {%- comment -%}
       JS error tracking — added 2026-04-28.
 
