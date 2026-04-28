@@ -52,4 +52,30 @@
     display: block;
     aspect-ratio: 125 / 24;
   }
+
+  /* CLS fix 2026-04-28 — Shop Sheriff PWA app injects #pwa-modal into the
+     page body when it decides to prompt for "Install our app". Without
+     position constraints, the modal pushes all subsequent in-flow content
+     down — causing massive CLS. Real-shopper RUM data attributed 341
+     poor-rated CLS events to #pwa-modal across the worst-performing
+     pages in 14 days (per GA4 web-vitals-reporter pipeline + GSC's
+     CrUX field data: dandruff-control collection at 0.29, blog/low-
+     porosity at 0.54, blog/best-hair-color at 0.53, kerastase-blond-
+     absolu PDP at 0.32, azta-urban-salon-service-menu at 0.30 mobile).
+
+     Fix: force the modal to position: fixed (overlay, not in-flow) +
+     contain: layout (its size changes don't affect siblings). The modal
+     can still appear and serve its "Install our PWA" purpose — it just
+     can't shift content around it.
+
+     Selectors target the modal element itself + likely backdrop sibling.
+     `!important` because Shop Sheriff's own CSS may set position absolute
+     or static; we need to win specificity battles against external CSS. */
+  #pwa-modal,
+  [id^="pwa-modal"],
+  [class*="pwa-modal"] {
+    position: fixed !important;
+    z-index: 9999 !important;
+    contain: layout !important;
+  }
 </style>
