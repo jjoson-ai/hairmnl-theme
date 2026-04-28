@@ -12,7 +12,7 @@
                 <div class="swiper-slide">
                   <article>
                     <a target="_blank" href="{{ article.url }}">
-                      <img src="{{article.image | img_url: '300x'}}" loading="lazy">
+                      <img src="{{article.image | img_url: '300x'}}" loading="lazy" alt="{{ article.title | strip_html | escape }}">
                       <h5>{{article.title}}</h5>
                     </a>
                   </article>
