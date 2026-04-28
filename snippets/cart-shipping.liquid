@@ -13,15 +13,22 @@
     <div class="shipping-calculator">
       <div data-shipping-estimate-form>
 
-        <div class="display-none">
-          {%- comment -%}Required for Shopify address handlers{%- endcomment -%}
-          <input type="text" name="address[first_name]" value="{{ form.first_name }}">
-          <input type="text" name="address[last_name]" value="{{ form.last_name }}">
-          <input type="text" name="address[company]" value="{{ form.company }}">
-          <input type="text" name="address[address1]" value="{{ form.address1 }}">
-          <input type="text" name="address[address2]" value="{{ form.address2 }}">
-          <input type="text" name="address[city]" value="{{ form.city }}">
-          <input type="tel" name="address[phone]" value="{{ form.phone }}">
+        <div class="display-none" aria-hidden="true">
+          {%- comment -%}
+            Required for Shopify address handlers. aria-hidden="true" + tabindex=-1
+            added 2026-04-28 — these are scaffolding inputs only used by Shopify's
+            shipping-rate API, never visible or focusable. The visible form below
+            uses select+label pairs that ARE properly labeled. Without aria-hidden,
+            screen readers announce 7 unlabeled text inputs as if they were
+            interactive form fields.
+          {%- endcomment -%}
+          <input type="text" name="address[first_name]" value="{{ form.first_name }}" tabindex="-1">
+          <input type="text" name="address[last_name]" value="{{ form.last_name }}" tabindex="-1">
+          <input type="text" name="address[company]" value="{{ form.company }}" tabindex="-1">
+          <input type="text" name="address[address1]" value="{{ form.address1 }}" tabindex="-1">
+          <input type="text" name="address[address2]" value="{{ form.address2 }}" tabindex="-1">
+          <input type="text" name="address[city]" value="{{ form.city }}" tabindex="-1">
+          <input type="tel" name="address[phone]" value="{{ form.phone }}" tabindex="-1">
         </div>
 
         <div class="p">

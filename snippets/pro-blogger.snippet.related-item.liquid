@@ -20,7 +20,7 @@
        <a style="border : 0px;" href="{{ ProdURL }}"><img src="{{ ProdImg }}" alt="{{ ProdTitle }}" data-pin-nopin="true"/></a>
      {% if pb_displayBuynow and pb_displayBuynow_hover %}
       <div class="pb-image-hover">
-        <form method="post" action="/cart/add">
+        <form method="post" action="{{ routes.cart_add_url }}">
         <input type="hidden" name="id" value="{{ all_products[ProdHandle].first_available_variant.id }}" />
         <input min="1" type="hidden" id="quantity" name="quantity" value="1"/>
         <input type="submit" value=" {{ pb_BuynowText }} " class="btn" />
@@ -45,7 +45,7 @@
        </div>
        {% if pb_displayBuynow and pb_displayBuynow_hover == false %}
         <div class="pb-buy-button" >
-        <form method="post" action="/cart/add">
+        <form method="post" action="{{ routes.cart_add_url }}">
         <input type="hidden" name="id" value="{{ all_products[ProdHandle].first_available_variant.id }}" />
         <input min="1" type="hidden" id="quantity" name="quantity" value="1"/>
         <input type="submit" value="{{ pb_BuynowText }}" class="btn" />

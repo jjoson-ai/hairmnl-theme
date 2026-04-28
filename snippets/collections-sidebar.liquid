@@ -71,12 +71,12 @@
       <h5 class="collection-nav--heading {{ custom_nav_list }}">{{ 'collections.sidebar.collections' | t }}</h5>
       <ul class="collection-nav {{ custom_nav_list }}">
         <li {% unless collection.id %}class="collection-nav--active"{% endunless %}>
-          <a href="/collections/all">{{ 'collections.sidebar.all_collections' | t }}</a>
+          <a href="{{ routes.all_products_collection_url }}">{{ 'collections.sidebar.all_collections' | t }}</a>
         </li>
         {% for collection_link in collections %}
           {% unless collection_link.handle == 'frontpage' %}
             <li {% if collection.handle == collection_link.handle %}class="collection-nav--active"{% endif %}>
-              <a href="/collections/{{ collection_link.handle }}">{{ collection_link.title }}</a>
+              <a href="{{ routes.collections_url }}/{{ collection_link.handle }}">{{ collection_link.title }}</a>
             </li>
           {% endunless %}
         {% endfor %}
@@ -89,7 +89,7 @@
       <h5>{{ 'collections.sidebar.types' | t }}</h5>
       <ul class="collection-nav">
         <li {% unless collection.current_type %}class="collection-nav--active"{% endunless %}>
-          <a href="/collections/all">{{ 'collections.sidebar.all_types' | t }}</a>
+          <a href="{{ routes.all_products_collection_url }}">{{ 'collections.sidebar.all_types' | t }}</a>
         </li>
         {% for type in collection.all_types %}
           {% capture typeString %}{{ type | link_to_type }}{% endcapture %}
@@ -114,7 +114,7 @@
       <h5>{{ 'collections.sidebar.vendors' | t }}</h5>
       <ul  class="collection-nav">
         <li {% unless collection.current_vendor %}class="collection-nav--active"{% endunless %}>
-          <a href="/collections/all">{{ 'collections.sidebar.all_vendors' | t }}</a>
+          <a href="{{ routes.all_products_collection_url }}">{{ 'collections.sidebar.all_vendors' | t }}</a>
         </li>
         {% for vendor in collection.all_vendors %}
           {% if collection.current_vendor == vendor %}
