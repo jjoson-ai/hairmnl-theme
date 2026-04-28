@@ -275,16 +275,22 @@ A grid item for products used in collection grid view
       <div class="product__grid__title__wrapper">
         <p class="product__grid__title">
           {%- comment -%}
-            Strip brand prefix from displayed title — same chain as
-            product-grid-item-branded.liquid:171 and
-            product-grid-item-branded-subcollection.liquid:152. Brand
-            landing pages render Featured / Best Sellers / Rituals
-            sections via THIS snippet (not the -branded one), so the
-            strip needs to live here too. Products without a brand
-            prefix in their title are unaffected (no replace match).
-            Alt text + SEO title remain fully qualified.
+            Reverted 2026-04-29: brand-prefix strip was added here on
+            the assumption that branded landing pages used this same
+            snippet. That's true — but this snippet is ALSO used on
+            homepage Best Sellers, /collections/all, search, related
+            products, and every other product card on the site. The
+            unconditional strip wiped the brand from ~all homepage
+            products ("Davines Purifying Shampoo" → "Purifying
+            Shampoo"), which is a much bigger regression than the
+            cosmetic redundancy on branded landing pages.
+
+            If we want to re-strip on branded pages later, the right
+            shape is a `strip_brand: true` param passed only by the
+            sections in /collections/davines, /collections/kerastase,
+            etc. — gated, not unconditional. Filed as bd item.
           {%- endcomment -%}
-          {{ product.title | replace: "L'Oréal Professionnel ", '' | replace: "L'Oreal Professionnel ", '' | replace: 'L’Oréal Professionnel ', '' | replace: 'Kérastase ', '' | replace: 'Kerastase ', '' | replace: 'Davines ', '' | replace: 'Naturaltech Davines ', '' | replace: 'AVEDA ', '' | replace: 'Aveda ', '' | replace: 'K18 ', '' | replace: 'Schwarzkopf Professional ', '' | replace: 'Bed Head By TIGI ', '' | replace: 'Wella Professionals ', '' | replace: 'Revlon Professional ', '' }}
+          {{ product.title }}
         </p>
         {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product %}
         {%- if settings.product_grid_show_rating and product.metafields.reviews.rating.value != blank -%}
