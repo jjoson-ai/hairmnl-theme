@@ -48,33 +48,13 @@
       </nav>
     {% endif %}
 
-    {%- comment -%}
-      2026-04-28 — CLS fix for PDP. Reserve aspect-ratio space on the OUTER
-      column so the description column never gets pushed when image column's
-      internal contents (Flickity carousel, lazy-loaded thumbnails, BSS B2B
-      price injection, store-pickup widget) take time to render. PSI measured
-      CLS 0.36-0.60 on davines-momo and loreal-serioxyl PDPs from
-      grid__item.medium-up--one-half shifts; this prevents that.
-
-      The --media-ar CSS variable carries the first image's aspect ratio
-      (capped at 1.0 to match the .flickity-viewport padding-bottom cap).
-      The mobile-only min-height in CSS (theme.css :: .product__media__wrapper)
-      reserves height = column_width / aspect on stacked layouts. Desktop
-      side-by-side layouts naturally reserve via the existing .lazy-image
-      padding-top so we don't need this there.
-    {%- endcomment -%}
-    {%- assign first_media_ar = product.media[0].aspect_ratio | default: 1 -%}
-    {%- if first_media_ar > 1 -%}{%- assign first_media_ar_capped = first_media_ar -%}{%- else -%}{%- assign first_media_ar_capped = 1 -%}{%- endif -%}
     <div class="grid product-single">
-      <div class="grid__item product__media__wrapper {{ product_image_width }}"
-           {%- if product.media.size > 0 -%}
-             style="--media-ar: {{ first_media_ar_capped }};"
-           {%- endif -%}>
+      <div class="grid__item product__media__wrapper {{ product_image_width }}">
 
         {% if product.media.size > 0 %}
           {% if product.media.size > 1 %}
             <div data-product-slideshow
-              class="product__slides flickity-lock-height"
+              class="product__slides flickity-lock-height" 
               style="--default-ratio: {{ 1 | divided_by: product.media[0].aspect_ratio | times: 100 | at_most: 100 }}%">
           {% else %}
             <div class="product__slides">

@@ -14877,22 +14877,6 @@ html.no-js .quantity__button {
 .product__media__wrapper {
   margin-bottom: calc(var(--gutter) * 2);
 }
-/* 2026-04-28 — CLS fix. Reserve aspect-ratio space on the image column
-   on mobile/tablet (where columns stack) so the description column never
-   gets pushed when image column's internal contents (Flickity carousel,
-   thumbnails, BSS B2B injection, store-pickup widget) take time to render.
-   PSI measured CLS 0.36-0.60 on PDPs from grid__item.medium-up--one-half
-   shifts; this reserves the column height immediately. The --media-ar
-   variable is set inline by sections/product.liquid from the first image
-   aspect ratio (capped at 1.0 to match flickity-viewport padding-bottom
-   cap). Falls back to 1 (square) if the variable isn't set. Desktop
-   side-by-side layouts (>= 768px) don't need this — the description
-   column is beside, not below, so image column height doesn't push it. */
-@media only screen and (max-width: 767px) {
-  .product__media__wrapper {
-    min-height: calc(100vw / var(--media-ar, 1));
-  }
-}
 .product__slides {
   position: relative;
   font-size: 0;
