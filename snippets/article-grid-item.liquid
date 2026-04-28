@@ -23,7 +23,10 @@
       browsers download 1080x variants for cards that only render at
       ~300px wide — flagged as OVERSIZED-WASTE in the smoke test.
     {%- endcomment -%}
-    {%- render 'image-fill', img_object: article.image, aspect_ratio: aspect_ratio, sizes: '(min-width: 768px) 25vw, 50vw' -%}
+    {%- comment -%} LCP fix 2026-04-28 (beads d73): caller passes `is_first: forloop.first` for the first article in a grid; first card on /blogs/* is a likely LCP candidate. {%- endcomment -%}
+    {%- assign img_loading = 'lazy' -%}{%- assign img_priority = '' -%}
+    {%- if is_first -%}{%- assign img_loading = 'eager' -%}{%- assign img_priority = 'high' -%}{%- endif -%}
+    {%- render 'image-fill', img_object: article.image, aspect_ratio: aspect_ratio, sizes: '(min-width: 768px) 25vw, 50vw', loading: img_loading, fetchpriority: img_priority -%}
   {% else %}
     <div class="image__fill" style="padding-top: {{ aspect_ratio | times: 100 }}%;
                                                                                                                                                                                                                                        background: var(--muted);"></div>

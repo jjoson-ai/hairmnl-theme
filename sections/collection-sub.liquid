@@ -16,7 +16,10 @@
                   {%- if section.settings.select_image == 'product' or image == blank -%}
                     {%- assign image = sub_collection.products.first.featured_media.preview_image -%}
                   {%- endif -%}
-                  {%- render 'image-fill', img_object: image, aspect_ratio: section.settings.aspect_ratio, bg_position: section.settings.bg_position, sizes: '(min-width: 768px) 33vw, 50vw' -%}
+                  {%- comment -%} LCP fix 2026-04-28 (beads d73): first sub-collection's image is a likely LCP candidate; eager+priority on forloop.first. {%- endcomment -%}
+                  {%- assign img_loading = 'lazy' -%}{%- assign img_priority = '' -%}
+                  {%- if forloop.first -%}{%- assign img_loading = 'eager' -%}{%- assign img_priority = 'high' -%}{%- endif -%}
+                  {%- render 'image-fill', img_object: image, aspect_ratio: section.settings.aspect_ratio, bg_position: section.settings.bg_position, sizes: '(min-width: 768px) 33vw, 50vw', loading: img_loading, fetchpriority: img_priority -%}
                 </div>
                 <div class="image-overlay" style="--bg:{{ section.settings.overlay_color }}; opacity:{{ section.settings.overlay_opacity | times: 0.01 }};"></div>
                 <div class="hero__content__wrapper {{ section.settings.text_align }}">

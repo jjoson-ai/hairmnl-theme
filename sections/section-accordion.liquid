@@ -59,7 +59,10 @@
                 {%- when 'image' -%}
                   <div class="accordion__block" {{ block.shopify_attributes }}>
                     <div class="accordion__block-image">
-                      {%- render 'image-fill', img_object: block.settings.image, bg_position: block.settings.bg_position, aspect_ratio: block.settings.aspect_ratio, sizes: '(min-width: 768px) 50vw, 100vw' -%}
+                      {%- comment -%} LCP fix 2026-04-28 (beads d73): first block's image is a likely LCP candidate; eager+priority on forloop.first. {%- endcomment -%}
+                      {%- assign img_loading = 'lazy' -%}{%- assign img_priority = '' -%}
+                      {%- if forloop.first -%}{%- assign img_loading = 'eager' -%}{%- assign img_priority = 'high' -%}{%- endif -%}
+                      {%- render 'image-fill', img_object: block.settings.image, bg_position: block.settings.bg_position, aspect_ratio: block.settings.aspect_ratio, sizes: '(min-width: 768px) 50vw, 100vw', loading: img_loading, fetchpriority: img_priority -%}
                     </div>
                     {{ text_content }}
                   </div>

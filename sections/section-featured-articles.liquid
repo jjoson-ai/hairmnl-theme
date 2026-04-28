@@ -41,7 +41,8 @@
                  show_excerpt: section.settings.show_excerpt
                  excerpt_alignment: section.settings.excerpt_alignment
                  show_readmore: section.settings.show_readmore
-                 btn_readmore_alignment: section.settings.btn_readmore_alignment %}
+                 btn_readmore_alignment: section.settings.btn_readmore_alignment
+                 is_first: forloop.first %}
               </div>
             {%- endunless -%}
 
@@ -68,7 +69,8 @@
                  show_excerpt: section.settings.show_excerpt
                  excerpt_alignment: section.settings.excerpt_alignment
                  show_readmore: section.settings.show_readmore
-                 btn_readmore_alignment: section.settings.btn_readmore_alignment %}
+                 btn_readmore_alignment: section.settings.btn_readmore_alignment
+                 is_first: forloop.first %}
               </div>
             {% else %}
               {% for i in (1..post_count) %}

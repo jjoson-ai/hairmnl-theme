@@ -82,21 +82,50 @@
       applied via inline style. Issue first surfaced on homepage blog
       cards + article-page recommended-articles sidebar.
     {%- endcomment -%}
-    <img
-      class="fade-in-child"
-      srcset="{% if image.width > 360 %}{{ image | img_url: '360x' }} 360w,{% endif %}
-              {% if image.width > 720 %}{{ image | img_url: '720x' }} 720w,{% endif %}
-              {% if image.width > 1080 %}{{ image | img_url: '1080x' }} 1080w,{% endif %}
-              {% if image.width > 1600 %}{{ image | img_url: '1600x' }} 1600w,{% endif %}
-              {{ image | img_url: 'master' }} {{ image.width }}w"
-      sizes="{{ sizes }}"
-      src="{{ image | img_url: 'master' }}"
-      width="{{ image.width }}"
-      height="{{ image.height }}"
-      loading="{{ loading }}"
-      {% if fetchpriority != '' %}fetchpriority="{{ fetchpriority }}"{% endif %}
-      alt="{{ image.alt | strip_html | escape }}"
-      style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:{{ bg_position | replace: '-', ' ' }};">
+    {%- comment -%}
+      WebP rollout 2026-04-28 — same <picture>+<source> pattern shipped
+      for product-grid-item.liquid (commit e946c02). image_url filter
+      with format:'webp' returns Shopify-CDN-served WebP variants —
+      typically 30-50% smaller than JPG at equivalent quality.
+
+      Modern browsers (~98% of HairMNL traffic per CrUX) pick the WebP
+      via type negotiation on <source>. Older browsers fall through to
+      the <img> JPG/PNG below. Lighthouse modern-image-formats audit
+      moves from FAIL to PASS for these images.
+
+      Critical pattern detail: pass `image` (the raw Image object)
+      into image_url, NOT image.src (URL string) — the latter silently
+      drops the format param. Earlier WebP attempts on banner-slider
+      and product-grid-item failed twice because of this.
+
+      The <img> below stays as fallback (and so existing JS / DevTools
+      tooling that reads img.src still works). width/height + loading
+      + fetchpriority + style + alt all remain on <img> per HTML spec
+      — those don't go on <source>.
+    {%- endcomment -%}
+    <picture>
+      <source type="image/webp"
+              srcset="{% if image.width > 360 %}{{ image | image_url: width: 360, format: 'webp' }} 360w,{% endif %}
+                      {% if image.width > 720 %}{{ image | image_url: width: 720, format: 'webp' }} 720w,{% endif %}
+                      {% if image.width > 1080 %}{{ image | image_url: width: 1080, format: 'webp' }} 1080w,{% endif %}
+                      {% if image.width > 1600 %}{{ image | image_url: width: 1600, format: 'webp' }} 1600w,{% endif %}"
+              sizes="{{ sizes }}">
+      <img
+        class="fade-in-child"
+        srcset="{% if image.width > 360 %}{{ image | img_url: '360x' }} 360w,{% endif %}
+                {% if image.width > 720 %}{{ image | img_url: '720x' }} 720w,{% endif %}
+                {% if image.width > 1080 %}{{ image | img_url: '1080x' }} 1080w,{% endif %}
+                {% if image.width > 1600 %}{{ image | img_url: '1600x' }} 1600w,{% endif %}
+                {{ image | img_url: 'master' }} {{ image.width }}w"
+        sizes="{{ sizes }}"
+        src="{{ image | img_url: 'master' }}"
+        width="{{ image.width }}"
+        height="{{ image.height }}"
+        loading="{{ loading }}"
+        {% if fetchpriority != '' %}fetchpriority="{{ fetchpriority }}"{% endif %}
+        alt="{{ image.alt | strip_html | escape }}"
+        style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:{{ bg_position | replace: '-', ' ' }};">
+    </picture>
   {%- endif -%}
   <noscript>
     <img src="{{ image | img_url: '720x' }}" alt="{{ image.alt | strip_html | escape }}" class="responsive-wide-image"/>

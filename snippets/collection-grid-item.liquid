@@ -29,7 +29,10 @@
   </a>
   {% if collection.image %}
     <div class="image-overlay--bottom" style="--bg:{{ overlay_color | default: '#000' }}; --opacity: 0.45;"></div>
-    {%- render 'image-fill', img_object: collection.image, aspect_ratio: aspect_ratio, sizes: '(min-width: 768px) 25vw, 50vw' -%}
+    {%- comment -%} LCP fix 2026-04-28 (beads d73): caller passes `is_first: forloop.first` for the first card in a grid. {%- endcomment -%}
+    {%- assign img_loading = 'lazy' -%}{%- assign img_priority = '' -%}
+    {%- if is_first -%}{%- assign img_loading = 'eager' -%}{%- assign img_priority = 'high' -%}{%- endif -%}
+    {%- render 'image-fill', img_object: collection.image, aspect_ratio: aspect_ratio, sizes: '(min-width: 768px) 25vw, 50vw', loading: img_loading, fetchpriority: img_priority -%}
   {% else %}
     <div class="image__fill" style="padding-top: {{ aspect_ratio | times: 100 }}%; background: var(--muted);"></div>
   {% endif %}

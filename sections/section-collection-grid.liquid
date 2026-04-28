@@ -50,7 +50,10 @@
               </div>
             </a>
             <div class="image-overlay" style="--bg:{{ section.settings.overlay_color }}; opacity:{{ section.settings.overlay_opacity | times: 0.01 }};"></div>
-            {%- render 'image-fill', img_object: img_object, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 33vw, 50vw' -%}
+            {%- comment -%} LCP fix 2026-04-28 (beads d73): first block's image is a likely LCP candidate when this section is at top of homepage. Eager+priority on forloop.first; lazy on rest. {%- endcomment -%}
+            {%- assign img_loading = 'lazy' -%}{%- assign img_priority = '' -%}
+            {%- if forloop.first -%}{%- assign img_loading = 'eager' -%}{%- assign img_priority = 'high' -%}{%- endif -%}
+            {%- render 'image-fill', img_object: img_object, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 33vw, 50vw', loading: img_loading, fetchpriority: img_priority -%}
           </div>
         </div>
       {% endfor %}

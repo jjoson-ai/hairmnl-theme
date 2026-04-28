@@ -27,10 +27,13 @@
         <div class="index__column grid__item {{ column_width }} {{ section.settings.align_text }}" {{ block.shopify_attributes }}>
           {% if block.settings.enable_image %}
             <div class="lazy-image column__image">
+              {%- comment -%} LCP fix 2026-04-28 (beads d73): first column's image is a likely LCP candidate; eager+priority on forloop.first. {%- endcomment -%}
+              {%- assign img_loading = 'lazy' -%}{%- assign img_priority = '' -%}
+              {%- if forloop.first -%}{%- assign img_loading = 'eager' -%}{%- assign img_priority = 'high' -%}{%- endif -%}
               {%- if section.settings.scale_image -%}
-                {%- render 'image-fill', img_object: block.settings.image, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 50vw, 50vw' -%}
+                {%- render 'image-fill', img_object: block.settings.image, aspect_ratio: section.settings.aspect_ratio, sizes: '(min-width: 768px) 50vw, 50vw', loading: img_loading, fetchpriority: img_priority -%}
               {%- else -%}
-                {%- render 'image-fill', img_object: block.settings.image, sizes: '(min-width: 768px) 50vw, 50vw' -%}
+                {%- render 'image-fill', img_object: block.settings.image, sizes: '(min-width: 768px) 50vw, 50vw', loading: img_loading, fetchpriority: img_priority -%}
               {%- endif -%}
               {% comment %}
                 If there is a video add a play button over the image

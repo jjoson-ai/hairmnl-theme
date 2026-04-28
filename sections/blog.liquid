@@ -98,7 +98,7 @@
             <div class="grid grid--uniform">
               {% for article in blog.articles %}
                 <div class="grid__item {{ blog_grid }}">
-                  {% render 'article-grid-item', article: article, aspect_ratio: 0.7, color: section.settings.color %}
+                  {% render 'article-grid-item', article: article, aspect_ratio: 0.7, color: section.settings.color, is_first: forloop.first %}
                 </div>
               {% endfor %}
             </div>
