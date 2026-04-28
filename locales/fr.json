@@ -52,7 +52,8 @@
       "toggle_with_count": {
         "one": "Afficher {{ count }} produit par ligne",
         "other": "Afficher {{ count }} produits par ligne"
-      }
+      },
+      "tousled_menu": "Menu Tousled"
     },
     "search": {
       "no_results_for": "Aucun résultat pour",
@@ -179,6 +180,17 @@
       "modal_title": "Cette page affichera tous les produits de votre magasin",
       "no_products_html": "Il n'y a aucun produit pour l'instant, mais dès que vous commencerez à les ajouter, ils s'afficheront ici, qu'ils soient dans une collection ou non.",
       "add_product": "Ajouter un produit"
+    },
+    "sorting": {
+      "title": "Trier:",
+      "featured": "En vedette",
+      "best_selling": "Meilleures ventes",
+      "az": "Alphabétiquement, A-Z",
+      "za": "Alphabétiquement, Z-A",
+      "price_ascending": "Prix croissant",
+      "price_descending": "Prix décroissant",
+      "date_descending": "Date, du plus récent au plus ancien",
+      "date_ascending": "Date, du plus ancien au plus récent"
     }
   },
   "contact": {

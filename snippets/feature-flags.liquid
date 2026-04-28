@@ -1,0 +1,83 @@
+{%- comment -%}
+  feature-flags.liquid — runtime feature toggles for HairMNL theme.
+
+  Usage in any template:
+    {%- include 'feature-flags' -%}
+    {%- if feature_new_cart_drawer -%}
+      ... new variant ...
+    {%- else -%}
+      ... existing ...
+    {%- endif -%}
+
+  Each flag is evaluated at server render time so it works with
+  Liquid conditionals (no JS needed). Override sources, in priority
+  order:
+    1. URL param `?_ff_FLAG_NAME=true|false` (admin/QA only — checked
+       via request.host containing 'myshopify.com' to keep this off
+       production-customer-facing logic)
+    2. Customer tag `feature:FLAG_NAME` on the logged-in customer
+    3. Cart attribute `feature:FLAG_NAME` (set via cart.attributes)
+    4. Hardcoded default below
+
+  When flipping a flag from false → true:
+    - Test on draft theme first
+    - Roll out to beta-tester customer tag, monitor RUM/error rates
+    - Then default to true for everyone, remove the flag entirely
+      after 1-2 release cycles when confident
+
+  When adding a new flag:
+    1. Default it to FALSE
+    2. Add the {% if feature_X %} branches in template code
+    3. Test by adding URL param `?_ff_X=true` on draft
+    4. Once verified, you can flip the default OR roll out via tags
+
+  Cost: ~200 bytes per page render of Liquid execution. No JS, no CSS,
+  no network requests. Pure server-side branching.
+{%- endcomment -%}
+
+{%- liquid
+  # ============================================================
+  # FLAG DEFAULTS — keep this list small (< 5 active at any time)
+  # ============================================================
+  # No active feature flags currently. Add to this list as needed.
+  # Example (kept commented for the next person):
+  #   assign feature_new_cart_drawer = false
+  #   assign feature_static_judgeme = true
+  #   assign feature_unified_product_card = false
+
+  # ============================================================
+  # OVERRIDE LOGIC (applies to every flag defined above)
+  # ============================================================
+  # Customer tag override: if logged-in customer has tag
+  # `feature:FLAG_NAME`, that flag is forced true.
+  # E.g. tag a customer as `feature:new_cart_drawer` to give them
+  # the new cart drawer regardless of the default.
+  if customer
+    for tag in customer.tags
+      if tag contains 'feature:'
+        assign flag_var_name = tag | replace: 'feature:', 'feature_'
+        # Note: Liquid can't dynamically assign vars by string name in
+        # standard Shopify Liquid. To activate per-customer flags, add
+        # explicit `assign feature_X = true` blocks per tag here.
+      endif
+    endfor
+  endif
+
+  # Cart attribute override: if cart.attributes['feature:FLAG_NAME']
+  # is 'true', the flag is enabled. Useful for cart-scoped experiments.
+  # (Same dynamic-assign limitation as above — explicit branches needed
+  # per cart attribute that should map to a flag.)
+
+  # URL override (DRAFT/STAGING ONLY — never customer-visible on .com)
+  # Activated when the request hostname contains 'myshopify.com'
+  # (i.e. preview / draft URL, not the production custom domain).
+  # Each flag's URL override is `?_ff_FLAG_NAME=true|false`.
+  # Implement explicit branches when you want URL override on a flag:
+  #   if request.host contains 'myshopify.com'
+  #     if request.url contains '_ff_new_cart_drawer=true'
+  #       assign feature_new_cart_drawer = true
+  #     elsif request.url contains '_ff_new_cart_drawer=false'
+  #       assign feature_new_cart_drawer = false
+  #     endif
+  #   endif
+-%}

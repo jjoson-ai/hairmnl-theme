@@ -542,6 +542,117 @@
         }, { once: true });
       })();
     </script>
+    {%- comment -%}
+      JS error tracking — added 2026-04-28.
+
+      Captures uncaught exceptions and unhandled promise rejections,
+      pushes to window.dataLayer for GTM forwarding to GA4. Pairs with
+      the RUM reporter above — together: WHEN errors happen + how
+      they correlate with web-vitals degradation.
+
+      Why inline in head: error listeners must be installed BEFORE any
+      script can throw. An external file would miss errors from the
+      deferred bundle's first-frame execution.
+
+      Throttled to max 10 errors per session to avoid:
+        - Flooding GA4 quota (custom events have daily caps)
+        - Throttling shopper bandwidth on a runaway error loop
+        - Doxxing the error to GA4 hundreds of times in one session
+
+      Cost: ~500 bytes inline. Only activates on actual errors.
+
+      Receives in GTM:
+        event: js_error
+        js_error_message: error.message (truncated 200 chars)
+        js_error_source: filename:line:col (truncated 100 chars)
+        js_error_type: 'error' | 'rejection'
+
+      GTM tag setup is admin-side: forward to GA4 as 'js_error'
+      custom event with same parameters. Once data flows, identify
+      top error sources via Looker Studio breakdown by source.
+    {%- endcomment -%}
+    {%- comment -%}
+      A/B testing framework — added 2026-04-28.
+
+      Foundation for theme-side experiments. Currently NO TESTS DEFINED;
+      add entries to the `TESTS` object below to start an experiment.
+
+      How a test works:
+        1. Add a key to TESTS with weights (typically 50/50 split):
+             TESTS = {
+               'cart-bar-style': { weights: { A: 50, B: 50 } }
+             };
+        2. Variant is assigned ONCE per shopper, persisted in cookie
+           (_ab_<testId>) for 90 days, stable across pages and sessions.
+        3. Variant is added as a CSS class on <html>:
+             html.ab-cart-bar-style-A { ... A styling ... }
+             html.ab-cart-bar-style-B { ... B styling ... }
+           (or check via JS: document.documentElement.classList.contains(...))
+        4. Variant is pushed to window.dataLayer:
+             { event: 'ab_test', ab_test_id, ab_variant }
+           GTM forwards to GA4 as a custom event for segmentation.
+
+      QA override: append ?_ab=A or ?_ab=B to any URL to force a variant
+      (one URL param applies to all active tests — useful for spot checks,
+      not for production traffic). Override does NOT persist in cookie.
+
+      Cost: ~700 bytes inline. Zero overhead when TESTS is empty (default).
+      Cookie write only on first assignment per test.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        var TESTS = {
+          // Add experiments here. Example:
+          // 'cart-bar-style': { weights: { A: 50, B: 50 } },
+        };
+        if (Object.keys(TESTS).length === 0) return;
+        var dl = (window.dataLayer = window.dataLayer || []);
+        function getVariant(id, weights) {
+          var urlOverride = new URLSearchParams(location.search).get('_ab');
+          if (urlOverride) return urlOverride;
+          var key = '_ab_' + id;
+          var m = document.cookie.match(new RegExp('(^|;\\s*)' + key + '=([^;]+)'));
+          if (m) return m[2];
+          var total = 0;
+          for (var k in weights) total += weights[k];
+          var rand = Math.random() * total, sum = 0, variant = Object.keys(weights)[0];
+          for (var k2 in weights) { sum += weights[k2]; if (rand < sum) { variant = k2; break; } }
+          document.cookie = key + '=' + variant + ';path=/;max-age=' + (90 * 24 * 3600);
+          return variant;
+        }
+        for (var id in TESTS) {
+          var v = getVariant(id, TESTS[id].weights);
+          document.documentElement.classList.add('ab-' + id + '-' + v);
+          dl.push({ event: 'ab_test', ab_test_id: id, ab_variant: v });
+        }
+      })();
+    </script>
+    <script>
+      (function () {
+        var dl = (window.dataLayer = window.dataLayer || []);
+        var errorCount = 0;
+        var MAX_ERRORS = 10;
+        function send(type, message, source) {
+          if (errorCount >= MAX_ERRORS) return;
+          errorCount++;
+          dl.push({
+            event: 'js_error',
+            js_error_type: type,
+            js_error_message: String(message || '').slice(0, 200),
+            js_error_source: String(source || '').slice(0, 100)
+          });
+        }
+        addEventListener('error', function (e) {
+          var src = (e.filename || '') + ':' + (e.lineno || 0) + ':' + (e.colno || 0);
+          send('error', e.message, src);
+        }, { capture: true });
+        addEventListener('unhandledrejection', function (e) {
+          var msg = e.reason && (e.reason.message || e.reason.toString()) || 'unknown rejection';
+          var src = e.reason && e.reason.stack ? e.reason.stack.split('\n')[1] || '' : '';
+          send('rejection', msg, src.trim());
+        });
+      })();
+    </script>
     <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
     {%- comment -%}
       jquery.min.js was loaded via Shopify's script_tag filter (which
