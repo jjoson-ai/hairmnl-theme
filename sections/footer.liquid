@@ -34,14 +34,14 @@
           {% when 'linklist' %}
             {% assign linklist = linklists[block.settings.linklist] %}
             <div class="grid__item {{ footer_column_width }} footer__block" {{ block.shopify_attributes }}>
-              <p class="uppercase footer__title {{ block.settings.accordion_default }}"
+              <button type="button" class="uppercase footer__title {{ block.settings.accordion_default }}"
                 data-accordion-trigger="accordion-{{ block.id }}-{{ forloop.index }}"
                 aria-controls="accordion-{{ block.id }}-{{ forloop.index }}"
-                aria-haspopup="true" 
+                aria-haspopup="true"
                 aria-expanded="true">
                   {{ linklist.title }}
                   {% render 'icon-arrow-medium-right' %}
-              </p>
+              </button>
               <ul class="footer-quicklinks" data-accordion-body data-accordion-body-mobile id="accordion-{{ block.id }}-{{ forloop.index }}">
                 {% for link in linklist.links %}
                   <li><a href="{{ link.url }}">{{ link.title }}</a></li>
@@ -53,27 +53,27 @@
             {% assign page = pages[block.settings.page] %}
             {% if page == blank or page.empty? %}
               <div class="grid__item {{ footer_column_width }} footer__block" {{ block.shopify_attributes }}>
-                <p class="uppercase footer__title {{ block.settings.accordion_default }}"
+                <button type="button" class="uppercase footer__title {{ block.settings.accordion_default }}"
                   data-accordion-trigger="accordion-{{ block.id }}-{{ forloop.index }}"
                   aria-controls="accordion-{{ block.id }}-{{ forloop.index }}"
-                  aria-haspopup="true" 
+                  aria-haspopup="true"
                   aria-expanded="true">
                     {{ shop.name }}
                     {% render 'icon-arrow-medium-right' %}
-                </p>
+                </button>
 
                 <div class="rte rte--column" data-accordion-body data-accordion-body-mobile id="accordion-{{ block.id }}-{{ forloop.index }}">{{ 'home_page.onboarding.no_content' | t }}</div>
               </div>
             {% else %}
               <div class="grid__item {{ footer_column_width }} footer__block" {{ block.shopify_attributes }}>
-                <p class="uppercase footer__title {{ block.settings.accordion_default }}"
+                <button type="button" class="uppercase footer__title {{ block.settings.accordion_default }}"
                   data-accordion-trigger="accordion-{{ block.id }}-{{ forloop.index }}"
                   aria-controls="accordion-{{ block.id }}-{{ forloop.index }}"
-                  aria-haspopup="true" 
+                  aria-haspopup="true"
                   aria-expanded="true">
                     {{ page.title | escape }}
                     {% render 'icon-arrow-medium-right' %}
-                </p>
+                </button>
 
                 <div class="rte rte--column" data-accordion-body data-accordion-body-mobile id="accordion-{{ block.id }}-{{ forloop.index }}">{{ page.content }}</div>
               </div>
@@ -81,27 +81,27 @@
 
           {% when 'text' %}
             <div class="grid__item {{ footer_column_width }} footer__block" {{ block.shopify_attributes }}>
-              <p class="uppercase footer__title {{ block.settings.accordion_default }}"
+              <button type="button" class="uppercase footer__title {{ block.settings.accordion_default }}"
                 data-accordion-trigger="accordion-{{ block.id }}-{{ forloop.index }}"
                 aria-controls="accordion-{{ block.id }}-{{ forloop.index }}"
-                aria-haspopup="true" 
+                aria-haspopup="true"
                 aria-expanded="true">
                   {{ block.settings.title | escape }}
                   {% render 'icon-arrow-medium-right' %}
-              </p>
+              </button>
               <div class="rte rte--column" data-accordion-body data-accordion-body-mobile id="accordion-{{ block.id }}-{{ forloop.index }}">{{ block.settings.text }}</div>
             </div>
 
           {% when 'newsletter' %}
             <div class="grid__item {{ footer_column_width }} footer__block" {{ block.shopify_attributes }}>
-              <p class="uppercase footer__title {{ block.settings.accordion_default }}"
+              <button type="button" class="uppercase footer__title {{ block.settings.accordion_default }}"
                 data-accordion-trigger="accordion-{{ block.id }}-{{ forloop.index }}"
                 aria-controls="accordion-{{ block.id }}-{{ forloop.index }}"
-                aria-haspopup="true" 
+                aria-haspopup="true"
                 aria-expanded="true">
                   {{ 'layout.footer.newsletter_title' | t }}
                   {% render 'icon-arrow-medium-right' %}
-              </p>
+              </button>
               <div class="rte rte--column" data-accordion-body data-accordion-body-mobile id="accordion-{{ block.id }}-{{ forloop.index }}">
                 {{ block.settings.richtext }}
                 

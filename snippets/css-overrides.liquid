@@ -7,6 +7,33 @@
     height: 60px;
   }
 
+  /* A11y fix 2026-04-28 — footer accordion triggers were <p> with
+     aria-controls/aria-haspopup/aria-expanded, which Lighthouse flagged
+     as 'aria-allowed-attr' violation (those ARIA attrs require <button>
+     or <a>). Changed sections/footer.liquid to <button type="button">.
+     This rule resets browser button defaults so .footer__title still
+     looks like the previous <p> styling: full-width text-aligned-left,
+     transparent background, no border (the .footer__title rule already
+     defines border-bottom), no extra padding from button defaults,
+     inherits font from parent. */
+  button.footer__title {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0 0 10px;
+    margin: 0 0 20px;
+    text-align: left;
+    width: 100%;
+    font: inherit;
+    text-transform: uppercase;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    font-weight: var(---font-weight-accent-bold);
+    border-bottom: 1px solid var(--border);
+  }
+  button.footer__title:focus { outline: 2px solid var(--secondary); outline-offset: 2px; }
+
   /* CLS fix 2026-04-28 — Judge.me 'Verified by' logo image is rendered
      by app HTML without explicit width/height attributes. PSI flagged
      it as "Media element lacking an explicit size" causing layout
