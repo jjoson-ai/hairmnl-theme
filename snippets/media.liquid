@@ -20,7 +20,18 @@
   {% case media.media_type %}
     {% when 'image' %}
       <div {% if media.aspect_ratio < 1 %}style="width:{{ media.aspect_ratio | times: 100 }}%; margin: 0 auto;"{% endif %}>
-        <div class="lazy-image mobile-zoom-wrapper" style="padding-top:{{ 1 | divided_by: media.aspect_ratio | times: 100 }}%; background-image:  url('{{ media | img_url: '1x1' }}');">
+        {%- comment -%}
+          Cap padding-top at 100% to MATCH the .flickity-viewport cap defined in
+          theme.css:14911 (.product__slides.flickity-lock-height .flickity-viewport
+          { padding-bottom: var(--default-ratio); } where --default-ratio is also
+          capped at 100% in product.liquid:58). Without the cap, tall product
+          images (aspect_ratio < 1) reserve more height pre-Flickity than post-
+          Flickity, causing the image column to shrink when Flickity initializes
+          and dragging the description column up. PSI 2026-04-28 measured CLS
+          0.36-0.60 on PDPs traced to this column-height mismatch on
+          grid__item.medium-up--one-half.
+        {%- endcomment -%}
+        <div class="lazy-image mobile-zoom-wrapper" style="padding-top:{{ 1 | divided_by: media.aspect_ratio | times: 100 | at_most: 100 }}%; background-image:  url('{{ media | img_url: '1x1' }}');">
           <img data-product-image class="srcset"
             data-image-id="{{ media.id }}"
             alt="{{ media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}"
