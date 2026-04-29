@@ -52,6 +52,47 @@ HTML_OUT_PATH = DASHBOARD_DIR / "index.html"
 DEFAULT_URL = "https://www.hairmnl.com/"
 VITAL_EVENTS = ["LCP", "CLS", "INP", "FCP", "TTFB"]
 
+# Plain-English metric tooltips for non-technical readers.
+# Each tip = (one-line description, goal threshold, action guidance).
+METRIC_TIPS = {
+    "Score": (
+        "The overall 0–100 perf grade Google gives the page (weighted blend of all metrics below).",
+        "90+",
+        "Caveat: swings ±5–10 points between runs. Trust trends, not single numbers.",
+    ),
+    "LCP": (
+        "Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.",
+        "≤ 2.5 s",
+        "Fix: preload the hero image, defer non-critical scripts, serve images in WebP at the right size.",
+    ),
+    "CLS": (
+        "Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).",
+        "≤ 0.10",
+        "Fix: set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.",
+    ),
+    "INP": (
+        "Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.",
+        "≤ 200 ms",
+        "Fix: break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).",
+    ),
+    "TBT": (
+        "Total Blocking Time — how long the main thread is frozen by heavy JavaScript during page load. Lab proxy for INP.",
+        "≤ 200 ms",
+        "Fix: defer non-critical JS (add the defer attribute), code-split bundles, lazy-load below-fold scripts.",
+    ),
+    "FCP": (
+        "First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).",
+        "≤ 1.8 s",
+        "Fix: reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.",
+    ),
+    "TTFB": (
+        "Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.",
+        "≤ 800 ms",
+        "Fix: minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.",
+    ),
+}
+
+
 # Apr 26, 2026 baseline (from psi_baselines.md memory). Mobile lab.
 BASELINE_2026_04_26 = {
     "score": 26,
@@ -546,6 +587,30 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   details { margin-top: 8px; }
   summary { cursor: pointer; font-size: 11px; color: var(--text-muted); }
 
+  /* Metric tooltips (non-technical guidance) */
+  .info { display: inline-block; position: relative; cursor: help; color: var(--text-muted);
+          margin-left: 4px; font-size: 11px; user-select: none; vertical-align: middle; }
+  .info:hover, .info:focus { color: var(--navy-light); outline: none; }
+  .info .tip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+               transform: translateX(-50%); background: var(--navy); color: white;
+               padding: 12px 14px; border-radius: 6px; font-size: 12px; line-height: 1.5;
+               width: 280px; max-width: 80vw; z-index: 100; text-align: left;
+               box-shadow: 0 6px 20px rgba(0,0,0,0.18); font-weight: 400; text-transform: none;
+               letter-spacing: 0; pointer-events: none; }
+  .info .tip::after { content: ''; position: absolute; top: 100%; left: 50%;
+                      transform: translateX(-50%); border: 6px solid transparent;
+                      border-top-color: var(--navy); }
+  .info:hover .tip, .info:focus .tip, .info:focus-within .tip { display: block; }
+  .info .tip strong { color: var(--gold); display: inline-block; margin-top: 6px; }
+  .info .tip .goal { display: block; margin: 6px 0 4px 0; color: var(--ice); font-weight: 600; }
+  .info .tip .fix { display: block; color: white; opacity: 0.9; }
+  /* Tooltip variant for left-edge metrics so it doesn't get clipped */
+  .info.left .tip { left: 0; transform: none; }
+  .info.left .tip::after { left: 12px; transform: none; }
+  /* Tooltip variant for right-edge metrics */
+  .info.right .tip { left: auto; right: 0; transform: none; }
+  .info.right .tip::after { left: auto; right: 12px; transform: none; }
+
   footer { color: var(--text-muted); font-size: 12px; text-align: center; padding: 24px 0;
            border-top: 1px solid var(--gray-light); margin-top: 32px; line-height: 1.6; }
   footer a { color: var(--navy-light); text-decoration: none; }
@@ -591,10 +656,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </span>
   </h2>
   <div class="grid-2">
-    <div class="card"><h3>Performance score</h3><div class="chart-wrap"><canvas id="chart-score"></canvas></div></div>
-    <div class="card"><h3>Largest Contentful Paint (s)</h3><div class="chart-wrap"><canvas id="chart-lcp"></canvas></div></div>
-    <div class="card"><h3>Total Blocking Time (ms)</h3><div class="chart-wrap"><canvas id="chart-tbt"></canvas></div></div>
-    <div class="card"><h3>Cumulative Layout Shift</h3><div class="chart-wrap"><canvas id="chart-cls"></canvas></div></div>
+    <div class="card"><h3>Performance score __TIP_SCORE__</h3><div class="chart-wrap"><canvas id="chart-score"></canvas></div></div>
+    <div class="card"><h3>Largest Contentful Paint (s) __TIP_LCP_2__</h3><div class="chart-wrap"><canvas id="chart-lcp"></canvas></div></div>
+    <div class="card"><h3>Total Blocking Time (ms) __TIP_TBT__</h3><div class="chart-wrap"><canvas id="chart-tbt"></canvas></div></div>
+    <div class="card"><h3>Cumulative Layout Shift __TIP_CLS_2__</h3><div class="chart-wrap"><canvas id="chart-cls"></canvas></div></div>
   </div>
 
   <h2>Real-shopper Core Web Vitals
@@ -608,9 +673,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <span class="h2-help">≥50 pageviews · click any path to open in PSI</span>
   </h2>
   <div class="grid-3">
-    <div class="card"><h3>LCP — slow paint</h3>__TOP_PAGES_LCP__</div>
-    <div class="card"><h3>INP — slow interaction</h3>__TOP_PAGES_INP__</div>
-    <div class="card"><h3>CLS — layout shift</h3>__TOP_PAGES_CLS__</div>
+    <div class="card"><h3>LCP — slow paint __TIP_LCP__</h3>__TOP_PAGES_LCP__</div>
+    <div class="card"><h3>INP — slow interaction __TIP_INP__</h3>__TOP_PAGES_INP__</div>
+    <div class="card"><h3>CLS — layout shift __TIP_CLS__</h3>__TOP_PAGES_CLS__</div>
   </div>
 
   <h2>Top INP attribution targets
@@ -710,10 +775,25 @@ buildCharts();
 """
 
 
-def _kpi_v2(label, value, source, klass="", delta_html=""):
+def _tooltip(metric_key: str, position: str = "") -> str:
+    """Render an ⓘ icon with a styled tooltip for a metric (LCP, CLS, INP, etc.).
+    position: '' (centered), 'left' (anchored to left), 'right' (anchored to right)."""
+    if metric_key not in METRIC_TIPS:
+        return ""
+    desc, goal, fix = METRIC_TIPS[metric_key]
+    pos_class = f" {position}" if position else ""
+    return (f'<span class="info{pos_class}" tabindex="0" aria-label="What is {metric_key}?">ⓘ'
+            f'<span class="tip" role="tooltip">{desc}'
+            f'<span class="goal"><strong>Goal:</strong> {goal}</span>'
+            f'<span class="fix"><strong>How to act:</strong> {fix}</span>'
+            f'</span></span>')
+
+
+def _kpi_v2(label, value, source, klass="", delta_html="", tooltip_metric=None):
     """Single KPI card. Source = 'CrUX p75', 'PSI lab', or empty."""
     src = f'<div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">{source}</div>' if source else ""
-    return (f'<div class="kpi {klass}"><div class="label">{label}</div>'
+    tip = _tooltip(tooltip_metric or label) if (tooltip_metric or label) in METRIC_TIPS else ""
+    return (f'<div class="kpi {klass}"><div class="label">{label}{tip}</div>'
             f'<div class="value">{value}</div>{delta_html}{src}</div>')
 
 
@@ -873,7 +953,7 @@ def render_rum_cwv_cards(metrics):
         klass = "" if passes else "fail"
         cards.append(f'''
         <div class="cwv {klass}">
-          <div class="name">{m}</div>
+          <div class="name">{m}{_tooltip(m)}</div>
           <div class="pct">{gp:.0f}%</div>
           <div class="total">good · {total:,} events {badge}</div>
           <div class="rating-stack">
@@ -1043,6 +1123,14 @@ def render_html(snapshots: list[dict]) -> str:
     html = html.replace("__JS_ERRORS__", render_js_errors(rum.get("js_errors", [])))
     html = html.replace("__BASELINE_TABLE__", render_baseline_table(psi_mobile))
     html = html.replace("__CHART_DATA__", json.dumps(chart_data))
+    # Inline tooltips for friction page section headers + trend chart cards
+    html = html.replace("__TIP_LCP__", _tooltip("LCP"))
+    html = html.replace("__TIP_INP__", _tooltip("INP"))
+    html = html.replace("__TIP_CLS__", _tooltip("CLS"))
+    html = html.replace("__TIP_SCORE__", _tooltip("Score"))
+    html = html.replace("__TIP_LCP_2__", _tooltip("LCP"))
+    html = html.replace("__TIP_TBT__", _tooltip("TBT"))
+    html = html.replace("__TIP_CLS_2__", _tooltip("CLS"))
     return html
 
 
