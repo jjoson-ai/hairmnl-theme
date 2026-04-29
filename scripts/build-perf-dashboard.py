@@ -63,32 +63,32 @@ METRIC_TIPS = {
     "LCP": (
         "Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.",
         "≤ 2.5 s",
-        "Fix: preload the hero image, defer non-critical scripts, serve images in WebP at the right size.",
+        "preload the hero image, defer non-critical scripts, serve images in WebP at the right size.",
     ),
     "CLS": (
         "Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).",
         "≤ 0.10",
-        "Fix: set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.",
+        "set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.",
     ),
     "INP": (
         "Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.",
         "≤ 200 ms",
-        "Fix: break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).",
+        "break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).",
     ),
     "TBT": (
         "Total Blocking Time — how long the main thread is frozen by heavy JavaScript during page load. Lab proxy for INP.",
         "≤ 200 ms",
-        "Fix: defer non-critical JS (add the defer attribute), code-split bundles, lazy-load below-fold scripts.",
+        "defer non-critical JS (add the defer attribute), code-split bundles, lazy-load below-fold scripts.",
     ),
     "FCP": (
         "First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).",
         "≤ 1.8 s",
-        "Fix: reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.",
+        "reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.",
     ),
     "TTFB": (
         "Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.",
         "≤ 800 ms",
-        "Fix: minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.",
+        "minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.",
     ),
 }
 
@@ -133,7 +133,7 @@ def query_crux(url: str, form_factor: str, key: str) -> dict | None:
     except urllib.error.HTTPError as e:
         if e.code == 403:
             print(f"  CrUX {form_factor} 403 — PSI API key has API-restrictions allowlist that blocks CrUX. "
-                  f"Fix: GCP Console → Credentials → click key → 'API restrictions' → "
+                  f"GCP Console → Credentials → click key → 'API restrictions' → "
                   f"add 'Chrome UX Report API' OR set 'Don't restrict key'.", file=sys.stderr)
         elif e.code == 404:
             print(f"  CrUX {form_factor} 404 — insufficient real-shopper data (need ~28 days of Chrome traffic).", file=sys.stderr)
