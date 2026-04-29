@@ -91,8 +91,9 @@ def run_psi_once(url: str, strategy: str, key: str) -> dict | None:
         "&category=performance"
     )
     req = urllib.request.Request(api, headers={"X-goog-api-key": key})
+    # 180s timeout: PSI on a slow site (LCP 14s+) can legitimately take >120s
     try:
-        with urllib.request.urlopen(req, timeout=120) as r:
+        with urllib.request.urlopen(req, timeout=180) as r:
             d = json.loads(r.read())
     except Exception as e:
         print(f"  PSI {strategy} run error: {e}", file=sys.stderr)
