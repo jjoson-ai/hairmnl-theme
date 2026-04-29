@@ -8,111 +8,209 @@
 <style>
   :root {
     --navy: #1E2761;
+    --navy-2: #2C3A7A;
     --navy-light: #3A4A8A;
     --ice: #CADCFC;
     --ice-bg: #F0F4FB;
     --gold: #D4A04C;
     --green: #2F8F3F;
+    --green-bg: #E8F5EA;
     --amber: #C97A1A;
+    --amber-bg: #FBF1E0;
     --red: #C03A3A;
+    --red-bg: #FBE8E8;
     --gray: #6B7280;
     --gray-light: #E5E7EB;
-    --bg: #FAFBFC;
+    --gray-bg: #F4F6F8;
+    --bg: #F7F8FA;
     --card: #FFFFFF;
     --text: #1F2937;
     --text-muted: #6B7280;
   }
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
          background: var(--bg); color: var(--text); margin: 0; padding: 0;
-         font-size: 14px; line-height: 1.4; }
-  .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
-  header { padding: 24px 0; border-bottom: 3px solid var(--navy); margin-bottom: 24px; }
-  header h1 { margin: 0; font-size: 28px; color: var(--navy); }
-  header .meta { color: var(--text-muted); font-size: 13px; margin-top: 6px; }
-  h2 { color: var(--navy); font-size: 18px; margin: 32px 0 16px 0; padding-bottom: 8px;
-       border-bottom: 1px solid var(--gray-light); }
-  h3 { color: var(--navy-light); font-size: 14px; margin: 0 0 12px 0; text-transform: uppercase;
+         font-size: 14px; line-height: 1.45; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 16px; }
+  @media (min-width: 700px) { .container { padding: 24px; } }
+
+  header { padding: 16px 0 20px; border-bottom: 3px solid var(--navy); margin-bottom: 20px; }
+  header .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+                flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 22px; color: var(--navy); line-height: 1.2; }
+  @media (min-width: 700px) { header h1 { font-size: 28px; } }
+  header .meta { color: var(--text-muted); font-size: 12px; margin-top: 6px; line-height: 1.5; }
+  header .meta strong { color: var(--text); }
+  .live-link { background: var(--navy); color: white; text-decoration: none; padding: 6px 12px;
+               border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .live-link:hover { background: var(--navy-2); }
+
+  h2 { color: var(--navy); font-size: 16px; margin: 28px 0 12px 0; padding-bottom: 8px;
+       border-bottom: 1px solid var(--gray-light); display: flex; align-items: center;
+       justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  @media (min-width: 700px) { h2 { font-size: 18px; } }
+  h2 .h2-help { font-weight: 400; font-size: 11px; color: var(--text-muted);
+                text-transform: none; letter-spacing: 0; }
+  h3 { color: var(--navy-light); font-size: 13px; margin: 0 0 10px 0; text-transform: uppercase;
        letter-spacing: 0.05em; font-weight: 700; }
 
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  /* Tab switcher */
+  .tabs { display: inline-flex; background: var(--gray-bg); border-radius: 8px; padding: 4px;
+          gap: 0; margin-bottom: 14px; }
+  .tab { background: transparent; border: 0; padding: 6px 14px; border-radius: 6px;
+         font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer;
+         font-family: inherit; }
+  .tab.active { background: var(--card); color: var(--navy); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+  .tab:hover:not(.active) { color: var(--navy-light); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* KPI cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (min-width: 700px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
+  @media (min-width: 1100px) { .kpi-grid { grid-template-columns: repeat(6, 1fr); } }
   .kpi { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
-         padding: 18px; }
-  .kpi .label { color: var(--text-muted); font-size: 11px; text-transform: uppercase;
-                letter-spacing: 0.06em; font-weight: 700; }
-  .kpi .value { font-size: 32px; font-weight: 700; color: var(--navy); margin-top: 6px;
+         padding: 14px; }
+  .kpi .label { color: var(--text-muted); font-size: 10px; text-transform: uppercase;
+                letter-spacing: 0.05em; font-weight: 700; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: var(--navy); margin-top: 4px;
                 line-height: 1; }
-  .kpi .delta { font-size: 12px; margin-top: 6px; color: var(--text-muted); }
-  .kpi .delta.up { color: var(--green); }
-  .kpi .delta.down { color: var(--red); }
+  @media (min-width: 700px) { .kpi .value { font-size: 28px; } }
+  .kpi .delta { font-size: 11px; margin-top: 4px; color: var(--text-muted); }
+  .kpi .delta.improve { color: var(--green); font-weight: 600; }
+  .kpi .delta.regress { color: var(--red); font-weight: 600; }
+  .kpi.poor { background: var(--red-bg); border-color: #F0C8C8; }
   .kpi.poor .value { color: var(--red); }
+  .kpi.warn { background: var(--amber-bg); border-color: #ECD9B6; }
   .kpi.warn .value { color: var(--amber); }
+  .kpi.good { background: var(--green-bg); border-color: #C6E2CC; }
   .kpi.good .value { color: var(--green); }
 
   .card { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
-          padding: 18px; margin-bottom: 16px; }
+          padding: 16px; margin-bottom: 14px; }
 
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+  .grid-2 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 800px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .grid-3 { grid-template-columns: 1fr 1fr 1fr; } }
+
+  /* RUM CWV cards */
+  .cwv-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 700px) { .cwv-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .cwv-grid { grid-template-columns: repeat(5, 1fr); } }
+  .cwv { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
+         padding: 14px; }
+  .cwv .name { font-size: 12px; color: var(--text-muted); text-transform: uppercase;
+               font-weight: 700; letter-spacing: 0.05em; }
+  .cwv .pct { font-size: 32px; font-weight: 700; color: var(--green); line-height: 1; margin: 4px 0; }
+  .cwv.fail .pct { color: var(--amber); }
+  .cwv .total { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .cwv .badge { display: inline-block; padding: 2px 8px; border-radius: 4px;
+                font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cwv .badge.pass { background: var(--green-bg); color: var(--green); }
+  .cwv .badge.fail { background: var(--amber-bg); color: var(--amber); }
+  .rating-stack { display: flex; height: 8px; border-radius: 4px; overflow: hidden;
+                  background: var(--gray-light); margin: 6px 0 4px 0; }
+  .rating-stack > span { display: block; height: 100%; }
+  .rating-stack > .good { background: var(--green); }
+  .rating-stack > .warn { background: var(--amber); }
+  .rating-stack > .poor { background: var(--red); }
+  .stack-legend { font-size: 10px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+
+  /* Page friction rows — readable, not truncated */
+  .page-row { padding: 10px 0; border-bottom: 1px solid var(--gray-light); }
+  .page-row:last-child { border-bottom: none; }
+  .page-row .path { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 12px;
+                    color: var(--navy); word-break: break-all; line-height: 1.3; display: block;
+                    margin-bottom: 6px; text-decoration: none; }
+  .page-row .path:hover { text-decoration: underline; }
+  .page-row .stats { display: flex; align-items: center; gap: 12px; font-size: 12px;
+                     flex-wrap: wrap; }
+  .page-row .pct-poor { font-weight: 700; min-width: 56px; }
+  .page-row .pct-poor.poor-high { color: var(--red); }
+  .page-row .pct-poor.poor-mid { color: var(--amber); }
+  .page-row .pct-poor.poor-low { color: var(--text-muted); }
+  .page-row .meta { color: var(--text-muted); font-size: 11px; }
+  .page-row .deeplinks { display: flex; gap: 8px; margin-left: auto; }
+  .page-row .deeplinks a { color: var(--navy-light); text-decoration: none; font-size: 11px;
+                            font-weight: 600; padding: 2px 6px; background: var(--ice-bg);
+                            border-radius: 4px; }
+  .page-row .deeplinks a:hover { background: var(--ice); }
 
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th { text-align: left; color: var(--text-muted); font-weight: 600; font-size: 11px;
        text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 10px;
        border-bottom: 2px solid var(--gray-light); }
-  td { padding: 8px 10px; border-bottom: 1px solid var(--gray-light); }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--gray-light); vertical-align: top; }
   tr:last-child td { border-bottom: none; }
-  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
   td.code { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 12px;
-            color: var(--navy); max-width: 360px; overflow: hidden; text-overflow: ellipsis;
-            white-space: nowrap; }
-
-  .bar { display: inline-block; height: 8px; background: var(--gray-light); border-radius: 4px;
-         vertical-align: middle; position: relative; overflow: hidden; min-width: 80px; }
-  .bar > span { display: block; height: 100%; }
-  .bar.good > span { background: var(--green); }
-  .bar.warn > span { background: var(--amber); }
-  .bar.poor > span { background: var(--red); }
-
-  .rating-stack { display: flex; height: 24px; border-radius: 4px; overflow: hidden;
-                  background: var(--gray-light); margin: 4px 0; }
-  .rating-stack > span { display: flex; align-items: center; justify-content: center;
-                         color: white; font-size: 11px; font-weight: 600; min-width: 30px; }
-  .rating-stack > .good { background: var(--green); }
-  .rating-stack > .warn { background: var(--amber); }
-  .rating-stack > .poor { background: var(--red); }
+            color: var(--navy); word-break: break-all; }
 
   .chart-wrap { position: relative; height: 200px; }
-  .empty { color: var(--text-muted); font-style: italic; padding: 12px 0; }
+  .empty { color: var(--text-muted); font-style: italic; padding: 12px 0; font-size: 13px; }
+  .note { background: var(--ice-bg); border-left: 3px solid var(--navy-light);
+          padding: 10px 14px; border-radius: 4px; font-size: 12px; color: var(--text);
+          margin-bottom: 12px; }
+  .note strong { color: var(--navy); }
 
-  footer { color: var(--text-muted); font-size: 12px; text-align: center; padding: 32px 0;
-           border-top: 1px solid var(--gray-light); margin-top: 48px; }
-  footer a { color: var(--navy-light); }
+  /* Trend chart range filter */
+  .range-filter { display: inline-flex; gap: 4px; }
+  .range-btn { background: var(--gray-bg); border: 0; padding: 4px 10px; border-radius: 4px;
+               font-size: 11px; font-weight: 600; color: var(--text-muted); cursor: pointer;
+               font-family: inherit; }
+  .range-btn.active { background: var(--navy); color: white; }
+  .range-btn:hover:not(.active) { background: var(--gray-light); }
+
+  /* Collapsible source detail */
+  details { margin-top: 8px; }
+  summary { cursor: pointer; font-size: 11px; color: var(--text-muted); }
+
+  footer { color: var(--text-muted); font-size: 12px; text-align: center; padding: 24px 0;
+           border-top: 1px solid var(--gray-light); margin-top: 32px; line-height: 1.6; }
+  footer a { color: var(--navy-light); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <h1>HairMNL — Performance Dashboard</h1>
-    <div class="meta">
-      Last updated: <strong>2026-04-29 12:07 UTC</strong>
-      &nbsp;·&nbsp; Snapshots collected: <strong>1</strong>
-      &nbsp;·&nbsp; PSI source: hairmnl.com (mobile slow 4G + desktop)
-      &nbsp;·&nbsp; RUM source: GA4 property 248106289, last 7 days
+    <div class="row">
+      <div>
+        <h1>HairMNL — Performance Dashboard</h1>
+        <div class="meta">
+          Last updated: <strong>2026-04-29 12:20 UTC</strong>
+          &nbsp;·&nbsp; Snapshots: <strong>2</strong>
+          &nbsp;·&nbsp; RUM window: <strong>last 7 days</strong>
+        </div>
+      </div>
+      <a class="live-link" href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com" target="_blank" rel="noopener">Open in PSI ↗</a>
     </div>
   </header>
 
-  <h2>Today&#39;s snapshot — PSI Lab (mobile)</h2>
-  <div class="kpi-grid">
-    <div class="empty">No PSI data captured yet — run with PSI enabled.</div>
+  <h2>Today&#39;s snapshot
+    <span class="h2-help">CrUX = real-shopper p75 (28-day) · PSI = single-run lab simulation</span>
+  </h2>
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="snapshot-mobile" onclick="switchTab(this)">📱 Mobile</button>
+    <button class="tab" data-tab="snapshot-desktop" onclick="switchTab(this)">🖥 Desktop</button>
+  </div>
+  <div class="tab-content active" id="snapshot-mobile">
+    <div class="empty">No data captured for this form factor yet. CrUX needs ~28 days of Chrome traffic; PSI mobile sometimes fails for slow sites (<a href="https://chromeuxreport.googleapis.com" target="_blank">enable CrUX API</a> for the most reliable signal).</div>
+  </div>
+  <div class="tab-content" id="snapshot-desktop">
+    <div class="kpi-grid"><div class="kpi warn"><div class="label">Score</div><div class="value">57</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi good"><div class="label">LCP</div><div class="value">1.29 s</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi good"><div class="label">CLS</div><div class="value">0.028</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi poor"><div class="label">TBT</div><div class="value">2172 ms</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi good"><div class="label">FCP</div><div class="value">0.58 s</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div></div>
   </div>
 
-  <h2>Today&#39;s snapshot — PSI Lab (desktop)</h2>
-  <div class="kpi-grid">
-    <div class="empty">No PSI data captured yet — run with PSI enabled.</div>
-  </div>
-
-  <h2>Trend over time — PSI Lab mobile</h2>
+  <h2>Trend over time — PSI Lab mobile
+    <span class="range-filter">
+      <button class="range-btn" data-range="7" onclick="setRange(7)">7d</button>
+      <button class="range-btn" data-range="30" onclick="setRange(30)">30d</button>
+      <button class="range-btn" data-range="90" onclick="setRange(90)">90d</button>
+      <button class="range-btn active" data-range="0" onclick="setRange(0)">All</button>
+    </span>
+  </h2>
   <div class="grid-2">
     <div class="card"><h3>Performance score</h3><div class="chart-wrap"><canvas id="chart-score"></canvas></div></div>
     <div class="card"><h3>Largest Contentful Paint (s)</h3><div class="chart-wrap"><canvas id="chart-lcp"></canvas></div></div>
@@ -120,86 +218,246 @@
     <div class="card"><h3>Cumulative Layout Shift</h3><div class="chart-wrap"><canvas id="chart-cls"></canvas></div></div>
   </div>
 
-  <h2>Real-shopper Core Web Vitals — last 7 days</h2>
-  <div class="card">
+  <h2>Real-shopper Core Web Vitals
+    <span class="h2-help">GA4 last 7 days · ≥75% good = PASS the CWV threshold</span>
+  </h2>
+  <div class="cwv-grid">
     
-        <div style="margin: 16px 0;">
-          <h3>LCP <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
-            10,748 pageviews · 81.5% good · CWV target ≥75% good <span style="color:var(--green); font-weight:700;">✓ PASS</span></span></h3>
+        <div class="cwv ">
+          <div class="name">LCP</div>
+          <div class="pct">81%</div>
+          <div class="total">good · 10,748 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
-            <span class="good" style="flex: 81.48492742835877;">81%</span>
-            <span class="warn" style="flex: 11.397469296613323;">11%</span>
-            <span class="poor" style="flex: 7.1176032750279115;">7%</span>
+            <span class="good" style="flex: 81.48492742835877;"></span>
+            <span class="warn" style="flex: 11.397469296613323;"></span>
+            <span class="poor" style="flex: 7.1176032750279115;"></span>
           </div>
+          <div class="stack-legend">81% good · 11% NI · 7% poor</div>
         </div>
 
-        <div style="margin: 16px 0;">
-          <h3>CLS <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
-            14,577 pageviews · 67.7% good · CWV target ≥75% good <span style="color:var(--amber); font-weight:700;">✗ FAIL</span></span></h3>
+        <div class="cwv fail">
+          <div class="name">CLS</div>
+          <div class="pct">68%</div>
+          <div class="total">good · 14,578 events <span class="badge fail">✗ FAIL</span></div>
           <div class="rating-stack">
-            <span class="good" style="flex: 67.72998559374356;">68%</span>
-            <span class="warn" style="flex: 10.571448171777458;">11%</span>
-            <span class="poor" style="flex: 21.698566234478974;">22%</span>
+            <span class="good" style="flex: 67.73219920428042;"></span>
+            <span class="warn" style="flex: 10.57072300727123;"></span>
+            <span class="poor" style="flex: 21.697077788448347;"></span>
           </div>
+          <div class="stack-legend">68% good · 11% NI · 22% poor</div>
         </div>
 
-        <div style="margin: 16px 0;">
-          <h3>INP <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
-            7,711 pageviews · 87.7% good · CWV target ≥75% good <span style="color:var(--green); font-weight:700;">✓ PASS</span></span></h3>
+        <div class="cwv ">
+          <div class="name">INP</div>
+          <div class="pct">88%</div>
+          <div class="total">good · 7,711 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
-            <span class="good" style="flex: 87.70587472441966;">88%</span>
-            <span class="warn" style="flex: 7.171573077421865;">7%</span>
-            <span class="poor" style="flex: 5.122552198158474;">5%</span>
+            <span class="good" style="flex: 87.70587472441966;"></span>
+            <span class="warn" style="flex: 7.171573077421865;"></span>
+            <span class="poor" style="flex: 5.122552198158474;"></span>
           </div>
+          <div class="stack-legend">88% good · 7% NI · 5% poor</div>
         </div>
 
-        <div style="margin: 16px 0;">
-          <h3>FCP <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
-            8,217 pageviews · 77.7% good · CWV target ≥75% good <span style="color:var(--green); font-weight:700;">✓ PASS</span></span></h3>
+        <div class="cwv ">
+          <div class="name">FCP</div>
+          <div class="pct">78%</div>
+          <div class="total">good · 8,219 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
-            <span class="good" style="flex: 77.65607886089813;">78%</span>
-            <span class="warn" style="flex: 14.250943166605817;">14%</span>
-            <span class="poor" style="flex: 8.092977972496044;">8%</span>
+            <span class="good" style="flex: 77.66151599951331;"></span>
+            <span class="warn" style="flex: 14.247475361966174;"></span>
+            <span class="poor" style="flex: 8.091008638520501;"></span>
           </div>
+          <div class="stack-legend">78% good · 14% NI · 8% poor</div>
         </div>
 
-        <div style="margin: 16px 0;">
-          <h3>TTFB <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
-            7,117 pageviews · 80.0% good · CWV target ≥75% good <span style="color:var(--green); font-weight:700;">✓ PASS</span></span></h3>
+        <div class="cwv ">
+          <div class="name">TTFB</div>
+          <div class="pct">80%</div>
+          <div class="total">good · 7,118 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
-            <span class="good" style="flex: 80.04777293803569;">80%</span>
-            <span class="warn" style="flex: 14.44428832373191;">14%</span>
-            <span class="poor" style="flex: 5.507938738232402;">6%</span>
+            <span class="good" style="flex: 80.05057600449564;"></span>
+            <span class="warn" style="flex: 14.442259061534138;"></span>
+            <span class="poor" style="flex: 5.507164933970216;"></span>
           </div>
+          <div class="stack-legend">80% good · 14% NI · 6% poor</div>
         </div>
   </div>
 
-  <h2>Top friction pages — by % &quot;poor&quot; rate</h2>
+  <h2>Top friction pages
+    <span class="h2-help">≥50 pageviews · click any path to open in PSI</span>
+  </h2>
   <div class="grid-3">
-    <div class="card"><h3>LCP — slow paint</h3><table><thead><tr><th>Page</th><th class="num">% poor</th><th class="num">N</th></tr></thead><tbody>
-<tr><td class="code">/search</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:21%"></span></span> 21.2%</td><td class="num">52</td></tr>
-<tr><td class="code">/account</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:15%"></span></span> 14.8%</td><td class="num">88</td></tr>
-<tr><td class="code">/cart</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:13%"></span></span> 12.6%</td><td class="num">87</td></tr>
-<tr><td class="code">/blogs/hair-education/the-do-s-and-don-ts-of-rebon</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:11%"></span></span> 11.1%</td><td class="num">63</td></tr>
-<tr><td class="code">/products/loreal-professionnel-serie-expert-absolu</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:10%"></span></span> 10.0%</td><td class="num">60</td></tr>
-</tbody></table></div>
-    <div class="card"><h3>INP — slow interaction</h3><table><thead><tr><th>Page</th><th class="num">% poor</th><th class="num">N</th></tr></thead><tbody>
-<tr><td class="code">/</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:12%"></span></span> 12.5%</td><td class="num">600</td></tr>
-<tr><td class="code">/collections/best-sellers</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:10%"></span></span> 9.5%</td><td class="num">63</td></tr>
-<tr><td class="code">/blogs/product-spotlight/15-top-sulfate-free-shamp</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:7%"></span></span> 7.1%</td><td class="num">140</td></tr>
-<tr><td class="code">/products/k18-leave-in-molecular-repair-hair-mask</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:7%"></span></span> 7.0%</td><td class="num">71</td></tr>
-<tr><td class="code">/pages/azta-urban-salon-service-menu</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:7%"></span></span> 6.7%</td><td class="num">344</td></tr>
-</tbody></table></div>
-    <div class="card"><h3>CLS — layout shift</h3><table><thead><tr><th>Page</th><th class="num">% poor</th><th class="num">N</th></tr></thead><tbody>
-<tr><td class="code">/blogs/hair-education/rebonding-vs-keratin-treatme</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:55%"></span></span> 54.9%</td><td class="num">51</td></tr>
-<tr><td class="code">/blogs/product-spotlight/lockdown-lab-we-tried-5-p</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:52%"></span></span> 51.9%</td><td class="num">52</td></tr>
-<tr><td class="code">/blogs/product-spotlight/15-top-sulfate-free-shamp</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:49%"></span></span> 49.2%</td><td class="num">392</td></tr>
-<tr><td class="code">/products/wella-professionals-koleston-perfect-ppd</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:49%"></span></span> 49.1%</td><td class="num">116</td></tr>
-<tr><td class="code">/blogs/tousled-online-magazine/how-to-hide-gray-ha</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:47%"></span></span> 47.1%</td><td class="num">51</td></tr>
-</tbody></table></div>
+    <div class="card"><h3>LCP — slow paint</h3>
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/search" target="_blank" rel="noopener">/search</a>
+          <div class="stats">
+            <span class="pct-poor poor-mid">21.2% poor</span>
+            <span class="meta">52 events · 11 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fsearch" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/account" target="_blank" rel="noopener">/account</a>
+          <div class="stats">
+            <span class="pct-poor poor-mid">14.8% poor</span>
+            <span class="meta">88 events · 13 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Faccount" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/cart" target="_blank" rel="noopener">/cart</a>
+          <div class="stats">
+            <span class="pct-poor poor-mid">12.6% poor</span>
+            <span class="meta">87 events · 11 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcart" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/the-do-s-and-don-ts-of-rebonded-hair-in-summertime" target="_blank" rel="noopener">/blogs/hair-education/the-do-s-and-don-ts-of-rebonded-hair-in-summertime</a>
+          <div class="stats">
+            <span class="pct-poor poor-mid">11.1% poor</span>
+            <span class="meta">63 events · 7 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fthe-do-s-and-don-ts-of-rebonded-hair-in-summertime" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/products/loreal-professionnel-serie-expert-absolut-repair-molecular-masque-250ml" target="_blank" rel="noopener">/products/loreal-professionnel-serie-expert-absolut-repair-molecular-masque-250ml</a>
+          <div class="stats">
+            <span class="pct-poor poor-mid">10.0% poor</span>
+            <span class="meta">60 events · 6 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fproducts%2Floreal-professionnel-serie-expert-absolut-repair-molecular-masque-250ml" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div></div>
+    <div class="card"><h3>INP — slow interaction</h3>
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/" target="_blank" rel="noopener">/</a>
+          <div class="stats">
+            <span class="pct-poor poor-mid">12.5% poor</span>
+            <span class="meta">600 events · 75 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2F" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/collections/best-sellers" target="_blank" rel="noopener">/collections/best-sellers</a>
+          <div class="stats">
+            <span class="pct-poor poor-low">9.5% poor</span>
+            <span class="meta">63 events · 6 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcollections%2Fbest-sellers" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines" target="_blank" rel="noopener">/blogs/product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines</a>
+          <div class="stats">
+            <span class="pct-poor poor-low">7.1% poor</span>
+            <span class="meta">140 events · 10 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fproduct-spotlight%2F15-top-sulfate-free-shampoos-in-the-philippines" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/products/k18-leave-in-molecular-repair-hair-mask" target="_blank" rel="noopener">/products/k18-leave-in-molecular-repair-hair-mask</a>
+          <div class="stats">
+            <span class="pct-poor poor-low">7.0% poor</span>
+            <span class="meta">71 events · 5 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fproducts%2Fk18-leave-in-molecular-repair-hair-mask" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/pages/azta-urban-salon-service-menu" target="_blank" rel="noopener">/pages/azta-urban-salon-service-menu</a>
+          <div class="stats">
+            <span class="pct-poor poor-low">6.7% poor</span>
+            <span class="meta">344 events · 23 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fpages%2Fazta-urban-salon-service-menu" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div></div>
+    <div class="card"><h3>CLS — layout shift</h3>
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/rebonding-vs-keratin-treatment-achieving-silky-hair" target="_blank" rel="noopener">/blogs/hair-education/rebonding-vs-keratin-treatment-achieving-silky-hair</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">54.9% poor</span>
+            <span class="meta">51 events · 28 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Frebonding-vs-keratin-treatment-achieving-silky-hair" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/product-spotlight/lockdown-lab-we-tried-5-purple-shampoos-for-blonde-hair-see-the-results-here" target="_blank" rel="noopener">/blogs/product-spotlight/lockdown-lab-we-tried-5-purple-shampoos-for-blonde-hair-see-the-results-here</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">51.9% poor</span>
+            <span class="meta">52 events · 27 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fproduct-spotlight%2Flockdown-lab-we-tried-5-purple-shampoos-for-blonde-hair-see-the-results-here" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines" target="_blank" rel="noopener">/blogs/product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">49.2% poor</span>
+            <span class="meta">392 events · 193 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fproduct-spotlight%2F15-top-sulfate-free-shampoos-in-the-philippines" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/products/wella-professionals-koleston-perfect-ppd-free-permanent-hair-color-tube-all-shades" target="_blank" rel="noopener">/products/wella-professionals-koleston-perfect-ppd-free-permanent-hair-color-tube-all-shades</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">49.1% poor</span>
+            <span class="meta">116 events · 57 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fproducts%2Fwella-professionals-koleston-perfect-ppd-free-permanent-hair-color-tube-all-shades" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/tousled-online-magazine/how-to-hide-gray-hair-on-brunettes" target="_blank" rel="noopener">/blogs/tousled-online-magazine/how-to-hide-gray-hair-on-brunettes</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">47.1% poor</span>
+            <span class="meta">51 events · 24 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Ftousled-online-magazine%2Fhow-to-hide-gray-hair-on-brunettes" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div></div>
   </div>
 
-  <h2>Top INP attribution targets — what shoppers tap that&#39;s slow</h2>
+  <h2>Top INP attribution targets
+    <span class="h2-help">CSS selectors / elements causing slow taps</span>
+  </h2>
   <div class="card">
     <table><thead><tr><th>Attribution target (CSS selector / element)</th><th class="num">Poor INP count</th></tr></thead><tbody>
 <tr><td><span style="color:var(--text-muted)">(not set) — interaction during page load</span></td><td class="num">317</td></tr>
@@ -212,64 +470,93 @@
 </tbody></table>
   </div>
 
-  <h2>JavaScript errors — last 7 days</h2>
+  <h2>JavaScript errors
+    <span class="h2-help">last 7 days</span>
+  </h2>
   <div class="card">
     <table><thead><tr><th>Type</th><th>Message</th><th>Source</th><th class="num">Count</th></tr></thead><tbody>
-<tr><td>?</td><td class="code">(no message)</td><td class="code">(unknown)</td><td class="num">3,028</td></tr>
+<tr><td>?</td><td class="code">(no message)</td><td class="code">(unknown)</td><td class="num">3,030</td></tr>
 <tr><td>(not set)</td><td class="code">(not set)</td><td class="code">(not set)</td><td class="num">4</td></tr>
 </tbody></table>
   </div>
 
-  <h2>vs April 26 baseline (mobile lab)</h2>
+  <h2>vs April 26 baseline
+    <span class="h2-help">PSI mobile lab · cumulative project impact</span>
+  </h2>
   <div class="card">
     <div class="empty">No PSI data to compare.</div>
   </div>
 
   <footer>
-    Generated by <code>scripts/build-perf-dashboard.py</code>
-    &nbsp;·&nbsp; Data: PSI v5 API + GA4 Data API
-    &nbsp;·&nbsp; Re-run: <code>./scripts/build-perf-dashboard.py</code>
-    &nbsp;·&nbsp; <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com">Open hairmnl.com in PSI</a>
+    Data sources: PSI v5 API · CrUX HTTP API · GA4 Data API (property 248106289)<br>
+    Refresh: <code>./scripts/build-perf-dashboard.py</code>
+    &nbsp;·&nbsp; <a href="https://github.com/jjoson-ai/hairmnl-theme/tree/main/dashboard">Source on GitHub</a>
   </footer>
 </div>
 
 <script>
 const CHART_DATA = {"labels": [], "score": [], "lcp_s": [], "tbt_ms": [], "cls": []};
+let activeRange = 0;  // 0 = all
+let charts = {};
 
-const baseConfig = (label, color, dataset, fmt) => ({
-  type: 'line',
-  data: {
-    labels: CHART_DATA.labels,
-    datasets: [{
-      label, data: dataset, borderColor: color, backgroundColor: color + '22',
-      tension: 0.25, fill: true, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2,
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => fmt ? fmt(ctx.parsed.y) : ctx.parsed.y,
-        }
-      }
+function filterByRange(allLabels, allData, days) {
+  if (days === 0) return { labels: allLabels, data: allData };
+  const n = allLabels.length;
+  const sliceStart = Math.max(0, n - days);
+  return { labels: allLabels.slice(sliceStart), data: allData.slice(sliceStart) };
+}
+
+const baseConfig = (label, color, allData, fmt) => {
+  const filtered = filterByRange(CHART_DATA.labels, allData, activeRange);
+  return {
+    type: 'line',
+    data: {
+      labels: filtered.labels,
+      datasets: [{
+        label, data: filtered.data, borderColor: color, backgroundColor: color + '22',
+        tension: 0.25, fill: true, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2,
+      }]
     },
-    scales: {
-      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
-      y: { beginAtZero: false, grid: { color: '#E5E7EB' }, ticks: { font: { size: 11 } } },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: (ctx) => fmt ? fmt(ctx.parsed.y) : ctx.parsed.y } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { beginAtZero: false, grid: { color: '#E5E7EB' }, ticks: { font: { size: 10 } } },
+      }
     }
-  }
-});
+  };
+};
 
-new Chart(document.getElementById('chart-score'),
-  baseConfig('Score', '#1E2761', CHART_DATA.score, v => `${v}/100`));
-new Chart(document.getElementById('chart-lcp'),
-  baseConfig('LCP', '#C03A3A', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`));
-new Chart(document.getElementById('chart-tbt'),
-  baseConfig('TBT', '#C97A1A', CHART_DATA.tbt_ms, v => `${v} ms`));
-new Chart(document.getElementById('chart-cls'),
-  baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, v => v.toFixed(3)));
+function buildCharts() {
+  Object.values(charts).forEach(c => c.destroy());
+  charts.score = new Chart(document.getElementById('chart-score'),
+    baseConfig('Score', '#1E2761', CHART_DATA.score, v => `${v}/100`));
+  charts.lcp = new Chart(document.getElementById('chart-lcp'),
+    baseConfig('LCP', '#C03A3A', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`));
+  charts.tbt = new Chart(document.getElementById('chart-tbt'),
+    baseConfig('TBT', '#C97A1A', CHART_DATA.tbt_ms, v => `${v} ms`));
+  charts.cls = new Chart(document.getElementById('chart-cls'),
+    baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, v => v.toFixed(3)));
+}
+
+function setRange(days) {
+  activeRange = days;
+  document.querySelectorAll('.range-btn').forEach(b =>
+    b.classList.toggle('active', parseInt(b.dataset.range, 10) === days));
+  buildCharts();
+}
+
+function switchTab(btn) {
+  const target = btn.dataset.tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === btn));
+  document.querySelectorAll('.tab-content').forEach(tc => tc.classList.toggle('active', tc.id === target));
+}
+
+buildCharts();
 </script>
 </body>
 </html>

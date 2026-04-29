@@ -63,6 +63,78 @@ BASELINE_2026_04_26 = {
 }
 
 
+# ───────────────────────── CrUX ─────────────────────────
+
+def query_crux(url: str, form_factor: str, key: str) -> dict | None:
+    """
+    Query Chrome UX Report API for real-shopper p75 values + rating distribution.
+    form_factor: 'PHONE' | 'DESKTOP' | 'TABLET' | 'ALL_FORM_FACTORS'
+
+    Returns None on 403 (API key restriction) or 404 (insufficient CrUX data).
+    Returns dict like:
+      {"lcp_ms": 3812, "cls": 0.30, "inp_ms": 277, "fcp_ms": 3140, "ttfb_ms": 737,
+       "histograms": {"lcp": {...}, ...}}
+    """
+    api = f"https://chromeuxreport.googleapis.com/v1/records:queryRecord?key={key}"
+    payload = json.dumps({
+        "url": url,
+        "formFactor": form_factor,
+        "metrics": [
+            "largest_contentful_paint", "cumulative_layout_shift",
+            "interaction_to_next_paint", "first_contentful_paint",
+            "experimental_time_to_first_byte",
+        ],
+    }).encode()
+    req = urllib.request.Request(api, data=payload, headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            d = json.loads(r.read())
+    except urllib.error.HTTPError as e:
+        if e.code == 403:
+            print(f"  CrUX {form_factor} 403 — PSI API key has API-restrictions allowlist that blocks CrUX. "
+                  f"Fix: GCP Console → Credentials → click key → 'API restrictions' → "
+                  f"add 'Chrome UX Report API' OR set 'Don't restrict key'.", file=sys.stderr)
+        elif e.code == 404:
+            print(f"  CrUX {form_factor} 404 — insufficient real-shopper data (need ~28 days of Chrome traffic).", file=sys.stderr)
+        else:
+            print(f"  CrUX {form_factor} HTTP {e.code}: {e.read()[:200].decode(errors='replace')}", file=sys.stderr)
+        return None
+    except Exception as e:
+        print(f"  CrUX {form_factor} error: {e}", file=sys.stderr)
+        return None
+
+    metrics = d.get("record", {}).get("metrics", {})
+    out = {"collection_period": d.get("record", {}).get("collectionPeriod", {}), "histograms": {}}
+
+    def _extract(name, key_out, multiplier=1):
+        m = metrics.get(name)
+        if not m:
+            return None
+        p75 = m.get("percentiles", {}).get("p75")
+        if p75 is not None:
+            try:
+                out[key_out] = float(p75) * multiplier
+            except (ValueError, TypeError):
+                pass
+        # Capture histogram (rating buckets) for charting
+        if "histogram" in m:
+            buckets = []
+            for b in m["histogram"]:
+                buckets.append({
+                    "start": b.get("start"),
+                    "end": b.get("end"),
+                    "density": b.get("density", 0),
+                })
+            out["histograms"][key_out] = buckets
+
+    _extract("largest_contentful_paint", "lcp_ms")
+    _extract("cumulative_layout_shift", "cls", multiplier=1/100.0)  # CrUX returns CLS as int×100
+    _extract("interaction_to_next_paint", "inp_ms")
+    _extract("first_contentful_paint", "fcp_ms")
+    _extract("experimental_time_to_first_byte", "ttfb_ms")
+    return out
+
+
 # ───────────────────────── PSI ─────────────────────────
 
 def get_psi_key() -> str:
@@ -313,111 +385,209 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <style>
   :root {
     --navy: #1E2761;
+    --navy-2: #2C3A7A;
     --navy-light: #3A4A8A;
     --ice: #CADCFC;
     --ice-bg: #F0F4FB;
     --gold: #D4A04C;
     --green: #2F8F3F;
+    --green-bg: #E8F5EA;
     --amber: #C97A1A;
+    --amber-bg: #FBF1E0;
     --red: #C03A3A;
+    --red-bg: #FBE8E8;
     --gray: #6B7280;
     --gray-light: #E5E7EB;
-    --bg: #FAFBFC;
+    --gray-bg: #F4F6F8;
+    --bg: #F7F8FA;
     --card: #FFFFFF;
     --text: #1F2937;
     --text-muted: #6B7280;
   }
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
          background: var(--bg); color: var(--text); margin: 0; padding: 0;
-         font-size: 14px; line-height: 1.4; }
-  .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
-  header { padding: 24px 0; border-bottom: 3px solid var(--navy); margin-bottom: 24px; }
-  header h1 { margin: 0; font-size: 28px; color: var(--navy); }
-  header .meta { color: var(--text-muted); font-size: 13px; margin-top: 6px; }
-  h2 { color: var(--navy); font-size: 18px; margin: 32px 0 16px 0; padding-bottom: 8px;
-       border-bottom: 1px solid var(--gray-light); }
-  h3 { color: var(--navy-light); font-size: 14px; margin: 0 0 12px 0; text-transform: uppercase;
+         font-size: 14px; line-height: 1.45; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 16px; }
+  @media (min-width: 700px) { .container { padding: 24px; } }
+
+  header { padding: 16px 0 20px; border-bottom: 3px solid var(--navy); margin-bottom: 20px; }
+  header .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+                flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 22px; color: var(--navy); line-height: 1.2; }
+  @media (min-width: 700px) { header h1 { font-size: 28px; } }
+  header .meta { color: var(--text-muted); font-size: 12px; margin-top: 6px; line-height: 1.5; }
+  header .meta strong { color: var(--text); }
+  .live-link { background: var(--navy); color: white; text-decoration: none; padding: 6px 12px;
+               border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .live-link:hover { background: var(--navy-2); }
+
+  h2 { color: var(--navy); font-size: 16px; margin: 28px 0 12px 0; padding-bottom: 8px;
+       border-bottom: 1px solid var(--gray-light); display: flex; align-items: center;
+       justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  @media (min-width: 700px) { h2 { font-size: 18px; } }
+  h2 .h2-help { font-weight: 400; font-size: 11px; color: var(--text-muted);
+                text-transform: none; letter-spacing: 0; }
+  h3 { color: var(--navy-light); font-size: 13px; margin: 0 0 10px 0; text-transform: uppercase;
        letter-spacing: 0.05em; font-weight: 700; }
 
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  /* Tab switcher */
+  .tabs { display: inline-flex; background: var(--gray-bg); border-radius: 8px; padding: 4px;
+          gap: 0; margin-bottom: 14px; }
+  .tab { background: transparent; border: 0; padding: 6px 14px; border-radius: 6px;
+         font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer;
+         font-family: inherit; }
+  .tab.active { background: var(--card); color: var(--navy); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+  .tab:hover:not(.active) { color: var(--navy-light); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* KPI cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (min-width: 700px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
+  @media (min-width: 1100px) { .kpi-grid { grid-template-columns: repeat(6, 1fr); } }
   .kpi { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
-         padding: 18px; }
-  .kpi .label { color: var(--text-muted); font-size: 11px; text-transform: uppercase;
-                letter-spacing: 0.06em; font-weight: 700; }
-  .kpi .value { font-size: 32px; font-weight: 700; color: var(--navy); margin-top: 6px;
+         padding: 14px; }
+  .kpi .label { color: var(--text-muted); font-size: 10px; text-transform: uppercase;
+                letter-spacing: 0.05em; font-weight: 700; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: var(--navy); margin-top: 4px;
                 line-height: 1; }
-  .kpi .delta { font-size: 12px; margin-top: 6px; color: var(--text-muted); }
-  .kpi .delta.up { color: var(--green); }
-  .kpi .delta.down { color: var(--red); }
+  @media (min-width: 700px) { .kpi .value { font-size: 28px; } }
+  .kpi .delta { font-size: 11px; margin-top: 4px; color: var(--text-muted); }
+  .kpi .delta.improve { color: var(--green); font-weight: 600; }
+  .kpi .delta.regress { color: var(--red); font-weight: 600; }
+  .kpi.poor { background: var(--red-bg); border-color: #F0C8C8; }
   .kpi.poor .value { color: var(--red); }
+  .kpi.warn { background: var(--amber-bg); border-color: #ECD9B6; }
   .kpi.warn .value { color: var(--amber); }
+  .kpi.good { background: var(--green-bg); border-color: #C6E2CC; }
   .kpi.good .value { color: var(--green); }
 
   .card { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
-          padding: 18px; margin-bottom: 16px; }
+          padding: 16px; margin-bottom: 14px; }
 
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+  .grid-2 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 800px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .grid-3 { grid-template-columns: 1fr 1fr 1fr; } }
+
+  /* RUM CWV cards */
+  .cwv-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 700px) { .cwv-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .cwv-grid { grid-template-columns: repeat(5, 1fr); } }
+  .cwv { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
+         padding: 14px; }
+  .cwv .name { font-size: 12px; color: var(--text-muted); text-transform: uppercase;
+               font-weight: 700; letter-spacing: 0.05em; }
+  .cwv .pct { font-size: 32px; font-weight: 700; color: var(--green); line-height: 1; margin: 4px 0; }
+  .cwv.fail .pct { color: var(--amber); }
+  .cwv .total { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .cwv .badge { display: inline-block; padding: 2px 8px; border-radius: 4px;
+                font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cwv .badge.pass { background: var(--green-bg); color: var(--green); }
+  .cwv .badge.fail { background: var(--amber-bg); color: var(--amber); }
+  .rating-stack { display: flex; height: 8px; border-radius: 4px; overflow: hidden;
+                  background: var(--gray-light); margin: 6px 0 4px 0; }
+  .rating-stack > span { display: block; height: 100%; }
+  .rating-stack > .good { background: var(--green); }
+  .rating-stack > .warn { background: var(--amber); }
+  .rating-stack > .poor { background: var(--red); }
+  .stack-legend { font-size: 10px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+
+  /* Page friction rows — readable, not truncated */
+  .page-row { padding: 10px 0; border-bottom: 1px solid var(--gray-light); }
+  .page-row:last-child { border-bottom: none; }
+  .page-row .path { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 12px;
+                    color: var(--navy); word-break: break-all; line-height: 1.3; display: block;
+                    margin-bottom: 6px; text-decoration: none; }
+  .page-row .path:hover { text-decoration: underline; }
+  .page-row .stats { display: flex; align-items: center; gap: 12px; font-size: 12px;
+                     flex-wrap: wrap; }
+  .page-row .pct-poor { font-weight: 700; min-width: 56px; }
+  .page-row .pct-poor.poor-high { color: var(--red); }
+  .page-row .pct-poor.poor-mid { color: var(--amber); }
+  .page-row .pct-poor.poor-low { color: var(--text-muted); }
+  .page-row .meta { color: var(--text-muted); font-size: 11px; }
+  .page-row .deeplinks { display: flex; gap: 8px; margin-left: auto; }
+  .page-row .deeplinks a { color: var(--navy-light); text-decoration: none; font-size: 11px;
+                            font-weight: 600; padding: 2px 6px; background: var(--ice-bg);
+                            border-radius: 4px; }
+  .page-row .deeplinks a:hover { background: var(--ice); }
 
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th { text-align: left; color: var(--text-muted); font-weight: 600; font-size: 11px;
        text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 10px;
        border-bottom: 2px solid var(--gray-light); }
-  td { padding: 8px 10px; border-bottom: 1px solid var(--gray-light); }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--gray-light); vertical-align: top; }
   tr:last-child td { border-bottom: none; }
-  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
   td.code { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 12px;
-            color: var(--navy); max-width: 360px; overflow: hidden; text-overflow: ellipsis;
-            white-space: nowrap; }
-
-  .bar { display: inline-block; height: 8px; background: var(--gray-light); border-radius: 4px;
-         vertical-align: middle; position: relative; overflow: hidden; min-width: 80px; }
-  .bar > span { display: block; height: 100%; }
-  .bar.good > span { background: var(--green); }
-  .bar.warn > span { background: var(--amber); }
-  .bar.poor > span { background: var(--red); }
-
-  .rating-stack { display: flex; height: 24px; border-radius: 4px; overflow: hidden;
-                  background: var(--gray-light); margin: 4px 0; }
-  .rating-stack > span { display: flex; align-items: center; justify-content: center;
-                         color: white; font-size: 11px; font-weight: 600; min-width: 30px; }
-  .rating-stack > .good { background: var(--green); }
-  .rating-stack > .warn { background: var(--amber); }
-  .rating-stack > .poor { background: var(--red); }
+            color: var(--navy); word-break: break-all; }
 
   .chart-wrap { position: relative; height: 200px; }
-  .empty { color: var(--text-muted); font-style: italic; padding: 12px 0; }
+  .empty { color: var(--text-muted); font-style: italic; padding: 12px 0; font-size: 13px; }
+  .note { background: var(--ice-bg); border-left: 3px solid var(--navy-light);
+          padding: 10px 14px; border-radius: 4px; font-size: 12px; color: var(--text);
+          margin-bottom: 12px; }
+  .note strong { color: var(--navy); }
 
-  footer { color: var(--text-muted); font-size: 12px; text-align: center; padding: 32px 0;
-           border-top: 1px solid var(--gray-light); margin-top: 48px; }
-  footer a { color: var(--navy-light); }
+  /* Trend chart range filter */
+  .range-filter { display: inline-flex; gap: 4px; }
+  .range-btn { background: var(--gray-bg); border: 0; padding: 4px 10px; border-radius: 4px;
+               font-size: 11px; font-weight: 600; color: var(--text-muted); cursor: pointer;
+               font-family: inherit; }
+  .range-btn.active { background: var(--navy); color: white; }
+  .range-btn:hover:not(.active) { background: var(--gray-light); }
+
+  /* Collapsible source detail */
+  details { margin-top: 8px; }
+  summary { cursor: pointer; font-size: 11px; color: var(--text-muted); }
+
+  footer { color: var(--text-muted); font-size: 12px; text-align: center; padding: 24px 0;
+           border-top: 1px solid var(--gray-light); margin-top: 32px; line-height: 1.6; }
+  footer a { color: var(--navy-light); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <h1>HairMNL — Performance Dashboard</h1>
-    <div class="meta">
-      Last updated: <strong>__LAST_UPDATED__</strong>
-      &nbsp;·&nbsp; Snapshots collected: <strong>__SNAPSHOT_COUNT__</strong>
-      &nbsp;·&nbsp; PSI source: hairmnl.com (mobile slow 4G + desktop)
-      &nbsp;·&nbsp; RUM source: GA4 property 248106289, last __RUM_DAYS__ days
+    <div class="row">
+      <div>
+        <h1>HairMNL — Performance Dashboard</h1>
+        <div class="meta">
+          Last updated: <strong>__LAST_UPDATED__</strong>
+          &nbsp;·&nbsp; Snapshots: <strong>__SNAPSHOT_COUNT__</strong>
+          &nbsp;·&nbsp; RUM window: <strong>last __RUM_DAYS__ days</strong>
+        </div>
+      </div>
+      <a class="live-link" href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com" target="_blank" rel="noopener">Open in PSI ↗</a>
     </div>
   </header>
 
-  <h2>Today&#39;s snapshot — PSI Lab (mobile)</h2>
-  <div class="kpi-grid">
-    __KPI_CARDS_MOBILE__
+  <h2>Today&#39;s snapshot
+    <span class="h2-help">CrUX = real-shopper p75 (28-day) · PSI = single-run lab simulation</span>
+  </h2>
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="snapshot-mobile" onclick="switchTab(this)">📱 Mobile</button>
+    <button class="tab" data-tab="snapshot-desktop" onclick="switchTab(this)">🖥 Desktop</button>
+  </div>
+  <div class="tab-content active" id="snapshot-mobile">
+    __SNAPSHOT_MOBILE__
+  </div>
+  <div class="tab-content" id="snapshot-desktop">
+    __SNAPSHOT_DESKTOP__
   </div>
 
-  <h2>Today&#39;s snapshot — PSI Lab (desktop)</h2>
-  <div class="kpi-grid">
-    __KPI_CARDS_DESKTOP__
-  </div>
-
-  <h2>Trend over time — PSI Lab mobile</h2>
+  <h2>Trend over time — PSI Lab mobile
+    <span class="range-filter">
+      <button class="range-btn" data-range="7" onclick="setRange(7)">7d</button>
+      <button class="range-btn" data-range="30" onclick="setRange(30)">30d</button>
+      <button class="range-btn" data-range="90" onclick="setRange(90)">90d</button>
+      <button class="range-btn active" data-range="0" onclick="setRange(0)">All</button>
+    </span>
+  </h2>
   <div class="grid-2">
     <div class="card"><h3>Performance score</h3><div class="chart-wrap"><canvas id="chart-score"></canvas></div></div>
     <div class="card"><h3>Largest Contentful Paint (s)</h3><div class="chart-wrap"><canvas id="chart-lcp"></canvas></div></div>
@@ -425,91 +595,124 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="card"><h3>Cumulative Layout Shift</h3><div class="chart-wrap"><canvas id="chart-cls"></canvas></div></div>
   </div>
 
-  <h2>Real-shopper Core Web Vitals — last __RUM_DAYS__ days</h2>
-  <div class="card">
+  <h2>Real-shopper Core Web Vitals
+    <span class="h2-help">GA4 last __RUM_DAYS__ days · ≥75% good = PASS the CWV threshold</span>
+  </h2>
+  <div class="cwv-grid">
     __RUM_RATINGS__
   </div>
 
-  <h2>Top friction pages — by % &quot;poor&quot; rate</h2>
+  <h2>Top friction pages
+    <span class="h2-help">≥50 pageviews · click any path to open in PSI</span>
+  </h2>
   <div class="grid-3">
     <div class="card"><h3>LCP — slow paint</h3>__TOP_PAGES_LCP__</div>
     <div class="card"><h3>INP — slow interaction</h3>__TOP_PAGES_INP__</div>
     <div class="card"><h3>CLS — layout shift</h3>__TOP_PAGES_CLS__</div>
   </div>
 
-  <h2>Top INP attribution targets — what shoppers tap that&#39;s slow</h2>
+  <h2>Top INP attribution targets
+    <span class="h2-help">CSS selectors / elements causing slow taps</span>
+  </h2>
   <div class="card">
     __INP_TARGETS__
   </div>
 
-  <h2>JavaScript errors — last __RUM_DAYS__ days</h2>
+  <h2>JavaScript errors
+    <span class="h2-help">last __RUM_DAYS__ days</span>
+  </h2>
   <div class="card">
     __JS_ERRORS__
   </div>
 
-  <h2>vs April 26 baseline (mobile lab)</h2>
+  <h2>vs April 26 baseline
+    <span class="h2-help">PSI mobile lab · cumulative project impact</span>
+  </h2>
   <div class="card">
     __BASELINE_TABLE__
   </div>
 
   <footer>
-    Generated by <code>scripts/build-perf-dashboard.py</code>
-    &nbsp;·&nbsp; Data: PSI v5 API + GA4 Data API
-    &nbsp;·&nbsp; Re-run: <code>./scripts/build-perf-dashboard.py</code>
-    &nbsp;·&nbsp; <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com">Open hairmnl.com in PSI</a>
+    Data sources: PSI v5 API · CrUX HTTP API · GA4 Data API (property 248106289)<br>
+    Refresh: <code>./scripts/build-perf-dashboard.py</code>
+    &nbsp;·&nbsp; <a href="https://github.com/jjoson-ai/hairmnl-theme/tree/main/dashboard">Source on GitHub</a>
   </footer>
 </div>
 
 <script>
 const CHART_DATA = __CHART_DATA__;
+let activeRange = 0;  // 0 = all
+let charts = {};
 
-const baseConfig = (label, color, dataset, fmt) => ({
-  type: 'line',
-  data: {
-    labels: CHART_DATA.labels,
-    datasets: [{
-      label, data: dataset, borderColor: color, backgroundColor: color + '22',
-      tension: 0.25, fill: true, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2,
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => fmt ? fmt(ctx.parsed.y) : ctx.parsed.y,
-        }
-      }
+function filterByRange(allLabels, allData, days) {
+  if (days === 0) return { labels: allLabels, data: allData };
+  const n = allLabels.length;
+  const sliceStart = Math.max(0, n - days);
+  return { labels: allLabels.slice(sliceStart), data: allData.slice(sliceStart) };
+}
+
+const baseConfig = (label, color, allData, fmt) => {
+  const filtered = filterByRange(CHART_DATA.labels, allData, activeRange);
+  return {
+    type: 'line',
+    data: {
+      labels: filtered.labels,
+      datasets: [{
+        label, data: filtered.data, borderColor: color, backgroundColor: color + '22',
+        tension: 0.25, fill: true, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2,
+      }]
     },
-    scales: {
-      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
-      y: { beginAtZero: false, grid: { color: '#E5E7EB' }, ticks: { font: { size: 11 } } },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: (ctx) => fmt ? fmt(ctx.parsed.y) : ctx.parsed.y } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { beginAtZero: false, grid: { color: '#E5E7EB' }, ticks: { font: { size: 10 } } },
+      }
     }
-  }
-});
+  };
+};
 
-new Chart(document.getElementById('chart-score'),
-  baseConfig('Score', '#1E2761', CHART_DATA.score, v => `${v}/100`));
-new Chart(document.getElementById('chart-lcp'),
-  baseConfig('LCP', '#C03A3A', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`));
-new Chart(document.getElementById('chart-tbt'),
-  baseConfig('TBT', '#C97A1A', CHART_DATA.tbt_ms, v => `${v} ms`));
-new Chart(document.getElementById('chart-cls'),
-  baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, v => v.toFixed(3)));
+function buildCharts() {
+  Object.values(charts).forEach(c => c.destroy());
+  charts.score = new Chart(document.getElementById('chart-score'),
+    baseConfig('Score', '#1E2761', CHART_DATA.score, v => `${v}/100`));
+  charts.lcp = new Chart(document.getElementById('chart-lcp'),
+    baseConfig('LCP', '#C03A3A', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`));
+  charts.tbt = new Chart(document.getElementById('chart-tbt'),
+    baseConfig('TBT', '#C97A1A', CHART_DATA.tbt_ms, v => `${v} ms`));
+  charts.cls = new Chart(document.getElementById('chart-cls'),
+    baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, v => v.toFixed(3)));
+}
+
+function setRange(days) {
+  activeRange = days;
+  document.querySelectorAll('.range-btn').forEach(b =>
+    b.classList.toggle('active', parseInt(b.dataset.range, 10) === days));
+  buildCharts();
+}
+
+function switchTab(btn) {
+  const target = btn.dataset.tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === btn));
+  document.querySelectorAll('.tab-content').forEach(tc => tc.classList.toggle('active', tc.id === target));
+}
+
+buildCharts();
 </script>
 </body>
 </html>
 """
 
 
-def _kpi(label, value, delta=None, klass=""):
-    delta_html = ""
-    if delta is not None:
-        cls = "up" if delta < 0 else ("down" if delta > 0 else "")  # for LCP/TBT/CLS, negative = improvement
-        sign = "+" if delta > 0 else ""
-        delta_html = f'<div class="delta {cls}">{sign}{delta} vs prev</div>'
-    return f'<div class="kpi {klass}"><div class="label">{label}</div><div class="value">{value}</div>{delta_html}</div>'
+def _kpi_v2(label, value, source, klass="", delta_html=""):
+    """Single KPI card. Source = 'CrUX p75', 'PSI lab', or empty."""
+    src = f'<div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">{source}</div>' if source else ""
+    return (f'<div class="kpi {klass}"><div class="label">{label}</div>'
+            f'<div class="value">{value}</div>{delta_html}{src}</div>')
 
 
 def _rate_class_lcp(ms):
@@ -533,6 +736,27 @@ def _rate_class_cls(v):
     return "poor"
 
 
+def _rate_class_inp(ms):
+    if ms is None: return ""
+    if ms <= 200: return "good"
+    if ms <= 500: return "warn"
+    return "poor"
+
+
+def _rate_class_fcp(ms):
+    if ms is None: return ""
+    if ms <= 1800: return "good"
+    if ms <= 3000: return "warn"
+    return "poor"
+
+
+def _rate_class_ttfb(ms):
+    if ms is None: return ""
+    if ms <= 800: return "good"
+    if ms <= 1800: return "warn"
+    return "poor"
+
+
 def _rate_class_score(v):
     if v is None: return ""
     if v >= 90: return "good"
@@ -540,70 +764,152 @@ def _rate_class_score(v):
     return "poor"
 
 
-def render_kpi_cards(psi_now, psi_prev, key_prefix):
+def _delta_html(curr, prev, lower_is_better=True, fmt=lambda v: f"{v:+.0f}"):
+    if prev is None or curr is None:
+        return ""
+    d = curr - prev
+    if d == 0:
+        return f'<div class="delta">no change vs prev</div>'
+    improved = (d < 0) if lower_is_better else (d > 0)
+    klass = "improve" if improved else "regress"
+    arrow = "↓" if d < 0 else "↑"
+    return f'<div class="delta {klass}">{arrow} {fmt(abs(d))} vs prev</div>'
+
+
+def render_snapshot_section(form_factor: str, snapshot: dict, prev_snapshot: dict | None) -> str:
+    """Render KPI cards for one form factor (mobile|desktop). Combines CrUX + PSI."""
+    crux = snapshot.get("crux", {}).get(form_factor)
+    psi = snapshot.get("psi", {}).get(form_factor)
+    crux_prev = prev_snapshot.get("crux", {}).get(form_factor) if prev_snapshot else None
+    psi_prev = prev_snapshot.get("psi", {}).get(form_factor) if prev_snapshot else None
+
+    if not crux and not psi:
+        return ('<div class="empty">No data captured for this form factor yet. '
+                'CrUX needs ~28 days of Chrome traffic; PSI mobile sometimes fails for slow sites '
+                '(<a href="https://chromeuxreport.googleapis.com" target="_blank">enable CrUX API</a> for the most reliable signal).</div>')
+
     cards = []
-    if not psi_now:
-        return '<div class="empty">No PSI data captured yet — run with PSI enabled.</div>'
 
-    delta = lambda k: (psi_now[k] - psi_prev[k]) if (psi_prev and k in psi_prev and k in psi_now) else None
-    fmt_ms = lambda k: f"{psi_now[k]/1000:.1f}s" if psi_now.get(k) else "n/a"
+    # SCORE — PSI only (CrUX has no aggregate score)
+    if psi and "score" in psi:
+        cards.append(_kpi_v2("Score", str(psi["score"]), "PSI lab",
+            klass=_rate_class_score(psi["score"]),
+            delta_html=_delta_html(psi["score"], (psi_prev or {}).get("score"), lower_is_better=False)))
 
-    cards.append(_kpi("Score", psi_now["score"],
-        delta=int(delta("score")) if delta("score") is not None else None,
-        klass=_rate_class_score(psi_now["score"])))
-    cards.append(_kpi("LCP", fmt_ms("lcp_ms"),
-        delta=int(delta("lcp_ms")) if delta("lcp_ms") is not None else None,
-        klass=_rate_class_lcp(psi_now["lcp_ms"])))
-    cards.append(_kpi("TBT", f"{int(psi_now['tbt_ms'])} ms",
-        delta=int(delta("tbt_ms")) if delta("tbt_ms") is not None else None,
-        klass=_rate_class_tbt(psi_now["tbt_ms"])))
-    cards.append(_kpi("CLS", f"{psi_now['cls']:.3f}",
-        delta=round(delta("cls"), 3) if delta("cls") is not None else None,
-        klass=_rate_class_cls(psi_now["cls"])))
-    cards.append(_kpi("FCP", fmt_ms("fcp_ms"), klass=""))
-    cards.append(_kpi("Speed Index", fmt_ms("si_ms"), klass=""))
-    return "\n".join(cards)
+    # LCP — prefer CrUX
+    lcp = crux.get("lcp_ms") if crux else None
+    lcp_src = "CrUX p75" if lcp else None
+    if not lcp and psi: lcp = psi.get("lcp_ms"); lcp_src = "PSI lab"
+    if lcp:
+        prev = (crux_prev or {}).get("lcp_ms") if crux else (psi_prev or {}).get("lcp_ms")
+        cards.append(_kpi_v2("LCP", f"{lcp/1000:.2f} s", lcp_src,
+            klass=_rate_class_lcp(lcp),
+            delta_html=_delta_html(lcp, prev, fmt=lambda v: f"{v/1000:.2f}s")))
+
+    # CLS — prefer CrUX
+    cls = crux.get("cls") if crux else None
+    cls_src = "CrUX p75" if cls is not None else None
+    if cls is None and psi: cls = psi.get("cls"); cls_src = "PSI lab"
+    if cls is not None:
+        prev = (crux_prev or {}).get("cls") if crux else (psi_prev or {}).get("cls")
+        cards.append(_kpi_v2("CLS", f"{cls:.3f}", cls_src,
+            klass=_rate_class_cls(cls),
+            delta_html=_delta_html(cls, prev, fmt=lambda v: f"{v:.3f}")))
+
+    # INP — CrUX only (PSI lab doesn't measure INP)
+    if crux and crux.get("inp_ms") is not None:
+        inp = crux["inp_ms"]
+        prev = (crux_prev or {}).get("inp_ms")
+        cards.append(_kpi_v2("INP", f"{inp:.0f} ms", "CrUX p75",
+            klass=_rate_class_inp(inp),
+            delta_html=_delta_html(inp, prev, fmt=lambda v: f"{v:.0f}ms")))
+
+    # TBT — PSI only (CrUX has no TBT)
+    if psi and "tbt_ms" in psi:
+        tbt = psi["tbt_ms"]
+        prev = (psi_prev or {}).get("tbt_ms")
+        cards.append(_kpi_v2("TBT", f"{tbt:.0f} ms", "PSI lab",
+            klass=_rate_class_tbt(tbt),
+            delta_html=_delta_html(tbt, prev, fmt=lambda v: f"{v:.0f}ms")))
+
+    # FCP — prefer CrUX
+    fcp = crux.get("fcp_ms") if crux else None
+    fcp_src = "CrUX p75" if fcp else None
+    if not fcp and psi: fcp = psi.get("fcp_ms"); fcp_src = "PSI lab"
+    if fcp:
+        prev = (crux_prev or {}).get("fcp_ms") if crux else (psi_prev or {}).get("fcp_ms")
+        cards.append(_kpi_v2("FCP", f"{fcp/1000:.2f} s", fcp_src,
+            klass=_rate_class_fcp(fcp),
+            delta_html=_delta_html(fcp, prev, fmt=lambda v: f"{v/1000:.2f}s")))
+
+    # TTFB — CrUX only
+    if crux and crux.get("ttfb_ms"):
+        ttfb = crux["ttfb_ms"]
+        prev = (crux_prev or {}).get("ttfb_ms")
+        cards.append(_kpi_v2("TTFB", f"{ttfb:.0f} ms", "CrUX p75",
+            klass=_rate_class_ttfb(ttfb),
+            delta_html=_delta_html(ttfb, prev, fmt=lambda v: f"{v:.0f}ms")))
+
+    return f'<div class="kpi-grid">{"".join(cards)}</div>'
 
 
-def render_rum_ratings(metrics):
+def render_rum_cwv_cards(metrics):
+    """5 compact cards in a row, one per CWV metric."""
     if not metrics:
         return '<div class="empty">No RUM data.</div>'
-    rows = []
+    cards = []
     for m in VITAL_EVENTS:
         d = metrics.get(m, {})
         total = d.get("total", 0)
         if total == 0:
-            rows.append(f'<div style="margin: 14px 0"><h3>{m}</h3><div class="empty">No events captured.</div></div>')
+            cards.append(f'<div class="cwv"><div class="name">{m}</div><div class="empty">No events</div></div>')
             continue
         g = d["good"]; ni = d["needs-improvement"]; p = d["poor"]
         gp = g/total*100; nip = ni/total*100; pp = p/total*100
         passes = gp >= 75
-        passes_badge = '<span style="color:var(--green); font-weight:700;">✓ PASS</span>' if passes else \
-                       '<span style="color:var(--amber); font-weight:700;">✗ FAIL</span>'
-        rows.append(f'''
-        <div style="margin: 16px 0;">
-          <h3>{m} <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
-            {total:,} pageviews · {gp:.1f}% good · CWV target ≥75% good {passes_badge}</span></h3>
+        badge = '<span class="badge pass">✓ PASS</span>' if passes else '<span class="badge fail">✗ FAIL</span>'
+        klass = "" if passes else "fail"
+        cards.append(f'''
+        <div class="cwv {klass}">
+          <div class="name">{m}</div>
+          <div class="pct">{gp:.0f}%</div>
+          <div class="total">good · {total:,} events {badge}</div>
           <div class="rating-stack">
-            <span class="good" style="flex: {gp};">{gp:.0f}%</span>
-            <span class="warn" style="flex: {nip};">{nip:.0f}%</span>
-            <span class="poor" style="flex: {pp};">{pp:.0f}%</span>
+            <span class="good" style="flex: {gp};"></span>
+            <span class="warn" style="flex: {nip};"></span>
+            <span class="poor" style="flex: {pp};"></span>
+          </div>
+          <div class="stack-legend">{gp:.0f}% good · {nip:.0f}% NI · {pp:.0f}% poor</div>
+        </div>''')
+    return "\n".join(cards)
+
+
+def render_top_pages(pages, metric_name):
+    """Page rows with full URLs (no truncation), deep-links to PSI + GA4."""
+    if not pages:
+        return '<div class="empty">No pages with ≥50 events.</div>'
+    rows = []
+    for p in pages:
+        path = p["page"]
+        # Build absolute URL for deep-links
+        full_url = f"https://www.hairmnl.com{path}" if path.startswith("/") else path
+        psi_link = f"https://pagespeed.web.dev/analysis?url={urllib.parse.quote(full_url, safe='')}"
+        # Color-coded poor%
+        pct_poor = p["p_poor"] * 100
+        if pct_poor >= 25: pct_class = "poor-high"
+        elif pct_poor >= 10: pct_class = "poor-mid"
+        else: pct_class = "poor-low"
+        rows.append(f'''
+        <div class="page-row">
+          <a class="path" href="{full_url}" target="_blank" rel="noopener">{path}</a>
+          <div class="stats">
+            <span class="pct-poor {pct_class}">{pct_poor:.1f}% poor</span>
+            <span class="meta">{p["total"]:,} events · {p["poor"]:,} poor</span>
+            <span class="deeplinks">
+              <a href="{psi_link}" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
           </div>
         </div>''')
-    return "\n".join(rows)
-
-
-def render_top_pages(pages):
-    if not pages:
-        return '<div class="empty">No data.</div>'
-    rows = ['<table><thead><tr><th>Page</th><th class="num">% poor</th><th class="num">N</th></tr></thead><tbody>']
-    for p in pages:
-        bar_w = min(100, p["p_poor"] * 100)
-        rows.append(f'<tr><td class="code">{p["page"][:50]}</td>'
-                    f'<td class="num"><span class="bar poor" style="width:60px"><span style="width:{bar_w:.0f}%"></span></span> '
-                    f'{p["p_poor"]*100:.1f}%</td>'
-                    f'<td class="num">{p["total"]:,}</td></tr>')
-    rows.append('</tbody></table>')
     return "\n".join(rows)
 
 
@@ -710,11 +1016,7 @@ def render_html(snapshots: list[dict]) -> str:
 
     latest = snapshots[-1]
     prev = snapshots[-2] if len(snapshots) >= 2 else None
-
     psi_mobile = latest.get("psi", {}).get("mobile")
-    psi_desktop = latest.get("psi", {}).get("desktop")
-    psi_mobile_prev = prev.get("psi", {}).get("mobile") if prev else None
-    psi_desktop_prev = prev.get("psi", {}).get("desktop") if prev else None
     rum = latest.get("ga4") or {}
 
     chart_data = build_chart_data(snapshots)
@@ -729,12 +1031,12 @@ def render_html(snapshots: list[dict]) -> str:
     html = html.replace("__LAST_UPDATED__", last_label)
     html = html.replace("__SNAPSHOT_COUNT__", str(len(snapshots)))
     html = html.replace("__RUM_DAYS__", str(rum.get("days", 7)))
-    html = html.replace("__KPI_CARDS_MOBILE__", render_kpi_cards(psi_mobile, psi_mobile_prev, "mobile"))
-    html = html.replace("__KPI_CARDS_DESKTOP__", render_kpi_cards(psi_desktop, psi_desktop_prev, "desktop"))
-    html = html.replace("__RUM_RATINGS__", render_rum_ratings(rum.get("metrics", {})))
-    html = html.replace("__TOP_PAGES_LCP__", render_top_pages(rum.get("top_pages", {}).get("LCP", [])))
-    html = html.replace("__TOP_PAGES_INP__", render_top_pages(rum.get("top_pages", {}).get("INP", [])))
-    html = html.replace("__TOP_PAGES_CLS__", render_top_pages(rum.get("top_pages", {}).get("CLS", [])))
+    html = html.replace("__SNAPSHOT_MOBILE__", render_snapshot_section("mobile", latest, prev))
+    html = html.replace("__SNAPSHOT_DESKTOP__", render_snapshot_section("desktop", latest, prev))
+    html = html.replace("__RUM_RATINGS__", render_rum_cwv_cards(rum.get("metrics", {})))
+    html = html.replace("__TOP_PAGES_LCP__", render_top_pages(rum.get("top_pages", {}).get("LCP", []), "LCP"))
+    html = html.replace("__TOP_PAGES_INP__", render_top_pages(rum.get("top_pages", {}).get("INP", []), "INP"))
+    html = html.replace("__TOP_PAGES_CLS__", render_top_pages(rum.get("top_pages", {}).get("CLS", []), "CLS"))
     html = html.replace("__INP_TARGETS__", render_inp_targets(rum.get("top_inp_targets", [])))
     html = html.replace("__JS_ERRORS__", render_js_errors(rum.get("js_errors", [])))
     html = html.replace("__BASELINE_TABLE__", render_baseline_table(psi_mobile))
@@ -748,6 +1050,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--no-psi", action="store_true", help="skip PSI lab fetch")
     ap.add_argument("--no-ga4", action="store_true", help="skip GA4 RUM fetch")
+    ap.add_argument("--no-crux", action="store_true", help="skip CrUX real-shopper p75 fetch")
     ap.add_argument("--psi-only-mobile", action="store_true", help="skip desktop PSI")
     ap.add_argument("--render-only", action="store_true", help="don't fetch new data, re-render from existing snapshots")
     ap.add_argument("--url", default=DEFAULT_URL, help=f"PSI URL (default: {DEFAULT_URL})")
@@ -772,6 +1075,25 @@ def main():
 
     snapshot = {"timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")}
 
+    if not args.no_crux:
+        # CrUX is fast (~1-2s/call) and gives REAL real-shopper p75 values.
+        # Always try CrUX before PSI — it's the more reliable lab-quality source.
+        try:
+            crux_key = get_psi_key()  # CrUX shares the PSI Google Cloud API key
+            print("  CrUX: fetching real-shopper p75 (mobile + desktop)...", flush=True)
+            t0 = time.time()
+            snapshot["crux"] = {}
+            for form_factor, label in [("PHONE", "mobile"), ("DESKTOP", "desktop")]:
+                r = query_crux(args.url, form_factor, crux_key)
+                if r:
+                    snapshot["crux"][label] = r
+                    print(f"    {label}: LCP {r.get('lcp_ms', 0):.0f}ms · CLS {r.get('cls', 0):.3f} · INP {r.get('inp_ms', 0):.0f}ms")
+            print(f"  CrUX total: {time.time()-t0:.1f}s")
+            if not snapshot["crux"]:
+                del snapshot["crux"]
+        except SystemExit:
+            print("  CrUX: skipped (no API key)", file=sys.stderr)
+
     if not args.no_psi:
         snapshot["psi"] = {}
         t0 = time.time()
@@ -792,7 +1114,8 @@ def main():
 
     has_psi = bool(snapshot.get("psi", {}).get("mobile") or snapshot.get("psi", {}).get("desktop"))
     has_ga4 = bool(snapshot.get("ga4"))
-    if has_psi or has_ga4:
+    has_crux = bool(snapshot.get("crux"))
+    if has_psi or has_ga4 or has_crux:
         append_snapshot(snapshot)
         print(f"  Snapshot appended to {SNAPSHOTS_PATH}")
     else:
