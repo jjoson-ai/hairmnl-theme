@@ -819,7 +819,20 @@
     {%- endcomment -%}
 
     <!-- Shop.js ============================================================== -->
-    {{ 'shop.js' | asset_url | script_tag }}
+    {%- comment -%}
+      Defer 2026-04-29: shop.js is 177KB and was loaded via Shopify's
+      script_tag filter, which renders <script src> WITHOUT defer or
+      async — making it the only render-blocking external script on
+      the page. Slow 4G mobile audit traced ~1-1.5s of TBT here.
+
+      shop.js bundles its own lodash (no jQuery dep) and runs theme
+      Banner/Footer/etc. initializers — none of which need to fire
+      before HTML parse completes. Defer matches the pattern already
+      applied to vendor.js, theme.js, jquery.min.js, custom.js,
+      custom-theme.js, storepickup.js, and bss-b2b-js (see history
+      comments above for each).
+    {%- endcomment -%}
+    <script src="{{ 'shop.js' | asset_url }}" defer="defer"></script>
 
     <!-- Core Web Vitals → GA4 reporter -->
     {%- comment -%}
