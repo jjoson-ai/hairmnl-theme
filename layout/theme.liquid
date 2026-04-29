@@ -510,13 +510,19 @@
 
       Receives in GTM:
         event: js_error
-        js_error_message: error.message (truncated 200 chars)
-        js_error_source: filename:line:col (truncated 100 chars)
-        js_error_type: 'error' | 'rejection'
+        error_message: error.message (truncated 200 chars)
+        error_source: filename:line:col (truncated 100 chars)
+        error_type: 'error' | 'rejection'
 
-      GTM tag setup is admin-side: forward to GA4 as 'js_error'
-      custom event with same parameters. Once data flows, identify
-      top error sources via Looker Studio breakdown by source.
+      Field names match the GA4 custom dimensions already registered
+      (error_type / error_message / error_source — without js_ prefix).
+      Earlier version used js_error_* prefix which silently dropped to
+      empty in GA4 (those dimensions weren't registered). Renamed
+      2026-04-29 after diagnostic query confirmed 3,150 events firing
+      with all params null. If GTM auto-forwards matching dataLayer
+      field names to GA4 event params, data starts flowing immediately
+      with no admin work; if GTM has explicit param mapping, the GTM
+      tag also needs to read these new field names.
     {%- endcomment -%}
     {%- comment -%}
       A/B testing framework — added 2026-04-28.
@@ -584,9 +590,9 @@
           errorCount++;
           dl.push({
             event: 'js_error',
-            js_error_type: type,
-            js_error_message: String(message || '').slice(0, 200),
-            js_error_source: String(source || '').slice(0, 100)
+            error_type: type,
+            error_message: String(message || '').slice(0, 200),
+            error_source: String(source || '').slice(0, 100)
           });
         }
         addEventListener('error', function (e) {
