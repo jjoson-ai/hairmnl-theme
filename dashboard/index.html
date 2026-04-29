@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HairMNL — Performance Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --navy: #1E2761;
+    --navy-light: #3A4A8A;
+    --ice: #CADCFC;
+    --ice-bg: #F0F4FB;
+    --gold: #D4A04C;
+    --green: #2F8F3F;
+    --amber: #C97A1A;
+    --red: #C03A3A;
+    --gray: #6B7280;
+    --gray-light: #E5E7EB;
+    --bg: #FAFBFC;
+    --card: #FFFFFF;
+    --text: #1F2937;
+    --text-muted: #6B7280;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+         background: var(--bg); color: var(--text); margin: 0; padding: 0;
+         font-size: 14px; line-height: 1.4; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+  header { padding: 24px 0; border-bottom: 3px solid var(--navy); margin-bottom: 24px; }
+  header h1 { margin: 0; font-size: 28px; color: var(--navy); }
+  header .meta { color: var(--text-muted); font-size: 13px; margin-top: 6px; }
+  h2 { color: var(--navy); font-size: 18px; margin: 32px 0 16px 0; padding-bottom: 8px;
+       border-bottom: 1px solid var(--gray-light); }
+  h3 { color: var(--navy-light); font-size: 14px; margin: 0 0 12px 0; text-transform: uppercase;
+       letter-spacing: 0.05em; font-weight: 700; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .kpi { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
+         padding: 18px; }
+  .kpi .label { color: var(--text-muted); font-size: 11px; text-transform: uppercase;
+                letter-spacing: 0.06em; font-weight: 700; }
+  .kpi .value { font-size: 32px; font-weight: 700; color: var(--navy); margin-top: 6px;
+                line-height: 1; }
+  .kpi .delta { font-size: 12px; margin-top: 6px; color: var(--text-muted); }
+  .kpi .delta.up { color: var(--green); }
+  .kpi .delta.down { color: var(--red); }
+  .kpi.poor .value { color: var(--red); }
+  .kpi.warn .value { color: var(--amber); }
+  .kpi.good .value { color: var(--green); }
+
+  .card { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
+          padding: 18px; margin-bottom: 16px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; color: var(--text-muted); font-weight: 600; font-size: 11px;
+       text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 10px;
+       border-bottom: 2px solid var(--gray-light); }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--gray-light); }
+  tr:last-child td { border-bottom: none; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.code { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 12px;
+            color: var(--navy); max-width: 360px; overflow: hidden; text-overflow: ellipsis;
+            white-space: nowrap; }
+
+  .bar { display: inline-block; height: 8px; background: var(--gray-light); border-radius: 4px;
+         vertical-align: middle; position: relative; overflow: hidden; min-width: 80px; }
+  .bar > span { display: block; height: 100%; }
+  .bar.good > span { background: var(--green); }
+  .bar.warn > span { background: var(--amber); }
+  .bar.poor > span { background: var(--red); }
+
+  .rating-stack { display: flex; height: 24px; border-radius: 4px; overflow: hidden;
+                  background: var(--gray-light); margin: 4px 0; }
+  .rating-stack > span { display: flex; align-items: center; justify-content: center;
+                         color: white; font-size: 11px; font-weight: 600; min-width: 30px; }
+  .rating-stack > .good { background: var(--green); }
+  .rating-stack > .warn { background: var(--amber); }
+  .rating-stack > .poor { background: var(--red); }
+
+  .chart-wrap { position: relative; height: 200px; }
+  .empty { color: var(--text-muted); font-style: italic; padding: 12px 0; }
+
+  footer { color: var(--text-muted); font-size: 12px; text-align: center; padding: 32px 0;
+           border-top: 1px solid var(--gray-light); margin-top: 48px; }
+  footer a { color: var(--navy-light); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>HairMNL — Performance Dashboard</h1>
+    <div class="meta">
+      Last updated: <strong>2026-04-29 12:07 UTC</strong>
+      &nbsp;·&nbsp; Snapshots collected: <strong>1</strong>
+      &nbsp;·&nbsp; PSI source: hairmnl.com (mobile slow 4G + desktop)
+      &nbsp;·&nbsp; RUM source: GA4 property 248106289, last 7 days
+    </div>
+  </header>
+
+  <h2>Today&#39;s snapshot — PSI Lab (mobile)</h2>
+  <div class="kpi-grid">
+    <div class="empty">No PSI data captured yet — run with PSI enabled.</div>
+  </div>
+
+  <h2>Today&#39;s snapshot — PSI Lab (desktop)</h2>
+  <div class="kpi-grid">
+    <div class="empty">No PSI data captured yet — run with PSI enabled.</div>
+  </div>
+
+  <h2>Trend over time — PSI Lab mobile</h2>
+  <div class="grid-2">
+    <div class="card"><h3>Performance score</h3><div class="chart-wrap"><canvas id="chart-score"></canvas></div></div>
+    <div class="card"><h3>Largest Contentful Paint (s)</h3><div class="chart-wrap"><canvas id="chart-lcp"></canvas></div></div>
+    <div class="card"><h3>Total Blocking Time (ms)</h3><div class="chart-wrap"><canvas id="chart-tbt"></canvas></div></div>
+    <div class="card"><h3>Cumulative Layout Shift</h3><div class="chart-wrap"><canvas id="chart-cls"></canvas></div></div>
+  </div>
+
+  <h2>Real-shopper Core Web Vitals — last 7 days</h2>
+  <div class="card">
+    
+        <div style="margin: 16px 0;">
+          <h3>LCP <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
+            10,748 pageviews · 81.5% good · CWV target ≥75% good <span style="color:var(--green); font-weight:700;">✓ PASS</span></span></h3>
+          <div class="rating-stack">
+            <span class="good" style="flex: 81.48492742835877;">81%</span>
+            <span class="warn" style="flex: 11.397469296613323;">11%</span>
+            <span class="poor" style="flex: 7.1176032750279115;">7%</span>
+          </div>
+        </div>
+
+        <div style="margin: 16px 0;">
+          <h3>CLS <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
+            14,577 pageviews · 67.7% good · CWV target ≥75% good <span style="color:var(--amber); font-weight:700;">✗ FAIL</span></span></h3>
+          <div class="rating-stack">
+            <span class="good" style="flex: 67.72998559374356;">68%</span>
+            <span class="warn" style="flex: 10.571448171777458;">11%</span>
+            <span class="poor" style="flex: 21.698566234478974;">22%</span>
+          </div>
+        </div>
+
+        <div style="margin: 16px 0;">
+          <h3>INP <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
+            7,711 pageviews · 87.7% good · CWV target ≥75% good <span style="color:var(--green); font-weight:700;">✓ PASS</span></span></h3>
+          <div class="rating-stack">
+            <span class="good" style="flex: 87.70587472441966;">88%</span>
+            <span class="warn" style="flex: 7.171573077421865;">7%</span>
+            <span class="poor" style="flex: 5.122552198158474;">5%</span>
+          </div>
+        </div>
+
+        <div style="margin: 16px 0;">
+          <h3>FCP <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
+            8,217 pageviews · 77.7% good · CWV target ≥75% good <span style="color:var(--green); font-weight:700;">✓ PASS</span></span></h3>
+          <div class="rating-stack">
+            <span class="good" style="flex: 77.65607886089813;">78%</span>
+            <span class="warn" style="flex: 14.250943166605817;">14%</span>
+            <span class="poor" style="flex: 8.092977972496044;">8%</span>
+          </div>
+        </div>
+
+        <div style="margin: 16px 0;">
+          <h3>TTFB <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">·
+            7,117 pageviews · 80.0% good · CWV target ≥75% good <span style="color:var(--green); font-weight:700;">✓ PASS</span></span></h3>
+          <div class="rating-stack">
+            <span class="good" style="flex: 80.04777293803569;">80%</span>
+            <span class="warn" style="flex: 14.44428832373191;">14%</span>
+            <span class="poor" style="flex: 5.507938738232402;">6%</span>
+          </div>
+        </div>
+  </div>
+
+  <h2>Top friction pages — by % &quot;poor&quot; rate</h2>
+  <div class="grid-3">
+    <div class="card"><h3>LCP — slow paint</h3><table><thead><tr><th>Page</th><th class="num">% poor</th><th class="num">N</th></tr></thead><tbody>
+<tr><td class="code">/search</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:21%"></span></span> 21.2%</td><td class="num">52</td></tr>
+<tr><td class="code">/account</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:15%"></span></span> 14.8%</td><td class="num">88</td></tr>
+<tr><td class="code">/cart</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:13%"></span></span> 12.6%</td><td class="num">87</td></tr>
+<tr><td class="code">/blogs/hair-education/the-do-s-and-don-ts-of-rebon</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:11%"></span></span> 11.1%</td><td class="num">63</td></tr>
+<tr><td class="code">/products/loreal-professionnel-serie-expert-absolu</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:10%"></span></span> 10.0%</td><td class="num">60</td></tr>
+</tbody></table></div>
+    <div class="card"><h3>INP — slow interaction</h3><table><thead><tr><th>Page</th><th class="num">% poor</th><th class="num">N</th></tr></thead><tbody>
+<tr><td class="code">/</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:12%"></span></span> 12.5%</td><td class="num">600</td></tr>
+<tr><td class="code">/collections/best-sellers</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:10%"></span></span> 9.5%</td><td class="num">63</td></tr>
+<tr><td class="code">/blogs/product-spotlight/15-top-sulfate-free-shamp</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:7%"></span></span> 7.1%</td><td class="num">140</td></tr>
+<tr><td class="code">/products/k18-leave-in-molecular-repair-hair-mask</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:7%"></span></span> 7.0%</td><td class="num">71</td></tr>
+<tr><td class="code">/pages/azta-urban-salon-service-menu</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:7%"></span></span> 6.7%</td><td class="num">344</td></tr>
+</tbody></table></div>
+    <div class="card"><h3>CLS — layout shift</h3><table><thead><tr><th>Page</th><th class="num">% poor</th><th class="num">N</th></tr></thead><tbody>
+<tr><td class="code">/blogs/hair-education/rebonding-vs-keratin-treatme</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:55%"></span></span> 54.9%</td><td class="num">51</td></tr>
+<tr><td class="code">/blogs/product-spotlight/lockdown-lab-we-tried-5-p</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:52%"></span></span> 51.9%</td><td class="num">52</td></tr>
+<tr><td class="code">/blogs/product-spotlight/15-top-sulfate-free-shamp</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:49%"></span></span> 49.2%</td><td class="num">392</td></tr>
+<tr><td class="code">/products/wella-professionals-koleston-perfect-ppd</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:49%"></span></span> 49.1%</td><td class="num">116</td></tr>
+<tr><td class="code">/blogs/tousled-online-magazine/how-to-hide-gray-ha</td><td class="num"><span class="bar poor" style="width:60px"><span style="width:47%"></span></span> 47.1%</td><td class="num">51</td></tr>
+</tbody></table></div>
+  </div>
+
+  <h2>Top INP attribution targets — what shoppers tap that&#39;s slow</h2>
+  <div class="card">
+    <table><thead><tr><th>Attribution target (CSS selector / element)</th><th class="num">Poor INP count</th></tr></thead><tbody>
+<tr><td><span style="color:var(--text-muted)">(not set) — interaction during page load</span></td><td class="num">317</td></tr>
+<tr><td><span style="color:var(--text-muted)">(not set) — interaction during page load</span></td><td class="num">70</td></tr>
+<tr><td><span class="code">#pwa-modal</span></td><td class="num">3</td></tr>
+<tr><td><span class="code">#MainContent</span></td><td class="num">2</td></tr>
+<tr><td><span class="code">article.grid__item.medium-up--two-thirds>div.blog__article>div.blog__article__co</span></td><td class="num">1</td></tr>
+<tr><td><span class="code">div.wrapper.product__align-left>div.grid.product-single>div.grid__item.medium-up</span></td><td class="num">1</td></tr>
+<tr><td><span class="code">span.swiper-pagination-bullet.swiper-pagination-bullet-active-prev</span></td><td class="num">1</td></tr>
+</tbody></table>
+  </div>
+
+  <h2>JavaScript errors — last 7 days</h2>
+  <div class="card">
+    <table><thead><tr><th>Type</th><th>Message</th><th>Source</th><th class="num">Count</th></tr></thead><tbody>
+<tr><td>?</td><td class="code">(no message)</td><td class="code">(unknown)</td><td class="num">3,028</td></tr>
+<tr><td>(not set)</td><td class="code">(not set)</td><td class="code">(not set)</td><td class="num">4</td></tr>
+</tbody></table>
+  </div>
+
+  <h2>vs April 26 baseline (mobile lab)</h2>
+  <div class="card">
+    <div class="empty">No PSI data to compare.</div>
+  </div>
+
+  <footer>
+    Generated by <code>scripts/build-perf-dashboard.py</code>
+    &nbsp;·&nbsp; Data: PSI v5 API + GA4 Data API
+    &nbsp;·&nbsp; Re-run: <code>./scripts/build-perf-dashboard.py</code>
+    &nbsp;·&nbsp; <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com">Open hairmnl.com in PSI</a>
+  </footer>
+</div>
+
+<script>
+const CHART_DATA = {"labels": [], "score": [], "lcp_s": [], "tbt_ms": [], "cls": []};
+
+const baseConfig = (label, color, dataset, fmt) => ({
+  type: 'line',
+  data: {
+    labels: CHART_DATA.labels,
+    datasets: [{
+      label, data: dataset, borderColor: color, backgroundColor: color + '22',
+      tension: 0.25, fill: true, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => fmt ? fmt(ctx.parsed.y) : ctx.parsed.y,
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { beginAtZero: false, grid: { color: '#E5E7EB' }, ticks: { font: { size: 11 } } },
+    }
+  }
+});
+
+new Chart(document.getElementById('chart-score'),
+  baseConfig('Score', '#1E2761', CHART_DATA.score, v => `${v}/100`));
+new Chart(document.getElementById('chart-lcp'),
+  baseConfig('LCP', '#C03A3A', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`));
+new Chart(document.getElementById('chart-tbt'),
+  baseConfig('TBT', '#C97A1A', CHART_DATA.tbt_ms, v => `${v} ms`));
+new Chart(document.getElementById('chart-cls'),
+  baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, v => v.toFixed(3)));
+</script>
+</body>
+</html>
