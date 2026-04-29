@@ -128,7 +128,9 @@ def query_crux(url: str, form_factor: str, key: str) -> dict | None:
             out["histograms"][key_out] = buckets
 
     _extract("largest_contentful_paint", "lcp_ms")
-    _extract("cumulative_layout_shift", "cls", multiplier=1/100.0)  # CrUX returns CLS as int×100
+    # CrUX HTTP API returns CLS p75 as a decimal string ("0.30"), NOT scaled.
+    # The BigQuery dataset uses int×100; the HTTP API uses real decimals.
+    _extract("cumulative_layout_shift", "cls")
     _extract("interaction_to_next_paint", "inp_ms")
     _extract("first_contentful_paint", "fcp_ms")
     _extract("experimental_time_to_first_byte", "ttfb_ms")

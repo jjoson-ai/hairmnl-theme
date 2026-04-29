@@ -180,8 +180,8 @@
       <div>
         <h1>HairMNL — Performance Dashboard</h1>
         <div class="meta">
-          Last updated: <strong>2026-04-29 12:20 UTC</strong>
-          &nbsp;·&nbsp; Snapshots: <strong>2</strong>
+          Last updated: <strong>2026-04-29 12:43 UTC</strong>
+          &nbsp;·&nbsp; Snapshots: <strong>4</strong>
           &nbsp;·&nbsp; RUM window: <strong>last 7 days</strong>
         </div>
       </div>
@@ -197,10 +197,10 @@
     <button class="tab" data-tab="snapshot-desktop" onclick="switchTab(this)">🖥 Desktop</button>
   </div>
   <div class="tab-content active" id="snapshot-mobile">
-    <div class="empty">No data captured for this form factor yet. CrUX needs ~28 days of Chrome traffic; PSI mobile sometimes fails for slow sites (<a href="https://chromeuxreport.googleapis.com" target="_blank">enable CrUX API</a> for the most reliable signal).</div>
+    <div class="kpi-grid"><div class="kpi warn"><div class="label">LCP</div><div class="value">3.66 s</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi poor"><div class="label">CLS</div><div class="value">0.300</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi warn"><div class="label">INP</div><div class="value">270 ms</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi poor"><div class="label">FCP</div><div class="value">3.08 s</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">TTFB</div><div class="value">708 ms</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div></div>
   </div>
   <div class="tab-content" id="snapshot-desktop">
-    <div class="kpi-grid"><div class="kpi warn"><div class="label">Score</div><div class="value">57</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi good"><div class="label">LCP</div><div class="value">1.29 s</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi good"><div class="label">CLS</div><div class="value">0.028</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi poor"><div class="label">TBT</div><div class="value">2172 ms</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi good"><div class="label">FCP</div><div class="value">0.58 s</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div></div>
+    <div class="kpi-grid"><div class="kpi warn"><div class="label">LCP</div><div class="value">3.15 s</div><div class="delta">no change vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi warn"><div class="label">CLS</div><div class="value">0.200</div><div class="delta">no change vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">INP</div><div class="value">122 ms</div><div class="delta">no change vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi warn"><div class="label">FCP</div><div class="value">2.50 s</div><div class="delta">no change vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">TTFB</div><div class="value">636 ms</div><div class="delta">no change vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div></div>
   </div>
 
   <h2>Trend over time — PSI Lab mobile
@@ -222,262 +222,30 @@
     <span class="h2-help">GA4 last 7 days · ≥75% good = PASS the CWV threshold</span>
   </h2>
   <div class="cwv-grid">
-    
-        <div class="cwv ">
-          <div class="name">LCP</div>
-          <div class="pct">81%</div>
-          <div class="total">good · 10,748 events <span class="badge pass">✓ PASS</span></div>
-          <div class="rating-stack">
-            <span class="good" style="flex: 81.48492742835877;"></span>
-            <span class="warn" style="flex: 11.397469296613323;"></span>
-            <span class="poor" style="flex: 7.1176032750279115;"></span>
-          </div>
-          <div class="stack-legend">81% good · 11% NI · 7% poor</div>
-        </div>
-
-        <div class="cwv fail">
-          <div class="name">CLS</div>
-          <div class="pct">68%</div>
-          <div class="total">good · 14,578 events <span class="badge fail">✗ FAIL</span></div>
-          <div class="rating-stack">
-            <span class="good" style="flex: 67.73219920428042;"></span>
-            <span class="warn" style="flex: 10.57072300727123;"></span>
-            <span class="poor" style="flex: 21.697077788448347;"></span>
-          </div>
-          <div class="stack-legend">68% good · 11% NI · 22% poor</div>
-        </div>
-
-        <div class="cwv ">
-          <div class="name">INP</div>
-          <div class="pct">88%</div>
-          <div class="total">good · 7,711 events <span class="badge pass">✓ PASS</span></div>
-          <div class="rating-stack">
-            <span class="good" style="flex: 87.70587472441966;"></span>
-            <span class="warn" style="flex: 7.171573077421865;"></span>
-            <span class="poor" style="flex: 5.122552198158474;"></span>
-          </div>
-          <div class="stack-legend">88% good · 7% NI · 5% poor</div>
-        </div>
-
-        <div class="cwv ">
-          <div class="name">FCP</div>
-          <div class="pct">78%</div>
-          <div class="total">good · 8,219 events <span class="badge pass">✓ PASS</span></div>
-          <div class="rating-stack">
-            <span class="good" style="flex: 77.66151599951331;"></span>
-            <span class="warn" style="flex: 14.247475361966174;"></span>
-            <span class="poor" style="flex: 8.091008638520501;"></span>
-          </div>
-          <div class="stack-legend">78% good · 14% NI · 8% poor</div>
-        </div>
-
-        <div class="cwv ">
-          <div class="name">TTFB</div>
-          <div class="pct">80%</div>
-          <div class="total">good · 7,118 events <span class="badge pass">✓ PASS</span></div>
-          <div class="rating-stack">
-            <span class="good" style="flex: 80.05057600449564;"></span>
-            <span class="warn" style="flex: 14.442259061534138;"></span>
-            <span class="poor" style="flex: 5.507164933970216;"></span>
-          </div>
-          <div class="stack-legend">80% good · 14% NI · 6% poor</div>
-        </div>
+    <div class="empty">No RUM data.</div>
   </div>
 
   <h2>Top friction pages
     <span class="h2-help">≥50 pageviews · click any path to open in PSI</span>
   </h2>
   <div class="grid-3">
-    <div class="card"><h3>LCP — slow paint</h3>
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/search" target="_blank" rel="noopener">/search</a>
-          <div class="stats">
-            <span class="pct-poor poor-mid">21.2% poor</span>
-            <span class="meta">52 events · 11 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fsearch" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/account" target="_blank" rel="noopener">/account</a>
-          <div class="stats">
-            <span class="pct-poor poor-mid">14.8% poor</span>
-            <span class="meta">88 events · 13 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Faccount" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/cart" target="_blank" rel="noopener">/cart</a>
-          <div class="stats">
-            <span class="pct-poor poor-mid">12.6% poor</span>
-            <span class="meta">87 events · 11 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcart" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/the-do-s-and-don-ts-of-rebonded-hair-in-summertime" target="_blank" rel="noopener">/blogs/hair-education/the-do-s-and-don-ts-of-rebonded-hair-in-summertime</a>
-          <div class="stats">
-            <span class="pct-poor poor-mid">11.1% poor</span>
-            <span class="meta">63 events · 7 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fthe-do-s-and-don-ts-of-rebonded-hair-in-summertime" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/products/loreal-professionnel-serie-expert-absolut-repair-molecular-masque-250ml" target="_blank" rel="noopener">/products/loreal-professionnel-serie-expert-absolut-repair-molecular-masque-250ml</a>
-          <div class="stats">
-            <span class="pct-poor poor-mid">10.0% poor</span>
-            <span class="meta">60 events · 6 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fproducts%2Floreal-professionnel-serie-expert-absolut-repair-molecular-masque-250ml" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div></div>
-    <div class="card"><h3>INP — slow interaction</h3>
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/" target="_blank" rel="noopener">/</a>
-          <div class="stats">
-            <span class="pct-poor poor-mid">12.5% poor</span>
-            <span class="meta">600 events · 75 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2F" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/collections/best-sellers" target="_blank" rel="noopener">/collections/best-sellers</a>
-          <div class="stats">
-            <span class="pct-poor poor-low">9.5% poor</span>
-            <span class="meta">63 events · 6 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcollections%2Fbest-sellers" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/blogs/product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines" target="_blank" rel="noopener">/blogs/product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines</a>
-          <div class="stats">
-            <span class="pct-poor poor-low">7.1% poor</span>
-            <span class="meta">140 events · 10 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fproduct-spotlight%2F15-top-sulfate-free-shampoos-in-the-philippines" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/products/k18-leave-in-molecular-repair-hair-mask" target="_blank" rel="noopener">/products/k18-leave-in-molecular-repair-hair-mask</a>
-          <div class="stats">
-            <span class="pct-poor poor-low">7.0% poor</span>
-            <span class="meta">71 events · 5 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fproducts%2Fk18-leave-in-molecular-repair-hair-mask" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/pages/azta-urban-salon-service-menu" target="_blank" rel="noopener">/pages/azta-urban-salon-service-menu</a>
-          <div class="stats">
-            <span class="pct-poor poor-low">6.7% poor</span>
-            <span class="meta">344 events · 23 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fpages%2Fazta-urban-salon-service-menu" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div></div>
-    <div class="card"><h3>CLS — layout shift</h3>
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/rebonding-vs-keratin-treatment-achieving-silky-hair" target="_blank" rel="noopener">/blogs/hair-education/rebonding-vs-keratin-treatment-achieving-silky-hair</a>
-          <div class="stats">
-            <span class="pct-poor poor-high">54.9% poor</span>
-            <span class="meta">51 events · 28 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Frebonding-vs-keratin-treatment-achieving-silky-hair" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/blogs/product-spotlight/lockdown-lab-we-tried-5-purple-shampoos-for-blonde-hair-see-the-results-here" target="_blank" rel="noopener">/blogs/product-spotlight/lockdown-lab-we-tried-5-purple-shampoos-for-blonde-hair-see-the-results-here</a>
-          <div class="stats">
-            <span class="pct-poor poor-high">51.9% poor</span>
-            <span class="meta">52 events · 27 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fproduct-spotlight%2Flockdown-lab-we-tried-5-purple-shampoos-for-blonde-hair-see-the-results-here" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/blogs/product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines" target="_blank" rel="noopener">/blogs/product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines</a>
-          <div class="stats">
-            <span class="pct-poor poor-high">49.2% poor</span>
-            <span class="meta">392 events · 193 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fproduct-spotlight%2F15-top-sulfate-free-shampoos-in-the-philippines" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/products/wella-professionals-koleston-perfect-ppd-free-permanent-hair-color-tube-all-shades" target="_blank" rel="noopener">/products/wella-professionals-koleston-perfect-ppd-free-permanent-hair-color-tube-all-shades</a>
-          <div class="stats">
-            <span class="pct-poor poor-high">49.1% poor</span>
-            <span class="meta">116 events · 57 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fproducts%2Fwella-professionals-koleston-perfect-ppd-free-permanent-hair-color-tube-all-shades" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div>
-
-        <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/blogs/tousled-online-magazine/how-to-hide-gray-hair-on-brunettes" target="_blank" rel="noopener">/blogs/tousled-online-magazine/how-to-hide-gray-hair-on-brunettes</a>
-          <div class="stats">
-            <span class="pct-poor poor-high">47.1% poor</span>
-            <span class="meta">51 events · 24 poor</span>
-            <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Ftousled-online-magazine%2Fhow-to-hide-gray-hair-on-brunettes" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
-            </span>
-          </div>
-        </div></div>
+    <div class="card"><h3>LCP — slow paint</h3><div class="empty">No pages with ≥50 events.</div></div>
+    <div class="card"><h3>INP — slow interaction</h3><div class="empty">No pages with ≥50 events.</div></div>
+    <div class="card"><h3>CLS — layout shift</h3><div class="empty">No pages with ≥50 events.</div></div>
   </div>
 
   <h2>Top INP attribution targets
     <span class="h2-help">CSS selectors / elements causing slow taps</span>
   </h2>
   <div class="card">
-    <table><thead><tr><th>Attribution target (CSS selector / element)</th><th class="num">Poor INP count</th></tr></thead><tbody>
-<tr><td><span style="color:var(--text-muted)">(not set) — interaction during page load</span></td><td class="num">317</td></tr>
-<tr><td><span style="color:var(--text-muted)">(not set) — interaction during page load</span></td><td class="num">70</td></tr>
-<tr><td><span class="code">#pwa-modal</span></td><td class="num">3</td></tr>
-<tr><td><span class="code">#MainContent</span></td><td class="num">2</td></tr>
-<tr><td><span class="code">article.grid__item.medium-up--two-thirds>div.blog__article>div.blog__article__co</span></td><td class="num">1</td></tr>
-<tr><td><span class="code">div.wrapper.product__align-left>div.grid.product-single>div.grid__item.medium-up</span></td><td class="num">1</td></tr>
-<tr><td><span class="code">span.swiper-pagination-bullet.swiper-pagination-bullet-active-prev</span></td><td class="num">1</td></tr>
-</tbody></table>
+    <div class="empty">No INP "poor" events with debug_target captured.</div>
   </div>
 
   <h2>JavaScript errors
     <span class="h2-help">last 7 days</span>
   </h2>
   <div class="card">
-    <table><thead><tr><th>Type</th><th>Message</th><th>Source</th><th class="num">Count</th></tr></thead><tbody>
-<tr><td>?</td><td class="code">(no message)</td><td class="code">(unknown)</td><td class="num">3,030</td></tr>
-<tr><td>(not set)</td><td class="code">(not set)</td><td class="code">(not set)</td><td class="num">4</td></tr>
-</tbody></table>
+    <div class="empty">No js_error events captured. Either no errors (good!) or the js_error tracking isn&#39;t live yet.</div>
   </div>
 
   <h2>vs April 26 baseline
