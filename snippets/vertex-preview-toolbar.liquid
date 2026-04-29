@@ -1,0 +1,95 @@
+{%- comment -%}
+  Vertex preview toolbar — sticky bar at the top of the page in this
+  preview-only theme. Lets the team toggle visibility of:
+    - Vertex (red) placements only
+    - LimeSpot (green) placements only
+    - Both (default — see them side by side)
+
+  Toggle works by setting a body class:
+    .vertex-preview-mode--vertex  → shows Vertex, hides LimeSpot
+    .vertex-preview-mode--limespot → shows LimeSpot, hides Vertex
+    .vertex-preview-mode--both    → shows both (default)
+
+  CSS rules in vertex-preview.css.liquid implement the show/hide.
+
+  Persisted via localStorage so the choice survives navigation.
+
+  Hidden on the live theme (only renders when theme.role != 'main').
+{%- endcomment -%}
+
+<div class="vertex-preview-toolbar" id="vertex-preview-toolbar">
+  <div class="vertex-preview-toolbar__inner">
+    <div class="vertex-preview-toolbar__brand">
+      <strong>Vertex AI Preview</strong>
+      <span class="vertex-preview-toolbar__sub">
+        <span style="color:#f44336;font-weight:600">red</span> = Vertex proposed ·
+        <span style="color:#00c853;font-weight:600">green</span> = LimeSpot ghost
+        (real LimeSpot doesn't inject on preview themes — see ghost notes for
+        actual ₱/wk attribution from their admin)
+      </span>
+    </div>
+    <div class="vertex-preview-toolbar__toggle" role="radiogroup" aria-label="Recommendation engine view mode">
+      <button type="button" data-mode="both" class="vertex-preview-toolbar__btn is-active" aria-pressed="true">
+        Both
+      </button>
+      <button type="button" data-mode="vertex" class="vertex-preview-toolbar__btn" aria-pressed="false">
+        Vertex only
+      </button>
+      <button type="button" data-mode="limespot" class="vertex-preview-toolbar__btn" aria-pressed="false">
+        Current only
+      </button>
+    </div>
+    <button type="button" class="vertex-preview-toolbar__close" aria-label="Hide preview toolbar" id="vertex-preview-toolbar-close">×</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var KEY = 'vertex-preview-mode';
+  var body = document.body;
+  var bar = document.getElementById('vertex-preview-toolbar');
+  if (!bar) return;
+
+  function applyMode(mode) {
+    body.classList.remove(
+      'vertex-preview-mode--both',
+      'vertex-preview-mode--vertex',
+      'vertex-preview-mode--limespot'
+    );
+    body.classList.add('vertex-preview-mode--' + mode);
+    var buttons = bar.querySelectorAll('[data-mode]');
+    for (var i = 0; i < buttons.length; i++) {
+      var b = buttons[i];
+      var active = b.getAttribute('data-mode') === mode;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-pressed', active ? 'true' : 'false');
+    }
+    try { localStorage.setItem(KEY, mode); } catch (e) {}
+  }
+
+  // Restore previous choice (defaults to "both")
+  var saved = 'both';
+  try { saved = localStorage.getItem(KEY) || 'both'; } catch (e) {}
+  applyMode(saved);
+
+  bar.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-mode]');
+    if (!t) return;
+    applyMode(t.getAttribute('data-mode'));
+  });
+
+  // Hide on close — also persisted so reviewers can dismiss it.
+  var closeBtn = document.getElementById('vertex-preview-toolbar-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function () {
+      bar.style.display = 'none';
+      try { localStorage.setItem(KEY + '-hidden', '1'); } catch (e) {}
+    });
+  }
+  try {
+    if (localStorage.getItem(KEY + '-hidden') === '1') {
+      bar.style.display = 'none';
+    }
+  } catch (e) {}
+})();
+</script>

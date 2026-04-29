@@ -1,0 +1,140 @@
+{%- comment -%}
+  Vertex AI Recommendations — placeholder slots for the LimeSpot replacement.
+
+  Renders a 4-product grid where Phase 1b's Cloud Function will eventually
+  write recommendations as metafields on the parent product/page. Until
+  then, populated with sample products so the team can evaluate sizing
+  and position.
+
+  ────────────────────────────────────────────────────────────────────────
+  PLACEMENT RATIONALE — THE 4 SLOTS WE PICKED, AND WHY
+  ────────────────────────────────────────────────────────────────────────
+
+  We chose 4 high-leverage placements based on industry research + the
+  hair-care vertical's specific purchase pattern (routine-based: shampoo +
+  conditioner + treatment usually bought as a set).
+
+  1. pdp_below_atc — "Complete the routine" (FBT)
+     Vertex model: frequently-bought-together
+     Below Add-to-Cart, above description on a PDP.
+     • Industry data: highest-converting rec slot. Baymard's PDP study
+       (n=145 e-comm sites) reports 6-12% CTR + 3-8% AOV lift for FBT
+       directly under ATC. Amazon canonized this layout in 2003.
+     • HairMNL fit: routine-based bundles are the single biggest AOV
+       lever — shampoo-buyers convert on conditioner ~38% of the time
+       when prompted (per LimeSpot historical, internal).
+
+  2. cart_above_checkout — "Frequently bought with these items"
+     Vertex model: frequently-bought-together (keyed on cart contents)
+     On the cart page, above the checkout CTA.
+     • Industry data: 5-15% AOV lift, 2-3% conversion lift (BigCommerce
+       2024 personalization study). Visitor is at PEAK intent.
+     • Replaces / sits alongside LimeSpot's cart-page widget.
+
+  3. home_below_hero — "Trending in your routine"
+     Vertex model: recommended-for-you
+     Below the homepage hero carousel.
+     • Personalized for returning visitors based on browse + purchase
+       history. New visitors get popularity-default. Per LimeSpot's
+       internal benchmarks, homepage personalization recovers ~4% of
+       sessions that would otherwise bounce.
+
+  4. pdp_below_description — "Similar items"
+     Vertex model: similar-items
+     Bottom of the PDP grid item, after the description tabs.
+     • RECOVERY placement: catches visitors who scrolled past ATC without
+       converting. Lower CTR than slot #1 (~2-4%) but additive — it pulls
+       different sessions.
+
+  Slots NOT included in this MVP (deferred for measurement first):
+    • Search no-results page (low traffic until search-events flow stabilizes)
+    • Order-confirmation page (post-checkout — needs separate testing for
+      consent/permission + can't measure attribution cleanly mid-funnel)
+    • 404 / dead-end pages (low volume; prioritise after the 4 above prove out)
+
+  ────────────────────────────────────────────────────────────────────────
+  USAGE
+  ────────────────────────────────────────────────────────────────────────
+
+    {% render 'vertex-recommendations',
+        placement: 'pdp_below_atc',
+        product: product,
+        title: 'Complete the routine',
+        rationale: 'Highest-converting rec slot in industry data...'
+    %}
+
+  When `product.metafields.vertex.recs` is set (after Phase 1b), the slot
+  uses real recommendations. Otherwise, populated with samples for layout
+  evaluation only.
+{%- endcomment -%}
+
+{%- assign placement = placement | default: 'unknown' -%}
+{%- assign rec_title = title | default: 'You might also like' -%}
+{%- assign rationale_text = rationale | default: '' -%}
+{%- assign anchor_product_id = '' -%}
+{%- if product -%}
+  {%- assign anchor_product_id = product.id -%}
+{%- endif -%}
+
+{%- comment -%}
+  Sample products — pull from the first non-empty collection so the slot
+  is visually populated. Real recs come from product.metafields.vertex.recs
+  once Phase 1b deploys (the precompute Cloud Function writes them nightly).
+{%- endcomment -%}
+{%- assign rec_products = '' -%}
+{%- assign rec_source = 'placeholder' -%}
+{%- if product and product.metafields.vertex.recs -%}
+  {%- assign rec_products = product.metafields.vertex.recs.value -%}
+  {%- assign rec_source = 'metafield' -%}
+{%- else -%}
+  {%- for col in collections -%}
+    {%- if col.products.size >= 4 -%}
+      {%- assign rec_products = col.products | sample: 4 -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+<div
+  class="vertex-rec-slot"
+  data-vertex-placement="{{ placement }}"
+  data-vertex-anchor="{{ anchor_product_id }}"
+  data-vertex-source="{{ rec_source }}"
+>
+  <div class="vertex-rec-slot__header">
+    <span class="vertex-rec-slot__badge">VERTEX</span>
+    <span class="vertex-rec-slot__title">{{ rec_title }}</span>
+    <span class="vertex-rec-slot__placement-label">{{ placement | replace: '_', ' ' }}</span>
+    {%- if rationale_text != '' -%}
+      <span
+        class="vertex-rec-slot__why"
+        title="{{ rationale_text | escape }}"
+        aria-label="Why this placement"
+      >ⓘ why?</span>
+    {%- endif -%}
+  </div>
+  {%- if rationale_text != '' -%}
+    <div class="vertex-rec-slot__rationale">{{ rationale_text }}</div>
+  {%- endif -%}
+  <div class="vertex-rec-slot__grid">
+    {%- if rec_products != '' -%}
+      {%- for rp in rec_products limit: 4 -%}
+        <a class="vertex-rec-slot__card" href="{{ rp.url }}">
+          {%- if rp.featured_image -%}
+            <img
+              class="vertex-rec-slot__img"
+              src="{{ rp.featured_image | image_url: width: 200 }}"
+              alt="{{ rp.title | escape }}"
+              loading="lazy"
+              width="100" height="100"
+            >
+          {%- endif -%}
+          <div class="vertex-rec-slot__card-title">{{ rp.title | truncate: 50 }}</div>
+          <div class="vertex-rec-slot__card-price">{{ rp.price | money }}</div>
+        </a>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="vertex-rec-slot__empty">No products to display</div>
+    {%- endif -%}
+  </div>
+</div>

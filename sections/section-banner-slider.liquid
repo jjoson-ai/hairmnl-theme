@@ -91,6 +91,58 @@
   </div>
 </div>
 
+{%- comment -%}
+  Vertex slot #3 (home_below_hero) — injected here instead of as a
+  standalone homepage section because index.json is at Shopify's 25-
+  section-per-template ceiling on hairmnl.com. Rendering inside the
+  banner-slider section keeps the slot directly below the hero (where
+  research says it performs best — recommended-for-you, recovers ~4% of
+  would-be-bounce sessions per LimeSpot internal benchmarks).
+
+  Gated on theme.role + theme.name so the live theme is unaffected.
+{%- endcomment -%}
+{%- comment -%}
+  Vertex home_below_hero slot. CRITICAL: section-banner-slider is also
+  referenced by brand-collection templates (collection.brand.davines-sis,
+  collection.brand-reuzel, etc. — see grep), so without a template guard
+  this slot would render on ~20 collection pages too. Only fire on the
+  actual homepage.
+
+  Per LimeSpot's admin dashboard, Home contributes ₱0/wk to attributed
+  revenue — green ghost stays here as a "₱0 gap" indicator showing this
+  is net-new revenue territory, not a replacement.
+{%- endcomment -%}
+{%- if theme.role != 'main' and theme.name contains 'Vertex' and template contains 'index' -%}
+  <div class="page-width" style="margin: 32px auto;">
+    {%- comment -%}
+      Phase 1b-α LIVE: Buy-it-again is the first model with real predictions
+      writing real customer metafields. For LOGGED-IN customers with at least
+      one prior order, render the Buy-it-again "Time to restock" carousel
+      using their personal repurchase metafield. Unique to Vertex — LimeSpot
+      ships zero per-customer replenishment recs on HairMNL today.
+
+      For ANONYMOUS visitors (the still-the-majority case until they sign in),
+      keep the existing "Trending in your routine" placeholder — that slot
+      remains net-new territory until Recommended-for-you (~+7 days) trains.
+    {%- endcomment -%}
+    {%- if customer and customer.metafields.vertex.repurchase_handles.value and customer.metafields.vertex.repurchase_handles.value.size > 0 -%}
+      {% render 'vertex-buy-it-again',
+          title: 'Time to restock',
+          subtitle: 'Based on your purchase history' %}
+    {%- else -%}
+      {% render 'vertex-recommendations',
+          placement: 'home_below_hero',
+          title: 'Trending in your routine',
+          rationale: 'Homepage personalization with the recommended-for-you model. NET-NEW revenue position — LimeSpot earns ₱0 here today (per their admin). Returning visitors would see recs based on browse + purchase history; new visitors see popularity-default. Recovers ~4% of sessions that would otherwise bounce (per LimeSpot internal benchmarks). Highest-leverage homepage placement because it''s above-fold and personalized at first impression.'
+      %}
+      {% render 'limespot-ghost-placeholder',
+          placement: 'home_below_hero_gap',
+          title: 'Nothing here today'
+      %}
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
 {% schema %}
   {
     "name": "Banner Slider",

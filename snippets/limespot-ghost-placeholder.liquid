@@ -1,0 +1,83 @@
+{%- comment -%}
+  LimeSpot "ghost" placeholder for the preview theme.
+
+  PROBLEM: LimeSpot's SDK loads on the preview theme (we see
+  window.LimeSpot fully populated with .runtime / .Recommendations /
+  .Storefront), but its admin-side "widget locations" config doesn't
+  include unpublished themes — so the SDK never injects DOM widgets on
+  this preview. Reviewers see no green boxes.
+
+  SOLUTION: render lightweight green-bordered ghost placeholders in the
+  same logical positions where LimeSpot CURRENTLY renders on the live
+  Pipeline 6 theme (per LimeSpot's PageInfo configuration). These let
+  the team see "this is where LimeSpot is today vs where Vertex would
+  go" inside ONE preview, no live-vs-preview tab-switching.
+
+  Each ghost is clearly labeled "[LimeSpot ghost — actually renders on
+  live]" so no one mistakes it for a real widget.
+
+  Usage:
+    {% render 'limespot-ghost-placeholder',
+        placement: 'pdp_below_description',
+        title: 'You may also like'
+    %}
+
+  Same toolbar toggle controls visibility (vertex-preview-mode--vertex
+  hides these; vertex-preview-mode--limespot hides Vertex).
+{%- endcomment -%}
+
+{%- assign placement = placement | default: 'unknown' -%}
+{%- assign rec_title = title | default: 'You may also like' -%}
+{%- comment -%}
+  revenue_per_wk_php (number) — when set and > 0, renders an "active
+  LimeSpot position" note showing the weekly attribution from the
+  LimeSpot admin dashboard. When unset/0, renders the "$0 gap" note.
+  Lets the same snippet handle both replacement positions and net-new
+  positions with appropriate framing.
+{%- endcomment -%}
+{%- assign rev_php = revenue_per_wk_php | default: 0 -%}
+
+<div class="limespot-ghost-slot" data-limespot-placement="{{ placement }}">
+  <div class="limespot-ghost-slot__header">
+    <span class="limespot-ghost-slot__badge">LIMESPOT</span>
+    <span class="limespot-ghost-slot__title">{{ rec_title }}</span>
+    <span class="limespot-ghost-slot__placement-label">{{ placement | replace: '_', ' ' }}</span>
+  </div>
+  <div class="limespot-ghost-slot__note">
+    {%- if rev_php > 0 -%}
+      <strong>LimeSpot earns ~₱{{ rev_php }}/wk here</strong> — replacement
+      target. Per LimeSpot's admin dashboard, this page type currently
+      contributes the listed attribution. Vertex would compete directly
+      for this revenue. (Real LimeSpot DOM doesn't render on this preview
+      theme — their admin's widget-locations config only activates on the
+      published theme; this ghost stands in for it visually.)
+    {%- else -%}
+      <strong>LimeSpot earns ₱0 here today</strong> — opportunity gap. Per
+      LimeSpot's own admin dashboard, this page type currently contributes
+      ₱0 to attributed revenue. Vertex's research-backed placement at this
+      position is a net-new revenue play, not a replacement.
+    {%- endif -%}
+  </div>
+  <div class="limespot-ghost-slot__grid">
+    {%- for col in collections -%}
+      {%- if col.products.size >= 4 -%}
+        {%- for rp in col.products limit: 4 -%}
+          <div class="limespot-ghost-slot__card">
+            {%- if rp.featured_image -%}
+              <img
+                class="limespot-ghost-slot__img"
+                src="{{ rp.featured_image | image_url: width: 200 }}"
+                alt="{{ rp.title | escape }}"
+                loading="lazy"
+                width="100" height="100"
+              >
+            {%- endif -%}
+            <div class="limespot-ghost-slot__card-title">{{ rp.title | truncate: 50 }}</div>
+            <div class="limespot-ghost-slot__card-price">{{ rp.price | money }}</div>
+          </div>
+        {%- endfor -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>

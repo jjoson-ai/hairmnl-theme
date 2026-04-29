@@ -1,0 +1,462 @@
+/* ─── Vertex preview theme: scoped styles ─────────────────────────────
+ *
+ * Loaded only by the preview theme via theme.liquid. Two purposes:
+ *   1. Highlight Vertex placements in RED (.vertex-rec-slot)
+ *   2. Highlight LimeSpot widgets in GREEN (target by their class /
+ *      ID prefixes — LimeSpot auto-injects DOM at runtime)
+ * Plus the show/hide rules driven by the toolbar's body class.
+ *
+ * IMPORTANT: keep this file appended after css-overrides.css so the
+ * outline rules win specificity battles.
+ * ────────────────────────────────────────────────────────────────── */
+
+/* ── Toolbar (top sticky bar) ─────────────────────────────────────── */
+.vertex-preview-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background: #1a1a1a;
+  color: #fff;
+  border-bottom: 2px solid #444;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.vertex-preview-toolbar__inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.vertex-preview-toolbar__brand strong {
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.vertex-preview-toolbar__sub {
+  color: #aaa;
+  font-size: 12px;
+}
+
+.vertex-preview-toolbar__toggle {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+  background: #333;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.vertex-preview-toolbar__btn {
+  background: transparent;
+  border: 0;
+  color: #ccc;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 120ms, color 120ms;
+}
+
+.vertex-preview-toolbar__btn:hover { color: #fff; }
+
+.vertex-preview-toolbar__btn.is-active {
+  background: #fff;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.vertex-preview-toolbar__close {
+  background: transparent;
+  border: 0;
+  color: #999;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+.vertex-preview-toolbar__close:hover { color: #fff; }
+
+@media (max-width: 720px) {
+  .vertex-preview-toolbar__inner { flex-wrap: wrap; gap: 8px; }
+  .vertex-preview-toolbar__sub { display: none; }
+  .vertex-preview-toolbar__toggle { margin-left: 0; }
+}
+
+/* ── Vertex rec slot (RED highlight) ──────────────────────────────── */
+.vertex-rec-slot {
+  outline: 3px solid #f44336;
+  outline-offset: 4px;
+  background: rgba(244, 67, 54, 0.04);
+  padding: 16px;
+  margin: 24px 0;
+  border-radius: 6px;
+  position: relative;
+}
+
+.vertex-rec-slot__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.vertex-rec-slot__badge {
+  display: inline-block;
+  background: #f44336;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.vertex-rec-slot__title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.vertex-rec-slot__placement-label {
+  font-size: 11px;
+  color: #999;
+  font-family: monospace;
+  text-transform: lowercase;
+}
+
+.vertex-rec-slot__why {
+  font-size: 11px;
+  color: #f44336;
+  cursor: help;
+  font-weight: 600;
+  border-bottom: 1px dotted #f44336;
+}
+
+.vertex-rec-slot__rationale {
+  background: rgba(244, 67, 54, 0.06);
+  border-left: 3px solid #f44336;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: #444;
+  line-height: 1.5;
+  border-radius: 0 4px 4px 0;
+}
+
+.vertex-rec-slot__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .vertex-rec-slot__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.vertex-rec-slot__card {
+  display: block;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 120ms, transform 120ms;
+}
+
+.vertex-rec-slot__card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.vertex-rec-slot__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+
+.vertex-rec-slot__card-title {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.vertex-rec-slot__card-price {
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+}
+
+.vertex-rec-slot__empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 32px;
+}
+
+/* ── LimeSpot widgets — real injected DOM (GREEN highlight) ───────── */
+/* LimeSpot auto-injects DOM at runtime when its admin has the theme */
+/* enabled. On preview themes it usually doesn't inject; we use ghost  */
+/* placeholders below as the visual stand-in.                         */
+[id^="LP_"],
+[class*="LP_Inline"],
+[class*="LP_GridContainer"],
+[class*="LP_RecommendationsBlock"],
+[data-personalizer-fragment],
+[class*="LimeSpot"] {
+  outline: 3px solid #00c853 !important;
+  outline-offset: 4px;
+  background: rgba(0, 200, 83, 0.04);
+  position: relative;
+}
+
+[id^="LP_"]::before,
+[class*="LP_Inline"]::before,
+[class*="LP_GridContainer"]::before {
+  content: "LIMESPOT";
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  background: #00c853;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  z-index: 10;
+}
+
+/* ── LimeSpot ghost placeholders (for preview when SDK doesn't inject) ─ */
+.limespot-ghost-slot {
+  outline: 3px solid #00c853;
+  outline-offset: 4px;
+  background: rgba(0, 200, 83, 0.04);
+  padding: 16px;
+  margin: 24px 0;
+  border-radius: 6px;
+  position: relative;
+}
+
+.limespot-ghost-slot__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.limespot-ghost-slot__badge {
+  display: inline-block;
+  background: #00c853;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.limespot-ghost-slot__title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.limespot-ghost-slot__placement-label {
+  font-size: 11px;
+  color: #999;
+  font-family: monospace;
+  text-transform: lowercase;
+}
+
+.limespot-ghost-slot__note {
+  background: rgba(0, 200, 83, 0.06);
+  border-left: 3px solid #00c853;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: #444;
+  font-style: italic;
+  line-height: 1.5;
+  border-radius: 0 4px 4px 0;
+}
+
+.limespot-ghost-slot__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .limespot-ghost-slot__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.limespot-ghost-slot__card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 8px;
+  /* No hover transition — these are non-clickable placeholders */
+}
+
+.limespot-ghost-slot__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-bottom: 6px;
+  filter: saturate(0.4); /* dim a bit so it reads as "placeholder" */
+}
+
+.limespot-ghost-slot__card-title {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.limespot-ghost-slot__card-price {
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+}
+
+/* ── Mode toggle: hide one or the other ───────────────────────────── */
+/* Vertex-only mode — hide all LimeSpot (real + ghost) */
+.vertex-preview-mode--vertex [id^="LP_"],
+.vertex-preview-mode--vertex [class*="LP_Inline"],
+.vertex-preview-mode--vertex [class*="LP_GridContainer"],
+.vertex-preview-mode--vertex [class*="LP_RecommendationsBlock"],
+.vertex-preview-mode--vertex [data-personalizer-fragment],
+.vertex-preview-mode--vertex [class*="LimeSpot"],
+.vertex-preview-mode--vertex .limespot-ghost-slot {
+  display: none !important;
+}
+
+/* LimeSpot-only mode — hide Vertex slots */
+.vertex-preview-mode--limespot .vertex-rec-slot {
+  display: none !important;
+}
+
+/* ── Vertex Buy-it-again live slot (Phase 1b-α — first production slot) ─── */
+/* Personalized homepage carousel for logged-in customers with a populated
+ * customer.metafields.vertex.repurchase_handles metafield. Written nightly
+ * by precompute-buy-it-again Cloud Function. */
+.vertex-buy-it-again {
+  outline: 3px solid #f44336;
+  outline-offset: 4px;
+  background: rgba(244, 67, 54, 0.04);
+  padding: 16px;
+  margin: 24px 0;
+  border-radius: 6px;
+  position: relative;
+}
+
+.vertex-buy-it-again::before {
+  content: "VERTEX · LIVE · BUY-IT-AGAIN";
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  background: #f44336;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 3px;
+  z-index: 1;
+}
+
+.vertex-buy-it-again__header {
+  margin-bottom: 16px;
+  padding-top: 4px;
+}
+
+.vertex-buy-it-again__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.vertex-buy-it-again__subtitle {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.vertex-buy-it-again__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 960px) {
+  .vertex-buy-it-again__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 540px) {
+  .vertex-buy-it-again__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.vertex-buy-it-again__card {
+  display: block;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 120ms, transform 120ms;
+}
+
+.vertex-buy-it-again__card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.vertex-buy-it-again__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+
+.vertex-buy-it-again__card-vendor {
+  font-size: 10px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.vertex-buy-it-again__card-title {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.vertex-buy-it-again__card-price {
+  font-size: 13px;
+  color: #444;
+  font-weight: 600;
+}
+
+/* Hide the live buy-it-again carousel in LimeSpot-only preview mode */
+.vertex-preview-mode--limespot .vertex-buy-it-again {
+  display: none !important;
+}

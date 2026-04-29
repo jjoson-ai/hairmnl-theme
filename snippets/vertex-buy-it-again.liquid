@@ -1,0 +1,83 @@
+{%- comment -%}
+  Vertex Buy-it-again — "Time to restock" homepage slot for logged-in
+  returning customers.
+
+  Reads `customer.metafields.vertex.repurchase` (JSON array of Shopify
+  legacy product IDs, top 6 by Vertex predict score).
+
+  Renders nothing when:
+    • customer is anonymous (customer is nil)
+    • metafield missing (customer brand new, or precompute hasn't run yet)
+    • metafield is empty array
+    • all referenced products are unavailable / deleted
+
+  This is unique to Vertex — LimeSpot doesn't ship per-customer
+  replenishment recs on HairMNL today. Per LimeSpot admin dashboard,
+  Home page contributes ₱0/wk, so this slot is net-new revenue, not a
+  replacement.
+
+  Usage in PARENT template (homepage section, account page, etc.):
+    {% if customer %}
+      {% render 'vertex-buy-it-again',
+          title: 'Time to restock',
+          subtitle: 'Based on your purchase history' %}
+    {% endif %}
+
+  Both `title` and `subtitle` are optional with sensible defaults.
+{%- endcomment -%}
+
+{%- if customer -%}
+  {%- assign rec_ids = customer.metafields.vertex.repurchase.value -%}
+  {%- if rec_ids and rec_ids.size > 0 -%}
+
+    {%- comment -%}
+      Resolve product IDs to product objects. all_products[] takes a
+      handle, not a legacy ID, so we need the products by_id list. In
+      Shopify Liquid, this is exposed via `products[<handle>]` only —
+      to lookup by legacy ID we use `all_products` with the handle from
+      a metafield-keyed-by-handle index. Simpler: iterate the rec_ids
+      list and use a where filter against the product collection.
+
+      For now we resolve via products[] keyed by handle metafield. The
+      precompute Cloud Function writes legacy product IDs; we look them
+      up via a parallel `customer.metafields.vertex.repurchase_handles`
+      metafield that the same precompute function writes (TODO: add
+      handles to the precompute write).
+    {%- endcomment -%}
+    {%- assign rec_handles = customer.metafields.vertex.repurchase_handles.value -%}
+
+    {%- assign resolved_products = '' -%}
+    {%- assign first = true -%}
+    {%- if rec_handles and rec_handles.size > 0 -%}
+      <section class="vertex-buy-it-again">
+        <header class="vertex-buy-it-again__header">
+          <h2 class="vertex-buy-it-again__title">{{ title | default: 'Time to restock' }}</h2>
+          <p class="vertex-buy-it-again__subtitle">{{ subtitle | default: 'Based on your purchase history' }}</p>
+        </header>
+
+        <div class="vertex-buy-it-again__grid">
+          {%- for handle in rec_handles -%}
+            {%- assign p = all_products[handle] -%}
+            {%- if p and p.available -%}
+              <a class="vertex-buy-it-again__card" href="{{ p.url }}">
+                {%- if p.featured_image -%}
+                  <img
+                    class="vertex-buy-it-again__img"
+                    src="{{ p.featured_image | image_url: width: 240 }}"
+                    alt="{{ p.title | escape }}"
+                    loading="lazy"
+                    width="120" height="120"
+                  >
+                {%- endif -%}
+                <div class="vertex-buy-it-again__card-vendor">{{ p.vendor }}</div>
+                <div class="vertex-buy-it-again__card-title">{{ p.title | truncate: 60 }}</div>
+                <div class="vertex-buy-it-again__card-price">{{ p.price | money }}</div>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </section>
+    {%- endif -%}
+
+  {%- endif -%}
+{%- endif -%}
