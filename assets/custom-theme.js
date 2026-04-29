@@ -14236,6 +14236,15 @@
   })(document);
 
   // scripts/article-card.js
+  // vyz 2026-04-29: Lazy-run setMaxHeight via IntersectionObserver.
+  // Original ran a forced layout-read/write pass on every .homepage-blog
+  // section 100ms after DOMContentLoaded. On homepages where the blog
+  // sits below the fold (every page), this burned main-thread time
+  // measuring + writing styles for content the user hadn't scrolled to.
+  // Now: each .homepage-blog observed individually; setMaxHeight fires
+  // only when the section is 200px from viewport entry, then
+  // unobserves. Same visual outcome (equal-height card titles), shifted
+  // off the DCL critical path.
   (function(document2) {
     document2.addEventListener("DOMContentLoaded", function() {
       const getMaxHeight = (elements) => {
@@ -14256,9 +14265,21 @@
       };
       const containerElement = document2.querySelectorAll(".homepage-blog");
       if (containerElement.length > 0) {
-        setTimeout(() => {
-          setMaxHeight(containerElement);
-        }, 100);
+        var blogObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              blogObserver.unobserve(entry.target);
+              // Preserve original 100ms settle delay (lets fonts /
+              // late-loading images finalize wrap before measurement)
+              setTimeout(function() {
+                setMaxHeight([entry.target]);
+              }, 100);
+            }
+          });
+        }, { rootMargin: "200px 0px" });
+        containerElement.forEach(function(el) {
+          blogObserver.observe(el);
+        });
       }
     });
   })(document);
