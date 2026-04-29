@@ -78,4 +78,54 @@
     z-index: 9999 !important;
     contain: layout !important;
   }
+
+  /* CLS fix 2026-04-29 — Blog article body images come from Shopify's
+     rich-text editor, which doesn't add width/height attributes. Without
+     dimensions, browsers can't reserve space → image loads → all content
+     below shifts down → catastrophic CLS.
+
+     Real-shopper RUM data (GA4 web-vitals last 7 days) showed 4 of the
+     top 5 worst CLS pages were blog posts:
+       /blogs/hair-education/rebonding-vs-keratin-treatment   54.9% poor
+       /blogs/product-spotlight/lockdown-lab-purple-shampoos  51.9% poor
+       /blogs/product-spotlight/15-top-sulfate-free-shampoos  49.2% poor (n=392)
+       /blogs/tousled-online-magazine/how-to-hide-gray-hair   47.1% poor
+
+     Fix strategy:
+     1. `aspect-ratio: auto 16 / 9` — when intrinsic ratio is unknown
+        (image hasn't loaded yet), fall back to 16:9 (most blog photos
+        are landscape). When intrinsic ratio becomes available, browser
+        switches to it. This pre-reserves vertical space at first paint.
+     2. `width: 100%` paired with the aspect-ratio so the browser can
+        compute height upfront from container width.
+     3. `height: auto` ensures intrinsic ratio wins once image loads,
+        even if intrinsic differs from 16:9.
+     4. `max-width: 100%` prevents oversized images overflowing.
+     5. `display: block` prevents baseline-aligned shifts from inline imgs.
+     6. Background placeholder color so the reserved area is visible
+        instead of empty white.
+
+     Selector targets `.blog__article__content` (full article page) and
+     all `.rte` content (blog list/preview cards too). Limited to images
+     that DON'T already have width+height attrs (skips already-sized
+     images so the rule doesn't accidentally regress them).
+
+     Caveat: portrait images will appear as 16:9 first then snap to
+     their portrait ratio when loaded — still better than 0px → full
+     height jump. For perfect fix, would need server-side image
+     dimension parsing in Liquid (article.content is HTML string, no
+     direct Image objects). Acceptable trade-off given the 49–55% poor
+     baseline. */
+  .blog__article__content img,
+  .rte img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  .blog__article__content img:not([width]):not([height]),
+  .rte img:not([width]):not([height]) {
+    aspect-ratio: auto 16 / 9;
+    width: 100%;
+    background: #f4f6f8;
+  }
 </style>
