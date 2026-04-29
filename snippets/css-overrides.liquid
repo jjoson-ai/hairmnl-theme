@@ -128,4 +128,34 @@
     width: 100%;
     background: #f4f6f8;
   }
+
+  /* CLS fix 2026-04-29 — Judge.me medals wrapper starts as `.jdgm-hidden`
+     (display: none) in the initial HTML and gets revealed by Judge.me's
+     loader.js once badges hydrate. The reveal grows the wrapper from 0
+     to ~80px tall, pushing all subsequent in-flow content down → CLS.
+
+     Real-shopper RUM showed /products/wella-professionals-koleston-
+     perfect-ppd-free 49.1% poor CLS (n=116 events). Wella PDP image
+     gallery is dimensioned correctly (width=1180 height=1180), so the
+     remaining CLS source is the medals wrapper appearing post-load.
+     Same pattern likely affects all PDPs with Judge.me reviews snippet.
+
+     Fix: while .jdgm-hidden is applied, override display to block but
+     keep visibility: hidden so the element occupies its eventual height
+     without showing content. min-height: 80px reserves the typical
+     rendered height of 5 badges in a row. contain: layout prevents
+     residual size variance from cascading to siblings. When Judge.me
+     removes .jdgm-hidden, the badges become visible in the same space.
+
+     Caveat: if Judge.me's JS gates hydration on display: none → display:
+     block transition, this override could break their logic. Loader.js
+     v490 (audited 2026-04-27 per beads memory) gates on
+     .jdgm-preview-badge presence, not display state, so the override
+     should be safe. Revert this rule if medals stop appearing. */
+  .jdgm-medals-wrapper.jdgm-hidden {
+    display: block !important;
+    visibility: hidden !important;
+    min-height: 80px;
+    contain: layout;
+  }
 </style>
