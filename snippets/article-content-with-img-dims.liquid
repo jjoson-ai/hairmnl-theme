@@ -1,0 +1,159 @@
+{%- comment -%}
+  article-content-with-img-dims.liquid
+
+  Post-processor for `article.content` HTML that injects explicit
+  width/height attributes onto <img> tags whose src URL encodes
+  Shopify CDN dimensions in the standard `_WIDTHxHEIGHT.ext` pattern
+  (e.g. `cdn.shopify.com/.../filename_480x480.jpg?v=...`).
+
+  Why: Shopify's rich-text editor inserts <img> tags WITHOUT any
+  width/height attributes. Browsers can't reserve layout space for
+  unsized images → all content below shifts when each image loads →
+  catastrophic CLS. Field RUM showed 4 of top 5 worst-CLS pages were
+  blog posts at 49–55% poor (mobile, n=51–392 events per page).
+
+  Today's earlier CSS fix (snippets/css-overrides.liquid) added
+  aspect-ratio: auto 16/9 fallback — helps but landscape vs portrait
+  images still snap when they load. THIS snippet eliminates the snap
+  for all Shopify-CDN-hosted images by parsing the dimensions out of
+  the URL and injecting them as HTML attributes. Browser then knows
+  the EXACT aspect ratio at HTML parse time, before the image load.
+
+  Usage (in sections/article.liquid):
+    {% render 'article-content-with-img-dims', content: article.content %}
+
+  The "with-img-dims" naming makes it obvious that other
+  ${something}.content callers (page.content, product.description)
+  should also be candidates if they have the same problem.
+
+  Algorithm:
+    1. Split content on '<img ' to get chunks. chunk[0] is everything
+       before the first <img tag (passes through unchanged).
+    2. For each subsequent chunk: reconstruct as '<img ' + chunk_open
+       + '>' + chunk_tail. The tag opens with chunk_open up to the
+       first '>'; everything after is tail (the next paragraph etc.).
+    3. Within chunk_open, look for src="..." then parse the URL for
+       a final-segment underscore-then-WxH-then-dot pattern.
+    4. If found AND the tag doesn't already have width/height attrs,
+       inject them right after '<img '. Also inject loading="lazy"
+       and decoding="async" if missing (perf bonus, doesn't affect CLS).
+    5. Reassemble.
+
+  Limitations:
+    - Only matches Shopify CDN URLs ending in `_NNNxMMM.ext` or
+      `_NNNxMMM.ext?...` patterns. Other URL shapes pass through
+      unchanged (CSS aspect-ratio fallback still helps those).
+    - Handles ONE pattern of underscore-x-dot. Filenames with
+      underscores in the basename work because we split on ALL
+      underscores and use the LAST chunk before the dot.
+    - Doesn't handle <picture><source> nesting (Shopify rich text
+      editor doesn't emit <picture> directly).
+    - Liquid has no regex; this uses split/replace chains only.
+{%- endcomment -%}
+
+{%- assign _src_content = content | default: '' -%}
+{%- assign _img_chunks = _src_content | split: '<img ' -%}
+{%- assign _output = _img_chunks | first -%}
+
+{%- for _chunk in _img_chunks offset: 1 -%}
+  {%- comment -%} Split chunk into "img attributes" + "rest of content after the > closing tag" {%- endcomment -%}
+  {%- assign _gt_split = _chunk | split: '>' -%}
+  {%- assign _img_attrs = _gt_split | first -%}
+  {%- assign _tail_size = _gt_split.size | minus: 1 -%}
+  {%- comment -%} _tail = everything after the first '>' — possibly contains more '>' characters, so we have to rejoin {%- endcomment -%}
+  {%- assign _tail = '' -%}
+  {%- for _piece in _gt_split offset: 1 -%}
+    {%- if forloop.first -%}
+      {%- assign _tail = _piece -%}
+    {%- else -%}
+      {%- assign _tail = _tail | append: '>' | append: _piece -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} Skip rewriting if the tag already has width="" or height="" attrs {%- endcomment -%}
+  {%- assign _has_dims = false -%}
+  {%- if _img_attrs contains 'width=' or _img_attrs contains 'height=' -%}
+    {%- assign _has_dims = true -%}
+  {%- endif -%}
+
+  {%- comment -%} Extract src URL value (between src=" and the next ") {%- endcomment -%}
+  {%- assign _src_url = '' -%}
+  {%- if _img_attrs contains 'src="' -%}
+    {%- assign _after_src = _img_attrs | split: 'src="' | last -%}
+    {%- assign _src_url = _after_src | split: '"' | first -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    Try to parse `_WIDTHxHEIGHT.ext` from the URL. Approach:
+      - Strip query string (everything after the first '?').
+      - Take the LAST segment of the path (after the last '/') — typically the filename.
+      - Strip the file extension (everything after the last '.').
+      - Take the LAST chunk after splitting on '_' (typically the dimension token).
+      - If that token contains 'x' surrounded by digits, split on 'x' to get width/height.
+  {%- endcomment -%}
+  {%- assign _w = '' -%}
+  {%- assign _h = '' -%}
+  {%- if _src_url != '' and _has_dims == false -%}
+    {%- assign _no_query = _src_url | split: '?' | first -%}
+    {%- assign _filename = _no_query | split: '/' | last -%}
+    {%- assign _no_ext_parts = _filename | split: '.' -%}
+    {%- assign _no_ext = '' -%}
+    {%- if _no_ext_parts.size > 1 -%}
+      {%- comment -%} Drop the LAST element (extension), rejoin the rest with '.' for filenames containing dots {%- endcomment -%}
+      {%- assign _ext_keep_count = _no_ext_parts.size | minus: 1 -%}
+      {%- for _p in _no_ext_parts limit: _ext_keep_count -%}
+        {%- if forloop.first -%}
+          {%- assign _no_ext = _p -%}
+        {%- else -%}
+          {%- assign _no_ext = _no_ext | append: '.' | append: _p -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- assign _no_ext = _filename -%}
+    {%- endif -%}
+
+    {%- comment -%} Last underscore-delimited token e.g. "480x480" {%- endcomment -%}
+    {%- assign _dim_token = _no_ext | split: '_' | last -%}
+    {%- if _dim_token contains 'x' -%}
+      {%- assign _wh = _dim_token | split: 'x' -%}
+      {%- if _wh.size == 2 -%}
+        {%- assign _w_candidate = _wh[0] -%}
+        {%- assign _h_candidate = _wh[1] -%}
+        {%- comment -%}
+          Validate both halves are pure digits (avoids false positives on
+          file names like "before-x-after"). Liquid has no regex — use
+          plus: 0 trick (parses to int, returns 0 on non-numeric strings),
+          then compare back-to-string equality.
+        {%- endcomment -%}
+        {%- assign _w_int = _w_candidate | plus: 0 -%}
+        {%- assign _h_int = _h_candidate | plus: 0 -%}
+        {%- if _w_int > 0 and _h_int > 0 -%}
+          {%- assign _w_back = _w_int | append: '' -%}
+          {%- assign _h_back = _h_int | append: '' -%}
+          {%- if _w_back == _w_candidate and _h_back == _h_candidate -%}
+            {%- assign _w = _w_candidate -%}
+            {%- assign _h = _h_candidate -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- comment -%} Build the rewritten <img ...> tag {%- endcomment -%}
+  {%- assign _new_attrs = _img_attrs -%}
+  {%- if _w != '' and _h != '' -%}
+    {%- assign _inject = 'width="' | append: _w | append: '" height="' | append: _h | append: '" ' -%}
+    {%- comment -%} Also add loading=lazy + decoding=async if not already present (perf bonus) {%- endcomment -%}
+    {%- unless _img_attrs contains 'loading=' -%}
+      {%- assign _inject = _inject | append: 'loading="lazy" ' -%}
+    {%- endunless -%}
+    {%- unless _img_attrs contains 'decoding=' -%}
+      {%- assign _inject = _inject | append: 'decoding="async" ' -%}
+    {%- endunless -%}
+    {%- assign _new_attrs = _inject | append: _img_attrs -%}
+  {%- endif -%}
+
+  {%- assign _output = _output | append: '<img ' | append: _new_attrs | append: '>' | append: _tail -%}
+{%- endfor -%}
+
+{{- _output -}}

@@ -51,7 +51,18 @@
           </header>
 
           <div class="blog__article__content rte {{section.settings.content_alignment}}">
-            {{ article.content }}
+            {%- comment -%}
+              Task 2b 2026-04-29: post-process article.content via the
+              article-content-with-img-dims snippet. The Shopify rich-text
+              editor inserts <img> tags WITHOUT width/height attributes;
+              the post-processor parses Shopify CDN `_WIDTHxHEIGHT.ext`
+              filenames and injects explicit width/height attrs so the
+              browser knows the exact aspect ratio at HTML parse time.
+              Eliminates blog-image CLS for dimensioned URLs (the
+              earlier CSS aspect-ratio fallback continues to catch the
+              rest). See the snippet file for the full algorithm doc.
+            {%- endcomment -%}
+            {%- render 'article-content-with-img-dims', content: article.content -%}
           </div>
 
           {% if section.settings.tags %}
