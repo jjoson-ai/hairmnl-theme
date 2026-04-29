@@ -23,5 +23,37 @@
     {% else %}
       loyaltylion.init({ token: "{{ shop.metafields.loyaltylion.token }}" });
     {% endif %}
+
+    /*
+     * Double-init guard 2026-04-29 — discovered via the GA4 js_error
+     * pipeline (now correctly populating after the GTM tag fix this
+     * session): every page load throws
+     *   "Uncaught Error: Cannot call lion.init more than once"
+     * because the LoyaltyLion Shopify App Embed block ALSO calls
+     * loyaltylion.init({token}) in its own injected script
+     * (rendered ~1370 lines into the page HTML, marked
+     *  <!-- loyaltylion.snippet.version=a2737380ee+9620 -->), and the
+     * SDK's bootstrap explicitly throws on the second init call.
+     *
+     * Theme runs first (this snippet, in <head>), so our init wins —
+     * we initialize with the full secure customer auth (token + auth.date
+     * + auth.token sha1 hash), which is more complete than the App
+     * Embed's anonymous { token } call. Then we neutralize subsequent
+     * init() calls so the App Embed's later call becomes a silent no-op
+     * instead of throwing.
+     *
+     * This preserves: app embed auto-update path (the loader bytes are
+     * still maintained by LoyaltyLion via Shopify), theme-side customer
+     * auth (still under our control). Eliminates: the runtime exception
+     * that was breaking JS execution after the App Embed loaded.
+     *
+     * Alternative fix (deferred): disable the LoyaltyLion App Embed in
+     * Shopify Admin → Online Store → Themes → Customize → App Embeds.
+     * Cleaner long-term, but requires admin action and breaks if anyone
+     * re-enables the embed by accident. Theme-side guard is defense-in-depth.
+     */
+    if (window.loyaltylion) {
+      loyaltylion.init = function() { /* no-op — already initialized by theme snippet */ };
+    }
   {% endif %}
 </script>
