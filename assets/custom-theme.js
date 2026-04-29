@@ -14382,13 +14382,26 @@
   })(document);
 
   // scripts/domparser.js
-  var import_node_html_parser = __toESM(require_dist(), 1);
+  // Bundle shrink 2026-04-29: replaced node-html-parser (~5,400 lines of
+  // bundled library) with native el.textContent = el.textContent. The
+  // library was used ONLY here to strip HTML tags from the innerHTML of
+  // .metafield-multi_line_text_field elements. Setting textContent to
+  // itself replaces all child nodes with a single text node containing
+  // the concatenated text — exactly what `parse(html).textContent` did,
+  // but using the browser's built-in DOM parser instead of a 1,500-line
+  // JavaScript reimplementation of one.
+  //
+  // This eliminates the runtime cost of constructing the parser and
+  // walking the HTML tree on every metafield element at DOMContentLoaded.
+  // The dead library code remains in the bundle (interleaved with other
+  // modules; clean removal needs the original bundler config) — file
+  // hairmnl-theme-<id> for the bundle-byte cleanup as a follow-up.
   (function(document2) {
     document2.addEventListener("DOMContentLoaded", function() {
       const metafieldMultiLineEls = document2.querySelectorAll(".metafield-multi_line_text_field");
       if (metafieldMultiLineEls.length > 0) {
         for (const el of metafieldMultiLineEls) {
-          el.innerHTML = (0, import_node_html_parser.parse)(el.innerHTML).textContent;
+          el.textContent = el.textContent;
         }
       }
     });
