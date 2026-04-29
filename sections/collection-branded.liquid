@@ -563,7 +563,7 @@
                             Path 2 brand-prefix strip auto-detects
                             this branded page from collection.handle.
                           {%- endcomment -%}
-                          {% render 'product-grid-item', product: product %}
+                          {% render 'product-grid-item', product: product, strip_brand: true %}
                         </div>
                       {% endfor %}
                         </div>
@@ -702,7 +702,7 @@
                             Path 2 brand-prefix strip auto-detects
                             this branded page from collection.handle.
                           {%- endcomment -%}
-                          {% render 'product-grid-item', product: product %}
+                          {% render 'product-grid-item', product: product, strip_brand: true %}
                         </div>
                       {% endfor %}
                         </div>
