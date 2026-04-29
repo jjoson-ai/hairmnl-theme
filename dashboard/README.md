@@ -2,13 +2,19 @@
 
 Self-hosted PWI/CWV dashboard. Renders to a single static HTML file. No SaaS, no admin UI clicks, no server running.
 
-## View it
+## Live URL
+
+**https://jjoson-ai.github.io/hairmnl-theme/**
+
+Auto-deploys on every push to `main` that touches `dashboard/**`. The GitHub Action (`.github/workflows/pages.yml`) takes ~30–60 seconds.
+
+## View locally
 
 ```bash
 open dashboard/index.html
 ```
 
-That's it. The HTML is self-contained (CSS inline, Chart.js from a public CDN), so it works opened directly from the filesystem.
+The HTML is self-contained (CSS inline, Chart.js from a public CDN), so it works opened directly from the filesystem too.
 
 ## Refresh it
 
