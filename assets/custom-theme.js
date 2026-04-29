@@ -14288,13 +14288,18 @@
   })(document);
 
   // scripts/collection-slider.js
+  // ua7 2026-04-29: Lazy-init below-fold sliders via IntersectionObserver.
+  // Only the first .swiper.collection (or any already in-viewport) inits eagerly
+  // at DOMContentLoaded. The rest defer until 200px before they scroll into view,
+  // spreading the Swiper layout-measurement work across the session instead of
+  // front-loading it all at DCL — reduces TBT and INP for homepage.
   (function(document2) {
     document2.addEventListener("DOMContentLoaded", function() {
       const collectionSliderEls = document2.querySelectorAll(".swiper.collection");
       if (collectionSliderEls.length > 0) {
-        collectionSliderEls.forEach((el) => {
-          const spinnerEl = el.previousElementSibling;
-          const slider = new core_default(el, {
+        var initCollectionSlider = function(el) {
+          var spinnerEl = el.previousElementSibling;
+          new core_default(el, {
             modules: [Navigation],
             grabCursor: true,
             freeMode: true,
@@ -14333,6 +14338,23 @@
               }
             }
           });
+        };
+        collectionSliderEls.forEach(function(el, index) {
+          // Eagerly init: first slider always, or any already visible at DCL time
+          if (index === 0 || el.getBoundingClientRect().top < window.innerHeight) {
+            initCollectionSlider(el);
+          } else {
+            // Below-fold: defer init until 200px before viewport entry
+            var observer = new IntersectionObserver(function(entries) {
+              entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                  observer.unobserve(el);
+                  initCollectionSlider(el);
+                }
+              });
+            }, { rootMargin: "200px 0px" });
+            observer.observe(el);
+          }
         });
       }
     });
