@@ -125,20 +125,36 @@
     {%- comment -%}
       Responsive srcset replaces static 700x/900x/1200x — saves bytes
       on mobile by letting browsers pick a width-appropriate variant.
+
+      WebP rollout 2026-04-29 (Task 5 batch). Same <picture>+<source>
+      pattern shipped earlier for product-grid-item-branded.liquid
+      (commit f6761d6). Pass `_img` (the raw Image object) into
+      `image_url` filter — using `.src` returns a URL string and the
+      filter silently drops the format param.
     {%- endcomment -%}
-    <img
-      src="{{ product.featured_image.src | img_url: '540x' }}"
-      srcset="{{ product.featured_image.src | img_url: '180x' }} 180w,
-              {{ product.featured_image.src | img_url: '360x' }} 360w,
-              {{ product.featured_image.src | img_url: '540x' }} 540w,
-              {{ product.featured_image.src | img_url: '720x' }} 720w,
-              {{ product.featured_image.src | img_url: '1080x' }} 1080w"
-      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-      width="{{ product.featured_image.width }}"
-      height="{{ product.featured_image.height }}"
-      loading="lazy"
-      style="height:auto;max-width:100%;"
-      alt="{{ product.featured_image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
+    {%- assign _img = product.featured_image -%}
+    <picture>
+      <source type="image/webp"
+              srcset="{{ _img | image_url: width: 180, format: 'webp' }} 180w,
+                      {{ _img | image_url: width: 360, format: 'webp' }} 360w,
+                      {{ _img | image_url: width: 540, format: 'webp' }} 540w,
+                      {{ _img | image_url: width: 720, format: 'webp' }} 720w,
+                      {{ _img | image_url: width: 1080, format: 'webp' }} 1080w"
+              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw">
+      <img
+        src="{{ _img.src | img_url: '540x' }}"
+        srcset="{{ _img.src | img_url: '180x' }} 180w,
+                {{ _img.src | img_url: '360x' }} 360w,
+                {{ _img.src | img_url: '540x' }} 540w,
+                {{ _img.src | img_url: '720x' }} 720w,
+                {{ _img.src | img_url: '1080x' }} 1080w"
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+        width="{{ _img.width }}"
+        height="{{ _img.height }}"
+        loading="lazy"
+        style="height:auto;max-width:100%;"
+        alt="{{ _img.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
+    </picture>
     {{ sticker }}
     {%- comment -%} product-labels disabled 2026-04-27 pending team decision (bd spz). Renders duplicate sale label alongside .product__badge--custom. Snippet kept in /snippets/ for future re-enable. {%- endcomment -%}
     {%- comment -%} {% render 'product-labels', product: product %} {%- endcomment -%}

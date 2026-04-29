@@ -53,22 +53,48 @@
         `.lazyloaded` class. Native <img loading="lazy"> never gets
         that class. `object-fit:cover` is already applied inline.
       {%- endcomment -%}
-      <img
-        class=""
-        srcset="{% if image.width > 540 %}{{ image | img_url: '540x' }} 540w,{% endif %}
-                {% if image.width > 900 %}{{ image | img_url: '900x' }} 900w,{% endif %}
-                {% if image.width > 1400 %}{{ image | img_url: '1400x' }} 1400w,{% endif %}
-                {% if image.width > 1800 %}{{ image | img_url: '1800x' }} 1800w,{% endif %}
-                {% if image.width > 2400 %}{{ image | img_url: '2400x' }} 2400w,{% endif %}
-                {{ image | img_url: 'master' }} {{ image.width }}w"
-        sizes="100vw"
-        src="{{ image | img_url: 'master' }}"
-        width="{{ image.width }}"
-        height="{{ image.height }}"
-        loading="{{ img_loading }}"
-        {% if eager %}fetchpriority="high"{% endif %}
-        alt="{{ image.alt | strip_html | escape }}"
-        style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:{{ bg_position | replace: '-', ' ' }};">
+      {%- comment -%}
+        WebP rollout 2026-04-29 (Task 5 batch). Same <picture>+<source>
+        pattern shipped earlier for image-fill.liquid (commit e946c02)
+        and product-grid-item-branded.liquid (commit f6761d6). Hero
+        images used by section heroes (collection page, blog page,
+        article page banners) — typically 1400–2400px wide, 200–500 KB
+        per image at JPEG. WebP variants are 30–50% smaller, with
+        meaningful network savings on mobile cellular.
+
+        `image` here is an Image object (assigned from img_object on
+        line 14), so `image_url` with format param works correctly.
+        Modern browsers (~98% of HairMNL traffic per CrUX) negotiate
+        the WebP via the source's type attribute. The <img> below stays
+        as fallback for the few browsers that don't accept image/webp,
+        and so width/height/loading/fetchpriority/alt/style continue to
+        live on <img> per HTML spec (those don't go on <source>).
+      {%- endcomment -%}
+      <picture>
+        <source type="image/webp"
+                srcset="{% if image.width > 540 %}{{ image | image_url: width: 540, format: 'webp' }} 540w,{% endif %}
+                        {% if image.width > 900 %}{{ image | image_url: width: 900, format: 'webp' }} 900w,{% endif %}
+                        {% if image.width > 1400 %}{{ image | image_url: width: 1400, format: 'webp' }} 1400w,{% endif %}
+                        {% if image.width > 1800 %}{{ image | image_url: width: 1800, format: 'webp' }} 1800w,{% endif %}
+                        {% if image.width > 2400 %}{{ image | image_url: width: 2400, format: 'webp' }} 2400w,{% endif %}"
+                sizes="100vw">
+        <img
+          class=""
+          srcset="{% if image.width > 540 %}{{ image | img_url: '540x' }} 540w,{% endif %}
+                  {% if image.width > 900 %}{{ image | img_url: '900x' }} 900w,{% endif %}
+                  {% if image.width > 1400 %}{{ image | img_url: '1400x' }} 1400w,{% endif %}
+                  {% if image.width > 1800 %}{{ image | img_url: '1800x' }} 1800w,{% endif %}
+                  {% if image.width > 2400 %}{{ image | img_url: '2400x' }} 2400w,{% endif %}
+                  {{ image | img_url: 'master' }} {{ image.width }}w"
+          sizes="100vw"
+          src="{{ image | img_url: 'master' }}"
+          width="{{ image.width }}"
+          height="{{ image.height }}"
+          loading="{{ img_loading }}"
+          {% if eager %}fetchpriority="high"{% endif %}
+          alt="{{ image.alt | strip_html | escape }}"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:{{ bg_position | replace: '-', ' ' }};">
+      </picture>
     </div>
   </div>
 
