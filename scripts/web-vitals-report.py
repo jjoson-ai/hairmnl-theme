@@ -233,7 +233,8 @@ def render_errors(rows) -> str:
         return "(no JS error events captured — either no errors yet, or js_error event not flowing through GTM)"
     out = ["| count | type | source | message |", "|---:|---|---|---|"]
     for r in rows:
-        out.append(f"| {r['count']:,} | {r['type']} | `{r['source'][:60]}` | {r['message'][:80].replace('|','\\|')} |")
+        msg = r['message'][:80].replace('|', '\\|')
+        out.append(f"| {r['count']:,} | {r['type']} | `{r['source'][:60]}` | {msg} |")
     return "\n".join(out)
 
 

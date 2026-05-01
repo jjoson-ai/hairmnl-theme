@@ -41,6 +41,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from statistics import median
+from typing import Optional
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -106,7 +107,7 @@ BASELINE_2026_04_26 = {
 
 # ───────────────────────── CrUX ─────────────────────────
 
-def query_crux(url: str, form_factor: str, key: str) -> dict | None:
+def query_crux(url: str, form_factor: str, key: str) -> Optional[dict]:
     """
     Query Chrome UX Report API for real-shopper p75 values + rating distribution.
     form_factor: 'PHONE' | 'DESKTOP' | 'TABLET' | 'ALL_FORM_FACTORS'
@@ -197,7 +198,7 @@ def get_psi_key() -> str:
         sys.exit(1)
 
 
-def run_psi_once(url: str, strategy: str, key: str) -> dict | None:
+def run_psi_once(url: str, strategy: str, key: str) -> Optional[dict]:
     """Single PSI run for url+strategy. Returns dict of metrics or None on error."""
     api = (
         "https://www.googleapis.com/pagespeedonline/v5/runPagespeed"
@@ -228,7 +229,7 @@ def run_psi_once(url: str, strategy: str, key: str) -> dict | None:
     }
 
 
-def run_psi_median(url: str, strategy: str, n: int = 3) -> dict | None:
+def run_psi_median(url: str, strategy: str, n: int = 3) -> Optional[dict]:
     """Run PSI n times for url+strategy and return median values across runs."""
     key = get_psi_key()
     print(f"  PSI {strategy} ({n} runs)...", flush=True)
@@ -858,7 +859,7 @@ def _delta_html(curr, prev, lower_is_better=True, fmt=lambda v: f"{v:+.0f}"):
     return f'<div class="delta {klass}">{arrow} {fmt(abs(d))} vs prev</div>'
 
 
-def render_snapshot_section(form_factor: str, snapshot: dict, prev_snapshot: dict | None) -> str:
+def render_snapshot_section(form_factor: str, snapshot: dict, prev_snapshot: Optional[dict]) -> str:
     """Render KPI cards for one form factor (mobile|desktop). Combines CrUX + PSI."""
     crux = snapshot.get("crux", {}).get(form_factor)
     psi = snapshot.get("psi", {}).get(form_factor)
