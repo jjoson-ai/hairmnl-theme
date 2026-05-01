@@ -13887,11 +13887,21 @@
   }
 
   // scripts/cross-post-blogs.js
+  // Lazy-init 2026-04-30 (mirror of ua7's collection-slider.js pattern):
+  // .cross-post-blogs sits at the BOTTOM of every article page (the
+  // "Read more from this blog" carousel). Always below-fold on initial
+  // render, so initializing the Swiper + attaching resize listener at
+  // DCL is wasted work. Wrap in IntersectionObserver with 200px root-
+  // margin so the work only happens when the section is about to scroll
+  // into view. Estimated 50-150ms TBT shaved on article pages, plus
+  // saves the layout-measurement work that Swiper does on instantiation.
   (function(document2) {
     document2.addEventListener("DOMContentLoaded", function() {
-      const slides = document2.querySelectorAll(".cross-post-blogs .swiper-slide");
       const crossPostBlogsElement = document2.querySelector(".cross-post-blogs");
-      if (crossPostBlogsElement) {
+      if (!crossPostBlogsElement) return;
+
+      const initCrossPostBlogs = function() {
+        const slides = document2.querySelectorAll(".cross-post-blogs .swiper-slide");
         let handlePostBlogs = function() {
           const swiperWrapperElement = document2.querySelector(
             "cross-post-blogs .swiper-wrapper"
@@ -13958,7 +13968,20 @@
           handlePostBlogs();
         });
         handlePostBlogs();
-      }
+      };
+
+      // Defer the heavy init (Swiper instantiation + resize listener +
+      // first handlePostBlogs eval) until the cross-post-blogs section
+      // is 200px from entering the viewport.
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            observer.unobserve(crossPostBlogsElement);
+            initCrossPostBlogs();
+          }
+        });
+      }, { rootMargin: "200px 0px" });
+      observer.observe(crossPostBlogsElement);
     });
   })(document);
 
