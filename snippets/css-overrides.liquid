@@ -70,10 +70,23 @@
 
      Selectors target the modal element itself + likely backdrop sibling.
      `!important` because Shop Sheriff's own CSS may set position absolute
-     or static; we need to win specificity battles against external CSS. */
+     or static; we need to win specificity battles against external CSS.
+
+     2026-05-01 escalation: position:fixed rule shipped 2026-04-28 was
+     ineffective — GA4 #pwa-modal CLS stayed at ~2,127 events/7d for 3 days.
+     Root cause found by inspecting Shop Sheriff main.js: their pwaSlideIn
+     keyframes animate `top: -100%` → `top: 0` (animating the `top` property
+     itself, not transform). Animating `top` triggers layout on every frame,
+     so position:fixed didn't help. Fix: display:none prevents the element
+     from rendering, so the animation never runs. Modal also has multiple
+     non-installprompt triggers (displayAlways, timeOnPage), so JS-side
+     event suppression alone wouldn't catch all paths. PWA install via
+     Chrome address bar still works (manifest.json preserved in
+     shop-sheriff-pwa.liquid). Re-measure GA4 in 24h post-ship. */
   #pwa-modal,
   [id^="pwa-modal"],
   [class*="pwa-modal"] {
+    display: none !important;
     position: fixed !important;
     z-index: 9999 !important;
     contain: layout !important;
