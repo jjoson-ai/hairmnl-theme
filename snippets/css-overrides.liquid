@@ -238,4 +238,41 @@
     contain: layout;
     overflow: hidden;
   }
+
+  /* CLS fix 2026-05-01 e4a-α — PDP store availability widget:
+     .product__pickup contains [data-store-availability-container], an empty
+     div in the Liquid that Zapiet's app embed populates with store pickup
+     availability after JS loads. The div grows 0px → ~60px when Zapiet
+     fires, shifting the footer and any below-fold content. Same injection
+     pattern as #freegifts-main-page-container (fixed earlier today).
+
+     Fix: reserve 64px (typical height of a single store row: store name
+     ~20px + status ~20px + 4px gap + 20px vertical padding). contain:layout
+     isolates internal Zapiet DOM mutations from cascading to siblings.
+     The gap when no stores match the variant is an acceptable white-space
+     trade-off vs. a layout shift on every PDP pageload. */
+  .product__pickup {
+    min-height: 64px;
+    contain: layout;
+  }
+
+  /* CLS fix 2026-05-01 e4a-β — PDP Flickity main gallery height animation:
+     .product__slides .flickity-viewport has `transition: height 0.4s` in
+     theme.css line 14885. This animated height transition fires whenever
+     Flickity adjusts viewport height — including during init on pages where
+     the first-slide aspect-ratio and --default-ratio match (so net shift is
+     0), the 400ms animation still triggers continuous layout recalc that
+     browsers can record as micro-shifts.
+
+     Fix: override the transition to `none` for the main product gallery only.
+     The thumbnail strip (.media__thumb__wrapper) already has contain:layout
+     (T8 fix) and doesn't need this. Disabling the transition means height
+     changes snap immediately — one discrete event rather than 400ms of
+     animated shifts. The visual experience is unchanged because the aspect-
+     ratio pre-reservation (--default-ratio inline style on .product__slides)
+     means the viewport should not need to change height at all on init for
+     most products. */
+  .product__slides .flickity-viewport {
+    transition: none !important;
+  }
 </style>
