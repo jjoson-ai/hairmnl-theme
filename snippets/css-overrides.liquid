@@ -171,4 +171,71 @@
     min-height: 80px;
     contain: layout;
   }
+
+  /* CLS fix 2026-05-01 T2 — Cart page: #freegifts-main-page-container is an
+     empty div always present in sections/cart.liquid (line 35). The Gifted
+     Free Gifts app populates it with gift-tile HTML after JS loads. When
+     active offers are configured, this div grows 0px → ~80px and shifts all
+     cart items down. GA4 RUM: 73 poor-CLS events in 7d, 100% poor rating.
+
+     Fix: reserve 80px (one row of gift tiles at their rendered height) so
+     the injection doesn't change document flow. contain:layout isolates
+     any internal reflows from cascading to siblings. The 80px blank gap
+     when no gifts are active is an acceptable trade-off vs. constant CLS. */
+  #freegifts-main-page-container {
+    min-height: 80px;
+    contain: layout;
+  }
+
+  /* CLS fix 2026-05-01 T8 — PDP Flickity media thumbs:
+     div.media__thumb__wrapper.flickity-enabled.is-draggable is the GA4
+     debug_target for 36 poor-CLS events in 7d on PDP pages. Before Flickity
+     initializes, the wrapper has no explicit height — its height comes from
+     the inline-block .media__thumb items (each 60px + 15px vertical margins
+     = ~75px rendered). When Flickity fires, it restructures the wrapper DOM
+     and briefly collapses the strip before re-measuring.
+
+     Fix: set min-height on the wrapper to the typical rendered height
+     (80px = 60px thumb + 10px top margin + 5px bottom margin + 5px buffer).
+     contain:layout prevents internal Flickity reflows from cascading.
+     overflow:hidden prevents any overflow during Flickity's brief transition. */
+  .media__thumb__wrapper {
+    min-height: 80px;
+    contain: layout;
+    overflow: hidden;
+  }
+
+  /* CLS fix 2026-05-01 T9 — Header CLS:
+     GA4 debug_target theme__header recorded 88 poor-CLS events in 7d.
+     Two causes:
+
+     1. Announcement bar: the ticker JS (announcement__scale ticker--unloaded
+        → loaded) and the Flickity slider init both fire after DOM parse,
+        potentially causing the .announcement__wrapper height to briefly
+        change. The announcement section renders before the header in DOM;
+        any height change there can affect the absolute-positioned header's
+        visual position at the top of the page.
+
+     2. LoyaltyLion .points-box: for logged-in users, two data-lion-points
+        spans inside .header__desktop start empty then get injected with the
+        points balance by LoyaltyLion's SDK. The injection can cause the
+        account navlink to reflow internally.
+
+     Fix 1: min-height on .announcement__wrapper prevents the bar from
+     collapsing to 0 during ticker initialization. 36px is the typical
+     rendered height of a single-line announcement bar (font-size ~14px
+     + ~22px vertical padding from .announcement__bar).
+
+     Fix 2: .points-box gets height: 0 / overflow: hidden for logged-out
+     users (no .is-loggedin → spans never get display:block from theme.css
+     line 15667). For logged-in users it stays block. contain:layout on
+     .points-box prevents the injection from reflowing sibling nav items. */
+  .announcement__wrapper {
+    min-height: 36px;
+  }
+
+  .points-box {
+    contain: layout;
+    overflow: hidden;
+  }
 </style>
