@@ -13918,7 +13918,7 @@
             }
           } else {
             if (slides.length <= 6) {
-              console.log("desktop less than 6");
+              // INP fix 2026-05-01 (T5): removed dev console.log
               swiperWrapperElement.classList.add("grid-box");
               swiperButtonNextElement.style.display = "none";
               swiperButtonPrevElement.style.display = "none";
@@ -13964,7 +13964,7 @@
           }
         );
         window.addEventListener("resize", function() {
-          console.log("resize");
+          // INP fix 2026-05-01 (T5): removed dev console.log (fired on every resize/orientation change)
           handlePostBlogs();
         });
         handlePostBlogs();
@@ -14032,7 +14032,7 @@
             selectors$D.item
           );
           const leftPos = navtextElement.getBoundingClientRect().left + window.scrollX;
-          console.log(this.sectionOuter.querySelector(".navtext"));
+          // INP fix 2026-05-01 (T5): removed dev console.log on every header init
           this.sectionOuter.style.setProperty(
             "--bar-left",
             `${Math.ceil(leftPos)}px`
@@ -14078,13 +14078,31 @@
       this.wrapper.addEventListener("mouseleave", this.clearBar.bind(this));
     }
     startBar(item) {
-      this.setHeight();
-      let active = this.sectionOuter.getAttribute(selectors$D.isActive) !== "false";
-      let left = item.offsetLeft;
+      // INP fix 2026-05-01 (T5): batch reads BEFORE writes to avoid layout
+      // thrashing on every menu mouseenter. Original sequence was:
+      //   setHeight() writes setProperty → invalidates layout
+      //   item.offsetLeft → forced layout read (recalc)
+      //   item.getBoundingClientRect() → forced layout read (recalc)
+      //   item.clientWidth → forced layout read (recalc)
+      // Three forced layout passes on every mouseenter. Now: read all
+      // measurements upfront, then perform all writes (CSS var setProperty
+      // calls) in a single batch — one layout invalidation instead of three.
+      const wrapperHeight = this.wrapper.clientHeight;
+      const textEl = this.itemList[0].querySelector(selectors$D.text);
+      const textHeight = textEl.clientHeight;
       const leftPos = Math.ceil(
         item.getBoundingClientRect().left + window.scrollX
       );
-      let width = item.clientWidth;
+      const width = item.clientWidth;
+      const active = this.sectionOuter.getAttribute(selectors$D.isActive) !== "false";
+
+      // All writes below — no reads after this point.
+      const textBottom = Math.floor(wrapperHeight / 2 - textHeight / 2) - 4;
+      if (this.textBottom !== textBottom) {
+        this.sectionOuter.style.setProperty("--bar-text", `${textHeight}px`);
+        this.sectionOuter.style.setProperty("--bar-bottom", `${textBottom}px`);
+        this.textBottom = textBottom;
+      }
       if (active) {
         this.render(width, leftPos);
       } else {
@@ -14147,7 +14165,7 @@
   };
   var HeaderMobileSliderule = class {
     constructor(el) {
-      console.log("HeaderMobileSliderule constructor el", el);
+      // INP fix 2026-05-01 (T5): removed dev console.log (fired per sliderule construction)
       this.sliderule = el;
       this.wrapper = el.closest(selectors$p.wrapper);
       this.key = this.sliderule.id;
@@ -14471,6 +14489,14 @@
   </div>
     `;
       const cartForm = document2.querySelector("form.cart");
+      // INP fix 2026-05-01 (T5): guard against null cartForm. Without this,
+      // `cartForm.querySelector(".checkout__button")` below threw a TypeError
+      // on every non-cart page (homepage, PDPs, collections) — an error fires
+      // on every pageview and the rest of consent-modal.js never executes.
+      // Bail early on pages without a cart form. The consent modal is only
+      // relevant when the user is on the cart page itself; the cart-drawer
+      // logic in this script also requires a cart form to attach to.
+      if (!cartForm) return;
       const cartItemWithConsent = document2.querySelector(
         ".cart__items__row[data-with-consent]"
       );
@@ -14498,7 +14524,7 @@
                     showCancelButton: true,
                     cancelButtonText: "Cancel"
                   }).then((value) => {
-                    console.log("Swal response", value);
+                    // INP fix 2026-05-01 (T5): removed dev console.log
                     const { isConfirmed } = value;
                     if (isConfirmed) {
                       isModalConfirmed = true;
@@ -14529,7 +14555,7 @@
               showCancelButton: true,
               cancelButtonText: "Cancel"
             }).then((value) => {
-              console.log("Swal response", value);
+              // INP fix 2026-05-01 (T5): removed dev console.log
               const { isConfirmed } = value;
               if (isConfirmed) {
                 isModalConfirmed = true;
