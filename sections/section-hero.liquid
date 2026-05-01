@@ -60,11 +60,11 @@
     {%- assign desktop_image_modifier = 'desktop' -%}
     
     {%- capture mobile_image -%}
-      {% render 'hero', img_object: section.settings.mobile_image, frame_height_class: section.settings.height, bg_position: section.settings.bg_position, modifier: 'mobile' %}
+      {% render 'hero', img_object: section.settings.mobile_image, frame_height_class: section.settings.height, bg_position: section.settings.bg_position, modifier: 'mobile', eager: true %}
     {%- endcapture -%}
   {%- endif -%}
 
-  {% render 'hero', img_object: section.settings.image, frame_height_class: section.settings.height, bg_position: section.settings.bg_position, modifier: desktop_image_modifier %}
+  {% render 'hero', img_object: section.settings.image, frame_height_class: section.settings.height, bg_position: section.settings.bg_position, modifier: desktop_image_modifier, eager: true %}
 
   {{ mobile_image }}
 

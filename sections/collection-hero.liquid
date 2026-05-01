@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="image-overlay" style="--bg:{{ section.settings.overlay_color }}; opacity:{{ section.settings.overlay_opacity | times: 0.01 }};"></div>
-      {% render 'hero', img_object: collection.image, frame_height_class: section.settings.image_height, bg_position: section.settings.bg_position %}
+      {% render 'hero', img_object: collection.image, frame_height_class: section.settings.image_height, bg_position: section.settings.bg_position, eager: true %}
     </div>
   {% endif %}
 
