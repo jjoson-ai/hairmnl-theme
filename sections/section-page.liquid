@@ -10,7 +10,8 @@
         {% endif %}
         {% assign font_size_class = section.settings.text_size | plus: 1 | prepend: 'font--' %}
         <div class="rte standard__rte {{ section.settings.align_text }} {{ font_size_class }}">
-          {{ page.content }}
+          {%- comment -%} Task 2b extension 2026-04-29 — Liquid post-processor injects width/height attrs onto Shopify CDN images in page.content. The /pages/azta-urban-salon-service-menu page is in the top INP friction list (345 events/wk, 6.7% poor) — pages with many editor-uploaded images benefit most. Same generic snippet, zero perf cost server-side. {%- endcomment -%}
+          {%- render 'article-content-with-img-dims', content: page.content -%}
         </div>
       </div>
     </div>

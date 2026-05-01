@@ -41,7 +41,9 @@
             data-aos-anchor="{{ animation_anchor }}"
             data-aos-order="3">
             <div class="rte">
-              {{ page.content | replace: '<iframe ', '<iframe loading="lazy" ' }}
+              {%- comment -%} Task 2b extension 2026-04-29 — preserve the existing iframe lazy-load transform, then pipe through article-content-with-img-dims to inject explicit width/height on Shopify CDN images. Salon menu pages, About, etc. — all rendered via this section — benefit when their editor content has _NNNxNNN.ext images. {%- endcomment -%}
+              {%- capture _page_content_lazyiframe -%}{{ page.content | replace: '<iframe ', '<iframe loading="lazy" ' }}{%- endcapture -%}
+              {%- render 'article-content-with-img-dims', content: _page_content_lazyiframe -%}
             </div>
           </div>
         {% endif %}
