@@ -77,6 +77,8 @@
         - tracking.aws.judge.me (Judge.me tracking, 800 ms)
         - analytics.tiktok.com (TikTok Pixel, 737 ms ping)
         - satcb.azureedge.net (Same-day store pickup widget, ~600 ms)
+        - searchanise-ef84.kxcdn.com (Searchanise CDN — templates.js, preload_data.js,
+          product images; origin used on every search results pageload)
     {%- endcomment -%}
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://cdn.reamaze.com">
@@ -87,6 +89,7 @@
     <link rel="dns-prefetch" href="https://tracking.aws.judge.me">
     <link rel="dns-prefetch" href="https://analytics.tiktok.com">
     <link rel="dns-prefetch" href="https://satcb.azureedge.net">
+    <link rel="preconnect" href="https://searchanise-ef84.kxcdn.com" crossorigin>
 
 
 
@@ -678,7 +681,18 @@
     {%- render 'bold-common' -%}
 
     <!-- Zapiet | Store Pickup + Delivery -->
-    {% include 'storepickup' %}
+    {%- comment -%}
+      T6 perf 2026-05-01 — gate storepickup to product + cart only.
+      storepickup.liquid emits 9 KB inline CSS + loads 90 KB storepickup.js
+      on EVERY page. Zapiet's widget only renders on product pages (pickup
+      selector) and cart (slot confirmation) — it is never activated on
+      search results, homepage, collections, blog, or page templates.
+      Gating here saves ~99 KB (CSS + JS) on ~85% of pageviews and
+      reduces TBT on the search results page by removing one deferred script.
+    {%- endcomment -%}
+    {%- if template contains 'product' or template == 'cart' -%}
+      {% include 'storepickup' %}
+    {%- endif -%}
     <!-- Zapiet | Store Pickup + Delivery -->
     {%- comment -%}
       Judge.me Core render removed 2026-04-26: the Judge.me app
