@@ -17,11 +17,24 @@
   hero rely on its eager + fetchpriority="high" <img> attribute (which
   is fast enough on desktop where LCP isn't as cellular-bound).
 {%- endcomment -%}
+{%- comment -%}
+  Body-side preload — fallback for non-homepage templates where this section
+  is embedded (e.g. brand collection pages). On the homepage the <head>
+  preload in layout/theme.liquid fires earlier and takes priority; this
+  preload is then a harmless duplicate (Chrome deduplicates by URL).
+
+  URL: image_url with format:'webp' to match the <source type="image/webp">
+  srcset Chrome picks. Previously used img_url:'x502' (JPEG), causing a
+  URL mismatch — Chrome preloaded JPEG but fetched WebP separately, wasting
+  the preload entirely and adding ~2,581ms to resource_load_delay.
+  type="image/webp" tells non-WebP browsers to skip this preload gracefully.
+{%- endcomment -%}
 {%- if section.blocks.size > 0 -%}
   {%- assign first_block = section.blocks.first -%}
   {%- if first_block.settings.slide_image_mobile -%}
-    <link rel="preload" as="image" media="(max-width: 1008px)" fetchpriority="high"
-          href="{{ first_block.settings.slide_image_mobile | img_url: 'x502' }}">
+    <link rel="preload" as="image" fetchpriority="high"
+          href="{{ first_block.settings.slide_image_mobile | image_url: width: 552, format: 'webp' }}"
+          type="image/webp">
   {%- endif -%}
 {%- endif -%}
 
