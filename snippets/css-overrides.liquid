@@ -275,4 +275,19 @@
   .product__slides .flickity-viewport {
     transition: none !important;
   }
+
+  /* CLS fix 2026-05-01 7fz — Reamaze chat widget label:
+     GA4 debug_target #reamaze-widget-label recorded 14 poor-CLS events in 7d
+     (7fz attribution query). The Reamaze widget label animates from off-screen
+     into its bottom-right corner position after JS loads. The animate-in shifts
+     any in-flow content it's adjacent to before settling as position:fixed.
+
+     Fix: force the label to position:fixed at all times so it never participates
+     in document flow. The widget still appears and functions — it just can't
+     shift content around it. contain:layout isolates any internal re-renders. */
+  #reamaze-widget-label,
+  [id^="reamaze-widget"] {
+    position: fixed !important;
+    contain: layout !important;
+  }
 </style>
