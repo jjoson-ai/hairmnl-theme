@@ -198,10 +198,9 @@
             <li><strong>Title copy:</strong> &ldquo;Complete the routine&rdquo; — keep, or change to something like &ldquo;Pairs well with this&rdquo; / &ldquo;Often bought together&rdquo;?</li>
             <li><strong>Live status:</strong> this slot is the only one already live on every PDP today. PR-2 cleans up the placeholder.</li>
           {%- when 'cart_above_checkout' -%}
-            <li><strong>Inline ADD button:</strong> v1 ships <em>without</em> the inline one-tap ADD — cards click through to the PDP instead. Adding inline ADD requires either a small JS init (~10 lines) or relocating the slot. Approve click-through for v1, OR approve the JS budget for v2 inline-ADD.</li>
+            <li><strong>Inline ADD button:</strong> v1 ships <em>without</em> inline one-tap ADD — cards click through to the PDP instead. The team flagged that without an ADD button the &ldquo;one tap&rdquo; promise is misleading, so the subtitle is dropped too. <strong>Decision:</strong> approve click-through for v1, OR approve a ~10-line JS init for v2 inline ADD.</li>
             <li><strong>Title copy:</strong> &ldquo;Frequently bought with these items&rdquo; — keep?</li>
-            <li><strong>Subtitle:</strong> &ldquo;Add to your cart in one tap.&rdquo; — drop this if v1 has no inline ADD (it would mislead).</li>
-            <li><strong>Layout:</strong> 2 stacked horizontal cards (desktop) / 1.1-card scroll rail (mobile). Approve.</li>
+            <li><strong>Layout:</strong> stacked horizontal cards (desktop) / horizontal scroll rail (mobile). Approve.</li>
           {%- when 'cart_drawer_below_items' -%}
             <li><strong>Drawer FBT:</strong> 2.25-card horizontal scroll rail, no inline ADD (drawer AJAX-rerender has known race conditions). Cards click through to the PDP. Approve.</li>
             <li><strong>Title copy:</strong> &ldquo;Add to your routine&rdquo; — fits HairMNL voice?</li>
@@ -227,15 +226,77 @@
   {%- endif -%}
 
   <header class="vrec-slot__header">
-    <h2 id="vrec-title-{{ placement }}" class="vrec-slot__title">{{ rec_title }}</h2>
+    {%- comment -%}
+      Use the theme's existing h2--body section-header__title classes so
+      the title font + size match every other section on HairMNL
+      (collection sliders, "Best Sellers", etc). The mockup's custom
+      Cormorant Garamond was visually inconsistent with the live site.
+    {%- endcomment -%}
+    <h2 id="vrec-title-{{ placement }}"
+        class="h2--body section-header__title vrec-slot__title">{{ rec_title }}</h2>
     {%- if rec_subtitle != '' -%}
       <p class="vrec-slot__subtitle">{{ rec_subtitle }}</p>
     {%- endif -%}
   </header>
 
-  <div class="vrec-slot__rail" role="list">
-    {{ rail_html }}
+  <div class="vrec-slot__nav-wrap">
+    <button type="button"
+            class="vrec-slot__nav vrec-slot__nav--prev"
+            aria-label="Scroll recommendations left"
+            disabled>&lsaquo;</button>
+    <div class="vrec-slot__rail" role="list">
+      {{ rail_html }}
+    </div>
+    <button type="button"
+            class="vrec-slot__nav vrec-slot__nav--next"
+            aria-label="Scroll recommendations right">&rsaquo;</button>
   </div>
 </section>
+
+{%- comment -%}
+  Inline init for the rail nav buttons. Scoped to this slot only via
+  document.currentScript.closest('.vrec-slot'); idempotent via the
+  data-vrec-init flag. ~25 lines net JS — needed because the team
+  flagged "no buttons to navigate the sliders" on the preview theme.
+
+  Uses scrollBy({behavior:'smooth'}) which scroll-snaps to the next
+  card. The disabled state on the buttons updates from a scroll
+  listener so the prev arrow disappears at the start and the next
+  arrow disappears at the end.
+{%- endcomment -%}
+<script>
+  (function () {
+    var script = document.currentScript;
+    var slot = script && script.previousElementSibling;
+    while (slot && !(slot.classList && slot.classList.contains('vrec-slot'))) {
+      slot = slot.previousElementSibling;
+    }
+    if (!slot || slot.dataset.vrecInit) return;
+    slot.dataset.vrecInit = '1';
+    var rail = slot.querySelector('.vrec-slot__rail');
+    var prev = slot.querySelector('.vrec-slot__nav--prev');
+    var next = slot.querySelector('.vrec-slot__nav--next');
+    if (!rail || !prev || !next) return;
+    function step() {
+      var card = rail.querySelector('.vrec-card');
+      return card ? card.offsetWidth + 20 : 200;
+    }
+    function syncDisabled() {
+      var atStart = rail.scrollLeft <= 1;
+      var atEnd = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 1;
+      prev.toggleAttribute('disabled', atStart);
+      next.toggleAttribute('disabled', atEnd);
+    }
+    prev.addEventListener('click', function () {
+      rail.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    next.addEventListener('click', function () {
+      rail.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+    rail.addEventListener('scroll', syncDisabled, { passive: true });
+    window.addEventListener('resize', syncDisabled);
+    syncDisabled();
+  })();
+</script>
 
 {%- endif -%}

@@ -43,19 +43,12 @@
 }
 .hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-slot__header { padding: 0 16px; }
 .hairmnl-theme .vrec-slot__title {
-  font-family: var(--vrec-font-heading);
-  font-size: 26px;
-  font-weight: 500;
+  /* Inherit theme's body-font heading style. The .h2--body class on the
+     <h2> handles font-family + responsive size to match every other
+     section header on HairMNL (collection sliders, "Best Sellers" etc).
+     Keep margin reset only — let theme size apply. */
   margin: 0 0 10px;
-  letter-spacing: 0.005em;
-}
-.hairmnl-theme .vrec-slot__title::after {
-  content: "";
-  display: block;
-  width: 32px;
-  height: 1px;
-  background: var(--vrec-rule);
-  margin: 12px auto 0;
+  letter-spacing: 0;
 }
 .hairmnl-theme .vrec-slot__subtitle {
   font-size: 13px;
@@ -77,20 +70,44 @@
 .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__title::after { display: none; }
 
 /* — Rail (horizontal scroll-snap) — */
+/*
+ * Mobile-first: 2.25 cards visible by default (42% per card). Tablet
+ * bumps to 3.3 (~30%); desktop to 4.5 (~22%). The peek of the off-screen
+ * card is the scroll affordance; nav buttons (added below) are the
+ * desktop click affordance.
+ *
+ * The verbatim mockup CSS used `minmax(0, 1fr)` which squished N cards
+ * into the available width with no overflow scroll — fixed here so the
+ * rail behaves like a real slider.
+ */
 .hairmnl-theme .vrec-slot__rail {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
-  gap: 20px;
+  grid-auto-columns: 42%; /* mobile default: 2.25 cards visible */
+  gap: 12px;
   scroll-snap-type: x mandatory;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
-  padding-bottom: 8px;
+  padding: 0 16px 8px;
 }
 .hairmnl-theme .vrec-slot__rail::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) {
+  .hairmnl-theme .vrec-slot__rail {
+    grid-auto-columns: 30%; /* tablet: ~3.3 cards visible */
+    gap: 16px;
+    padding: 0 0 8px;
+  }
+}
+@media (min-width: 1024px) {
+  .hairmnl-theme .vrec-slot__rail {
+    grid-auto-columns: 22%; /* desktop: ~4.5 cards visible (4 + peek) */
+    gap: 20px;
+  }
+}
 .hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-slot__rail {
-  grid-auto-columns: 42%; /* 2.25 cards visible */
+  /* mockup-only override (kept for parity with the design preview file) */
+  grid-auto-columns: 42%;
   gap: 12px;
   padding: 0 16px 8px;
 }
@@ -293,17 +310,10 @@
 }
 
 /*
- * Mobile viewport rules.
- *
- * The mockup's [data-viewport="mobile"] selectors above are used by the
- * preview HTML to render desktop + mobile side-by-side on the same page.
- * In production we never set that attribute — we rely on real viewport
- * width. These media queries mirror every [data-viewport="mobile"] rule
- * above so mobile users actually get the mobile layout.
- *
- * Breakpoint: 768px matches the existing HairMNL theme breakpoint
- * (see frame--mobile in the mockup; matches `@media (max-width: 768px)`
- * in theme.css).
+ * Mobile-only refinements.
+ * The rail breakpoints above already handle card width per breakpoint;
+ * these are the pure typography + cart-stacking exceptions that need
+ * media queries to fire (no [data-viewport] dependency).
  */
 @media (max-width: 767px) {
   .hairmnl-theme .vrec-slot {
@@ -312,14 +322,10 @@
   .hairmnl-theme .vrec-slot__header {
     padding: 0 16px;
   }
-  .hairmnl-theme .vrec-slot__rail {
-    grid-auto-columns: 42%; /* 2.25 cards visible */
-    gap: 12px;
-    padding: 0 16px 8px;
-  }
   .hairmnl-theme .vrec-card__title { font-size: 12px; }
   .hairmnl-theme .vrec-card__price { font-size: 13px; }
   .hairmnl-theme .vrec-card__vendor { font-size: 10px; }
+  /* Cart slot: stacked vertical desktop → horizontal scroll on mobile */
   .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
     grid-auto-flow: column;
     grid-auto-columns: 88%;
@@ -431,11 +437,28 @@
 .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__title::after { display: none; }
 .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__subtitle { display: none; }
 .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__rail {
-  grid-auto-columns: 42%;
+  /* Fixed pixel width so cards stay small regardless of drawer width.
+     Earlier 42% scaled with the drawer (which is wide on this theme)
+     and made card images dominate the line items. 140px keeps the rec
+     row visually subordinate to the cart contents above. */
+  grid-auto-columns: 140px;
   gap: 10px;
   padding: 0 0 8px;
 }
-/* Drawer compact card: ~140px image, 1-line clamped title, no inline ATC */
+/* All breakpoints in the drawer use the same 140px sizing */
+@media (min-width: 768px) {
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__rail {
+    grid-auto-columns: 140px;
+    gap: 10px;
+  }
+}
+@media (min-width: 1024px) {
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__rail {
+    grid-auto-columns: 140px;
+    gap: 10px;
+  }
+}
+/* Drawer compact card: small image, 1-line clamped title, no inline ATC */
 .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-card__image {
   aspect-ratio: 1 / 1;
   margin-bottom: 8px;
@@ -450,3 +473,54 @@
 .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-card__price {
   font-size: 12px;
 }
+
+/*
+ * Slider nav buttons (prev / next).
+ *
+ * The team flagged that the rail had no visible affordance on desktop:
+ * scroll-snap works but no buttons hint at scrollability. These buttons
+ * are paired with a tiny inline init script in the snippet (~20 lines)
+ * that wires click → scrollBy and updates disabled state at edges.
+ *
+ * Hidden on mobile (touch-swipe is the primary affordance there) and
+ * on the cart-page slot (which is stacked vertical on desktop).
+ */
+.hairmnl-theme .vrec-slot__nav-wrap {
+  position: relative;
+}
+.hairmnl-theme .vrec-slot__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid var(--vrec-rule);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--vrec-text);
+  z-index: 3;
+  transition: opacity 150ms ease, background 150ms ease;
+}
+.hairmnl-theme .vrec-slot__nav:hover { background: #fafafa; }
+.hairmnl-theme .vrec-slot__nav:active { background: #f0f0f0; }
+.hairmnl-theme .vrec-slot__nav[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+.hairmnl-theme .vrec-slot__nav--prev { left: -8px; }
+.hairmnl-theme .vrec-slot__nav--next { right: -8px; }
+
+/* Hide nav on touch viewports — swipe is the primary affordance */
+@media (max-width: 1023px) {
+  .hairmnl-theme .vrec-slot__nav { display: none; }
+}
+/* Cart page is stacked vertical on desktop — no rail to navigate */
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__nav { display: none; }
+/* Drawer is too narrow for absolute-positioned nav — let touch handle it */
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav { display: none; }

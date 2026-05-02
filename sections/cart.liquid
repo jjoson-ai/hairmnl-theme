@@ -67,13 +67,17 @@
             </div>
         </div>
 
-        {%- comment -%} Phase 1b-γ.8 Slot 2: Cart page FBT — above checkout footer (PR-3). {%- endcomment -%}
+        {%- comment -%}
+          Phase 1b-γ.8 Slot 2: Cart page FBT — above checkout footer (PR-3).
+          v1 ships without inline ADD-to-cart (existing AJAX hook would
+          need a small init script — see team-review notes panel on the
+          slot). The "one tap" subtitle is dropped to match v1 reality.
+        {%- endcomment -%}
         {%- if cart.item_count > 0 -%}
           {% render 'vertex-recommendations',
               placement: 'cart_above_checkout',
               cart: cart,
-              title: 'Frequently bought with these items',
-              subtitle: 'Add to your cart in one tap.'
+              title: 'Frequently bought with these items'
           %}
         {%- endif -%}
 
