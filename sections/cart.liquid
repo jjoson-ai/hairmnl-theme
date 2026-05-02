@@ -67,6 +67,16 @@
             </div>
         </div>
 
+        {%- comment -%} Phase 1b-γ.8 Slot 2: Cart page FBT — above checkout footer (PR-3). {%- endcomment -%}
+        {%- if cart.item_count > 0 -%}
+          {% render 'vertex-recommendations',
+              placement: 'cart_above_checkout',
+              cart: cart,
+              title: 'Frequently bought with these items',
+              subtitle: 'Add to your cart in one tap.'
+          %}
+        {%- endif -%}
+
         <div class="template__cart__footer" data-cart-bottom>
 
           <div class="cart__footer__notes">
