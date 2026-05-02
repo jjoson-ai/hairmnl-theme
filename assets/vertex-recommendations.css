@@ -330,6 +330,88 @@
   }
 }
 
+/*
+ * Team-review notes panel.
+ * Renders only on draft / unpublished / demo themes (theme.role != 'main').
+ * Goal: every decision the team needs to approve appears INLINE next to
+ * the slot it affects, so reviewing the draft theme replaces a memo.
+ * NEVER renders on live (the snippet's gate is a hard server-side check).
+ */
+.hairmnl-theme .vrec-slot--preview {
+  outline: 2px dashed #c0392b;
+  outline-offset: 8px;
+}
+.hairmnl-theme .vrec-slot__notes {
+  background: #fff8f1;
+  border: 1px solid #f3d6a3;
+  border-radius: 6px;
+  padding: 14px 16px 12px;
+  margin: 0 auto 24px;
+  max-width: 720px;
+  font-family: var(--vrec-font-body);
+  font-size: 13px;
+  line-height: 1.55;
+  color: #1a1a1a;
+}
+.hairmnl-theme .vrec-slot__notes-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f3d6a3;
+}
+.hairmnl-theme .vrec-slot__notes-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c0392b;
+}
+.hairmnl-theme .vrec-slot__notes-source {
+  font-size: 11px;
+  color: #6b6b6b;
+}
+.hairmnl-theme .vrec-slot__notes-source code {
+  font-family: ui-monospace, monospace;
+  background: #fff;
+  padding: 1px 6px;
+  border-radius: 3px;
+  border: 1px solid #ececec;
+}
+.hairmnl-theme .vrec-slot__notes-list {
+  margin: 0;
+  padding: 0 0 0 18px;
+  list-style: disc;
+}
+.hairmnl-theme .vrec-slot__notes-list li {
+  margin: 0 0 6px;
+}
+.hairmnl-theme .vrec-slot__notes-list li:last-child {
+  margin-bottom: 0;
+}
+.hairmnl-theme .vrec-slot__notes-list strong {
+  font-weight: 600;
+}
+.hairmnl-theme .vrec-slot__notes-list code {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  background: #fff;
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid #ececec;
+}
+.hairmnl-theme .vrec-slot__notes-footer {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #f3d6a3;
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+}
+
 /* — Cart drawer slot (Addendum A / v1.1) — */
 /* Tighter padding; single-row 2.25-card rail at all breakpoints; no subtitle. */
 .hairmnl-theme .vrec-slot--cart_drawer_below_items {

@@ -71,37 +71,26 @@
       </div>
     {%- endif -%}
 
-    {%- if placement == 'cart_above_checkout' -%}
-      {%- comment -%} Cart compact variant: price + inline ATC in a bottom row. {%- endcomment -%}
-      <div class="vrec-card__bottom">
-        <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
-          <span class="vrec-card__price-current">{{ product.price | money }}</span>
-          {%- if on_sale -%}
-            <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
-          {%- endif -%}
-        </p>
-        {%- unless sold_out -%}
-          {%- assign first_variant = product.first_available_variant -%}
-          {%- if first_variant -%}
-            <a href="{{ product.url }}"
-               class="vrec-card__cta btn btn--primary btn--small uppercase"
-               data-add-to-cart-variant="{{ first_variant.id }}"
-               aria-label="{{ 'products.general.upsell_add_to_cart' | t }}: {{ product.title | strip_html | escape }}">
-              {{ 'products.general.upsell_add_to_cart' | t | default: 'Add' }}
-            </a>
-          {%- endif -%}
-        {%- endunless -%}
-        {%- if sold_out -%}
-          <span class="upsell__out-of-stock">{{ 'products.product.sold_out' | t }}</span>
-        {%- endif -%}
-      </div>
-    {%- else -%}
-      <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
-        <span class="vrec-card__price-current">{{ product.price | money }}</span>
-        {%- if on_sale -%}
-          <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
-        {%- endif -%}
-      </p>
-    {%- endif -%}
+    {%- comment -%}
+      v1: all placements (including cart_above_checkout) click through to PDP.
+
+      The design guide §2.2 specified an inline ATC on the cart compact card,
+      but the existing `data-add-to-cart` AJAX path is auto-initialized only
+      inside sections that register the `$s.onLoad` handler (theme.js:2604),
+      which sections/cart.liquid does NOT — so our wrapper would render but
+      never be hooked up. Wiring inline ATC requires either a tiny init
+      <script> (violates the "zero new JS" budget) or moving the rec slot
+      inside a sub-section that registers the handler. Both are v2 work.
+
+      Team decision required: ship click-through-only for v1, OR allow a
+      ~10-line init script to enable inline ATC. See §Team Notes overlay
+      in the preview.
+    {%- endcomment -%}
+    <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
+      <span class="vrec-card__price-current">{{ product.price | money }}</span>
+      {%- if on_sale -%}
+        <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
+      {%- endif -%}
+    </p>
   </div>
 </a>
