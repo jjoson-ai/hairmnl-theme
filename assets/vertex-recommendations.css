@@ -1,0 +1,332 @@
+/*
+ * Vertex AI Recommendations — production stylesheet.
+ * Source of truth: vertex-placement-guide-mockups.html § "PRODUCTION CSS".
+ * Copied verbatim. Do NOT hand-edit — regenerate from the mockup instead.
+ *
+ * Registered in layout/theme.liquid via stylesheet_tag.
+ * Scoped to .hairmnl-theme (added to <body> in theme.liquid).
+ */
+
+.hairmnl-theme {
+  --vrec-bg: #ffffff;
+  --vrec-card-bg: #ffffff;
+  --vrec-text: #1a1a1a;
+  --vrec-muted: #6b6b6b;
+  --vrec-mutedest: #999999;
+  --vrec-rule: #ececec;
+  --vrec-image-bg: #f0f0f0;
+  --vrec-sale: #c0392b;
+  --vrec-cta-bg: #1a1a1a;
+  --vrec-cta-fg: #ffffff;
+  --vrec-cta-bg-hover: #000000;
+  --vrec-font-heading: "Cormorant Garamond", "Times New Roman", serif;
+  --vrec-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--vrec-font-body);
+  color: var(--vrec-text);
+}
+
+/* — Slot container — */
+.hairmnl-theme .vrec-slot {
+  background: var(--vrec-bg);
+  padding: 64px 24px 48px;
+  position: relative;
+}
+.hairmnl-theme .vrec-slot--mobile,
+.hairmnl-theme .vrec-slot[data-viewport="mobile"] {
+  padding: 40px 0 32px;
+}
+
+/* — Header — */
+.hairmnl-theme .vrec-slot__header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-slot__header { padding: 0 16px; }
+.hairmnl-theme .vrec-slot__title {
+  font-family: var(--vrec-font-heading);
+  font-size: 26px;
+  font-weight: 500;
+  margin: 0 0 10px;
+  letter-spacing: 0.005em;
+}
+.hairmnl-theme .vrec-slot__title::after {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--vrec-rule);
+  margin: 12px auto 0;
+}
+.hairmnl-theme .vrec-slot__subtitle {
+  font-size: 13px;
+  color: var(--vrec-muted);
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.5;
+}
+/* Cart placement — left-aligned, smaller */
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__header {
+  text-align: left;
+  margin-bottom: 16px;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__title {
+  font-family: var(--vrec-font-body);
+  font-size: 18px;
+  font-weight: 500;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__title::after { display: none; }
+
+/* — Rail (horizontal scroll-snap) — */
+.hairmnl-theme .vrec-slot__rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 20px;
+  scroll-snap-type: x mandatory;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+.hairmnl-theme .vrec-slot__rail::-webkit-scrollbar { display: none; }
+.hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-slot__rail {
+  grid-auto-columns: 42%; /* 2.25 cards visible */
+  gap: 12px;
+  padding: 0 16px 8px;
+}
+
+/* — Card — */
+.hairmnl-theme .vrec-card {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  background: var(--vrec-card-bg);
+  transition: transform 200ms ease-out;
+}
+.hairmnl-theme .vrec-card:hover .vrec-card__image img { transform: scale(1.02); }
+.hairmnl-theme .vrec-card:active { opacity: 0.85; }
+.hairmnl-theme .vrec-card__image {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--vrec-image-bg);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.hairmnl-theme .vrec-card__image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 300ms ease-out;
+}
+.hairmnl-theme .vrec-card__badge {
+  position: absolute;
+  top: 8px; left: 8px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 3px 7px;
+  text-transform: uppercase;
+}
+.hairmnl-theme .vrec-card__badge--sale { background: var(--vrec-sale); }
+.hairmnl-theme .vrec-card__badge--sold { background: #6b6b6b; }
+.hairmnl-theme .vrec-card--sold-out .vrec-card__image img { opacity: 0.6; }
+.hairmnl-theme .vrec-card__info { padding: 0 4px; }
+.hairmnl-theme .vrec-card__vendor {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--vrec-mutedest);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+.hairmnl-theme .vrec-card__title {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.35;
+  margin: 0 0 6px;
+  text-wrap: pretty;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hairmnl-theme .vrec-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--vrec-muted);
+  margin-bottom: 6px;
+}
+.hairmnl-theme .vrec-card__stars { color: #d4a017; letter-spacing: 1px; }
+.hairmnl-theme .vrec-card__price {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.hairmnl-theme .vrec-card__price-current { color: var(--vrec-text); }
+.hairmnl-theme .vrec-card__price--sale .vrec-card__price-current { color: var(--vrec-sale); }
+.hairmnl-theme .vrec-card__price-compare {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--vrec-mutedest);
+  text-decoration: line-through;
+}
+.hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-card__title { font-size: 12px; }
+.hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-card__price { font-size: 13px; }
+.hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-card__vendor { font-size: 10px; }
+
+/* — Cart compact card — */
+.hairmnl-theme .vrec-card--compact {
+  flex-direction: row;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--vrec-rule);
+  border-radius: 4px;
+  align-items: stretch;
+  margin-bottom: 12px;
+  scroll-snap-align: start;
+}
+.hairmnl-theme .vrec-card--compact .vrec-card__image {
+  width: 88px; height: 88px;
+  flex: 0 0 88px;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 0;
+  border-radius: 2px;
+}
+.hairmnl-theme .vrec-card--compact .vrec-card__info {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 0;
+  min-width: 0;
+}
+.hairmnl-theme .vrec-card--compact .vrec-card__title {
+  -webkit-line-clamp: 2;
+}
+.hairmnl-theme .vrec-card--compact .vrec-card__bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.hairmnl-theme .vrec-card--compact .vrec-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--vrec-cta-bg);
+  color: var(--vrec-cta-fg);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 9px 14px;
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.hairmnl-theme .vrec-card--compact .vrec-card__cta:hover { background: var(--vrec-cta-bg-hover); }
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
+  grid-auto-flow: row;
+  grid-auto-columns: auto;
+  gap: 0;
+  padding: 0;
+  overflow: visible;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout[data-viewport="mobile"] .vrec-slot__rail {
+  grid-auto-flow: column;
+  grid-auto-columns: 88%;
+  gap: 12px;
+  padding: 0 16px 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+/* — Skeleton — */
+.hairmnl-theme .vrec-card--skeleton {
+  pointer-events: none;
+}
+.hairmnl-theme .vrec-card--skeleton .vrec-card__image {
+  background: var(--vrec-image-bg);
+}
+.hairmnl-theme .vrec-card--skeleton .vrec-card__sk-line {
+  background: var(--vrec-image-bg);
+  height: 12px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+}
+.hairmnl-theme .vrec-card--skeleton .vrec-card__sk-line--vendor { width: 40%; height: 9px; }
+.hairmnl-theme .vrec-card--skeleton .vrec-card__sk-line--title { width: 90%; }
+.hairmnl-theme .vrec-card--skeleton .vrec-card__sk-line--title-2 { width: 60%; }
+.hairmnl-theme .vrec-card--skeleton .vrec-card__sk-line--price { width: 35%; height: 14px; margin-top: 8px; }
+
+/* — Preview chrome — */
+.hairmnl-theme .vrec-slot__preview-chrome {
+  position: absolute;
+  top: 12px; right: 16px;
+  display: flex; align-items: center; gap: 8px;
+  z-index: 2;
+  pointer-events: none;
+}
+.hairmnl-theme .vrec-slot__preview-chrome .vertex-rec-slot__badge {
+  background: #c0392b;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 7px;
+  border-radius: 2px;
+}
+.hairmnl-theme .vrec-slot__preview-chrome .vertex-rec-slot__placement-label {
+  font-size: 10px;
+  color: #999;
+  font-family: ui-monospace, monospace;
+}
+
+/* — Cart drawer slot (Addendum A / v1.1) — */
+/* Tighter padding; single-row 2.25-card rail at all breakpoints; no subtitle. */
+.hairmnl-theme .vrec-slot--cart_drawer_below_items {
+  padding: 20px 12px 16px;
+  background: transparent;
+}
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__header {
+  text-align: left;
+  margin-bottom: 8px;
+}
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__title {
+  font-family: var(--vrec-font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__title::after { display: none; }
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__subtitle { display: none; }
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__rail {
+  grid-auto-columns: 42%;
+  gap: 10px;
+  padding: 0 0 8px;
+}
+/* Drawer compact card: ~140px image, 1-line clamped title, no inline ATC */
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-card__image {
+  aspect-ratio: 1 / 1;
+  margin-bottom: 8px;
+}
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-card__vendor {
+  font-size: 10px;
+}
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-card__title {
+  font-size: 12px;
+  -webkit-line-clamp: 1;
+}
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-card__price {
+  font-size: 12px;
+}

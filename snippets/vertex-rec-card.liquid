@@ -1,0 +1,107 @@
+{%- comment -%}
+  Vertex AI Recommendations — shared card partial.
+  Used by every rec slot (PDP FBT, cart, home RFY, PDP similar, drawer).
+
+  Arguments:
+    product   {Product}  required — the product to render
+    placement {String}   optional — passed through for slot-specific variants
+
+  Renders a <a class="vrec-card"> element. Caller wraps in a
+  <div class="vrec-slot__rail" role="list"> with role="listitem" on each card.
+
+  Image: WebP <picture> + JPEG <img> fallback, explicit width/height,
+  loading="lazy". Mirrors product-grid-item.liquid lines 168-200.
+
+  Data attributes: data-vertex-product-id on each card for analytics hooks.
+{%- endcomment -%}
+
+{%- liquid
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+  assign sold_out = true
+  if product.available
+    assign sold_out = false
+  endif
+  assign img = product.featured_media.preview_image
+-%}
+
+<a class="vrec-card{% if placement == 'cart_above_checkout' %} vrec-card--compact{% endif %}{% if sold_out %} vrec-card--sold-out{% endif %}"
+   href="{{ product.url }}"
+   role="listitem"
+   data-vertex-product-id="{{ product.id }}">
+  <div class="vrec-card__image">
+    {%- if img -%}
+      <picture>
+        <source type="image/webp"
+                srcset="{% if img.width > 360 %}{{ img | image_url: width: 360, format: 'webp' }} 360w,{% endif %}
+                        {% if img.width > 540 %}{{ img | image_url: width: 540, format: 'webp' }} 540w,{% endif %}
+                        {% if img.width > 720 %}{{ img | image_url: width: 720, format: 'webp' }} 720w{% endif %}"
+                sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 42vw">
+        <img
+          src="{{ img | image_url: width: 540 }}"
+          srcset="{% if img.width > 360 %}{{ img | image_url: width: 360 }} 360w,{% endif %}
+                  {% if img.width > 540 %}{{ img | image_url: width: 540 }} 540w,{% endif %}
+                  {% if img.width > 720 %}{{ img | image_url: width: 720 }} 720w{% endif %}"
+          sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 42vw"
+          width="{{ img.width }}"
+          height="{{ img.height }}"
+          loading="lazy"
+          alt="{{ img.alt | default: product.title | strip_html | escape }}">
+      </picture>
+    {%- else -%}
+      <div class="vrec-card__image-placeholder" aria-hidden="true"></div>
+    {%- endif -%}
+    {%- if sold_out -%}
+      <span class="vrec-card__badge vrec-card__badge--sold">{{ 'products.product.sold_out' | t }}</span>
+    {%- elsif on_sale -%}
+      <span class="vrec-card__badge vrec-card__badge--sale">{{ 'products.product.sale' | t }}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="vrec-card__info">
+    {%- if product.vendor != blank -%}
+      <p class="vrec-card__vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+    <p class="vrec-card__title">{{ product.title | strip_html }}</p>
+    {%- if product.metafields.reviews.rating.value != blank -%}
+      <div class="vrec-card__rating">
+        {%- render 'product-rating', product: product, show_rating_count: true -%}
+      </div>
+    {%- endif -%}
+
+    {%- if placement == 'cart_above_checkout' -%}
+      {%- comment -%} Cart compact variant: price + inline ATC in a bottom row. {%- endcomment -%}
+      <div class="vrec-card__bottom">
+        <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
+          <span class="vrec-card__price-current">{{ product.price | money }}</span>
+          {%- if on_sale -%}
+            <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+        </p>
+        {%- unless sold_out -%}
+          {%- assign first_variant = product.first_available_variant -%}
+          {%- if first_variant -%}
+            <a href="{{ product.url }}"
+               class="vrec-card__cta btn btn--primary btn--small uppercase"
+               data-add-to-cart-variant="{{ first_variant.id }}"
+               aria-label="{{ 'products.general.upsell_add_to_cart' | t }}: {{ product.title | strip_html | escape }}">
+              {{ 'products.general.upsell_add_to_cart' | t | default: 'Add' }}
+            </a>
+          {%- endif -%}
+        {%- endunless -%}
+        {%- if sold_out -%}
+          <span class="upsell__out-of-stock">{{ 'products.product.sold_out' | t }}</span>
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
+        <span class="vrec-card__price-current">{{ product.price | money }}</span>
+        {%- if on_sale -%}
+          <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+  </div>
+</a>

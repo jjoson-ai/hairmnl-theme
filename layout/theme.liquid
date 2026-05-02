@@ -728,9 +728,11 @@
     {%- endcomment -%}
   
 
+    {{ 'vertex-recommendations.css' | asset_url | stylesheet_tag }}
+
 </head>
 
-  <body id="{{ page_title | handle }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {{ settings.default_background }}{% if customer %} customer-logged-in{% endif %}">
+  <body id="{{ page_title | handle }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {{ settings.default_background }}{% if customer %} customer-logged-in{% endif %} hairmnl-theme">
   
     <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}
     </a>
