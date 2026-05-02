@@ -53,15 +53,18 @@
 .hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-slot__header { padding: 0 16px; }
 .hairmnl-theme .vrec-slot__title {
   /*
-   * Inherit font-family from <body> (HairMNL's BasisGrotesquePro per
-   * settings_data.json). PDP-scoped overrides like
-   * product_use_custom_heading_font: SelfModern try to bleed onto our
-   * <h2> — using `inherit` with !important pins us to the body font
-   * regardless of any PDP-side cascade.
+   * Match HairMNL's section-header convention: the homepage "Best
+   * Sellers" header (and every other collection-slider section title
+   * across the site) uses the theme's HEADING font — SelfModern, the
+   * elegant serif configured via custom_heading_font in settings_data.
+   * `var(---font-stack-heading)` is the theme's variable that resolves
+   * to SelfModern with the proper fallback chain.
    *
-   * Size + weight + transform are pinned for cross-placement consistency.
+   * Size kept modest (18/22px) so the rec rail doesn't compete with the
+   * actual product title for visual weight on PDPs. The default h2 size
+   * (~30-39px) was too dominant per earlier team feedback.
    */
-  font-family: inherit !important;
+  font-family: var(---font-stack-heading) !important;
   font-size: 18px !important;
   font-weight: 500 !important;
   text-transform: none !important;
