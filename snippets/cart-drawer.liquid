@@ -158,6 +158,21 @@
           </div>
         </div>
       </div>
+
+      {%- comment -%}
+        Phase 1b-γ.8 Slot 2b: Vertex FBT in cart drawer — below line items (PR-4).
+        Recs scroll with items; never collide with the fixed .drawer__bottom.
+        No inline ATC: drawer AJAX re-render has known race conditions (see
+        lines 116–129 above). Cards link → PDP instead (open question 7).
+      {%- endcomment -%}
+      {%- if cart.item_count > 0 -%}
+        {% render 'vertex-recommendations',
+            placement: 'cart_drawer_below_items',
+            cart: cart,
+            title: 'Add to your routine'
+        %}
+      {%- endif -%}
+
     </div>
     <div class="drawer__bottom cart--hidden" data-cart-bottom data-accordion-group>
       {%- if settings.cart_notes_enable -%}
