@@ -55,7 +55,7 @@
   {%- endif -%}
   {%- if article.image -%}
   "image": [
-    {{ article.image | image_url: '1200x' | prepend: 'https:' | json }}
+    {{ article.image | image_url: width: 1200 | prepend: 'https:' | json }}
   ],
   {%- endif -%}
   {%- if howto.supplies != blank and howto.supplies.size > 0 -%}

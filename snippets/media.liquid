@@ -20,18 +20,18 @@
   {% case media.media_type %}
     {% when 'image' %}
       <div {% if media.aspect_ratio < 1 %}style="width:{{ media.aspect_ratio | times: 100 }}%; margin: 0 auto;"{% endif %}>
-        <div class="lazy-image mobile-zoom-wrapper" style="padding-top:{{ 1 | divided_by: media.aspect_ratio | times: 100 }}%; background-image:  url('{{ media | image_url: '1x1' }}');">
+        <div class="lazy-image mobile-zoom-wrapper" style="padding-top:{{ 1 | divided_by: media.aspect_ratio | times: 100 }}%; background-image:  url('{{ media | image_url: width: 1, height: 1 }}');">
           <img data-product-image class="srcset"
             data-image-id="{{ media.id }}"
             alt="{{ media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}"
-            srcset="{%- if media.preview_image.width >= 550 -%}{{ media.preview_image | image_url: '550x' }} 550w,{%- endif -%}
-                    {%- if media.preview_image.width >= 1100 -%}{{ media.preview_image | image_url: '1100x' }} 1100w,{%- endif -%}
-                    {%- if media.preview_image.width >= 1680 -%}{{ media.preview_image | image_url: '1680x' }} 1680w,{%- endif -%}
-                    {%- if media.preview_image.width >= 2048 -%}{{ media.preview_image | image_url: '2048x' }} 2048w,{%- endif -%}
-                    {%- if media.preview_image.width >= 4096 -%}{{ media.preview_image | image_url: '4096x' }} 4096w{%- endif -%}"
+            srcset="{%- if media.preview_image.width >= 550 -%}{{ media.preview_image | image_url: width: 550 }} 550w,{%- endif -%}
+                    {%- if media.preview_image.width >= 1100 -%}{{ media.preview_image | image_url: width: 1100 }} 1100w,{%- endif -%}
+                    {%- if media.preview_image.width >= 1680 -%}{{ media.preview_image | image_url: width: 1680 }} 1680w,{%- endif -%}
+                    {%- if media.preview_image.width >= 2048 -%}{{ media.preview_image | image_url: width: 2048 }} 2048w,{%- endif -%}
+                    {%- if media.preview_image.width >= 4096 -%}{{ media.preview_image | image_url: width: 4096 }} 4096w{%- endif -%}"
             sizes="(min-width: 768px), 50vw,
                    100vw"
-            src="{{ media.preview_image | image_url: '1100x' }}"
+            src="{{ media.preview_image | image_url: width: 1100 }}"
             {%- comment -%}
               First product media is the LCP element on PDPs — load it
               eagerly with high fetch priority so the browser starts

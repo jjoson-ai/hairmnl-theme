@@ -7,8 +7,8 @@
                 	<div class="swiper-slide">
                       <a href="{{block.settings.slide_image_url}}">
                         <picture>
-                          <source media="(min-width: 1009px)" srcset="{{ block.settings.slide_image_desktop | image_url: 'x788' }}">
-                          <img class="banner-slide-img" src="{{ block.settings.slide_image_mobile | image_url: 'x502' }}" loading="lazy" alt="Banner Slide 1">
+                          <source media="(min-width: 1009px)" srcset="{{ block.settings.slide_image_desktop | image_url: height: 788 }}">
+                          <img class="banner-slide-img" src="{{ block.settings.slide_image_mobile | image_url: height: 502 }}" loading="lazy" alt="Banner Slide 1">
                         </picture>
                       </a>
                     </div>

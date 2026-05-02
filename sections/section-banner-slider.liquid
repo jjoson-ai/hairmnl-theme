@@ -91,16 +91,16 @@
               <picture>
                 {% if _img_d %}<source type="image/webp" media="(min-width: 1009px)" srcset="{{ _img_d | image_url: width: 1400, format: 'webp' }}">{% endif %}
                 {% if _img_m %}<source type="image/webp" srcset="{{ _img_m | image_url: width: 552, format: 'webp' }}">{% endif %}
-                <source media="(min-width: 1009px)" srcset="{{ _img_d | image_url: 'x788' }}">
-                <img class="banner-slide-img" src="{{ _img_m | image_url: 'x502' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
+                <source media="(min-width: 1009px)" srcset="{{ _img_d | image_url: height: 788 }}">
+                <img class="banner-slide-img" src="{{ _img_m | image_url: height: 502 }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
               </picture>
             </a>
           {%- else -%}
             <picture>
               {% if _img_d %}<source type="image/webp" media="(min-width: 1009px)" srcset="{{ _img_d | image_url: width: 1400, format: 'webp' }}">{% endif %}
               {% if _img_m %}<source type="image/webp" srcset="{{ _img_m | image_url: width: 552, format: 'webp' }}">{% endif %}
-              <source media="(min-width: 1009px)" srcset="{{ _img_d | image_url: 'x788' }}">
-              <img class="banner-slide-img" src="{{ _img_m | image_url: 'x502' }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
+              <source media="(min-width: 1009px)" srcset="{{ _img_d | image_url: height: 788 }}">
+              <img class="banner-slide-img" src="{{ _img_m | image_url: height: 502 }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
             </picture>
           {% endif %}
 

@@ -49,7 +49,7 @@
     <a class="header__logo__link" 
         href="{{ routes.root_url }}">
       {% if section.settings.logo != blank %}
-        {%- assign img_url = section.settings.logo | image_url: '440x' -%}
+        {%- assign img_url = section.settings.logo | image_url: width: 440 -%}
         <img src="{{ img_url }}"
           class="logo__img logo__img--color"
           width="{{ section.settings.logo.width }}"
@@ -75,7 +75,7 @@
         </div>
       {% endif %}
       {% if has_transparent_logo %}
-        {%- assign img_url = section.settings.transparent_logo | image_url: '440x' -%}
+        {%- assign img_url = section.settings.transparent_logo | image_url: width: 440 -%}
         <img src="{{ img_url }}"
               class="logo__img logo__img--transparent"
               width="{{ section.settings.transparent_logo.width }}"
@@ -85,7 +85,7 @@
 
       {% if section.settings.logo != blank %}
         <noscript>
-          <img class="logo__img" style="opacity: 1;" src="{{ section.settings.logo | image_url: '360x' }}" alt="{{ section.settings.logo.alt | strip_html | escape }}"/>
+          <img class="logo__img" style="opacity: 1;" src="{{ section.settings.logo | image_url: width: 360 }}" alt="{{ section.settings.logo.alt | strip_html | escape }}"/>
         </noscript>
       {% endif %}
     </a>

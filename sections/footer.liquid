@@ -7,7 +7,7 @@
   {% if section.settings.footer_image %}
     <div class="footer-logo-wrapper">
       <a href="{{ routes.root_url }}" class="footer-logo" data-footer-logo>
-        <img src="{{ section.settings.footer_image | image_url: 'x200' }}" 
+        <img src="{{ section.settings.footer_image | image_url: height: 200 }}" 
           width="{{ section.settings.footer_image.width }}"
           height="{{ section.settings.footer_image.height }}"
           alt="{{ section.settings.footer_image.alt | default: shop.name | strip_html | escape }}"/>

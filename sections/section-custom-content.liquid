@@ -335,7 +335,7 @@
             <div class="video-autoplay-wrapper">
               <video
                 data-video-autoplay
-                {% if block.settings.image != blank %}poster="{{ block.settings.image.src | image_url: '1x1' }}"{% endif %}
+                {% if block.settings.image != blank %}poster="{{ block.settings.image.src | image_url: width: 1, height: 1 }}"{% endif %}
                 style="object-position: {{ block.settings.object_position | replace: '-', ' ' }};"
                 playsinline
                 autoplay

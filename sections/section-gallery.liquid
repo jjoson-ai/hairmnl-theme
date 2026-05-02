@@ -64,7 +64,7 @@
                 {% endif %}
               </div>
               <noscript>
-                <img src="{{ block.settings.image | image_url: '540x' }}"
+                <img src="{{ block.settings.image | image_url: width: 540 }}"
                      alt="{{ block.settings.image.alt | strip_html | escape }}"/>
               </noscript>
             {% else %}

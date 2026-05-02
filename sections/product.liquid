@@ -102,7 +102,7 @@
 
         <noscript>
           {% for image in product.media %}
-            <img src="{{ image.preview_image | image_url: '900x' }}" alt="{{ image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
+            <img src="{{ image.preview_image | image_url: width: 900 }}" alt="{{ image.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
           {% endfor %}
         </noscript>
         {% if product.media.size > 1 %}
@@ -111,7 +111,7 @@
               <div class="media__thumb" 
                 data-slideshow-thumbnail 
                 data-media-select="{{ media.id }}">
-                <img alt="{{ media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}" src="{{ media.preview_image.src | image_url: '200x200', crop: 'center' }}">
+                <img alt="{{ media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}" src="{{ media.preview_image.src | image_url: width: 200, height: 200, crop: 'center' }}">
                 {%- if media.media_type == 'model' -%}
                   {% render 'icon-media-model' %}
                 {%- elsif media.media_type contains 'video' -%}

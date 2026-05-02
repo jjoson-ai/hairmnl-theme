@@ -10,7 +10,7 @@
 (function(et){
     var collections = {{product.type | json}};
     var o={}, empi={{ product.id | json }},
-    piu = {{ product.featured_image | image_url: '620x620' | json }};
+    piu = {{ product.featured_image | image_url: width: 620, height: 620 | json }};
     {% assign currentVariant = product.variants[0] %}
     {% for variant in product.variants %}
 {% unless variant.metafields.secomapp.freegifts %}
@@ -24,7 +24,7 @@
       du:"{{ shop.url }}{{ product.url }}",
       dt:{{ product.title | json }},
       ct: collections,
-      iu: {% if variant.image %} {{ variant | image_url: '620x620' | json }} {% else %} piu {% endif %},
+      iu: {% if variant.image %} {{ variant | image_url: width: 620, height: 620 | json }} {% else %} piu {% endif %},
       stk: {{variant.inventory_quantity}},
       pr: {{ variant.price }}/100,
       {% if variant.compare_at_price %} op: {{variant.compare_at_price}}/100, {% endif %}
@@ -39,7 +39,7 @@
       empi:empi, epi:{{ currentVariant.id }},
       dt	:{{ product.title | json }},du:"{{ shop.url }}{{ product.url }}",
       ct 	:collections,pr:{{ currentVariant.price }}/100,stk:{{ currentVariant.inventory_quantity }},
-      iu	:{% if currentVariant.image %} {{ currentVariant | image_url: '620x620' | json }} {% else %} piu {% endif %},variants:[{ {{currentVariant.title | json}} : {{currentVariant.id | json}} }]
+      iu	:{% if currentVariant.image %} {{ currentVariant | image_url: width: 620, height: 620 | json }} {% else %} piu {% endif %},variants:[{ {{currentVariant.title | json}} : {{currentVariant.id | json}} }]
       {% if currentVariant.compare_at_price %} ,op:{{currentVariant.compare_at_price}}/100 {% endif %}
     };
     SwymViewProducts[{{product.handle | json}}] = SwymViewProducts[{{product.id | json}}] = product_data;

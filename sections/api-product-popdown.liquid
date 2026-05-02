@@ -34,7 +34,7 @@
           {%- endif -%}
           <img loading="lazy" 
               alt="{{ media.alt | default: product_variant.product.title | strip_html | escape }}" 
-              src="{{ media.preview_image.src | image_url: '180x180', crop: 'center' }}"
+              src="{{ media.preview_image.src | image_url: width: 180, height: 180, crop: 'center' }}"
               width="90"
               height="90">
         </div>

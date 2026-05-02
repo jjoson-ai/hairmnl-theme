@@ -48,8 +48,8 @@
       {%- if section.settings.image -%}
         {%- assign img_object = section.settings.image -%}
         <img class="background-size-cover"
-             src="{{ img_object | image_url: '720x' }}"
-             srcset="{% if img_object.width > 360 %}{{ img_object | image_url: '360x' }} 360w,{% endif %} {% if img_object.width > 540 %}{{ img_object | image_url: '540x' }} 540w,{% endif %} {% if img_object.width > 720 %}{{ img_object | image_url: '720x' }} 720w,{% endif %} {% if img_object.width > 1080 %}{{ img_object | image_url: '1080x' }} 1080w,{% endif %}"
+             src="{{ img_object | image_url: width: 720 }}"
+             srcset="{% if img_object.width > 360 %}{{ img_object | image_url: width: 360 }} 360w,{% endif %} {% if img_object.width > 540 %}{{ img_object | image_url: width: 540 }} 540w,{% endif %} {% if img_object.width > 720 %}{{ img_object | image_url: width: 720 }} 720w,{% endif %} {% if img_object.width > 1080 %}{{ img_object | image_url: width: 1080 }} 1080w,{% endif %}"
              sizes="50vw"
              width="{{ img_object.width }}"
              height="{{ img_object.height }}"
@@ -67,7 +67,7 @@
       {%- endif -%}
     </div>
     <noscript>
-      <div class="background-size-cover" style="background-image: url('{{ img_object | image_url: '540x' }}');"></div>
+      <div class="background-size-cover" style="background-image: url('{{ img_object | image_url: width: 540 }}');"></div>
     </noscript>
     {% if display_map %}
       <div class="map-section__container {{ section.settings.height }}" data-map-container>

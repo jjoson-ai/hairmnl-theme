@@ -155,7 +155,7 @@
         "position": {{ forloop.index }},
         "url": {{ shop.url | append: product.url | json }},
         "name": {{ product.title | json }}{% if product.featured_image %},
-        "image": {{ product.featured_image | image_url: '600x' | prepend: 'https:' | json }}{% endif %}
+        "image": {{ product.featured_image | image_url: width: 600 | prepend: 'https:' | json }}{% endif %}
       }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
     ]

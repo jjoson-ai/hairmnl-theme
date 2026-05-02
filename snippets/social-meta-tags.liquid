@@ -21,7 +21,7 @@
       {%- endfor -%}
     {%- endcapture -%}
     {%- capture twitter_image_tag -%}
-      <meta name="twitter:image" content="https:{{ product.featured_media.preview_image | image_url: '1200x1200' }}">
+      <meta name="twitter:image" content="https:{{ product.featured_media.preview_image | image_url: width: 1200, height: 1200 }}">
     {%- endcapture -%}
   {%- endif -%}
 
@@ -38,7 +38,7 @@
       <meta property="og:image:width" content="{{ article_og_image.width }}">
     {%- endcapture -%}
     {%- capture twitter_image_tag -%}
-      <meta name="twitter:image" content="https:{{ article_og_image | image_url: '1200x' }}">
+      <meta name="twitter:image" content="https:{{ article_og_image | image_url: width: 1200 }}">
     {%- endcapture -%}
   {%- endif -%}
 
