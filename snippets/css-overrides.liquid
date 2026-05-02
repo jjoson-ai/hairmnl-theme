@@ -172,18 +172,16 @@
     contain: layout;
   }
 
-  /* CLS fix 2026-05-01 T2 — Cart page: #freegifts-main-page-container is an
-     empty div always present in sections/cart.liquid (line 35). The Gifted
-     Free Gifts app populates it with gift-tile HTML after JS loads. When
-     active offers are configured, this div grows 0px → ~80px and shifts all
-     cart items down. GA4 RUM: 73 poor-CLS events in 7d, 100% poor rating.
-
-     Fix: reserve 80px (one row of gift tiles at their rendered height) so
-     the injection doesn't change document flow. contain:layout isolates
-     any internal reflows from cascading to siblings. The 80px blank gap
-     when no gifts are active is an acceptable trade-off vs. constant CLS. */
+  /* CLS fix 2026-05-01 T2 / 2026-05-02 1pi update — Cart page:
+     #freegifts-main-page-container. Initial T2 fix reserved 80px (one gift
+     row). Post-fix GA4 still shows 141 poor-CLS events/7d on the outer cart
+     wrapper (div.wrapper.pt2.pb4). When active offers show 2 gift rows, the
+     injected height is ~160px — overflowing the 80px reservation and shifting
+     all cart items below. Increased to 160px (2 gift rows: each row ~70px +
+     ~10px header/spacing). The 160px blank gap when no gifts are active is
+     the accepted trade-off. contain:layout unchanged. */
   #freegifts-main-page-container {
-    min-height: 80px;
+    min-height: 160px;
     contain: layout;
   }
 
@@ -289,5 +287,38 @@
   [id^="reamaze-widget"] {
     position: fixed !important;
     contain: layout !important;
+  }
+
+  /* CLS fix 2026-05-02 fan — PDP product price column:
+     GA4 debug_target div.grid__item.medium-up--one-half logged 251 poor-CLS
+     events/7d across all PDPs (Wella all-shades worst at 44 events, 52% poor).
+     Root cause: bss-b2b-product-vat.liquid inlines a <style> that hides
+     .shopify-section .product__price with display:none before BSS B2B JS
+     reveals the correct price. This collapses .product__price__wrap from its
+     rendered height (~44px for price text + padding) to 0, then BSS JS sets
+     display:block → the price area re-expands → shifts variant selector, ATC
+     button, and all content below.
+
+     Fix: reserve 44px on .product__price__wrap so the price row never
+     collapses to 0. contain:layout prevents internal price changes (sale
+     badges, strikethrough compare-at price) from cascading to siblings.
+     The 44px reservation is visible as a blank strip ONLY for users who load
+     the page before BSS B2B JS fires (sub-300ms window). Acceptable vs.
+     251 poor-CLS events/7d. */
+  .product__price__wrap {
+    min-height: 44px;
+    contain: layout;
+  }
+
+  /* CLS fix 2026-05-02 1pi-b — Cart page recently-viewed section:
+     sections/section-recent-products.liquid renders with style="display:none"
+     on the products container. JS populates from localStorage then removes
+     display:none. Section grows from 0 → ~360px (6 product cards × ~60px
+     row height) pushing site footer down. Footer is below-fold so CLS impact
+     is low, but still recorded in GA4. Reserve 300px (minimum 4 products ×
+     ~75px each) to prevent the grow-from-zero shift. */
+  .section-recent.recent__container {
+    min-height: 300px;
+    contain: layout;
   }
 </style>
