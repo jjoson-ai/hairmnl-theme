@@ -199,6 +199,19 @@
 
 {% render 'product-info', product: product %}
 
+{%- comment -%} Phase 1b-γ.8 Slot 4: PDP below description — Similar items (PR-5). {%- endcomment -%}
+{%- comment -%}
+  Model is currently TRAINING. The empty-state gate in vertex-recommendations.liquid
+  suppresses this section until product.metafields.vertex.similar is populated.
+  Open question 3: confirm Pipeline 6.1.3 native "You May Also Like" section is NOT
+  already rendering here before enabling on live.
+{%- endcomment -%}
+{% render 'vertex-recommendations',
+    placement: 'pdp_below_description',
+    product: product,
+    title: 'You may also like'
+%}
+
 {% if section.settings.zoom_enable %}
   {% render 'zoom-pswp' %}
 {% endif %}
