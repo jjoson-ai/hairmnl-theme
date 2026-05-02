@@ -183,7 +183,15 @@
             {% comment %} {% when 'upsell_list' %}
               {% render 'upsell-product-list' upsell_product_list: block.settings.product_list, show_form: true %} {% endcomment %}
           {% endcase %}
-        {% endfor %}     
+        {% endfor %}
+
+        {%- comment -%} Phase 1b-γ.3: FBT (Frequently Bought Together) recommendation slot, wired 2026-05-02 {%- endcomment -%}
+        {% render 'vertex-recommendations',
+            placement: 'pdp_below_atc',
+            product: product,
+            title: 'Complete the routine',
+            rationale: 'Hair-care routines work best as sets. Shampoo buyers convert on conditioner ~38% of the time when suggested.'
+        %}
 
       </div>
     </div>
