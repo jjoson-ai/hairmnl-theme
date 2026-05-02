@@ -2,17 +2,17 @@
   Vertex AI Recommendations — shared card partial.
   Used by every rec slot (PDP FBT, cart, home RFY, PDP similar, drawer).
 
+  Two layouts:
+  - Default vertical card: clickable <a> wrapping image + content. Used
+    on PDP, home, drawer placements. Card click → PDP.
+  - Cart compact card (placement == 'cart_above_checkout'): horizontal
+    image-left + content-right with an inline ADD button. Built around
+    a {% form 'product' %} so submit → /cart/add via native HTML form
+    (page reloads, Shopify default). No AJAX, no new JS.
+
   Arguments:
     product   {Product}  required — the product to render
     placement {String}   optional — passed through for slot-specific variants
-
-  Renders a <a class="vrec-card"> element. Caller wraps in a
-  <div class="vrec-slot__rail" role="list"> with role="listitem" on each card.
-
-  Image: WebP <picture> + JPEG <img> fallback, explicit width/height,
-  loading="lazy". Mirrors product-grid-item.liquid lines 168-200.
-
-  Data attributes: data-vertex-product-id on each card for analytics hooks.
 {%- endcomment -%}
 
 {%- liquid
@@ -25,12 +25,11 @@
     assign sold_out = false
   endif
   assign img = product.featured_media.preview_image
+  assign first_variant = product.first_available_variant
 -%}
 
-<a class="vrec-card{% if placement == 'cart_above_checkout' %} vrec-card--compact{% endif %}{% if sold_out %} vrec-card--sold-out{% endif %}"
-   href="{{ product.url }}"
-   role="listitem"
-   data-vertex-product-id="{{ product.id }}">
+{%- comment -%} Reusable image markup. {%- endcomment -%}
+{%- capture card_image -%}
   <div class="vrec-card__image">
     {%- if img -%}
       <picture>
@@ -59,38 +58,77 @@
       <span class="vrec-card__badge vrec-card__badge--sale">{{ 'products.product.sale' | t }}</span>
     {%- endif -%}
   </div>
+{%- endcapture -%}
 
-  <div class="vrec-card__info">
-    {%- if product.vendor != blank -%}
-      <p class="vrec-card__vendor">{{ product.vendor }}</p>
-    {%- endif -%}
-    <p class="vrec-card__title">{{ product.title | strip_html }}</p>
-    {%- if product.metafields.reviews.rating.value != blank -%}
-      <div class="vrec-card__rating">
-        {%- render 'product-rating', product: product, show_rating_count: true -%}
-      </div>
-    {%- endif -%}
-
-    {%- comment -%}
-      v1: all placements (including cart_above_checkout) click through to PDP.
-
-      The design guide §2.2 specified an inline ATC on the cart compact card,
-      but the existing `data-add-to-cart` AJAX path is auto-initialized only
-      inside sections that register the `$s.onLoad` handler (theme.js:2604),
-      which sections/cart.liquid does NOT — so our wrapper would render but
-      never be hooked up. Wiring inline ATC requires either a tiny init
-      <script> (violates the "zero new JS" budget) or moving the rec slot
-      inside a sub-section that registers the handler. Both are v2 work.
-
-      Team decision required: ship click-through-only for v1, OR allow a
-      ~10-line init script to enable inline ATC. See §Team Notes overlay
-      in the preview.
-    {%- endcomment -%}
-    <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
-      <span class="vrec-card__price-current">{{ product.price | money }}</span>
-      {%- if on_sale -%}
-        <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
+{%- if placement == 'cart_above_checkout' -%}
+  {%- comment -%}
+    Cart compact card — horizontal layout with inline ADD-to-cart button.
+    Wrapped in {% form 'product' %} so the button does a native submit to
+    /cart/add. After submit, Shopify redirects back to /cart with the new
+    line item appended. Page reload — but matches the existing site
+    pattern where {% form 'product', show_form: true %} is used on the
+    product page upsell.
+  {%- endcomment -%}
+  <div class="vrec-card vrec-card--compact{% if sold_out %} vrec-card--sold-out{% endif %}"
+       data-vertex-product-id="{{ product.id }}">
+    <a class="vrec-card__image-link" href="{{ product.url }}" aria-label="{{ product.title | strip_html | escape }}">
+      {{ card_image }}
+    </a>
+    <div class="vrec-card__info">
+      {%- if product.vendor != blank -%}
+        <p class="vrec-card__vendor">
+          <a href="{{ product.url }}" class="vrec-card__vendor-link">{{ product.vendor }}</a>
+        </p>
       {%- endif -%}
-    </p>
+      <p class="vrec-card__title">
+        <a href="{{ product.url }}" class="vrec-card__title-link">{{ product.title | strip_html }}</a>
+      </p>
+      <div class="vrec-card__bottom">
+        <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
+          <span class="vrec-card__price-current">{{ product.price | money }}</span>
+          {%- if on_sale -%}
+            <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+        </p>
+        {%- if first_variant and first_variant.available -%}
+          {%- form 'product', product, class: 'vrec-card__cta-form' -%}
+            <input type="hidden" name="id" value="{{ first_variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit"
+                    name="add"
+                    class="vrec-card__cta uppercase">
+              {{ 'products.general.upsell_add_to_cart' | t | default: 'Add to cart' }}
+            </button>
+          {%- endform -%}
+        {%- else -%}
+          <span class="vrec-card__sold-out-label">{{ 'products.product.sold_out' | t }}</span>
+        {%- endif -%}
+      </div>
+    </div>
   </div>
-</a>
+{%- else -%}
+  {%- comment -%} Default vertical card — whole card is the click target. {%- endcomment -%}
+  <a class="vrec-card{% if sold_out %} vrec-card--sold-out{% endif %}"
+     href="{{ product.url }}"
+     role="listitem"
+     data-vertex-product-id="{{ product.id }}">
+    {{ card_image }}
+    <div class="vrec-card__info">
+      {%- if product.vendor != blank -%}
+        <p class="vrec-card__vendor">{{ product.vendor }}</p>
+      {%- endif -%}
+      <p class="vrec-card__title">{{ product.title | strip_html }}</p>
+      {%- if product.metafields.reviews.rating.value != blank -%}
+        <div class="vrec-card__rating">
+          {%- render 'product-rating', product: product, show_rating_count: true -%}
+        </div>
+      {%- endif -%}
+      <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
+        <span class="vrec-card__price-current">{{ product.price | money }}</span>
+        {%- if on_sale -%}
+          <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+      </p>
+    </div>
+  </a>
+{%- endif -%}

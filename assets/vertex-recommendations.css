@@ -43,12 +43,26 @@
 }
 .hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-slot__header { padding: 0 16px; }
 .hairmnl-theme .vrec-slot__title {
-  /* Inherit theme's body-font heading style. The .h2--body class on the
-     <h2> handles font-family + responsive size to match every other
-     section header on HairMNL (collection sliders, "Best Sellers" etc).
-     Keep margin reset only — let theme size apply. */
-  margin: 0 0 10px;
-  letter-spacing: 0;
+  /*
+   * Explicit override — the team flagged that inheriting from .h2--body
+   * still rendered too large/serif on the PDP (likely PDP-scoped overrides
+   * from product_use_custom_heading_font: SelfModern). Pin to body-font +
+   * fixed sizing for visual consistency with the cart slot's title which
+   * the team approved. Keep size modest so the recommendation rail
+   * doesn't compete with the actual product title for visual weight.
+   */
+  font-family: var(--vrec-font-body) !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  line-height: 1.3 !important;
+  margin: 0 0 10px !important;
+}
+@media (min-width: 1024px) {
+  .hairmnl-theme .vrec-slot__title {
+    font-size: 22px !important;
+  }
 }
 .hairmnl-theme .vrec-slot__subtitle {
   font-size: 13px;
@@ -57,17 +71,14 @@
   font-weight: 400;
   line-height: 1.5;
 }
-/* Cart placement — left-aligned, smaller */
+/* Cart placement — left-aligned (size already set globally) */
 .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__header {
   text-align: left;
   margin-bottom: 16px;
 }
 .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__title {
-  font-family: var(--vrec-font-body);
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 18px !important;
 }
-.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__title::after { display: none; }
 
 /* — Rail (horizontal scroll-snap) — */
 /*
@@ -201,7 +212,13 @@
 .hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-card__vendor { font-size: 10px; }
 
 /* — Cart compact card — */
+/*
+ * Horizontal layout with inline ADD button. Card is a <div> (not <a>)
+ * because <button> can't be nested inside <a>. Image + vendor + title
+ * are individual <a> links to the PDP.
+ */
 .hairmnl-theme .vrec-card--compact {
+  display: flex;
   flex-direction: row;
   gap: 14px;
   padding: 14px;
@@ -210,10 +227,15 @@
   align-items: stretch;
   margin-bottom: 12px;
   scroll-snap-align: start;
+  background: var(--vrec-card-bg);
+}
+.hairmnl-theme .vrec-card--compact .vrec-card__image-link {
+  flex: 0 0 88px;
+  text-decoration: none;
+  display: block;
 }
 .hairmnl-theme .vrec-card--compact .vrec-card__image {
   width: 88px; height: 88px;
-  flex: 0 0 88px;
   aspect-ratio: 1 / 1;
   margin-bottom: 0;
   border-radius: 2px;
@@ -225,6 +247,15 @@
   padding: 0;
   min-width: 0;
 }
+.hairmnl-theme .vrec-card--compact .vrec-card__vendor-link,
+.hairmnl-theme .vrec-card--compact .vrec-card__title-link {
+  color: inherit;
+  text-decoration: none;
+}
+.hairmnl-theme .vrec-card--compact .vrec-card__vendor-link:hover,
+.hairmnl-theme .vrec-card--compact .vrec-card__title-link:hover {
+  text-decoration: underline;
+}
 .hairmnl-theme .vrec-card--compact .vrec-card__title {
   -webkit-line-clamp: 2;
 }
@@ -234,6 +265,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-wrap: wrap;
+}
+.hairmnl-theme .vrec-card--compact .vrec-card__cta-form {
+  margin: 0;
+  display: inline-flex;
 }
 .hairmnl-theme .vrec-card--compact .vrec-card__cta {
   display: inline-flex;
@@ -245,13 +281,22 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 9px 14px;
+  padding: 10px 16px;
+  min-height: 44px; /* touch target */
   border: 0;
   cursor: pointer;
   white-space: nowrap;
   text-decoration: none;
+  font-family: inherit;
 }
 .hairmnl-theme .vrec-card--compact .vrec-card__cta:hover { background: var(--vrec-cta-bg-hover); }
+.hairmnl-theme .vrec-card--compact .vrec-card__cta:active { transform: translateY(1px); }
+.hairmnl-theme .vrec-card--compact .vrec-card__sold-out-label {
+  font-size: 11px;
+  color: var(--vrec-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
 .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
   grid-auto-flow: row;
   grid-auto-columns: auto;
@@ -516,11 +561,26 @@
 .hairmnl-theme .vrec-slot__nav--prev { left: -8px; }
 .hairmnl-theme .vrec-slot__nav--next { right: -8px; }
 
-/* Hide nav on touch viewports — swipe is the primary affordance */
+/* Hide nav on touch viewports — swipe is the primary affordance.
+   Exception: the drawer placement (handled below) keeps its nav at all
+   viewports because team requested it. */
 @media (max-width: 1023px) {
   .hairmnl-theme .vrec-slot__nav { display: none; }
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav {
+    display: flex;
+  }
 }
 /* Cart page is stacked vertical on desktop — no rail to navigate */
 .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__nav { display: none; }
-/* Drawer is too narrow for absolute-positioned nav — let touch handle it */
-.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav { display: none; }
+/*
+ * Drawer slider nav — show in the drawer too (team requested).
+ * Override the mobile-hide rule above + shrink to fit narrow drawer width.
+ */
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+}
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav--prev { left: 4px; }
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav--next { right: 4px; }

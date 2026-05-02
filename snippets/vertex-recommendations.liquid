@@ -198,9 +198,10 @@
             <li><strong>Title copy:</strong> &ldquo;Complete the routine&rdquo; — keep, or change to something like &ldquo;Pairs well with this&rdquo; / &ldquo;Often bought together&rdquo;?</li>
             <li><strong>Live status:</strong> this slot is the only one already live on every PDP today. PR-2 cleans up the placeholder.</li>
           {%- when 'cart_above_checkout' -%}
-            <li><strong>Inline ADD button:</strong> v1 ships <em>without</em> inline one-tap ADD — cards click through to the PDP instead. The team flagged that without an ADD button the &ldquo;one tap&rdquo; promise is misleading, so the subtitle is dropped too. <strong>Decision:</strong> approve click-through for v1, OR approve a ~10-line JS init for v2 inline ADD.</li>
+            <li><strong>Inline ADD button:</strong> wired via native form submit — clicking ADD posts to <code>/cart/add</code> and the page reloads with the new line item appended (Shopify default). No new JS. <strong>Decision:</strong> approve native-submit for v1, OR approve ~30 lines of inline AJAX so the page doesn't reload.</li>
             <li><strong>Title copy:</strong> &ldquo;Frequently bought with these items&rdquo; — keep?</li>
-            <li><strong>Layout:</strong> stacked horizontal cards (desktop) / horizontal scroll rail (mobile). Approve.</li>
+            <li><strong>Subtitle:</strong> &ldquo;Add to your cart in one tap.&rdquo; — restored. Keep?</li>
+            <li><strong>Layout:</strong> horizontal compact cards (image + content + ADD button). Approve.</li>
           {%- when 'cart_drawer_below_items' -%}
             <li><strong>Drawer FBT:</strong> 2.25-card horizontal scroll rail, no inline ADD (drawer AJAX-rerender has known race conditions). Cards click through to the PDP. Approve.</li>
             <li><strong>Title copy:</strong> &ldquo;Add to your routine&rdquo; — fits HairMNL voice?</li>
