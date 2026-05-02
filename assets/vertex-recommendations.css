@@ -19,10 +19,19 @@
   --vrec-cta-bg: #1a1a1a;
   --vrec-cta-fg: #ffffff;
   --vrec-cta-bg-hover: #000000;
-  --vrec-font-heading: "Cormorant Garamond", "Times New Roman", serif;
-  --vrec-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  font-family: var(--vrec-font-body);
-  color: var(--vrec-text);
+  /*
+   * Note: we intentionally do NOT set font-family on .hairmnl-theme.
+   * The class is on <body>, so leaving font-family unset means our slots
+   * inherit HairMNL's actual configured body font (BasisGrotesquePro per
+   * settings_data.json:custom_base_font). The earlier hardcoded Inter
+   * caused all rec-slot text to render in the wrong typeface — flagged
+   * by the team in three rounds of review.
+   *
+   * --vrec-font-body remains as a fallback for components that need an
+   * explicit stack (e.g. compact card CTAs), but most rules use
+   * font-family: inherit instead.
+   */
+  --vrec-font-body: inherit;
 }
 
 /* — Slot container — */
@@ -44,14 +53,15 @@
 .hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-slot__header { padding: 0 16px; }
 .hairmnl-theme .vrec-slot__title {
   /*
-   * Explicit override — the team flagged that inheriting from .h2--body
-   * still rendered too large/serif on the PDP (likely PDP-scoped overrides
-   * from product_use_custom_heading_font: SelfModern). Pin to body-font +
-   * fixed sizing for visual consistency with the cart slot's title which
-   * the team approved. Keep size modest so the recommendation rail
-   * doesn't compete with the actual product title for visual weight.
+   * Inherit font-family from <body> (HairMNL's BasisGrotesquePro per
+   * settings_data.json). PDP-scoped overrides like
+   * product_use_custom_heading_font: SelfModern try to bleed onto our
+   * <h2> — using `inherit` with !important pins us to the body font
+   * regardless of any PDP-side cascade.
+   *
+   * Size + weight + transform are pinned for cross-placement consistency.
    */
-  font-family: var(--vrec-font-body) !important;
+  font-family: inherit !important;
   font-size: 18px !important;
   font-weight: 500 !important;
   text-transform: none !important;
