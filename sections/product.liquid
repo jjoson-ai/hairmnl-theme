@@ -185,12 +185,11 @@
           {% endcase %}
         {% endfor %}
 
-        {%- comment -%} Phase 1b-γ.3: FBT (Frequently Bought Together) recommendation slot, wired 2026-05-02 {%- endcomment -%}
+        {%- comment -%} Phase 1b-γ.8 Slot 1: PDP below ATC — FBT "Complete the routine" (PR-2). {%- endcomment -%}
         {% render 'vertex-recommendations',
             placement: 'pdp_below_atc',
             product: product,
-            title: 'Complete the routine',
-            rationale: 'Hair-care routines work best as sets. Shampoo buyers convert on conditioner ~38% of the time when suggested.'
+            title: 'Complete the routine'
         %}
 
       </div>
