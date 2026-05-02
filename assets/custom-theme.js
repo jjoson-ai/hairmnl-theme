@@ -14351,10 +14351,19 @@
 
   // scripts/collection-slider.js
   // ua7 2026-04-29: Lazy-init below-fold sliders via IntersectionObserver.
-  // Only the first .swiper.collection (or any already in-viewport) inits eagerly
-  // at DOMContentLoaded. The rest defer until 200px before they scroll into view,
-  // spreading the Swiper layout-measurement work across the session instead of
-  // front-loading it all at DCL — reduces TBT and INP for homepage.
+  // Only sliders already in viewport at DCL init eagerly. The rest defer
+  // until 200px before they scroll into view, spreading the Swiper
+  // layout-measurement work across the session instead of front-loading
+  // it all at DCL — reduces TBT and INP for homepage.
+  //
+  // bjf 2026-05-02: dropped the previous `index === 0` forced-eager
+  // fallback. On mobile homepage the first .swiper.collection lives
+  // BELOW the banner-slider + richtext + menu-buttons + search (often
+  // y > 1500px on a 320-414px viewport), so initializing it at DCL was
+  // front-loading ~30-80ms of Swiper layout-measurement + touch listener
+  // binding for content the user hadn't reached. The IO below picks it
+  // up well before scroll arrives. Banner-slider keeps its own eager
+  // init in the separate banner-slider.js block above.
   (function(document2) {
     document2.addEventListener("DOMContentLoaded", function() {
       const collectionSliderEls = document2.querySelectorAll(".swiper.collection");
@@ -14401,12 +14410,12 @@
             }
           });
         };
-        collectionSliderEls.forEach(function(el, index) {
-          // Eagerly init: first slider always, or any already visible at DCL time
-          if (index === 0 || el.getBoundingClientRect().top < window.innerHeight) {
+        collectionSliderEls.forEach(function(el) {
+          // Pure viewport gating: eager init only if rect is already
+          // within the viewport at DCL time.
+          if (el.getBoundingClientRect().top < window.innerHeight) {
             initCollectionSlider(el);
           } else {
-            // Below-fold: defer init until 200px before viewport entry
             var observer = new IntersectionObserver(function(entries) {
               entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
