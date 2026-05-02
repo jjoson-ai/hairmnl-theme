@@ -74,8 +74,12 @@
       if customer and customer.metafields.vertex.recommended_for_you
         assign rec_products = customer.metafields.vertex.recommended_for_you.value
         assign rec_source   = 'metafield'
-      elsif shop.metafields.vertex.trending
-        assign rec_products = shop.metafields.vertex.trending.value
+      elsif shop.metafields.vertex.homepage_trending
+        comment
+          Precompute writes shop.metafields.vertex.homepage_trending (NOT
+          .trending) — confirmed against precompute/main.py:206-214.
+        endcomment
+        assign rec_products = shop.metafields.vertex.homepage_trending.value
         assign rec_source   = 'trending'
       endif
 
@@ -145,8 +149,30 @@
   </header>
 
   <div class="vrec-slot__rail" role="list">
-    {%- for rp in rec_products limit: 8 -%}
-      {%- render 'vertex-rec-card', product: rp, placement: placement -%}
+    {%- comment -%}
+      Two iteration shapes:
+      1. Sample-fallback path → rec_products is a list of Shopify Product
+         objects (from `collections | sample: 4`). entry.url is set.
+      2. Metafield path → rec_products is a parsed JSON array of dicts
+         {id, handle, vendor, score, final_score, margin_pct} written by
+         precompute (type: "json", not list.product_reference). entry.url
+         is nil; we resolve via all_products[entry.handle].
+
+      Detection: products have entry.url; precompute dicts do not.
+
+      Edge case: a deleted/unpublished handle from precompute returns nil
+      from all_products and is silently skipped. Render counts may be
+      lower than rec_products.size; acceptable for v1.
+    {%- endcomment -%}
+    {%- for entry in rec_products limit: 8 -%}
+      {%- if entry.url -%}
+        {%- render 'vertex-rec-card', product: entry, placement: placement -%}
+      {%- else -%}
+        {%- assign resolved = all_products[entry.handle] -%}
+        {%- if resolved and resolved.handle != blank -%}
+          {%- render 'vertex-rec-card', product: resolved, placement: placement -%}
+        {%- endif -%}
+      {%- endif -%}
     {%- endfor -%}
   </div>
 </section>

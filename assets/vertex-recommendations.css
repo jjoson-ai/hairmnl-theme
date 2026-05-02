@@ -292,6 +292,44 @@
   font-family: ui-monospace, monospace;
 }
 
+/*
+ * Mobile viewport rules.
+ *
+ * The mockup's [data-viewport="mobile"] selectors above are used by the
+ * preview HTML to render desktop + mobile side-by-side on the same page.
+ * In production we never set that attribute — we rely on real viewport
+ * width. These media queries mirror every [data-viewport="mobile"] rule
+ * above so mobile users actually get the mobile layout.
+ *
+ * Breakpoint: 768px matches the existing HairMNL theme breakpoint
+ * (see frame--mobile in the mockup; matches `@media (max-width: 768px)`
+ * in theme.css).
+ */
+@media (max-width: 767px) {
+  .hairmnl-theme .vrec-slot {
+    padding: 40px 0 32px;
+  }
+  .hairmnl-theme .vrec-slot__header {
+    padding: 0 16px;
+  }
+  .hairmnl-theme .vrec-slot__rail {
+    grid-auto-columns: 42%; /* 2.25 cards visible */
+    gap: 12px;
+    padding: 0 16px 8px;
+  }
+  .hairmnl-theme .vrec-card__title { font-size: 12px; }
+  .hairmnl-theme .vrec-card__price { font-size: 13px; }
+  .hairmnl-theme .vrec-card__vendor { font-size: 10px; }
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
+    grid-auto-flow: column;
+    grid-auto-columns: 88%;
+    gap: 12px;
+    padding: 0 16px 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+}
+
 /* — Cart drawer slot (Addendum A / v1.1) — */
 /* Tighter padding; single-row 2.25-card rail at all breakpoints; no subtitle. */
 .hairmnl-theme .vrec-slot--cart_drawer_below_items {
