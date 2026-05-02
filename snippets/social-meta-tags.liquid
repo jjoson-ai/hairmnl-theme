@@ -14,14 +14,14 @@
     {%- capture og_image_tags -%}
       {%- for media in product.media limit: 3 -%}
         {% assign image = media.preview_image %}
-        <meta property="og:image" content="https:{{ image | img_url: 'master' }}">
-        <meta property="og:image:secure_url" content="https:{{ image | img_url: 'master' }}">
+        <meta property="og:image" content="https:{{ image | image_url: 'master' }}">
+        <meta property="og:image:secure_url" content="https:{{ image | image_url: 'master' }}">
         <meta property="og:image:height" content="{{ image.height }}">
         <meta property="og:image:width" content="{{ image.width }}">
       {%- endfor -%}
     {%- endcapture -%}
     {%- capture twitter_image_tag -%}
-      <meta name="twitter:image" content="https:{{ product.featured_media.preview_image | img_url: '1200x1200' }}">
+      <meta name="twitter:image" content="https:{{ product.featured_media.preview_image | image_url: '1200x1200' }}">
     {%- endcapture -%}
   {%- endif -%}
 
@@ -32,13 +32,13 @@
   {%- assign article_og_image = article.image | default: page_image -%}
   {%- if article_og_image -%}
     {%- capture og_image_tags -%}
-      <meta property="og:image" content="https:{{ article_og_image | img_url: 'master' }}">
-      <meta property="og:image:secure_url" content="https:{{ article_og_image | img_url: 'master' }}">
+      <meta property="og:image" content="https:{{ article_og_image | image_url: 'master' }}">
+      <meta property="og:image:secure_url" content="https:{{ article_og_image | image_url: 'master' }}">
       <meta property="og:image:height" content="{{ article_og_image.height }}">
       <meta property="og:image:width" content="{{ article_og_image.width }}">
     {%- endcapture -%}
     {%- capture twitter_image_tag -%}
-      <meta name="twitter:image" content="https:{{ article_og_image | img_url: '1200x' }}">
+      <meta name="twitter:image" content="https:{{ article_og_image | image_url: '1200x' }}">
     {%- endcapture -%}
   {%- endif -%}
 

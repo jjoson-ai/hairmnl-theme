@@ -115,7 +115,7 @@
           {% elsif supportedFilterNP == 'url_param_escape' %}
             {% assign replaceWith = replaceWith | url_param_escape %}
           {% elsif supportedFilterNP == 'hex_to_rgba' %}
-            {% assign replaceWith = replaceWith | hex_to_rgba %}
+            {% assign replaceWith = replaceWith | color_to_rgb %}
           {% elsif supportedFilterNP == 'json' %}
             {% assign replaceWith = replaceWith | json %}
           {% elsif supportedFilterNP == 'weight_with_unit' %}

@@ -8,14 +8,14 @@
     {% if section.settings.banner_url != blank %}
       <a href="{{section.settings.banner_url}}">
         <picture>
-          <source media="(min-width: 1009px)" srcset="{{ section.settings.banner_desktop | img_url: 'x788' }}">
-          <img class="static-banner-img" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="{{ banner_alt }}">
+          <source media="(min-width: 1009px)" srcset="{{ section.settings.banner_desktop | image_url: 'x788' }}">
+          <img class="static-banner-img" src="{{ section.settings.banner_mobile | image_url: 'x502' }}" alt="{{ banner_alt }}">
         </picture>
       </a>
     {% else %}
       <picture>
-        <source media="(min-width: 1009px)" srcset="{{ section.settings.banner_desktop | img_url: 'x788' }}">
-        <img class="static-banner-img" src="{{ section.settings.banner_mobile | img_url: 'x502' }}" alt="{{ banner_alt }}">
+        <source media="(min-width: 1009px)" srcset="{{ section.settings.banner_desktop | image_url: 'x788' }}">
+        <img class="static-banner-img" src="{{ section.settings.banner_mobile | image_url: 'x502' }}" alt="{{ banner_alt }}">
       </picture>
     {% endif %}
   </div>

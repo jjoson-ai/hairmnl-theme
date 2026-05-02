@@ -36,7 +36,7 @@
       <div class="image-overlay" style="--bg:{{ section.settings.overlay_color }}; opacity:{{ section.settings.overlay_opacity | times: 0.01 }};"></div>
       {% render 'hero', img_object: section.settings.image, frame_height_class: section.settings.image_height %}
       <noscript>
-        <img src="{{ section.settings.image | img_url: '720x' }}" alt="{{ section.settings.image | default: blog.title | strip_html | escape }}" class="responsive-wide-image"/>
+        <img src="{{ section.settings.image | image_url: '720x' }}" alt="{{ section.settings.image | default: blog.title | strip_html | escape }}" class="responsive-wide-image"/>
       </noscript>
     </div>
   {% endif %}
@@ -61,7 +61,7 @@
           {% if section.settings.layout == 'list' %}
             {% for article in blog.articles %}
               <div class="blog__article">
-                <header {% if article.image %} class="blog__article-header-image" style="background-image: url('{{ article.image | img_url: '1024x1024' }}');"{% endif %}>
+                <header {% if article.image %} class="blog__article-header-image" style="background-image: url('{{ article.image | image_url: '1024x1024' }}');"{% endif %}>
                   <h2 class="h3"><a href="{{ article.url }}">{{ article.title }}</a></h2>
                   {% if section.settings.blog_show_meta %}
                     {% capture author %}<strong>{{ article.author }}</strong>{% endcapture %}

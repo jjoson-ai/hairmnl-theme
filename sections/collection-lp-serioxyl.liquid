@@ -1,0 +1,28 @@
+{% comment %}
+  Stub section for the legacy collection.lp-serioxyl template.
+  The original section was renamed to collection-lp-serioxyladvanced.
+  This stub renders a basic collection grid as a safe fallback.
+  If a collection is actively using the lp-serioxyl template, assign it
+  to use lp-serioxyladvanced instead (Shopify Admin → Collections → [collection] → Theme template).
+{% endcomment %}
+
+<div class="wrapper">
+  {% if collection.products.size == 0 %}
+    <p class="text-center">{{ 'collections.general.no_matches' | t }}</p>
+  {% else %}
+    <div class="grid">
+      {% for product in collection.products %}
+        <div class="grid__item medium-up--one-quarter small--one-half">
+          {% render 'product-grid-item', product: product %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Sérioxyl LP (legacy stub)",
+  "settings": []
+}
+{% endschema %}

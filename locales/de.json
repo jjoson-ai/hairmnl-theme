@@ -53,7 +53,8 @@
         "one": "{{ count }} produkt pro zeile anzeigen",
         "other": "{{ count }} artikel pro zeile anzeigen"
       },
-      "tousled_menu": "Tousled-Menü"
+      "tousled_menu": "Tousled-Menü",
+      "error": "Bitte füllen Sie die Pflichtfelder aus."
     },
     "search": {
       "no_results_for": "Keine ergebnisse für",
@@ -94,7 +95,8 @@
       "newer_post": "Neuerer Post",
       "tags": "Tags",
       "comment_meta_html": "{{ author }} am {{ date }}",
-      "read_more": "Weiterlesen"
+      "read_more": "Weiterlesen",
+      "view_all": "Alle anzeigen"
     },
     "comments": {
       "title": "Hinterlassen Sie einen Kommentar",
@@ -174,7 +176,8 @@
       "all_vendors": "Alle Vendors",
       "all_tags": "Filter Löschen",
       "all_collections": "Alle Collections",
-      "show_more": "Zeig mehr"
+      "show_more": "Zeig mehr",
+      "tags": "Tags"
     },
     "onboarding": {
       "modal_title": "Auf dieser Seite werden alle Produkte Ihres Geschäfts angezeigt.",

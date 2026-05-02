@@ -37,7 +37,7 @@
 data-wlh-variantid="{{product.selected_or_first_available_variant.id}}" 
  data-wlh-price="{{product.selected_or_first_available_variant.price | remove: '.' | remove: ',' | divided_by: 100.0 }}" 
  data-wlh-name="{{name | strip_html }}" 
- data-wlh-image="{{image | img_url: '1024x'}}" 
+ data-wlh-image="{{image | image_url: '1024x'}}" 
  class="wishlist-hero-custom-button {{buttonClass}}" 
  data-wlh-mode="{{buttonMode}}"
  data-wlh-view="{{buttonView}}"

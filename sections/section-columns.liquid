@@ -47,7 +47,7 @@
               {%- endif -%}
             </div>
             <noscript>
-              <img src="{{ block.settings.image | img_url: '540x' }}" alt="{{ block.settings.image.alt | default: block.settings.title | strip_html | escape }}"/>
+              <img src="{{ block.settings.image | image_url: '540x' }}" alt="{{ block.settings.image.alt | default: block.settings.title | strip_html | escape }}"/>
             </noscript>
           {% endif %}
           {% if block.settings.title != blank %}

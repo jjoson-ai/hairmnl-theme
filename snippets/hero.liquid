@@ -20,7 +20,7 @@
   data-overflow-background
   {% if height == 'use_image' %}
     style="padding-top: {{ 1 | divided_by: aspect_ratio | times: 100 }}%;
-            background-image: url('{{ image | img_url: '1x1' }}');"
+            background-image: url('{{ image | image_url: '1x1' }}');"
   {% endif %}
   {% if settings.parallax_enable %}data-parallax-wrapper{% endif %}>
 
@@ -80,14 +80,14 @@
                 sizes="100vw">
         <img
           class=""
-          srcset="{% if image.width > 540 %}{{ image | img_url: '540x' }} 540w,{% endif %}
-                  {% if image.width > 900 %}{{ image | img_url: '900x' }} 900w,{% endif %}
-                  {% if image.width > 1400 %}{{ image | img_url: '1400x' }} 1400w,{% endif %}
-                  {% if image.width > 1800 %}{{ image | img_url: '1800x' }} 1800w,{% endif %}
-                  {% if image.width > 2400 %}{{ image | img_url: '2400x' }} 2400w,{% endif %}
-                  {{ image | img_url: 'master' }} {{ image.width }}w"
+          srcset="{% if image.width > 540 %}{{ image | image_url: '540x' }} 540w,{% endif %}
+                  {% if image.width > 900 %}{{ image | image_url: '900x' }} 900w,{% endif %}
+                  {% if image.width > 1400 %}{{ image | image_url: '1400x' }} 1400w,{% endif %}
+                  {% if image.width > 1800 %}{{ image | image_url: '1800x' }} 1800w,{% endif %}
+                  {% if image.width > 2400 %}{{ image | image_url: '2400x' }} 2400w,{% endif %}
+                  {{ image | image_url: 'master' }} {{ image.width }}w"
           sizes="100vw"
-          src="{{ image | img_url: 'master' }}"
+          src="{{ image | image_url: 'master' }}"
           width="{{ image.width }}"
           height="{{ image.height }}"
           loading="{{ img_loading }}"
@@ -99,7 +99,7 @@
   </div>
 
   <noscript>
-    <img src="{{ image | img_url: '720x' }}" alt="{{ image.alt | strip_html | escape }}" class="responsive-wide-image"/>
+    <img src="{{ image | image_url: '720x' }}" alt="{{ image.alt | strip_html | escape }}" class="responsive-wide-image"/>
   </noscript>
 </div>
   

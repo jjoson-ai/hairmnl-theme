@@ -107,7 +107,7 @@
 
                                 {% if match_score > 0 %}
                                         {% capture prod_details %}
-                                                {% include 'pro-blogger.snippet.score_sorting' with score:match_score %}||{{ article.id }}||{{ article.handle }}||{{article.title | escape }}||{{ article.url }}||{{ article.image | img_url: artimagesize }}||{{ articles_contents | strip_html | truncatewords: arttruncate }}
+                                                {% include 'pro-blogger.snippet.score_sorting' with score:match_score %}||{{ article.id }}||{{ article.handle }}||{{article.title | escape }}||{{ article.url }}||{{ article.image | image_url: artimagesize }}||{{ articles_contents | strip_html | truncatewords: arttruncate }}
                                         {% endcapture %}
                                         {% assign matched_list = matched_list | append: prod_details | append: "://:" %}
                                         {% assign pb_matches_found = pb_matches_found | plus: 1 %}

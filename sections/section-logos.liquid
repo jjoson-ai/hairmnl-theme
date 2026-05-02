@@ -22,13 +22,13 @@
                 lazy is the right default.
               {%- endcomment -%}
               {%- assign _logo = block.settings.image -%}
-              <div class="lazy-image logo-bar__image" style="padding-top:{{ 1 | divided_by: _logo.aspect_ratio | times: 100 }}%; background-image: url('{{ _logo | img_url: '1x1' }}');">
+              <div class="lazy-image logo-bar__image" style="padding-top:{{ 1 | divided_by: _logo.aspect_ratio | times: 100 }}%; background-image: url('{{ _logo | image_url: '1x1' }}');">
                 <img
-                  src="{{ _logo | img_url: '220x' }}"
-                  srcset="{% if _logo.width > 110 %}{{ _logo | img_url: '110x' }} 110w,{% endif %}
-                          {% if _logo.width > 220 %}{{ _logo | img_url: '220x' }} 220w,{% endif %}
-                          {% if _logo.width > 320 %}{{ _logo | img_url: '320x' }} 320w,{% endif %}
-                          {% if _logo.width > 480 %}{{ _logo | img_url: '480x' }} 480w,{% endif %}"
+                  src="{{ _logo | image_url: '220x' }}"
+                  srcset="{% if _logo.width > 110 %}{{ _logo | image_url: '110x' }} 110w,{% endif %}
+                          {% if _logo.width > 220 %}{{ _logo | image_url: '220x' }} 220w,{% endif %}
+                          {% if _logo.width > 320 %}{{ _logo | image_url: '320x' }} 320w,{% endif %}
+                          {% if _logo.width > 480 %}{{ _logo | image_url: '480x' }} 480w,{% endif %}"
                   sizes="(min-width: 768px) 160px, 110px"
                   width="{{ _logo.width }}"
                   height="{{ _logo.height }}"
@@ -36,7 +36,7 @@
                   alt="{{ _logo.alt | strip_html | escape }}">
               </div>
               <noscript>
-                <img src="{{ _logo | img_url: '160x' }}" alt="{{ _logo.alt | default: block.settings.title | strip_html | escape }}"/>
+                <img src="{{ _logo | image_url: '160x' }}" alt="{{ _logo.alt | default: block.settings.title | strip_html | escape }}"/>
               </noscript>
             {% else %}
               {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}

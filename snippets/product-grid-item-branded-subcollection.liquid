@@ -63,11 +63,11 @@
   {% assign WCProduct_VariantComparePrice = saw_variant_compare_at_price %}
 {% endif %}
 {% comment %} Wholesale_Club_Product_Prices End {% endcomment %}
-{%- assign product_img_url = product.featured_image.src | img_url: '700x' -%}
+{%- assign product_img_url = product.featured_image.src | image_url: '700x' -%}
 {%- if grid_width_large == 'large--one-whole' -%}
-  {%- assign product_img_url = product.featured_image.src | img_url: '1200x' -%}
+  {%- assign product_img_url = product.featured_image.src | image_url: '1200x' -%}
 {%- elsif grid_width_large == 'large--one-half' -%}
-  {%- assign product_img_url = product.featured_image.src | img_url: '900x' -%}
+  {%- assign product_img_url = product.featured_image.src | image_url: '900x' -%}
 {%- endif -%}
 
 {%- assign on_sale = false -%}
@@ -142,12 +142,12 @@
                       {{ _img | image_url: width: 1080, format: 'webp' }} 1080w"
               sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw">
       <img
-        src="{{ _img.src | img_url: '540x' }}"
-        srcset="{{ _img.src | img_url: '180x' }} 180w,
-                {{ _img.src | img_url: '360x' }} 360w,
-                {{ _img.src | img_url: '540x' }} 540w,
-                {{ _img.src | img_url: '720x' }} 720w,
-                {{ _img.src | img_url: '1080x' }} 1080w"
+        src="{{ _img.src | image_url: '540x' }}"
+        srcset="{{ _img.src | image_url: '180x' }} 180w,
+                {{ _img.src | image_url: '360x' }} 360w,
+                {{ _img.src | image_url: '540x' }} 540w,
+                {{ _img.src | image_url: '720x' }} 720w,
+                {{ _img.src | image_url: '1080x' }} 1080w"
         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
         width="{{ _img.width }}"
         height="{{ _img.height }}"

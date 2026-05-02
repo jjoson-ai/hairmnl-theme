@@ -32,7 +32,7 @@
       {% render 'icon-nav' %}
     </div>
     {% if section.settings.tousled_logo_mobile_menu != blank %}
-      {%- assign img_url = section.settings.tousled_logo_mobile_menu | img_url: '1x1' | replace: '_1x1.', '_600x.' -%}
+      {%- assign img_url = section.settings.tousled_logo_mobile_menu | image_url: '1x1' | replace: '_1x1.', '_600x.' -%}
       <div class="logo-wrapper">
         <img src="{{img_url}}"
           class="tousled-logo" 
@@ -53,7 +53,7 @@
     <div class="drawer__content">
       <div class="drawer__top">
         {% if section.settings.tousled_logo_mobile != blank %}
-          {%- assign img_url = section.settings.tousled_logo_mobile | img_url: '1x1' | replace: '_1x1.', '_600x.' -%}
+          {%- assign img_url = section.settings.tousled_logo_mobile | image_url: '1x1' | replace: '_1x1.', '_600x.' -%}
           <div class="logo-wrapper">
             <img src="{{img_url}}"
               class="tousled-logo" 

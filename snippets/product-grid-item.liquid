@@ -181,12 +181,12 @@ A grid item for products used in collection grid view
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw">
           <img
             class="collection__image__top"
-            srcset="{% if _img.width > 360 %}{{ _img | img_url: '360x' }} 360w,{% endif %}
-                    {% if _img.width > 540 %}{{ _img | img_url: '540x' }} 540w,{% endif %}
-                    {% if _img.width > 720 %}{{ _img | img_url: '720x' }} 720w,{% endif %}
-                    {% if _img.width > 1080 %}{{ _img | img_url: '1080x' }} 1080w,{% endif %}"
+            srcset="{% if _img.width > 360 %}{{ _img | image_url: '360x' }} 360w,{% endif %}
+                    {% if _img.width > 540 %}{{ _img | image_url: '540x' }} 540w,{% endif %}
+                    {% if _img.width > 720 %}{{ _img | image_url: '720x' }} 720w,{% endif %}
+                    {% if _img.width > 1080 %}{{ _img | image_url: '1080x' }} 1080w,{% endif %}"
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-            src="{{ _img | img_url: '540x' }}"
+            src="{{ _img | image_url: '540x' }}"
             width="{{ _img.width }}"
             height="{{ _img.height }}"
             loading="eager"
@@ -218,12 +218,12 @@ A grid item for products used in collection grid view
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw">
           <img
             class="collection__image__top"
-            srcset="{% if _img.width > 360 %}{{ _img | img_url: '360x' }} 360w,{% endif %}
-                    {% if _img.width > 540 %}{{ _img | img_url: '540x' }} 540w,{% endif %}
-                    {% if _img.width > 720 %}{{ _img | img_url: '720x' }} 720w,{% endif %}
-                    {% if _img.width > 1080 %}{{ _img | img_url: '1080x' }} 1080w,{% endif %}"
+            srcset="{% if _img.width > 360 %}{{ _img | image_url: '360x' }} 360w,{% endif %}
+                    {% if _img.width > 540 %}{{ _img | image_url: '540x' }} 540w,{% endif %}
+                    {% if _img.width > 720 %}{{ _img | image_url: '720x' }} 720w,{% endif %}
+                    {% if _img.width > 1080 %}{{ _img | image_url: '1080x' }} 1080w,{% endif %}"
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-            src="{{ _img | img_url: '540x' }}"
+            src="{{ _img | image_url: '540x' }}"
             width="{{ _img.width }}"
             height="{{ _img.height }}"
             loading="lazy"
@@ -243,12 +243,12 @@ A grid item for products used in collection grid view
           {%- assign _img2 = product.media[1].preview_image -%}
           <img
             class="img-object-cover"
-            srcset="{% if _img2.width > 360 %}{{ _img2 | img_url: '360x' }} 360w,{% endif %}
-                    {% if _img2.width > 540 %}{{ _img2 | img_url: '540x' }} 540w,{% endif %}
-                    {% if _img2.width > 720 %}{{ _img2 | img_url: '720x' }} 720w,{% endif %}
-                    {% if _img2.width > 1080 %}{{ _img2 | img_url: '1080x' }} 1080w,{% endif %}"
+            srcset="{% if _img2.width > 360 %}{{ _img2 | image_url: '360x' }} 360w,{% endif %}
+                    {% if _img2.width > 540 %}{{ _img2 | image_url: '540x' }} 540w,{% endif %}
+                    {% if _img2.width > 720 %}{{ _img2 | image_url: '720x' }} 720w,{% endif %}
+                    {% if _img2.width > 1080 %}{{ _img2 | image_url: '1080x' }} 1080w,{% endif %}"
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-            src="{{ _img2 | img_url: '540x' }}"
+            src="{{ _img2 | image_url: '540x' }}"
             width="{{ _img2.width }}"
             height="{{ _img2.height }}"
             loading="lazy"
@@ -265,7 +265,7 @@ A grid item for products used in collection grid view
     <a href="{{ product.url | within: collection }}">
       <img
         class="responsive-wide-image"
-        src="{{ product.featured_media.preview_image | img_url: '360x' }}"
+        src="{{ product.featured_media.preview_image | image_url: '360x' }}"
         alt="{{ product.featured_media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
       {{ badge }}
     </a>

@@ -61,7 +61,7 @@
 
     {% if link.title == 'TOUSLED MAGAZINE' and template != 'blog' %}
       {% if tousled_logo != blank %}
-        {%- assign img_url = tousled_logo | img_url: '1x1' | replace: '_1x1.', '_600x.' -%}
+        {%- assign img_url = tousled_logo | image_url: '1x1' | replace: '_1x1.', '_600x.' -%}
         <div>
           <img src="{{img_url}}" class="tousled-logo" width="{{ tousled_logo_max_limit}}" height="{{ tousled_logo.height }}" alt="{{ tousled_logo.alt | default: shop.name | strip_html | escape }}" loading="lazy">
         </div>

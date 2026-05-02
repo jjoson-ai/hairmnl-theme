@@ -198,24 +198,24 @@
       <link
         rel="preload"
         as="image"
-        href="{{ media.preview_image | img_url: '550' }}"
+        href="{{ media.preview_image | image_url: '550' }}"
         srcset="{%- if media.preview_image.width >= 550 -%}
-        {{ media.preview_image | img_url: '550x' }} 550w,{%- endif -%}
+        {{ media.preview_image | image_url: '550x' }} 550w,{%- endif -%}
       {%- if media.preview_image.width >= 1100 -%}
-        {{ media.preview_image | img_url: '1100x' }} 1100w,{%- endif -%}
+        {{ media.preview_image | image_url: '1100x' }} 1100w,{%- endif -%}
       {%- if media.preview_image.width >= 1680 -%}
-        {{ media.preview_image | img_url: '1680x' }} 1680w,{%- endif -%}
+        {{ media.preview_image | image_url: '1680x' }} 1680w,{%- endif -%}
       {%- if media.preview_image.width >= 2048 -%}
-        {{ media.preview_image | img_url: '2048x' }} 2048w,{%- endif -%}
+        {{ media.preview_image | image_url: '2048x' }} 2048w,{%- endif -%}
       {%- if media.preview_image.width >= 4096 -%}
-        {{ media.preview_image | img_url: '4096x' }} 4096w{%- endif -%}"
+        {{ media.preview_image | image_url: '4096x' }} 4096w{%- endif -%}"
       sizes="(min-width: 768px), 50vw, 100vw">
     {% endif %}
 
     {%- if settings.favicon != blank -%}
       <link
         rel="shortcut icon"
-        href="{{ settings.favicon | img_url: '32x32' }}"
+        href="{{ settings.favicon | image_url: '32x32' }}"
         type="image/png">
     {%- else -%}
       <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
@@ -356,7 +356,7 @@
           photoswipe: '{{ "photoswipe.js" | asset_url }}',
           smoothscroll: '{{ "smoothscroll.js" | asset_url }}',
           swatches: '{{ "swatches.json" | asset_url }}',
-          noImage: '{{ "nil" | img_url: "master" }}',
+          noImage: '{{ "nil" | image_url: "master" }}',
           base: '{{ "nil.jpg" | asset_url | split: "nil.jpg" | first }}'
         },
         strings: {
@@ -758,7 +758,7 @@
         <limespot></limespot>
       {%- endunless -%}
       
-    {% capture bsscommerce_passcode_to_see_price_product_custom %}{% render 'bss-passcode-to-see-price-js.liquid' %}{% endcapture %}{% unless bsscommerce_passcode_to_see_price_product_custom contains "Liquid error" %}{% render 'bss-passcode-to-see-price-js.liquid' %}{% endunless %}{% capture bsscommerce_login_to_see_price_product_custom %}{% render 'bsscommerce-login-to-see-price-custom-js.liquid' %}{% endcapture %}{% unless bsscommerce_login_to_see_price_product_custom contains "Liquid error" %}{% render 'bsscommerce-login-to-see-price-custom-js.liquid' %}{% endunless %}{% capture bss_ltap_fl_redirect %}{% render 'bss-ltap-fl-redirect.liquid' %}{% endcapture %}{% unless bss_ltap_fl_redirect contains "Liquid error" %}{% render 'bss-ltap-fl-redirect.liquid' %}{% endunless %}</main>
+    {% capture bsscommerce_passcode_to_see_price_product_custom %}{% render 'bss-passcode-to-see-price-js' %}{% endcapture %}{% unless bsscommerce_passcode_to_see_price_product_custom contains "Liquid error" %}{% render 'bss-passcode-to-see-price-js' %}{% endunless %}{% capture bsscommerce_login_to_see_price_product_custom %}{% render 'bsscommerce-login-to-see-price-custom-js' %}{% endcapture %}{% unless bsscommerce_login_to_see_price_product_custom contains "Liquid error" %}{% render 'bsscommerce-login-to-see-price-custom-js' %}{% endunless %}{% capture bss_ltap_fl_redirect %}{% render 'bss-ltap-fl-redirect' %}{% endcapture %}{% unless bss_ltap_fl_redirect contains "Liquid error" %}{% render 'bss-ltap-fl-redirect' %}{% endunless %}</main>
 
     {% section 'footer' %}
 

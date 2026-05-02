@@ -1,0 +1,100 @@
+# Theme-check configuration for HairMNL Pipeline 6.1.3 theme
+# Last updated: 2026-05-02 (bd 9g9)
+---
+VariableName:
+  # Pipeline 6 upstream uses camelCase/snake_case conventions that don't match
+  # Shopify's preferred naming style. These are cosmetic, not functional issues.
+  enabled: false
+
+LiquidHTMLSyntaxError:
+  # Many false positives in:
+  # - snippets/hero.liquid (conditional picture/source nesting)
+  # - sections/product.liquid (conditional media type rendering)
+  # - svg-related snippets (raw SVG mixed with Liquid)
+  # - js.liquid (JS template with Liquid interpolation)
+  # Parser does not correctly handle conditional HTML inside Liquid branches.
+  enabled: false
+
+RemoteAsset:
+  # Intentional external asset loads:
+  # - Google Tag Manager (tagmanager.google.com)
+  # - Google Fonts (fonts.googleapis.com / fonts.gstatic.com)
+  # - LoyaltyLion CDN
+  # - Reamaze widget CDN
+  # - Various vendor analytics pixels
+  # These cannot be self-hosted without significant effort or are vendor-required.
+  enabled: false
+
+UnclosedHTMLElement:
+  # False positives on conditional HTML rendering patterns:
+  # sections/product.liquid + sections/section-product.liquid use
+  # conditional media-type rendering that correctly closes tags but
+  # the static parser cannot follow Liquid conditional branches.
+  enabled: false
+
+AssetPreload:
+  # Our preload pattern uses raw <link rel="preload"> tags intentionally:
+  # - image preloads in section-banner-slider.liquid use custom timing logic
+  # - layout/theme.liquid preloads use media=print swap pattern (our CSS defer strategy)
+  # These are correct and intentional; preload_tag filter would not support all our cases.
+  enabled: false
+
+UnknownFilter:
+  # False positives from vendor snippets:
+  # - snippets/wsg-header.liquid: 'string' filter used by WSG app
+  # - snippets/vertex-recommendations.liquid: 'sample' filter (custom Liquid extension)
+  # - snippets/loyaltylion.liquid: 'if' filter used by LoyaltyLion app inject
+  # These are vendor app snippets outside our control.
+  enabled: false
+
+DeprecatedTag:
+  # 81 include→render offenses; 79 are in vendor-managed snippets (BSS B2B, pluginseo,
+  # pro-blogger, wsg, storepickup, LimeSpot, LoyaltyLion) that rely on parent-scope
+  # variable passing which 'render' does not support. Converting blindly would break
+  # functionality. Vendor owners are responsible for their own migration.
+  # The 2 theme-owned cases (judgeme_carousel_section, product-grid-item-branded-subcollection)
+  # were converted separately with explicit parameter passing.
+  # Re-enable once vendor snippets are removed or updated by their owners.
+  enabled: false
+
+UnusedAssign:
+  # 154 offenses; Pipeline 6 upstream frequently assigns variables that are then
+  # used inside capture blocks, conditional branches, or as computed intermediates
+  # for complex Liquid rendering. Many are legitimate — Liquid tooling cannot track
+  # all usage paths. Suppressed to reduce noise; re-enable when reducing vendor
+  # snippet count significantly (target: post-BSS+pluginseo+pro-blogger cleanup).
+  enabled: false
+
+UndefinedObject:
+  # 29 offenses; most are false positives:
+  # - 'block' in cart.liquid + section-map.liquid: valid Shopify section block object
+  # - 'tags' in cross-post-blogs.liquid: valid collection.tags context
+  # - 'newHash'/'resetPassword' in theme.liquid: JS-side variables read via Liquid
+  #   hash-change handler, not Liquid-side objects
+  # - wcp_*/wlm_* in WOF templates: dead WishList Plus app code (templates safe to delete)
+  # - 'email' in reset_password.liquid: valid form params context
+  # - 'post_count'/'tabs_navigation'/'tabs' in custom sections: app-injected variables
+  # Re-enable and address individually once dead WOF templates are removed.
+  enabled: false
+
+ContentForHeaderModification:
+  # BSS B2B vendor snippet (bsscommerce_login_require.liquid) modifies content_for_header.
+  # This is a BSS-app design pattern outside our control.
+  # Will be resolved when bjk (BSS B2B full uninstall decision) is actioned.
+  enabled: false
+
+PaginationSize:
+  # BSS B2B templates (search.bss.b2b.liquid, search.bss.product.labels.liquid) use
+  # `paginate by 1000` intentionally — they are JSON data endpoints for client-side
+  # filtering that need all products in one response. Reducing to 250 would break
+  # the BSS filtering functionality.
+  enabled: false
+
+MissingAsset:
+  # Remaining false positives after nil.jpg and ico-select.svg were created:
+  # - assets/cursor-zoom.svg + cursor-zoom-2x.svg: exist as .svg.liquid files;
+  #   Shopify's CDN serves them at the .svg URL; theme-check doesn't follow .liquid files
+  # - assets/sca.affiliate.refer-customer-data.js: SCA affiliate app asset uploaded by
+  #   the app to Shopify's CDN, not committed to the theme repo; present on live
+  # - assets/filename.png: mbc-bundles app placeholder, never resolved, degrades gracefully
+  enabled: false

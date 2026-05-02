@@ -77,7 +77,7 @@
     <div class="video-autoplay-wrapper">
       <video 
         data-video-autoplay
-        {% if section.settings.image != blank %}poster="{{ section.settings.image.src | img_url: '1x1' }}"{% endif %}
+        {% if section.settings.image != blank %}poster="{{ section.settings.image.src | image_url: '1x1' }}"{% endif %}
         style="object-position: {{ section.settings.object_position | replace: '-', ' ' }};"
         playsinline
         autoplay

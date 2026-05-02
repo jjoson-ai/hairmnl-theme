@@ -64,10 +64,10 @@
            filter: brightness(.95);"
   {% elsif aspect_ratio %}
     style="padding-top: {{ aspect_ratio | times: 100}}%;
-           background-image: url('{{ image | img_url: '1x1' }}');"
+           background-image: url('{{ image | image_url: '1x1' }}');"
   {% else %}
     style="padding-top: {{ 1 | divided_by: image.aspect_ratio | times: 100}}%;
-           background-image: url('{{ image | img_url: '1x1' }}');"
+           background-image: url('{{ image | image_url: '1x1' }}');"
   {% endif %}>
   {%- if image contains 'blank.svg' -%}
   {%- else -%}
@@ -112,13 +112,13 @@
               sizes="{{ sizes }}">
       <img
         class="fade-in-child"
-        srcset="{% if image.width > 360 %}{{ image | img_url: '360x' }} 360w,{% endif %}
-                {% if image.width > 720 %}{{ image | img_url: '720x' }} 720w,{% endif %}
-                {% if image.width > 1080 %}{{ image | img_url: '1080x' }} 1080w,{% endif %}
-                {% if image.width > 1600 %}{{ image | img_url: '1600x' }} 1600w,{% endif %}
-                {{ image | img_url: 'master' }} {{ image.width }}w"
+        srcset="{% if image.width > 360 %}{{ image | image_url: '360x' }} 360w,{% endif %}
+                {% if image.width > 720 %}{{ image | image_url: '720x' }} 720w,{% endif %}
+                {% if image.width > 1080 %}{{ image | image_url: '1080x' }} 1080w,{% endif %}
+                {% if image.width > 1600 %}{{ image | image_url: '1600x' }} 1600w,{% endif %}
+                {{ image | image_url: 'master' }} {{ image.width }}w"
         sizes="{{ sizes }}"
-        src="{{ image | img_url: 'master' }}"
+        src="{{ image | image_url: 'master' }}"
         width="{{ image.width }}"
         height="{{ image.height }}"
         loading="{{ loading }}"
@@ -128,6 +128,6 @@
     </picture>
   {%- endif -%}
   <noscript>
-    <img src="{{ image | img_url: '720x' }}" alt="{{ image.alt | strip_html | escape }}" class="responsive-wide-image"/>
+    <img src="{{ image | image_url: '720x' }}" alt="{{ image.alt | strip_html | escape }}" class="responsive-wide-image"/>
   </noscript>
 </div>

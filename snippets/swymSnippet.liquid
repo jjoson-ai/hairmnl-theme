@@ -39,7 +39,7 @@
     var variants = [];
     window.SwymProductInfo.product = {{ product | json }};
     window.SwymProductInfo.variants = window.SwymProductInfo.product.variants;
-    var piu = {{ product.featured_image | img_url: '620x620' | json }};
+    var piu = {{ product.featured_image | image_url: '620x620' | json }};
     {% if product.selected_or_first_available_variant %}
     {% assign currentVariant = product.selected_or_first_available_variant%}
     {% else %}
@@ -53,7 +53,7 @@
         empi:window.SwymProductInfo.product.id,epi:{{variant.id|json}},
         dt: {{ product.title | json }},
         du: "{{ shop.url }}{{ product.url }}",
-        iu: {% if variant.image %} {{ variant | img_url: '620x620' | json }} {% else %} piu {% endif %},
+        iu: {% if variant.image %} {{ variant | image_url: '620x620' | json }} {% else %} piu {% endif %},
         stk: {{variant.inventory_quantity}},
         pr: {{variant.price}}/100,
         ct: window.SwymProductInfo.product.type,
@@ -66,7 +66,7 @@
       et: 1, empi: window.SwymProductInfo.product.id, epi: window.SwymProductInfo.currentVariant,
       dt: {{ product.title | json }}, du: "{{ shop.url }}{{ product.url }}",
       ct: window.SwymProductInfo.product.type, pr: {{ currentVariant.price }}/100,
-      iu: {% if currentVariant.image %} {{ currentVariant | img_url: '620x620' | json }} {% else %} piu {% endif %}, variants: [{ {{currentVariant.title | json}} : {{currentVariant.id | json}} }],
+      iu: {% if currentVariant.image %} {{ currentVariant | image_url: '620x620' | json }} {% else %} piu {% endif %}, variants: [{ {{currentVariant.title | json}} : {{currentVariant.id | json}} }],
       stk:{{ currentVariant.inventory_quantity }} {% if currentVariant.compare_at_price %} ,op:{{currentVariant.compare_at_price}}/100 {% endif %}
     };
     window.SwymPageData = product_data;

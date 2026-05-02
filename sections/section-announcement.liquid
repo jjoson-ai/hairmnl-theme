@@ -105,8 +105,8 @@
                       <div class="announcement__bar--icon" {{ block.shopify_attributes }}>
                         {%- if block.settings.icon_alt != blank -%}
                           {%- assign image_size = block.settings.icon_alt_width | append: 'x' -%}
-                          <img srcset="{{ block.settings.icon_alt | img_url: image_size }} 1x, {{ block.settings.icon_alt | img_url: image_size, scale: 2 }} 2x"
-                            src="{{ block.settings.icon_alt | img_url: image_size }}"
+                          <img srcset="{{ block.settings.icon_alt | image_url: image_size }} 1x, {{ block.settings.icon_alt | image_url: image_size, scale: 2 }} 2x"
+                            src="{{ block.settings.icon_alt | image_url: image_size }}"
                             loading="lazy"
                             class="icon__bar__image"
                             width="{{ block.settings.icon_alt_width }}"

@@ -42,10 +42,10 @@
                 data-aos-delay="{{ delay }}"
                 data-aos="hero">
                 <img
-                  src="{{ _icon | img_url: '360x' }}"
-                  srcset="{% if _icon.width > 180 %}{{ _icon | img_url: '180x' }} 180w,{% endif %}
-                          {% if _icon.width > 360 %}{{ _icon | img_url: '360x' }} 360w,{% endif %}
-                          {% if _icon.width > 540 %}{{ _icon | img_url: '540x' }} 540w,{% endif %}"
+                  src="{{ _icon | image_url: '360x' }}"
+                  srcset="{% if _icon.width > 180 %}{{ _icon | image_url: '180x' }} 180w,{% endif %}
+                          {% if _icon.width > 360 %}{{ _icon | image_url: '360x' }} 360w,{% endif %}
+                          {% if _icon.width > 540 %}{{ _icon | image_url: '540x' }} 540w,{% endif %}"
                   sizes="(min-width: 768px) 200px, 100px"
                   width="{{ _icon.width }}"
                   height="{{ _icon.height }}"

@@ -295,7 +295,7 @@
         "type": "font_picker",
         "id": "type_accent_font",
         "label": "Font",
-        "default": "itc_johnston_n5"
+        "default": "assistant_n4"
       },
       {
         "type": "range",
@@ -360,7 +360,7 @@
         "type": "font_picker",
         "id": "type_base_font",
         "label": "Font",
-        "default": "harmonia_sans_n4"
+        "default": "assistant_n4"
       },
       {
         "type": "range",

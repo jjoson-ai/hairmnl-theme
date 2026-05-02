@@ -99,7 +99,7 @@
 
 		{% if match_score > 0 %}
 			{% capture prod_details %}
-				{% include 'pro-blogger.snippet.score_sorting' with score:match_score %}||{{ prod.id }}||{{ prod.handle }}||{{prod.title | escape }}||{{ prod.url | within: collections.all }}||{{ prod.featured_image.src | img_url: imagesize }}||{{ prod.price | money }}||{{prod.vendor }}||{% if prod.compare_at_price > prod.price %}{{prod.compare_at_price | money }} {% endif %}
+				{% include 'pro-blogger.snippet.score_sorting' with score:match_score %}||{{ prod.id }}||{{ prod.handle }}||{{prod.title | escape }}||{{ prod.url | within: collections.all }}||{{ prod.featured_image.src | image_url: imagesize }}||{{ prod.price | money }}||{{prod.vendor }}||{% if prod.compare_at_price > prod.price %}{{prod.compare_at_price | money }} {% endif %}
 			{% endcapture %}
 			{% assign matched_list = matched_list | append: prod_details | append: "://:" %}
 			{% assign pb_matches_found = pb_matches_found | plus: 1 %}
@@ -165,7 +165,7 @@
 
 		{% if match_score > 0 %}
 			{% capture prod_details %}
-				{% include 'pro-blogger.snippet.score_sorting' with score:match_score %}||{{ prod.id }}||{{ prod.handle }}||{{prod.title | escape }}||{{ prod.url | within: collections.all }}||{{ prod.featured_image.src | img_url: imagesize }}||{{ prod.price | money }}||{{prod.vendor }}||{% if prod.compare_at_price > prod.price %}{{prod.compare_at_price | money }} {% endif %}
+				{% include 'pro-blogger.snippet.score_sorting' with score:match_score %}||{{ prod.id }}||{{ prod.handle }}||{{prod.title | escape }}||{{ prod.url | within: collections.all }}||{{ prod.featured_image.src | image_url: imagesize }}||{{ prod.price | money }}||{{prod.vendor }}||{% if prod.compare_at_price > prod.price %}{{prod.compare_at_price | money }} {% endif %}
 			{% endcapture %}
 			{% assign matched_list = matched_list | append: prod_details | append: "://:" %}
 			{% assign pb_matches_found = pb_matches_found | plus: 1 %}
@@ -235,7 +235,7 @@
 
 		{% if match_score > 0 %}
 			{% capture prod_details %}
-				{% include 'pro-blogger.snippet.score_sorting' with score:match_score %}||{{ prod.id }}||{{ prod.handle }}||{{prod.title | escape }}||{{ prod.url | within: collections.all }}||{{ prod.featured_image.src | img_url: imagesize }}||{{ prod.price | money }}||{{prod.vendor }}||{% if prod.compare_at_price > prod.price %}{{prod.compare_at_price | money }} {% endif %}
+				{% include 'pro-blogger.snippet.score_sorting' with score:match_score %}||{{ prod.id }}||{{ prod.handle }}||{{prod.title | escape }}||{{ prod.url | within: collections.all }}||{{ prod.featured_image.src | image_url: imagesize }}||{{ prod.price | money }}||{{prod.vendor }}||{% if prod.compare_at_price > prod.price %}{{prod.compare_at_price | money }} {% endif %}
 			{% endcapture %}
 
 			{% assign matched_list = matched_list | append: prod_details | append: "://:" %}

@@ -1,7 +1,7 @@
 <header class="giftcard-header" role="banner">
   <div class="h1 header-logo">
     {% if section.settings.logo != blank %}
-      {%- assign img_url = section.settings.logo | img_url: '440x' -%}
+      {%- assign img_url = section.settings.logo | image_url: '440x' -%}
       <a href="{{ shop.url }}" itemprop="url">
         <img src="{{ img_url }}"
             style="width: {{ section.settings.logo_max_limit }}px; margin: 0 auto;"

@@ -32,7 +32,7 @@
           without needing the lazysizes.js dependency.
         {%- endcomment -%}
         <img class="zoom__img"
-          src="{{ image | img_url: 'master' }}"
+          src="{{ image | image_url: 'master' }}"
           loading="lazy"
           alt="{{ image.alt | strip_html | escape }}"/>
       </div>

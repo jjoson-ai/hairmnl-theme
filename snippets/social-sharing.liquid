@@ -18,7 +18,7 @@
     </a>
   {% endif %}
   {% if settings.share_enable_pinterest %}
-    <a class="share__link" target="_blank" rel="noopener" href="//pinterest.com/pin/create/button/?url={{ shop.url | append: share_permalink }}&amp;media={{ share_image | img_url: '1024x1024' }}&amp;description={{ share_title | url_param_escape }}">
+    <a class="share__link" target="_blank" rel="noopener" href="//pinterest.com/pin/create/button/?url={{ shop.url | append: share_permalink }}&amp;media={{ share_image | image_url: '1024x1024' }}&amp;description={{ share_title | url_param_escape }}">
       {% render 'icon-pinterest' %}
       <span class="share__text">{{ 'general.share.pinterest' | t }}</span>
     </a>

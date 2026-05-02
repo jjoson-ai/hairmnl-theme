@@ -53,7 +53,8 @@
       "toggle_with_count": {
         "one": "Show {{ count }} product per row",
         "other": "Show {{ count }} products per row"
-      }
+      },
+      "error": "Please fill in the required fields."
     },
     "search": {
       "no_results_for": "No results for",
@@ -94,7 +95,8 @@
       "newer_post": "Newer Post",
       "tags": "Tags",
       "comment_meta_html": "{{ author }} on {{ date }}",
-      "read_more": "Read more"
+      "read_more": "Read more",
+      "view_all": "View all"
     },
     "comments": {
       "title": "Leave a comment",
@@ -174,7 +176,8 @@
       "all_vendors": "All Vendors",
       "all_tags": "Clear Filters",
       "all_collections": "All Collections",
-      "show_more": "Show more"
+      "show_more": "Show more",
+      "tags": "Tags"
     },
     "sorting": {
       "title": "Sort:",

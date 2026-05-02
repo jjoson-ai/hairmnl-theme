@@ -53,7 +53,8 @@
         "one": "Afficher {{ count }} produit par ligne",
         "other": "Afficher {{ count }} produits par ligne"
       },
-      "tousled_menu": "Menu Tousled"
+      "tousled_menu": "Menu Tousled",
+      "error": "Veuillez remplir les champs obligatoires."
     },
     "search": {
       "no_results_for": "Aucun résultat pour",
@@ -94,7 +95,8 @@
       "newer_post": "Article suivant",
       "tags": "Tags",
       "comment_meta_html": "{{ author }} le {{ date }}",
-      "read_more": "Plus"
+      "read_more": "Plus",
+      "view_all": "Voir tout"
     },
     "comments": {
       "title": "Laissez un commentaire",
@@ -174,7 +176,8 @@
       "all_vendors": "Tous les Fournisseurs",
       "all_tags": "Effacer les Filtres",
       "all_collections": "Tous les Collections",
-      "show_more": "Montre plus"
+      "show_more": "Montre plus",
+      "tags": "Tags"
     },
     "onboarding": {
       "modal_title": "Cette page affichera tous les produits de votre magasin",

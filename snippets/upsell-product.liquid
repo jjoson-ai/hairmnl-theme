@@ -30,7 +30,7 @@
               <img class="upsell__image__inner" 
                 loading="lazy" 
                 alt="{{ upsell_image.alt | default: upsell_product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}"
-                src="{{ upsell_image.src | img_url: '180x180', crop: 'center' }}"
+                src="{{ upsell_image.src | image_url: '180x180', crop: 'center' }}"
                 width="90"
                 height="90">
             </a>
