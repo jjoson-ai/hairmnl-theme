@@ -321,4 +321,64 @@
     min-height: 300px;
     contain: layout;
   }
+
+  /* CLS fix 2026-05-02 e4a-γ — Klaviyo body-injected signup modal:
+     PSI filmstrip frame 8 on serioxyl PDP shows the Klaviyo signup modal
+     appearing mid-load and pushing PDP content. Klaviyo's runtime CSS
+     sets the modal to position:fixed once their stylesheet hydrates, but
+     between when the modal HTML is appended to <body> and when their CSS
+     loads, the modal briefly occupies document flow as a body child →
+     shifts every in-flow sibling below it.
+
+     Confirmed safe: `grep -rn "klaviyo-form" sections/ snippets/` returns
+     zero inline embeds — Klaviyo at HairMNL is exclusively the body-level
+     modal popup injected by the Klaviyo Shopify App Embed. The selector
+     uses `body > ...` so any future inline form embedded inside a section
+     container is unaffected. Forcing position:fixed in our <head> CSS
+     wins because <head> parses before Klaviyo's loader script downloads.
+
+     Class patterns covered:
+     - `klaviyo-form-*` — Klaviyo's standard modal form ID class
+     - `kl-private-reset-css-*` — Klaviyo's css-reset wrapper (random suffix)
+     - `[data-testid^="klaviyo-form"]` — newer Klaviyo SDK builds
+
+     Caveat: this rule will break any Klaviyo embed form rendered as a
+     direct <body> child (atypical — embeds normally live inside section
+     containers). Revert if signup CTAs stop appearing inline anywhere. */
+  body > [class*="klaviyo-form"],
+  body > div[class*="kl-private-reset-css"],
+  body > [data-testid^="klaviyo-form"] {
+    position: fixed !important;
+    z-index: 9999 !important;
+    contain: layout !important;
+  }
+
+  /* CLS fix 2026-05-02 e4a-δ — LoyaltyLion body-injected notification/popup:
+     LoyaltyLion's "Sign up for HairMNL Rewards to get a Php100 voucher"
+     notification bar and any LL overlay popup are injected as direct body
+     children by their SDK loader (sdk.loyaltylion.net/static/2/loader.js,
+     dns-prefetched at theme.liquid:87). Same lifecycle gap as Klaviyo —
+     SDK appends the notification HTML before its own stylesheet sets
+     position:fixed, so it briefly renders in flow.
+
+     Selector targets only body-level descendants:
+     - `[id^="lion-"]` — LL's standard ID prefix on overlay/notification els
+     - `[class*="ll-notification"]` / `[class*="ll-popup"]` — LL legacy markup
+     - `[class*="lion-overlay"]` — LL modal backdrop
+
+     The `.lion-points-box` element is NOT body-level (it lives inside
+     .header__desktop nav, theme.liquid header section), so `body > ...`
+     scoping naturally excludes it — the T9 header CLS fix at
+     css-overrides.liquid:235 handles that one in-flow.
+
+     Caveat: any future LL embed widget rendered as direct body child
+     (atypical for LL — they place inline widgets via merchant-supplied
+     containers like `<div data-loyaltylion></div>`) would break. */
+  body > [id^="lion-"],
+  body > [class*="ll-notification"],
+  body > [class*="ll-popup"],
+  body > [class*="lion-overlay"] {
+    position: fixed !important;
+    contain: layout !important;
+  }
 </style>
