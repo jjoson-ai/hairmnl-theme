@@ -1,0 +1,71 @@
+{%- comment -%}
+  Section: Vertex AI Home Recommendations (RFY / Trending)
+  Placement: home_below_hero — below the hero banner slider, above category pills.
+
+  Gated on model ACTIVE (~2026-05-07). Until then:
+  - customer.metafields.vertex.recommended_for_you is nil (model TRAINING)
+  - shop.metafields.vertex.trending is nil (not yet written by precompute)
+  - The empty-state gate in vertex-recommendations.liquid suppresses the section
+  So the section can be safely added to templates/index.json now; nothing renders.
+
+  When model goes ACTIVE, precompute writes:
+  - customer.metafields.vertex.recommended_for_you (per-customer, logged-in path)
+  - shop.metafields.vertex.trending (global fallback, anonymous path)
+  Both are JSON arrays of product references → same format as vertex.recs.
+
+  Phase 1b-γ.9 (2026-05-07 estimated). See task-1-recommendations.md §Slot3,
+  open questions 1 and 2, and the plan at ~/.claude/plans/woolly-humming-quokka.md.
+{%- endcomment -%}
+
+{%- liquid
+  if customer
+    assign rfy_title    = section.settings.title_logged_in    | default: 'Trending in your routine'
+    assign rfy_subtitle = section.settings.subtitle_logged_in | default: ''
+  else
+    assign rfy_title    = section.settings.title_anon         | default: 'Trending now'
+    assign rfy_subtitle = section.settings.subtitle_anon      | default: ''
+  endif
+-%}
+
+{% render 'vertex-recommendations',
+    placement: 'home_below_hero',
+    customer: customer,
+    title: rfy_title,
+    subtitle: rfy_subtitle
+%}
+
+{% schema %}
+{
+  "name": "Vertex recommendations",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_logged_in",
+      "label": "Title (logged-in customer)",
+      "default": "Trending in your routine"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_logged_in",
+      "label": "Subtitle (logged-in customer)"
+    },
+    {
+      "type": "text",
+      "id": "title_anon",
+      "label": "Title (anonymous visitor)",
+      "default": "Trending now"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_anon",
+      "label": "Subtitle (anonymous visitor)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vertex recommendations",
+      "category": "Recommendations"
+    }
+  ]
+}
+{% endschema %}
