@@ -512,20 +512,17 @@
       Cost: ~500 bytes inline. Only activates on actual errors.
 
       Receives in GTM:
-        event: js_error
+        event: hairmnl_js_error  (prefixed to avoid collision with Elevar's own js_error push)
         error_message: error.message (truncated 200 chars)
         error_source: filename:line:col (truncated 100 chars)
         error_type: 'error' | 'rejection'
 
-      Field names match the GA4 custom dimensions already registered
-      (error_type / error_message / error_source — without js_ prefix).
-      Earlier version used js_error_* prefix which silently dropped to
-      empty in GA4 (those dimensions weren't registered). Renamed
-      2026-04-29 after diagnostic query confirmed 3,150 events firing
-      with all params null. If GTM auto-forwards matching dataLayer
-      field names to GA4 event params, data starts flowing immediately
-      with no admin work; if GTM has explicit param mapping, the GTM
-      tag also needs to read these new field names.
+      GA4-side event name is still 'js_error' (set in GTM tag eventName).
+      The dataLayer event name was renamed from js_error → hairmnl_js_error
+      on 2026-05-02 because Elevar's old install also pushes {event:'js_error'}
+      with its own field names — that collision fired our GTM trigger but our
+      DLVs (reading error_type etc.) returned undefined for Elevar's events,
+      producing ~30k (not set) hits/7d. GTM trigger updated to match.
     {%- endcomment -%}
     {%- comment -%}
       A/B testing framework — added 2026-04-28.
@@ -592,7 +589,7 @@
           if (errorCount >= MAX_ERRORS) return;
           errorCount++;
           dl.push({
-            event: 'js_error',
+            event: 'hairmnl_js_error',
             error_type: type,
             error_message: String(message || '').slice(0, 200),
             error_source: String(source || '').slice(0, 100)
