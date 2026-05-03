@@ -770,6 +770,7 @@ button.swiper-pagination-bullet {
 }
 .header__desktop__bar__inline .tousled-logo {
   height: auto;
+  aspect-ratio: auto;
 }
 .header__desktop__bar__inline .navtext.tousled {
   position: absolute;
@@ -780,6 +781,7 @@ button.swiper-pagination-bullet {
   padding-left: 20px;
   padding-right: 34px;
   height: auto;
+  aspect-ratio: auto;
   display: flex;
   align-items: center;
 }
