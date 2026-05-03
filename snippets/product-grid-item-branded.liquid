@@ -1,3 +1,28 @@
+{% comment %}
+Shared product card for branded collection landing pages and their sub-collections.
+
+Callers:
+  - Branded collection sections (collection-branded, collection-kerastase-*, collection-lp-*, etc.)
+    → {% include 'product-grid-item-branded' %}
+  - Sub-collection sections (collection-branded-subcollection.liquid)
+    → via stub snippet product-grid-item-branded-subcollection.liquid which sets
+      show_soldout = true before delegating here
+
+Variables inherited from caller scope (via include):
+  product            {object}  - the product to render
+  grid_offset        {string}  - e.g. '' or 'large--push-one-sixth'
+  grid_width_small   {string}  - e.g. 'small--one-half'
+  grid_width_medium  {string}  - e.g. 'medium--one-third'
+  grid_width_large   {string}  - e.g. 'large--one-quarter'
+
+Sub-collection-only variables (set by stub, optional):
+  show_soldout          {bool}   - if true, render sold-out text below price
+  product_title_font    {string} - CSS font-family for title <p>
+  product_title_font_size {number} - px font size for title
+  product_price_font    {string} - CSS font-family for price <p>
+  product_price_font_size {number} - px font size for price
+{% endcomment %}
+
 {% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
 {% assign base_product = product %}
 {% assign base_variant = product.selected_or_first_available_variant %}
@@ -63,12 +88,6 @@
   {% assign WCProduct_VariantComparePrice = saw_variant_compare_at_price %}
 {% endif %}
 {% comment %} Wholesale_Club_Product_Prices End {% endcomment %}
-{%- assign product_img_url = product.featured_image.src | image_url: width: 400, height: 400, crop: 'center' -%}
-{%- if grid_width_large == 'large--one-whole' -%}
-  {%- assign product_img_url = product.featured_image.src | image_url: width: 1200 -%}
-{%- elsif grid_width_large == 'large--one-half' -%}
-  {%- assign product_img_url = product.featured_image.src | image_url: width: 900 -%}
-{%- endif -%}
 
 {%- assign on_sale = false -%}
 {%- if WCProduct_ComparePrice > WCProduct_Price -%}
@@ -123,28 +142,10 @@
 <div class="grid__item {{ grid_offset }} {{ grid_width_small }} {{ grid_width_medium }} {{ grid_width_large }}{% if tagged %} tagged{% endif %} product-grid-item">
   <a href="{{ product.url | within: collection }}" class="grid__image">
     {%- comment -%}
-      Responsive srcset (180w/360w/540w/720w/1080w) sized for the
-      branded grid (≤25vw desktop, ≤33vw tablet, ≤50vw mobile).
-      width/height for CLS reservation. loading="lazy" since this
-      grid is below the brand banner (not LCP).
-    {%- endcomment -%}
-    {%- comment -%}
-      WebP rollout pilot — 2026-04-27 (third attempt).
-      Earlier attempts failed because they piped `product.featured_image.src`
-      (URL string) into image_url, which silently dropped the source line.
-      This time we pass `product.featured_image` (raw Image object) into
-      the `image_url` filter directly. Per Shopify Liquid docs, image_url
-      with `format: 'webp'` returns a Shopify-CDN-served WebP variant —
-      30–50% smaller than JPEG at equivalent quality.
-
-      <picture> + <source type="image/webp"> means modern browsers (~98%
-      of HairMNL traffic per CrUX) pick the WebP. The <img> stays as the
-      fallback for the rare browser that doesn't accept image/webp.
-
-      If verification shows the <source> line missing in rendered HTML,
-      the image_url filter may genuinely not work in Pipeline 6.1.3 —
-      revert by removing the <picture>/<source> wrapper and keeping just
-      the <img>.
+      Responsive WebP srcset — <picture>+<source> pattern so modern browsers (~98%
+      of HairMNL traffic) pick the WebP; the <img> is the universal fallback.
+      Pass `_img` (raw Image object) into image_url — using `.src` (URL string)
+      silently drops the format: param.
     {%- endcomment -%}
     {%- assign _img = product.featured_image -%}
     <picture>
@@ -170,35 +171,33 @@
         alt="{{ _img.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
     </picture>
     {{ sticker }}
-    {%- comment -%} product-labels disabled 2026-04-27 pending team decision (bd spz). Renders duplicate sale label alongside .product__badge--custom. Snippet kept in /snippets/ for future re-enable. {%- endcomment -%}
+    {%- comment -%} product-labels disabled 2026-04-27 pending team decision (bd spz). Snippet kept in /snippets/ for future re-enable. {%- endcomment -%}
     {%- comment -%} {% render 'product-labels', product: product %} {%- endcomment -%}
   </a>
 
   <div class="figcaption {{ settings.product_grid_style }} {{ settings.collection_text_alignment | default: 'text-center' }}">
     <a href="{{ product.url | within: collection | capitalize }}">
-      <p class="h6 name_wrapper">
-        {%- comment -%}
-          Strip brand prefix from displayed title — on a brand landing
-          page (Kérastase / L'Oreal / Davines etc) the brand is already
-          in the page H1 + sidebar; repeating it on every card wraps
-          long titles into 6+ lines and overflows the 140px figcaption
-          height cap, bleeding content into the next section. Alt text
-          and SEO title remain fully qualified.
-        {%- endcomment -%}
-        {{ product.title | replace: "L'Oréal Professionnel ", '' | replace: "L'Oreal Professionnel ", '' | replace: 'L’Oréal Professionnel ', '' | replace: 'Kérastase ', '' | replace: 'Kerastase ', '' | replace: 'Davines ', '' | replace: 'Naturaltech Davines ', '' | replace: 'AVEDA ', '' | replace: 'Aveda ', '' | replace: 'K18 ', '' | replace: 'Schwarzkopf Professional ', '' | replace: 'Bed Head By TIGI ', '' | replace: 'Wella Professionals ', '' | replace: 'Revlon Professional ', '' }}
+      {%- comment -%}
+        Strip brand prefix — on branded landing pages the brand is already in
+        the page H1 + sidebar; repeating it on every card wraps long titles and
+        overflows the figcaption height cap. Alt text + SEO title remain qualified.
+        product_title_font / product_title_font_size are set by sub-collection callers only.
+      {%- endcomment -%}
+      <p class="h6 name_wrapper"{% if product_title_font and product_title_font != blank %} style="font-family: {{ product_title_font }}; font-size: {{ product_title_font_size }}px;"{% endif %}>
+        {{ product.title | replace: "L'Oréal Professionnel ", '' | replace: "L'Oreal Professionnel ", '' | replace: 'L'Oréal Professionnel ', '' | replace: 'Kérastase ', '' | replace: 'Kerastase ', '' | replace: 'Davines ', '' | replace: 'Naturaltech Davines ', '' | replace: 'AVEDA ', '' | replace: 'Aveda ', '' | replace: 'K18 ', '' | replace: 'Schwarzkopf Professional ', '' | replace: 'Bed Head By TIGI ', '' | replace: 'Wella Professionals ', '' | replace: 'Revlon Professional ', '' }}
       </p>
-      <p class="price_wrapper">
+      {% include 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true %}
+
+      <p class="price_wrapper"{% if product_price_font and product_price_font != blank %} style="font-family: {{ product_price_font }}; font-size: {{ product_price_font_size }}px;"{% endif %}>
         <span class="price{% if on_sale %} on-sale{% endif %}">
           {% if product.price_varies %}
             {{ 'products.general.from' | t }}
           {% endif %}
           <span class="money">{{ WCProduct_Price | money }}</span>
         </span>
-        {% comment %}
-        {% if sold_out %}
-        <br /><em>{{ 'products.product.sold_out' | t }}</em>
-        {% endif %}
-        {% endcomment %}
+        {%- if show_soldout and sold_out -%}
+          <br/><em>{{ 'products.product.sold_out' | t }}</em>
+        {%- endif -%}
         {% if on_sale %}
           <span class="compare-at">
             <span class="money">{{ WCProduct_ComparePrice | money }}</span>
