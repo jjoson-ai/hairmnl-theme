@@ -1,4 +1,10 @@
 window.theme = window.theme || {};
+// Modernizr shim — full Modernizr library removed 2026-04-xx; only .touch was used.
+// Native equivalent: 'ontouchstart' in window covers iOS/Android; maxTouchPoints covers
+// Windows touch + iPad-as-desktop-Safari. Both needed for full cross-browser coverage.
+window.Modernizr = window.Modernizr || {
+  touch: ('ontouchstart' in window) || (navigator.maxTouchPoints > 0)
+};
 
 /**
  * @license
