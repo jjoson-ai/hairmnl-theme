@@ -212,6 +212,33 @@
       sizes="(min-width: 768px), 50vw, 100vw">
     {% endif %}
 
+    {%- comment -%}
+      Article hero LCP preload 2026-05-04 (issue 9hw). GA4 RUM showed
+      40–88% poor LCP on hair-education blog articles. The hero snippet
+      was loading="lazy" by default. Adding eager:true on the render call
+      (sections/article.liquid) adds fetchpriority=high, but the browser
+      still discovers the image late (after CSS/JS preload finishes).
+      This <link rel=preload> lets the browser queue the WebP fetch
+      during initial HTML parse — the browser preload scanner picks it
+      up before render-blocking resources finish.
+      Gated on request.page_type == 'article' + article.image so it only
+      fires on blog article pages that actually have a hero image.
+      imagesrcset/imagesizes are the correct attributes for preloading
+      responsive images (not srcset/sizes which are for <img>/<source>).
+    {%- endcomment -%}
+    {%- if request.page_type == 'article' and article.image -%}
+      <link
+        rel="preload"
+        as="image"
+        href="{{ article.image | image_url: width: 900, format: 'webp' }}"
+        imagesrcset="{%- if article.image.width >= 540 -%}{{ article.image | image_url: width: 540, format: 'webp' }} 540w,{%- endif -%}
+          {%- if article.image.width >= 900 -%}{{ article.image | image_url: width: 900, format: 'webp' }} 900w,{%- endif -%}
+          {%- if article.image.width >= 1400 -%}{{ article.image | image_url: width: 1400, format: 'webp' }} 1400w,{%- endif -%}
+          {%- if article.image.width >= 1800 -%}{{ article.image | image_url: width: 1800, format: 'webp' }} 1800w{%- endif -%}"
+        imagesizes="100vw"
+        type="image/webp">
+    {%- endif -%}
+
     {%- if settings.favicon != blank -%}
       <link
         rel="shortcut icon"

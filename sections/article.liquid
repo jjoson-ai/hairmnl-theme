@@ -26,7 +26,16 @@
 
   {%- if article.image and section.settings.blog_show_featured_image -%}
     <div data-overlay-header>
-      {% render 'hero', img_object: article.image, frame_height_class: section.settings.image_height, bg_position: section.settings.bg_position %}
+      {%- comment -%}
+        LCP fix 2026-05-04 (issue 9hw): pass eager:true so hero snippet
+        renders loading="eager" + fetchpriority="high" on the article
+        hero <img>. GA4 RUM showed 40–88% poor LCP on hair-education
+        articles; root cause was the default loading="lazy" deferring
+        the above-the-fold hero image until after scroll detection.
+        Companion <link rel="preload"> in layout/theme.liquid preloads
+        the WebP srcset variant during initial HTML parse.
+      {%- endcomment -%}
+      {% render 'hero', img_object: article.image, frame_height_class: section.settings.image_height, bg_position: section.settings.bg_position, eager: true %}
     </div>
   {%- endif -%}
 
