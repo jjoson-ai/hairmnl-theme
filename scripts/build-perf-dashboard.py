@@ -385,12 +385,38 @@ def query_ga4_rum(days: int = 7) -> dict:
         print(f"  GA4 RUM: JS error query failed (likely no js_error events yet): {e}", file=sys.stderr)
         errors = []
 
+    # WoW comparison: previous period (days+1 .. days*2 ago) for INP + CLS
+    print("  GA4 RUM: querying WoW comparison (INP + CLS)...", flush=True)
+    wow = {}
+    for metric_name in ("INP", "CLS"):
+        try:
+            r = client.run_report(RunReportRequest(
+                property=prop,
+                date_ranges=[DateRange(start_date=f"{days * 2}daysAgo", end_date=f"{days + 1}daysAgo")],
+                dimensions=[Dimension(name="customEvent:metric_rating")],
+                metrics=[Metric(name="eventCount")],
+                dimension_filter=_and(_eq("eventName", metric_name)),
+                limit=10,
+            ))
+            ratings = {"good": 0, "needs-improvement": 0, "poor": 0}
+            for row in r.rows:
+                rating = row.dimension_values[0].value or "(no rating)"
+                cnt = int(row.metric_values[0].value)
+                if rating in ratings:
+                    ratings[rating] += cnt
+            total = sum(ratings.values())
+            wow[metric_name] = {**ratings, "total": total,
+                                "p_good": ratings["good"] / total if total else 0}
+        except Exception as e:
+            print(f"  GA4 WoW {metric_name} failed: {e}", file=sys.stderr)
+
     return {
         "days": days,
         "metrics": metrics,
         "top_pages": top_pages,
         "top_inp_targets": inp_targets,
         "js_errors": errors,
+        "wow_prev": wow,
     }
 
 
@@ -699,6 +725,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <div class="card">
     __BASELINE_TABLE__
   </div>
+
+  <hr style="margin:32px 0 24px;border:0;border-top:2px solid var(--navy)">
+  <h2 id="wow-scorecard">INP + CLS Scorecard — Week-over-Week
+    <span class="h2-help">GA4 RUM · this week vs previous __RUM_DAYS__ days · click tabs to compare</span>
+  </h2>
+  __WOW_SCORECARD__
 
   <footer>
     Data sources: PSI v5 API · CrUX HTTP API · GA4 Data API (property 248106289)<br>
@@ -1022,6 +1054,109 @@ def render_js_errors(errors):
     return "\n".join(rows)
 
 
+def render_wow_scorecard(metrics_this: dict, wow_prev: dict, days: int) -> str:
+    """
+    WoW scorecard for INP + CLS: this-week vs last-week good% side by side.
+    metrics_this = rum["metrics"]  (current period)
+    wow_prev     = rum["wow_prev"] (previous period, keyed by metric name)
+    """
+    if not metrics_this and not wow_prev:
+        return '<div class="empty">No RUM data yet — run the script after 7+ days of GA4 Custom Events.</div>'
+
+    TARGETS_90D = {
+        "INP": {"good_pct": 75, "p75_ms": 200,  "label": "≤200 ms p75 · ≥75% good"},
+        "CLS": {"good_pct": 75, "p75_val": 0.10, "label": "≤0.10 p75 · ≥75% good (mobile from ~0.30 → <0.10)"},
+    }
+
+    def _wow_card(metric_name):
+        this = metrics_this.get(metric_name, {})
+        prev = wow_prev.get(metric_name, {})
+        this_total = this.get("total", 0)
+        prev_total = prev.get("total", 0)
+        this_pct = this.get("p_good", 0) * 100
+        prev_pct = prev.get("p_good", 0) * 100
+
+        if this_total == 0:
+            return (f'<div class="card" style="flex:1;min-width:260px">'
+                    f'<h3>{metric_name} — Week-over-Week{_tooltip(metric_name)}</h3>'
+                    f'<div class="empty">No events this period.</div></div>')
+
+        delta = this_pct - prev_pct
+        delta_html = ""
+        if prev_total > 0:
+            sign = "+" if delta > 0 else ""
+            klass = "improve" if delta > 0 else ("regress" if delta < 0 else "")
+            arrow = "↑" if delta > 0 else ("↓" if delta < 0 else "→")
+            delta_html = (f'<div class="delta {klass}" style="font-size:14px;margin-top:4px">'
+                          f'{arrow} {sign}{delta:.1f} pp vs prev {days}d</div>')
+
+        target = TARGETS_90D.get(metric_name, {})
+        target_pct = target.get("good_pct", 75)
+        passes = this_pct >= target_pct
+        badge = ('<span class="badge pass" style="font-size:11px">✓ PASS</span>' if passes
+                 else '<span class="badge fail" style="font-size:11px">✗ FAIL</span>')
+
+        this_g = this.get("good", 0); this_ni = this.get("needs-improvement", 0); this_p = this.get("poor", 0)
+        gp = this_g / this_total * 100 if this_total else 0
+        nip = this_ni / this_total * 100 if this_total else 0
+        pp = this_p / this_total * 100 if this_total else 0
+
+        prev_block = ""
+        if prev_total > 0:
+            prev_g = prev.get("good", 0); prev_ni = prev.get("needs-improvement", 0); prev_p = prev.get("poor", 0)
+            pgp = prev_g / prev_total * 100; pnip = prev_ni / prev_total * 100; ppp = prev_p / prev_total * 100
+            prev_block = f'''
+            <div style="margin-top:14px">
+              <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">
+                Prev {days}d ({prev_total:,} events)
+              </div>
+              <div class="rating-stack">
+                <span class="good" style="flex:{pgp}"></span>
+                <span class="warn" style="flex:{pnip}"></span>
+                <span class="poor" style="flex:{ppp}"></span>
+              </div>
+              <div class="stack-legend">{pgp:.0f}% good · {pnip:.0f}% NI · {ppp:.0f}% poor</div>
+            </div>'''
+
+        return f'''
+        <div class="card" style="flex:1;min-width:260px">
+          <h3>{metric_name} — Week-over-Week{_tooltip(metric_name)}</h3>
+          <div style="font-size:36px;font-weight:700;color:{'var(--green)' if passes else 'var(--amber)'};line-height:1">
+            {this_pct:.0f}%
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">good · {this_total:,} events {badge}</div>
+          {delta_html}
+          <div class="rating-stack" style="margin-top:12px">
+            <span class="good" style="flex:{gp}"></span>
+            <span class="warn" style="flex:{nip}"></span>
+            <span class="poor" style="flex:{pp}"></span>
+          </div>
+          <div class="stack-legend">{gp:.0f}% good · {nip:.0f}% NI · {pp:.0f}% poor</div>
+          {prev_block}
+        </div>'''
+
+    inp_card = _wow_card("INP")
+    cls_card = _wow_card("CLS")
+
+    target_block = f'''
+    <div class="note" style="margin-top:20px">
+      <strong>90-day targets</strong> (end of Q3 2026)<br>
+      <strong>INP:</strong> {TARGETS_90D["INP"]["label"]}<br>
+      <strong>CLS:</strong> {TARGETS_90D["CLS"]["label"]}<br>
+      <span style="color:var(--text-muted)">
+        Threshold: ≥75% good = CWV PASS (Google Search ranking signal).
+        Current sprint: mobile CLS p75 from ~0.30 → &lt;0.10 via layout-shift fixes.
+      </span>
+    </div>'''
+
+    return f'''
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      {inp_card}
+      {cls_card}
+    </div>
+    {target_block}'''
+
+
 def render_baseline_table(psi_now):
     if not psi_now:
         return '<div class="empty">No PSI data to compare.</div>'
@@ -1123,6 +1258,11 @@ def render_html(snapshots: list[dict]) -> str:
     html = html.replace("__INP_TARGETS__", render_inp_targets(rum.get("top_inp_targets", [])))
     html = html.replace("__JS_ERRORS__", render_js_errors(rum.get("js_errors", [])))
     html = html.replace("__BASELINE_TABLE__", render_baseline_table(psi_mobile))
+    html = html.replace("__WOW_SCORECARD__", render_wow_scorecard(
+        rum.get("metrics", {}),
+        rum.get("wow_prev", {}),
+        rum.get("days", 7),
+    ))
     html = html.replace("__CHART_DATA__", json.dumps(chart_data))
     # Inline tooltips for friction page section headers + trend chart cards
     html = html.replace("__TIP_LCP__", _tooltip("LCP"))
