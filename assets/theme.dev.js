@@ -4110,7 +4110,7 @@
 
     lockState() {
       this.latestClick.querySelector('.item--loadbar').style.display = 'block';
-      this.loader.classList.add(classes$b.loading);
+      this.latestClick.classList.add(classes$b.loading);
     }
 
     updateCart(clickedKey, newQuantity) {

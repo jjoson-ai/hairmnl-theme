@@ -2756,7 +2756,7 @@ if((typeof Shopify.getCart) === 'undefined'){
         }
         lockState() {
             this.latestClick.querySelector(".item--loadbar").style.display = "block",
-            this.loader.classList.add(an)
+            this.latestClick.classList.add(an)
         }
         updateCart(t, e) {
             let i = null
