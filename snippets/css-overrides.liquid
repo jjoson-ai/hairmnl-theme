@@ -412,4 +412,45 @@
     right: 0 !important;
     contain: layout !important;
   }
+
+  /* CLS fix 2026-05-04 3uw — BOGOS/Secomapp Free Gifts gift image + notification containers.
+
+     DOM structure confirmed from live page source:
+       <div id="freegifts-main-popup-container" class="freegifts-main-container sca-modal-fg"
+            data-animation="slideInOutTop"></div>
+       <div id="sca-fg-notifications" class="sca-fg-notifications"></div>
+
+     These divs are injected into <body> as empty elements during initial HTML parse.
+     BOGOS JS later populates them with content (images, promotion bars).
+     The BOGOS inline CSS block — including #sca-gift-thumbnail .sca-gift-image — is
+     also injected at JS runtime, creating a lifecycle gap where:
+     1. Div exists in document flow (empty but in flow)
+     2. JS fires → injects content → size jumps from 0 → full height
+     3. BOGOS CSS block loads → applies position (too late)
+     = layout shift on PDP.
+
+     Fix A: .sca-gift-image — pre-declare 160×160 from our <head> CSS so the browser
+     reserves space before BOGOS's own CSS lands. Dimensions confirmed from BOGOS's own
+     inline CSS: "#sca-gift-thumbnail .sca-gift-image { width: 160px; max-height: 160px; }".
+     aspect-ratio: 1/1 + object-fit: cover ensures images that are slightly non-square
+     still fit without causing height instability.
+
+     Fix B: Force the notification and modal containers to position:fixed + contain:layout
+     before they receive content. Our <head> CSS wins the race against BOGOS's runtime
+     injection — same mechanism as e4a-γ (Klaviyo) and e4a-δ (LoyaltyLion) fixes.
+
+     Caveat: #sca-promotion-glider (also present in BOGOS inline CSS) may still shift
+     content if it renders inline. Monitor GA4 CLS attribution for this selector. */
+  .sca-gift-image {
+    width: 160px;
+    height: 160px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  #freegifts-main-popup-container,
+  #sca-fg-notifications {
+    position: fixed !important;
+    contain: layout !important;
+  }
 </style>
