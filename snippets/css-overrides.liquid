@@ -475,4 +475,17 @@
     display: block;
     contain: layout;
   }
+
+  /* A11y fix 9ct-1 — LoyaltyLion notification action button contrast.
+     Lighthouse color-contrast audit flags .lion-notification__action-button
+     (and its alias .lion-action-button) because LoyaltyLion's default palette
+     can render light-on-light or dark-on-dark depending on theme background.
+     Override to HairMNL's high-contrast palette: dark text on white, meeting
+     WCAG AA (4.5:1 ratio on normal text). */
+  .lion-notification__action-button,
+  .lion-action-button {
+    color: #1a1a1a !important;
+    background-color: #ffffff !important;
+    border: 1px solid #1a1a1a !important;
+  }
 </style>

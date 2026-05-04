@@ -970,6 +970,39 @@
   </style>
 
   <script src="https://satcb.azureedge.net/Scripts/satcb.min.js?shop=creations-gdc.myshopify.com" async="async" defer="defer"></script>
+
+  {%- comment -%}
+    A11y fix 9ct-3 — cc-dismiss label-content-name-mismatch.
+    Nova EU Cookie Bar injects a button with aria-label="dismiss cookie message"
+    whose visible text (e.g. "Got it" or "Dismiss") often doesn't contain the
+    full aria-label string, triggering Lighthouse label-content-name-mismatch.
+    Fix: after the cookieconsent banner mounts, sync the aria-label to the
+    button's own textContent so they match. Uses MutationObserver because
+    the banner is injected asynchronously after DOMContentLoaded.
+    Zero TBT cost — observer fires once then disconnects.
+  {%- endcomment -%}
+  <script>
+    (function () {
+      function fixCcDismissLabel(el) {
+        var text = el.textContent && el.textContent.trim();
+        if (text) el.setAttribute('aria-label', text);
+      }
+      var existing = document.querySelector('.cc-dismiss');
+      if (existing) { fixCcDismissLabel(existing); return; }
+      var obs = new MutationObserver(function (mutations, o) {
+        for (var i = 0; i < mutations.length; i++) {
+          for (var j = 0; j < mutations[i].addedNodes.length; j++) {
+            var node = mutations[i].addedNodes[j];
+            if (!node.querySelector) continue;
+            var btn = node.classList && node.classList.contains('cc-dismiss')
+              ? node : node.querySelector('.cc-dismiss');
+            if (btn) { fixCcDismissLabel(btn); o.disconnect(); return; }
+          }
+        }
+      });
+      obs.observe(document.body, { childList: true, subtree: true });
+    })();
+  </script>
   </body>
     {% render 'freegifts-snippet-change' %}
 </html>
