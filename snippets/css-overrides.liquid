@@ -453,4 +453,26 @@
     position: fixed !important;
     contain: layout !important;
   }
+
+  /* CLS fix 2026-05-04 c8k — /collections/all 40.7% poor CLS — defensive fixes.
+
+     PRIMARY fix: BOGOS containers above (3uw) also apply on /collections/all.
+     #freegifts-main-popup-container + #sca-fg-notifications are injected into
+     every page body including /collections/all — their position:fixed + contain:layout
+     above is the main CLS fix for the collection page.
+
+     SECONDARY fix: <limespot> custom element.
+     Browsers treat unknown HTML elements as display:inline (0×0 size). LimeSpot's
+     SDK (edge.personalizer.io/storefront/2.0.0/js/shopify/storefront.min.js, deferred)
+     injects a recommendation row into the <limespot> custom element after parse.
+     The custom element grows from 0 → ~400px, shifting the footer below <main>.
+     Footer is typically below-fold on /collections/all (100+ products above it),
+     so viewport-visible CLS impact is low — but pre-declaring display:block +
+     contain:layout eliminates the shift entirely without visual side-effects.
+     contain:layout also prevents LimeSpot's internal carousel reflows (Flickity/Swiper
+     init inside the widget) from cascading to page siblings. */
+  limespot {
+    display: block;
+    contain: layout;
+  }
 </style>
