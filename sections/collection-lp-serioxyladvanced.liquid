@@ -11,9 +11,9 @@
       {%- assign grid_offset = 'push--large-up--one-quarter' -%}
     {%- endif -%}
   {%- when 3 -%}
-    {%- assign grid_width_large = 'large--one-third' -%}
+    {%- assign grid_width_large = 'large-up--one-third' -%}
     {%- if products_count == 1 -%}
-      {%- assign grid_offset = 'push--large--one-third' -%}
+      {%- assign grid_offset = 'push--large-up--one-third' -%}
     {%- elsif products_count == 2 -%}
       {%- assign grid_offset = '' -%}
     {%- endif -%}
@@ -75,7 +75,7 @@
   {%- assign product_count = 20 -%}
 {%- elsif grid_width_large == 'large--one-half' -%}
   {%- assign product_count = 50 -%}
-{%- elsif grid_width_large == 'large--one-third' -%}
+{%- elsif grid_width_large == 'large-up--one-third' -%}
   {%- assign product_count = 48 -%}
 {%- elsif grid_width_large == 'large-up--one-quarter' -%}
   {%- assign product_count = 48 -%}
@@ -193,7 +193,7 @@
               <div class="grid {% if settings.image_autoheight_enable %} image_autoheight_enable{% endif %}">
                 {% unless collections[featured_collection_1_handle] == blank %}
                   {% assign featured_collection_1 = collections[featured_collection_1_handle] %}
-                  <div class="grid__item large--one-third product-grid-item featured-collection">
+                  <div class="grid__item large-up--one-third product-grid-item featured-collection">
                     <a href="{{ featured_collection_1.url }}">
                       {% if featured_collection_1.image %}
                         <img src="{{ featured_collection_1.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_1.title }} Collection Image">
@@ -210,7 +210,7 @@
 
                 {% unless collections[featured_collection_2_handle] == blank %}
                   {% assign featured_collection_2 = collections[featured_collection_2_handle] %}
-                  <div class="grid__item large--one-third product-grid-item featured-collection">
+                  <div class="grid__item large-up--one-third product-grid-item featured-collection">
                     <a href="{{ featured_collection_2.url }}">
                       {% if featured_collection_2.image %}
                         <img src="{{ featured_collection_2.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_2.title }} Collection Image">
@@ -227,7 +227,7 @@
 
                 {% unless collections[featured_collection_3_handle] == blank %}
                   {% assign featured_collection_3 = collections[featured_collection_3_handle] %}
-                  <div class="grid__item large--one-third product-grid-item featured-collection">
+                  <div class="grid__item large-up--one-third product-grid-item featured-collection">
                     <a href="{{ featured_collection_3.url }}">
                       {% if featured_collection_3.image %}
                         <img src="{{ featured_collection_3.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_3.title }} Collection Image">
@@ -253,6 +253,7 @@
 {% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
 {% assign base_product = product %}
 {% assign base_variant = product.selected_or_first_available_variant %}
+
 {% if shop.metafields.sawholesale['base_price'] == blank %}
   {% assign base_price = 'compare_at_price' %}
 {% else %}
@@ -342,123 +343,123 @@
                   <div class="mobile-only grid__item">
                     <div>{{ block.settings.right_text_html }}</div>
                   </div>
-                  <div class="grid__item small--one-half medium--one-half large--one-third product-grid-item">  
-                    <img src="{{ block.settings.left_media_html | img_url: '1800x' }}">
+                  <div class="grid__item small--one-half medium--one-half large-up--one-third product-grid-item">
+                    <img src="{{ block.settings.left_media_html | img_url: '1800x' }}" alt="{{ block.settings.left_media_html_alt }}">
                   </div>
-                  <div class="grid__item small--one-half medium--one-half large--one-third product-grid-item no-pad-left pad-right-30">
-                    <img src="{{ block.settings.middle_media_html | img_url: '1800x' }}">
+                  <div class="grid__item small--one-half medium--one-half large-up--one-third product-grid-item no-pad-left pad-right-30">
+                    <img src="{{ block.settings.middle_media_html | img_url: '1800x' }}" alt="{{ block.settings.middle_media_html_alt }}">
                   </div>
-                  <div class="grid__item small--one-half medium--one-half large--one-third tagged no-pad-left">
+                  <div class="grid__item small--one-half medium--one-half large-up--one-third tagged no-pad-left">
                       <div class="desktop-only">{{ block.settings.right_text_html }}</div>
                   </div>
               </div>
             
               {% when "3x3_grid_tile" %}
               <!-- 3X3 Grid -->
-              <div class="grid 3x3_grid_tile margin-bottom-20 collection-branded"> 
+              <div class="grid 3x3_grid_tile margin-bottom-20 collection-branded">
                 {% if block.settings.product_image_1 != "" %}
-                <div class="grid__item small--one-whole medium--one-third large--one-third product-grid-item">  
-                  <img src="{{ block.settings.product_image_1 | img_url: '800x', crop: 'center' }}">
+                <div class="grid__item small--one-whole medium--one-third large-up--one-third product-grid-item">
+                  <img src="{{ block.settings.product_image_1 | img_url: '800x', crop: 'center' }}" alt="{{ block.settings.product_image_1_alt }}">
                   <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_1 }}</div>
                   {% unless block.settings.link_url_1 == blank %}
-                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a> 
-                  {% endunless %}           
+                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a>
+                  {% endunless %}
                 </div>
                 {% endif %}
                 {% if block.settings.product_image_2 != "" %}
-                <div class="grid__item small--one-whole medium--one-third large--one-third product-grid-item">  
-                  <img src="{{ block.settings.product_image_2 | img_url: '800x', crop: 'center' }}">
+                <div class="grid__item small--one-whole medium--one-third large-up--one-third product-grid-item">
+                  <img src="{{ block.settings.product_image_2 | img_url: '800x', crop: 'center' }}" alt="{{ block.settings.product_image_2_alt }}">
                   <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_2 }}</div>
                   {% unless block.settings.link_url_2 == blank %}
-                  <a href="{{ block.settings.link_url_2 }}"><h5>{{ block.settings.link_label_2 }}</h5></a> 
-                  {% endunless %}           
+                  <a href="{{ block.settings.link_url_2 }}"><h5>{{ block.settings.link_label_2 }}</h5></a>
+                  {% endunless %}
                 </div>
                 {% endif %}
                 {% if block.settings.product_image_3 != "" %}
-                <div class="grid__item small--one-whole medium--one-third large--one-third product-grid-item">  
-                  <img src="{{ block.settings.product_image_3 | img_url: '800x', crop: 'center' }}">
+                <div class="grid__item small--one-whole medium--one-third large-up--one-third product-grid-item">
+                  <img src="{{ block.settings.product_image_3 | img_url: '800x', crop: 'center' }}" alt="{{ block.settings.product_image_3_alt }}">
                   <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_3 }}</div>
                   {% unless block.settings.link_url_3 == blank %}
-                  <a href="{{ block.settings.link_url_3 }}"><h5>{{ block.settings.link_label_3 }}</h5></a> 
-                  {% endunless %}           
+                  <a href="{{ block.settings.link_url_3 }}"><h5>{{ block.settings.link_label_3 }}</h5></a>
+                  {% endunless %}
                 </div>
                 {% endif %}
             </div>
             
             {% when "4x3_grid_tile" %}
               <!-- 4X3 Grid -->
-              <div class="grid 3x3_grid_tile margin-bottom-20 collection-branded"> 
+              <div class="grid 3x3_grid_tile margin-bottom-20 collection-branded">
                 {% if block.settings.product_image_1 != "" %}
-                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">  
-                  <img src="{{ block.settings.product_image_1 | img_url: '800x', crop: 'center' }}">
+                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">
+                  <img src="{{ block.settings.product_image_1 | img_url: '800x', crop: 'center' }}" alt="{{ block.settings.product_image_1_alt }}">
                   <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_1 }}</div>
                   {% unless block.settings.link_url_1 == blank %}
-                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a> 
-                  {% endunless %}           
+                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a>
+                  {% endunless %}
                 </div>
                 {% endif %}
                 {% if block.settings.product_image_2 != "" %}
-                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">  
-                  <img src="{{ block.settings.product_image_2 | img_url: '800x', crop: 'center' }}">
+                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">
+                  <img src="{{ block.settings.product_image_2 | img_url: '800x', crop: 'center' }}" alt="{{ block.settings.product_image_2_alt }}">
                   <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_2 }}</div>
                   {% unless block.settings.link_url_2 == blank %}
-                  <a href="{{ block.settings.link_url_2 }}"><h5>{{ block.settings.link_label_2 }}</h5></a> 
-                  {% endunless %}           
+                  <a href="{{ block.settings.link_url_2 }}"><h5>{{ block.settings.link_label_2 }}</h5></a>
+                  {% endunless %}
                 </div>
                 {% endif %}
                 {% if block.settings.product_image_3 != "" %}
-                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">  
-                  <img src="{{ block.settings.product_image_3 | img_url: '800x', crop: 'center' }}">
+                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">
+                  <img src="{{ block.settings.product_image_3 | img_url: '800x', crop: 'center' }}" alt="{{ block.settings.product_image_3_alt }}">
                   <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_3 }}</div>
                   {% unless block.settings.link_url_3 == blank %}
-                  <a href="{{ block.settings.link_url_3 }}"><h5>{{ block.settings.link_label_3 }}</h5></a> 
-                  {% endunless %}           
+                  <a href="{{ block.settings.link_url_3 }}"><h5>{{ block.settings.link_label_3 }}</h5></a>
+                  {% endunless %}
                 </div>
                 {% endif %}
                 {% if block.settings.product_image_4 != "" %}
-                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">  
-                  <img src="{{ block.settings.product_image_4 | img_url: '800x', crop: 'center' }}">
+                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">
+                  <img src="{{ block.settings.product_image_4 | img_url: '800x', crop: 'center' }}" alt="{{ block.settings.product_image_4_alt }}">
                   <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_4 }}</div>
                   {% unless block.settings.link_url_4 == blank %}
-                  <a href="{{ block.settings.link_url_4 }}"><h5>{{ block.settings.link_label_4 }}</h5></a> 
-                  {% endunless %}           
+                  <a href="{{ block.settings.link_url_4 }}"><h5>{{ block.settings.link_label_4 }}</h5></a>
+                  {% endunless %}
                 </div>
                 {% endif %}
             </div>
             
             {% when "2x3_grid_tile" %}
               <!-- 2X3 Grid -->
-              <div class="grid 2x3_grid_tile margin-bottom-20 collection-branded"> 
+              <div class="grid 2x3_grid_tile margin-bottom-20 collection-branded">
                 {% if block.settings.product_image_1 != "" %}
-                <div class="grid__item small--one-whole medium--one-half large--one-half product-grid-item">  
-                  <img src="{{ block.settings.product_image_1 | img_url: '800x', crop: 'center' }}">
+                <div class="grid__item small--one-whole medium--one-half large--one-half product-grid-item">
+                  <img src="{{ block.settings.product_image_1 | img_url: '800x', crop: 'center' }}" alt="{{ block.settings.product_image_1_alt }}">
                   <div class="2x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_1 }}</div>
                   {% unless block.settings.link_url_1 == blank %}
-                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a> 
-                  {% endunless %}           
+                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a>
+                  {% endunless %}
                 </div>
                 {% endif %}
                 {% if block.settings.product_image_2 != "" %}
-                <div class="grid__item small--one-whole medium--one-half large--one-half product-grid-item">  
-                  <img src="{{ block.settings.product_image_2 | img_url: '800x', crop: 'center' }}">
+                <div class="grid__item small--one-whole medium--one-half large--one-half product-grid-item">
+                  <img src="{{ block.settings.product_image_2 | img_url: '800x', crop: 'center' }}" alt="{{ block.settings.product_image_2_alt }}">
                   <div class="2x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_2 }}</div>
                   {% unless block.settings.link_url_2 == blank %}
-                  <a href="{{ block.settings.link_url_2 }}"><h5>{{ block.settings.link_label_2 }}</h5></a> 
-                  {% endunless %}           
+                  <a href="{{ block.settings.link_url_2 }}"><h5>{{ block.settings.link_label_2 }}</h5></a>
+                  {% endunless %}
                 </div>
                 {% endif %}
             </div>
             
             {% when "1x3_grid_tile" %}
               <!-- 1X3 Grid -->
-              <div class="grid 2x3_grid_tile margin-bottom-20 collection-branded"> 
+              <div class="grid 2x3_grid_tile margin-bottom-20 collection-branded">
                 {% if block.settings.product_image_1 != "" %}
-                <div class="grid__item small--one-whole medium--one-half large--one-half product-grid-item">  
-                  <img src="{{ block.settings.product_image_1 | img_url: '300x300', crop: 'center' }}" align="center">
+                <div class="grid__item small--one-whole medium--one-half large--one-half product-grid-item">
+                  <img src="{{ block.settings.product_image_1 | img_url: '300x300', crop: 'center' }}" alt="{{ block.settings.product_image_1_alt }}" align="center">
                   <div class="2x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_1 }}</div>
                   {% unless block.settings.link_url_1 == blank %}
-                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a> 
-                  {% endunless %}           
+                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a>
+                  {% endunless %}
                 </div>
                 {% endif %}
               </div>
@@ -476,7 +477,7 @@
                     </div>
                     {{ block.settings.left_media_with_text_media_html }}
                   </div>
-                  <div class="grid__item large--one-third">
+                  <div class="grid__item large-up--one-third">
                     <div class="desktop-only">
                       <h4 class="h4--body rte section-title">{{ block.settings.left_media_with_text_section_title }}</h4>
                     </div>
@@ -488,7 +489,7 @@
                   <!-- Right Media with Text -->
                   <hr>
                   <div class="grid custom-section">
-                    <div class="grid__item large--one-third desktop-only">
+                    <div class="grid__item large-up--one-third desktop-only">
                       <h4 class="h4--body rte section-title">{{ block.settings.right_media_with_text_section_title }}</h4>
 
                       {{ block.settings.right_media_with_text_copy }}
@@ -502,7 +503,7 @@
                       </div>
                       {{ block.settings.right_media_with_text_media_html }}
                     </div>
-                    <div class="grid__item large--one-third mobile-only">
+                    <div class="grid__item large-up--one-third mobile-only">
                       {{ block.settings.right_media_with_text_copy }}
                     </div>
                   </div>
@@ -512,13 +513,10 @@
                   <!--<hr>-->
                   <div class="grid custom-section">
                     <div class="grid__item large--one-half">
-                      {% comment %}
-                        TODO: Add alt-text and customisation for image location
-                      {% endcomment %}
                       <div class="mobile-only">
                         <h4 class="h4--body rte section-title">{{ block.settings.left_image_with_text_section_title }}</h4>
                       </div>
-                      <img src="{{ block.settings.left_image_with_text_image | img_url: '1800x' }}">
+                      <img src="{{ block.settings.left_image_with_text_image | img_url: '1800x' }}" alt="{{ block.settings.left_image_with_text_image_alt }}">
                     </div>
                     <div class="grid__item large--one-half">
                       <div class="desktop-only">
@@ -534,21 +532,18 @@
                   <!-- Right Image with Text -->
                    <!-- Removing so that no HR break for 3-step><hr><-->
                   <div class="grid custom-section">
-                    <div class="grid__item large--one-third desktop-only">
+                    <div class="grid__item large-up--one-third desktop-only">
                       <h4 class="h4--body rte section-title">{{ block.settings.right_image_with_text_section_title }}</h4>
 
                       {{ block.settings.right_image_with_text_copy }}
                     </div>
                     <div class="grid__item large--two-thirds">
-                      {% comment %}
-                        TODO: Add alt-text and customisation for image location
-                      {% endcomment %}
                       <div class="mobile-only">
                         <h4 class="h4--body rte section-title">{{ block.settings.right_image_with_text_section_title }}</h4>
                       </div>
-                      <img src="{{ block.settings.right_image_with_text_image | img_url: '1800x' }}">
+                      <img src="{{ block.settings.right_image_with_text_image | img_url: '1800x' }}" alt="{{ block.settings.right_image_with_text_image_alt }}">
                     </div>
-                    <div class="grid__item large--one-third mobile-only">
+                    <div class="grid__item large-up--one-third mobile-only">
                       {{ block.settings.right_image_with_text_copy }}
                     </div>
                   </div>
@@ -577,7 +572,7 @@
 
                         {{ block.settings.fw_text_with_image_copy }}
                       </div>
-                      <div><img src="{{ block.settings.fw_text_with_image_image | img_url: '1800x' }}"></div>
+                      <div><img src="{{ block.settings.fw_text_with_image_image | img_url: '1800x' }}" alt="{{ block.settings.fw_text_with_image_image_alt }}"></div>
                     </div>
                   </div>
 
@@ -777,7 +772,7 @@
               <div class="grid {% if settings.image_autoheight_enable %} image_autoheight_enable{% endif %}">
                 {% unless collections[discover_collection_1_handle] == blank %}
                   {% assign discover_collection_1 = collections[discover_collection_1_handle] %}
-                  <div class="grid__item large--one-third product-grid-item discover-collection">
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
                     <a href="{{ discover_collection_1.url }}">
                       {% if discover_collection_1.image %}
                         <img src="{{ discover_collection_1.image | img_url: '700x700', crop: 'center' }}" alt="{{ discover_collection_1.title }} Collection Image">
@@ -794,7 +789,7 @@
 
                 {% unless collections[discover_collection_2_handle] == blank %}
                   {% assign discover_collection_2 = collections[discover_collection_2_handle] %}
-                  <div class="grid__item large--one-third product-grid-item discover-collection">
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
                     <a href="{{ discover_collection_2.url }}">
                       {% if discover_collection_2.image %}
                         <img src="{{ discover_collection_2.image | img_url: '700x700', crop: 'center' }}" alt="{{ discover_collection_2.title }} Collection Image">
@@ -811,7 +806,7 @@
 
                 {% unless collections[discover_collection_3_handle] == blank %}
                   {% assign discover_collection_3 = collections[discover_collection_3_handle] %}
-                  <div class="grid__item large--one-third product-grid-item discover-collection">
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
                     <a href="{{ discover_collection_3.url }}">
                       {% if discover_collection_3.image %}
                         <img src="{{ discover_collection_3.image | img_url: '700x700', crop: 'center' }}" alt="{{ discover_collection_3.title }} Collection Image">
@@ -828,7 +823,7 @@
 
                 {% unless collections[discover_collection_4_handle] == blank %}
                   {% assign discover_collection_4 = collections[discover_collection_4_handle] %}
-                  <div class="grid__item large--one-third product-grid-item discover-collection">
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
                     <a href="{{ discover_collection_4.url }}">
                       {% if discover_collection_4.image %}
                         <img src="{{ discover_collection_4.image | img_url: '700x700', crop: 'center' }}" alt="{{ discover_collection_4.title }} Collection Image">
@@ -845,7 +840,7 @@
 
                 {% unless collections[discover_collection_5_handle] == blank %}
                   {% assign discover_collection_5 = collections[discover_collection_5_handle] %}
-                  <div class="grid__item large--one-third product-grid-item discover-collection">
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
                     <a href="{{ discover_collection_5.url }}">
                       {% if discover_collection_5.image %}
                         <img src="{{ discover_collection_5.image | img_url: '700x700', crop: 'center' }}" alt="{{ discover_collection_5.title }} Collection Image">
@@ -862,7 +857,7 @@
 
                 {% unless collections[discover_collection_6_handle] == blank %}
                   {% assign discover_collection_6 = collections[discover_collection_6_handle] %}
-                  <div class="grid__item large--one-third product-grid-item discover-collection">
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
                     <a href="{{ discover_collection_6.url }}">
                       {% if discover_collection_6.image %}
                         <img src="{{ discover_collection_6.image | img_url: '700x700', crop: 'center' }}" alt="{{ discover_collection_6.title }} Collection Image">
@@ -879,7 +874,7 @@
 
                 {% unless collections[discover_collection_7_handle] == blank %}
                   {% assign discover_collection_7 = collections[discover_collection_7_handle] %}
-                  <div class="grid__item large--one-third product-grid-item discover-collection">
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
                     <a href="{{ discover_collection_7.url }}">
                       {% if discover_collection_7.image %}
                         <img src="{{ discover_collection_7.image | img_url: '700x700', crop: 'center' }}" alt="{{ discover_collection_7.title }} Collection Image">
@@ -896,7 +891,7 @@
 
                 {% unless collections[discover_collection_8_handle] == blank %}
                   {% assign discover_collection_8 = collections[discover_collection_8_handle] %}
-                  <div class="grid__item large--one-third product-grid-item discover-collection">
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
                     <a href="{{ discover_collection_8.url }}">
                       {% if discover_collection_8.image %}
                         <img src="{{ discover_collection_8.image | img_url: '700x700', crop: 'center' }}" alt="{{ discover_collection_8.title }} Collection Image">
@@ -913,7 +908,7 @@
 
                 {% unless collections[discover_collection_9_handle] == blank %}
                   {% assign discover_collection_9 = collections[discover_collection_9_handle] %}
-                  <div class="grid__item large--one-third product-grid-item discover-collection">
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
                     <a href="{{ discover_collection_9.url }}">
                       {% if discover_collection_9.image %}
                         <img src="{{ discover_collection_9.image | img_url: '700x700', crop: 'center' }}" alt="{{ discover_collection_9.title }} Collection Image">
@@ -930,7 +925,7 @@
 
                 {% unless collections[discover_collection_10_handle] == blank %}
                   {% assign discover_collection_10 = collections[discover_collection_10_handle] %}
-                  <div class="grid__item large--one-third product-grid-item discover-collection">
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
                     <a href="{{ discover_collection_10.url }}">
                       {% if discover_collection_10.image %}
                         <img src="{{ discover_collection_10.image | img_url: '700x700', crop: 'center' }}" alt="{{ discover_collection_10.title }} Collection Image">
@@ -1323,9 +1318,19 @@
             "label": "Left Image"
           },
           {
+            "type": "text",
+            "id": "left_media_html_alt",
+            "label": "Left Image Alt Text"
+          },
+          {
             "type": "image_picker",
             "id": "middle_media_html",
             "label": "Center Image"
+          },
+          {
+            "type": "text",
+            "id": "middle_media_html_alt",
+            "label": "Center Image Alt Text"
           },
           {
             "type": "html",
@@ -1342,6 +1347,11 @@
             "type": "image_picker",
             "id": "product_image_1",
             "label": "Image 1"
+          },
+          {
+            "type": "text",
+            "id": "product_image_1_alt",
+            "label": "Image 1 Alt Text"
           },
           {
             "type": "html",
@@ -1365,6 +1375,11 @@
             "label": "Image 2"
           },
           {
+            "type": "text",
+            "id": "product_image_2_alt",
+            "label": "Image 2 Alt Text"
+          },
+          {
             "type": "html",
             "id": "description_2",
             "label": "Text Content (HTML)"
@@ -1384,6 +1399,11 @@
             "type": "image_picker",
             "id": "product_image_3",
             "label": "Image 3"
+          },
+          {
+            "type": "text",
+            "id": "product_image_3_alt",
+            "label": "Image 3 Alt Text"
           },
           {
             "type": "html",
@@ -1413,6 +1433,11 @@
             "label": "Image 1"
           },
           {
+            "type": "text",
+            "id": "product_image_1_alt",
+            "label": "Image 1 Alt Text"
+          },
+          {
             "type": "html",
             "id": "description_1",
             "label": "Text Content (HTML)"
@@ -1432,6 +1457,11 @@
             "type": "image_picker",
             "id": "product_image_2",
             "label": "Image 2"
+          },
+          {
+            "type": "text",
+            "id": "product_image_2_alt",
+            "label": "Image 2 Alt Text"
           },
           {
             "type": "html",
@@ -1455,6 +1485,11 @@
             "label": "Image 3"
           },
           {
+            "type": "text",
+            "id": "product_image_3_alt",
+            "label": "Image 3 Alt Text"
+          },
+          {
             "type": "html",
             "id": "description_3",
             "label": "Text Content (HTML)"
@@ -1473,7 +1508,12 @@
           {
             "type": "image_picker",
             "id": "product_image_4",
-            "label": "Image 3"
+            "label": "Image 4"
+          },
+          {
+            "type": "text",
+            "id": "product_image_4_alt",
+            "label": "Image 4 Alt Text"
           },
           {
             "type": "html",
@@ -1503,6 +1543,11 @@
             "label": "Image 1"
           },
           {
+            "type": "text",
+            "id": "product_image_1_alt",
+            "label": "Image 1 Alt Text"
+          },
+          {
             "type": "html",
             "id": "description_1",
             "label": "Text Content (HTML)"
@@ -1522,6 +1567,11 @@
             "type": "image_picker",
             "id": "product_image_2",
             "label": "Image 2"
+          },
+          {
+            "type": "text",
+            "id": "product_image_2_alt",
+            "label": "Image 2 Alt Text"
           },
           {
             "type": "html",
@@ -1549,6 +1599,11 @@
             "type": "image_picker",
             "id": "product_image_1",
             "label": "Image 1"
+          },
+          {
+            "type": "text",
+            "id": "product_image_1_alt",
+            "label": "Image 1 Alt Text"
           },
           {
             "type": "html",
@@ -1625,6 +1680,11 @@
             "label": "Image"
           },
           {
+            "type": "text",
+            "id": "left_image_with_text_image_alt",
+            "label": "Image Alt Text"
+          },
+          {
             "type": "html",
             "id": "left_image_with_text_copy",
             "label": "Text Content (HTML)"
@@ -1644,6 +1704,11 @@
             "type": "image_picker",
             "id": "right_image_with_text_image",
             "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "right_image_with_text_image_alt",
+            "label": "Image Alt Text"
           },
           {
             "type": "html",
@@ -1691,6 +1756,11 @@
             "type": "image_picker",
             "id": "fw_text_with_image_image",
             "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "fw_text_with_image_image_alt",
+            "label": "Image Alt Text"
           }
         ]
       },
