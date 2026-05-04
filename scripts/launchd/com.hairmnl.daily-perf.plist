@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!--
+    HairMNL — Daily perf dashboard refresh.
+
+    Fires every day at 6:00 AM local time. Runs the full dashboard build
+    (CrUX + PSI mobile + GA4 RUM). Mobile-only PSI keeps the run under
+    ~3 minutes. Desktop PSI is skipped here because we already track
+    desktop CrUX p75, which is the metric that matters for desktop.
+
+    This addresses the previous "frozen on May 1" issue: only the
+    weekly-perf job (Mondays only, --no-psi) was scheduled, so the
+    PSI chart on the dashboard stopped updating between Mondays.
+
+    Manual fire: launchctl start com.hairmnl.daily-perf
+    Inspect:     launchctl list | grep hairmnl
+    Logs:        ~/.local/log/hairmnl-daily-perf.log
+  -->
+  <key>Label</key>
+  <string>com.hairmnl.daily-perf</string>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/y9378348c/Projects/hairmnl-theme</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/y9378348c/Projects/hairmnl-theme/scripts/build-perf-dashboard.py</string>
+    <string>--psi-only-mobile</string>
+    <string>--psi-runs</string>
+    <string>2</string>
+  </array>
+
+  <!-- Daily 6:00 AM (Manila if system TZ is Asia/Manila, else local 6AM) -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>6</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <!-- If the Mac was asleep at 6 AM, run as soon as it wakes up. -->
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>GA4_PROPERTY_ID</key>
+    <string>248106289</string>
+    <key>PATH</key>
+    <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/y9378348c/.local/log/hairmnl-daily-perf.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/y9378348c/.local/log/hairmnl-daily-perf.log</string>
+</dict>
+</plist>
