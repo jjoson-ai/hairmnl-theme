@@ -381,4 +381,35 @@
     position: fixed !important;
     contain: layout !important;
   }
+
+  /* CLS fix 2026-05-04 0u4 — Booster EU Cookie Bar / Nova GDPR cookie banner:
+     The Nova EU Cookie Bar GDPR app embed (settings_data.json: nova-eu-cookie-bar-gdpr,
+     confirmed active) uses the cookieconsent library which:
+     1. Injects inline <style> into <head> at runtime via createElement
+     2. Creates .cc-window.cc-banner DOM (position:fixed in its own CSS)
+     Between step 1 and step 2 the element can briefly render in document
+     flow — same lifecycle gap as Klaviyo/LoyaltyLion above. Pre-loading
+     position:fixed in our <head> CSS wins the race because custom-theme.css
+     and css-overrides.liquid parse before any app script downloads.
+
+     Banner is bottom-aligned on desktop and mobile:
+     - .cc-window — base cookieconsent window class (all variants)
+     - .cc-window.cc-banner — the bottom-bar variant shown on HairMNL
+     bottom/left/right are explicit so the banner stays visible in its
+     correct position even if the cookieconsent CSS loads late or fails.
+
+     contain:layout prevents the fixed element's size/position from
+     affecting surrounding in-flow elements (belt-and-suspenders with
+     position:fixed, but required for accurate CLS attribution).
+
+     Caveat: if Nova/Booster changes its DOM class naming, this rule
+     becomes a no-op (harmless — falls back to their own CSS). */
+  .cc-window,
+  .cc-window.cc-banner {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    contain: layout !important;
+  }
 </style>
