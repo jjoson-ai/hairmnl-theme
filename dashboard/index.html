@@ -204,8 +204,8 @@
       <div>
         <h1>HairMNL — Performance Dashboard</h1>
         <div class="meta">
-          Last updated: <strong>2026-05-04 11:32 UTC</strong>
-          &nbsp;·&nbsp; Snapshots: <strong>15</strong>
+          Last updated: <strong>2026-05-04 18:55 UTC</strong>
+          &nbsp;·&nbsp; Snapshots: <strong>16</strong>
           &nbsp;·&nbsp; RUM window: <strong>last 7 days</strong>
         </div>
       </div>
@@ -221,10 +221,10 @@
     <button class="tab" data-tab="snapshot-desktop" onclick="switchTab(this)">🖥 Desktop</button>
   </div>
   <div class="tab-content active" id="snapshot-mobile">
-    <div class="kpi-grid"><div class="kpi warn"><div class="label">LCP<span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></div><div class="value">3.54 s</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi poor"><div class="label">CLS<span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></div><div class="value">0.270</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi warn"><div class="label">INP<span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></div><div class="value">272 ms</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi warn"><div class="label">FCP<span class="info" tabindex="0" aria-label="What is FCP?">ⓘ<span class="tip" role="tooltip">First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).<span class="goal"><strong>Goal:</strong> ≤ 1.8 s</span><span class="fix"><strong>How to act:</strong> reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.</span></span></span></div><div class="value">2.99 s</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi warn"><div class="label">TTFB<span class="info" tabindex="0" aria-label="What is TTFB?">ⓘ<span class="tip" role="tooltip">Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.<span class="goal"><strong>Goal:</strong> ≤ 800 ms</span><span class="fix"><strong>How to act:</strong> minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.</span></span></span></div><div class="value">896 ms</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div></div>
+    <div class="empty">No data captured for this form factor yet. CrUX needs ~28 days of Chrome traffic; PSI mobile sometimes fails for slow sites (<a href="https://chromeuxreport.googleapis.com" target="_blank">enable CrUX API</a> for the most reliable signal).</div>
   </div>
   <div class="tab-content" id="snapshot-desktop">
-    <div class="kpi-grid"><div class="kpi warn"><div class="label">LCP<span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></div><div class="value">3.03 s</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi warn"><div class="label">CLS<span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></div><div class="value">0.210</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">INP<span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></div><div class="value">136 ms</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi warn"><div class="label">FCP<span class="info" tabindex="0" aria-label="What is FCP?">ⓘ<span class="tip" role="tooltip">First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).<span class="goal"><strong>Goal:</strong> ≤ 1.8 s</span><span class="fix"><strong>How to act:</strong> reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.</span></span></span></div><div class="value">2.49 s</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">TTFB<span class="info" tabindex="0" aria-label="What is TTFB?">ⓘ<span class="tip" role="tooltip">Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.<span class="goal"><strong>Goal:</strong> ≤ 800 ms</span><span class="fix"><strong>How to act:</strong> minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.</span></span></span></div><div class="value">613 ms</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div></div>
+    <div class="empty">No data captured for this form factor yet. CrUX needs ~28 days of Chrome traffic; PSI mobile sometimes fails for slow sites (<a href="https://chromeuxreport.googleapis.com" target="_blank">enable CrUX API</a> for the most reliable signal).</div>
   </div>
 
   <h2>Trend over time — PSI Lab mobile
@@ -246,30 +246,265 @@
     <span class="h2-help">GA4 last 7 days · ≥75% good = PASS the CWV threshold</span>
   </h2>
   <div class="cwv-grid">
-    <div class="empty">No RUM data.</div>
+    
+        <div class="cwv ">
+          <div class="name">LCP<span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></div>
+          <div class="pct">86%</div>
+          <div class="total">good · 26,808 events <span class="badge pass">✓ PASS</span></div>
+          <div class="rating-stack">
+            <span class="good" style="flex: 85.56774097284394;"></span>
+            <span class="warn" style="flex: 7.385854968666069;"></span>
+            <span class="poor" style="flex: 7.046404058490004;"></span>
+          </div>
+          <div class="stack-legend">86% good · 7% NI · 7% poor</div>
+        </div>
+
+        <div class="cwv ">
+          <div class="name">CLS<span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></div>
+          <div class="pct">88%</div>
+          <div class="total">good · 38,250 events <span class="badge pass">✓ PASS</span></div>
+          <div class="rating-stack">
+            <span class="good" style="flex: 88.30065359477123;"></span>
+            <span class="warn" style="flex: 4.64313725490196;"></span>
+            <span class="poor" style="flex: 7.056209150326797;"></span>
+          </div>
+          <div class="stack-legend">88% good · 5% NI · 7% poor</div>
+        </div>
+
+        <div class="cwv ">
+          <div class="name">INP<span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></div>
+          <div class="pct">85%</div>
+          <div class="total">good · 7,603 events <span class="badge pass">✓ PASS</span></div>
+          <div class="rating-stack">
+            <span class="good" style="flex: 84.51926870971985;"></span>
+            <span class="warn" style="flex: 9.351571747994212;"></span>
+            <span class="poor" style="flex: 6.12915954228594;"></span>
+          </div>
+          <div class="stack-legend">85% good · 9% NI · 6% poor</div>
+        </div>
+
+        <div class="cwv ">
+          <div class="name">FCP<span class="info" tabindex="0" aria-label="What is FCP?">ⓘ<span class="tip" role="tooltip">First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).<span class="goal"><strong>Goal:</strong> ≤ 1.8 s</span><span class="fix"><strong>How to act:</strong> reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.</span></span></span></div>
+          <div class="pct">86%</div>
+          <div class="total">good · 22,091 events <span class="badge pass">✓ PASS</span></div>
+          <div class="rating-stack">
+            <span class="good" style="flex: 86.1029378479924;"></span>
+            <span class="warn" style="flex: 6.676927255443394;"></span>
+            <span class="poor" style="flex: 7.220134896564212;"></span>
+          </div>
+          <div class="stack-legend">86% good · 7% NI · 7% poor</div>
+        </div>
+
+        <div class="cwv ">
+          <div class="name">TTFB<span class="info" tabindex="0" aria-label="What is TTFB?">ⓘ<span class="tip" role="tooltip">Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.<span class="goal"><strong>Goal:</strong> ≤ 800 ms</span><span class="fix"><strong>How to act:</strong> minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.</span></span></span></div>
+          <div class="pct">84%</div>
+          <div class="total">good · 11,919 events <span class="badge pass">✓ PASS</span></div>
+          <div class="rating-stack">
+            <span class="good" style="flex: 84.31076432586626;"></span>
+            <span class="warn" style="flex: 9.539390888497357;"></span>
+            <span class="poor" style="flex: 6.149844785636379;"></span>
+          </div>
+          <div class="stack-legend">84% good · 10% NI · 6% poor</div>
+        </div>
   </div>
 
   <h2>Top friction pages
     <span class="h2-help">≥50 pageviews · click any path to open in PSI</span>
   </h2>
   <div class="grid-3">
-    <div class="card"><h3>LCP — slow paint <span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></h3><div class="empty">No pages with ≥50 events.</div></div>
-    <div class="card"><h3>INP — slow interaction <span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></h3><div class="empty">No pages with ≥50 events.</div></div>
-    <div class="card"><h3>CLS — layout shift <span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></h3><div class="empty">No pages with ≥50 events.</div></div>
+    <div class="card"><h3>LCP — slow paint <span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></h3>
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/flattering-haircuts-to-try-for-every-face-shape" target="_blank" rel="noopener">/blogs/hair-education/flattering-haircuts-to-try-for-every-face-shape</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">87.7% poor</span>
+            <span class="meta">57 events · 50 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fflattering-haircuts-to-try-for-every-face-shape" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/before-and-after-the-transformative-power-of-purple-shampoo" target="_blank" rel="noopener">/blogs/hair-education/before-and-after-the-transformative-power-of-purple-shampoo</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">68.6% poor</span>
+            <span class="meta">70 events · 48 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fbefore-and-after-the-transformative-power-of-purple-shampoo" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/mastering-the-art-of-styling-permed-hair-top-product-picks-from-hairmnl" target="_blank" rel="noopener">/blogs/hair-education/mastering-the-art-of-styling-permed-hair-top-product-picks-from-hairmnl</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">57.4% poor</span>
+            <span class="meta">54 events · 31 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fmastering-the-art-of-styling-permed-hair-top-product-picks-from-hairmnl" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/rinse-out-conditioner-vs-leave-in-conditioner-what-s-the-difference" target="_blank" rel="noopener">/blogs/hair-education/rinse-out-conditioner-vs-leave-in-conditioner-what-s-the-difference</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">50.5% poor</span>
+            <span class="meta">99 events · 50 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Frinse-out-conditioner-vs-leave-in-conditioner-what-s-the-difference" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/purple-vs-blue-shampoo-philippines" target="_blank" rel="noopener">/blogs/hair-education/purple-vs-blue-shampoo-philippines</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">44.3% poor</span>
+            <span class="meta">61 events · 27 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fpurple-vs-blue-shampoo-philippines" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div></div>
+    <div class="card"><h3>INP — slow interaction <span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></h3>
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/cart" target="_blank" rel="noopener">/cart</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">30.1% poor</span>
+            <span class="meta">73 events · 22 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcart" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/" target="_blank" rel="noopener">/</a>
+          <div class="stats">
+            <span class="pct-poor poor-mid">14.3% poor</span>
+            <span class="meta">642 events · 92 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2F" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/collections/k18" target="_blank" rel="noopener">/collections/k18</a>
+          <div class="stats">
+            <span class="pct-poor poor-mid">13.7% poor</span>
+            <span class="meta">51 events · 7 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcollections%2Fk18" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/account" target="_blank" rel="noopener">/account</a>
+          <div class="stats">
+            <span class="pct-poor poor-mid">12.6% poor</span>
+            <span class="meta">103 events · 13 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Faccount" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/products/davines-naturaltech-purifying-shampoo-for-scalp-with-oily-or-dry-dandruff" target="_blank" rel="noopener">/products/davines-naturaltech-purifying-shampoo-for-scalp-with-oily-or-dry-dandruff</a>
+          <div class="stats">
+            <span class="pct-poor poor-mid">12.1% poor</span>
+            <span class="meta">58 events · 7 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fproducts%2Fdavines-naturaltech-purifying-shampoo-for-scalp-with-oily-or-dry-dandruff" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div></div>
+    <div class="card"><h3>CLS — layout shift <span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></h3>
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/cart" target="_blank" rel="noopener">/cart</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">49.3% poor</span>
+            <span class="meta">217 events · 107 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcart" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/collections/all" target="_blank" rel="noopener">/collections/all</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">40.7% poor</span>
+            <span class="meta">59 events · 24 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcollections%2Fall" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/flattering-haircuts-to-try-for-every-face-shape" target="_blank" rel="noopener">/blogs/hair-education/flattering-haircuts-to-try-for-every-face-shape</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">39.3% poor</span>
+            <span class="meta">56 events · 22 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fflattering-haircuts-to-try-for-every-face-shape" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/hair-tutorials/time-to-tie-the-knot-5-tied-hairstyles-for-brides" target="_blank" rel="noopener">/blogs/hair-tutorials/time-to-tie-the-knot-5-tied-hairstyles-for-brides</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">37.4% poor</span>
+            <span class="meta">115 events · 43 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-tutorials%2Ftime-to-tie-the-knot-5-tied-hairstyles-for-brides" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="page-row">
+          <a class="path" href="https://www.hairmnl.com/blogs/hair-education/hair-coloring-techniques-balayage-vs-ombre-vs-sombre" target="_blank" rel="noopener">/blogs/hair-education/hair-coloring-techniques-balayage-vs-ombre-vs-sombre</a>
+          <div class="stats">
+            <span class="pct-poor poor-high">33.3% poor</span>
+            <span class="meta">138 events · 46 poor</span>
+            <span class="deeplinks">
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fhair-coloring-techniques-balayage-vs-ombre-vs-sombre" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+            </span>
+          </div>
+        </div></div>
   </div>
 
   <h2>Top INP attribution targets
     <span class="h2-help">CSS selectors / elements causing slow taps</span>
   </h2>
   <div class="card">
-    <div class="empty">No INP "poor" events with debug_target captured.</div>
+    <table><thead><tr><th>Attribution target (CSS selector / element)</th><th class="num">Poor INP count</th></tr></thead><tbody>
+<tr><td><span style="color:var(--text-muted)">(not set) — interaction during page load</span></td><td class="num">211</td></tr>
+<tr><td><span class="code">#MainContent</span></td><td class="num">61</td></tr>
+<tr><td><span class="code">#shopify-section-template--16528967270499__main>div.cart__template>div.wrapper.p</span></td><td class="num">17</td></tr>
+<tr><td><span class="code">div.flickity-slider>div.product__media.is-selected>div>div.lazy-image.mobile-zoo</span></td><td class="num">15</td></tr>
+<tr><td><span class="code">div.wrapper.product__align-left>div.grid.product-single>div.grid__item.medium-up</span></td><td class="num">14</td></tr>
+<tr><td><span class="code">article.grid__item.medium-up--two-thirds>div.blog__article>div.blog__article__co</span></td><td class="num">9</td></tr>
+<tr><td><span class="code">div.media__thumb__wrapper.flickity-enabled.is-draggable</span></td><td class="num">8</td></tr>
+<tr><td><span class="code">div.swiper-wrapper>div.swiper-slide.swiper-slide-active>a>picture>img.banner-sli</span></td><td class="num">8</td></tr>
+<tr><td><span class="code">div.wrapper>div.swiper>div.swiper-wrapper>div.swiper-slide>a>picture>img.banner-</span></td><td class="num">8</td></tr>
+<tr><td><span class="code">div.announcement__message>div.announcement__scale>div.announcement__text.ticker-</span></td><td class="num">7</td></tr>
+</tbody></table>
   </div>
 
   <h2>JavaScript errors
     <span class="h2-help">last 7 days</span>
   </h2>
   <div class="card">
-    <div class="empty">No js_error events captured. Either no errors (good!) or the js_error tracking isn&#39;t live yet.</div>
+    <table><thead><tr><th>Type</th><th>Message</th><th>Source</th><th class="num">Count</th></tr></thead><tbody>
+<tr><td>(not set)</td><td class="code">(not set)</td><td class="code">(not set)</td><td class="num">35,495</td></tr>
+<tr><td>?</td><td class="code">(no message)</td><td class="code">(unknown)</td><td class="num">2,753</td></tr>
+</tbody></table>
   </div>
 
   <h2>vs April 26 baseline
@@ -283,7 +518,73 @@
   <h2 id="wow-scorecard">INP + CLS Scorecard — Week-over-Week
     <span class="h2-help">GA4 RUM · this week vs previous 7 days · click tabs to compare</span>
   </h2>
-  <div class="empty">No RUM data yet — run the script after 7+ days of GA4 Custom Events.</div>
+  
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      
+        <div class="card" style="flex:1;min-width:260px">
+          <h3>INP — Week-over-Week<span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></h3>
+          <div style="font-size:36px;font-weight:700;color:var(--green);line-height:1">
+            85%
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">good · 7,603 events <span class="badge pass" style="font-size:11px">✓ PASS</span></div>
+          <div class="delta regress" style="font-size:14px;margin-top:4px">↓ -2.8 pp vs prev 7d</div>
+          <div class="rating-stack" style="margin-top:12px">
+            <span class="good" style="flex:84.51926870971985"></span>
+            <span class="warn" style="flex:9.351571747994212"></span>
+            <span class="poor" style="flex:6.12915954228594"></span>
+          </div>
+          <div class="stack-legend">85% good · 9% NI · 6% poor</div>
+          
+            <div style="margin-top:14px">
+              <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">
+                Prev 7d (4,373 events)
+              </div>
+              <div class="rating-stack">
+                <span class="good" style="flex:87.30848387834439"></span>
+                <span class="warn" style="flex:7.409101303453007"></span>
+                <span class="poor" style="flex:5.282414818202607"></span>
+              </div>
+              <div class="stack-legend">87% good · 7% NI · 5% poor</div>
+            </div>
+        </div>
+      
+        <div class="card" style="flex:1;min-width:260px">
+          <h3>CLS — Week-over-Week<span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></h3>
+          <div style="font-size:36px;font-weight:700;color:var(--green);line-height:1">
+            88%
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">good · 38,250 events <span class="badge pass" style="font-size:11px">✓ PASS</span></div>
+          <div class="delta improve" style="font-size:14px;margin-top:4px">↑ +19.7 pp vs prev 7d</div>
+          <div class="rating-stack" style="margin-top:12px">
+            <span class="good" style="flex:88.30065359477123"></span>
+            <span class="warn" style="flex:4.64313725490196"></span>
+            <span class="poor" style="flex:7.056209150326797"></span>
+          </div>
+          <div class="stack-legend">88% good · 5% NI · 7% poor</div>
+          
+            <div style="margin-top:14px">
+              <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">
+                Prev 7d (7,366 events)
+              </div>
+              <div class="rating-stack">
+                <span class="good" style="flex:68.58539234319848"></span>
+                <span class="warn" style="flex:9.679609014390444"></span>
+                <span class="poor" style="flex:21.734998642411078"></span>
+              </div>
+              <div class="stack-legend">69% good · 10% NI · 22% poor</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="note" style="margin-top:20px">
+      <strong>90-day targets</strong> (end of Q3 2026)<br>
+      <strong>INP:</strong> ≤200 ms p75 · ≥75% good<br>
+      <strong>CLS:</strong> ≤0.10 p75 · ≥75% good (mobile from ~0.30 → <0.10)<br>
+      <span style="color:var(--text-muted)">
+        Threshold: ≥75% good = CWV PASS (Google Search ranking signal).
+        Current sprint: mobile CLS p75 from ~0.30 → &lt;0.10 via layout-shift fixes.
+      </span>
+    </div>
 
   <footer>
     Data sources: PSI v5 API · CrUX HTTP API · GA4 Data API (property 248106289)<br>
