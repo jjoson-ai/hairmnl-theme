@@ -36,11 +36,30 @@ git status                      # any uncommitted drift
 
 3. **Draft first for layouts and snippets.** `--theme=140785582179 --nodelete`, smoke test in Brave (Claude-in-Chrome MCP), then `--theme=131664707683 --allow-live`.
 
-4. **Beads is the only task tracker.** Do NOT use TodoWrite, markdown TODO lists, or MEMORY.md files. Use `bd create` / `bd update --claim` / `bd close` and `bd remember` for cross-session knowledge.
+4. **Beads is the only task tracker.** Do NOT use TodoWrite, markdown TODO lists, or MEMORY.md files.
+
+   **Full bd command reference:**
+   - Finding: `bd ready` · `bd list --status=open` · `bd list --status=in_progress` · `bd show <id>`
+   - Claiming: `bd update <id> --claim` · `bd update <id> --notes "..." --design "..."`
+   - Closing: `bd close <id>` (or batch: `bd close <id1> <id2>`)
+   - Creating: `bd create --title="..." --description="..." --type=task|bug|feature --priority=2` (priority 0–4 / P0–P4, NOT high/med/low)
+   - Memory: `bd remember "<insight>"` to persist · `bd memories <keyword>` to search
+   - Context: `bd prime` at the start of each new session to reload workflow context
+
+   **Hard rule:** Create the bd issue BEFORE writing code. Mark in_progress when starting. Close only after the deploy is verified.
 
 5. **Commit and push to GitHub immediately after every live deploy.** Drift between git HEAD and live is what enables regressions.
 
-6. **Append to `docs/handoff-log.md` before ending the session.** Use the exact format in `docs/coordinator-handoff.md` §10. Include "Next-session handoff notes" so the Anthropic Claude Code session can resume cleanly. The log is the seam between coordinators — without it, pending verifications and prior decisions are lost.
+6. **Session-close protocol** (mandatory before saying "done"):
+   ```
+   1. Append entry to docs/handoff-log.md (format in coordinator-handoff.md §10)
+   2. bd close <id> (or batch close)
+   3. bd remember "<insight>" for cross-session knowledge worth preserving
+   4. git status (should be clean)
+   5. git pull --rebase && bd dolt push && git push
+   6. git status MUST show "up to date with origin"
+   ```
+   Work is NOT complete until `git push` succeeds. Never stop before pushing. The handoff-log entry is the seam between coordinators — without it, pending verifications and prior decisions are lost.
 
 ## Sub-task offload (you have access to OpenCode and other Ollama Cloud models)
 

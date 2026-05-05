@@ -80,10 +80,34 @@ This is the canonical loop. Skipping steps causes regressions (see CLAUDE.md pus
 
 ### Bd issue conventions
 
-- Priority: 0–4 or P0–P4 (NOT high/medium/low). 0 = critical, 2 = medium, 4 = backlog.
-- Always claim before working: `bd update <id> --claim`
-- Use `bd remember "insight"` for cross-session knowledge — DO NOT create MEMORY.md files
-- Search prior knowledge: `bd memories <keyword>`
+**Full command reference:**
+
+- **Finding work:** `bd ready` · `bd list --status=open` · `bd list --status=in_progress` · `bd show <id>`
+- **Claiming + working:** `bd update <id> --claim` · `bd update <id> --notes "..." --design "..."`
+- **Closing:** `bd close <id>` · `bd close <id1> <id2> <id3>` (batch)
+- **Creating:** `bd create --title="..." --description="..." --type=task|bug|feature --priority=2`
+  - Priority: 0–4 or P0–P4 (NOT high/medium/low). 0 = critical, 2 = medium, 4 = backlog.
+- **Cross-session memory:** `bd remember "insight"` to persist · `bd memories <keyword>` to search · DO NOT create MEMORY.md files (they fragment across accounts)
+- **Sync:** `bd dolt push` at session end (auto-commits go to local Dolt regardless)
+- **Context recovery:** `bd prime` after compaction or new session to load workflow context
+
+**Hard rules:**
+
+- Use bd for ALL task tracking — do NOT use TodoWrite, TaskCreate, or markdown TODO lists
+- Create the bd issue BEFORE writing code. Mark in_progress when starting. Close only after the deploy is verified.
+
+**Session-close protocol** (mandatory before saying "done"):
+
+```
+1. Append entry to docs/handoff-log.md
+2. bd close <id> (or batch close)
+3. bd remember "<insight>" for any cross-session knowledge worth preserving
+4. git status (should be clean)
+5. git pull --rebase && bd dolt push && git push
+6. git status MUST show "up to date with origin"
+```
+
+Work is NOT complete until `git push` succeeds. Never stop before pushing.
 
 ---
 
