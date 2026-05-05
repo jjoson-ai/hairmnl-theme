@@ -121,6 +121,8 @@ GA4_PROPERTY_ID=248106289 python3 scripts/build-perf-dashboard.py
 
 After running, view at `dashboard/index.html`.
 
+**Full dashboard handoff (state, roadmap, pending bugs):** `docs/dashboard-handoff.md`. Read this before working on the dashboard itself or before drawing conclusions from a snapshot.
+
 ---
 
 ## 7. Tools
