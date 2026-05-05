@@ -6,6 +6,32 @@ Format spec: see `docs/coordinator-handoff.md` §10.
 
 ---
 
+### 2026-05-06 (model: claude-opus-4-7) — coordinator review of Batch F
+
+**Issues touched:** ofc, 2em (Batch F — A/B comparison + Slack alerts)
+**Outcome:** shipped to GitHub Pages
+
+**What was done:**
+- Reviewed OpenCode diff — scope contained, all expected symbols present at expected line ranges
+- ofc: `--compare <iso1> <iso2>` CLI; render_comparison() + find_snapshot_by_prefix() helpers; standalone HTML at dashboard/compare-{slug1}-vs-{slug2}.html with PSI mobile/desktop, GA4 RUM, CrUX mobile/desktop side-by-side; color-coded deltas via td.delta.improve/regress/muted
+- 2em: evaluate_alerts() + post_alerts_to_slack() helpers; wired into main() after append_snapshot(); silently no-ops when SLACK_WEBHOOK_URL unset; covers RUM <75% good, RUM WoW drop >10pp, PSI mobile score regression >10, GA4 sampling, RUM volume drop ≥50%
+- Test artifact dashboard/compare-2026-04-29-vs-2026-05-05.html (18KB) shipped as a working example
+
+**Verification:**
+- py_compile clean: ✓
+- --render-only succeeds (54KB HTML): ✓
+- --compare 2026-04-29 2026-05-05 generates 18KB comparison HTML: ✓
+- evaluate_alerts() detects synthetic LCP regression at 50% good: ✓ ('🔴 *LCP* good% is 50.0%')
+- snapshots.jsonl unchanged: ✓
+- Closed ofc, 2em (already closed by OpenCode)
+
+**Next-session handoff notes:**
+- Slack alerts won't fire until user adds SLACK_WEBHOOK_URL secret (GHA + local). Coordinator should update .github/SECRETS.md to document the new secret post-merge (low priority — alerts are purely additive).
+- A/B comparison is on-demand only — not wired into daily run. Use `python3 scripts/build-perf-dashboard.py --compare <prefix1> <prefix2>` to invoke; output goes to dashboard/compare-<slug1>-vs-<slug2>.html.
+- Batch E (236 — per-template CWV slicing) brief at /tmp/oc-batch-E.md remains the next offload. Multi-file (theme + dashboard); coordinator handles draft→live theme push.
+
+---
+
 ### 2026-05-06 (model: claude-opus-4-7) — coordinator review of Batch D
 
 **Issues touched:** cua, c4w, 4sv (Batch D — features + polish)
@@ -259,6 +285,32 @@ Format spec: see `docs/coordinator-handoff.md` §10.
 **Next-session handoff notes:**
 - Origin-weights chart will be empty until the next PSI run captures network_by_origin (next GHA run at 13:00 UTC, or manual `python3 scripts/build-perf-dashboard.py --no-crux --psi-only-mobile`)
 - Coordinator (Claude Code) to review diff, run end-to-end smoke check, commit, push, and bd-close all 3 issues
+
+---
+
+### 2026-05-06 (model: glm-5.1:cloud via OpenCode, coordinated by claude-opus-4-7)
+
+**Issues touched:** ofc, 2em (Batch F — A/B comparison + Slack alerts)
+**Outcome:** staged for coordinator review, not yet committed
+
+**What was done:**
+- A/B comparison mode: new `--compare <iso1> <iso2>` CLI; render_comparison() helper; standalone HTML at dashboard/compare-{slug1}-vs-{slug2}.html with PSI mobile/desktop, GA4 RUM, CrUX mobile/desktop side-by-side tables; color-coded deltas (ofc)
+- Slack alerts: evaluate_alerts() + post_alerts_to_slack() helpers; wired into main() after append_snapshot(); skips silently when SLACK_WEBHOOK_URL unset; covers RUM <75%, RUM WoW drop >10pp, PSI score regression >10, sampling, volume drop (2em)
+
+**Files modified:**
+- `scripts/build-perf-dashboard.py` — new --compare CLI, render_comparison, find_snapshot_by_prefix, evaluate_alerts, post_alerts_to_slack, main() wiring
+
+**Verification:**
+- render-only succeeds: ✓
+- --compare generates valid HTML (>18KB): ✓
+- evaluate_alerts() detects synthetic regression: ✓
+- py_compile clean: ✓
+- snapshots.jsonl unchanged: ✓
+
+**Next-session handoff notes:**
+- For Slack alerts to fire: user must add SLACK_WEBHOOK_URL secret (GHA + local env) and update .github/SECRETS.md to reference it
+- A/B comparison is on-demand only — not wired into daily run; user invokes via `python3 scripts/build-perf-dashboard.py --compare 2026-04-26 2026-05-05`
+- Coordinator (Claude Code) to commit and push, bd close ofc + 2em
 
 ---
 

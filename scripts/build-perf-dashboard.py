@@ -27,6 +27,9 @@ Requires (same as the two source scripts):
 
 Cron schedule (recommended): daily 6am Manila time
   0 6 * * * cd /path/to/hairmnl-theme && ./scripts/build-perf-dashboard.py >> ~/.local/log/hairmnl-daily-perf.log 2>&1
+
+# Optional Slack alerts:
+#   - SLACK_WEBHOOK_URL env var — if set, daily run posts alerts on threshold breach
 """
 
 import argparse
@@ -683,6 +686,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   .kpi .delta { font-size: 11px; margin-top: 4px; color: var(--text-muted); }
   .kpi .delta.improve { color: var(--green); font-weight: 600; }
   .kpi .delta.regress { color: var(--red); font-weight: 600; }
+  td.delta.improve { color: var(--green); font-weight: 600; }
+  td.delta.regress { color: var(--red); font-weight: 600; }
+  td.delta.muted { color: var(--text-muted); }
   .kpi.poor { background: var(--red-bg); border-color: #F0C8C8; }
   .kpi.poor .value { color: var(--red); }
   .kpi.warn { background: var(--amber-bg); border-color: #ECD9B6; }
@@ -1715,6 +1721,200 @@ def render_html(snapshots: list[dict]) -> str:
     return html
 
 
+def find_snapshot_by_prefix(snapshots: list, prefix: str) -> Optional[dict]:
+    """Return the most recent snapshot whose timestamp starts with the prefix."""
+    matches = [s for s in snapshots if s.get("timestamp", "").startswith(prefix)]
+    return max(matches, key=lambda s: s["timestamp"]) if matches else None
+
+
+def render_comparison(snap1: dict, snap2: dict) -> str:
+    """Render a side-by-side comparison HTML for two snapshots."""
+    ts1 = snap1.get("timestamp", "?")
+    ts2 = snap2.get("timestamp", "?")
+
+    def _delta(v1, v2, lower_is_better=True):
+        """Return (formatted_delta_string, css_class)."""
+        if v1 is None or v2 is None:
+            return ("\u2014", "muted")
+        try:
+            d = v2 - v1
+            if v1 == 0:
+                rel = 0
+            else:
+                rel = abs(d) / abs(v1)
+            if rel < 0.02:
+                return (f"{d:+.2f}", "muted")
+            improved = (d < 0) if lower_is_better else (d > 0)
+            cls = "improve" if improved else "regress"
+            return (f"{d:+.2f}", cls)
+        except Exception:
+            return ("\u2014", "muted")
+
+    def _fmt(v, fmt):
+        return fmt(v) if v is not None else "\u2014"
+
+    rows = []
+
+    # --- PSI Mobile ---
+    psi1 = snap1.get("psi", {}).get("mobile") or {}
+    psi2 = snap2.get("psi", {}).get("mobile") or {}
+    psi_metrics = [
+        ("Score", "score", lambda v: f"{int(v)}", False),
+        ("LCP", "lcp_ms", lambda v: f"{v/1000:.2f}s", True),
+        ("TBT", "tbt_ms", lambda v: f"{v:.0f}ms", True),
+        ("CLS", "cls", lambda v: f"{v:.3f}", True),
+        ("FCP", "fcp_ms", lambda v: f"{v/1000:.2f}s", True),
+        ("Speed Index", "si_ms", lambda v: f"{v/1000:.2f}s", True),
+    ]
+    rows.append('<h2>PSI Mobile</h2><div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Snapshot 1</th><th class="num">Snapshot 2</th><th class="num">\u0394</th></tr></thead><tbody>')
+    for label, key, fmt, lower in psi_metrics:
+        v1, v2 = psi1.get(key), psi2.get(key)
+        delta_s, delta_cls = _delta(v1, v2, lower_is_better=lower)
+        rows.append(f'<tr><td><strong>{label}</strong></td>'
+                    f'<td class="num">{_fmt(v1, fmt)}</td>'
+                    f'<td class="num">{_fmt(v2, fmt)}</td>'
+                    f'<td class="num delta {delta_cls}">{delta_s}</td></tr>')
+    rows.append('</tbody></table></div>')
+
+    # --- PSI Desktop ---
+    psi1d = snap1.get("psi", {}).get("desktop") or {}
+    psi2d = snap2.get("psi", {}).get("desktop") or {}
+    if psi1d or psi2d:
+        rows.append('<h2>PSI Desktop</h2><div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Snapshot 1</th><th class="num">Snapshot 2</th><th class="num">\u0394</th></tr></thead><tbody>')
+        for label, key, fmt, lower in psi_metrics:
+            v1, v2 = psi1d.get(key), psi2d.get(key)
+            delta_s, delta_cls = _delta(v1, v2, lower_is_better=lower)
+            rows.append(f'<tr><td><strong>{label}</strong></td>'
+                        f'<td class="num">{_fmt(v1, fmt)}</td>'
+                        f'<td class="num">{_fmt(v2, fmt)}</td>'
+                        f'<td class="num delta {delta_cls}">{delta_s}</td></tr>')
+        rows.append('</tbody></table></div>')
+
+    # --- GA4 RUM ---
+    ga1 = snap1.get("ga4", {}).get("metrics") or {}
+    ga2 = snap2.get("ga4", {}).get("metrics") or {}
+    if ga1 or ga2:
+        rows.append('<h2>GA4 RUM (good% per metric)</h2><div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Snap 1 good%</th><th class="num">Snap 2 good%</th><th class="num">\u0394pp</th><th class="num">N (snap1 / snap2)</th></tr></thead><tbody>')
+        for m in ("LCP", "CLS", "INP", "FCP", "TTFB"):
+            g1 = ga1.get(m, {}).get("p_good")
+            g2 = ga2.get(m, {}).get("p_good")
+            n1 = ga1.get(m, {}).get("total", 0)
+            n2 = ga2.get(m, {}).get("total", 0)
+            v1 = g1 * 100 if g1 is not None else None
+            v2 = g2 * 100 if g2 is not None else None
+            delta_s, delta_cls = _delta(v1, v2, lower_is_better=False)
+            f = lambda v: f"{v:.1f}%"
+            rows.append(f'<tr><td><strong>{m}</strong></td>'
+                        f'<td class="num">{_fmt(v1, f)}</td>'
+                        f'<td class="num">{_fmt(v2, f)}</td>'
+                        f'<td class="num delta {delta_cls}">{delta_s}pp</td>'
+                        f'<td class="num">{n1:,} / {n2:,}</td></tr>')
+        rows.append('</tbody></table></div>')
+
+    # --- CrUX Mobile + Desktop ---
+    for ff in ("mobile", "desktop"):
+        c1 = snap1.get("crux", {}).get(ff)
+        c2 = snap2.get("crux", {}).get(ff)
+        if not c1 and not c2:
+            continue
+        c1 = c1 or {}
+        c2 = c2 or {}
+        rows.append(f'<h2>CrUX {ff.title()} (p75)</h2><div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Snapshot 1</th><th class="num">Snapshot 2</th><th class="num">\u0394</th></tr></thead><tbody>')
+        crux_metrics = [
+            ("LCP", "lcp_ms", lambda v: f"{v/1000:.2f}s", True),
+            ("CLS", "cls", lambda v: f"{v:.3f}", True),
+            ("INP", "inp_ms", lambda v: f"{v:.0f}ms", True),
+            ("FCP", "fcp_ms", lambda v: f"{v/1000:.2f}s", True),
+            ("TTFB", "ttfb_ms", lambda v: f"{v:.0f}ms", True),
+        ]
+        for label, key, fmt, lower in crux_metrics:
+            v1, v2 = c1.get(key), c2.get(key)
+            delta_s, delta_cls = _delta(v1, v2, lower_is_better=lower)
+            rows.append(f'<tr><td><strong>{label}</strong></td>'
+                        f'<td class="num">{_fmt(v1, fmt)}</td>'
+                        f'<td class="num">{_fmt(v2, fmt)}</td>'
+                        f'<td class="num delta {delta_cls}">{delta_s}</td></tr>')
+        rows.append('</tbody></table></div>')
+
+    style_start = HTML_TEMPLATE.find("<style>")
+    style_end = HTML_TEMPLATE.find("</style>") + len("</style>")
+    styles = HTML_TEMPLATE[style_start:style_end] if style_start != -1 else ""
+
+    page = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HairMNL \u2014 Snapshot comparison</title>
+{styles}
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Snapshot comparison</h1>
+    <div class="meta"><strong>Snapshot 1:</strong> {ts1} &nbsp;\u00b7&nbsp; <strong>Snapshot 2:</strong> {ts2}</div>
+  </header>
+  {''.join(rows)}
+  <footer>Generated by build-perf-dashboard.py --compare</footer>
+</div>
+</body>
+</html>"""
+    return page
+
+
+def evaluate_alerts(snapshot: dict, prev_snapshot: Optional[dict]) -> list:
+    """Return a list of alert message lines. Empty list = all clear."""
+    alerts = []
+    rum = snapshot.get("ga4") or {}
+    metrics = rum.get("metrics", {})
+    wow_prev = rum.get("wow_prev", {})
+
+    for m in ("LCP", "CLS", "INP"):
+        cur = metrics.get(m, {})
+        gp = (cur.get("p_good") or 0) * 100
+        total = cur.get("total", 0)
+        if total >= 50 and gp < 75:
+            alerts.append(f"\U0001f534 *{m}* good% is {gp:.1f}% (target: \u226575%)")
+        prev_m = wow_prev.get(m, {})
+        prev_gp = (prev_m.get("p_good") or 0) * 100
+        prev_total = prev_m.get("total", 0)
+        if prev_total >= 50 and total >= 50 and prev_gp - gp > 10:
+            alerts.append(f"\U0001f4c9 *{m}* good% dropped {prev_gp - gp:.1f}pp WoW (was {prev_gp:.1f}%, now {gp:.1f}%)")
+        if prev_total > 0 and total < prev_total / 2:
+            drop_pct = round((1 - total / prev_total) * 100)
+            alerts.append(f"\U0001f4c9 *{m}* event volume dropped {drop_pct}% WoW (was {prev_total:,}, now {total:,})")
+
+    cur_score = (snapshot.get("psi", {}).get("mobile") or {}).get("score")
+    prev_score = (prev_snapshot.get("psi", {}).get("mobile") or {}).get("score") if prev_snapshot else None
+    if cur_score is not None and prev_score is not None and prev_score - cur_score > 10:
+        alerts.append(f"\U0001f4c9 *PSI mobile score* {cur_score} (was {prev_score}, \u0394{cur_score - prev_score:+d})")
+
+    if rum.get("_sampled"):
+        alerts.append(f"\u26a0\ufe0f GA4 query was sampled \u2014 data may be approximate")
+
+    return alerts
+
+
+def post_alerts_to_slack(webhook_url: str, alerts: list) -> None:
+    """POST alert lines to a Slack incoming webhook. Silently swallow errors so alerting failures don't break the run."""
+    if not webhook_url or not alerts:
+        return
+    text = "*HairMNL perf dashboard alerts:*\n" + "\n".join(f"\u2022 {a}" for a in alerts)
+    text += f"\n\n<https://jjoson-ai.github.io/hairmnl-theme/|Open dashboard \u2197>"
+    payload = json.dumps({"text": text}).encode()
+    req = urllib.request.Request(
+        webhook_url, data=payload,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as r:
+            r.read()
+        print(f"  Slack: posted {len(alerts)} alert(s)", file=sys.stderr)
+    except Exception as e:
+        print(f"  Slack post failed (non-fatal): {e}", file=sys.stderr)
+
+
 # ───────────────────────── Main ─────────────────────────
 
 def main():
@@ -1727,10 +1927,30 @@ def main():
     ap.add_argument("--url", default=DEFAULT_URL, help=f"PSI URL (default: {DEFAULT_URL})")
     ap.add_argument("--psi-runs", type=int, default=3, help="PSI runs per strategy for median (default: 3)")
     ap.add_argument("--ga4-days", type=int, default=7, help="GA4 RUM lookback window (default: 7)")
+    ap.add_argument("--compare", nargs=2, metavar=("ISO1", "ISO2"),
+                    help="Render side-by-side comparison of two snapshots (date prefix matching)")
     args = ap.parse_args()
 
     DASHBOARD_DIR.mkdir(parents=True, exist_ok=True)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+    if args.compare:
+        snapshots = load_snapshots()
+        s1 = find_snapshot_by_prefix(snapshots, args.compare[0])
+        s2 = find_snapshot_by_prefix(snapshots, args.compare[1])
+        if not s1:
+            print(f"No snapshot matching prefix: {args.compare[0]}", file=sys.stderr)
+            sys.exit(1)
+        if not s2:
+            print(f"No snapshot matching prefix: {args.compare[1]}", file=sys.stderr)
+            sys.exit(1)
+        html = render_comparison(s1, s2)
+        slug1 = args.compare[0].replace(":", "-")
+        slug2 = args.compare[1].replace(":", "-")
+        out_path = DASHBOARD_DIR / f"compare-{slug1}-vs-{slug2}.html"
+        out_path.write_text(html)
+        print(f"Wrote comparison: {out_path}")
+        return
 
     if args.render_only:
         print("--render-only: re-rendering HTML from existing snapshots, no fetch")
@@ -1797,6 +2017,15 @@ def main():
         append_snapshot(snapshot)
         rotate_snapshots_if_needed()
         print(f"  Snapshot appended to {SNAPSHOTS_PATH}")
+
+        # Evaluate alerts and notify Slack if a webhook is configured
+        webhook = os.environ.get("SLACK_WEBHOOK_URL")
+        if webhook:
+            all_snaps = load_snapshots()
+            prev = all_snaps[-2] if len(all_snaps) >= 2 else None
+            alerts = evaluate_alerts(snapshot, prev)
+            if alerts:
+                post_alerts_to_slack(webhook, alerts)
     else:
         print(f"  Skipping empty snapshot (no PSI mobile/desktop, no GA4)", file=sys.stderr)
 

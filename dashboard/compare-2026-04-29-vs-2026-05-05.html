@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HairMNL — Snapshot comparison</title>
+<style>
+  :root {
+    --navy: #1E2761;
+    --navy-2: #2C3A7A;
+    --navy-light: #3A4A8A;
+    --ice: #CADCFC;
+    --ice-bg: #F0F4FB;
+    --gold: #D4A04C;
+    --green: #2F8F3F;
+    --green-bg: #E8F5EA;
+    --amber: #8F5210;
+    --amber-bg: #FBF1E0;
+    --red: #922525;
+    --red-bg: #FBE8E8;
+    --gray: #6B7280;
+    --gray-light: #E5E7EB;
+    --gray-bg: #F4F6F8;
+    --bg: #F7F8FA;
+    --card: #FFFFFF;
+    --text: #1F2937;
+    --text-muted: #6B7280;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+         background: var(--bg); color: var(--text); margin: 0; padding: 0;
+         font-size: 14px; line-height: 1.45; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 16px; }
+  @media (min-width: 700px) { .container { padding: 24px; } }
+
+  header { padding: 16px 0 20px; border-bottom: 3px solid var(--navy); margin-bottom: 20px; }
+  header .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+                flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 22px; color: var(--navy); line-height: 1.2; }
+  @media (min-width: 700px) { header h1 { font-size: 28px; } }
+  header .meta { color: var(--text-muted); font-size: 12px; margin-top: 6px; line-height: 1.5; }
+  header .meta strong { color: var(--text); }
+  .live-link { background: var(--navy); color: white; text-decoration: none; padding: 6px 12px;
+               border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .live-link:hover { background: var(--navy-2); }
+
+  h2 { color: var(--navy); font-size: 16px; margin: 28px 0 12px 0; padding-bottom: 8px;
+       border-bottom: 1px solid var(--gray-light); display: flex; align-items: center;
+       justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  @media (min-width: 700px) { h2 { font-size: 18px; } }
+  h2 .h2-help { font-weight: 400; font-size: 11px; color: var(--text-muted);
+                text-transform: none; letter-spacing: 0; }
+  h3 { color: var(--navy-light); font-size: 13px; margin: 0 0 10px 0; text-transform: uppercase;
+       letter-spacing: 0.05em; font-weight: 700; }
+
+  /* Tab switcher */
+  .tabs { display: inline-flex; background: var(--gray-bg); border-radius: 8px; padding: 4px;
+          gap: 0; margin-bottom: 14px; }
+  .tab { background: transparent; border: 0; padding: 6px 14px; border-radius: 6px;
+         font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer;
+         font-family: inherit; }
+  .tab.active { background: var(--card); color: var(--navy); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+  .tab:hover:not(.active) { color: var(--navy-light); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* KPI cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (min-width: 700px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
+  @media (min-width: 1100px) { .kpi-grid { grid-template-columns: repeat(6, 1fr); } }
+  .kpi { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
+         padding: 14px; }
+  .kpi .label { color: var(--text-muted); font-size: 10px; text-transform: uppercase;
+                letter-spacing: 0.05em; font-weight: 700; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: var(--navy); margin-top: 4px;
+                line-height: 1; }
+  @media (min-width: 700px) { .kpi .value { font-size: 28px; } }
+  .kpi .delta { font-size: 11px; margin-top: 4px; color: var(--text-muted); }
+  .kpi .delta.improve { color: var(--green); font-weight: 600; }
+  .kpi .delta.regress { color: var(--red); font-weight: 600; }
+  td.delta.improve { color: var(--green); font-weight: 600; }
+  td.delta.regress { color: var(--red); font-weight: 600; }
+  td.delta.muted { color: var(--text-muted); }
+  .kpi.poor { background: var(--red-bg); border-color: #F0C8C8; }
+  .kpi.poor .value { color: var(--red); }
+  .kpi.warn { background: var(--amber-bg); border-color: #ECD9B6; }
+  .kpi.warn .value { color: var(--amber); }
+  .kpi.good { background: var(--green-bg); border-color: #C6E2CC; }
+  .kpi.good .value { color: var(--green); }
+
+  .card { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
+          padding: 16px; margin-bottom: 14px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 800px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .grid-3 { grid-template-columns: 1fr 1fr 1fr; } }
+
+  /* RUM CWV cards */
+  .cwv-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 700px) { .cwv-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .cwv-grid { grid-template-columns: repeat(5, 1fr); } }
+  .cwv { background: var(--card); border: 1px solid var(--gray-light); border-radius: 8px;
+         padding: 14px; }
+  .cwv .name { font-size: 12px; color: var(--text-muted); text-transform: uppercase;
+               font-weight: 700; letter-spacing: 0.05em; }
+  .cwv .pct { font-size: 32px; font-weight: 700; color: var(--green); line-height: 1; margin: 4px 0; }
+  .cwv.fail .pct { color: var(--amber); }
+  .cwv .total { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .sample-size { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .sample-size.caution { color: var(--amber); font-weight: 600; }
+  .cwv .badge { display: inline-block; padding: 2px 8px; border-radius: 4px;
+                font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cwv .badge.pass { background: var(--green-bg); color: var(--green); }
+  .cwv .badge.fail { background: var(--amber-bg); color: var(--amber); }
+  .rating-stack { display: flex; height: 8px; border-radius: 4px; overflow: hidden;
+                  background: var(--gray-light); margin: 6px 0 4px 0; }
+  .rating-stack > span { display: block; height: 100%; }
+  .rating-stack > .good { background: var(--green); }
+  .rating-stack > .warn { background: var(--amber); }
+  .rating-stack > .poor { background: var(--red); }
+  .stack-legend { font-size: 10px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+
+  /* Page friction rows — readable, not truncated */
+  .page-row { padding: 10px 0; border-bottom: 1px solid var(--gray-light); }
+  .page-row:last-child { border-bottom: none; }
+  .page-row .path { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 12px;
+                    color: var(--navy); word-break: break-all; line-height: 1.3; display: block;
+                    margin-bottom: 6px; text-decoration: none; }
+  .page-row .path:hover { text-decoration: underline; }
+  .page-row .stats { display: flex; align-items: center; gap: 12px; font-size: 12px;
+                     flex-wrap: wrap; }
+  .page-row .impact { font-weight: 700; font-size: 13px; color: var(--navy); min-width: 56px; }
+  .page-row .pct-poor { font-weight: 700; min-width: 56px; }
+  .page-row .pct-poor.poor-high { color: var(--red); }
+  .page-row .pct-poor.poor-mid { color: var(--amber); }
+  .page-row .pct-poor.poor-low { color: var(--text-muted); }
+  .page-row .meta { color: var(--text-muted); font-size: 11px; }
+  .page-row .deeplinks { display: flex; gap: 8px; margin-left: auto; }
+  .page-row .deeplinks a { color: var(--navy-light); text-decoration: none; font-size: 11px;
+                            font-weight: 600; padding: 2px 6px; background: var(--ice-bg);
+                            border-radius: 4px; }
+  .page-row .deeplinks a:hover { background: var(--ice); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; color: var(--text-muted); font-weight: 600; font-size: 11px;
+       text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 10px;
+       border-bottom: 2px solid var(--gray-light); }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--gray-light); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.code { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 12px;
+            color: var(--navy); word-break: break-all; }
+
+  .chart-wrap { position: relative; height: 200px; }
+  .empty { color: var(--text-muted); font-style: italic; padding: 12px 0; font-size: 13px; }
+  .note { background: var(--ice-bg); border-left: 3px solid var(--navy-light);
+          padding: 10px 14px; border-radius: 4px; font-size: 12px; color: var(--text);
+          margin-bottom: 12px; }
+  .note strong { color: var(--navy); }
+
+  /* Trend chart range filter */
+  .range-filter { display: inline-flex; gap: 4px; }
+  .range-btn { background: var(--gray-bg); border: 0; padding: 4px 10px; border-radius: 4px;
+               font-size: 11px; font-weight: 600; color: var(--text-muted); cursor: pointer;
+               font-family: inherit; }
+  .range-btn.active { background: var(--navy); color: white; }
+  .range-btn:hover:not(.active) { background: var(--gray-light); }
+
+  /* Collapsible source detail */
+  details { margin-top: 8px; }
+  summary { cursor: pointer; font-size: 11px; color: var(--text-muted); }
+
+  /* Metric tooltips (non-technical guidance) */
+  .info { display: inline-block; position: relative; cursor: help; color: var(--text-muted);
+          margin-left: 4px; font-size: 11px; user-select: none; vertical-align: middle; }
+  .info:hover, .info:focus { color: var(--navy-light); outline: none; }
+  .info .tip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+               transform: translateX(-50%); background: var(--navy); color: white;
+               padding: 12px 14px; border-radius: 6px; font-size: 12px; line-height: 1.5;
+               width: 280px; max-width: 80vw; z-index: 100; text-align: left;
+               box-shadow: 0 6px 20px rgba(0,0,0,0.18); font-weight: 400; text-transform: none;
+               letter-spacing: 0; pointer-events: none; }
+  .info .tip::after { content: ''; position: absolute; top: 100%; left: 50%;
+                      transform: translateX(-50%); border: 6px solid transparent;
+                      border-top-color: var(--navy); }
+  .info:hover .tip, .info:focus .tip, .info:focus-within .tip { display: block; }
+  .info .tip strong { color: var(--gold); display: inline-block; margin-top: 6px; }
+  .info .tip .goal { display: block; margin: 6px 0 4px 0; color: var(--ice); font-weight: 600; }
+  .info .tip .fix { display: block; color: white; opacity: 0.9; }
+  /* Tooltip variant for left-edge metrics so it doesn't get clipped */
+  .info.left .tip { left: 0; transform: none; }
+  .info.left .tip::after { left: 12px; transform: none; }
+  /* Tooltip variant for right-edge metrics */
+  .info.right .tip { left: auto; right: 0; transform: none; }
+  .info.right .tip::after { left: auto; right: 12px; transform: none; }
+
+  footer { color: var(--text-muted); font-size: 12px; text-align: center; padding: 24px 0;
+           border-top: 1px solid var(--gray-light); margin-top: 32px; line-height: 1.6; }
+  footer a { color: var(--navy-light); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* Mobile path clamping */
+  @media (max-width: 700px) {
+    .page-row .path { max-height: 2.6em; overflow: hidden; }
+  }
+  /* KPI font shrink on very narrow screens */
+  @media (max-width: 400px) {
+    .kpi .value { font-size: 20px; }
+  }
+
+  /* Tooltip tap-to-toggle for touch devices */
+  .info.tip-open .tip { display: block; }
+  .info.tip-open .tip { pointer-events: auto; }
+  /* Viewport clamping */
+  .info.left .tip { left: 0; right: auto; transform: none; }
+  .info.right .tip { left: auto; right: 0; transform: none; }
+  /* Improve :focus-visible ring */
+  .info:focus-visible { outline: 2px solid var(--navy-light); outline-offset: 2px; border-radius: 2px; }
+
+  @media print {
+    .tabs, .range-filter, .live-link, footer, .info .tip { display: none !important; }
+    canvas { display: none !important; }
+    .chart-wrap::after { content: '(chart — view online for interactive version)';
+                         display: block; font-style: italic; color: #666; font-size: 12px; }
+    body, .container { background: white !important; }
+    .kpi, .cwv, .card { border: 1px solid #ccc !important; box-shadow: none !important; }
+    .tab-content { display: block !important; }
+    .kpi.good .value, .cwv .pct { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .kpi.warn .value, .kpi.poor .value { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h2 { page-break-before: auto; page-break-after: avoid; }
+    .card, .kpi-grid, .cwv-grid { page-break-inside: avoid; }
+    .info::after { content: ' (' attr(aria-label) ')'; font-size: 10px; color: #666; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Snapshot comparison</h1>
+    <div class="meta"><strong>Snapshot 1:</strong> 2026-04-29T15:12:13Z &nbsp;·&nbsp; <strong>Snapshot 2:</strong> 2026-05-05T22:07:45Z</div>
+  </header>
+  <h2>PSI Mobile</h2><div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Snapshot 1</th><th class="num">Snapshot 2</th><th class="num">Δ</th></tr></thead><tbody><tr><td><strong>Score</strong></td><td class="num">—</td><td class="num">27</td><td class="num delta muted">—</td></tr><tr><td><strong>LCP</strong></td><td class="num">—</td><td class="num">13.95s</td><td class="num delta muted">—</td></tr><tr><td><strong>TBT</strong></td><td class="num">—</td><td class="num">3112ms</td><td class="num delta muted">—</td></tr><tr><td><strong>CLS</strong></td><td class="num">—</td><td class="num">0.056</td><td class="num delta muted">—</td></tr><tr><td><strong>FCP</strong></td><td class="num">—</td><td class="num">4.75s</td><td class="num delta muted">—</td></tr><tr><td><strong>Speed Index</strong></td><td class="num">—</td><td class="num">10.64s</td><td class="num delta muted">—</td></tr></tbody></table></div><h2>PSI Desktop</h2><div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Snapshot 1</th><th class="num">Snapshot 2</th><th class="num">Δ</th></tr></thead><tbody><tr><td><strong>Score</strong></td><td class="num">—</td><td class="num">56</td><td class="num delta muted">—</td></tr><tr><td><strong>LCP</strong></td><td class="num">—</td><td class="num">1.39s</td><td class="num delta muted">—</td></tr><tr><td><strong>TBT</strong></td><td class="num">—</td><td class="num">1899ms</td><td class="num delta muted">—</td></tr><tr><td><strong>CLS</strong></td><td class="num">—</td><td class="num">0.014</td><td class="num delta muted">—</td></tr><tr><td><strong>FCP</strong></td><td class="num">—</td><td class="num">0.57s</td><td class="num delta muted">—</td></tr><tr><td><strong>Speed Index</strong></td><td class="num">—</td><td class="num">8.71s</td><td class="num delta muted">—</td></tr></tbody></table></div><h2>GA4 RUM (good% per metric)</h2><div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Snap 1 good%</th><th class="num">Snap 2 good%</th><th class="num">Δpp</th><th class="num">N (snap1 / snap2)</th></tr></thead><tbody><tr><td><strong>LCP</strong></td><td class="num">81.1%</td><td class="num">84.6%</td><td class="num delta improve">+3.47pp</td><td class="num">11,145 / 25,682</td></tr><tr><td><strong>CLS</strong></td><td class="num">67.7%</td><td class="num">91.1%</td><td class="num delta improve">+23.39pp</td><td class="num">15,019 / 37,201</td></tr><tr><td><strong>INP</strong></td><td class="num">87.6%</td><td class="num">83.2%</td><td class="num delta regress">-4.39pp</td><td class="num">7,876 / 6,453</td></tr><tr><td><strong>FCP</strong></td><td class="num">77.5%</td><td class="num">84.8%</td><td class="num delta improve">+7.30pp</td><td class="num">8,518 / 21,341</td></tr><tr><td><strong>TTFB</strong></td><td class="num">80.0%</td><td class="num">85.3%</td><td class="num delta improve">+5.38pp</td><td class="num">7,308 / 11,271</td></tr></tbody></table></div><h2>CrUX Mobile (p75)</h2><div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Snapshot 1</th><th class="num">Snapshot 2</th><th class="num">Δ</th></tr></thead><tbody><tr><td><strong>LCP</strong></td><td class="num">3.66s</td><td class="num">—</td><td class="num delta muted">—</td></tr><tr><td><strong>CLS</strong></td><td class="num">0.300</td><td class="num">—</td><td class="num delta muted">—</td></tr><tr><td><strong>INP</strong></td><td class="num">270ms</td><td class="num">—</td><td class="num delta muted">—</td></tr><tr><td><strong>FCP</strong></td><td class="num">3.08s</td><td class="num">—</td><td class="num delta muted">—</td></tr><tr><td><strong>TTFB</strong></td><td class="num">708ms</td><td class="num">—</td><td class="num delta muted">—</td></tr></tbody></table></div><h2>CrUX Desktop (p75)</h2><div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Snapshot 1</th><th class="num">Snapshot 2</th><th class="num">Δ</th></tr></thead><tbody><tr><td><strong>LCP</strong></td><td class="num">3.15s</td><td class="num">—</td><td class="num delta muted">—</td></tr><tr><td><strong>CLS</strong></td><td class="num">0.200</td><td class="num">—</td><td class="num delta muted">—</td></tr><tr><td><strong>INP</strong></td><td class="num">122ms</td><td class="num">—</td><td class="num delta muted">—</td></tr><tr><td><strong>FCP</strong></td><td class="num">2.50s</td><td class="num">—</td><td class="num delta muted">—</td></tr><tr><td><strong>TTFB</strong></td><td class="num">636ms</td><td class="num">—</td><td class="num delta muted">—</td></tr></tbody></table></div>
+  <footer>Generated by build-perf-dashboard.py --compare</footer>
+</div>
+</body>
+</html>
