@@ -4,6 +4,67 @@ Append-only log of coordinator sessions. Newest entries at the top.
 
 Format spec: see `docs/coordinator-handoff.md` §10.
 
+### 2026-05-06 (model: glm-5.1:cloud via OpenCode, coordinated by claude-opus-4-7)
+
+**Issues touched:** 236 (Batch E — per-template CWV slicing)
+**Outcome:** staged for coordinator review, not yet committed (theme push pending)
+
+**What was done:**
+- Theme: web-vitals-reporter.liquid now includes `template: {{ template | json }}` in the GA4 event payload
+- Dashboard: query_ga4_rum() now queries customEvent:template; new top_templates field on the response
+- New render_top_templates() helper; new "Top friction templates" section in HTML showing LCP/INP/CLS per template
+- Empty-state messages handle the period before GA4 admin registration + 24h data accumulation
+
+**Files modified:**
+- `snippets/web-vitals-reporter.liquid` — added template field to event payload
+- `scripts/build-perf-dashboard.py` — query_ga4_rum() per-template query, render_top_templates(), HTML_TEMPLATE new section, render_html() replacements
+
+**Verification:**
+- render-only succeeds: ✓
+- py_compile clean: ✓
+- snapshots.jsonl unchanged: ✓
+- New section renders empty states (expected — no data yet): ✓
+
+**Next-session handoff notes:**
+- **MANUAL ACTION (USER)**: register `template` as a custom dimension in GA4 admin: GA4 → Admin → Custom Definitions → Create custom dimension → Dimension name: `template`, Scope: Event, Event parameter: `template`. Required for the dashboard query to return data.
+- Coordinator (Claude Code): review diff, push web-vitals-reporter.liquid to draft theme 140785582179, smoke test in Brave, push to live 131664707683 with --allow-live, commit, push, bd close 236
+- Per-template data will start populating ~24h after both: (a) custom dimension registered, (b) live theme push of the new snippet
+
+---
+
+### 2026-05-06 (model: claude-opus-4-7) — coordinator review of Batch E (LIVE THEME PUSH)
+
+**Issues touched:** 236 (Batch E — per-template CWV slicing)
+**Outcome:** shipped to live (theme 131664707683) and to GitHub Pages
+
+**What was done:**
+- Reviewed OpenCode diff — exactly 1 line added in Liquid snippet (template field with comma fixup); Python additions match brief
+- Pre-push diff check: ✓ surgical, no surprises
+- Pushed `snippets/web-vitals-reporter.liquid` to draft theme 140785582179 (Claude Code)
+- Smoke tested 4 templates via Brave + Claude-in-Chrome:
+  - `/` → `template: "index"` ✓
+  - `/cart` → `template: "cart"` ✓
+  - `/collections/davines` → `template: "collection.brand.davines-sis"` ✓
+  - `/products/...-thinning-hair` → `template: "product"` ✓
+- Pushed `snippets/web-vitals-reporter.liquid` to live theme 131664707683 with --allow-live
+- Closed 236
+
+**Verification:**
+- py_compile clean: ✓
+- render-only succeeds (57,698 bytes): ✓
+- "Top friction templates" h2 in HTML: ✓
+- All __TOP_TEMPLATES_ placeholders replaced: ✓
+- snapshots.jsonl unchanged: ✓
+- Draft smoke test ✓ across 4 templates
+- Live theme push ✓
+
+**Next-session handoff notes:**
+- **GA4 admin step DONE by user** — `template` custom dimension registered before this push.
+- Per-template friction tables will populate once GA4 has ~24h of post-push data. First useful look: 2026-05-07 onwards.
+- Bot URL `/products/davines-momo-shampoo` still redirects to `/` (issue `3q4`) — discovered during smoke test; admin-side fix.
+- Sprint complete: 21 of 21 dashboard issues shipped (gjv + 18 dashboard sprint + 6o0 GHA debug + Batch D + Batch F + Batch E).
+- gjv RUM verification still pending after 2026-05-12.
+
 ---
 
 ### 2026-05-06 (model: claude-opus-4-7) — coordinator review of Batch F

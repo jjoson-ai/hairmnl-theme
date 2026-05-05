@@ -55,7 +55,8 @@
         metric_delta: metric.delta,
         metric_rating: metric.rating,
         metric_navigation_type: metric.navigationType,
-        page_path: location.pathname
+        page_path: location.pathname,
+        template: {{ template | json }}
       };
       var attr = metric.attribution || {};
       if (attr.element) params.debug_target = attr.element;

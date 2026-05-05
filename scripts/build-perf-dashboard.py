@@ -428,6 +428,50 @@ def query_ga4_rum(days: int = 7) -> dict:
         ranked.sort(key=lambda r: (-(r["p_poor"] * r["total"]), -r["total"]))
         top_pages[metric_name] = ranked[:5]
 
+    # Per-template friction (events where metric_rating="poor", grouped by template)
+    print(f"  GA4 RUM: querying per-template friction...", flush=True)
+    top_templates: dict[str, list[dict]] = {}
+    for metric_name in ("LCP", "INP", "CLS"):
+        template_dim_filter = FilterExpression(and_group=FilterExpressionList(
+            expressions=[
+                FilterExpression(filter=_eq("eventName", metric_name)),
+                bot_exclude,
+            ]))
+        try:
+            r = client.run_report(RunReportRequest(
+                property=prop,
+                date_ranges=date_range,
+                dimensions=[Dimension(name="customEvent:template"), Dimension(name="customEvent:metric_rating")],
+                metrics=[Metric(name="eventCount")],
+                dimension_filter=template_dim_filter,
+                limit=200,
+            ))
+        except Exception as e:
+            print(f"  GA4 per-template {metric_name} failed (custom dim may not exist yet): {e}", file=sys.stderr)
+            top_templates[metric_name] = []
+            continue
+        template_data = defaultdict(lambda: {"good": 0, "needs-improvement": 0, "poor": 0})
+        for row in r.rows:
+            template = row.dimension_values[0].value or "(no template)"
+            rating = row.dimension_values[1].value or "(no rating)"
+            count = int(row.metric_values[0].value)
+            if rating in template_data[template]:
+                template_data[template][rating] = count
+        ranked = []
+        for template, rd in template_data.items():
+            total = rd["good"] + rd["needs-improvement"] + rd["poor"]
+            if total < 50:  # min sample threshold
+                continue
+            poor = rd["poor"]
+            ranked.append({
+                "template": template,
+                "total": total,
+                "poor": poor,
+                "p_poor": poor / total if total else 0,
+            })
+        ranked.sort(key=lambda r: (-(r["p_poor"] * r["total"]), -r["total"]))
+        top_templates[metric_name] = ranked[:10]
+
     # Top INP attribution targets
     print("  GA4 RUM: querying INP attribution targets...", flush=True)
     r = client.run_report(RunReportRequest(
@@ -499,6 +543,7 @@ def query_ga4_rum(days: int = 7) -> dict:
         "days": days,
         "metrics": metrics,
         "top_pages": top_pages,
+        "top_templates": top_templates,
         "top_inp_targets": inp_targets,
         "js_errors": errors,
         "wow_prev": wow,
@@ -528,6 +573,7 @@ def _empty_ga4_response(days: int) -> dict:
         "days": days,
         "metrics": {},
         "top_pages": {"LCP": [], "INP": [], "CLS": []},
+        "top_templates": {"LCP": [], "INP": [], "CLS": []},
         "top_inp_targets": [],
         "js_errors": [],
         "wow_prev": {},
@@ -906,6 +952,22 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="card"><h3>LCP — slow paint __TIP_LCP__</h3>__TOP_PAGES_LCP__</div>
     <div class="card"><h3>INP — slow interaction __TIP_INP__</h3>__TOP_PAGES_INP__</div>
     <div class="card"><h3>CLS — layout shift __TIP_CLS__</h3>__TOP_PAGES_CLS__</div>
+  </div>
+
+  <h2>Top friction templates <span class="h2-help">poor% × event volume · all pages of a given template type</span></h2>
+  <div class="grid-3">
+    <div class="card">
+      <h3>LCP — by template</h3>
+      __TOP_TEMPLATES_LCP__
+    </div>
+    <div class="card">
+      <h3>INP — by template</h3>
+      __TOP_TEMPLATES_INP__
+    </div>
+    <div class="card">
+      <h3>CLS — by template</h3>
+      __TOP_TEMPLATES_CLS__
+    </div>
   </div>
 
   <h2>Top INP attribution targets
@@ -1312,6 +1374,30 @@ def render_top_pages(pages, metric_name):
     return "\n".join(rows)
 
 
+def render_top_templates(templates: list[dict], metric_name: str) -> str:
+    if not templates:
+        return _empty_state(f"No per-template {metric_name} data — "
+                            "either the GA4 custom dimension `template` hasn't been registered yet, "
+                            "or there isn't enough data since the theme update shipped.")
+    rows = ['<div class="table-scroll"><table><thead><tr>'
+            '<th>Template</th><th class="num">Impact</th><th class="num">% poor</th>'
+            '<th class="num">N events</th><th class="num">Poor count</th>'
+            '</tr></thead><tbody>']
+    for t in templates:
+        impact = int(t["p_poor"] * t["total"])
+        pct_poor = t["p_poor"] * 100
+        if pct_poor >= 25: pct_class = "poor-high"
+        elif pct_poor >= 10: pct_class = "poor-mid"
+        else: pct_class = "poor-low"
+        rows.append(f'<tr><td><strong>{t["template"]}</strong></td>'
+                    f'<td class="num"><strong>{impact:,}</strong></td>'
+                    f'<td class="num pct-poor {pct_class}">{pct_poor:.1f}%</td>'
+                    f'<td class="num">{t["total"]:,}</td>'
+                    f'<td class="num">{t["poor"]:,}</td></tr>')
+    rows.append('</tbody></table></div>')
+    return "\n".join(rows)
+
+
 def render_inp_targets(targets):
     if not targets:
         return _empty_state("No INP attribution data — no debug_target events recorded. Ensure the web-vitals snippet is firing.")
@@ -1698,6 +1784,10 @@ def render_html(snapshots: list[dict]) -> str:
     html = html.replace("__TOP_PAGES_LCP__", render_top_pages(rum.get("top_pages", {}).get("LCP", []), "LCP"))
     html = html.replace("__TOP_PAGES_INP__", render_top_pages(rum.get("top_pages", {}).get("INP", []), "INP"))
     html = html.replace("__TOP_PAGES_CLS__", render_top_pages(rum.get("top_pages", {}).get("CLS", []), "CLS"))
+    top_templates = rum.get("top_templates", {})
+    html = html.replace("__TOP_TEMPLATES_LCP__", render_top_templates(top_templates.get("LCP", []), "LCP"))
+    html = html.replace("__TOP_TEMPLATES_INP__", render_top_templates(top_templates.get("INP", []), "INP"))
+    html = html.replace("__TOP_TEMPLATES_CLS__", render_top_templates(top_templates.get("CLS", []), "CLS"))
     html = html.replace("__INP_TARGETS__", render_inp_targets(rum.get("top_inp_targets", [])))
     html = html.replace("__JS_ERRORS__", render_js_errors(rum.get("js_errors", [])))
     html = html.replace("__BASELINE_TABLE__", render_baseline_table(psi_mobile))
