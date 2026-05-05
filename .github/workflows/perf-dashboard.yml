@@ -28,12 +28,46 @@ jobs:
       - name: Install dependencies
         run: pip install google-analytics-data
 
+      - name: Verify required secrets are set
+        env:
+          GA4_KEY: ${{ secrets.GA4_SERVICE_ACCOUNT_KEY }}
+          PSI_KEY: ${{ secrets.PSI_API_KEY }}
+          GA4_PROP: ${{ secrets.GA4_PROPERTY_ID }}
+        run: |
+          missing=()
+          [ -z "$GA4_KEY" ] && missing+=("GA4_SERVICE_ACCOUNT_KEY")
+          [ -z "$PSI_KEY" ] && missing+=("PSI_API_KEY")
+          [ -z "$GA4_PROP" ] && missing+=("GA4_PROPERTY_ID")
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::error::Missing required secrets: ${missing[*]}"
+            echo "Set them at: https://github.com/${{ github.repository }}/settings/secrets/actions"
+            exit 1
+          fi
+          echo "All 3 secrets are present. GA4_KEY length: ${#GA4_KEY} chars; PSI_KEY length: ${#PSI_KEY} chars."
+
       - name: Write GA4 service account key
         env:
           GA4_SERVICE_ACCOUNT_KEY: ${{ secrets.GA4_SERVICE_ACCOUNT_KEY }}
         run: |
           mkdir -p ~/.config
-          echo "$GA4_SERVICE_ACCOUNT_KEY" > ~/.config/hairmnl-ga4-key.json
+          # printf preserves bytes verbatim; echo can mangle backslashes/options
+          printf '%s' "$GA4_SERVICE_ACCOUNT_KEY" > ~/.config/hairmnl-ga4-key.json
+          # Validate JSON before proceeding so failures surface here, not deep in the script
+          if ! python3 -c "import json,sys; json.load(open('$HOME/.config/hairmnl-ga4-key.json'))" 2>/tmp/ga4-validate.err; then
+            echo "::error::GA4 service account key is not valid JSON"
+            echo "Validation error:"
+            cat /tmp/ga4-validate.err
+            echo "File size: $(wc -c < ~/.config/hairmnl-ga4-key.json) bytes"
+            echo "First 80 chars (redacted private_key):"
+            head -c 80 ~/.config/hairmnl-ga4-key.json | sed 's/[A-Za-z0-9+/=]\{20,\}/[REDACTED]/g'
+            echo ""
+            echo "Likely cause: the secret was pasted with extra whitespace, missing braces, or "
+            echo "  was set under the wrong name. Re-paste the FULL contents of"
+            echo "  ~/.config/hairmnl-ga4-key.json on your local machine into the secret."
+            exit 1
+          fi
+          # Confirm it has the expected service account fields
+          python3 -c "import json; d=json.load(open('$HOME/.config/hairmnl-ga4-key.json')); assert d.get('type')=='service_account', f'Expected type=service_account, got: {d.get(\"type\")}'; print(f'  GA4 key OK — project: {d.get(\"project_id\")}, client: {d.get(\"client_email\")}')"
 
       - name: Run dashboard script
         env:
