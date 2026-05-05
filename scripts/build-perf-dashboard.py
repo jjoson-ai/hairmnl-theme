@@ -38,7 +38,7 @@ import time
 import urllib.parse
 import urllib.request
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import median
 from typing import Optional
@@ -286,6 +286,18 @@ def query_ga4_rum(days: int = 7) -> dict:
     client, prop = get_ga4_client()
     date_range = [DateRange(start_date=f"{days}daysAgo", end_date="today")]
 
+    bot_exclude = FilterExpression(
+        not_expression=FilterExpression(
+            filter=Filter(
+                field_name="pagePath",
+                string_filter=Filter.StringFilter(
+                    match_type=Filter.StringFilter.MatchType.EXACT,
+                    value="/pages/privacy-policy",
+                ),
+            ),
+        )
+    )
+
     # Overall metric distribution by rating
     print(f"  GA4 RUM: querying {days}-day rating distribution...", flush=True)
     r = client.run_report(RunReportRequest(
@@ -297,6 +309,12 @@ def query_ga4_rum(days: int = 7) -> dict:
         limit=200,
     ))
     metrics = {m: {"good": 0, "needs-improvement": 0, "poor": 0} for m in VITAL_EVENTS}
+    sampled = False
+    try:
+        if hasattr(r, 'metadata') and r.metadata and getattr(r.metadata, 'sampling_metadatas', None):
+            sampled = bool(r.metadata.sampling_metadatas)
+    except Exception:
+        pass
     for row in r.rows:
         ev = row.dimension_values[0].value
         rating = row.dimension_values[1].value or "(no rating)"
@@ -313,12 +331,17 @@ def query_ga4_rum(days: int = 7) -> dict:
     print("  GA4 RUM: querying top friction pages per metric...", flush=True)
     top_pages = {}
     for metric_name in ("LCP", "INP", "CLS"):
+        page_dim_filter = FilterExpression(and_group=FilterExpressionList(
+            expressions=[
+                FilterExpression(filter=_eq("eventName", metric_name)),
+                bot_exclude,
+            ]))
         r = client.run_report(RunReportRequest(
             property=prop,
             date_ranges=date_range,
             dimensions=[Dimension(name="pagePath"), Dimension(name="customEvent:metric_rating")],
             metrics=[Metric(name="eventCount")],
-            dimension_filter=_and(_eq("eventName", metric_name)),
+            dimension_filter=page_dim_filter,
             limit=2000,
         ))
         page_data = defaultdict(lambda: {"good": 0, "needs-improvement": 0, "poor": 0})
@@ -340,7 +363,7 @@ def query_ga4_rum(days: int = 7) -> dict:
                 "poor": poor,
                 "p_poor": poor / total if total else 0,
             })
-        ranked.sort(key=lambda r: (-r["p_poor"], -r["total"]))
+        ranked.sort(key=lambda r: (-(r["p_poor"] * r["total"]), -r["total"]))
         top_pages[metric_name] = ranked[:5]
 
     # Top INP attribution targets
@@ -410,13 +433,43 @@ def query_ga4_rum(days: int = 7) -> dict:
         except Exception as e:
             print(f"  GA4 WoW {metric_name} failed: {e}", file=sys.stderr)
 
-    return {
+    result = {
         "days": days,
         "metrics": metrics,
         "top_pages": top_pages,
         "top_inp_targets": inp_targets,
         "js_errors": errors,
         "wow_prev": wow,
+        "_sampled": sampled,
+    }
+
+    required_keys = {"metrics", "top_pages", "top_inp_targets", "js_errors"}
+    missing = [k for k in required_keys if result.get(k) is None]
+    if missing:
+        print(f"  GA4 RUM: response missing keys: {missing}", file=sys.stderr)
+        for k in missing:
+            if k == "metrics":
+                result["metrics"] = {}
+            elif k == "top_pages":
+                result["top_pages"] = {"LCP": [], "INP": [], "CLS": []}
+            elif k == "top_inp_targets":
+                result["top_inp_targets"] = []
+            elif k == "js_errors":
+                result["js_errors"] = []
+        result["_warning"] = "GA4 query returned partial/empty response — see stderr"
+
+    return result
+
+
+def _empty_ga4_response(days: int) -> dict:
+    return {
+        "days": days,
+        "metrics": {},
+        "top_pages": {"LCP": [], "INP": [], "CLS": []},
+        "top_inp_targets": [],
+        "js_errors": [],
+        "wow_prev": {},
+        "_warning": "GA4 query returned partial/empty response — see stderr",
     }
 
 
@@ -428,19 +481,63 @@ def append_snapshot(snapshot: dict):
         f.write(json.dumps(snapshot) + "\n")
 
 
+def rotate_snapshots_if_needed():
+    """If snapshots.jsonl > 1000 lines, archive entries older than 365 days."""
+    if not SNAPSHOTS_PATH.exists():
+        return
+    with open(SNAPSHOTS_PATH) as f:
+        lines = f.readlines()
+    if len(lines) <= 1000:
+        return
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=365)).isoformat()
+    keep = []
+    archive_by_year: dict[str, list[str]] = {}
+    for line in lines:
+        try:
+            snap = json.loads(line)
+            ts = snap.get("timestamp", "")
+            if ts < cutoff:
+                year = ts[:4]
+                archive_by_year.setdefault(year, []).append(line)
+            else:
+                keep.append(line)
+        except (json.JSONDecodeError, KeyError):
+            keep.append(line)
+    if archive_by_year:
+        archive_dir = SNAPSHOTS_PATH.parent / "archive"
+        archive_dir.mkdir(exist_ok=True)
+        for year, year_lines in archive_by_year.items():
+            archive_path = archive_dir / f"{year}.jsonl"
+            with open(archive_path, "a") as f:
+                f.writelines(year_lines)
+        with open(SNAPSHOTS_PATH, "w") as f:
+            f.writelines(keep)
+        print(f"Archived {sum(len(v) for v in archive_by_year.values())} snapshots to {archive_dir}/", file=sys.stderr)
+
+
 def load_snapshots() -> list[dict]:
+    raw = []
     if not SNAPSHOTS_PATH.exists():
         return []
-    snapshots = []
     with open(SNAPSHOTS_PATH) as f:
         for line in f:
             line = line.strip()
-            if line:
-                try:
-                    snapshots.append(json.loads(line))
-                except json.JSONDecodeError:
-                    continue
-    return snapshots
+            if not line:
+                continue
+            try:
+                raw.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    by_day: dict[str, dict] = {}
+    for snap in raw:
+        ts = snap.get("timestamp", "")
+        day = ts[:10]
+        if not day:
+            continue
+        existing = by_day.get(day)
+        if existing is None or ts > existing.get("timestamp", ""):
+            by_day[day] = snap
+    return sorted(by_day.values(), key=lambda s: s.get("timestamp", ""))
 
 
 # ───────────────────────── HTML render ─────────────────────────
@@ -462,9 +559,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     --gold: #D4A04C;
     --green: #2F8F3F;
     --green-bg: #E8F5EA;
-    --amber: #C97A1A;
+    --amber: #8F5210;
     --amber-bg: #FBF1E0;
-    --red: #C03A3A;
+    --red: #922525;
     --red-bg: #FBE8E8;
     --gray: #6B7280;
     --gray-light: #E5E7EB;
@@ -553,6 +650,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   .cwv .pct { font-size: 32px; font-weight: 700; color: var(--green); line-height: 1; margin: 4px 0; }
   .cwv.fail .pct { color: var(--amber); }
   .cwv .total { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .sample-size { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .sample-size.caution { color: var(--amber); font-weight: 600; }
   .cwv .badge { display: inline-block; padding: 2px 8px; border-radius: 4px;
                 font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
   .cwv .badge.pass { background: var(--green-bg); color: var(--green); }
@@ -574,6 +673,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   .page-row .path:hover { text-decoration: underline; }
   .page-row .stats { display: flex; align-items: center; gap: 12px; font-size: 12px;
                      flex-wrap: wrap; }
+  .page-row .impact { font-weight: 700; font-size: 13px; color: var(--navy); min-width: 56px; }
   .page-row .pct-poor { font-weight: 700; min-width: 56px; }
   .page-row .pct-poor.poor-high { color: var(--red); }
   .page-row .pct-poor.poor-mid { color: var(--amber); }
@@ -781,9 +881,9 @@ function buildCharts() {
   charts.score = new Chart(document.getElementById('chart-score'),
     baseConfig('Score', '#1E2761', CHART_DATA.score, v => `${v}/100`));
   charts.lcp = new Chart(document.getElementById('chart-lcp'),
-    baseConfig('LCP', '#C03A3A', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`));
+    baseConfig('LCP', '#922525', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`));
   charts.tbt = new Chart(document.getElementById('chart-tbt'),
-    baseConfig('TBT', '#C97A1A', CHART_DATA.tbt_ms, v => `${v} ms`));
+    baseConfig('TBT', '#8F5210', CHART_DATA.tbt_ms, v => `${v} ms`));
   charts.cls = new Chart(document.getElementById('chart-cls'),
     baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, v => v.toFixed(3)));
 }
@@ -802,6 +902,40 @@ function switchTab(btn) {
 }
 
 buildCharts();
+</script>
+
+<script>
+// Tooltip tap-to-toggle for mobile
+(function() {
+  document.addEventListener('click', function(e) {
+    var info = e.target.closest('.info');
+    if (info) {
+      e.stopPropagation();
+      var wasOpen = info.classList.contains('tip-open');
+      document.querySelectorAll('.info.tip-open').forEach(function(el) {
+        el.classList.remove('tip-open');
+      });
+      if (!wasOpen) {
+        info.classList.add('tip-open');
+        var tip = info.querySelector('.tip');
+        if (tip) {
+          var rect = tip.getBoundingClientRect();
+          if (rect.right > window.innerWidth - 8) {
+            info.classList.add('right');
+            info.classList.remove('left');
+          } else if (rect.left < 8) {
+            info.classList.add('left');
+            info.classList.remove('right');
+          }
+        }
+      }
+    } else {
+      document.querySelectorAll('.info.tip-open').forEach(function(el) {
+        el.classList.remove('tip-open');
+      });
+    }
+  });
+})();
 </script>
 </body>
 </html>
@@ -891,15 +1025,47 @@ def _delta_html(curr, prev, lower_is_better=True, fmt=lambda v: f"{v:+.0f}"):
     return f'<div class="delta {klass}">{arrow} {fmt(abs(d))} vs prev</div>'
 
 
+def _empty_state(message: str) -> str:
+    """Render a styled empty-state message."""
+    return f'<div class="empty">ℹ️ {message}</div>'
+
+
+def _crux_ga4_divergence_badge(crux_key: str, crux: Optional[dict], ga4_metrics: dict) -> str:
+    """Return a '⚠ Δ' badge if CrUX good% and GA4 RUM good% diverge by >10pp."""
+    if not crux or not ga4_metrics:
+        return ""
+    histograms = crux.get("histograms", {}).get(crux_key, [])
+    if not histograms:
+        return ""
+    crux_good = histograms[0].get("density", 0)
+    ga4_key_map = {"lcp_ms": "LCP", "cls": "CLS", "inp_ms": "INP", "fcp_ms": "FCP", "ttfb_ms": "TTFB"}
+    ga4_key = ga4_key_map.get(crux_key)
+    if not ga4_key:
+        return ""
+    ga4_good = ga4_metrics.get(ga4_key, {}).get("p_good", 0)
+    if ga4_good == 0 and crux_good == 0:
+        return ""
+    diff_pp = abs(crux_good - ga4_good) * 100
+    if diff_pp <= 10:
+        return ""
+    tooltip = (f"CrUX (28d p75) and GA4 RUM (7d) diverge by {diff_pp:.0f}pp on this metric. "
+              f"Possible cause: sampling bias, time-window difference, or bot contamination. "
+              f"Investigate before drawing conclusions.")
+    return (f' <span class="info" tabindex="0" style="color:var(--amber);font-size:11px" '
+            f'aria-label="CrUX vs GA4 divergence">⚠ Δ'
+            f'<span class="tip" role="tooltip">{tooltip}</span></span>')
+
+
 def render_snapshot_section(form_factor: str, snapshot: dict, prev_snapshot: Optional[dict]) -> str:
     """Render KPI cards for one form factor (mobile|desktop). Combines CrUX + PSI."""
     crux = snapshot.get("crux", {}).get(form_factor)
     psi = snapshot.get("psi", {}).get(form_factor)
     crux_prev = prev_snapshot.get("crux", {}).get(form_factor) if prev_snapshot else None
     psi_prev = prev_snapshot.get("psi", {}).get(form_factor) if prev_snapshot else None
+    ga4_metrics = snapshot.get("ga4", {}).get("metrics", {})
 
     if not crux and not psi:
-        return ('<div class="empty">No data captured for this form factor yet. '
+        return ('<div class="empty">No PSI data for this snapshot — PSI API may have failed or been skipped (--no-psi). '
                 'CrUX needs ~28 days of Chrome traffic; PSI mobile sometimes fails for slow sites '
                 '(<a href="https://chromeuxreport.googleapis.com" target="_blank">enable CrUX API</a> for the most reliable signal).</div>')
 
@@ -917,9 +1083,10 @@ def render_snapshot_section(form_factor: str, snapshot: dict, prev_snapshot: Opt
     if not lcp and psi: lcp = psi.get("lcp_ms"); lcp_src = "PSI lab"
     if lcp:
         prev = (crux_prev or {}).get("lcp_ms") if crux else (psi_prev or {}).get("lcp_ms")
+        div_badge = _crux_ga4_divergence_badge("lcp_ms", crux, ga4_metrics) if lcp_src == "CrUX p75" else ""
         cards.append(_kpi_v2("LCP", f"{lcp/1000:.2f} s", lcp_src,
             klass=_rate_class_lcp(lcp),
-            delta_html=_delta_html(lcp, prev, fmt=lambda v: f"{v/1000:.2f}s")))
+            delta_html=_delta_html(lcp, prev, fmt=lambda v: f"{v/1000:.2f}s") + div_badge))
 
     # CLS — prefer CrUX
     cls = crux.get("cls") if crux else None
@@ -927,17 +1094,19 @@ def render_snapshot_section(form_factor: str, snapshot: dict, prev_snapshot: Opt
     if cls is None and psi: cls = psi.get("cls"); cls_src = "PSI lab"
     if cls is not None:
         prev = (crux_prev or {}).get("cls") if crux else (psi_prev or {}).get("cls")
+        div_badge = _crux_ga4_divergence_badge("cls", crux, ga4_metrics) if cls_src == "CrUX p75" else ""
         cards.append(_kpi_v2("CLS", f"{cls:.3f}", cls_src,
             klass=_rate_class_cls(cls),
-            delta_html=_delta_html(cls, prev, fmt=lambda v: f"{v:.3f}")))
+            delta_html=_delta_html(cls, prev, fmt=lambda v: f"{v:.3f}") + div_badge))
 
     # INP — CrUX only (PSI lab doesn't measure INP)
     if crux and crux.get("inp_ms") is not None:
         inp = crux["inp_ms"]
         prev = (crux_prev or {}).get("inp_ms")
+        div_badge = _crux_ga4_divergence_badge("inp_ms", crux, ga4_metrics)
         cards.append(_kpi_v2("INP", f"{inp:.0f} ms", "CrUX p75",
             klass=_rate_class_inp(inp),
-            delta_html=_delta_html(inp, prev, fmt=lambda v: f"{v:.0f}ms")))
+            delta_html=_delta_html(inp, prev, fmt=lambda v: f"{v:.0f}ms") + div_badge))
 
     # TBT — PSI only (CrUX has no TBT)
     if psi and "tbt_ms" in psi:
@@ -953,17 +1122,19 @@ def render_snapshot_section(form_factor: str, snapshot: dict, prev_snapshot: Opt
     if not fcp and psi: fcp = psi.get("fcp_ms"); fcp_src = "PSI lab"
     if fcp:
         prev = (crux_prev or {}).get("fcp_ms") if crux else (psi_prev or {}).get("fcp_ms")
+        div_badge = _crux_ga4_divergence_badge("fcp_ms", crux, ga4_metrics) if fcp_src == "CrUX p75" else ""
         cards.append(_kpi_v2("FCP", f"{fcp/1000:.2f} s", fcp_src,
             klass=_rate_class_fcp(fcp),
-            delta_html=_delta_html(fcp, prev, fmt=lambda v: f"{v/1000:.2f}s")))
+            delta_html=_delta_html(fcp, prev, fmt=lambda v: f"{v/1000:.2f}s") + div_badge))
 
     # TTFB — CrUX only
     if crux and crux.get("ttfb_ms"):
         ttfb = crux["ttfb_ms"]
         prev = (crux_prev or {}).get("ttfb_ms")
+        div_badge = _crux_ga4_divergence_badge("ttfb_ms", crux, ga4_metrics)
         cards.append(_kpi_v2("TTFB", f"{ttfb:.0f} ms", "CrUX p75",
             klass=_rate_class_ttfb(ttfb),
-            delta_html=_delta_html(ttfb, prev, fmt=lambda v: f"{v:.0f}ms")))
+            delta_html=_delta_html(ttfb, prev, fmt=lambda v: f"{v:.0f}ms") + div_badge))
 
     return f'<div class="kpi-grid">{"".join(cards)}</div>'
 
@@ -984,10 +1155,15 @@ def render_rum_cwv_cards(metrics):
         passes = gp >= 75
         badge = '<span class="badge pass">✓ PASS</span>' if passes else '<span class="badge fail">✗ FAIL</span>'
         klass = "" if passes else "fail"
+        if total < 50:
+            sample_html = f'<div class="sample-size caution">⚠️ N={total}</div>'
+        else:
+            sample_html = f'<div class="sample-size">(N={total:,})</div>'
         cards.append(f'''
         <div class="cwv {klass}">
           <div class="name">{m}{_tooltip(m)}</div>
           <div class="pct">{gp:.0f}%</div>
+          {sample_html}
           <div class="total">good · {total:,} events {badge}</div>
           <div class="rating-stack">
             <span class="good" style="flex: {gp};"></span>
@@ -1006,20 +1182,20 @@ def render_top_pages(pages, metric_name):
     rows = []
     for p in pages:
         path = p["page"]
-        # Build absolute URL for deep-links
         full_url = f"https://www.hairmnl.com{path}" if path.startswith("/") else path
         psi_link = f"https://pagespeed.web.dev/analysis?url={urllib.parse.quote(full_url, safe='')}"
-        # Color-coded poor%
         pct_poor = p["p_poor"] * 100
         if pct_poor >= 25: pct_class = "poor-high"
         elif pct_poor >= 10: pct_class = "poor-mid"
         else: pct_class = "poor-low"
+        impact = int(p["p_poor"] * p["total"])
         rows.append(f'''
         <div class="page-row">
           <a class="path" href="{full_url}" target="_blank" rel="noopener">{path}</a>
           <div class="stats">
+            <span class="impact">{impact:,} impact</span>
             <span class="pct-poor {pct_class}">{pct_poor:.1f}% poor</span>
-            <span class="meta">{p["total"]:,} events · {p["poor"]:,} poor</span>
+            <span class="meta">N={p["total"]:,} · {p["poor"]:,} poor</span>
             <span class="deeplinks">
               <a href="{psi_link}" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -1030,8 +1206,8 @@ def render_top_pages(pages, metric_name):
 
 def render_inp_targets(targets):
     if not targets:
-        return '<div class="empty">No INP "poor" events with debug_target captured.</div>'
-    rows = ['<table><thead><tr><th>Attribution target (CSS selector / element)</th><th class="num">Poor INP count</th></tr></thead><tbody>']
+        return _empty_state("No INP attribution data — no debug_target events recorded. Ensure the web-vitals snippet is firing.")
+    rows = ['<div class="table-scroll"><table><thead><tr><th>Attribution target (CSS selector / element)</th><th class="num">Poor INP count</th></tr></thead><tbody>']
     for t in targets:
         target = t["target"]
         if target == "(not set)":
@@ -1039,18 +1215,18 @@ def render_inp_targets(targets):
         else:
             target_html = f'<span class="code">{target[:80]}</span>'
         rows.append(f'<tr><td>{target_html}</td><td class="num">{t["count"]:,}</td></tr>')
-    rows.append('</tbody></table>')
+    rows.append('</tbody></table></div>')
     return "\n".join(rows)
 
 
 def render_js_errors(errors):
     if not errors:
-        return '<div class="empty">No js_error events captured. Either no errors (good!) or the js_error tracking isn&#39;t live yet.</div>'
-    rows = ['<table><thead><tr><th>Type</th><th>Message</th><th>Source</th><th class="num">Count</th></tr></thead><tbody>']
+        return _empty_state("No JavaScript errors recorded in this period. Either clean or the js_error event is not firing.")
+    rows = ['<div class="table-scroll"><table><thead><tr><th>Type</th><th>Message</th><th>Source</th><th class="num">Count</th></tr></thead><tbody>']
     for e in errors:
         rows.append(f'<tr><td>{e["type"]}</td><td class="code">{e["message"]}</td>'
                     f'<td class="code">{e["source"]}</td><td class="num">{e["count"]:,}</td></tr>')
-    rows.append('</tbody></table>')
+    rows.append('</tbody></table></div>')
     return "\n".join(rows)
 
 
@@ -1138,6 +1314,20 @@ def render_wow_scorecard(metrics_this: dict, wow_prev: dict, days: int) -> str:
     inp_card = _wow_card("INP")
     cls_card = _wow_card("CLS")
 
+    volume_warning = ""
+    for metric_name in ("INP", "CLS"):
+        this = metrics_this.get(metric_name, {})
+        prev = wow_prev.get(metric_name, {})
+        this_total = this.get("total", 0)
+        prev_total = prev.get("total", 0)
+        if prev_total > 0 and this_total < prev_total / 2:
+            drop_pct = round((1 - this_total / prev_total) * 100)
+            volume_warning = (f'<div style="background:var(--amber-bg);border:1px solid #ECD9B6;border-radius:6px;'
+                             f'padding:10px 14px;margin-bottom:14px;font-size:13px;color:var(--amber)">'
+                             f'⚠️ Traffic volume dropped {drop_pct}% week-over-week for {metric_name}. '
+                             f'Percentage shifts may not reflect actual performance changes — compare raw event counts.</div>')
+            break
+
     target_block = f'''
     <div class="note" style="margin-top:20px">
       <strong>90-day targets</strong> (end of Q3 2026)<br>
@@ -1150,6 +1340,7 @@ def render_wow_scorecard(metrics_this: dict, wow_prev: dict, days: int) -> str:
     </div>'''
 
     return f'''
+    {volume_warning}
     <div style="display:flex;gap:14px;flex-wrap:wrap">
       {inp_card}
       {cls_card}
@@ -1174,7 +1365,7 @@ def render_baseline_table(psi_now):
         ('FCP (s)', base["fcp_ms"]/1000, psi_now["fcp_ms"]/1000, True),
         ('Speed Index (s)', base["si_ms"]/1000, psi_now["si_ms"]/1000, True),
     ]
-    out = ['<table><thead><tr><th>Metric</th><th class="num">Apr 26 baseline</th>'
+    out = ['<div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Apr 26 baseline</th>'
            '<th class="num">Now</th><th class="num">Δ</th><th>Direction</th></tr></thead><tbody>']
     for label, then, now, lower_is_better in rows:
         d = now - then
@@ -1193,7 +1384,7 @@ def render_baseline_table(psi_now):
                    f'<td class="num">{now_s}</td>'
                    f'<td class="num" style="color:{color}; font-weight:600">{arrow} {d_pct}</td>'
                    f'<td style="color:{color};">{verdict}</td></tr>')
-    out.append('</tbody></table>')
+    out.append('</tbody></table></div>')
     return "\n".join(out)
 
 
@@ -1249,6 +1440,19 @@ def render_html(snapshots: list[dict]) -> str:
     html = html.replace("__LAST_UPDATED__", last_label)
     html = html.replace("__SNAPSHOT_COUNT__", str(len(snapshots)))
     html = html.replace("__RUM_DAYS__", str(rum.get("days", 7)))
+
+    ga4_notes = []
+    if rum.get("_warning"):
+        ga4_notes.append(f'<div style="background:var(--amber-bg);border:1px solid #ECD9B6;border-radius:6px;'
+                         f'padding:8px 12px;margin-top:8px;font-size:12px;color:var(--amber)">'
+                         f'⚠ {rum["_warning"]}</div>')
+    if rum.get("_sampled"):
+        ga4_notes.append(f'<div style="background:var(--amber-bg);border:1px solid #ECD9B6;border-radius:6px;'
+                         f'padding:8px 12px;margin-top:8px;font-size:12px;color:var(--amber)">'
+                         f'⚠ GA4 query was sampled — data may be approximate. Re-run after off-peak.</div>')
+    if ga4_notes:
+        header_note = "".join(ga4_notes)
+        html = html.replace("</h1>", f"</h1>\n{header_note}", 1)
     html = html.replace("__SNAPSHOT_MOBILE__", render_snapshot_section("mobile", latest, prev))
     html = html.replace("__SNAPSHOT_DESKTOP__", render_snapshot_section("desktop", latest, prev))
     html = html.replace("__RUM_RATINGS__", render_rum_cwv_cards(rum.get("metrics", {})))
@@ -1328,10 +1532,17 @@ def main():
     if not args.no_psi:
         snapshot["psi"] = {}
         t0 = time.time()
-        m = run_psi_median(args.url, "mobile", args.psi_runs)
-        if m: snapshot["psi"]["mobile"] = m
-        if not args.psi_only_mobile:
-            d = run_psi_median(args.url, "desktop", args.psi_runs)
+        if args.psi_only_mobile:
+            m = run_psi_median(args.url, "mobile", args.psi_runs)
+            if m: snapshot["psi"]["mobile"] = m
+        else:
+            from concurrent.futures import ThreadPoolExecutor
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                fut_m = pool.submit(run_psi_median, args.url, "mobile", args.psi_runs)
+                fut_d = pool.submit(run_psi_median, args.url, "desktop", args.psi_runs)
+                m = fut_m.result()
+                d = fut_d.result()
+            if m: snapshot["psi"]["mobile"] = m
             if d: snapshot["psi"]["desktop"] = d
         print(f"  PSI total: {time.time()-t0:.1f}s")
 
@@ -1348,6 +1559,7 @@ def main():
     has_crux = bool(snapshot.get("crux"))
     if has_psi or has_ga4 or has_crux:
         append_snapshot(snapshot)
+        rotate_snapshots_if_needed()
         print(f"  Snapshot appended to {SNAPSHOTS_PATH}")
     else:
         print(f"  Skipping empty snapshot (no PSI mobile/desktop, no GA4)", file=sys.stderr)

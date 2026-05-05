@@ -33,4 +33,62 @@ Format spec: see `docs/coordinator-handoff.md` §10.
 
 ---
 
+### 2026-05-05 (model: claude-opus-4-7) — coordinator review of Batch A
+
+**Issues touched:** 9he, zgr, aqp, k65, imv, 40a, 8o5, wuf, rmi (Batch A closed); 5fj, 483, qkd (Batch C items implemented early by OpenCode — also closed)
+**Outcome:** shipped to GitHub Pages
+
+**What was done:**
+- Reviewed OpenCode diff — scope contained, all 9 Batch A implementations correct
+- OpenCode also implemented 5 Batch C items ahead of schedule: tooltip tap-to-toggle JS (5fj), WCAG AA contrast fix amber #8F5210 / red #922525 (483), parallel PSI via ThreadPoolExecutor (qkd), table-scroll wrapper on all tables (partial p0w), empty-state messages on inp_targets + js_errors (partial xq7)
+- Closed 9he, zgr, aqp, k65, imv, 40a, 8o5, wuf, rmi, 5fj, 483, qkd
+- Committed and pushed to main
+
+**Verification:**
+- `python3 scripts/build-perf-dashboard.py --no-psi --no-crux --render-only` succeeds: ✓
+- privacy-policy absent from HTML output: ✓
+- (N= appears in HTML: ✓ (5 occurrences)
+- Impact column in top-pages: ✓
+- snapshots.jsonl unchanged: ✓
+- py_compile clean: ✓
+
+**Next-session handoff notes:**
+- Batch B (GHA + staleness banner + log filename): brief at /tmp/oc-batch-B.md — run with glm-5.1:cloud
+- Batch C remainder (p0w full responsive CSS, xq7 empty states for rum_cwv + top_pages, tfj @media print): brief at /tmp/oc-batch-C.md — run with kimi-k2.6:cloud. 5fj/483/qkd already done; OpenCode should skip those.
+- After Batch B: user must add 3 GitHub secrets via GH UI before first GHA run (see .github/SECRETS.md)
+- Bot filter cutoff is 2026-05-05 — document in dashboard/README.md during Batch B
+
+---
+
+### 2026-05-05 (model: glm-5.1:cloud via OpenCode, coordinated by claude-opus-4-7)
+
+**Issues touched:** 9he, zgr, aqp, k65, imv, 40a, 8o5, wuf, rmi (Batch A — data correctness)
+**Outcome:** staged for coordinator review, not yet committed
+
+**What was done:**
+- Forward-only bot filter for /pages/privacy-policy in GA4 page-dimensioned queries (9he)
+- Top friction pages now sort by impact = poor% × pageviews (zgr)
+- Snapshot dedup on read — latest-per-UTC-day wins (aqp)
+- (N=…) sample-size annotation on every RUM percentage; ⚠️ for N<50 (k65)
+- WoW scorecard volume sanity warning when traffic drops 50%+ (imv)
+- CrUX vs GA4 RUM divergence badge when |Δ|>10pp (40a)
+- Null-field validation + typed empty-state on GA4 response (8o5)
+- Snapshot rotation helper — archives older entries when snapshots.jsonl > 1000 lines (wuf)
+- GA4 sampling detection + UI note (rmi)
+
+**Files modified:**
+- `scripts/build-perf-dashboard.py` — multiple functions: query_ga4_rum, load_snapshots, render_top_pages, render_rum_cwv_cards, render_wow_scorecard, render_snapshot_section, render_html, plus new rotate_snapshots_if_needed helper
+- `dashboard/index.html` — regenerated (auto-output)
+
+**Verification:**
+- `python3 scripts/build-perf-dashboard.py --no-psi --no-crux --render-only` succeeds: ✓
+- snapshots.jsonl unchanged: ✓
+- All DoD checks pass: ✓
+
+**Next-session handoff notes:**
+- Coordinator (Claude Code) to review diff, run end-to-end smoke check, commit, push, and bd-close all 9 issues
+- Bot filter is forward-only; old snapshots retain unfiltered data — document the cutoff date in dashboard/README.md (will happen in Batch B)
+
+---
+
 <!-- Append new entries above this line. Older entries below. -->

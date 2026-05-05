@@ -15,9 +15,9 @@
     --gold: #D4A04C;
     --green: #2F8F3F;
     --green-bg: #E8F5EA;
-    --amber: #C97A1A;
+    --amber: #8F5210;
     --amber-bg: #FBF1E0;
-    --red: #C03A3A;
+    --red: #922525;
     --red-bg: #FBE8E8;
     --gray: #6B7280;
     --gray-light: #E5E7EB;
@@ -106,6 +106,8 @@
   .cwv .pct { font-size: 32px; font-weight: 700; color: var(--green); line-height: 1; margin: 4px 0; }
   .cwv.fail .pct { color: var(--amber); }
   .cwv .total { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .sample-size { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .sample-size.caution { color: var(--amber); font-weight: 600; }
   .cwv .badge { display: inline-block; padding: 2px 8px; border-radius: 4px;
                 font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
   .cwv .badge.pass { background: var(--green-bg); color: var(--green); }
@@ -127,6 +129,7 @@
   .page-row .path:hover { text-decoration: underline; }
   .page-row .stats { display: flex; align-items: center; gap: 12px; font-size: 12px;
                      flex-wrap: wrap; }
+  .page-row .impact { font-weight: 700; font-size: 13px; color: var(--navy); min-width: 56px; }
   .page-row .pct-poor { font-weight: 700; min-width: 56px; }
   .page-row .pct-poor.poor-high { color: var(--red); }
   .page-row .pct-poor.poor-mid { color: var(--amber); }
@@ -205,7 +208,7 @@
         <h1>HairMNL — Performance Dashboard</h1>
         <div class="meta">
           Last updated: <strong>2026-05-04 18:55 UTC</strong>
-          &nbsp;·&nbsp; Snapshots: <strong>16</strong>
+          &nbsp;·&nbsp; Snapshots: <strong>4</strong>
           &nbsp;·&nbsp; RUM window: <strong>last 7 days</strong>
         </div>
       </div>
@@ -221,10 +224,10 @@
     <button class="tab" data-tab="snapshot-desktop" onclick="switchTab(this)">🖥 Desktop</button>
   </div>
   <div class="tab-content active" id="snapshot-mobile">
-    <div class="empty">No data captured for this form factor yet. CrUX needs ~28 days of Chrome traffic; PSI mobile sometimes fails for slow sites (<a href="https://chromeuxreport.googleapis.com" target="_blank">enable CrUX API</a> for the most reliable signal).</div>
+    <div class="empty">No PSI data for this snapshot — PSI API may have failed or been skipped (--no-psi). CrUX needs ~28 days of Chrome traffic; PSI mobile sometimes fails for slow sites (<a href="https://chromeuxreport.googleapis.com" target="_blank">enable CrUX API</a> for the most reliable signal).</div>
   </div>
   <div class="tab-content" id="snapshot-desktop">
-    <div class="empty">No data captured for this form factor yet. CrUX needs ~28 days of Chrome traffic; PSI mobile sometimes fails for slow sites (<a href="https://chromeuxreport.googleapis.com" target="_blank">enable CrUX API</a> for the most reliable signal).</div>
+    <div class="empty">No PSI data for this snapshot — PSI API may have failed or been skipped (--no-psi). CrUX needs ~28 days of Chrome traffic; PSI mobile sometimes fails for slow sites (<a href="https://chromeuxreport.googleapis.com" target="_blank">enable CrUX API</a> for the most reliable signal).</div>
   </div>
 
   <h2>Trend over time — PSI Lab mobile
@@ -250,6 +253,7 @@
         <div class="cwv ">
           <div class="name">LCP<span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></div>
           <div class="pct">86%</div>
+          <div class="sample-size">(N=26,808)</div>
           <div class="total">good · 26,808 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
             <span class="good" style="flex: 85.56774097284394;"></span>
@@ -262,6 +266,7 @@
         <div class="cwv ">
           <div class="name">CLS<span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></div>
           <div class="pct">88%</div>
+          <div class="sample-size">(N=38,250)</div>
           <div class="total">good · 38,250 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
             <span class="good" style="flex: 88.30065359477123;"></span>
@@ -274,6 +279,7 @@
         <div class="cwv ">
           <div class="name">INP<span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></div>
           <div class="pct">85%</div>
+          <div class="sample-size">(N=7,603)</div>
           <div class="total">good · 7,603 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
             <span class="good" style="flex: 84.51926870971985;"></span>
@@ -286,6 +292,7 @@
         <div class="cwv ">
           <div class="name">FCP<span class="info" tabindex="0" aria-label="What is FCP?">ⓘ<span class="tip" role="tooltip">First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).<span class="goal"><strong>Goal:</strong> ≤ 1.8 s</span><span class="fix"><strong>How to act:</strong> reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.</span></span></span></div>
           <div class="pct">86%</div>
+          <div class="sample-size">(N=22,091)</div>
           <div class="total">good · 22,091 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
             <span class="good" style="flex: 86.1029378479924;"></span>
@@ -298,6 +305,7 @@
         <div class="cwv ">
           <div class="name">TTFB<span class="info" tabindex="0" aria-label="What is TTFB?">ⓘ<span class="tip" role="tooltip">Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.<span class="goal"><strong>Goal:</strong> ≤ 800 ms</span><span class="fix"><strong>How to act:</strong> minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.</span></span></span></div>
           <div class="pct">84%</div>
+          <div class="sample-size">(N=11,919)</div>
           <div class="total">good · 11,919 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
             <span class="good" style="flex: 84.31076432586626;"></span>
@@ -316,8 +324,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/blogs/hair-education/flattering-haircuts-to-try-for-every-face-shape" target="_blank" rel="noopener">/blogs/hair-education/flattering-haircuts-to-try-for-every-face-shape</a>
           <div class="stats">
+            <span class="impact">50 impact</span>
             <span class="pct-poor poor-high">87.7% poor</span>
-            <span class="meta">57 events · 50 poor</span>
+            <span class="meta">N=57 · 50 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fflattering-haircuts-to-try-for-every-face-shape" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -327,8 +336,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/blogs/hair-education/before-and-after-the-transformative-power-of-purple-shampoo" target="_blank" rel="noopener">/blogs/hair-education/before-and-after-the-transformative-power-of-purple-shampoo</a>
           <div class="stats">
+            <span class="impact">48 impact</span>
             <span class="pct-poor poor-high">68.6% poor</span>
-            <span class="meta">70 events · 48 poor</span>
+            <span class="meta">N=70 · 48 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fbefore-and-after-the-transformative-power-of-purple-shampoo" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -338,8 +348,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/blogs/hair-education/mastering-the-art-of-styling-permed-hair-top-product-picks-from-hairmnl" target="_blank" rel="noopener">/blogs/hair-education/mastering-the-art-of-styling-permed-hair-top-product-picks-from-hairmnl</a>
           <div class="stats">
+            <span class="impact">31 impact</span>
             <span class="pct-poor poor-high">57.4% poor</span>
-            <span class="meta">54 events · 31 poor</span>
+            <span class="meta">N=54 · 31 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fmastering-the-art-of-styling-permed-hair-top-product-picks-from-hairmnl" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -349,8 +360,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/blogs/hair-education/rinse-out-conditioner-vs-leave-in-conditioner-what-s-the-difference" target="_blank" rel="noopener">/blogs/hair-education/rinse-out-conditioner-vs-leave-in-conditioner-what-s-the-difference</a>
           <div class="stats">
+            <span class="impact">50 impact</span>
             <span class="pct-poor poor-high">50.5% poor</span>
-            <span class="meta">99 events · 50 poor</span>
+            <span class="meta">N=99 · 50 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Frinse-out-conditioner-vs-leave-in-conditioner-what-s-the-difference" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -360,8 +372,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/blogs/hair-education/purple-vs-blue-shampoo-philippines" target="_blank" rel="noopener">/blogs/hair-education/purple-vs-blue-shampoo-philippines</a>
           <div class="stats">
+            <span class="impact">27 impact</span>
             <span class="pct-poor poor-high">44.3% poor</span>
-            <span class="meta">61 events · 27 poor</span>
+            <span class="meta">N=61 · 27 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fpurple-vs-blue-shampoo-philippines" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -371,8 +384,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/cart" target="_blank" rel="noopener">/cart</a>
           <div class="stats">
+            <span class="impact">22 impact</span>
             <span class="pct-poor poor-high">30.1% poor</span>
-            <span class="meta">73 events · 22 poor</span>
+            <span class="meta">N=73 · 22 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcart" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -382,8 +396,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/" target="_blank" rel="noopener">/</a>
           <div class="stats">
+            <span class="impact">91 impact</span>
             <span class="pct-poor poor-mid">14.3% poor</span>
-            <span class="meta">642 events · 92 poor</span>
+            <span class="meta">N=642 · 92 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2F" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -393,8 +408,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/collections/k18" target="_blank" rel="noopener">/collections/k18</a>
           <div class="stats">
+            <span class="impact">7 impact</span>
             <span class="pct-poor poor-mid">13.7% poor</span>
-            <span class="meta">51 events · 7 poor</span>
+            <span class="meta">N=51 · 7 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcollections%2Fk18" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -404,8 +420,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/account" target="_blank" rel="noopener">/account</a>
           <div class="stats">
+            <span class="impact">13 impact</span>
             <span class="pct-poor poor-mid">12.6% poor</span>
-            <span class="meta">103 events · 13 poor</span>
+            <span class="meta">N=103 · 13 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Faccount" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -415,8 +432,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/products/davines-naturaltech-purifying-shampoo-for-scalp-with-oily-or-dry-dandruff" target="_blank" rel="noopener">/products/davines-naturaltech-purifying-shampoo-for-scalp-with-oily-or-dry-dandruff</a>
           <div class="stats">
+            <span class="impact">7 impact</span>
             <span class="pct-poor poor-mid">12.1% poor</span>
-            <span class="meta">58 events · 7 poor</span>
+            <span class="meta">N=58 · 7 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fproducts%2Fdavines-naturaltech-purifying-shampoo-for-scalp-with-oily-or-dry-dandruff" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -426,8 +444,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/cart" target="_blank" rel="noopener">/cart</a>
           <div class="stats">
+            <span class="impact">107 impact</span>
             <span class="pct-poor poor-high">49.3% poor</span>
-            <span class="meta">217 events · 107 poor</span>
+            <span class="meta">N=217 · 107 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcart" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -437,8 +456,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/collections/all" target="_blank" rel="noopener">/collections/all</a>
           <div class="stats">
+            <span class="impact">24 impact</span>
             <span class="pct-poor poor-high">40.7% poor</span>
-            <span class="meta">59 events · 24 poor</span>
+            <span class="meta">N=59 · 24 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcollections%2Fall" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -448,8 +468,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/blogs/hair-education/flattering-haircuts-to-try-for-every-face-shape" target="_blank" rel="noopener">/blogs/hair-education/flattering-haircuts-to-try-for-every-face-shape</a>
           <div class="stats">
+            <span class="impact">22 impact</span>
             <span class="pct-poor poor-high">39.3% poor</span>
-            <span class="meta">56 events · 22 poor</span>
+            <span class="meta">N=56 · 22 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fflattering-haircuts-to-try-for-every-face-shape" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -459,8 +480,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/blogs/hair-tutorials/time-to-tie-the-knot-5-tied-hairstyles-for-brides" target="_blank" rel="noopener">/blogs/hair-tutorials/time-to-tie-the-knot-5-tied-hairstyles-for-brides</a>
           <div class="stats">
+            <span class="impact">43 impact</span>
             <span class="pct-poor poor-high">37.4% poor</span>
-            <span class="meta">115 events · 43 poor</span>
+            <span class="meta">N=115 · 43 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-tutorials%2Ftime-to-tie-the-knot-5-tied-hairstyles-for-brides" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -470,8 +492,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/blogs/hair-education/hair-coloring-techniques-balayage-vs-ombre-vs-sombre" target="_blank" rel="noopener">/blogs/hair-education/hair-coloring-techniques-balayage-vs-ombre-vs-sombre</a>
           <div class="stats">
+            <span class="impact">46 impact</span>
             <span class="pct-poor poor-high">33.3% poor</span>
-            <span class="meta">138 events · 46 poor</span>
+            <span class="meta">N=138 · 46 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fhair-education%2Fhair-coloring-techniques-balayage-vs-ombre-vs-sombre" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -483,7 +506,7 @@
     <span class="h2-help">CSS selectors / elements causing slow taps</span>
   </h2>
   <div class="card">
-    <table><thead><tr><th>Attribution target (CSS selector / element)</th><th class="num">Poor INP count</th></tr></thead><tbody>
+    <div class="table-scroll"><table><thead><tr><th>Attribution target (CSS selector / element)</th><th class="num">Poor INP count</th></tr></thead><tbody>
 <tr><td><span style="color:var(--text-muted)">(not set) — interaction during page load</span></td><td class="num">211</td></tr>
 <tr><td><span class="code">#MainContent</span></td><td class="num">61</td></tr>
 <tr><td><span class="code">#shopify-section-template--16528967270499__main>div.cart__template>div.wrapper.p</span></td><td class="num">17</td></tr>
@@ -494,17 +517,17 @@
 <tr><td><span class="code">div.swiper-wrapper>div.swiper-slide.swiper-slide-active>a>picture>img.banner-sli</span></td><td class="num">8</td></tr>
 <tr><td><span class="code">div.wrapper>div.swiper>div.swiper-wrapper>div.swiper-slide>a>picture>img.banner-</span></td><td class="num">8</td></tr>
 <tr><td><span class="code">div.announcement__message>div.announcement__scale>div.announcement__text.ticker-</span></td><td class="num">7</td></tr>
-</tbody></table>
+</tbody></table></div>
   </div>
 
   <h2>JavaScript errors
     <span class="h2-help">last 7 days</span>
   </h2>
   <div class="card">
-    <table><thead><tr><th>Type</th><th>Message</th><th>Source</th><th class="num">Count</th></tr></thead><tbody>
+    <div class="table-scroll"><table><thead><tr><th>Type</th><th>Message</th><th>Source</th><th class="num">Count</th></tr></thead><tbody>
 <tr><td>(not set)</td><td class="code">(not set)</td><td class="code">(not set)</td><td class="num">35,495</td></tr>
 <tr><td>?</td><td class="code">(no message)</td><td class="code">(unknown)</td><td class="num">2,753</td></tr>
-</tbody></table>
+</tbody></table></div>
   </div>
 
   <h2>vs April 26 baseline
@@ -519,6 +542,7 @@
     <span class="h2-help">GA4 RUM · this week vs previous 7 days · click tabs to compare</span>
   </h2>
   
+    
     <div style="display:flex;gap:14px;flex-wrap:wrap">
       
         <div class="card" style="flex:1;min-width:260px">
@@ -594,7 +618,7 @@
 </div>
 
 <script>
-const CHART_DATA = {"labels": ["May 01", "May 01", "May 01", "May 01", "May 04"], "score": [32, 27, 28, 27, 24], "lcp_s": [8.353, 6.844, 16.351, 12.244, 13.951], "tbt_ms": [2906, 2377, 2602, 2819, 5163], "cls": [0.026, 0.09, 0.043, 0.023, 0.102]};
+const CHART_DATA = {"labels": ["May 01"], "score": [27], "lcp_s": [12.244], "tbt_ms": [2819], "cls": [0.023]};
 let activeRange = 0;  // 0 = all
 let charts = {};
 
@@ -635,9 +659,9 @@ function buildCharts() {
   charts.score = new Chart(document.getElementById('chart-score'),
     baseConfig('Score', '#1E2761', CHART_DATA.score, v => `${v}/100`));
   charts.lcp = new Chart(document.getElementById('chart-lcp'),
-    baseConfig('LCP', '#C03A3A', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`));
+    baseConfig('LCP', '#922525', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`));
   charts.tbt = new Chart(document.getElementById('chart-tbt'),
-    baseConfig('TBT', '#C97A1A', CHART_DATA.tbt_ms, v => `${v} ms`));
+    baseConfig('TBT', '#8F5210', CHART_DATA.tbt_ms, v => `${v} ms`));
   charts.cls = new Chart(document.getElementById('chart-cls'),
     baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, v => v.toFixed(3)));
 }
@@ -656,6 +680,40 @@ function switchTab(btn) {
 }
 
 buildCharts();
+</script>
+
+<script>
+// Tooltip tap-to-toggle for mobile
+(function() {
+  document.addEventListener('click', function(e) {
+    var info = e.target.closest('.info');
+    if (info) {
+      e.stopPropagation();
+      var wasOpen = info.classList.contains('tip-open');
+      document.querySelectorAll('.info.tip-open').forEach(function(el) {
+        el.classList.remove('tip-open');
+      });
+      if (!wasOpen) {
+        info.classList.add('tip-open');
+        var tip = info.querySelector('.tip');
+        if (tip) {
+          var rect = tip.getBoundingClientRect();
+          if (rect.right > window.innerWidth - 8) {
+            info.classList.add('right');
+            info.classList.remove('left');
+          } else if (rect.left < 8) {
+            info.classList.add('left');
+            info.classList.remove('right');
+          }
+        }
+      }
+    } else {
+      document.querySelectorAll('.info.tip-open').forEach(function(el) {
+        el.classList.remove('tip-open');
+      });
+    }
+  });
+})();
 </script>
 </body>
 </html>
