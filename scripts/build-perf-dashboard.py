@@ -1559,7 +1559,11 @@ def render_baseline_table(psi_now):
         ('FCP (s)', base["fcp_ms"]/1000, psi_now["fcp_ms"]/1000, True),
         ('Speed Index (s)', base["si_ms"]/1000, psi_now["si_ms"]/1000, True),
     ]
-    out = ['<div class="table-scroll"><table><thead><tr><th>Metric</th><th class="num">Apr 26 baseline</th>'
+    out = ['<div class="table-scroll"><table style="table-layout:fixed">'
+           '<colgroup>'
+           '<col style="width:30%"><col style="width:22%"><col style="width:18%"><col style="width:15%"><col style="width:15%">'
+           '</colgroup>'
+           '<thead><tr><th>Metric</th><th class="num">Apr 26 baseline</th>'
            '<th class="num">Now</th><th class="num">Δ</th><th>Direction</th></tr></thead><tbody>']
     for label, then, now, lower_is_better in rows:
         d = now - then
@@ -1632,9 +1636,24 @@ def render_origin_weights(snapshots: list[dict]) -> str:
     return chart + table
 
 
-def render_crux_truth(latest: dict) -> str:
+def render_crux_truth(snapshots: list[dict]) -> str:
+    """Render CrUX p75 production truth. Falls back to the most recent snapshot
+    that has CrUX data (since some snapshots — e.g. GHA runs without --crux —
+    won't carry it). Surfaces the source timestamp when fallback is used."""
+    latest = snapshots[-1] if snapshots else {}
     crux_mobile = latest.get("crux", {}).get("mobile")
     crux_desktop = latest.get("crux", {}).get("desktop")
+    fallback_ts = None
+    if not crux_mobile and not crux_desktop:
+        # Walk back to find the most recent snapshot with CrUX data
+        for s in reversed(snapshots[:-1]):
+            cm = s.get("crux", {}).get("mobile")
+            cd = s.get("crux", {}).get("desktop")
+            if cm or cd:
+                crux_mobile = cm
+                crux_desktop = cd
+                fallback_ts = s.get("timestamp", "")
+                break
     if not crux_mobile and not crux_desktop:
         return _empty_state("No CrUX data — needs ~28 days of Chrome traffic. Verify GCP API key has Chrome UX Report API enabled.")
 
@@ -1675,9 +1694,14 @@ def render_crux_truth(latest: dict) -> str:
         if first and last:
             period = f' <span class="h2-help">{first.get("year")}-{first.get("month",0):02d}-{first.get("day",0):02d} → {last.get("year")}-{last.get("month",0):02d}-{last.get("day",0):02d}</span>'
 
+    fallback_note = ""
+    if fallback_ts:
+        fallback_note = (f' <span class="h2-help" style="color:var(--amber)">⚠ Latest snapshot has no CrUX; '
+                         f'showing values from {fallback_ts[:10]}.</span>')
+
     return (f'<div class="note" style="margin-bottom:10px"><strong>What this is:</strong> Chrome UX Report p75 — '
             f'real-shopper field data over the last 28 days. This is the metric Google uses for Core Web Vitals search ranking.'
-            f'{period}</div>'
+            f'{period}{fallback_note}</div>'
             '<div class="table-scroll"><table><thead><tr>'
             '<th>Form factor</th><th class="num">LCP</th><th class="num">CLS</th>'
             '<th class="num">INP</th><th class="num">FCP</th><th class="num">TTFB</th>'
@@ -1792,7 +1816,7 @@ def render_html(snapshots: list[dict]) -> str:
     html = html.replace("__JS_ERRORS__", render_js_errors(rum.get("js_errors", [])))
     html = html.replace("__BASELINE_TABLE__", render_baseline_table(psi_mobile))
     html = html.replace("__ORIGIN_WEIGHTS__", render_origin_weights(snapshots))
-    html = html.replace("__CRUX_TRUTH__", render_crux_truth(latest))
+    html = html.replace("__CRUX_TRUTH__", render_crux_truth(snapshots))
     html = html.replace("__WOW_SCORECARD__", render_wow_scorecard(
         rum.get("metrics", {}),
         rum.get("wow_prev", {}),
