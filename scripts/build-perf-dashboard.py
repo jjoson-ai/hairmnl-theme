@@ -91,7 +91,42 @@ METRIC_TIPS = {
         "≤ 800 ms",
         "minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.",
     ),
+    "WoW": (
+        "Week-over-week — % of events meeting Google's 'good' threshold this week vs the prior 7 days.",
+        "≥ 75% good (Google's CWV pass threshold for SEO). Aim for steady or rising; sudden drops mean a regression.",
+        "investigate the most recent deploy or app update; check the Top Friction Pages section for affected URLs; verify with 7+ days of post-fix data before declaring victory.",
+    ),
 }
+
+ORIGIN_LABELS = {
+    "myshopify.com": "Shopify storefront",
+    "shopify.com": "Shopify CDN",
+    "shopifycdn.com": "Shopify CDN",
+    "google-analytics.com": "Google Analytics",
+    "googletagmanager.com": "Google Tag Manager",
+    "klaviyo.com": "Klaviyo",
+    "limespot.com": "LimeSpot",
+    "bsscommerce.com": "BSS B2B",
+    "judge.me": "Judge.me",
+    "elevar.com": "Elevar",
+    "elevar-gtm.com": "Elevar (GTM proxy)",
+    "getelevar.com": "Elevar",
+    "vertex.ai": "Vertex AI",
+    "googleapis.com": "Google APIs",
+    "gstatic.com": "Google static",
+    "facebook.net": "Facebook Pixel",
+    "snapchat.com": "Snapchat Pixel",
+    "loyaltylion.net": "LoyaltyLion",
+    "reamaze.io": "Reamaze",
+    "smartseo.app": "Smart SEO",
+}
+
+def _label_origin(origin: str) -> str:
+    o = origin.lower()
+    for suffix, label in ORIGIN_LABELS.items():
+        if o == suffix or o.endswith("." + suffix):
+            return label
+    return o.removeprefix("www.")
 
 
 # Apr 26, 2026 baseline (from psi_baselines.md memory). Mobile lab.
@@ -219,6 +254,23 @@ def run_psi_once(url: str, strategy: str, key: str) -> Optional[dict]:
         return None
     audits = d["lighthouseResult"]["audits"]
     cat = d["lighthouseResult"]["categories"]["performance"]
+    network_by_origin: dict[str, int] = {}
+    try:
+        items = (audits.get("network-requests", {})
+                       .get("details", {})
+                       .get("items", []))
+        for item in items:
+            url = item.get("url", "")
+            size = item.get("transferSize") or 0
+            if not url or size <= 0:
+                continue
+            parsed = urllib.parse.urlparse(url)
+            origin = parsed.netloc.lower()
+            if not origin:
+                continue
+            network_by_origin[origin] = network_by_origin.get(origin, 0) + int(size)
+    except Exception as e:
+        print(f"  PSI network-requests parse error: {e}", file=sys.stderr)
     return {
         "score": round(cat["score"] * 100),
         "fcp_ms": audits["first-contentful-paint"]["numericValue"],
@@ -226,11 +278,13 @@ def run_psi_once(url: str, strategy: str, key: str) -> Optional[dict]:
         "tbt_ms": audits["total-blocking-time"]["numericValue"],
         "cls": audits["cumulative-layout-shift"]["numericValue"],
         "si_ms": audits["speed-index"]["numericValue"],
+        "network_by_origin": network_by_origin,
     }
 
 
 def run_psi_median(url: str, strategy: str, n: int = 3) -> Optional[dict]:
-    """Run PSI n times for url+strategy and return median values across runs."""
+    """Run PSI n times for url+strategy and return median values across runs.
+    For network_by_origin, carries the median run's dict (by score) since origins differ per run."""
     key = get_psi_key()
     print(f"  PSI {strategy} ({n} runs)...", flush=True)
     runs = []
@@ -241,7 +295,12 @@ def run_psi_median(url: str, strategy: str, n: int = 3) -> Optional[dict]:
             print(f"    run {i+1}: score {r['score']}  LCP {r['lcp_ms']/1000:.1f}s  TBT {r['tbt_ms']:.0f}ms")
     if not runs:
         return None
-    return {k: round(median(r[k] for r in runs), 3) if k == "cls" else int(median(r[k] for r in runs)) for k in runs[0]}
+    result = {k: round(median(r[k] for r in runs), 3) if k == "cls" else int(median(r[k] for r in runs)) for k in runs[0] if k != "network_by_origin"}
+    median_idx = sorted(range(len(runs)), key=lambda i: runs[i]["score"])[len(runs) // 2]
+    nbo = runs[median_idx].get("network_by_origin")
+    if nbo:
+        result["network_by_origin"] = nbo
+    return result
 
 
 # ───────────────────────── GA4 ─────────────────────────
@@ -793,6 +852,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
   </header>
 
+  <h2>Production truth <span class="h2-help">CrUX p75 · 28-day rolling field data · what Google uses for SEO</span></h2>
+  <div class="card">
+    __CRUX_TRUTH__
+  </div>
+
   <h2>Today&#39;s snapshot
     <span class="h2-help">CrUX = real-shopper p75 (28-day) · PSI = single-run lab simulation</span>
   </h2>
@@ -859,8 +923,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     __BASELINE_TABLE__
   </div>
 
+  <h2>Third-party weight by origin <span class="h2-help">PSI mobile · top 8 origins over last 30 snapshots, latest table</span></h2>
+  <div class="card">
+    __ORIGIN_WEIGHTS__
+  </div>
+
   <hr style="margin:32px 0 24px;border:0;border-top:2px solid var(--navy)">
-  <h2 id="wow-scorecard">INP + CLS Scorecard — Week-over-Week
+  <h2 id="wow-scorecard">INP + CLS Scorecard — Week-over-Week __TIP_WOW__
     <span class="h2-help">GA4 RUM · this week vs previous __RUM_DAYS__ days · click tabs to compare</span>
   </h2>
   __WOW_SCORECARD__
@@ -1421,6 +1490,111 @@ def render_baseline_table(psi_now):
     return "\n".join(out)
 
 
+def render_origin_weights(snapshots: list[dict]) -> str:
+    latest_origins = None
+    for s in reversed(snapshots):
+        nbo = s.get("psi", {}).get("mobile", {}).get("network_by_origin")
+        if nbo:
+            latest_origins = nbo
+            break
+    if not latest_origins:
+        return _empty_state("No third-party weight data — PSI mobile not run since this feature shipped.")
+
+    by_label: dict[str, int] = {}
+    for origin, bytes_ in latest_origins.items():
+        by_label[_label_origin(origin)] = by_label.get(_label_origin(origin), 0) + bytes_
+    sorted_items = sorted(by_label.items(), key=lambda kv: -kv[1])
+
+    total = sum(by_label.values())
+    rows = [f'<tr><td><strong>Total transfer</strong></td><td class="num"><strong>{total/1024:.0f} KB</strong></td><td class="num"><strong>100%</strong></td></tr>']
+    for label, b in sorted_items[:15]:
+        pct = (b / total * 100) if total else 0
+        rows.append(f'<tr><td>{label}</td><td class="num">{b/1024:.0f} KB</td><td class="num">{pct:.1f}%</td></tr>')
+    table = ('<div class="table-scroll"><table><thead><tr><th>Origin</th><th class="num">Bytes</th><th class="num">% of total</th></tr></thead><tbody>'
+             + "".join(rows) + '</tbody></table></div>')
+
+    recent = [s for s in snapshots[-30:] if s.get("psi", {}).get("mobile", {}).get("network_by_origin")]
+    top_labels = [lbl for lbl, _ in sorted_items[:8]]
+    series = {lbl: [] for lbl in top_labels}
+    timestamps = []
+    for s in recent:
+        ts = s.get("timestamp", "")[:10]
+        timestamps.append(ts)
+        nbo = s.get("psi", {}).get("mobile", {}).get("network_by_origin", {})
+        snap_by_label: dict[str, int] = {}
+        for origin, b in nbo.items():
+            snap_by_label[_label_origin(origin)] = snap_by_label.get(_label_origin(origin), 0) + b
+        for lbl in top_labels:
+            series[lbl].append(round(snap_by_label.get(lbl, 0) / 1024))
+
+    chart_data = {"labels": timestamps, "series": [{"name": lbl, "data": series[lbl]} for lbl in top_labels]}
+
+    chart = (f'<div class="chart-wrap" style="height:240px"><canvas id="origin-chart"></canvas></div>'
+             f'<script>(function(){{'
+             f'  var d = {json.dumps(chart_data)};'
+             f'  var ctx = document.getElementById("origin-chart").getContext("2d");'
+             f'  var palette = ["#1E2761","#C03A3A","#2F8F3F","#C97A1A","#3A4A8A","#6B7280","#922525","#8F5210"];'
+             f'  new Chart(ctx, {{type:"line", data:{{labels:d.labels, datasets:d.series.map(function(s,i){{return {{label:s.name, data:s.data, borderColor:palette[i%palette.length], backgroundColor:palette[i%palette.length]+"33", fill:true, tension:0.25, pointRadius:2}}}})}}, options:{{responsive:true, maintainAspectRatio:false, scales:{{y:{{stacked:true, title:{{display:true,text:"KB"}}}},x:{{stacked:true}}}},plugins:{{legend:{{position:"bottom",labels:{{boxWidth:12,font:{{size:10}}}}}}}}}}}});'
+             f'}})();</script>')
+
+    return chart + table
+
+
+def render_crux_truth(latest: dict) -> str:
+    crux_mobile = latest.get("crux", {}).get("mobile")
+    crux_desktop = latest.get("crux", {}).get("desktop")
+    if not crux_mobile and not crux_desktop:
+        return _empty_state("No CrUX data — needs ~28 days of Chrome traffic. Verify GCP API key has Chrome UX Report API enabled.")
+
+    def _pass_html(value: Optional[float], threshold_good: float, lower_is_better: bool = True) -> str:
+        if value is None:
+            return '<span class="badge fail">—</span>'
+        passes = (value <= threshold_good) if lower_is_better else (value >= threshold_good)
+        cls = "pass" if passes else "fail"
+        return f'<span class="badge {cls}">{"✓" if passes else "✗"}</span>'
+
+    THRESHOLDS = {
+        "lcp_ms": 2500, "cls": 0.10, "inp_ms": 200, "fcp_ms": 1800, "ttfb_ms": 800,
+    }
+    LABELS = {"lcp_ms": "LCP", "cls": "CLS", "inp_ms": "INP", "fcp_ms": "FCP", "ttfb_ms": "TTFB"}
+    FORMATS = {
+        "lcp_ms": lambda v: f"{v/1000:.2f}s" if v is not None else "—",
+        "cls": lambda v: f"{v:.3f}" if v is not None else "—",
+        "inp_ms": lambda v: f"{v:.0f}ms" if v is not None else "—",
+        "fcp_ms": lambda v: f"{v/1000:.2f}s" if v is not None else "—",
+        "ttfb_ms": lambda v: f"{v:.0f}ms" if v is not None else "—",
+    }
+
+    def _row(form_factor_label: str, crux: Optional[dict]) -> str:
+        if not crux:
+            return f'<tr><td><strong>{form_factor_label}</strong></td>' + ''.join(['<td class="num">—</td>'] * 5) + '</tr>'
+        cells = [f'<td><strong>{form_factor_label}</strong></td>']
+        for k in ("lcp_ms", "cls", "inp_ms", "fcp_ms", "ttfb_ms"):
+            v = crux.get(k)
+            cells.append(f'<td class="num">{FORMATS[k](v)} {_pass_html(v, THRESHOLDS[k])}</td>')
+        return '<tr>' + ''.join(cells) + '</tr>'
+
+    period = ""
+    src = crux_mobile or crux_desktop
+    cp = src.get("collection_period", {}) if src else {}
+    if cp:
+        first = cp.get("firstDate", {})
+        last = cp.get("lastDate", {})
+        if first and last:
+            period = f' <span class="h2-help">{first.get("year")}-{first.get("month",0):02d}-{first.get("day",0):02d} → {last.get("year")}-{last.get("month",0):02d}-{last.get("day",0):02d}</span>'
+
+    return (f'<div class="note" style="margin-bottom:10px"><strong>What this is:</strong> Chrome UX Report p75 — '
+            f'real-shopper field data over the last 28 days. This is the metric Google uses for Core Web Vitals search ranking.'
+            f'{period}</div>'
+            '<div class="table-scroll"><table><thead><tr>'
+            '<th>Form factor</th><th class="num">LCP</th><th class="num">CLS</th>'
+            '<th class="num">INP</th><th class="num">FCP</th><th class="num">TTFB</th>'
+            '</tr></thead><tbody>'
+            + _row("Mobile", crux_mobile)
+            + _row("Desktop", crux_desktop)
+            + '</tbody></table></div>')
+
+
 def build_chart_data(snapshots, max_points=30):
     """Build trend data from snapshots. Use mobile PSI; only keep snapshots with PSI data."""
     pts = []
@@ -1521,6 +1695,8 @@ def render_html(snapshots: list[dict]) -> str:
     html = html.replace("__INP_TARGETS__", render_inp_targets(rum.get("top_inp_targets", [])))
     html = html.replace("__JS_ERRORS__", render_js_errors(rum.get("js_errors", [])))
     html = html.replace("__BASELINE_TABLE__", render_baseline_table(psi_mobile))
+    html = html.replace("__ORIGIN_WEIGHTS__", render_origin_weights(snapshots))
+    html = html.replace("__CRUX_TRUTH__", render_crux_truth(latest))
     html = html.replace("__WOW_SCORECARD__", render_wow_scorecard(
         rum.get("metrics", {}),
         rum.get("wow_prev", {}),
@@ -1535,6 +1711,7 @@ def render_html(snapshots: list[dict]) -> str:
     html = html.replace("__TIP_LCP_2__", _tooltip("LCP"))
     html = html.replace("__TIP_TBT__", _tooltip("TBT"))
     html = html.replace("__TIP_CLS_2__", _tooltip("CLS"))
+    html = html.replace("__TIP_WOW__", _tooltip("WoW"))
     return html
 
 

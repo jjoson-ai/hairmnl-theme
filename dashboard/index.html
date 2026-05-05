@@ -249,6 +249,11 @@
     </div>
   </header>
 
+  <h2>Production truth <span class="h2-help">CrUX p75 · 28-day rolling field data · what Google uses for SEO</span></h2>
+  <div class="card">
+    <div class="empty">ℹ️ No CrUX data — needs ~28 days of Chrome traffic. Verify GCP API key has Chrome UX Report API enabled.</div>
+  </div>
+
   <h2>Today&#39;s snapshot
     <span class="h2-help">CrUX = real-shopper p75 (28-day) · PSI = single-run lab simulation</span>
   </h2>
@@ -577,8 +582,13 @@
 </tbody></table></div>
   </div>
 
+  <h2>Third-party weight by origin <span class="h2-help">PSI mobile · top 8 origins over last 30 snapshots, latest table</span></h2>
+  <div class="card">
+    <div class="empty">ℹ️ No third-party weight data — PSI mobile not run since this feature shipped.</div>
+  </div>
+
   <hr style="margin:32px 0 24px;border:0;border-top:2px solid var(--navy)">
-  <h2 id="wow-scorecard">INP + CLS Scorecard — Week-over-Week
+  <h2 id="wow-scorecard">INP + CLS Scorecard — Week-over-Week <span class="info" tabindex="0" aria-label="What is WoW?">ⓘ<span class="tip" role="tooltip">Week-over-week — % of events meeting Google's 'good' threshold this week vs the prior 7 days.<span class="goal"><strong>Goal:</strong> ≥ 75% good (Google's CWV pass threshold for SEO). Aim for steady or rising; sudden drops mean a regression.</span><span class="fix"><strong>How to act:</strong> investigate the most recent deploy or app update; check the Top Friction Pages section for affected URLs; verify with 7+ days of post-fix data before declaring victory.</span></span></span>
     <span class="h2-help">GA4 RUM · this week vs previous 7 days · click tabs to compare</span>
   </h2>
   

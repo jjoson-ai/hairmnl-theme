@@ -6,6 +6,32 @@ Format spec: see `docs/coordinator-handoff.md` §10.
 
 ---
 
+### 2026-05-06 (model: claude-opus-4-7) — coordinator review of Batch D
+
+**Issues touched:** cua, c4w, 4sv (Batch D — features + polish)
+**Outcome:** shipped to GitHub Pages
+
+**What was done:**
+- Reviewed OpenCode diff — scope contained, all 3 implementations correct
+- cua: PSI now captures network_by_origin (median run preserved); ORIGIN_LABELS map; render_origin_weights() with stacked area chart over last 30 snapshots + latest table
+- c4w: render_crux_truth() — top-of-page card with mobile + desktop p75 across 5 metrics, pass/fail badges per Google CWV thresholds, collection period subtitle
+- 4sv: METRIC_TIPS["WoW"] entry; tooltip injected on WoW scorecard h2
+
+**Verification:**
+- render-only succeeds: ✓
+- py_compile clean: ✓
+- "Production truth" h2 in HTML: ✓
+- "Third-party weight" h2 in HTML: ✓
+- snapshots.jsonl unchanged: ✓
+- Closed cua, c4w, 4sv (already closed by OpenCode session)
+
+**Next-session handoff notes:**
+- Origin-weights chart shows empty state until next PSI run captures network_by_origin (next GHA run at 13:00 UTC, or manual trigger)
+- Batch F (ofc + 2em) brief at /tmp/oc-batch-F.md — A/B comparison + Slack alerts, single file, glm-5.1:cloud
+- Batch E (236) brief at /tmp/oc-batch-E.md — per-template CWV slicing, multi-file (theme + dashboard), glm-5.1:cloud, requires draft→live theme push by coordinator
+
+---
+
 ### 2026-05-05 (model: claude-opus-4-7)
 
 **Issues touched:** gjv
@@ -208,6 +234,31 @@ Format spec: see `docs/coordinator-handoff.md` §10.
 - Confirm print preview looks correct (Cmd+P)
 - WCAG contrast: spot-check amber #8F5210 on #FBF1E0 and red #922525 on #FBE8E8 ≥4.5:1 (DevTools or axe)
 - PSI parallel run: confirm wall-clock is ~3.5 min or less (was ~6 min)
+
+---
+
+### 2026-05-06 (model: glm-5.1:cloud via OpenCode, coordinated by claude-opus-4-7)
+
+**Issues touched:** cua, c4w, 4sv (Batch D — features + polish)
+**Outcome:** staged for coordinator review, not yet committed
+
+**What was done:**
+- Third-party script weight tracker — PSI now captures network_by_origin per snapshot; new section renders top-8 stacked-area chart over 30 snapshots + latest-snapshot table sorted desc (cua)
+- CrUX 'production truth' card — new top-of-page section with mobile + desktop p75 across 5 metrics, pass/fail per Google CWV thresholds, collection period subtitle (c4w)
+- WoW scorecard tooltip — METRIC_TIPS['WoW'] added; ⓘ icon next to scorecard h2 (4sv)
+
+**Files modified:**
+- `scripts/build-perf-dashboard.py` — run_psi_once() network_by_origin extraction, ORIGIN_LABELS constant, render_origin_weights(), render_crux_truth(), METRIC_TIPS WoW entry, HTML_TEMPLATE 2 new sections + 1 tooltip placeholder, render_html() 3 new replacements
+
+**Verification:**
+- render-only succeeds: ✓
+- py_compile clean: ✓
+- snapshots.jsonl unchanged: ✓
+- All 3 markers present in HTML: ✓
+
+**Next-session handoff notes:**
+- Origin-weights chart will be empty until the next PSI run captures network_by_origin (next GHA run at 13:00 UTC, or manual `python3 scripts/build-perf-dashboard.py --no-crux --psi-only-mobile`)
+- Coordinator (Claude Code) to review diff, run end-to-end smoke check, commit, push, and bd-close all 3 issues
 
 ---
 
