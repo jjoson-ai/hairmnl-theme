@@ -1,0 +1,50 @@
+name: Refresh perf dashboard
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'dashboard/**'
+      - '.github/SECRETS.md'
+  schedule:
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install google-analytics-data
+
+      - name: Write GA4 service account key
+        env:
+          GA4_SERVICE_ACCOUNT_KEY: ${{ secrets.GA4_SERVICE_ACCOUNT_KEY }}
+        run: |
+          mkdir -p ~/.config
+          echo "$GA4_SERVICE_ACCOUNT_KEY" > ~/.config/hairmnl-ga4-key.json
+
+      - name: Run dashboard script
+        env:
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
+        run: python3 scripts/build-perf-dashboard.py --no-crux --psi-runs 2
+
+      - name: Commit updated dashboard
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add dashboard/
+          git diff --staged --quiet || git commit -m "chore: auto-refresh dashboard [skip ci]"
+          git push

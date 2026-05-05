@@ -44,10 +44,21 @@ Total time: ~6 minutes (PSI is the slow part — 3 runs × 2 strategies × ~30�
 ## Daily cron (recommended)
 
 ```cron
-0 6 * * * cd /Users/y9378348c/Projects/hairmnl-theme && GA4_PROPERTY_ID=248106289 ./scripts/build-perf-dashboard.py >> ~/.local/log/hairmnl-perf.log 2>&1
+0 6 * * * cd /Users/y9378348c/Projects/hairmnl-theme && GA4_PROPERTY_ID=248106289 ./scripts/build-perf-dashboard.py >> ~/.local/log/hairmnl-daily-perf.log 2>&1
 ```
 
 6am Manila time = roughly when overnight CDN cache settles, before the morning traffic peak. PSI lab numbers are most representative when the site has settled.
+
+> **Note:** The actual cron mechanism is the launchd plist at `scripts/launchd/com.hairmnl.daily-perf.plist`, not the raw cron entry above. The plist is the authoritative scheduler; the cron line is shown for reference only.
+
+## GitHub Action (daily CI build)
+
+The dashboard also refreshes daily via GitHub Actions at 13:00 UTC (5am Manila time), even when the laptop is off. See `.github/workflows/perf-dashboard.yml`.
+
+- Runs `build-perf-dashboard.py --no-crux --psi-runs 2` on `ubuntu-latest`
+- Commits updated `dashboard/` back to `main` with `[skip ci]` (avoids re-triggering)
+- Can be triggered manually via the **Run workflow** button on the Actions tab
+- Requires 3 repo secrets (see `.github/SECRETS.md`) to be added before first run
 
 ## Required setup (already done locally)
 

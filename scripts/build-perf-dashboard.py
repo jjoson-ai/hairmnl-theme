@@ -26,7 +26,7 @@ Requires (same as the two source scripts):
   - PSI_API_KEY in macOS Keychain (`security add-generic-password -a $USER -s psi-api-key -w "AIza..."`)
 
 Cron schedule (recommended): daily 6am Manila time
-  0 6 * * * cd /path/to/hairmnl-theme && ./scripts/build-perf-dashboard.py >> ~/.local/log/hairmnl-perf.log 2>&1
+  0 6 * * * cd /path/to/hairmnl-theme && ./scripts/build-perf-dashboard.py >> ~/.local/log/hairmnl-daily-perf.log 2>&1
 """
 
 import argparse
@@ -742,6 +742,39 @@ HTML_TEMPLATE = """<!DOCTYPE html>
            border-top: 1px solid var(--gray-light); margin-top: 32px; line-height: 1.6; }
   footer a { color: var(--navy-light); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
+
+  /* Mobile path clamping */
+  @media (max-width: 700px) {
+    .page-row .path { max-height: 2.6em; overflow: hidden; }
+  }
+  /* KPI font shrink on very narrow screens */
+  @media (max-width: 400px) {
+    .kpi .value { font-size: 20px; }
+  }
+
+  /* Tooltip tap-to-toggle for touch devices */
+  .info.tip-open .tip { display: block; }
+  .info.tip-open .tip { pointer-events: auto; }
+  /* Viewport clamping */
+  .info.left .tip { left: 0; right: auto; transform: none; }
+  .info.right .tip { left: auto; right: 0; transform: none; }
+  /* Improve :focus-visible ring */
+  .info:focus-visible { outline: 2px solid var(--navy-light); outline-offset: 2px; border-radius: 2px; }
+
+  @media print {
+    .tabs, .range-filter, .live-link, footer, .info .tip { display: none !important; }
+    canvas { display: none !important; }
+    .chart-wrap::after { content: '(chart — view online for interactive version)';
+                         display: block; font-style: italic; color: #666; font-size: 12px; }
+    body, .container { background: white !important; }
+    .kpi, .cwv, .card { border: 1px solid #ccc !important; box-shadow: none !important; }
+    .tab-content { display: block !important; }
+    .kpi.good .value, .cwv .pct { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .kpi.warn .value, .kpi.poor .value { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h2 { page-break-before: auto; page-break-after: avoid; }
+    .card, .kpi-grid, .cwv-grid { page-break-inside: avoid; }
+    .info::after { content: ' (' attr(aria-label) ')'; font-size: 10px; color: #666; }
+  }
 </style>
 </head>
 <body>
@@ -1436,7 +1469,33 @@ def render_html(snapshots: list[dict]) -> str:
     except Exception:
         last_label = last_dt
 
+    try:
+        last_ts = datetime.fromisoformat(last_dt.replace("Z", "+00:00"))
+        age_hours = (datetime.now(timezone.utc) - last_ts).total_seconds() / 3600
+        stale = age_hours > 24
+    except Exception:
+        stale = False
+        age_hours = 0
+
+    stale_banner = ""
+    if stale:
+        age_label = f"{int(age_hours)}h" if age_hours < 48 else f"{int(age_hours / 24)}d"
+        stale_banner = (
+            '<div style="background:var(--amber-bg);border:1px solid #ECD9B6;border-radius:8px;'
+            'padding:10px 16px;margin-bottom:16px;color:var(--amber);font-size:13px;display:flex;'
+            'align-items:center;gap:8px;">'
+            f'⚠️ <strong>Stale data</strong> — last snapshot is {age_label} old. '
+            '<a href="https://github.com/jjoson-ai/hairmnl-theme/actions/workflows/perf-dashboard.yml" '
+            'target="_blank" rel="noopener" style="color:var(--amber);text-decoration:underline;">'
+            'Trigger a refresh →</a></div>'
+        )
+
     html = HTML_TEMPLATE
+    html = html.replace(
+        '<div class="container">',
+        f'<div class="container">{stale_banner}',
+        1,
+    )
     html = html.replace("__LAST_UPDATED__", last_label)
     html = html.replace("__SNAPSHOT_COUNT__", str(len(snapshots)))
     html = html.replace("__RUM_DAYS__", str(rum.get("days", 7)))

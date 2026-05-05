@@ -33,6 +33,34 @@ Format spec: see `docs/coordinator-handoff.md` §10.
 
 ---
 
+### 2026-05-05 (model: claude-opus-4-7) — coordinator review of Batches B + C
+
+**Issues touched:** 8vi, me3, 91i (Batch B); p0w, xq7, tfj (Batch C remainder — 5fj, 483, qkd already shipped in earlier commit)
+**Outcome:** shipped to GitHub Pages
+
+**What was done:**
+- Reviewed combined Batch B + C diff — scope contained, all expected files only
+- Batch B: GHA workflow (.github/workflows/perf-dashboard.yml), SECRETS.md doc, staleness banner in render_html(), README log filename fix + GHA section
+- Batch C remainder: full responsive CSS breakpoints (p0w), empty states for all render functions (xq7), @media print block (tfj)
+- Closed 8vi, me3, 91i, p0w, xq7, tfj
+- Committed and pushed to main
+
+**Verification:**
+- `python3 scripts/build-perf-dashboard.py --no-psi --no-crux --render-only` succeeds: ✓
+- py_compile clean: ✓
+- All HTML markers present: .table-scroll (2), tip-open (8), #8F5210 (2), #922525 (2), @media print (1), Stale data banner (1)
+- snapshots.jsonl unchanged: ✓
+- GHA YAML scope: paths-ignore prevents self-loop; secrets only via ${{ secrets.X }}; commit-back uses [skip ci]: ✓
+
+**Next-session handoff notes:**
+- **MANUAL ACTION REQUIRED:** User must add 3 GitHub repo secrets via GH UI before first GHA run (see .github/SECRETS.md). Without them, the workflow will fail authentication.
+- After secrets added: manually trigger workflow_dispatch at https://github.com/jjoson-ai/hairmnl-theme/actions/workflows/perf-dashboard.yml to validate end-to-end before relying on the daily cron
+- Sprint complete: 18 of 18 dashboard issues shipped (9 Batch A + 3 Batch B + 6 Batch C). Deferred: `236` (per-template CWV slicing — separate session, needs GA4 custom dimension)
+- gjv RUM verification still pending after 2026-05-12 — check /cart poor INP drops from 21% toward <10%
+- Staleness banner currently rendering on local dashboard because latest snapshot is >24h old; will clear once daily refresh runs
+
+---
+
 ### 2026-05-05 (model: claude-opus-4-7) — coordinator review of Batch A
 
 **Issues touched:** 9he, zgr, aqp, k65, imv, 40a, 8o5, wuf, rmi (Batch A closed); 5fj, 483, qkd (Batch C items implemented early by OpenCode — also closed)
@@ -88,6 +116,68 @@ Format spec: see `docs/coordinator-handoff.md` §10.
 **Next-session handoff notes:**
 - Coordinator (Claude Code) to review diff, run end-to-end smoke check, commit, push, and bd-close all 9 issues
 - Bot filter is forward-only; old snapshots retain unfiltered data — document the cutoff date in dashboard/README.md (will happen in Batch B)
+
+---
+
+### 2026-05-05 (model: glm-5.1:cloud via OpenCode, coordinated by claude-opus-4-7)
+
+**Issues touched:** 8vi, me3, 91i (Batch B — dashboard freshness)
+**Outcome:** staged for coordinator review, not yet committed
+
+**What was done:**
+- GitHub Action perf-dashboard.yml — daily 13:00 UTC build, commit-back, workflow_dispatch trigger (8vi)
+- Staleness banner injected into render_html() when newest snapshot >24h old, links to GHA manual trigger (me3)
+- Reconciled log filename to hairmnl-daily-perf.log across README and build script docstring (91i)
+- Created .github/SECRETS.md documenting the 3 required repo secrets user must add via GH UI
+
+**Files modified:**
+- `.github/workflows/perf-dashboard.yml` — new file
+- `.github/SECRETS.md` — new file
+- `scripts/build-perf-dashboard.py` — render_html() staleness banner; docstring log filename
+- `dashboard/README.md` — log filename fix, GHA section added
+- `scripts/launchd/com.hairmnl.daily-perf.plist` — verified already correct (no change needed)
+
+**Verification:**
+- `python3 scripts/build-perf-dashboard.py --no-psi --no-crux --render-only` succeeds: ✓
+- YAML lints clean: ✓
+- snapshots.jsonl unchanged: ✓
+- All DoD checks pass: ✓
+
+**Next-session handoff notes:**
+- Coordinator (Claude Code) must review GHA YAML before committing — verify paths-ignore, no secret leakage in YAML, commit-back uses [skip ci]
+- User must add 3 GitHub secrets before first GHA run (see .github/SECRETS.md)
+- After secrets added: user manually triggers workflow_dispatch to validate end-to-end
+- Batch A (data correctness) should be merged first — Batch B's GHA will run the updated script
+
+---
+
+### 2026-05-05 (model: kimi-k2.6:cloud via OpenCode, coordinated by claude-opus-4-7)
+
+**Issues touched:** p0w, 5fj, xq7, 483, qkd, tfj (Batch C — UX polish + ops)
+**Outcome:** staged for coordinator review, not yet committed
+
+**What was done:**
+- Mobile responsive pass: table-scroll wrapper, overflow-wrap on paths, chart min-width, max-width 400px kpi font shrink (p0w)
+- Tooltip tap-to-toggle JS + viewport-edge clamping + :focus-visible styles (5fj)
+- Empty/loading states for all 5 render functions with informative messages (xq7)
+- WCAG AA contrast fix: --amber #C97A1A→#8F5210, --red #C03A3A→#922525; chart hardcodes updated (483)
+- PSI mobile+desktop now run concurrently via ThreadPoolExecutor(max_workers=2) (qkd)
+- @media print block: hide charts/tabs, expand all tab-content, page-break hints (tfj)
+
+**Files modified:**
+- `scripts/build-perf-dashboard.py` — CSS block in HTML_TEMPLATE, _empty_state() helper, render_*() empty guards, main() PSI parallelization
+
+**Verification:**
+- `python3 scripts/build-perf-dashboard.py --no-psi --no-crux --render-only` succeeds: ✓
+- python3 -m py_compile passes: ✓
+- snapshots.jsonl unchanged: ✓
+- All DoD checks pass: ✓
+
+**Next-session handoff notes:**
+- Coordinator (Claude Code) to verify visually at 375/768/1280/1920px viewports
+- Confirm print preview looks correct (Cmd+P)
+- WCAG contrast: spot-check amber #8F5210 on #FBF1E0 and red #922525 on #FBE8E8 ≥4.5:1 (DevTools or axe)
+- PSI parallel run: confirm wall-clock is ~3.5 min or less (was ~6 min)
 
 ---
 

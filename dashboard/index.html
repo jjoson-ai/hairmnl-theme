@@ -198,10 +198,43 @@
            border-top: 1px solid var(--gray-light); margin-top: 32px; line-height: 1.6; }
   footer a { color: var(--navy-light); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
+
+  /* Mobile path clamping */
+  @media (max-width: 700px) {
+    .page-row .path { max-height: 2.6em; overflow: hidden; }
+  }
+  /* KPI font shrink on very narrow screens */
+  @media (max-width: 400px) {
+    .kpi .value { font-size: 20px; }
+  }
+
+  /* Tooltip tap-to-toggle for touch devices */
+  .info.tip-open .tip { display: block; }
+  .info.tip-open .tip { pointer-events: auto; }
+  /* Viewport clamping */
+  .info.left .tip { left: 0; right: auto; transform: none; }
+  .info.right .tip { left: auto; right: 0; transform: none; }
+  /* Improve :focus-visible ring */
+  .info:focus-visible { outline: 2px solid var(--navy-light); outline-offset: 2px; border-radius: 2px; }
+
+  @media print {
+    .tabs, .range-filter, .live-link, footer, .info .tip { display: none !important; }
+    canvas { display: none !important; }
+    .chart-wrap::after { content: '(chart — view online for interactive version)';
+                         display: block; font-style: italic; color: #666; font-size: 12px; }
+    body, .container { background: white !important; }
+    .kpi, .cwv, .card { border: 1px solid #ccc !important; box-shadow: none !important; }
+    .tab-content { display: block !important; }
+    .kpi.good .value, .cwv .pct { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .kpi.warn .value, .kpi.poor .value { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h2 { page-break-before: auto; page-break-after: avoid; }
+    .card, .kpi-grid, .cwv-grid { page-break-inside: avoid; }
+    .info::after { content: ' (' attr(aria-label) ')'; font-size: 10px; color: #666; }
+  }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container"><div style="background:var(--amber-bg);border:1px solid #ECD9B6;border-radius:8px;padding:10px 16px;margin-bottom:16px;color:var(--amber);font-size:13px;display:flex;align-items:center;gap:8px;">⚠️ <strong>Stale data</strong> — last snapshot is 26h old. <a href="https://github.com/jjoson-ai/hairmnl-theme/actions/workflows/perf-dashboard.yml" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:underline;">Trigger a refresh →</a></div>
   <header>
     <div class="row">
       <div>
