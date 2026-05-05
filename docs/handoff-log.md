@@ -33,6 +33,36 @@ Format spec: see `docs/coordinator-handoff.md` §10.
 
 ---
 
+### 2026-05-05 (model: claude-opus-4-7) — GHA debugging + first successful run
+
+**Issues touched:** 6o0 (closed)
+**Outcome:** GHA workflow fully operational; first auto-refresh commit a01a2df landed on main
+
+**What was done:**
+- First run of perf-dashboard.yml after secrets were added returned green but did no work (silent no-op via "Skipping empty snapshot" exit-0 path)
+- Diagnosed via hardened workflow: GA4_SERVICE_ACCOUNT_KEY was 34 chars (should be ~2300 — full JSON file), PSI_API_KEY was 61 chars (should be 39 starting with AIza). User confused GA4_PROPERTY_ID with G- prefixed Measurement ID.
+- Pushed dcaf207: hardened workflow with explicit secret-presence check, printf '%s' instead of echo, JSON validation step that prints redacted preview on failure
+- User updated secrets correctly; manual workflow_dispatch run succeeded in 3m 34s, fetched real PSI + GA4 data, committed a01a2df with snapshot 17 (PSI mobile score 36, GA4 LCP 84.59% good / N=25,682)
+- Closed 6o0; bd remember persisted the failure modes so future debugging is faster
+
+**Files modified:**
+- `.github/workflows/perf-dashboard.yml` — verify-secrets step, printf for write, JSON validation with redacted preview
+
+**Verification:**
+- GHA run 25404594... succeeded: ✓
+- Commit a01a2df pushed by github-actions[bot]: ✓
+- snapshots.jsonl: 16 → 17 lines: ✓
+- Staleness banner cleared after re-render (snapshot now <24h): ✓
+
+**Next-session handoff notes:**
+- Daily cron at 13:00 UTC is now live and self-maintaining; no operator action needed unless a run fails
+- GA4 service account key in the secret will rotate when the underlying ~/.config/hairmnl-ga4-key.json is rotated — remember to also update the GitHub secret if you rotate locally
+- gjv RUM check still pending after 2026-05-12 (verify /cart poor INP drops from 21% → <10%)
+- 236 (per-template CWV slicing) still deferred — needs separate session
+- Sprint complete: 19 of 19 dashboard issues shipped this 2-day span (gjv + 18 dashboard sprint + 6o0 GHA debug)
+
+---
+
 ### 2026-05-05 (model: claude-opus-4-7) — coordinator review of Batches B + C
 
 **Issues touched:** 8vi, me3, 91i (Batch B); p0w, xq7, tfj (Batch C remainder — 5fj, 483, qkd already shipped in earlier commit)
