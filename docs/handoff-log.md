@@ -4,6 +4,43 @@ Append-only log of coordinator sessions. Newest entries at the top.
 
 Format spec: see `docs/coordinator-handoff.md` §10.
 
+### 2026-05-06 (model: glm-5.1:cloud via OpenCode, coordinated by claude-opus-4-7)
+
+**Issues touched:** dy0, 0ru (Batch G2 — iterative debug of Bug 2 + Bug 3)
+**Outcome:** staged for coordinator review, not yet committed
+
+**What was done (Bug 2 — dy0):**
+- Root cause identified via v7 diagnostic (`pre_gen=0 post_gen=12 post_gen_after=0`): the `article.content` enters the snippet with `<a>` tags properly closed by Shopify's sanitizer, but the `<img ` split-and-reassemble dimension-injection algorithm loses the `>` that closes parent `<a>` tags. This creates `"<img` malformations in the output.
+- Fix: three-pass repair in `snippets/article-content-with-img-dims.liquid`:
+  1. Pass 1: Pre-split repair for known `target="_blank"<img` variants in raw content
+  2. Pass 2: Post-reassembly general repair `"<img` → `"><img` on final output (catches 12 instances the split algorithm introduces)
+  3. Pass 3: Convert `<div style="text-align: center;">` → `<p style="text-align: center;">` (and `</a></div>` → `</a></p>`) — fixes Bloggle image collapse where centered `<div>` wrappers following `<ul>` lists hide images
+- Diagnostic markers removed from production code
+- Known artifact: `<img alt="HairMNL">` (no `src`) appears in some Bloggle articles as inline branding pixel — pre-existing, not introduced by this change
+
+**What was done (Bug 3 — 0ru):**
+- Root cause: schema change `richtext`→`html` allows HTML content, but some products store Liquid template syntax (`{{ product.metafields.hmnl.<key> | metafield_tag }}`) in the setting, expecting Shopify to evaluate it. Settings values are NOT processed as Liquid.
+- Fix: In `snippets/product-tabs.liquid`, both tabs and accordions render paths now detect `product.metafields` in `_content`, dynamically extract namespace and key, resolve to the actual metafield value, and output directly via `{{ _mf }}` (not `metafield_tag`, which wraps in `<span>` and escapes HTML).
+- Namespace is dynamically extracted (not hardcoded to `hmnl`), supporting any metafield namespace.
+
+**Files modified:**
+- `snippets/article-content-with-img-dims.liquid` — three-pass repair (Pass 1: pre-split, Pass 2: post-reassembly, Pass 3: div→p conversion)
+- `snippets/product-tabs.liquid` — metafield resolution in both tabs and accordions render paths
+- `docs/handoff-log.md` — this entry
+
+**Verification:**
+- Bug 2: v7 diagnostic confirmed `post_gen=12, post_gen_after=0` — all 12 malformations caught and repaired
+- Bug 2: Images load correctly on sulfate-free shampoo article (15 images, previously broken after `<ul>` lists)
+- Bug 3: Accordion tabs on K18 product page render actual metafield content (not escaped HTML, not literal `{{ ... }}` text)
+- Production code has no diagnostic markers
+
+**Next-session handoff notes:**
+- Coordinator (Claude Code): push to live theme 131664707683 with --allow-live, commit, push to GitHub, bd close dy0 0ru
+- Known Bloggle artifact: `<img alt="HairMNL">` (no src) renders as broken image icon in some article text — this is a Bloggle app content issue, not a theme bug
+- The `<img>` split algorithm bug (losing `>` from parent tags) should be considered for a future refactor — the Pass 2 post-repair is a safety net, not a structural fix
+
+---
+
 ### 2026-05-06 (model: minimax-m2.7:cloud via OpenCode, coordinated by claude-opus-4-7)
 
 **Issues touched:** l3g (in progress) + 3 new follow-ups: hairmnl-theme-4r8, hairmnl-theme-t4m, hairmnl-theme-miy

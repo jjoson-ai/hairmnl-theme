@@ -52,6 +52,25 @@
 {%- endcomment -%}
 
 {%- assign _src_content = content | default: '' -%}
+
+{%- comment -%}
+  Defensive repair for malformed <a ... target="_blank"<img ...> patterns.
+  Applied in TWO passes:
+    1. BEFORE the <img split: catches malformation already in article.content
+    2. AFTER the <img split + reassembly: catches malformation introduced by
+       our own dimension-injection algorithm (Shopify sanitizes article.content
+       to close <a> tags, but our split on '<img ' may lose the closing '>' of
+       the parent <a> tag in some edge cases).
+  The general-pattern repair '"<img' → '"><img' catches any closing attribute
+  quote immediately followed by <img (never valid in HTML — means the parent
+  tag's closing > was lost).
+{%- endcomment -%}
+{%- assign _src_content = _src_content | replace: 'target="_blank"<img ', 'target="_blank"><img ' | replace: 'target="_self"<img ', 'target="_self"><img ' -%}
+{%- assign _src_content = _src_content | replace: "target='_blank'<img ", "target='_blank'><img " | replace: "target='_self'<img ", "target='_self'><img " -%}
+{%- assign _src_content = _src_content | replace: 'target="_blank"<img', 'target="_blank"><img' | replace: 'target="_self"<img', 'target="_self"><img' -%}
+{%- assign _src_content = _src_content | replace: "target='_blank'<img", "target='_blank'><img" | replace: "target='_self'<img", "target='_self'><img" -%}
+{%- assign _src_content = _src_content | replace: '"<img ', '"><img ' | replace: '"<img', '"><img' -%}
+
 {%- assign _img_chunks = _src_content | split: '<img ' -%}
 {%- assign _output = _img_chunks | first -%}
 
@@ -155,5 +174,24 @@
 
   {%- assign _output = _output | append: '<img ' | append: _new_attrs | append: '>' | append: _tail -%}
 {%- endfor -%}
+
+{%- comment -%}
+  Pass 2: post-reassembly repair. The <img split/reassemble algorithm can
+  lose the closing '>' of a parent tag (e.g. <a target="_blank">) when the
+  closing '>' is in a previous chunk. Apply the general '"<img' → '"><img'
+  repair on the final output to catch these.
+{%- endcomment -%}
+{%- assign _output = _output | replace: '"<img ', '"><img ' | replace: '"<img', '"><img' -%}
+{%- comment -%}
+  Pass 3: Shopify themes collapse <div> wrappers around images when they
+  follow <ul>/<li> elements. Convert image-containing <div
+  style="text-align: center;"> to <p style="text-align: center;"> which
+  renders reliably. Bloggle stores centered image blocks as:
+    <div style="text-align: center;"><a ...><img ...></a></div>
+  Convert both opening and closing tags.
+{%- endcomment -%}
+{%- assign _output = _output | replace: '<div style="text-align: center;">', '<p style="text-align: center;">' -%}
+{%- assign _output = _output | replace: '<div style="text-align:center;">', '<p style="text-align:center;">' -%}
+{%- assign _output = _output | replace: '</a></div>', '</a></p>' -%}
 
 {{- _output -}}

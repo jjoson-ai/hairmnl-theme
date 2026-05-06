@@ -291,7 +291,7 @@ A grid item for products used in collection grid view
             product card site-wide. Do not remove the gate.
           {%- endcomment -%}
           {%- if strip_brand -%}
-            {{ product.title | replace: "L'Oréal Professionnel ", '' | replace: "L'Oreal Professionnel ", '' | replace: 'L’Oréal Professionnel ', '' | replace: 'Kérastase ', '' | replace: 'Kerastase ', '' | replace: 'Davines ', '' | replace: 'Naturaltech Davines ', '' | replace: 'AVEDA ', '' | replace: 'Aveda ', '' | replace: 'K18 ', '' | replace: 'Schwarzkopf Professional ', '' | replace: 'Bed Head By TIGI ', '' | replace: 'Wella Professionals ', '' | replace: 'Revlon Professional ', '' }}
+            {{ product.title | replace: "L'Oréal Professionnel ", "" | replace: "L'Oreal Professionnel ", "" | replace: "L’Oréal Professionnel ", "" | replace: "Kérastase ", "" | replace: "Kerastase ", "" | replace: "Davines ", "" | replace: "Naturaltech Davines ", "" | replace: "AVEDA ", "" | replace: "Aveda ", "" | replace: "K18 ", "" | replace: "Schwarzkopf Professional ", "" | replace: "Bed Head By TIGI ", "" | replace: "Wella Professionals ", "" | replace: "Revlon Professional ", "" }}
           {%- else -%}
             {{ product.title }}
           {%- endif -%}

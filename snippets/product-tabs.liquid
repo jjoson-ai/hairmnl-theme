@@ -48,20 +48,34 @@
     {%- assign _content = 'raw_content_' | append: forloop.index -%}
     {%- assign _content = block.settings[_content] -%}
 
-    {%- if _title != '' and _content != '' -%}
-      {%- capture tab_links_html -%}
-        {{ tab_links_html }}
+      {%- if _title != '' and _content != '' -%}
+        {%- assign _resolved_content = _content -%}
+        {%- if _content contains 'product.metafields' -%}
+          {%- assign _ns_part = _content | split: 'product.metafields.' | last -%}
+          {%- assign _ns = _ns_part | split: '.' | first -%}
+          {%- assign _key_part = _ns_part | split: '.' | last -%}
+          {%- assign _key = _key_part | split: '|' | first | split: ' ' | first | split: '}' | first | strip -%}
+          {%- if _ns != blank and _key != blank -%}
+            {%- assign _mf = product.metafields[_ns][_key] -%}
+            {%- if _mf != blank -%}
+              {%- capture _resolved_content -%}{{ _mf }}{%- endcapture -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
 
-        <li class="tab-link tab-link-{{ count }}" data-focus-element data-tab="{{ count }}" data-block-id="{{ block.id }}" tabindex="0" {{ block.shopify_attributes }}>{{ _title }}</li>
-      {%- endcapture -%}
+        {%- capture tab_links_html -%}
+          {{ tab_links_html }}
 
-      {%- capture tab_contents_html -%}
-        {{ tab_contents_html }}
+          <li class="tab-link tab-link-{{ count }}" data-focus-element data-tab="{{ count }}" data-block-id="{{ block.id }}" tabindex="0" {{ block.shopify_attributes }}>{{ _title }}</li>
+        {%- endcapture -%}
 
-        <div class="tab-content tab-content-{{ count }}">
-          {{ _content }}
-        </div>
-      {%- endcapture -%}
+        {%- capture tab_contents_html -%}
+          {{ tab_contents_html }}
+
+          <div class="tab-content tab-content-{{ count }}">
+            {{ _resolved_content }}
+          </div>
+        {%- endcapture -%}
 
       {%- assign count = count | plus: 1 -%}
     {%- endif -%}
@@ -100,6 +114,20 @@
       {% assign block_id = block.id | append: '-' | append: forloop.index %}
 
       {%- if _title != '' and _content != '' -%}
+        {%- assign _resolved_content = _content -%}
+        {%- if _content contains 'product.metafields' -%}
+          {%- assign _ns_part = _content | split: 'product.metafields.' | last -%}
+          {%- assign _ns = _ns_part | split: '.' | first -%}
+          {%- assign _key_part = _ns_part | split: '.' | last -%}
+          {%- assign _key = _key_part | split: '|' | first | split: ' ' | first | split: '}' | first | strip -%}
+          {%- if _ns != blank and _key != blank -%}
+            {%- assign _mf = product.metafields[_ns][_key] -%}
+            {%- if _mf != blank -%}
+              {%- capture _resolved_content -%}{{ _mf }}{%- endcapture -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+
         {%- capture accordion_blocks_html -%}
           {{ accordion_blocks_html }}
           <div class="accordion__wrapper">
@@ -112,7 +140,7 @@
             </button>
 
             <div class="accordion__body" id="{{ block_id }}" data-accordion-body>
-              {{ _content }}
+              {{ _resolved_content }}
             </div>
           </div>
         {%- endcapture -%}

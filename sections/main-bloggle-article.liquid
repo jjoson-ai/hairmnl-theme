@@ -379,7 +379,17 @@
     </div>
   </div>
     <div class="bloggle_rte rte" id="bloggle_rte">
-      {{ article.content | replace: '<iframe ', '<iframe loading="lazy" ' }}
+      {%- comment -%}
+        Bloggle render path. Two reasons we route through article-content-with-img-dims:
+          1. Defensive repair for malformed `target="_blank"<img` patterns (issue dy0)
+             — rich-text editor / vendor-app artifact that breaks browser image rendering.
+          2. CLS-saving width/height injection on Shopify-CDN images (parsed from URL).
+        Preserve the existing iframe lazy-load by piping through replace BEFORE the
+        post-processor runs. The post-processor's defensive replace handles <img>;
+        the iframe handling stays here.
+      {%- endcomment -%}
+      {%- assign _bloggle_content = article.content | replace: '<iframe ', '<iframe loading="lazy" ' -%}
+      {%- render 'article-content-with-img-dims', content: _bloggle_content -%}
 
     </div>
 

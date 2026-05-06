@@ -184,7 +184,7 @@ Sub-collection-only variables (set by stub, optional):
         product_title_font / product_title_font_size are set by sub-collection callers only.
       {%- endcomment -%}
       <p class="h6 name_wrapper"{% if product_title_font and product_title_font != blank %} style="font-family: {{ product_title_font }}; font-size: {{ product_title_font_size }}px;"{% endif %}>
-        {{ product.title | replace: "L'Oréal Professionnel ", '' | replace: "L'Oreal Professionnel ", '' | replace: 'L'Oréal Professionnel ', '' | replace: 'Kérastase ', '' | replace: 'Kerastase ', '' | replace: 'Davines ', '' | replace: 'Naturaltech Davines ', '' | replace: 'AVEDA ', '' | replace: 'Aveda ', '' | replace: 'K18 ', '' | replace: 'Schwarzkopf Professional ', '' | replace: 'Bed Head By TIGI ', '' | replace: 'Wella Professionals ', '' | replace: 'Revlon Professional ', '' }}
+        {{ product.title | replace: "L'Oréal Professionnel ", "" | replace: "L'Oreal Professionnel ", "" | replace: "L'Oréal Professionnel ", "" | replace: "Kérastase ", "" | replace: "Kerastase ", "" | replace: "Davines ", "" | replace: "Naturaltech Davines ", "" | replace: "AVEDA ", "" | replace: "Aveda ", "" | replace: "K18 ", "" | replace: "Schwarzkopf Professional ", "" | replace: "Bed Head By TIGI ", "" | replace: "Wella Professionals ", "" | replace: "Revlon Professional ", "" }}
       </p>
       {% include 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true %}
 
