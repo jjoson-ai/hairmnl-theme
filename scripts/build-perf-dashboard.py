@@ -623,6 +623,52 @@ def rotate_snapshots_if_needed():
         print(f"Archived {sum(len(v) for v in archive_by_year.values())} snapshots to {archive_dir}/", file=sys.stderr)
 
 
+def _merge_daily_snapshot(existing: Optional[dict], incoming: dict) -> dict:
+    """Merge raw snapshots into one per-day view, keeping newest data per source.
+
+    Dashboard refreshes often run source-specific fetches. A later GA4-only run
+    should update freshness and RUM sections without erasing an earlier same-day
+    PSI or CrUX result from charts and KPI cards.
+    """
+    if existing is None:
+        existing = {"timestamp": incoming.get("timestamp", "")}
+    if incoming.get("timestamp", "") > existing.get("timestamp", ""):
+        existing["timestamp"] = incoming.get("timestamp", "")
+
+    ga4 = incoming.get("ga4")
+    if ga4:
+        if (
+            "ga4" not in existing
+            or incoming.get("timestamp", "") >= existing.get("_ga4_timestamp", "")
+        ):
+            existing["ga4"] = ga4
+            existing["_ga4_timestamp"] = incoming.get("timestamp", "")
+
+    crux_in = incoming.get("crux") or {}
+    if crux_in:
+        crux_out = existing.setdefault("crux", {})
+        crux_ts = existing.setdefault("_crux_timestamps", {})
+        for form_factor in ("mobile", "desktop"):
+            if crux_in.get(form_factor) and incoming.get("timestamp", "") >= crux_ts.get(form_factor, ""):
+                crux_out[form_factor] = crux_in[form_factor]
+                crux_ts[form_factor] = incoming.get("timestamp", "")
+
+    psi_in = incoming.get("psi") or {}
+    if psi_in:
+        psi_out = existing.setdefault("psi", {})
+        psi_ts = existing.setdefault("_psi_timestamps", {})
+        for strategy in ("mobile", "desktop"):
+            if psi_in.get(strategy) and incoming.get("timestamp", "") >= psi_ts.get(strategy, ""):
+                psi_out[strategy] = psi_in[strategy]
+                psi_ts[strategy] = incoming.get("timestamp", "")
+
+    return existing
+
+
+def _strip_internal_snapshot_keys(snapshot: dict) -> dict:
+    return {k: v for k, v in snapshot.items() if not k.startswith("_")}
+
+
 def load_snapshots() -> list[dict]:
     raw = []
     if not SNAPSHOTS_PATH.exists():
@@ -642,10 +688,9 @@ def load_snapshots() -> list[dict]:
         day = ts[:10]
         if not day:
             continue
-        existing = by_day.get(day)
-        if existing is None or ts > existing.get("timestamp", ""):
-            by_day[day] = snap
-    return sorted(by_day.values(), key=lambda s: s.get("timestamp", ""))
+        by_day[day] = _merge_daily_snapshot(by_day.get(day), snap)
+    daily = [_strip_internal_snapshot_keys(s) for s in by_day.values()]
+    return sorted(daily, key=lambda s: s.get("timestamp", ""))
 
 
 # ───────────────────────── HTML render ─────────────────────────
@@ -796,15 +841,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                             border-radius: 4px; }
   .page-row .deeplinks a:hover { background: var(--ice); }
 
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .table-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 13px; }
   th { text-align: left; color: var(--text-muted); font-weight: 600; font-size: 11px;
        text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 10px;
-       border-bottom: 2px solid var(--gray-light); }
+       border-bottom: 2px solid var(--gray-light); vertical-align: bottom; }
   td { padding: 8px 10px; border-bottom: 1px solid var(--gray-light); vertical-align: top; }
   tr:last-child td { border-bottom: none; }
-  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  td.code { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 12px;
-            color: var(--navy); word-break: break-all; }
+  th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  th.code, td.code, .code { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 12px;
+                            color: var(--navy); word-break: break-word; }
 
   .chart-wrap { position: relative; height: 200px; }
   .empty { color: var(--text-muted); font-style: italic; padding: 12px 0; font-size: 13px; }
@@ -1183,7 +1229,7 @@ def _rate_class_score(v):
     return "poor"
 
 
-def _delta_html(curr, prev, lower_is_better=True, fmt=lambda v: f"{v:+.0f}"):
+def _delta_html(curr, prev, lower_is_better=True, fmt=lambda v: f"{v:.0f}"):
     if prev is None or curr is None:
         return ""
     d = curr - prev
