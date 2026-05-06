@@ -702,6 +702,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HairMNL — Performance Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 <style>
   :root {
     --navy: #1E2761;
@@ -1068,8 +1069,17 @@ function filterByRange(allLabels, allData, days) {
   return { labels: allLabels.slice(sliceStart), data: allData.slice(sliceStart) };
 }
 
-const baseConfig = (label, color, allData, fmt) => {
+const CHART_TARGETS = {
+  score: { threshold: 90,  higherIsBetter: true  },
+  lcp:   { threshold: 2.5, higherIsBetter: false },
+  tbt:   { threshold: 200, higherIsBetter: false },
+  cls:   { threshold: 0.10, higherIsBetter: false },
+};
+
+const baseConfig = (label, color, allData, fmt, chartKey) => {
   const filtered = filterByRange(CHART_DATA.labels, allData, activeRange);
+  const t = CHART_TARGETS[chartKey];
+  const lineColor = t.higherIsBetter ? '#22C55E' : '#EF4444';
   return {
     type: 'line',
     data: {
@@ -1083,7 +1093,25 @@ const baseConfig = (label, color, allData, fmt) => {
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
-        tooltip: { callbacks: { label: (ctx) => fmt ? fmt(ctx.parsed.y) : ctx.parsed.y } }
+        tooltip: { callbacks: { label: (ctx) => fmt ? fmt(ctx.parsed.y) : ctx.parsed.y } },
+        annotation: {
+          annotations: {
+            targetLine: {
+              type: 'line',
+              yMin: t.threshold,
+              yMax: t.threshold,
+              borderColor: lineColor,
+              borderDash: [5, 5],
+              borderWidth: 1.5,
+              label: {
+                display: true,
+                content: `${t.higherIsBetter ? '▲' : '▼'} ${fmt(t.threshold)}`,
+                color: lineColor,
+                font: { size: 10 },
+              }
+            }
+          }
+        }
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 10 } } },
@@ -1096,13 +1124,13 @@ const baseConfig = (label, color, allData, fmt) => {
 function buildCharts() {
   Object.values(charts).forEach(c => c.destroy());
   charts.score = new Chart(document.getElementById('chart-score'),
-    baseConfig('Score', '#1E2761', CHART_DATA.score, v => `${v}/100`));
+    baseConfig('Score', '#1E2761', CHART_DATA.score, v => `${v}/100`, 'score'));
   charts.lcp = new Chart(document.getElementById('chart-lcp'),
-    baseConfig('LCP', '#922525', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`));
+    baseConfig('LCP', '#922525', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`, 'lcp'));
   charts.tbt = new Chart(document.getElementById('chart-tbt'),
-    baseConfig('TBT', '#8F5210', CHART_DATA.tbt_ms, v => `${v} ms`));
+    baseConfig('TBT', '#8F5210', CHART_DATA.tbt_ms, v => `${v} ms`, 'tbt'));
   charts.cls = new Chart(document.getElementById('chart-cls'),
-    baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, v => v.toFixed(3)));
+    baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, v => v.toFixed(3), 'cls'));
 }
 
 function setRange(days) {
