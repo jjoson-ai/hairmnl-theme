@@ -4,6 +4,40 @@ Append-only log of coordinator sessions. Newest entries at the top.
 
 Format spec: see `docs/coordinator-handoff.md` §10.
 
+### 2026-05-06 (model: minimax-m2.7:cloud via OpenCode, coordinated by claude-opus-4-7)
+
+**Issues touched:** l3g (in progress) + 3 new follow-ups: hairmnl-theme-4r8, hairmnl-theme-t4m, hairmnl-theme-miy
+**Outcome:** dashboard query staged; GTM container version created in new workspace, NOT YET PUBLISHED — coordinator review pending
+
+**What was done:**
+- Updated dashboard JS error query at scripts/build-perf-dashboard.py:503 to filter both `js_error` and `hairmnl_js_error` event names
+- Created GTM workspace `fix-js-error-trigger-2026-05-06` (workspace ID: 198) from live v140
+- In new workspace: updated tag 776 firing trigger from [2147479573 (Window Loaded)] → [772 (Custom Event - hairmnl_js_error)]. DLV verification: all 3 DLVs (js_error_type, js_error_message, js_error_source) read correct post-rename fields (error_type, error_message, error_source) ✓
+- Created GTM Container Version 141 in the new workspace (name: "Fix JS Error tag trigger (bd hairmnl-theme-l3g)"). Coordinator review URL: https://tagmanager.google.com/#/container/accounts/4702257664/containers/12266146/versions/141
+- Filed 3 new bd issues for orphan-trigger tags 12 (Conversion Linker, P1 hairmnl-theme-4r8), 415 (Klaviyo Form Listener, P1 hairmnl-theme-t4m), 94 (TrafficGuard, P2 hairmnl-theme-miy)
+- Wrote replayable script scripts/gtm-fix-js-error-tag-2026-05-06.py
+
+**Files modified:**
+- scripts/build-perf-dashboard.py — 1-line query update
+- scripts/gtm-fix-js-error-tag-2026-05-06.py — new file, replayable fix script
+- .beads/issues.jsonl — l3g claimed, 3 new issues (4r8, t4m, miy)
+- docs/handoff-log.md — this entry
+
+**Verification:**
+- py_compile clean: ✓
+- render-only succeeds: ✓
+- snapshots.jsonl unchanged: ✓
+- New GTM workspace + version exist: ✓ (verified via API — workspace 198, version 141)
+- Container NOT yet published: ✓
+
+**Next-session handoff notes:**
+- **COORDINATOR ACTION REQUIRED:** review the GTM Container Version diff at https://tagmanager.google.com/#/container/accounts/4702257664/containers/12266146/versions/141; if the change is exactly 1 tag (776) with trigger change to 772 (no other surprises), publish via the GTM admin UI.
+- After publish: synthetic-error test in storefront incognito + DevTools to verify GA4 DebugView shows real error_type/error_message/error_source on `js_error` events.
+- Wait ~24h, then `python3 scripts/build-perf-dashboard.py --no-crux` to confirm dashboard surfaces real errors. Legacy (not set) rows age out of the 7-day window after 7 days.
+- Then `bd close hairmnl-theme-l3g`. The 3 new bd issues (4r8, t4m, miy) stay OPEN — separate follow-up sessions.
+
+---
+
 ### 2026-05-06 (model: glm-5.1:cloud via OpenCode, coordinated by claude-opus-4-7)
 
 **Issues touched:** 236 (Batch E — per-template CWV slicing)
@@ -372,6 +406,35 @@ Format spec: see `docs/coordinator-handoff.md` §10.
 - For Slack alerts to fire: user must add SLACK_WEBHOOK_URL secret (GHA + local env) and update .github/SECRETS.md to reference it
 - A/B comparison is on-demand only — not wired into daily run; user invokes via `python3 scripts/build-perf-dashboard.py --compare 2026-04-26 2026-05-05`
 - Coordinator (Claude Code) to commit and push, bd close ofc + 2em
+
+---
+
+### 2026-05-06 (model: glm-5.1:cloud via OpenCode, coordinated by claude-opus-4-7)
+
+**Issues touched:** jhb, dy0, 0ru (Batch G — three P0 production bugs)
+**Outcome:** staged for coordinator review, not yet committed
+
+**What was done:**
+- jhb: Standardized 14-entry brand-prefix replace chain to use double quotes throughout in 2 files (product-grid-item.liquid:294 + product-grid-item-branded.liquid:187). Resolves the "Unexpected character é" Liquid parser error on Kérastase landing pages.
+- dy0: Added a 4-pattern defensive replace chain at the top of article-content-with-img-dims.liquid to repair malformed target="..."<img> sequences before chunk-splitting. Repairs blog body images where the parent <a> tag is missing its closing > (10 of 11 broken on /blogs/hair-education/2026-best-in-beauty-hair-protocols-essentials).
+- 0ru: Changed `"type": "richtext"` to `"type": "html"` for raw_content_1..5 in sections/product.liquid (5 changes) and sections/section-product.liquid (5 changes). Resolves the visible <ol><li> markup on PDP accordions.
+
+**Files modified:**
+- snippets/product-grid-item.liquid:294
+- snippets/product-grid-item-branded.liquid:187
+- snippets/article-content-with-img-dims.liquid:54
+- sections/product.liquid (raw_content_1..5)
+- sections/section-product.liquid (raw_content_1..5)
+
+**Verification:**
+- grep checks per DoD: ✓
+- git diff scope contained to listed files: ✓
+- snapshots.jsonl unchanged: ✓
+- staged but not committed: ✓
+
+**Next-session handoff notes:**
+- Coordinator (Claude Code) to: pre-push diff check; push to draft theme 140785582179 (--only=<each>); smoke test in Brave on /collections/kerastase, /blogs/hair-education/2026-best-in-beauty-hair-protocols-essentials, and a PDP with tabs; push to live theme 131664707683 with --allow-live; commit + push to GitHub; bd close jhb dy0 0ru.
+- Bug 3 caveat: existing escaped tab content stays escaped after schema change — merchant must re-save each affected product in theme editor for old data to re-render. If many products affected, follow-up with a bulk-unescape ticket.
 
 ---
 

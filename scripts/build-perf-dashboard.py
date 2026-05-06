@@ -500,7 +500,7 @@ def query_ga4_rum(days: int = 7) -> dict:
                 Dimension(name="customEvent:error_source"),
             ],
             metrics=[Metric(name="eventCount")],
-            dimension_filter=_and(_eq("eventName", "js_error")),
+            dimension_filter=_and(_in("eventName", ["js_error", "hairmnl_js_error"])),
             order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
             limit=10,
         ))
