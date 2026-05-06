@@ -38,12 +38,17 @@ The `hairmnl_js_error` rename happened 2026-05-02 (commit 5fb4be7) to avoid coll
    - Verify `eventSettingsTable` maps: `error_type` → `{{DLV - js_error_type}}`, `error_message` → `{{DLV - js_error_message}}`, `error_source` → `{{DLV - js_error_source}}`
 
 2. **Fix 3 other tags with orphaned trigger 2147479553:**
-   - Tag 12: Conversion Linker
-   - Tag 415: Klaviyo - Form Submission Listener
-   - Tag 94: TrafficGuard Tag
-   - These may need trigger 2147479553 recreated or remapped to valid triggers
+   These are high-priority tags that reference a trigger (ID `2147479553`) that **does not exist anywhere in the container**. Without a valid trigger, these tags cannot fire. Investigate and either recreate the original trigger or remap to a valid one:
 
-3. **Publish the container** after making these changes
+   | Tag ID | Tag Name | Purpose | Impact of broken trigger |
+   |--------|----------|---------|--------------------------|
+   | 12 | Conversion Linker | Fires on page loads to set `NID`, `gclid`, cookie for cross-domain GA4 tracking | **All GA4 conversion data broken** — last-click attribution fails, GCLID/braid cookies not set |
+   | 415 | Klaviyo - Form Submission Listener | Tracks form submission events for Klaviyo email flows | **Revenue attribution broken** — email automation flows won't fire correctly |
+   | 94 | TrafficGuard Tag | Fraud protection — verifies traffic quality before allowing tracking | **Fraud detection disabled** — invalid traffic may inflate GA4 metrics |
+
+   These 3 tags likely all shared the same trigger (probably a custom event trigger that was deleted). The fix is to identify the intended trigger for each tag and reconnect them, then publish.
+
+3. **Publish the container** after making all tag changes
 
 ### Phase 2 — Dashboard query (can be done in parallel)
 
@@ -91,13 +96,20 @@ If Elevar's events also send `error_type`/`error_message`/`error_source`, they w
 
 ## Additional findings
 
-### 3 other broken trigger references
-Trigger ID `2147479553` is used by 3 tags but doesn't exist in the container:
-- Conversion Linker (tag 12)
-- Klaviyo - Form Submission Listener (tag 415)
-- TrafficGuard Tag (tag 94)
+### 4 other broken trigger references (critical)
 
-These should be investigated and fixed as part of the same GTM session.
+Trigger ID `2147479553` is used by 4 tags but **does not exist anywhere in the container**:
+
+| Tag ID | Tag Name | Impact if not fixed |
+|--------|----------|---------------------|
+| 776 | GA4 - JS Error Event | JS error custom dimensions always `(not set)` |
+| 12 | Conversion Linker | All GA4 conversion attribution broken |
+| 415 | Klaviyo - Form Submission Listener | Email automation revenue tracking broken |
+| 94 | TrafficGuard Tag | Fraud detection disabled |
+
+All 4 tags reference the same non-existent trigger. This suggests the trigger was deleted (perhaps a custom event trigger for `dl_*` prefixed events) but the tags were never updated. **All 4 must be fixed together** in the same GTM session.
+
+The trigger that was deleted was likely named something like `Custom Event - dl_*` (old dataLayer naming convention). The 2019 live container may have had this trigger, but it was removed without updating the tags that depended on it.
 
 ### Workspace vs live discrepancy
 Workspace 197 (Default Workspace) has massive unpublished changes — container fingerprint `1573742594630` vs workspace fingerprint `1777714610172`. The workspace state is stale and does NOT reflect the live version 140. **Do not trust workspace API queries for live container state.** Use the GTM UI or the live version API.
