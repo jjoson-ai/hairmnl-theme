@@ -165,7 +165,7 @@ In priority order:
 
 1. **INP** — /cart fixed today (issue `gjv`, commit `3a22d94`); next likely target: PDP variant picker
 2. **CLS** — homepage now 88% good (up from 69% WoW); below 90% threshold so still on the list
-3. **AOV** — pending issues `fw8` (LimeSpot admin tweaks, no code), `bvs` (Snapchat Pixel removal, admin)
+3. **AOV** — pending issues `fw8` (LimeSpot admin tweaks, no code), `3q4` (URL Redirect cleanup, admin)
 4. **Vertex AI rec engine** — `oyw` separate 4-6 week build, NOT this session; design brief in `docs/vertex-placement-guide.md`
 5. **A11y** — completed `9ct`, `6cb`, `D4` recently; check for new Lighthouse failures monthly
 6. **Tech debt** — `yzk` (vendor.js tree-shake, blocked on build pipeline), `l55` (CRO data layer foundation)
