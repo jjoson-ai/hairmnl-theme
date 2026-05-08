@@ -28,14 +28,17 @@
   {% comment %} Cart is full {% endcomment %}
   <div class="wrapper pt2 pb4 {{ full_init }}" data-cart-form data-cart-loading>
     <form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
-      <h3 class="h3--body">{{ 'cart.general.title' | t }}</h3>
-      
-      <br/>
+      {%- comment -%}
+        Phase 1 cutover (2026-05-08): tightened the title-to-items spacing.
+        Removed two stray <br/> tags around the freegifts container that
+        were padding ~80px of dead vertical space above the cart line items.
+        The container itself is empty when no freegift is active; let it
+        collapse naturally instead of bracketing it with hard line breaks.
+      {%- endcomment -%}
+      <h3 class="h3--body cart__title">{{ 'cart.general.title' | t }}</h3>
 
       <div id="freegifts-main-page-container" class="freegifts-main-container"></div>
 
-      <br/>
-      
       <div class="errors" data-form-errors style="display: none;"></div>
       <div class="cart__items__grid cart__heading__wrapper">
         <div class="cart__heading__back">

@@ -5,24 +5,11 @@
 {% endcomment %}
 
 {%- comment -%}
-  Phase 1 cutover (2026-05-08): line-item thumbnail size bumped to
-  match Vertex 'Buy it with' rec card thumbnails. The default 90px
-  image column made the line-item product look smaller than the
-  recommendations sitting below it — visual hierarchy was inverted
-  (recs > the thing-you-already-bought).
-
-  Applied globally (.cart__items__grid, no parent scope) so both
-  the slide-out cart drawer AND the standalone cart page get the
-  larger thumb. Lives in cart-drawer.liquid because the drawer
-  renders on every page in the layout, so the <style> block lands
-  in the document head regardless of which cart surface the
-  customer ends up on.
+  Phase 1 cutover (2026-05-08): line-item thumbnail bump moved to
+  assets/theme.css (.cart__items__grid base rule, 90px → 140px).
+  Inline override removed from this snippet to keep theme.css the
+  single source of truth for cart layout sizing.
 {%- endcomment -%}
-<style>
-  .cart__items__grid {
-    grid-template-columns: 140px 1fr;
-  }
-</style>
 
 
 {%- liquid

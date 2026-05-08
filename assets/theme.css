@@ -14310,7 +14310,12 @@ input[type="number"].filter__price__input {
 .cart__items__grid {
   display: grid;
   grid-template-areas: "image title" "image price" "image quantity" "below  below";
-  grid-template-columns: 90px 1fr;
+  /* Phase 1 cutover (2026-05-08): bumped from 90px → 140px so cart
+     line-item thumbnails match the Vertex 'Buy it with' / 'Often
+     bought together' rec card thumbnails. Earlier the visual
+     hierarchy was inverted (recs > the product the customer was
+     already buying). */
+  grid-template-columns: 140px 1fr;
   grid-template-rows: auto auto auto auto;
   grid-column-gap: var(--gutter);
   grid-row-gap: 6px;
