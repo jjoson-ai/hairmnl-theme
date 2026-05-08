@@ -4,6 +4,24 @@
   {% render 'cart-drawer', cart: cart %}
 {% endcomment %}
 
+{%- comment -%}
+  Phase 1 cutover (2026-05-08): cart-drawer line-item thumbnail size
+  bumped to match Vertex 'Buy it with' rec card thumbnails. The
+  default 90px image column made the line-item product look smaller
+  than the recommendations sitting just below it — visual hierarchy
+  was inverted (recs > the thing-you-already-bought).
+
+  Scope: only the cart drawer (.cart__drawer parent selector). The
+  standalone cart page (which shares the cart-line-items snippet)
+  keeps its existing 90px column.
+{%- endcomment -%}
+<style>
+  .cart__drawer .cart__items__grid {
+    grid-template-columns: 140px 1fr;
+  }
+</style>
+
+
 {%- liquid
   assign hide_quantity = 'quantity--hide'
   if settings.cart_show_quantity
