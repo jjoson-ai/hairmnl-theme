@@ -148,21 +148,24 @@
       keep the existing "Trending in your routine" placeholder — that slot
       remains net-new territory until Recommended-for-you (~+7 days) trains.
     {%- endcomment -%}
-    {%- if customer and customer.metafields.vertex.repurchase_handles.value and customer.metafields.vertex.repurchase_handles.value.size > 0 -%}
-      {% render 'vertex-buy-it-again',
-          title: 'Time to restock',
-          subtitle: 'Based on your purchase history' %}
-    {%- else -%}
-      {% render 'vertex-recommendations',
-          placement: 'home_below_hero',
-          title: 'Trending in your routine',
-          rationale: 'Homepage personalization with the recommended-for-you model. NET-NEW revenue position — LimeSpot earns ₱0 here today (per their admin). Returning visitors would see recs based on browse + purchase history; new visitors see popularity-default. Recovers ~4% of sessions that would otherwise bounce (per LimeSpot internal benchmarks). Highest-leverage homepage placement because it''s above-fold and personalized at first impression.'
-      %}
-      {% render 'limespot-ghost-placeholder',
-          placement: 'home_below_hero_gap',
-          title: 'Nothing here today'
-      %}
-    {%- endif -%}
+    {%- comment -%}
+      Temporarily disabled on main until vertex snippet ships.
+      {%- if customer and customer.metafields.vertex.repurchase_handles.value and customer.metafields.vertex.repurchase_handles.value.size > 0 -%}
+        {% render 'vertex-buy-it-again',
+            title: 'Time to restock',
+            subtitle: 'Based on your purchase history' %}
+      {%- else -%}
+        {% render 'vertex-recommendations',
+            placement: 'home_below_hero',
+            title: 'Trending in your routine',
+            rationale: 'Homepage personalization with the recommended-for-you model. NET-NEW revenue position — LimeSpot earns ₱0 here today (per their admin). Returning visitors would see recs based on browse + purchase history; new visitors see popularity-default. Recovers ~4% of sessions that would otherwise bounce (per LimeSpot internal benchmarks). Highest-leverage homepage placement because it''s above-fold and personalized at first impression.'
+        %}
+        {% render 'limespot-ghost-placeholder',
+            placement: 'home_below_hero_gap',
+            title: 'Nothing here today'
+        %}
+      {%- endif -%}
+    {%- endcomment -%}
   </div>
 {%- endif -%}
 

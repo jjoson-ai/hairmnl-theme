@@ -185,12 +185,14 @@
           {% endcase %}
         {% endfor %}
 
-        {%- comment -%} Phase 1b-γ.8 Slot 1: PDP below ATC — FBT "Complete the routine" (PR-2). {%- endcomment -%}
-        {% render 'vertex-recommendations',
-            placement: 'pdp_below_atc',
-            product: product,
-            title: 'Complete the routine'
-        %}
+        {%- comment -%} Phase 1b-γ.8 Slot 1: PDP below ATC — FBT "Complete the routine" (PR-2). Temporarily disabled on main until vertex snippet ships. {%- endcomment -%}
+        {%- comment -%}
+          {% render 'vertex-recommendations',
+              placement: 'pdp_below_atc',
+              product: product,
+              title: 'Complete the routine'
+          %}
+        {%- endcomment -%}
 
       </div>
     </div>
@@ -206,11 +208,14 @@
   Open question 3: confirm Pipeline 6.1.3 native "You May Also Like" section is NOT
   already rendering here before enabling on live.
 {%- endcomment -%}
-{% render 'vertex-recommendations',
-    placement: 'pdp_below_description',
-    product: product,
-    title: 'You may also like'
-%}
+{%- comment -%}
+  Temporarily disabled on main until vertex snippet ships.
+  {% render 'vertex-recommendations',
+      placement: 'pdp_below_description',
+      product: product,
+      title: 'You may also like'
+  %}
+{%- endcomment -%}
 
 {% if section.settings.zoom_enable %}
   {% render 'zoom-pswp' %}
