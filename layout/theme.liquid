@@ -186,9 +186,17 @@
       Real-shopper LimeSpot recs still load on homepage / collection /
       PDP / cart / search where they actually drive conversion.
     {%- endcomment -%}
-    {%- unless template contains 'customers/' -%}
-      {% include 'limespot' %}
-    {%- endunless -%}
+    {%- comment -%}
+      Phase 1 cutover (2026-05-08): LimeSpot include disabled.
+      The snippet body is also wrapped in {% if false %} as a
+      belt-and-suspenders gate. Rollback: uncomment the include
+      below AND remove the {% if false %} from snippets/limespot.liquid.
+    {%- endcomment -%}
+    {%- comment -%}
+      {%- unless template contains 'customers/' -%}
+        {% include 'limespot' %}
+      {%- endunless -%}
+    {%- endcomment -%}
 
     {% render 'treedify' %}
     
@@ -755,8 +763,8 @@
     {%- endcomment -%}
   
 
-    {%- comment -%} Temporarily disabled on main until vertex snippet ships. {%- endcomment -%}
-    {%- comment -%} {{ 'vertex-recommendations.css' | asset_url | stylesheet_tag }} {%- endcomment -%}
+    {%- comment -%} Phase 1 cutover (2026-05-08): re-enabled. The PDP-FBT and cart-FBT placements need this CSS bundle. {%- endcomment -%}
+    {{ 'vertex-recommendations.css' | asset_url | stylesheet_tag }}
 
 </head>
 
@@ -784,9 +792,18 @@
         sit empty. Skipping the element entirely shaves a tiny bit of
         DOM + CSS work for those templates.
       {%- endcomment -%}
-      {%- unless template contains 'customers/' -%}
-        <limespot></limespot>
-      {%- endunless -%}
+      {%- comment -%}
+        Phase 1 cutover (2026-05-08): LimeSpot custom element disabled.
+        Without the SDK loaded (see comment above this section), the
+        element wouldn't be populated anyway, but commenting it out
+        removes the empty element from the DOM entirely. Rollback:
+        uncomment.
+      {%- endcomment -%}
+      {%- comment -%}
+        {%- unless template contains 'customers/' -%}
+          <limespot></limespot>
+        {%- endunless -%}
+      {%- endcomment -%}
       
     {% capture bsscommerce_passcode_to_see_price_product_custom %}{% render 'bss-passcode-to-see-price-js' %}{% endcapture %}{% unless bsscommerce_passcode_to_see_price_product_custom contains "Liquid error" %}{% render 'bss-passcode-to-see-price-js' %}{% endunless %}{% capture bsscommerce_login_to_see_price_product_custom %}{% render 'bsscommerce-login-to-see-price-custom-js' %}{% endcapture %}{% unless bsscommerce_login_to_see_price_product_custom contains "Liquid error" %}{% render 'bsscommerce-login-to-see-price-custom-js' %}{% endunless %}{% capture bss_ltap_fl_redirect %}{% render 'bss-ltap-fl-redirect' %}{% endcapture %}{% unless bss_ltap_fl_redirect contains "Liquid error" %}{% render 'bss-ltap-fl-redirect' %}{% endunless %}</main>
 

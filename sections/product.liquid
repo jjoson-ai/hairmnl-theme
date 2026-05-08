@@ -185,14 +185,12 @@
           {% endcase %}
         {% endfor %}
 
-        {%- comment -%} Phase 1b-γ.8 Slot 1: PDP below ATC — FBT "Complete the routine" (PR-2). Temporarily disabled on main until vertex snippet ships. {%- endcomment -%}
-        {%- comment -%}
-          {% render 'vertex-recommendations',
-              placement: 'pdp_below_atc',
-              product: product,
-              title: 'Complete the routine'
-          %}
-        {%- endcomment -%}
+        {%- comment -%} Phase 1 cutover (2026-05-08): PDP below ATC — FBT widget. Replaces LimeSpot's JS-injected "Frequently Bought Together" widget. Standardized title per Phase 1 plan. {%- endcomment -%}
+        {% render 'vertex-recommendations',
+            placement: 'pdp_below_atc',
+            product: product,
+            title: 'Frequently bought together'
+        %}
 
       </div>
     </div>

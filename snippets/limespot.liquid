@@ -1,11 +1,21 @@
 {%- comment -%}
-  Defer LimeSpot SDK 2026-04-26: was render-blocking (no async/defer
-  attr) and contributing to the 6.7s mobile TBT. The inline data setup
-  below uses `window.LimeSpot = window.LimeSpot === undefined ? {} :
-  LimeSpot;` so order-independent — inline can run before or after the
-  SDK and both populate the same window.LimeSpot object. With defer,
-  inline runs first (sets PageInfo), then SDK reads it.
+  Phase 1 cutover (2026-05-08): LimeSpot SDK GATED OFF.
+
+  Wrapping the entire SDK init body in a {% if false %} to short-circuit
+  rendering. Belt-and-suspenders with the {% include 'limespot' %} comment
+  in layout/theme.liquid — gating here means even if the include is
+  re-enabled by accident, no LimeSpot script tag emits and no PageInfo /
+  UserInfo / CartItems globals are set. The recs widget on the
+  <limespot></limespot> custom element silently no-ops.
+
+  Rollback: remove the {% if false %} wrapper to re-enable LimeSpot.
+  Original SDK key + shop reference preserved verbatim below.
+
+  Defer note (2026-04-26): SDK has defer="defer" so it never blocks
+  render. Inline data setup uses `window.LimeSpot = window.LimeSpot
+  === undefined ? {} : LimeSpot;` so order-independent.
 {%- endcomment -%}
+{% if false %}
 <script type="text/javascript" src="https://edge.personalizer.io/storefront/2.0.0/js/shopify/storefront.min.js?key=ebkrx-lb1o3gbh8p6nbo8hxo-ldify&shop=creations-gdc.myshopify.com" defer="defer"></script>
 <script>
 window.LimeSpot = window.LimeSpot === undefined ? {} : LimeSpot;{% assign t = template | prepend: '/' | append: '.' %}
@@ -35,6 +45,7 @@ LimeSpot.CartItems = [{{ cart_product_ids | remove_first: "," }}];
 {% if t contains '/collection.' and collection.metafields.LimeSpot['CuratedCollectionVariation'] == "true" %}
 <link rel="canonical" data-owner="LimeSpot" href="https://{{ request.host }}{{ collection.metafields.LimeSpot['StartingCollectionPath'] }}">
 {% endif %}
+{% endif %}{%- comment -%} closes Phase 1 cutover {% if false %} gate at line 18 {%- endcomment -%}
 
 
 

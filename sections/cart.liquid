@@ -68,23 +68,18 @@
         </div>
 
         {%- comment -%}
-          Phase 1b-γ.8 Slot 2: Cart page FBT — above checkout footer.
-          v1 ships with inline ADD-to-cart via native form submit (page
-          reloads after add — Shopify's default behavior). Restored per
-          team feedback that click-through-only made the slot feel
-          unfinished.
+          Phase 1 cutover (2026-05-08): cart-page FBT — above checkout footer.
+          Replaces LimeSpot JS-injected widget on the standalone cart page.
+          Inline ADD-to-cart via native form submit (page reloads after add).
+          Standardized title + dropped subtitle per Phase 1 copy decision.
         {%- endcomment -%}
-        {%- comment -%}
-          Temporarily disabled on main until vertex snippet ships.
-          {%- if cart.item_count > 0 -%}
-            {% render 'vertex-recommendations',
-                placement: 'cart_above_checkout',
-                cart: cart,
-                title: 'Frequently bought with these items',
-                subtitle: 'Add to your cart in one tap.'
-            %}
-          {%- endif -%}
-        {%- endcomment -%}
+        {%- if cart.item_count > 0 -%}
+          {% render 'vertex-recommendations',
+              placement: 'cart_above_checkout',
+              cart: cart,
+              title: 'Often bought together'
+          %}
+        {%- endif -%}
 
         <div class="template__cart__footer" data-cart-bottom>
 
