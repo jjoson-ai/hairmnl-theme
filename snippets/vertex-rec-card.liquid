@@ -75,7 +75,13 @@
       {{ card_image }}
     </a>
     <div class="vrec-card__info">
-      {%- if product.vendor != blank -%}
+      {%- comment -%}
+        Phase 1 cutover (2026-05-08): vendor line hidden — product titles
+        already begin with the brand name (e.g. "L'Oréal Professionnel
+        Serie Expert..."), so the separate vendor row was redundant.
+        Markup preserved for trivial rollback.
+      {%- endcomment -%}
+      {%- if false and product.vendor != blank -%}
         <p class="vrec-card__vendor">
           <a href="{{ product.url }}" class="vrec-card__vendor-link">{{ product.vendor }}</a>
         </p>
@@ -114,7 +120,11 @@
      data-vertex-product-id="{{ product.id }}">
     {{ card_image }}
     <div class="vrec-card__info">
-      {%- if product.vendor != blank -%}
+      {%- comment -%}
+        Phase 1 cutover (2026-05-08): vendor line hidden — product titles
+        already begin with the brand name. Markup preserved for rollback.
+      {%- endcomment -%}
+      {%- if false and product.vendor != blank -%}
         <p class="vrec-card__vendor">{{ product.vendor }}</p>
       {%- endif -%}
       <p class="vrec-card__title">{{ product.title | strip_html }}</p>
