@@ -766,37 +766,6 @@
     {%- comment -%} Phase 1 cutover (2026-05-08): re-enabled. The PDP-FBT and cart-FBT placements need this CSS bundle. {%- endcomment -%}
     {{ 'vertex-recommendations.css' | asset_url | stylesheet_tag }}
 
-    {%- comment -%}
-      Phase 1 cutover (2026-05-08): hide STKY sticky-add-to-cart bar
-      ON NON-LIVE THEMES ONLY. STKY remains active on the live theme;
-      this rule only fires on draft / unpublished / demo themes where
-      the sticky bar was overlapping the cart drawer's CHECK OUT button
-      during round-2 QA. The app block was also disabled in
-      config/settings_data.json on the draft theme as belt-and-suspenders;
-      this CSS is a backup in case the app injects via additional paths.
-
-      Live (theme.role == 'main') receives no inline style — the entire
-      block is skipped. Safe to ship to live.
-    {%- endcomment -%}
-    {%- if theme.role != 'main' -%}
-      <style>
-        /* Catch every common STKY namespace + Shopify app-block wrappers
-           that match the sticky-add-to-cart embed. Display:none kills
-           layout AND interactivity. !important wins against the app's
-           own injected inline styles. */
-        [id^="stky-"],
-        [id*="sticky-add-to-cart"],
-        [class*="stky-bar"],
-        [class*="stky-container"],
-        [class*="satcb"],
-        div[data-stky],
-        div[data-block-handle*="sticky-add-to-cart"],
-        div[data-shopify-app-block][data-app-handle*="stky"] {
-          display: none !important;
-        }
-      </style>
-    {%- endif -%}
-
 </head>
 
   <body id="{{ page_title | handle }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {{ settings.default_background }}{% if customer %} customer-logged-in{% endif %} hairmnl-theme">
