@@ -1,0 +1,22 @@
+URL:      https://hairmnl.com/cart
+Strategy: mobile
+Runs:     3
+
+  run 1... ERR: The read operation timed out
+  run 2... ERR: HTTP Error 500: Internal Server Error
+  run 3... score 29  LCP 17.6s  TBT 4624ms  (4.2s)
+URL:      https://hairmnl.com/cart
+Strategy: mobile
+Runs:     3
+
+  run 1... score 26  LCP 18.7s  TBT 3339ms  (50.5s)
+  run 2... score 25  LCP 25.6s  TBT 1721ms  (47.1s)
+  run 3... score 25  LCP 25.6s  TBT 1721ms  (0.4s)
+
+══ Medians (n=3) ══
+  SCORE 25
+  FCP   6.18s
+  LCP   25.62s
+  TBT   1.72s
+  CLS   0.111
+  SI    13.56s
