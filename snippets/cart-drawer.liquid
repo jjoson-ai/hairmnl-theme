@@ -160,21 +160,20 @@
       </div>
 
       {%- comment -%}
-        Phase 1b-γ.8 Slot 2b: Vertex FBT in cart drawer — below line items (PR-4).
+        Phase 1 cutover (2026-05-08): Vertex FBT in cart drawer — below line items.
+        Replaces the Pipeline cart-line-items 'BUY IT WITH' upsell.
         Recs scroll with items; never collide with the fixed .drawer__bottom.
         No inline ATC: drawer AJAX re-render has known race conditions (see
-        lines 116–129 above). Cards link → PDP instead (open question 7).
+        lines 116-129 above). Cards link → PDP instead.
+        Title "Buy it with" matches the cart-page upsell language for consistency.
       {%- endcomment -%}
-      {%- comment -%}
-        Temporarily disabled on main until vertex snippet ships.
-        {%- if cart.item_count > 0 -%}
-          {% render 'vertex-recommendations',
-              placement: 'cart_drawer_below_items',
-              cart: cart,
-              title: 'Add to your routine'
-          %}
-        {%- endif -%}
-      {%- endcomment -%}
+      {%- if cart.item_count > 0 -%}
+        {% render 'vertex-recommendations',
+            placement: 'cart_drawer_below_items',
+            cart: cart,
+            title: 'Buy it with'
+        %}
+      {%- endif -%}
 
     </div>
     <div class="drawer__bottom cart--hidden" data-cart-bottom data-accordion-group>

@@ -159,14 +159,21 @@
   {% endfor %}
 </div>
 
-{%- if pair_products_index != '' -%}
+{%- comment -%}
+  Phase 1 cutover (2026-05-08): cart "BUY IT WITH" Pipeline upsell
+  disabled in cart drawer + standalone cart page. Replaced by Vertex
+  'cart_drawer_below_items' (drawer) and 'cart_above_checkout' (cart
+  page). Empty cart-card slot prevents the Pipeline upsell card from
+  rendering; the loop logic is preserved verbatim for rollback.
+{%- endcomment -%}
+{%- if false and pair_products_index != '' -%}
   {%- assign pair_products_index = pair_products_index | split: ',' -%}
   {%- assign cart_products = cart_products | prepend: ',' -%}
 
   {%- for index in pair_products_index -%}
     {%- assign arr_index = index | plus: 0 -%}
     {%- assign upsell_product = cart.items[arr_index].product.metafields.theme.upsell.value -%}
-    
+
     {%- if cart_products contains upsell_product.id or upsell_product.available == false -%}
       {%- continue -%}
     {%- endif -%}

@@ -169,9 +169,16 @@
               {% endif %}
             {% when 'liquid' %} 
               {{ block.settings.custom_liquid }}
+            {%- comment -%}
+              Phase 1 cutover (2026-05-08): "BUY IT WITH" Pipeline upsell
+              block disabled — replaced by Vertex on PDP. Block stays
+              defined as a no-op to keep merchant-configured blocks happy.
+            {%- endcomment -%}
             {% when 'upsell' %}
-              {%- assign upsell_product = all_products[block.settings.product] -%}
-              {% render 'upsell-product' upsell_product: upsell_product, show_form: true %}
+              {%- comment -%}
+                {%- assign upsell_product = all_products[block.settings.product] -%}
+                {% render 'upsell-product' upsell_product: upsell_product, show_form: true %}
+              {%- endcomment -%}
           {% endcase %}
         {% endfor %}     
 

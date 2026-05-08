@@ -149,19 +149,16 @@
 {%- if card_count == 0 or rail_trimmed == '' -%}{%- else -%}
 
 {%- comment -%}
-  Show preview chrome + team-notes panel on any non-live theme:
-    theme.role == 'main'         → live theme   → chrome OFF
-    theme.role == 'unpublished'  → draft theme  → chrome ON
-    theme.role == 'demo'         → demo theme   → chrome ON
-  This also covers the Shopify theme editor (where request.design_mode
-  is true and theme.role is 'unpublished'). Lets reviewers see VERTEX
-  badges and decision notes via preview-themed shop URLs without an
-  admin login.
+  Phase 1 cutover (2026-05-08): preview chrome HARD-DISABLED.
+  Was: show on any non-main theme (draft/demo/preview). Reviewers
+  approved the visual layout; the Team-Review notes + VERTEX badge
+  + placement-label chrome were noise on QA passes.
+
+  To re-enable for future development sessions: restore the
+  `{%- if theme.role != 'main' -%} ... {%- endif -%}` override
+  block below the assign.
 {%- endcomment -%}
 {%- assign show_preview_chrome = false -%}
-{%- if theme.role != 'main' -%}
-  {%- assign show_preview_chrome = true -%}
-{%- endif -%}
 
 <section
   class="vrec-slot vrec-slot--{{ placement }}{% if show_preview_chrome %} vrec-slot--preview{% endif %}"

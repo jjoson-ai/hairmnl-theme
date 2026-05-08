@@ -177,9 +177,18 @@
               {% endif %}
             {% when 'liquid' %} 
               {{ block.settings.custom_liquid }}
+            {%- comment -%}
+              Phase 1 cutover (2026-05-08): "BUY IT WITH" Pipeline upsell
+              block disabled on PDP — replaced by Vertex 'pdp_below_atc'
+              FBT slot below. Block stays defined as a no-op so existing
+              merchant-configured blocks in section settings don't error.
+              Rollback: restore the render call.
+            {%- endcomment -%}
             {% when 'upsell' %}
-              {%- assign upsell_product = all_products[block.settings.product] -%}
-              {% render 'upsell-product' upsell_product: upsell_product, show_form: true %}
+              {%- comment -%}
+                {%- assign upsell_product = all_products[block.settings.product] -%}
+                {% render 'upsell-product' upsell_product: upsell_product, show_form: true %}
+              {%- endcomment -%}
             {% comment %} {% when 'upsell_list' %}
               {% render 'upsell-product-list' upsell_product_list: block.settings.product_list, show_form: true %} {% endcomment %}
           {% endcase %}
