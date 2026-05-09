@@ -4114,47 +4114,88 @@
     }
 
     updateCart(clickedKey, newQuantity) {
-      let oldCount = null;
-      let newCount = null;
-      let newItem = null;
+      // Capture pre-mutation item title from current DOM (was previously fetched
+      // via a redundant cart.js GET — see o0z investigation 2026-05-10).
+      let newItem = '';
+      if (this.latestClick) {
+        const titleEl =
+          this.latestClick.querySelector('[data-cart-item-title]') ||
+          this.latestClick.querySelector('.cart-item__title') ||
+          this.latestClick.querySelector('a');
+        if (titleEl) newItem = titleEl.textContent.trim();
+      }
+
+      // Single bulk-sections POST replaces the prior 4-fetch cascade
+      // (cart.js GET → change.js POST → ?section_id=api-cart-items GET →
+      // ?section_id=api-cart-subtotal GET). Returns the new cart state AND
+      // both rendered section HTML in one round-trip. Saves ~3 sequential
+      // network round-trips on the qty-stepper click→paint critical path.
+      // Stockout detection now uses Shopify's response (item.quantity vs
+      // requested) instead of pre-fetch oldCount comparison.
+      const data = {
+        id: clickedKey,
+        quantity: newQuantity,
+        sections: 'api-cart-items,api-cart-subtotal',
+        sections_url: '/cart',
+      };
       window
-        .fetch(`${window.theme.routes.cart}.js`)
-        .then(this.handleErrors)
-        .then((response) => {
-          return response.json();
-        })
-        .then((response) => {
-          const matchKeys = (item) => item.key === clickedKey;
-          const index = response.items.findIndex(matchKeys);
-          oldCount = response.item_count;
-          newItem = response.items[index].title;
-          const data = {
-            line: `${index + 1}`,
-            quantity: newQuantity,
-          };
-          return window.fetch(`${window.theme.routes.cart}/change.js`, {
-            method: 'post',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data),
-          });
+        .fetch(`${window.theme.routes.cart}/change.js`, {
+          method: 'post',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data),
         })
         .then(this.handleErrors)
-        .then((response) => {
-          return response.json();
-        })
+        .then((response) => response.json())
         .then((response) => {
           this.cart = response;
-          newCount = response.item_count;
-          if (oldCount === newCount) {
-            this.stockoutError(newItem);
-            this.stale = true;
-          } else {
-            slideUp(this.errors);
-            this.fireChange(response);
-            this.stale = true;
+
+          // Stockout detection: Shopify caps quantity at available stock.
+          // For a non-zero target, if the actual quantity returned doesn't
+          // match what was requested, it's a stockout.
+          if (newQuantity > 0) {
+            const updated = (response.items || []).find((it) => it.key === clickedKey);
+            const actualQty = updated ? updated.quantity : 0;
+            if (actualQty !== newQuantity) {
+              this.stockoutError(newItem || 'this item');
+              this.stale = true;
+              return;
+            }
+          }
+          slideUp(this.errors);
+          this.fireChange(response);
+          this.stale = true;
+
+          // Apply pre-rendered section HTML inline (no extra fetches).
+          // Falls back to loadHTML() if response.sections is missing
+          // (defensive — older Shopify response shapes).
+          if (response.sections && response.sections['api-cart-items'] && this.items) {
+            const fresh = document.createElement('div');
+            fresh.innerHTML = response.sections['api-cart-items'];
+            const apiContent = fresh.querySelector('[data-api-content]');
+            if (apiContent) {
+              this.items.innerHTML = apiContent.innerHTML;
+              this.showForm();
+              this.initQuantity();
+              this.initUpsell();
+            }
+          }
+          if (response.sections && response.sections['api-cart-subtotal'] && this.subtotal) {
+            const fresh = document.createElement('div');
+            fresh.innerHTML = response.sections['api-cart-subtotal'];
+            const apiContent = fresh.querySelector('[data-api-content]');
+            if (apiContent) {
+              this.subtotal.innerHTML = apiContent.innerHTML;
+            }
+          }
+          if (this.cart && this.cart.total_price != null && this.finalPrice) {
+            this.finalPrice.innerHTML = themeCurrency.formatMoney(this.cart.total_price, theme.moneyFormat);
           }
 
-          this.loadHTML();
+          // Fallback: if Shopify didn't return rendered sections, run the
+          // legacy reload path (preserves backward compat).
+          if (!response.sections) {
+            this.loadHTML();
+          }
         })
         .catch((e) => {
           console.error(e);
@@ -4162,7 +4203,7 @@
           if (typeof e.status !== 'undefined') {
             heading = `<p>${e.status}</p>`;
           }
-          let paragraph = e.json.description || '';
+          let paragraph = (e.json && e.json.description) || '';
           this.showError(`${heading + paragraph}`);
           this.loadHTML();
         });

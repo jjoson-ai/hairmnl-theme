@@ -2759,41 +2759,62 @@ if((typeof Shopify.getCart) === 'undefined'){
             this.latestClick.classList.add(an)
         }
         updateCart(t, e) {
-            let i = null
-              , s = null
-              , n = null;
-            window.fetch(window.theme.routes.cart + ".js").then(this.handleErrors).then((t=>t.json())).then((s=>{
-                const o = s.items.findIndex((e=>e.key === t));
-                i = s.item_count,
-                n = s.items[o].title;
-                const r = {
-                    line: "" + (o + 1),
-                    quantity: e
-                };
-                return window.fetch(window.theme.routes.cart + "/change.js", {
-                    method: "post",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(r)
-                })
+            // o0z 2026-05-10: bulk-sections POST replaces 4-fetch cascade.
+            // Eliminates pre-fetch cart.js GET, redundant Shopify.getCart() wrapper,
+            // and 2 separate section fetches. Saves ~3 sequential round-trips on
+            // qty-stepper click→paint critical path.
+            let c = "";
+            if (this.latestClick) {
+                const o = this.latestClick.querySelector("[data-cart-item-title]") || this.latestClick.querySelector(".cart-item__title") || this.latestClick.querySelector("a");
+                o && (c = o.textContent.trim())
             }
-            )).then(this.handleErrors).then((t=>t.json())).then((t=>{
-              Shopify.getCart(function(t){
-                this.cart = t,
-                s = t.item_count,
-                i === s ? (this.stockoutError(n),
-                this.stale = !0) : (ms(this.errors),
-                this.fireChange(t),
-                this.stale = !0),
-                this.loadHTML()
-              }.bind(this));
+            window.fetch(window.theme.routes.cart + "/change.js", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: t,
+                    quantity: e,
+                    sections: "api-cart-items,api-cart-subtotal",
+                    sections_url: "/cart"
+                })
+            }).then(this.handleErrors).then((t=>t.json())).then((r=>{
+                if (this.cart = r, e > 0) {
+                    const i = (r.items || []).find((m=>m.key === t))
+                      , o = i ? i.quantity : 0;
+                    if (o !== e) {
+                        this.stockoutError(c || "this item"),
+                        this.stale = !0;
+                        return
+                    }
+                }
+                if (ms(this.errors),
+                this.fireChange(r),
+                this.stale = !0,
+                r.sections && r.sections["api-cart-items"] && this.items) {
+                    const a = document.createElement("div");
+                    a.innerHTML = r.sections["api-cart-items"];
+                    const b = a.querySelector("[data-api-content]");
+                    b && (this.items.innerHTML = b.innerHTML,
+                    this.showForm(),
+                    this.initQuantity(),
+                    this.initUpsell())
+                }
+                if (r.sections && r.sections["api-cart-subtotal"] && this.subtotal) {
+                    const a = document.createElement("div");
+                    a.innerHTML = r.sections["api-cart-subtotal"];
+                    const b = a.querySelector("[data-api-content]");
+                    b && (this.subtotal.innerHTML = b.innerHTML)
+                }
+                this.cart && this.cart.total_price != null && this.finalPrice && (this.finalPrice.innerHTML = n.formatMoney(this.cart.total_price, theme.moneyFormat));
+                r.sections || this.loadHTML()
             }
             )).catch((t=>{
                 console.error(t);
                 let e = "";
                 void 0 !== t.status && (e = `<p>${t.status}</p>`);
-                let i = t.json.description || "";
+                let i = (t.json && t.json.description) || "";
                 this.showError("" + (e + i)),
                 this.loadHTML()
             }
