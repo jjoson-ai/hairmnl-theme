@@ -49,7 +49,7 @@
     {%- assign _content = block.settings[_content] -%}
 
       {%- if _title != '' and _content != '' -%}
-        {%- assign _resolved_content = _content -%}
+        {%- assign _mf_resolved = false -%}
         {%- if _content contains 'product.metafields' -%}
           {%- assign _ns_part = _content | split: 'product.metafields.' | last -%}
           {%- assign _ns = _ns_part | split: '.' | first -%}
@@ -59,9 +59,37 @@
             {%- assign _mf = product.metafields[_ns][_key] -%}
             {%- if _mf != blank -%}
               {%- capture _resolved_content -%}{{ _mf }}{%- endcapture -%}
+              {%- assign _mf_resolved = true -%}
             {%- endif -%}
           {%- endif -%}
         {%- endif -%}
+        {%- unless _mf_resolved -%}
+          {%- assign _looks_escaped_html = false -%}
+          {%- if _resolved_content contains '&lt;' and _resolved_content contains '&gt;' -%}
+            {%- assign _escaped_html_tags = '&lt;ol&gt;&lt;/ol&gt;&lt;ul&gt;&lt;/ul&gt;&lt;li&gt;&lt;/li&gt;&lt;p&gt;&lt;/p&gt;&lt;div&gt;&lt;/div&gt;&lt;strong&gt;&lt;/strong&gt;&lt;em&gt;&lt;/em&gt;&lt;br&gt;' | split: ';' -%}
+            {%- for _etag in _escaped_html_tags -%}
+              {%- if _resolved_content contains _etag -%}
+                {%- assign _looks_escaped_html = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if _looks_escaped_html == false -%}
+              {%- if _resolved_content contains '&lt;ol' or _resolved_content contains '&lt;ul' or _resolved_content contains '&lt;li' or _resolved_content contains '&lt;p' or _resolved_content contains '&lt;div' or _resolved_content contains '&lt;strong' or _resolved_content contains '&lt;em' or _resolved_content contains '&lt;br' -%}
+                {%- assign _looks_escaped_html = true -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if _looks_escaped_html -%}
+              {%- if _resolved_content contains '<' -%}
+                {%- assign _test_raw = _resolved_content | split: '<' | last -%}
+                {%- unless _test_raw | slice: 0, 1 | plus: 0 > 0 and _test_raw | slice: 0, 1 | plus: 0 < 255 -%}
+                  {%- assign _resolved_content = _resolved_content | replace: '&lt;', '<' | replace: '&gt;', '>' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' -%}
+                {%- endunless -%}
+              {%- else -%}
+                {%- assign _resolved_content = _resolved_content | replace: '&lt;', '<' | replace: '&gt;', '>' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endunless -%}
 
         {%- capture tab_links_html -%}
           {{ tab_links_html }}
@@ -111,10 +139,10 @@
       {%- assign _content = 'raw_content_' | append: forloop.index -%}
       {%- assign _content = block.settings[_content] -%}
 
-      {% assign block_id = block.id | append: '-' | append: forloop.index %}
+        {% assign block_id = block.id | append: '-' | append: forloop.index %}
 
-      {%- if _title != '' and _content != '' -%}
-        {%- assign _resolved_content = _content -%}
+        {%- if _title != '' and _content != '' -%}
+        {%- assign _mf_resolved = false -%}
         {%- if _content contains 'product.metafields' -%}
           {%- assign _ns_part = _content | split: 'product.metafields.' | last -%}
           {%- assign _ns = _ns_part | split: '.' | first -%}
@@ -124,9 +152,37 @@
             {%- assign _mf = product.metafields[_ns][_key] -%}
             {%- if _mf != blank -%}
               {%- capture _resolved_content -%}{{ _mf }}{%- endcapture -%}
+              {%- assign _mf_resolved = true -%}
             {%- endif -%}
           {%- endif -%}
         {%- endif -%}
+        {%- unless _mf_resolved -%}
+          {%- assign _looks_escaped_html = false -%}
+          {%- if _resolved_content contains '&lt;' and _resolved_content contains '&gt;' -%}
+            {%- assign _escaped_html_tags = '&lt;ol&gt;&lt;/ol&gt;&lt;ul&gt;&lt;/ul&gt;&lt;li&gt;&lt;/li&gt;&lt;p&gt;&lt;/p&gt;&lt;div&gt;&lt;/div&gt;&lt;strong&gt;&lt;/strong&gt;&lt;em&gt;&lt;/em&gt;&lt;br&gt;' | split: ';' -%}
+            {%- for _etag in _escaped_html_tags -%}
+              {%- if _resolved_content contains _etag -%}
+                {%- assign _looks_escaped_html = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if _looks_escaped_html == false -%}
+              {%- if _resolved_content contains '&lt;ol' or _resolved_content contains '&lt;ul' or _resolved_content contains '&lt;li' or _resolved_content contains '&lt;p' or _resolved_content contains '&lt;div' or _resolved_content contains '&lt;strong' or _resolved_content contains '&lt;em' or _resolved_content contains '&lt;br' -%}
+                {%- assign _looks_escaped_html = true -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if _looks_escaped_html -%}
+              {%- if _resolved_content contains '<' -%}
+                {%- assign _test_raw = _resolved_content | split: '<' | last -%}
+                {%- unless _test_raw | slice: 0, 1 | plus: 0 > 0 and _test_raw | slice: 0, 1 | plus: 0 < 255 -%}
+                  {%- assign _resolved_content = _resolved_content | replace: '&lt;', '<' | replace: '&gt;', '>' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' -%}
+                {%- endunless -%}
+              {%- else -%}
+                {%- assign _resolved_content = _resolved_content | replace: '&lt;', '<' | replace: '&gt;', '>' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endunless -%}
 
         {%- capture accordion_blocks_html -%}
           {{ accordion_blocks_html }}
