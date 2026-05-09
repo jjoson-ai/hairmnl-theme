@@ -80,5 +80,10 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add dashboard/
-          git diff --staged --quiet || git commit -m "chore: auto-refresh dashboard [skip ci]"
+          # NO [skip ci] in commit message — GitHub treats it globally and would
+          # skip the pages.yml deploy too, leaving GH Pages stale. Self-loop on
+          # this workflow is already prevented by `paths-ignore: ['dashboard/**']`
+          # in the push trigger above. The pages.yml workflow paths filter is
+          # `paths: ['dashboard/**']` so it correctly redeploys on this commit.
+          git diff --staged --quiet || git commit -m "chore: auto-refresh dashboard"
           git push
