@@ -76,14 +76,32 @@ jobs:
         run: python3 scripts/build-perf-dashboard.py --psi-runs 2
 
       - name: Commit updated dashboard
+        id: commit
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add dashboard/
           # NO [skip ci] in commit message — GitHub treats it globally and would
-          # skip the pages.yml deploy too, leaving GH Pages stale. Self-loop on
-          # this workflow is already prevented by `paths-ignore: ['dashboard/**']`
-          # in the push trigger above. The pages.yml workflow paths filter is
-          # `paths: ['dashboard/**']` so it correctly redeploys on this commit.
-          git diff --staged --quiet || git commit -m "chore: auto-refresh dashboard"
-          git push
+          # skip the pages.yml deploy too. Self-loop on this workflow is already
+          # prevented by `paths-ignore: ['dashboard/**']` in the push trigger.
+          if git diff --staged --quiet; then
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            echo "No dashboard changes — nothing to commit."
+          else
+            git commit -m "chore: auto-refresh dashboard"
+            git push
+            echo "committed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Trigger pages deploy
+        # Commits made by the default GITHUB_TOKEN do NOT trigger downstream
+        # workflows (GitHub anti-loop safety). pages.yml's push trigger never
+        # fires from our commit above, so we kick it explicitly via dispatch.
+        # pages.yml has `workflow_dispatch:` enabled to support this.
+        if: steps.commit.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Triggering pages.yml deploy on main..."
+          gh workflow run pages.yml --ref main
+          echo "Triggered."
