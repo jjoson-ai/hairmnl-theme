@@ -15,4 +15,5 @@
     }
 </script>
 
-<script src='https://apps-bundles-cluster.makebecool.com/js/app.js?v=1649423145673' defer></script>
+{%- comment -%} 2026-05-09: BOGOS empty-cart guard — prevents "reduce of empty array" error (issue hairmnl-theme-8pd). BOGOS app.js crashes when cart has no eligible items. Gate to cart.item_count > 0. {%- endcomment -%}
+{% if cart.item_count > 0 %}<script src='https://apps-bundles-cluster.makebecool.com/js/app.js?v=1649423145673' defer></script>{% endif %}
