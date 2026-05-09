@@ -623,7 +623,12 @@
         }
         addEventListener('error', function (e) {
           var src = (e.filename || '') + ':' + (e.lineno || 0) + ':' + (e.colno || 0);
-          send('error', e.message, src);
+          // p8j 2026-05-10: prefer e.error.name (TypeError, ReferenceError, SyntaxError, etc.)
+          // for first-party errors. Cross-origin errors have e.error redacted to null by the
+          // browser — those fall back to the literal "error" bucket. Promise rejections stay
+          // categorical via the unhandledrejection handler below.
+          var t = (e.error && e.error.name) ? e.error.name : 'error';
+          send(t, e.message, src);
         }, { capture: true });
         addEventListener('unhandledrejection', function (e) {
           var msg = e.reason && (e.reason.message || e.reason.toString()) || 'unknown rejection';

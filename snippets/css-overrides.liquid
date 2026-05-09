@@ -237,6 +237,31 @@
     overflow: hidden;
   }
 
+  /* CLS fix 2026-05-10 kt0 — Desktop header element shift:
+     GA4 RUM (last 14d, deviceCategory=desktop) shows header.theme__header
+     contributing 165 poor-CLS events + 52 on the parent #shopify-section-header
+     = 14.4% of all desktop CLS. The May 2 sprint fixed the announcement bar
+     and .points-box internal reflow, but shifts inside the header itself
+     (logo paint, cart count hydration, LoyaltyLion data-lion-points injection)
+     still cascade to the header's outer dimensions, which the rest of the page
+     reacts to.
+
+     Fix: `contain: layout` on the header element and its parent wrapper
+     isolates internal mutations from affecting siblings. No min-height
+     because typical rendered heights differ across breakpoints (mobile ~50px,
+     desktop ~80px) and we'd risk inflating one or under-reserving the other.
+     contain:layout is no-visual-impact — purely a hint that browsers can use
+     to prune layout-tree dependencies. Combined with the existing
+     .points-box contain:layout (mobile fix May 2), this gives two-level
+     isolation for the LoyaltyLion injection case.
+
+     Mobile already has CLS p75 = 0.07 (GOOD), so this fix is desktop-targeting
+     but global — contain:layout is safe on either breakpoint. */
+  header.theme__header,
+  .header__wrapper {
+    contain: layout;
+  }
+
   /* CLS fix 2026-05-01 e4a-α — PDP store availability widget:
      .product__pickup contains [data-store-availability-container], an empty
      div in the Liquid that Zapiet's app embed populates with store pickup
