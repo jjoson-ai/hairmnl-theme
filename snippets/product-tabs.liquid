@@ -50,6 +50,7 @@
 
       {%- if _title != '' and _content != '' -%}
         {%- assign _mf_resolved = false -%}
+        {%- assign _resolved_content = _content -%}{%- comment -%} default — covers plain-HTML content and metafield-blank fallback {%- endcomment -%}
         {%- if _content contains 'product.metafields' -%}
           {%- assign _ns_part = _content | split: 'product.metafields.' | last -%}
           {%- assign _ns = _ns_part | split: '.' | first -%}
@@ -143,6 +144,7 @@
 
         {%- if _title != '' and _content != '' -%}
         {%- assign _mf_resolved = false -%}
+        {%- assign _resolved_content = _content -%}{%- comment -%} default — covers plain-HTML content and metafield-blank fallback {%- endcomment -%}
         {%- if _content contains 'product.metafields' -%}
           {%- assign _ns_part = _content | split: 'product.metafields.' | last -%}
           {%- assign _ns = _ns_part | split: '.' | first -%}
