@@ -190,8 +190,7 @@
       {% include 'limespot' %}
     {%- endunless -%}
 
-    {% render 'treedify' %}
-    
+    {% comment %} 2026-05-09: Treedify uninstalled (issue ijh) — removed empty snippet render. {% endcomment %}
 
     {% if product.featured_media.preview_image %}
       {%- assign media = product.featured_media -%}
@@ -775,7 +774,7 @@
     <main class="main-content" id="MainContent">
       {{ content_for_layout }}<!-- End of layout -->
 	<noscript class="endOfLayoutContentX" type="text/mark"></noscript>
-      {% render 'treedify_script' %}
+      {% comment %} 2026-05-09: Treedify uninstalled (issue ijh) — removed treedify_script render. {% endcomment %}
       {%- comment -%}
         LimeSpot recs widget gated 2026-04-28 — same rationale as the
         SDK include above. The <limespot> element is the recs container
@@ -836,7 +835,7 @@
       attributes that nothing reads anymore. Removing skips the per-
       pageview HMAC compute + dead HTML.
     {%- endcomment -%}
-    {% include 'subscribe-it-helper' %}
+    {% comment %} 2026-05-09: Subscribe It uninstalled (issue ijh) — removed subscribe-it-helper include (~54 KB / 178 lines deleted). {% endcomment %}
     <!-- Klaviyo Signup Script ============================================================== -->  
     <script>
       window.addEventListener("klaviyoForms", function(e) { 
@@ -852,9 +851,7 @@
       });
     </script>
     <!-- End of Klaviyo Signup ============================================================== -->
-    <!-- **BEGIN** Hextom CTB Integration // Main Include - DO NOT MODIFY -->
-    {% render 'hextom_ctb_main', product: product, customer: customer %}
-    <!-- **END** Hextom CTB Integration // Main Include - DO NOT MODIFY -->
+    {% comment %} 2026-05-09: Hextom CTB uninstalled (issue ijh) — removed hextom_ctb_main render. App embed in settings_data.json (line 3588) still references hextom-timer-bar — admin must remove via Online Store → Themes → Customize → App embeds. {% endcomment %}
     {% render 'mbc-bundles' %}
     {%- comment -%}
       Booster Page Speed Optimizer was uninstalled 2026-04-25.
