@@ -162,10 +162,26 @@
   {%- assign _new_attrs = _img_attrs -%}
   {%- if _w != '' and _h != '' -%}
     {%- assign _inject = 'width="' | append: _w | append: '" height="' | append: _h | append: '" ' -%}
-    {%- comment -%} Also add loading=lazy + decoding=async if not already present (perf bonus) {%- endcomment -%}
-    {%- unless _img_attrs contains 'loading=' -%}
-      {%- assign _inject = _inject | append: 'loading="lazy" ' -%}
-    {%- endunless -%}
+    {%- comment -%}
+      LCP priority for the FIRST in-body image (issue 7tq, 2026-05-10).
+      GA4 RUM attribution showed first body image is the LCP candidate on
+      42-45% of poor LCP events — the hero is already preloaded (9hw) but
+      its CSS fade-in delays paint, so the unanimated body image wins the
+      LCP race despite loading later. Inject fetchpriority=high + eager
+      on the first <img>, lazy on all subsequent <img> tags.
+    {%- endcomment -%}
+    {%- if forloop.first -%}
+      {%- unless _img_attrs contains 'fetchpriority=' -%}
+        {%- assign _inject = _inject | append: 'fetchpriority="high" ' -%}
+      {%- endunless -%}
+      {%- unless _img_attrs contains 'loading=' -%}
+        {%- assign _inject = _inject | append: 'loading="eager" ' -%}
+      {%- endunless -%}
+    {%- else -%}
+      {%- unless _img_attrs contains 'loading=' -%}
+        {%- assign _inject = _inject | append: 'loading="lazy" ' -%}
+      {%- endunless -%}
+    {%- endif -%}
     {%- unless _img_attrs contains 'decoding=' -%}
       {%- assign _inject = _inject | append: 'decoding="async" ' -%}
     {%- endunless -%}
