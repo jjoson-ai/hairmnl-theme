@@ -370,7 +370,12 @@ def query_ga4_rum(days: int = 7) -> dict:
         dimension_filter=_and(_in("eventName", VITAL_EVENTS)),
         limit=200,
     ))
-    metrics = {m: {"good": 0, "needs-improvement": 0, "poor": 0} for m in VITAL_EVENTS}
+    # Defensive: track events whose `metric_rating` custom dim came back as
+    # (not set) — silent param-mapping failures used to disappear from totals
+    # entirely (only good/needs-improvement/poor were summed). bd hairmnl-theme-vux
+    # found a 95.7% (not set) blast radius going undetected for ~4 days; surfacing
+    # the unknown bucket here makes the next instrumentation regression visible.
+    metrics = {m: {"good": 0, "needs-improvement": 0, "poor": 0, "unknown": 0} for m in VITAL_EVENTS}
     sampled = False
     try:
         if hasattr(r, 'metadata') and r.metadata and getattr(r.metadata, 'sampling_metadatas', None):
@@ -381,13 +386,18 @@ def query_ga4_rum(days: int = 7) -> dict:
         ev = row.dimension_values[0].value
         rating = row.dimension_values[1].value or "(no rating)"
         cnt = int(row.metric_values[0].value)
-        if ev in metrics and rating in metrics[ev]:
-            metrics[ev][rating] += cnt
+        if ev in metrics:
+            if rating in metrics[ev]:
+                metrics[ev][rating] += cnt
+            else:
+                # Catches "(not set)", "(no rating)", and any future unexpected values.
+                metrics[ev]["unknown"] += cnt
     for m in metrics:
         total = sum(metrics[m].values())
         metrics[m]["total"] = total
         metrics[m]["p_good"] = (metrics[m]["good"] / total) if total else 0
         metrics[m]["p_poor"] = (metrics[m]["poor"] / total) if total else 0
+        metrics[m]["p_unknown"] = (metrics[m]["unknown"] / total) if total else 0
 
     # Top pages by poor rate per metric
     print("  GA4 RUM: querying top friction pages per metric...", flush=True)
