@@ -142,6 +142,41 @@
     background: #f4f6f8;
   }
 
+  /* CLS fix 2026-05-10 hairmnl-theme-ojx — Pro Blogger related-articles thumbnails.
+     snippets/pro-blogger.snippet.related-item.liquid renders <img> without
+     width/height attrs (lines 5 + 20); image URLs use Shopify CDN
+     ?height=400 query param so they're 400px tall but variable width.
+     Without dimensions, each thumbnail shifts content as it loads —
+     6+ thumbnails per blog post = CLS 0.52 on
+     hair-education/purple-vs-blue-shampoo-philippines (POOR bucket, GSC
+     5/10). Existing article-content-with-img-dims snippet doesn't
+     recognize ?height= query params, only _WxH.ext patterns.
+
+     Reserve 1:1 aspect-ratio (matches typical thumbnail container style
+     per .pb_image_wrapper) so browser allocates space before image loads.
+     width:100% lets the image fill its parent. height:auto + object-fit:
+     cover preserves visual fit when actual image aspect differs from 1:1.
+     background reserves a visible placeholder color during load. */
+  .pb_image_wrapper img:not([width]):not([height]) {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #f4f6f8;
+    object-fit: cover;
+  }
+
+  /* Same pattern for .responsive-wide-image which also renders unsized
+     in some article contexts (cross-post-blogs widget). 16:9 fallback
+     matches the existing .blog__article__content rule at line 138-143. */
+  .responsive-wide-image:not([width]):not([height]) {
+    aspect-ratio: auto 16 / 9;
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #f4f6f8;
+  }
+
   /* CLS fix 2026-04-29 — Judge.me medals wrapper starts as `.jdgm-hidden`
      (display: none) in the initial HTML and gets revealed by Judge.me's
      loader.js once badges hydrate. The reveal grows the wrapper from 0
@@ -169,6 +204,20 @@
     display: block !important;
     visibility: hidden !important;
     min-height: 80px;
+    contain: layout;
+  }
+
+  /* CLS fix 2026-05-10 hairmnl-theme-z9y — Judge.me preview badge top-of-PDP shift.
+     <div class="jdgm-widget jdgm-prev-badge"> renders empty at PDP top
+     below product title; loader.js injects stars + "N reviews" → grows
+     from 0 → ~24px → top-of-page shift → 884 URLs failing CLS on
+     kerastase-blond-absolu PDP grouping. Reserve typical badge height
+     so the hydration is paint-only, not layout. contain:layout
+     isolates internal star-count changes from cascading. */
+  .jdgm-widget.jdgm-prev-badge {
+    display: inline-block;
+    min-height: 24px;
+    min-width: 100px;
     contain: layout;
   }
 
