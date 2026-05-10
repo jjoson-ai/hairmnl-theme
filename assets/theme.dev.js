@@ -7637,7 +7637,7 @@
 
         const triggers = container.querySelectorAll(selectors$9.zoomButton);
         triggers.forEach((trigger) => {
-          trigger.addEventListener('click', (event) => {
+          trigger.addEventListener('click', async (event) => {
             const el = container.querySelector(selectors$9.zoomWrapper);
             const dataId = event.target.closest(selectors$9.mediaId).getAttribute(selectors$9.mediaIdAttr).toString();
             const items = [];
@@ -7686,6 +7686,19 @@
               },
             };
             el.dispatchEvent(new CustomEvent('theme:scroll:lock', {bubbles: true}));
+
+            // INP fix 2026-05-10 z9y Phase B — yield to event loop before heavy
+            // PhotoSwipe instantiation. PhotoSwipe constructor + gallery.init()
+            // create ~50KB of DOM with multiple reflows. Without this yield, the
+            // entire setup runs synchronously inside the click event, blocking
+            // paint of the tap visual feedback → real-shopper RUM showed PDP
+            // gallery as #2 INP target site-wide (27 events/7d, 290ms p75 on
+            // /products/kerastase-blond-absolu-purple-shampoo-250ml). setTimeout 0
+            // schedules the heavy work in next macrotask so browser can paint
+            // tap-state feedback within INP budget; PhotoSwipe still opens, just
+            // one frame later (visually invisible to user).
+            await new Promise((resolve) => setTimeout(resolve, 0));
+
             // Initializes and opens PhotoSwipe
             const gallery = new PhotoSwipe(el, PhotoSwipeUI, items, options);
             gallery.init();

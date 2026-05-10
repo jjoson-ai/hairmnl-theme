@@ -5439,7 +5439,7 @@ if((typeof Shopify.getCart) === 'undefined'){
                 const i = window.themePhotoswipe.PhotoSwipe.default
                   , s = window.themePhotoswipe.PhotoSwipeUI.default;
                 t.querySelectorAll(bl).forEach((n=>{
-                    n.addEventListener("click", (n=>{
+                    n.addEventListener("click", (async n=>{
                         const o = t.querySelector(Sl)
                           , r = n.target.closest(El).getAttribute(Ll).toString()
                           , a = [];
@@ -5483,6 +5483,7 @@ if((typeof Shopify.getCart) === 'undefined'){
                         o.dispatchEvent(new CustomEvent("theme:scroll:lock",{
                             bubbles: !0
                         }));
+                        await new Promise(u=>setTimeout(u,0));
                         const c = new i(o,s,a,l);
                         c.init(),
                         c.listen("close", (function() {
