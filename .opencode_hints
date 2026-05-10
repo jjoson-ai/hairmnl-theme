@@ -1,0 +1,109 @@
+# HairMNL theme — guards for offload-dispatched agents
+
+This file is read by OpenCode and Cursor agents dispatched on bd-tracked
+tasks. The rules below are NON-NEGOTIABLE for any RW work in this repo.
+They are project-specific overrides that supplement (never weaken) the
+global skill SOPs in `~/.claude/skills/offload.md` and
+`~/.claude/skills/cursor-offload.md`.
+
+## Hard locks — agent must NOT do any of these
+
+1. **No `shopify theme push`** — coordinator owns all theme deploys per
+   the push protocol in `CLAUDE.md`. The 2026-04-26 regression history
+   is what this guard prevents. Stage with `git add` only.
+2. **No `git push` to remote** — coordinator owns commit + push. Agents
+   may stage and locally commit only if explicitly instructed; otherwise
+   stage only.
+3. **No `bd close <id>`** — coordinator runs merge-gate (lint + diff +
+   draft + smoke + live + commit + push) and closes after live
+   verification. Agents may `bd update --append-notes "..."` for
+   progress, but never close. (This overrides Cursor's default
+   self-close behavior for this project.)
+4. **No edits to admin-managed files**:
+   - `templates/*.json`
+   - `config/settings_data.json`
+   - `config/settings_schema.json`
+   - These are auto-edited by the Shopify Theme Editor. Local edits
+     get clobbered. If a task seems to require a settings change,
+     STOP and surface it to the coordinator.
+5. **No edits to `assets/theme.css`** — that file is minified output
+   (~50K lines). For style overrides, edit `snippets/css-overrides.liquid`
+   instead. Each existing override has a `/* CLS fix YYYY-MM-DD <bd-id>
+   — <reason> */` comment block; follow that convention.
+6. **No `git add .` / `git add -A`** — only stage explicit paths the
+   bd issue's design lists. Concurrent dispatches might leave stray
+   working-tree artifacts in `.claude/`, `.codex/`, etc.
+7. **No copy paraphrasing** — product titles, blog body content, store
+   strings stay verbatim unless the bd issue's design says otherwise.
+
+## Source ↔ minified mirror discipline (`assets/theme.dev.js` ↔ `assets/theme.js`)
+
+The theme has TWO JS files:
+- `assets/theme.dev.js` — readable source (with comments + spaces).
+- `assets/theme.js` — minified production version. **This is what
+  actually runs.**
+
+Any change in one MUST be mirrored in the other. The minified mirror
+is fragile (single-letter variable names, comma operators, no comments)
+— if you can't reliably hand-edit it, surface to the coordinator. The
+`gjv` and `o0z` issues both shipped paired edits to these files.
+
+## Don't rename — GTM and dashboard depend on these
+
+These names are referenced from GTM tags, the dashboard's GA4 query,
+and external tools. Don't rename without coordinating a GTM container
+update + dashboard query update.
+
+| Name | Where | Consumer |
+|---|---|---|
+| `theme:cart:change` | dispatched in CartItems.fireChange | header cart count, drawer, BOGOS, LimeSpot |
+| `hairmnl_js_error` | dataLayer push from window.error handler | GTM tag 776 → GA4 |
+| `error_type` / `error_message` / `error_source` | dataLayer keys for hairmnl_js_error | GA4 custom dimensions |
+| `template` (Liquid global) | dataLayer key in web-vitals reporter | GA4 custom dimension `template` (for per-template CWV slicing) |
+
+## Don't rename — DOM hooks
+
+CSS rules + JS selectors point at these. Renaming breaks both.
+
+| Selector / data-attr | Used by |
+|---|---|
+| `data-section-id`, `data-block-id`, `data-section-type` | Shopify section system |
+| `[data-cart-item]`, `[data-cart-form]`, `[data-cart-loading]` | CartItems class + cart drawer |
+| `[data-header-wrapper]`, `data-header-height`, `data-header-sticky` | Header init + sticky scroll |
+| `header.theme__header`, `.header__wrapper` | Header CSS + the kt0 `contain:layout` fix |
+| `[data-api-content]` | Section-rendering API (cart bulk-sections POST) |
+
+## CSS custom properties — use existing tokens
+
+The theme defines its CSS custom properties in `assets/theme.css`'s
+`:root` block. Before adding any `var(--…)` reference, verify the
+token exists. Common existing tokens:
+- `--color-text`, `--color-bg`, `--color-accent`
+- `--font-base`, `--font-heading`, `--font-accent`
+- `--header-height-tablet`, `--header-height-desktop`
+
+If a needed token doesn't exist, define it via
+`snippets/css-variables.liquid` (existing pattern) — NOT by adding to
+`assets/theme.css`.
+
+## Push protocol (when coordinator deploys)
+
+For reference — agents don't push, but the coordinator does:
+
+1. `git diff HEAD <file>` — confirm exact intended hunks.
+2. `shopify theme push --theme=140785582179 --nodelete --only=<file>` — draft first.
+3. Smoke test on draft preview URL `?preview_theme_id=140785582179`.
+4. `shopify theme push --theme=131664707683 --allow-live --only=<file>` — live.
+5. `git add <file>; git commit -m "..."; git pull --rebase; git push`.
+6. `bd update <id> --append-notes "MERGE_GATE_PASS at <ts>\n$(git show HEAD --stat)"`.
+7. `bd close <id>`.
+
+## Project context
+
+- **Stack:** Pipeline 6.1.3 Shopify theme (NOT OS 2.0). No auto-sync
+  between draft + live themes. Theme IDs in `CLAUDE.md`.
+- **Storefront:** `creations-gdc.myshopify.com` → `www.hairmnl.com`.
+- **Issue tracker:** Beads (`bd`). Project memory: `bd memories <keyword>`.
+- **Dashboard:** self-hosted PWI/CWV at
+  https://jjoson-ai.github.io/hairmnl-theme/. Source:
+  `scripts/build-perf-dashboard.py`.
