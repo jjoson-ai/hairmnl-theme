@@ -98,6 +98,99 @@ For reference — agents don't push, but the coordinator does:
 6. `bd update <id> --append-notes "MERGE_GATE_PASS at <ts>\n$(git show HEAD --stat)"`.
 7. `bd close <id>`.
 
+## CSS containment + position gotchas
+
+Adding any of the following CSS properties to a selector silently creates a
+new containing block for `position: fixed` and `position: absolute`
+descendants. If you apply one of these to a parent that contains a fixed
+overlay (cart drawer, mobile nav, search modal, Klaviyo popup, LoyaltyLion
+notification, PWA install banner, cookie consent), the descendant's
+positioning resolves relative to that parent — NOT the viewport — and the
+overlay renders inline within the parent's bounds instead of covering the
+viewport.
+
+This is the bug pattern that broke the cart drawer on 2026-05-11 (the kt0
+fix's `contain: layout` on `.header__wrapper` trapped the cart-drawer's
+fixed position inside the header wrapper's bounds; see commit ff1ef80 and
+`bd memories contain` for the post-mortem).
+
+| Property                          | Effect on fixed/absolute descendants                        |
+|-----------------------------------|-------------------------------------------------------------|
+| `contain: layout`                 | Containing block + new stacking context                     |
+| `contain: paint`                  | Same as layout + clips overflow                             |
+| `contain: strict` / `content`     | Includes both layout and paint                              |
+| `transform: <anything>` (not `none`) | Containing block + new stacking context                  |
+| `filter: <anything>`              | Same                                                        |
+| `backdrop-filter: <anything>`     | Same                                                        |
+| `perspective: <anything>`         | Same                                                        |
+| `will-change: transform`          | Same (pre-emptive)                                          |
+| `will-change: filter`             | Same                                                        |
+| `overflow: hidden\|auto\|scroll`  | Doesn't create containing block, but clips fixed children   |
+|                                   | visually if they exceed bounds (similar symptom)            |
+
+**Required audit before adding any of these to a parent selector:**
+
+```
+# What position:fixed / position:absolute is inside the targeted selector?
+grep -rn "position:\s*fixed\|position:\s*absolute" sections/ snippets/ \
+  assets/theme.css assets/theme.dev.js | grep -i "<selector-scope>"
+```
+
+If the audit surfaces any fixed/absolute descendants, either:
+- Move the descendant OUT of the selector's scope (DOM restructure), OR
+- Narrow the selector to a sibling element that does NOT contain the descendant, OR
+- Skip the containment fix (accept the CLS cost)
+
+DO NOT trust comments in existing CSS that claim `contain: layout` is
+"no visual impact" or "purely a hint". That phrasing was the source of
+the kt0 regression — it's actively wrong.
+
+## Pre-push smoke checklist (CSS / layout changes)
+
+Before any `shopify theme push --allow-live` that touches:
+  - `snippets/css-overrides.liquid`
+  - `assets/theme.css`
+  - `snippets/css-variables.liquid`
+  - `layout/theme.liquid`
+  - `sections/header.liquid`
+  - any snippet that establishes a stacking context (Klaviyo, LoyaltyLion,
+    Reamaze, PWA-install, Booster cookie bar wrappers)
+
+… visit the DRAFT preview URL `?preview_theme_id=140785582179` and verify
+these interactions render correctly. Each should overlay the viewport
+fully — drawers slide in as full-height panels, modals render center-screen
+with a backdrop dim:
+
+1. Cart drawer — click the cart icon on a PDP. Drawer slides in from
+   right, ~50vw wide, full viewport height, white panel with backdrop
+   dimming the rest of the page.
+2. Mobile nav drawer — on a mobile viewport, click the hamburger. Drawer
+   slides in from left, same behavior.
+3. Product gallery zoom (PhotoSwipe) — tap a zoom button on a PDP. The
+   PhotoSwipe lightbox should overlay the viewport (black/dark background,
+   image centered).
+4. Search overlay — click the search icon. The search panel should
+   overlay the viewport.
+5. Klaviyo popup (if enabled) — trigger via test event or wait for
+   timer-based fire. Popup centers on screen with backdrop dim.
+6. LoyaltyLion launcher / notification — visit any page logged in as a
+   customer with rewards points. The launcher should anchor bottom-right
+   without affecting in-flow layout.
+
+If ANY of these render inline / below the page / clipped / behind other
+elements, STOP. The most likely cause is a parent selector with one of
+the properties listed in the "CSS containment + position gotchas"
+section above — audit before pushing to live.
+
+Skip this checklist only for diffs that:
+- Touch only image-attribute CSS (`.foo img { aspect-ratio: ... }`,
+  `.bar { object-fit: cover }`)
+- Touch only color / typography tokens
+- Are pure comment / documentation changes
+
+When in doubt, run the checklist anyway. 30 seconds of clicking is cheap
+vs. a live regression.
+
 ## Project context
 
 - **Stack:** Pipeline 6.1.3 Shopify theme (NOT OS 2.0). No auto-sync
