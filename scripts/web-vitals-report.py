@@ -128,6 +128,8 @@ def query_vitals(args) -> Dict[str, Dict[str, Dict[str, int]]]:
         flat.append(_in("eventName", VITAL_EVENTS))
     if args.rating:
         flat.append(_eq("customEvent:metric_rating", args.rating))
+    if args.device:
+        flat.append(_eq("deviceCategory", args.device))
 
     dim_name = DIMENSION_MAP.get(args.by, args.by)
 
@@ -247,6 +249,7 @@ def main():
     parser.add_argument("--metric", default="all", choices=["all"] + VITAL_EVENTS)
     parser.add_argument("--by", default="page", choices=list(DIMENSION_MAP.keys()))
     parser.add_argument("--rating", default="", choices=["", "good", "needs-improvement", "poor"])
+    parser.add_argument("--device", default="", choices=["", "desktop", "mobile", "tablet"], help="Filter by device category")
     parser.add_argument("--days", type=int, default=7)
     parser.add_argument("--top", type=int, default=15)
     parser.add_argument("--errors", action="store_true", help="Show JS error breakdown")
