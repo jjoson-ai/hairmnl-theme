@@ -191,6 +191,43 @@ Skip this checklist only for diffs that:
 When in doubt, run the checklist anyway. 30 seconds of clicking is cheap
 vs. a live regression.
 
+## Automated drawer smoke test (Layer 3)
+
+The manual smoke checklist above is augmented by an automated Playwright
+script that programmatically verifies fixed-position overlays open and
+overlay correctly:
+
+  python3 scripts/smoke-test-drawers.py --theme=draft
+
+Run this BEFORE every `shopify theme push --allow-live` that touches:
+  - snippets/css-overrides.liquid
+  - assets/theme.css
+  - snippets/css-variables.liquid
+  - layout/theme.liquid
+  - sections/header.liquid
+  - any popup/modal wrapper snippet
+
+Script exit codes:
+  0 = all overlay tests passed → safe to push to live
+  1 = at least one overlay broken → STOP, do not push to live
+  2 = script setup error (Playwright missing, network down, etc.)
+      → investigate before pushing
+
+The script's key assertion (the kt0-killer) walks every fixed-position
+overlay panel's parent chain and fails if any ancestor has a CSS property
+that creates a containing block for fixed descendants (contain:layout,
+transform, filter, perspective, will-change:transform, backdrop-filter).
+This catches the exact bug pattern from the 2026-05-11 kt0 regression
+(commit ff1ef80) at the structural level — before it can ship to live.
+
+Setup (one-time per workstation):
+  pip install playwright
+  playwright install chromium
+
+If Playwright is unavailable, fall back to the manual smoke checklist
+above. The manual checklist remains the source-of-truth verification —
+the script is an additional belt-and-suspenders layer.
+
 ## Project context
 
 - **Stack:** Pipeline 6.1.3 Shopify theme (NOT OS 2.0). No auto-sync
