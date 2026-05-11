@@ -10,6 +10,14 @@ on:
     paths:
       - 'dashboard/**'
       - '.github/workflows/pages.yml'
+  # Auto-fire after the perf-dashboard refresh completes. Default GITHUB_TOKEN
+  # cannot trigger workflow_dispatch (HTTP 403 "Resource not accessible by
+  # integration"), so we use workflow_run instead — no PAT needed.
+  # Gated to success-only via the deploy job's `if` below.
+  workflow_run:
+    workflows: ["Refresh perf dashboard"]
+    branches: [main]
+    types: [completed]
   workflow_dispatch:
 
 # Required permissions for Pages deployment
@@ -26,6 +34,8 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Skip if triggered by a failed perf-dashboard run; allow push/manual/scheduled.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

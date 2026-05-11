@@ -93,15 +93,9 @@ jobs:
             echo "committed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Trigger pages deploy
-        # Commits made by the default GITHUB_TOKEN do NOT trigger downstream
-        # workflows (GitHub anti-loop safety). pages.yml's push trigger never
-        # fires from our commit above, so we kick it explicitly via dispatch.
-        # pages.yml has `workflow_dispatch:` enabled to support this.
-        if: steps.commit.outputs.committed == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Triggering pages.yml deploy on main..."
-          gh workflow run pages.yml --ref main
-          echo "Triggered."
+      # Pages deploy is now triggered by pages.yml's `workflow_run` listener on
+      # this workflow's successful completion. No explicit dispatch needed.
+      # (Prior approach used `gh workflow run pages.yml` with GITHUB_TOKEN, which
+      # fails with HTTP 403 "Resource not accessible by integration" — the
+      # default token cannot trigger workflow_dispatch in any repo. See
+      # pages.yml `on.workflow_run` block.)
