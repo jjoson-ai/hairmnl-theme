@@ -2246,6 +2246,30 @@ html:not(.lt-ie9) .image_autoheight_enable .grid__image img {
 .article__card.section--details .excerpt.right {
   text-align: right;
 }
+/* ── CLS fix 2026-05-12 hairmnl-theme-xn4 (Option B template-body-scope) ── */
+/* Pure-CSS equal-height card titles (replaces JS setMaxHeight in custom-theme.js).
+   Scoped by body.template-index so it only fires on the literal homepage —
+   blog index templates that reuse .homepage-blog keep Pipeline 6's float-based
+   width-class grid intact (the regression from commit 3b9cf26, reverted in 279b2c9).
+   No contain:layout / transform / filter — safe for fixed overlays. */
+body.template-index .homepage-blog .grid.grid--uniform {
+  display: flex;
+  flex-wrap: wrap;
+}
+body.template-index .homepage-blog .grid__item {
+  display: flex;
+  flex-direction: column;
+  float: none;
+}
+body.template-index .homepage-blog .article__card.section--details {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+body.template-index .homepage-blog .article__card.section--details .title {
+  flex: 1 1 auto;
+}
+/* ── End CLS fix hairmnl-theme-xn4 ── */
 .btn--readmore {
   font-weight: bold;
   text-transform: uppercase;
