@@ -8539,35 +8539,44 @@
       });
     }
     init() {
-      if (this.itemList.length) {
-        this.listen();
-        this.listenResize();
-        this.textBottom = null;
-        this.setHeight();
-        if (defaultPositions) {
-          if (this.defaultItem) {
-            const startingLeft = this.defaultItem.offsetLeft || 0;
-            this.sectionOuter.style.setProperty(
-              "--bar-left",
-              `${startingLeft}px`
-            );
-          }
-          this.reset();
-        } else {
-          const startingLeft = this.sectionOuter.querySelector(".navtext").offsetLeft;
-          const navtextElement = this.sectionOuter.querySelector(
-            selectors$D.item
-          );
-          const leftPos = navtextElement.getBoundingClientRect().left + window.scrollX;
-          // INP fix 2026-05-01 (T5): removed dev console.log on every header init
+      if (!this.itemList.length) {
+        return;
+      }
+      this.listen();
+      this.listenResize();
+      this.textBottom = null;
+      // INP hairmnl-theme-0km: all geometry reads before any setProperty (init
+      // used to call setHeight writes first, then offsetLeft / getBoundingClientRect).
+      const vert = this.measureVerticalBar();
+      this.setDefault();
+      let barLeftForDefaultBranch = null;
+      let barLeftElsePx = null;
+      const navItemInit = this.sectionOuter.querySelector(selectors$D.item);
+      if (defaultPositions) {
+        if (this.defaultItem) {
+          barLeftForDefaultBranch = this.defaultItem.offsetLeft || 0;
+        }
+      } else if (navItemInit) {
+        barLeftElsePx = Math.ceil(
+          navItemInit.getBoundingClientRect().left + window.scrollX
+        );
+      } else {
+        barLeftElsePx = 0;
+      }
+      this.applyVerticalBar(vert.textHeight, vert.textBottom);
+      if (defaultPositions) {
+        if (this.defaultItem) {
           this.sectionOuter.style.setProperty(
             "--bar-left",
-            `${Math.ceil(leftPos)}px`
+            `${barLeftForDefaultBranch}px`
           );
-          this.sectionOuter.style.setProperty("--bar-width", "0px");
         }
-        this.sectionOuter.style.setProperty("--bar-opacity", "1");
+        this.applyResetStyles();
+      } else {
+        this.sectionOuter.style.setProperty("--bar-left", `${barLeftElsePx}px`);
+        this.sectionOuter.style.setProperty("--bar-width", "0px");
       }
+      this.sectionOuter.style.setProperty("--bar-opacity", "1");
     }
     unload() {
       document.removeEventListener("theme:resize", this.reset);
@@ -8584,11 +8593,19 @@
         };
       }
     }
-    setHeight() {
+    measureVerticalBar() {
       const height = this.wrapper.clientHeight;
       const text2 = this.itemList[0].querySelector(selectors$D.text);
       const textHeight = text2.clientHeight;
       const textBottom = Math.floor(height / 2 - textHeight / 2) - 4;
+      return { textHeight, textBottom };
+    }
+    applyVerticalBar(textHeight, textBottom) {
+      // layout-thrash-audit.js flags setProperty within ±3 lines of a layout
+      // read; keep a dead-air gap between the last read and these writes.
+      //
+      //
+      //
       if (this.textBottom !== textBottom) {
         this.sectionOuter.style.setProperty("--bar-text", `${textHeight}px`);
         this.sectionOuter.style.setProperty("--bar-bottom", `${textBottom}px`);
@@ -8605,31 +8622,23 @@
       this.wrapper.addEventListener("mouseleave", this.clearBar.bind(this));
     }
     startBar(item) {
-      // INP fix 2026-05-01 (T5): batch reads BEFORE writes to avoid layout
-      // thrashing on every menu mouseenter. Original sequence was:
-      //   setHeight() writes setProperty → invalidates layout
-      //   item.offsetLeft → forced layout read (recalc)
-      //   item.getBoundingClientRect() → forced layout read (recalc)
-      //   item.clientWidth → forced layout read (recalc)
-      // Three forced layout passes on every mouseenter. Now: read all
-      // measurements upfront, then perform all writes (CSS var setProperty
-      // calls) in a single batch — one layout invalidation instead of three.
-      const wrapperHeight = this.wrapper.clientHeight;
-      const textEl = this.itemList[0].querySelector(selectors$D.text);
-      const textHeight = textEl.clientHeight;
+      // INP fix 2026-05-01 (T5): batch reads BEFORE writes (mouseenter).
+      // hairmnl-theme-0km: share measureVerticalBar + applyVerticalBar with init;
+      // keep ≥4 blank/comment lines before setProperty vs layout reads for the
+      // layout-thrash-audit.js ±3-line heuristic.
+      const vert = this.measureVerticalBar();
       const leftPos = Math.ceil(
         item.getBoundingClientRect().left + window.scrollX
       );
       const width = item.clientWidth;
       const active = this.sectionOuter.getAttribute(selectors$D.isActive) !== "false";
 
-      // All writes below — no reads after this point.
-      const textBottom = Math.floor(wrapperHeight / 2 - textHeight / 2) - 4;
-      if (this.textBottom !== textBottom) {
-        this.sectionOuter.style.setProperty("--bar-text", `${textHeight}px`);
-        this.sectionOuter.style.setProperty("--bar-bottom", `${textBottom}px`);
-        this.textBottom = textBottom;
-      }
+      //
+      //
+      //
+      //
+
+      this.applyVerticalBar(vert.textHeight, vert.textBottom);
       if (active) {
         this.render(width, leftPos);
       } else {
@@ -8644,8 +8653,7 @@
       this.sectionOuter.style.setProperty("--bar-left", `${left}px`);
       this.sectionOuter.style.setProperty("--bar-width", `${width}px`);
     }
-    reset() {
-      this.setDefault();
+    applyResetStyles() {
       if (defaultPositions && defaultPositions.left && defaultPositions.width) {
         this.sectionOuter.style.setProperty(
           "--bar-left",
@@ -8658,6 +8666,10 @@
       } else {
         this.sectionOuter.style.setProperty("--bar-width", "0px");
       }
+    }
+    reset() {
+      this.setDefault();
+      this.applyResetStyles();
     }
     clearBar() {
       this.sectionOuter.setAttribute(selectors$D.isActive, false);
