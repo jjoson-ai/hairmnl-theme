@@ -237,3 +237,9 @@ the script is an additional belt-and-suspenders layer.
 - **Dashboard:** self-hosted PWI/CWV at
   https://jjoson-ai.github.io/hairmnl-theme/. Source:
   `scripts/build-perf-dashboard.py`.
+- **Full architecture + operating model:** `ARCHITECTURE.md` in repo root.
+  Read it for: repo layout, critical-contracts table (do-not-rename),
+  performance instrumentation chain (RUM → GTM → GA4 → dashboard),
+  external integration inventory, recent operational history. This
+  file (`.opencode_hints`) is hard locks only; `ARCHITECTURE.md` is
+  the descriptive reference.
