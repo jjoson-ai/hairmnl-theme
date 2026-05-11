@@ -197,7 +197,7 @@ The manual smoke checklist above is augmented by an automated Playwright
 script that programmatically verifies fixed-position overlays open and
 overlay correctly:
 
-  python3 scripts/smoke-test-drawers.py --theme=draft
+  python3 scripts/smoke-test-drawers.py --config=scripts/smoke-test-drawers.config.json --theme=draft
 
 Run this BEFORE every `shopify theme push --allow-live` that touches:
   - snippets/css-overrides.liquid

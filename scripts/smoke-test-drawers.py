@@ -1,93 +1,109 @@
 #!/usr/bin/env python3
 """
-smoke-test-drawers.py — Automated drawer smoke test (Layer 3, kt0-killer gate).
+smoke-test-overlays.py — Automated overlay regression gate (the kt0-killer).
 
 WHY
 ---
-On 2026-05-11 (commit ff1ef80), a CSS-only commit added `contain: layout` to
-`.header__wrapper` to fix the "kt0" CLS warning. That property silently creates
-a containing block for `position: fixed` descendants, which trapped the cart
-drawer inside `.header__wrapper`'s bounds instead of overlaying the viewport.
-The drawer rendered inline within the header — visually broken for every
-visitor — and required an emergency revert.
+A specific class of CSS regression keeps recurring across web projects: a
+parent selector accidentally gets a CSS property that creates a containing
+block for `position: fixed` / `position: absolute` descendants. The descendant
+overlay (cart drawer, mobile nav, modal, lightbox) then renders inline within
+the parent's bounds instead of overlaying the viewport. Per the CSS Containment
+spec, these properties establish a containing block for fixed descendants:
 
-Layer 1 (CSS audit guidance) and Layer 2 (manual pre-push smoke checklist)
-shipped in commit d0334b0 as `.opencode_hints` additions. THIS script is
-Layer 3: a deterministic, headless, Playwright-based test that catches the
-same structural bug pattern automatically — before live push.
+    contain: layout | paint | strict | content
+    transform != none
+    filter != none
+    backdrop-filter != none
+    perspective != none
+    will-change containing transform | filter
 
-WHAT IT CHECKS (the "kt0-killer" set, per overlay)
--------------------------------------------------
-For each fixed-position overlay (cart drawer, mobile nav, PhotoSwipe lightbox,
-search overlay):
+Origin: 2026-05-11 HairMNL kt0 incident. A `contain: layout` added to
+`.header__wrapper` as a CLS optimization trapped the cart drawer's
+`position: fixed` inside the wrapper's bounds. Live for ~24h before
+user-reported. https://github.com/jjoson-ai/hairmnl-theme/commit/ff1ef80
 
-  a. The trigger click opens the overlay within a 2s timeout.
-  b. The panel's computed `position` is `fixed`.
-  c. The panel's bounding box covers ≥ 90% of viewport height AND ≥ 300px wide.
-  d. CONTAINMENT AUDIT (the kt0-killer): walks every ancestor up to <body> and
-     FAILS if any ancestor has a CSS property that creates a containing block
-     for fixed descendants:
-       - contain: layout | paint | strict | content
-       - transform != none
-       - filter != none
-       - backdrop-filter != none
-       - perspective != none
-       - will-change: transform | filter
-  e. On fail: captures screenshot to /tmp/smoke-fail-<test>-<ts>.png and logs
-     the offending ancestor's selector chain so the senior developer can fix
-     it in one diff.
+WHAT THIS SCRIPT CHECKS (per overlay, per the config)
+-----------------------------------------------------
+  a. The trigger click opens the overlay within 5s.
+  b. The panel's computed `position` is `fixed` (or `absolute` with body
+     as the containing block).
+  c. The panel's bounding box covers >= `expected_height_pct` of viewport
+     height (default 0.9) and >= 300px wide.
+  d. CONTAINMENT AUDIT (the kt0-killer): walks every ancestor up to <body>
+     and FAILs if any has a CSS property that creates a containing block
+     for fixed descendants.
+  e. On fail: screenshot saved to /tmp/smoke-fail-<test>-<ts>.png and the
+     offending ancestor's selector chain is logged.
 
 SETUP (one-time per workstation)
 --------------------------------
-    pip install playwright
-    playwright install chromium
+    python3 -m pip install playwright
+    python3 -m playwright install chromium
 
 USAGE
 -----
-    python3 scripts/smoke-test-drawers.py [--theme=draft|live] \\
-        [--headless=true|false] [--store=creations-gdc] [--verbose]
+    python3 scripts/smoke-test-overlays.py --config=<path-to-config.json> \\
+        [--theme=draft|live|<custom-key>] [--headless=true|false] [--verbose]
 
-    Defaults: --theme=draft --headless=true --store=creations-gdc
+    Defaults: --theme=draft (or whatever's first in config.site.themes)
+              --headless=true
+
+CONFIG FILE SCHEMA
+------------------
+See example.config.json shipped with this skill. Top-level shape:
+
+    {
+      "site": {
+        "base_url": "https://www.example.com",
+        "preview_param": "preview_theme_id",      // optional
+        "themes": {"draft": "...", "live": "..."} // optional
+      },
+      "tests": [
+        {
+          "name": "Cart drawer on PDP",
+          "path": "/products/example",
+          "trigger_selector": "[data-drawer-toggle=\\"drawer-cart\\"]",
+          "panel_selector": ".cart__drawer .drawer__content",
+          "state_selector": ".cart__drawer.drawer--visible",
+          "viewport": [1280, 800],
+          "expected_height_pct": 0.9,
+          "pre_click_wait_for": null,
+          "incomplete_reason": null
+        }
+      ]
+    }
+
+If `site.preview_param` and `site.themes` are both omitted, the script uses
+`base_url + path` directly (works for non-Shopify sites without preview params).
 
 EXIT CODES
 ----------
     0 — all overlay tests passed (safe to push to live)
     1 — at least one overlay test failed (BLOCK push to live)
-    2 — script setup error (Playwright missing, network error, etc.)
+    2 — script setup error (Playwright missing, config invalid, network error)
 
-INTEGRATION
------------
-The coordinator runs this BEFORE every `shopify theme push --allow-live` that
-touches CSS-overrides.liquid, theme.css, layout/, sections/header.liquid, or
-any popup/modal wrapper snippet. See `.opencode_hints` →
-"## Automated drawer smoke test (Layer 3)".
+This is a NARROW test for a SPECIFIC bug class. It's NOT a replacement for full
+E2E testing, visual regression, or accessibility audits. Use Playwright Test /
+Cypress / Percy / axe for those.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Any, Callable
+from pathlib import Path
+from typing import Any
 
-
-THEME_IDS = {
-    "draft": 140785582179,
-    "live": 131664707683,
-}
-
-STORE_URL = "https://www.hairmnl.com"
-
-PDP_PATH = (
-    "/products/davines-naturaltech-purifying-shampoo-for-scalp"
-    "-with-oily-or-dry-dandruff"
-)
 
 # Containment-audit JS — walks the panel's parent chain to <body> and reports
 # the first ancestor (if any) whose computed style creates a containing block
-# for fixed descendants. This is the kt0-killer assertion.
+# for fixed descendants. This is the kt0-killer assertion. DO NOT MODIFY without
+# understanding the CSS Containment spec (https://www.w3.org/TR/css-contain-1/).
 CONTAINMENT_AUDIT_JS = r"""
     (panelSelector) => {
         const panel = document.querySelector(panelSelector);
@@ -121,6 +137,13 @@ CONTAINMENT_AUDIT_JS = r"""
 
 
 @dataclass
+class SiteConfig:
+    base_url: str
+    preview_param: str | None = None
+    themes: dict[str, str] = field(default_factory=dict)
+
+
+@dataclass
 class OverlayTest:
     name: str
     path: str
@@ -128,9 +151,18 @@ class OverlayTest:
     panel_selector: str
     state_selector: str  # selector that becomes present/matchable when open
     viewport: tuple[int, int] = (1280, 800)
-    # Optional pre-click hook (e.g. dismiss cookie banner, scroll). Receives
-    # the Playwright `page` object.
-    pre_click: Callable[[Any], None] | None = field(default=None, repr=False)
+    expected_height_pct: float = 0.9
+    # JS predicate string evaluated via page.wait_for_function before clicking
+    # the trigger. Use for overlays whose JS init is async (e.g. dynamically
+    # loaded libraries like PhotoSwipe). Example: "() => !!window.themePhotoswipe"
+    pre_click_wait_for: str | None = None
+    # JS async function string evaluated via page.evaluate to OPEN the overlay
+    # instead of the normal trigger click. Use when programmatic click doesn't
+    # reliably fire the init chain (e.g. PhotoSwipe in headless mode). The
+    # function must open the overlay; the script then waits for state_selector
+    # and checks geometry + containment as normal.
+    # Example: "async () => { const g = new window.themePhotoswipe.PhotoSwipe(...); g.init(); }"
+    trigger_eval_js: str | None = None
     # If set, this test is skipped immediately with the given reason. Use for
     # tests whose selectors haven't been verified against the live theme yet —
     # keeps the test definition visible (as a reminder for follow-up work)
@@ -148,19 +180,59 @@ class TestResult:
     screenshot_path: str = ""
 
 
-def build_url(path: str, theme: str) -> str:
-    theme_id = THEME_IDS[theme]
-    sep = "&" if "?" in path else "?"
-    return f"{STORE_URL}{path}{sep}preview_theme_id={theme_id}"
+def load_config(path: Path) -> tuple[SiteConfig, list[OverlayTest]]:
+    if not path.exists():
+        raise FileNotFoundError(f"config file not found: {path}")
+    raw = json.loads(path.read_text())
+    site_raw = raw.get("site") or {}
+    if "base_url" not in site_raw:
+        raise ValueError("config.site.base_url is required")
+    site = SiteConfig(
+        base_url=site_raw["base_url"].rstrip("/"),
+        preview_param=site_raw.get("preview_param"),
+        themes={str(k): str(v) for k, v in (site_raw.get("themes") or {}).items()},
+    )
+    tests_raw = raw.get("tests") or []
+    if not tests_raw:
+        raise ValueError("config.tests must be a non-empty array")
+    tests: list[OverlayTest] = []
+    for i, t in enumerate(tests_raw):
+        for required in ("name", "path", "trigger_selector", "panel_selector", "state_selector"):
+            if required not in t:
+                raise ValueError(f"config.tests[{i}] missing required field: {required}")
+        viewport = t.get("viewport", [1280, 800])
+        if not isinstance(viewport, list) or len(viewport) != 2:
+            raise ValueError(f"config.tests[{i}].viewport must be a 2-element list [width, height]")
+        tests.append(OverlayTest(
+            name=t["name"],
+            path=t["path"],
+            trigger_selector=t["trigger_selector"],
+            panel_selector=t["panel_selector"],
+            state_selector=t["state_selector"],
+            viewport=(int(viewport[0]), int(viewport[1])),
+            expected_height_pct=float(t.get("expected_height_pct", 0.9)),
+            pre_click_wait_for=t.get("pre_click_wait_for"),
+            trigger_eval_js=t.get("trigger_eval_js"),
+            incomplete_reason=t.get("incomplete_reason"),
+        ))
+    return site, tests
+
+
+def build_url(site: SiteConfig, path: str, theme: str | None) -> str:
+    full = f"{site.base_url}{path}"
+    if theme and site.preview_param and theme in site.themes:
+        sep = "&" if "?" in full else "?"
+        full = f"{full}{sep}{site.preview_param}={site.themes[theme]}"
+    return full
 
 
 def utc_stamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
-def run_overlay_test(page: Any, test: OverlayTest, theme: str, verbose: bool) -> TestResult:
+def run_overlay_test(page: Any, test: OverlayTest, site: SiteConfig, theme: str | None, verbose: bool) -> TestResult:
     started = time.monotonic()
-    url = build_url(test.path, theme)
+    url = build_url(site, test.path, theme)
 
     if test.incomplete_reason:
         return TestResult(
@@ -173,7 +245,7 @@ def run_overlay_test(page: Any, test: OverlayTest, theme: str, verbose: bool) ->
     try:
         page.set_viewport_size({"width": test.viewport[0], "height": test.viewport[1]})
         page.goto(url, wait_until="domcontentloaded", timeout=15000)
-    except Exception as e:  # network / 404 / theme preview redirect
+    except Exception as e:
         return TestResult(
             name=test.name,
             status="FAIL",
@@ -181,30 +253,21 @@ def run_overlay_test(page: Any, test: OverlayTest, theme: str, verbose: bool) ->
             reason=f"page load error: {e}",
         )
 
-    # Best-effort networkidle wait — HairMNL has many always-on third-party
-    # scripts (Judge.me, LoyaltyLion, Klaviyo, GTM, Reamaze, BSS, Searchanise)
-    # that keep the network non-idle indefinitely. Wait briefly for JS handlers
-    # to bind, then proceed regardless of network state. The actual test (click
-    # the trigger) is the real readiness gate.
+    # Best-effort networkidle wait. Script-heavy sites (heavy 3rd-party JS,
+    # ad pixels, analytics, chat widgets) often never reach network-idle.
+    # Wait briefly, then proceed regardless. The actual test (click the
+    # trigger) is the real readiness gate.
     try:
         page.wait_for_load_state("networkidle", timeout=3000)
     except Exception:
         pass
-    # Small fixed delay so theme.js drawer/popdown handlers finish binding.
-    page.wait_for_timeout(1200)
+    page.wait_for_timeout(1200)  # JS handler binding window
 
-    if test.pre_click is not None:
-        try:
-            test.pre_click(page)
-        except Exception as e:
-            if verbose:
-                print(f"    pre_click hook raised (continuing): {e}")
-
-    # Find FIRST VISIBLE trigger. The theme often renders multiple matches for
-    # the same selector (mobile + desktop variants); query_selector returns
-    # the first DOM match regardless of visibility, which is usually the
-    # responsive variant that's hidden at the test viewport. Loop through all
-    # matches and pick the first visible one. If none visible, SKIP.
+    # Find FIRST VISIBLE trigger. Themes often render multiple matches for the
+    # same selector (mobile + desktop variants); query_selector returns the
+    # first DOM match regardless of visibility. Loop to find the visible one
+    # at the test viewport; SKIP if none visible (responsive variant might be
+    # the only one rendered, just not at this size).
     try:
         candidates = page.query_selector_all(test.trigger_selector)
     except Exception as e:
@@ -234,35 +297,58 @@ def run_overlay_test(page: Any, test: OverlayTest, theme: str, verbose: bool) ->
             name=test.name,
             status="SKIP",
             duration_ms=int((time.monotonic() - started) * 1000),
-            reason=f"trigger matched {len(candidates)} element(s) but none visible at viewport {test.viewport[0]}x{test.viewport[1]}: {test.trigger_selector}",
+            reason=(
+                f"trigger matched {len(candidates)} element(s) but none visible "
+                f"at viewport {test.viewport[0]}x{test.viewport[1]}: {test.trigger_selector}"
+            ),
         )
 
-    try:
-        trigger.scroll_into_view_if_needed(timeout=2000)
-        # Some triggers (PhotoSwipe zoom button) reveal on parent hover.
-        # Hover the trigger's parent first, then click. Safe for all triggers.
+    if test.pre_click_wait_for:
         try:
-            parent = trigger.evaluate_handle("el => el.parentElement").as_element()
-            if parent:
-                parent.hover(timeout=1000)
-        except Exception:
-            pass
-        trigger.click(timeout=2000, force=True)
-    except Exception as e:
-        return TestResult(
-            name=test.name,
-            status="FAIL",
-            duration_ms=int((time.monotonic() - started) * 1000),
-            reason=f"trigger click failed: {e}",
-        )
+            page.wait_for_function(test.pre_click_wait_for, timeout=8000)
+        except Exception as e:
+            if verbose:
+                print(f"    pre_click_wait_for timed out (continuing): {e}")
+
+    if test.trigger_eval_js:
+        # Direct JS evaluation path — used when a programmatic click doesn't
+        # reliably fire the overlay init chain in headless mode (e.g. PhotoSwipe
+        # whose listener is only bound after an async loadScript promise resolves
+        # and whose init uses setTimeout(0) yielding to the next macrotask).
+        try:
+            page.evaluate(test.trigger_eval_js)
+        except Exception as e:
+            return TestResult(
+                name=test.name,
+                status="FAIL",
+                duration_ms=int((time.monotonic() - started) * 1000),
+                reason=f"trigger_eval_js execution failed: {e}",
+            )
+    else:
+        try:
+            trigger.scroll_into_view_if_needed(timeout=2000)
+            # Some triggers (PhotoSwipe-style zoom buttons) reveal on parent hover.
+            # Hover the parent first; safe for all triggers.
+            try:
+                parent = trigger.evaluate_handle("el => el.parentElement").as_element()
+                if parent:
+                    parent.hover(timeout=1000)
+            except Exception:
+                pass
+            trigger.click(timeout=2000, force=True)
+        except Exception as e:
+            return TestResult(
+                name=test.name,
+                status="FAIL",
+                duration_ms=int((time.monotonic() - started) * 1000),
+                reason=f"trigger click failed: {e}",
+            )
 
     try:
-        # state="attached" — wait for the open-state class to be applied on the
-        # outer wrapper. We don't use state="visible" because outer drawer
-        # wrappers are often position:static with 0 height (only the inner
-        # .drawer__content has fixed positioning + dimensions); Playwright
-        # would treat the wrapper as not-visible and time out, even though the
-        # drawer IS open.
+        # state="attached", not "visible". Outer drawer wrappers are often
+        # position:static with 0 height (only the inner .drawer__content has
+        # fixed positioning + dimensions); Playwright's "visible" check would
+        # time out on the wrapper, even though the drawer IS open.
         page.wait_for_selector(test.state_selector, state="attached", timeout=5000)
     except Exception:
         return TestResult(
@@ -281,7 +367,6 @@ def run_overlay_test(page: Any, test: OverlayTest, theme: str, verbose: bool) ->
             reason=f"panel not found after open: {test.panel_selector}",
         )
 
-    # Computed style + geometry sanity checks.
     geometry = page.evaluate(
         """
         (sel) => {
@@ -317,7 +402,7 @@ def run_overlay_test(page: Any, test: OverlayTest, theme: str, verbose: bool) ->
             ),
         )
 
-    min_height = 0.9 * geometry["viewportHeight"]
+    min_height = test.expected_height_pct * geometry["viewportHeight"]
     if geometry["height"] < min_height or geometry["width"] < 300:
         return _fail_with_screenshot(
             page, test, started,
@@ -325,7 +410,8 @@ def run_overlay_test(page: Any, test: OverlayTest, theme: str, verbose: bool) ->
                 f"panel geometry too small: {geometry['width']:.0f}x"
                 f"{geometry['height']:.0f}px (viewport "
                 f"{geometry['viewportWidth']}x{geometry['viewportHeight']}); "
-                f"expected width>=300 and height>={min_height:.0f}. "
+                f"expected width>=300 and height>={min_height:.0f} "
+                f"({int(test.expected_height_pct*100)}% of viewport). "
                 "Overlay is likely rendering inline / clipped."
             ),
         )
@@ -373,78 +459,27 @@ def _fail_with_screenshot(
     )
 
 
-def build_tests() -> list[OverlayTest]:
-    # Selectors confirmed by inspecting sections/header.liquid,
-    # snippets/cart-drawer.liquid, snippets/search-predictive.liquid, and
-    # assets/theme.dev.js (drawer state class `drawer--visible` at line 1954;
-    # `.search-popdown.is-visible` at theme.dev.css line 20416).
-    return [
-        OverlayTest(
-            name="Cart drawer on PDP",
-            path=PDP_PATH,
-            trigger_selector='[data-drawer-toggle="drawer-cart"]',
-            panel_selector=".cart__drawer .drawer__content",
-            state_selector=".cart__drawer.drawer--visible",
-            viewport=(1280, 800),
-        ),
-        OverlayTest(
-            name="Mobile nav drawer on Home",
-            path="/",
-            trigger_selector='[data-drawer-toggle="hamburger"]',
-            panel_selector=".header__drawer .drawer__content",
-            state_selector=".header__drawer.drawer--visible",
-            viewport=(375, 667),
-        ),
-        OverlayTest(
-            name="PhotoSwipe lightbox on PDP",
-            path=PDP_PATH,
-            trigger_selector="[data-zoom-button]",
-            panel_selector=".pswp",
-            state_selector=".pswp--open",
-            viewport=(1280, 800),
-            # PhotoSwipe zoom button is `.media__zoom__icon` and reveals only
-            # on hover of `.product__media` per theme CSS; programmatic click
-            # via Playwright doesn't reliably trigger the gallery init in
-            # headless mode (verified 2026-05-11: zoom button click fires but
-            # `.pswp--open` never appears within 5s). Fixed by manual smoke
-            # test (Layer 2 checklist item #3) until this selector chain is
-            # mapped reliably. Follow-up bd: file when this test's coverage
-            # is needed in CI.
-            incomplete_reason="PhotoSwipe zoom-button hover-reveal + init chain not yet mappable to headless Playwright click. Manual smoke test (Layer 2 checklist) covers PhotoSwipe overlay verification.",
-        ),
-        OverlayTest(
-            name="Search overlay on Home",
-            path="/",
-            trigger_selector='[data-popdown-toggle="search-popdown"]',
-            panel_selector="#search-popdown",
-            state_selector="#search-popdown.is-visible",
-            viewport=(1280, 800),
-            # The `#search-popdown` element opens as a 107px-tall top-anchored
-            # bar (intentional design — it's a popdown, not a full-viewport
-            # overlay). The kt0-killer geometry assertion (height >= 90% of
-            # viewport) is the wrong assertion for this overlay shape. Needs
-            # either: (a) a per-test "expected geometry" override (overlay vs.
-            # popdown vs. tooltip), OR (b) split popdowns into a separate
-            # assertion class. Manual smoke test (Layer 2 checklist item #4)
-            # covers search popdown verification.
-            incomplete_reason="Search is a top-anchored popdown (107px tall by design), not a full-viewport overlay. Default geometry assertion (h >= 90% viewport) doesn't apply. Needs per-test geometry override before re-enabling.",
-        ),
-    ]
-
-
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description=(
             "Headless smoke test for fixed-position overlays — the kt0-killer "
-            "gate. Run before any `shopify theme push --allow-live` that "
-            "touches CSS / layout / header."
+            "gate. Run before any deploy / push that touches CSS / layout / "
+            "header / popup-wrapper code. Config-driven via JSON."
         )
     )
     p.add_argument(
+        "--config",
+        required=True,
+        help="Path to JSON config file. See skill docs for schema.",
+    )
+    p.add_argument(
         "--theme",
-        choices=sorted(THEME_IDS.keys()),
-        default="draft",
-        help="Which theme preview to test (default: draft).",
+        default=None,
+        help=(
+            "Which theme key from config.site.themes to preview. Defaults to "
+            "the first key in the themes dict. Ignored if config has no "
+            "preview_param/themes (direct URL navigation)."
+        ),
     )
 
     def _truthy(v: str) -> bool:
@@ -455,11 +490,6 @@ def parse_args() -> argparse.Namespace:
         type=_truthy,
         default=True,
         help="Run browser headless (default: true). Pass --headless=false to watch.",
-    )
-    p.add_argument(
-        "--store",
-        default="creations-gdc",
-        help="Shopify store handle (informational only; STORE_URL is hardcoded).",
     )
     p.add_argument(
         "--verbose",
@@ -473,56 +503,69 @@ def main() -> int:
     args = parse_args()
 
     try:
-        from playwright.sync_api import sync_playwright
-    except ImportError:
+        site, tests = load_config(Path(args.config))
+    except (FileNotFoundError, ValueError, json.JSONDecodeError) as e:
+        print(f"ERROR: config load failed: {e}", file=sys.stderr)
+        return 2
+
+    theme: str | None = args.theme
+    if theme is None and site.themes:
+        theme = next(iter(site.themes.keys()))
+    if theme and site.themes and theme not in site.themes:
         print(
-            "ERROR: playwright is not installed. Run:\n"
-            "  pip install playwright && playwright install chromium",
+            f"ERROR: --theme={theme!r} not in config.site.themes "
+            f"({sorted(site.themes.keys())})",
             file=sys.stderr,
         )
         return 2
 
-    tests = build_tests()
-    results: list[TestResult] = []
-
     try:
-        with sync_playwright() as pw:
-            browser = pw.chromium.launch(headless=args.headless)
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        print(
+            "ERROR: playwright not installed. Run:\n"
+            "  python3 -m pip install playwright\n"
+            "  python3 -m playwright install chromium",
+            file=sys.stderr,
+        )
+        return 2
+
+    results: list[TestResult] = []
+    try:
+        with sync_playwright() as p:
             try:
-                context = browser.new_context(
-                    user_agent=(
-                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                        "AppleWebKit/537.36 (KHTML, like Gecko) "
-                        "Chrome/124.0.0.0 Safari/537.36 hairmnl-smoke-test"
-                    ),
+                browser = p.chromium.launch(headless=args.headless)
+            except Exception as e:
+                print(
+                    f"ERROR: chromium launch failed: {e}\n"
+                    "  Run: python3 -m playwright install chromium",
+                    file=sys.stderr,
                 )
-                for i, test in enumerate(tests, start=1):
-                    if args.verbose:
-                        print(f"[{i}/{len(tests)}] {test.name} ...", end=" ", flush=True)
+                return 2
+            try:
+                for i, test in enumerate(tests, 1):
+                    context = browser.new_context(
+                        viewport={"width": test.viewport[0], "height": test.viewport[1]},
+                    )
                     page = context.new_page()
-                    try:
-                        result = run_overlay_test(page, test, args.theme, args.verbose)
-                    finally:
-                        page.close()
+                    label = f"[{i}/{len(tests)}] {test.name}"
+                    if args.verbose:
+                        print(f"{label} ... ", end="", flush=True)
+                    result = run_overlay_test(page, test, site, theme, args.verbose)
                     results.append(result)
                     if args.verbose:
                         print(f"{result.status} ({result.duration_ms}ms)")
                     if result.status == "FAIL":
-                        print(f"\n[{i}/{len(tests)}] {test.name} ... FAIL ({result.duration_ms}ms)")
+                        print(f"\n{label} ... FAIL ({result.duration_ms}ms)")
                         print(f"  Reason: {result.reason}")
                         if result.offending_selector:
                             print(f"  Offending ancestor: {result.offending_selector}")
-                            print(
-                                "  This creates a containing block for fixed descendants "
-                                "per CSS Containment spec, trapping the overlay inside "
-                                "the ancestor's bounds."
-                            )
-                            print("  See: bd memories contain (kt0 lesson, 2026-05-11).")
+                            print(f"  See: CSS Containment spec for which properties create containing blocks for fixed descendants.")
                         if result.screenshot_path:
                             print(f"  Screenshot: {result.screenshot_path}")
                     elif result.status == "SKIP" and args.verbose:
                         print(f"  Skipped: {result.reason}")
-                context.close()
+                    context.close()
             finally:
                 browser.close()
     except Exception as e:
