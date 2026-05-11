@@ -2246,28 +2246,6 @@ html:not(.lt-ie9) .image_autoheight_enable .grid__image img {
 .article__card.section--details .excerpt.right {
   text-align: right;
 }
-/* ── Pure-CSS equal-height card titles (replaces JS setMaxHeight) ── */
-/* Flex row lets all grid items stretch to the tallest, and flex column
-   inside each item lets the title span remaining space — equalizing
-   title heights across a row without forced layout reads. */
-.homepage-blog .grid.grid--uniform {
-  display: flex;
-  flex-wrap: wrap;
-}
-.homepage-blog .grid__item {
-  display: flex;
-  flex-direction: column;
-  float: none;
-}
-.homepage-blog .article__card.section--details {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-}
-.homepage-blog .article__card.section--details .title {
-  flex: 1 1 auto;
-}
-/* ── End pure-CSS equal-height ── */
 .btn--readmore {
   font-weight: bold;
   text-transform: uppercase;

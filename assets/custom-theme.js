@@ -8803,6 +8803,55 @@
     });
   })(document);
 
+  // scripts/article-card.js
+  // vyz 2026-04-29: Lazy-run setMaxHeight via IntersectionObserver.
+  // Original ran a forced layout-read/write pass on every .homepage-blog
+  // section 100ms after DOMContentLoaded. On homepages where the blog
+  // sits below the fold (every page), this burned main-thread time
+  // measuring + writing styles for content the user hadn't scrolled to.
+  // Now: each .homepage-blog observed individually; setMaxHeight fires
+  // only when the section is 200px from viewport entry, then
+  // unobserves. Same visual outcome (equal-height card titles), shifted
+  // off the DCL critical path.
+  (function(document2) {
+    document2.addEventListener("DOMContentLoaded", function() {
+      const getMaxHeight = (elements) => {
+        const heights = [];
+        elements.forEach((e) => heights.push(e.clientHeight));
+        return Math.max.apply(null, heights);
+      };
+      const setMaxHeight = (containerElement2) => {
+        containerElement2.forEach((parentEl) => {
+          const articleTitlesElements = parentEl.querySelectorAll(
+            ".article__card.section--details .title"
+          );
+          const maxHeight = getMaxHeight(articleTitlesElements);
+          articleTitlesElements.forEach((element) => {
+            element.style.height = `${maxHeight}px`;
+          });
+        });
+      };
+      const containerElement = document2.querySelectorAll(".homepage-blog");
+      if (containerElement.length > 0) {
+        var blogObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              blogObserver.unobserve(entry.target);
+              // Preserve original 100ms settle delay (lets fonts /
+              // late-loading images finalize wrap before measurement)
+              setTimeout(function() {
+                setMaxHeight([entry.target]);
+              }, 100);
+            }
+          });
+        }, { rootMargin: "200px 0px" });
+        containerElement.forEach(function(el) {
+          blogObserver.observe(el);
+        });
+      }
+    });
+  })(document);
+
   // scripts/banner-slider.js
   (function(document2) {
     document2.addEventListener("DOMContentLoaded", function() {
