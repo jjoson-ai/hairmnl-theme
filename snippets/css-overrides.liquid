@@ -295,19 +295,35 @@
      still cascade to the header's outer dimensions, which the rest of the page
      reacts to.
 
-     Fix: `contain: layout` on the header element and its parent wrapper
-     isolates internal mutations from affecting siblings. No min-height
-     because typical rendered heights differ across breakpoints (mobile ~50px,
-     desktop ~80px) and we'd risk inflating one or under-reserving the other.
-     contain:layout is no-visual-impact — purely a hint that browsers can use
-     to prune layout-tree dependencies. Combined with the existing
+     Fix: `contain: layout` on the header element isolates internal mutations
+     from affecting siblings. No min-height because typical rendered heights
+     differ across breakpoints (mobile ~50px, desktop ~80px) and we'd risk
+     inflating one or under-reserving the other. Combined with the existing
      .points-box contain:layout (mobile fix May 2), this gives two-level
      isolation for the LoyaltyLion injection case.
 
      Mobile already has CLS p75 = 0.07 (GOOD), so this fix is desktop-targeting
-     but global — contain:layout is safe on either breakpoint. */
-  header.theme__header,
-  .header__wrapper {
+     but global — contain:layout is safe on either breakpoint.
+
+     2026-05-11 HOTFIX — REMOVED .header__wrapper from this selector.
+     The cart-drawer ({% render 'cart-drawer' %} at sections/header.liquid:334)
+     is rendered AFTER `</header>` (line 330) but INSIDE `.header__wrapper`
+     (closes at line 338). `contain: layout` establishes a containing block
+     for fixed/absolute descendants per CSS Containment spec — that trapped
+     the drawer's `position: fixed; z-index: 20050` inside `.header__wrapper`'s
+     bounds instead of overlaying the viewport. Result: opening the cart drawer
+     on a PDP rendered the drawer panel inline within the header area while
+     PDP content showed alongside (perceived as "drawer rendering behind
+     elements"). User-reported live regression.
+
+     `header.theme__header` alone is safe — the drawer renders OUTSIDE the
+     `<header>` element (after its closing tag at line 330), so containment
+     here doesn't establish a containing block for the drawer. CLS GA4
+     attribution was on `header.theme__header` (165 events) + parent
+     `#shopify-section-header` (52 events) — `.header__wrapper` was a
+     speculative addition, never showed in field data, and removing it loses
+     nothing on CLS. */
+  header.theme__header {
     contain: layout;
   }
 
