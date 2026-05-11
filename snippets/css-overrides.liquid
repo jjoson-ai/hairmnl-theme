@@ -488,4 +488,19 @@
     background-color: #ffffff !important;
     border: 1px solid #1a1a1a !important;
   }
+
+  /* Phase 1 cutover (2026-05-08): cart line-item thumbnail bump.
+     Default theme.css ships 90px; bumping to 140px so the cart
+     line-item thumb visually matches the Vertex 'Buy it with' /
+     'Often bought together' rec card thumbnails just below it.
+     Without this override, the visual hierarchy was inverted —
+     recs > the product the customer was already buying.
+
+     Applied via .cart__items__grid (no parent scope), so both the
+     slide-out drawer AND the standalone /cart page get the larger
+     thumb. Override lives here (per .opencode_hints rule 5) rather
+     than directly in assets/theme.css. */
+  .cart__items__grid {
+    grid-template-columns: 140px 1fr !important;
+  }
 </style>
