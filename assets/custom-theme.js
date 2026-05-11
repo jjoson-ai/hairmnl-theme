@@ -3245,19 +3245,32 @@
   (function(document2) {
     document2.addEventListener("DOMContentLoaded", function() {
       const collectionNav = document2.querySelector(".collection__nav");
-      const themeHeader = document2.querySelector(".theme__header");
       let mql = window.matchMedia("(max-width: 600px)");
       if (collectionNav) {
         makeNavSticky(mql);
         mql.addEventListener("change", makeNavSticky);
       }
+      function stickyTopFromMenuHeightVar() {
+        const raw = document2.documentElement.style.getPropertyValue("--menu-height");
+        const n = parseFloat(raw);
+        return !Number.isNaN(n) && n > 0 ? Math.round(n) - 1 : 0;
+      }
       function makeNavSticky(mql2) {
-        if (mql2.matches) {
-          collectionNav.dataset.marginTop = themeHeader.offsetHeight - 1;
+        if (!mql2.matches) {
+          return;
+        }
+        const apply = () => {
+          let top = stickyTopFromMenuHeightVar();
+          if (top <= 0 && document2.readyState !== "complete") {
+            window.addEventListener("load", apply, { once: true });
+            return;
+          }
+          collectionNav.dataset.marginTop = String(top);
           collectionNav.style.backgroundColor = "white";
           collectionNav.style.zIndex = 999;
           new import_sticky_js.default(".collection__nav");
-        }
+        };
+        apply();
       }
     });
   })(document);
