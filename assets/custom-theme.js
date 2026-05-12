@@ -8854,8 +8854,8 @@
 
   // scripts/collection-slider.js
   // ua7 2026-04-29: Lazy-init below-fold sliders via IntersectionObserver.
-  // Only sliders already in viewport at DCL init eagerly. The rest defer
-  // until 200px before they scroll into view, spreading the Swiper
+  // qku 2026-05-12: all sliders use IO only (no DCL getBoundingClientRect).
+  // Each defers Swiper init until intersecting root + 200px margin, spreading
   // layout-measurement work across the session instead of front-loading
   // it all at DCL — reduces TBT and INP for homepage.
   //
@@ -8914,21 +8914,18 @@
           });
         };
         collectionSliderEls.forEach(function(el) {
-          // Pure viewport gating: eager init only if rect is already
-          // within the viewport at DCL time.
-          if (el.getBoundingClientRect().top < window.innerHeight) {
-            initCollectionSlider(el);
-          } else {
-            var observer = new IntersectionObserver(function(entries) {
-              entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                  observer.unobserve(el);
-                  initCollectionSlider(el);
-                }
-              });
-            }, { rootMargin: "200px 0px" });
-            observer.observe(el);
-          }
+          // qku 2026-05-12: IntersectionObserver-only init (no getBoundingClientRect /
+          // window.innerHeight at DCL). IO delivers isIntersecting for sliders already
+          // in view plus rootMargin 200px — same deferral semantics as the prior branch.
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                observer.unobserve(el);
+                initCollectionSlider(el);
+              }
+            });
+          }, { rootMargin: "200px 0px" });
+          observer.observe(el);
         });
       }
     });
