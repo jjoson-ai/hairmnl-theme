@@ -2697,3 +2697,17 @@ body.template-cart .cart__template .cart__items__quantity .quantity__input {
   }
 }
 /* ── End CLS fix hairmnl-theme-jvf ── */
+
+/* ── CLS fix 2026-05-12 hairmnl-theme-p52 (987 Phase 2 — Judge.me review block) ── */
+body.template-product #judgeme_product_reviews {
+  min-height: 220px;
+}
+body.template-product .jdgm-widget.jdgm-review-widget {
+  min-height: 220px;
+}
+
+body.template-collection .jdgm-prev-badge,
+body.template-index .jdgm-prev-badge {
+  min-height: 18px;
+  display: block;
+}
