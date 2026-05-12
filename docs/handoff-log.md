@@ -4,6 +4,33 @@ Append-only log of coordinator sessions. Newest entries at the top.
 
 Format spec: see `docs/coordinator-handoff.md` §10.
 
+### 2026-05-12 (model: claude-sonnet-4-6, coordinated by claude-opus-4-7)
+
+**Issues touched:** d00 (GTM metric_rating parameter fix — publish confirmed)
+**Outcome:** GTM Container Version 143 confirmed live; 24h GA4 verification window pending
+
+**What was done:**
+- Confirmed GTM live container is version 143 ("Fix metric_rating param on CWV tags")
+- Tag 771 (GA4 - Web Vital Event) now has 4-param eventSettingsTable: `metric_name`, `metric_value`, `metric_id`, `metric_rating → {{metric_rating}}`
+- Variable 759 (`{{metric_rating}}`) already existed — no new variable needed
+- Workspace 200 (fix-metric-rating-2026-05-11) → Version 143 published to live
+
+**GTM version URL:**
+https://tagmanager.google.com/#/container/accounts/4702257664/containers/12266146/versions/143
+
+**Pre-publish GA4 metric_rating distribution (2-day window, ~37K events):**
+- `(not set)`: 36.6%
+- `good`: 36.6%
+- `(empty)`: 15.7%
+- `poor`: 6.5%
+- `needs-improvement`: 4.6%
+
+**Verification status:** 24h window required for clean post-fix GA4 data. Close d00 after re-querying GA4 and confirming `(not set)` + `(empty)` drops to <5% combined.
+
+**Next step:** Run `python3 scripts/web-vitals-report.py` or the inline GA4 query (see handoff note in d00 bd issue) after 2026-05-13 to confirm metric_rating is now populated for >95% of CWV events.
+
+---
+
 ### 2026-05-06 (model: glm-5.1:cloud via OpenCode, coordinated by claude-opus-4-7)
 
 **Issues touched:** dy0, 0ru (Batch G2 — iterative debug of Bug 2 + Bug 3)
