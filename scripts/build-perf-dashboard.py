@@ -998,26 +998,35 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <button class="tab active" data-tab="snapshot-mobile" onclick="switchTab(this)">📱 Mobile</button>
     <button class="tab" data-tab="snapshot-desktop" onclick="switchTab(this)">🖥 Desktop</button>
   </div>
+
+  <div class="range-filter">
+    <button class="range-btn" data-range="7" onclick="setRange(7)">7d</button>
+    <button class="range-btn" data-range="30" onclick="setRange(30)">30d</button>
+    <button class="range-btn" data-range="90" onclick="setRange(90)">90d</button>
+    <button class="range-btn active" data-range="0" onclick="setRange(0)">All</button>
+  </div>
+
   <div class="tab-content active" id="snapshot-mobile">
     __SNAPSHOT_MOBILE__
+
+    <h3 class="trend-heading">Trend over time — PSI Lab mobile</h3>
+    <div class="grid-2">
+      <div class="card"><h4>Performance score __TIP_SCORE__</h4><div class="chart-wrap"><canvas id="chart-score-m"></canvas></div></div>
+      <div class="card"><h4>Largest Contentful Paint (s) __TIP_LCP_2__</h4><div class="chart-wrap"><canvas id="chart-lcp-m"></canvas></div></div>
+      <div class="card"><h4>Total Blocking Time (ms) __TIP_TBT__</h4><div class="chart-wrap"><canvas id="chart-tbt-m"></canvas></div></div>
+      <div class="card"><h4>Cumulative Layout Shift __TIP_CLS_2__</h4><div class="chart-wrap"><canvas id="chart-cls-m"></canvas></div></div>
+    </div>
   </div>
   <div class="tab-content" id="snapshot-desktop">
     __SNAPSHOT_DESKTOP__
-  </div>
 
-  <h2>Trend over time — PSI Lab mobile
-    <span class="range-filter">
-      <button class="range-btn" data-range="7" onclick="setRange(7)">7d</button>
-      <button class="range-btn" data-range="30" onclick="setRange(30)">30d</button>
-      <button class="range-btn" data-range="90" onclick="setRange(90)">90d</button>
-      <button class="range-btn active" data-range="0" onclick="setRange(0)">All</button>
-    </span>
-  </h2>
-  <div class="grid-2">
-    <div class="card"><h3>Performance score __TIP_SCORE__</h3><div class="chart-wrap"><canvas id="chart-score"></canvas></div></div>
-    <div class="card"><h3>Largest Contentful Paint (s) __TIP_LCP_2__</h3><div class="chart-wrap"><canvas id="chart-lcp"></canvas></div></div>
-    <div class="card"><h3>Total Blocking Time (ms) __TIP_TBT__</h3><div class="chart-wrap"><canvas id="chart-tbt"></canvas></div></div>
-    <div class="card"><h3>Cumulative Layout Shift __TIP_CLS_2__</h3><div class="chart-wrap"><canvas id="chart-cls"></canvas></div></div>
+    <h3 class="trend-heading">Trend over time — PSI Lab desktop</h3>
+    <div class="grid-2">
+      <div class="card"><h4>Performance score __TIP_SCORE__</h4><div class="chart-wrap"><canvas id="chart-score-d"></canvas></div></div>
+      <div class="card"><h4>Largest Contentful Paint (s) __TIP_LCP_2__</h4><div class="chart-wrap"><canvas id="chart-lcp-d"></canvas></div></div>
+      <div class="card"><h4>Total Blocking Time (ms) __TIP_TBT__</h4><div class="chart-wrap"><canvas id="chart-tbt-d"></canvas></div></div>
+      <div class="card"><h4>Cumulative Layout Shift __TIP_CLS_2__</h4><div class="chart-wrap"><canvas id="chart-cls-d"></canvas></div></div>
+    </div>
   </div>
 
   <h2>Real-shopper Core Web Vitals
@@ -1094,6 +1103,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <script>
 const CHART_DATA = __CHART_DATA__;
 let activeRange = 0;  // 0 = all
+let currentStrategy = 'mobile';
 let charts = {};
 
 function filterByRange(allLabels, allData, days) {
@@ -1111,9 +1121,9 @@ const CHART_TARGETS = {
 };
 
 const baseConfig = (label, color, allData, allMin, allMax, fmt, chartKey) => {
-  const filtered = filterByRange(CHART_DATA.labels, allData, activeRange);
-  const filtMin = filterByRange(CHART_DATA.labels, allMin, activeRange);
-  const filtMax = filterByRange(CHART_DATA.labels, allMax, activeRange);
+  const filtered = filterByRange(CHART_DATA._labels, allData, activeRange);
+  const filtMin = filterByRange(CHART_DATA._labels, allMin, activeRange);
+  const filtMax = filterByRange(CHART_DATA._labels, allMax, activeRange);
   const t = CHART_TARGETS[chartKey];
 
   const bandColor = color + '18';
@@ -1170,32 +1180,52 @@ const baseConfig = (label, color, allData, allMin, allMax, fmt, chartKey) => {
   };
 };
 
-function buildCharts() {
-  Object.values(charts).forEach(c => c.destroy());
-  charts.score = new Chart(document.getElementById('chart-score'),
-    baseConfig('Score', '#1F2937', CHART_DATA.score, CHART_DATA.score_min, CHART_DATA.score_max, v => `${v}/100`, 'score'));
-  charts.lcp = new Chart(document.getElementById('chart-lcp'),
-    baseConfig('LCP', '#1F2937', CHART_DATA.lcp_s, CHART_DATA.lcp_s_min, CHART_DATA.lcp_s_max, v => `${v.toFixed(2)} s`, 'lcp'));
-  charts.tbt = new Chart(document.getElementById('chart-tbt'),
-    baseConfig('TBT', '#1F2937', CHART_DATA.tbt_ms, CHART_DATA.tbt_ms_min, CHART_DATA.tbt_ms_max, v => `${v} ms`, 'tbt'));
-  charts.cls = new Chart(document.getElementById('chart-cls'),
-    baseConfig('CLS', '#1F2937', CHART_DATA.cls, CHART_DATA.cls_min, CHART_DATA.cls_max, v => v.toFixed(3), 'cls'));
+function buildChartsForStrategy(strategy) {
+  strategy = strategy || 'mobile';
+  const data = (CHART_DATA && CHART_DATA[strategy]) || null;
+  // Bail early if this strategy has no snapshots (e.g. desktop never sampled).
+  // Without this guard, Chart.js renders empty-axis errors.
+  if (!data || !data.labels || data.labels.length === 0) return;
+  CHART_DATA._labels = data.labels;  // baseConfig + filterByRange read this
+  const suffix = strategy === 'mobile' ? 'm' : 'd';
+  const cfgs = [
+    ['score', 'Score', '#1F2937', data.score,  data.score_min,  data.score_max,  v => `${v}/100`],
+    ['lcp',   'LCP',   '#1F2937', data.lcp_s,  data.lcp_s_min,  data.lcp_s_max,  v => `${v.toFixed(2)} s`],
+    ['tbt',   'TBT',   '#1F2937', data.tbt_ms, data.tbt_ms_min, data.tbt_ms_max, v => `${v} ms`],
+    ['cls',   'CLS',   '#1F2937', data.cls,    data.cls_min,    data.cls_max,    v => v.toFixed(3)],
+  ];
+  cfgs.forEach(([key, label, color, series, sMin, sMax, fmt]) => {
+    const id = `chart-${key}-${suffix}`;
+    if (charts[id]) charts[id].destroy();
+    const el = document.getElementById(id);
+    if (el) charts[id] = new Chart(el, baseConfig(label, color, series, sMin, sMax, fmt, key));
+  });
 }
 
 function setRange(days) {
   activeRange = days;
   document.querySelectorAll('.range-btn').forEach(b =>
     b.classList.toggle('active', parseInt(b.dataset.range, 10) === days));
-  buildCharts();
+  buildChartsForStrategy(currentStrategy);
 }
 
 function switchTab(btn) {
   const target = btn.dataset.tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === btn));
   document.querySelectorAll('.tab-content').forEach(tc => tc.classList.toggle('active', tc.id === target));
+
+  // Lazy-build trend charts when an inner snapshot tab activates.
+  // Chart.js can't size canvases that are display:none, so we build only
+  // after the panel becomes visible (requestAnimationFrame paints next frame).
+  const m = target.match(/^snapshot-(mobile|desktop)$/);
+  if (m) {
+    const strategy = m[1];
+    currentStrategy = strategy;
+    requestAnimationFrame(() => buildChartsForStrategy(strategy));
+  }
 }
 
-buildCharts();
+buildChartsForStrategy('mobile');
 </script>
 
 <script>
@@ -1836,51 +1866,50 @@ def render_crux_truth(snapshots: list[dict]) -> str:
 
 
 def build_chart_data(snapshots, max_points=30):
-    """Build trend data from snapshots. Use mobile PSI; only keep snapshots with PSI data."""
-    pts = []
-    for s in snapshots:
-        psi = s.get("psi", {}).get("mobile")
-        if not psi:
-            continue
-        ts = s["timestamp"]
-        # short label (MM-DD)
-        try:
-            dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
-            label = dt.strftime("%b %d")
-        except Exception:
-            label = ts[:10]
-        mm = s.get("psi_minmax", {}).get("mobile", {})
-        pts.append({
-            "label": label,
-            "score": psi["score"],
-            "lcp_s": psi["lcp_ms"] / 1000,
-            "tbt_ms": psi["tbt_ms"],
-            "cls": psi["cls"],
-            "score_min": mm.get("score_min", psi["score"]),
-            "score_max": mm.get("score_max", psi["score"]),
-            "lcp_s_min": mm.get("lcp_ms_min", psi["lcp_ms"]) / 1000,
-            "lcp_s_max": mm.get("lcp_ms_max", psi["lcp_ms"]) / 1000,
-            "tbt_ms_min": mm.get("tbt_ms_min", psi["tbt_ms"]),
-            "tbt_ms_max": mm.get("tbt_ms_max", psi["tbt_ms"]),
-            "cls_min": mm.get("cls_min", psi["cls"]),
-            "cls_max": mm.get("cls_max", psi["cls"]),
-        })
-    pts = pts[-max_points:]
-    return {
-        "labels": [p["label"] for p in pts],
-        "score": [p["score"] for p in pts],
-        "lcp_s": [p["lcp_s"] for p in pts],
-        "tbt_ms": [p["tbt_ms"] for p in pts],
-        "cls": [p["cls"] for p in pts],
-        "score_min": [p["score_min"] for p in pts],
-        "score_max": [p["score_max"] for p in pts],
-        "lcp_s_min": [p["lcp_s_min"] for p in pts],
-        "lcp_s_max": [p["lcp_s_max"] for p in pts],
-        "tbt_ms_min": [p["tbt_ms_min"] for p in pts],
-        "tbt_ms_max": [p["tbt_ms_max"] for p in pts],
-        "cls_min": [p["cls_min"] for p in pts],
-        "cls_max": [p["cls_max"] for p in pts],
-    }
+    """Build trend data for mobile and desktop PSI strategies.
+    
+    Returns {mobile: {labels, score, lcp_s, tbt_ms, cls, ...min/max bands},
+             desktop: {labels, score, lcp_s, tbt_ms, cls, ...min/max bands}}
+    where each strategy dict uses the same key schema as the old flat return.
+    """
+    def _extract(strategy):
+        pts = []
+        for s in snapshots:
+            psi = (s.get("psi") or {}).get(strategy)
+            if not psi:
+                continue
+            ts = s["timestamp"]
+            try:
+                label = datetime.fromisoformat(ts.replace("Z", "+00:00")).strftime("%b %d")
+            except Exception:
+                label = ts[:10]
+            mm = (s.get("psi_minmax") or {}).get(strategy) or {}
+            pts.append({
+                "label": label,
+                "score": psi["score"],
+                "score_min": mm.get("score_min", psi["score"]),
+                "score_max": mm.get("score_max", psi["score"]),
+                "lcp_s": round(psi["lcp_ms"] / 1000, 3),
+                "lcp_s_min": round(mm.get("lcp_ms_min", psi["lcp_ms"]) / 1000, 3),
+                "lcp_s_max": round(mm.get("lcp_ms_max", psi["lcp_ms"]) / 1000, 3),
+                "tbt_ms": psi["tbt_ms"],
+                "tbt_ms_min": mm.get("tbt_ms_min", psi["tbt_ms"]),
+                "tbt_ms_max": mm.get("tbt_ms_max", psi["tbt_ms"]),
+                "cls": psi["cls"],
+                "cls_min": mm.get("cls_min", psi["cls"]),
+                "cls_max": mm.get("cls_max", psi["cls"]),
+            })
+        pts = pts[-max_points:]
+        keys = ("score", "score_min", "score_max",
+                "lcp_s", "lcp_s_min", "lcp_s_max",
+                "tbt_ms", "tbt_ms_min", "tbt_ms_max",
+                "cls", "cls_min", "cls_max")
+        out = {"labels": [p["label"] for p in pts]}
+        for k in keys:
+            out[k] = [p[k] for p in pts]
+        return out
+    
+    return {"mobile": _extract("mobile"), "desktop": _extract("desktop")}
 
 
 def render_html(snapshots: list[dict]) -> str:
