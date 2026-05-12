@@ -5,6 +5,73 @@
 - **Live theme**: `131664707683` (" Pipeline 6 - Fix share image")
 - **Draft theme**: `140785582179` (Claude Code draft)
 
+## CSS containment kt0 rule (regression history: 2026-05-11 header, 2026-05-12 Reamaze)
+
+These CSS properties create a new containing block for **fixed/absolute-positioned
+descendants**:
+
+- `contain: layout | paint | strict | content`
+- `transform: <anything-but-none>`
+- `filter: <anything-but-none>`
+- `backdrop-filter: <anything-but-none>`
+- `perspective: <anything-but-none>`
+- `will-change: transform | filter | perspective`
+
+When applied to an overlay container (chat widget, cart drawer, modal, sticky
+header, mobile nav, body-injected popup), Reamaze/Pipeline/LL/etc. internal
+positioning math silently breaks — children end up at coordinates relative to
+the wrong ancestor (off-screen, zero-size, etc.). Two visible regressions this
+caused already:
+
+- **2026-05-11** — sticky header got `contain:layout`; cart icon dropdown
+  positioned wrong.
+- **2026-05-12** — `[id^="reamaze-widget"] { contain:layout }` (bd 7fz)
+  pushed the Reamaze chat icon to `right:-58px` and the chat container to
+  `bottom:-16914.5px`, hiding the live-chat bubble from customers for ~10
+  days (bd hairmnl-theme-lki).
+
+### Automated check
+
+`scripts/check-overlay-css.py` scans the repo for any of these properties
+applied to a known-overlay selector. Runs in CI on every push touching
+`*.liquid`/`*.css`/`*.scss` (`.github/workflows/kt0-css-lint.yml`).
+
+**Run locally before any CSS push**:
+
+```sh
+python3 scripts/check-overlay-css.py
+```
+
+Exit 0 = clean. Exit 1 = at least one new violation.
+
+### Acknowledging intentional uses
+
+If you genuinely need one of these properties on an overlay selector
+(e.g. `display:none` makes containment moot, or your overlay has no
+absolute-positioned descendants), add a comment containing the literal
+token `kt0-OK` inside the rule body:
+
+```css
+.my-overlay {
+  /* kt0-OK: display:none means containment is moot */
+  display: none !important;
+  contain: layout !important;
+}
+```
+
+The lint accepts any `/* ... kt0-OK ... */` comment as acknowledgment.
+Always include a one-line justification — future readers (and future AI
+sessions) need to know why you decided it was safe.
+
+### Adding new overlay selectors
+
+The lint's selector list is in `OVERLAY_PATTERNS` near the top of
+`scripts/check-overlay-css.py`. When the store gains a new overlay
+(new chat tool, new modal app, etc.) add its selector pattern there
+so containment regressions on the new overlay get caught.
+
+---
+
 ## The push regression that triggered this guard (2026-04-26)
 
 `shopify theme push --only=<file>` uploads the **local working tree**

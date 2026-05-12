@@ -86,6 +86,8 @@
   #pwa-modal,
   [id^="pwa-modal"],
   [class*="pwa-modal"] {
+    /* kt0-OK: display:none makes contain:layout moot — modal never renders,
+       so containment can't break any absolute-positioned descendants. */
     display: none !important;
     position: fixed !important;
     z-index: 9999 !important;
@@ -467,6 +469,11 @@
   body > [class*="ll-notification"],
   body > [class*="ll-popup"],
   body > [class*="lion-overlay"] {
+    /* kt0-OK: scoped to `body > *` so it only matches LoyaltyLion's
+       top-level body-injected popup containers (not arbitrary children).
+       LL popups have no absolutely-positioned descendants that need to
+       escape the popup boundary (icon/close button are inside the popup
+       flow). Verified shipping cleanly since 2026-05-02 e4a-delta. */
     position: fixed !important;
     contain: layout !important;
   }

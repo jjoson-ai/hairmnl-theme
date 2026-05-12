@@ -1,0 +1,39 @@
+# kt0 CSS lint — prevent regressions of the type that broke the sticky header
+# (2026-05-11) and Reamaze chat widget (2026-05-12). See:
+#   - CLAUDE.md "CSS Containment kt0 rule"
+#   - bd hairmnl-theme-lki
+#   - scripts/check-overlay-css.py (full rule docs)
+name: kt0 CSS lint
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.liquid'
+      - '**.css'
+      - '**.scss'
+      - 'scripts/check-overlay-css.py'
+      - '.github/workflows/kt0-css-lint.yml'
+  pull_request:
+    paths:
+      - '**.liquid'
+      - '**.css'
+      - '**.scss'
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run kt0 CSS lint
+        run: python3 scripts/check-overlay-css.py
