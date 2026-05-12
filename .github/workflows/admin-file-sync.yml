@@ -1,0 +1,62 @@
+# Weekly pull of admin-managed JSON from live theme into a PR (never auto-merge).
+# Spec: bd hairmnl-theme-4dw
+name: Admin-managed theme file sync
+
+on:
+  schedule:
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: admin-file-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli@latest
+
+      - name: Verify required secrets
+        env:
+          PARTNERS: ${{ secrets.SHOPIFY_CLI_PARTNERS_TOKEN }}
+          FLAG_STORE: ${{ secrets.SHOPIFY_FLAG_STORE }}
+        run: |
+          missing=()
+          [ -z "${PARTNERS}" ] && missing+=("SHOPIFY_CLI_PARTNERS_TOKEN")
+          [ -z "${FLAG_STORE}" ] && missing+=("SHOPIFY_FLAG_STORE")
+          if [ "${#missing[@]}" -ne 0 ]; then
+            echo "::error::Missing required secrets: ${missing[*]}"
+            exit 1
+          fi
+          echo "Required secrets present (store for pull is pinned in the next step per bd hairmnl-theme-4dw)."
+
+      - name: Yamllint (this workflow only)
+        run: |
+          pip install --disable-pip-version-check --user yamllint
+          export PATH="${HOME}/.local/bin:${PATH}"
+          yamllint -d "{extends: default, rules: {document-start: disable, truthy: disable, line-length: {max: 120}}}" \
+            .github/workflows/admin-file-sync.yml
+
+      - name: Sync from live theme
+        env:
+          SHOPIFY_CLI_PARTNERS_TOKEN: ${{ secrets.SHOPIFY_CLI_PARTNERS_TOKEN }}
+          SHOPIFY_FLAG_STORE: hairmnl.myshopify.com
+          SHOPIFY_FLAG_FORCE: '1'
+          GH_TOKEN: ${{ github.token }}
+        run: ./scripts/admin-file-sync.sh
