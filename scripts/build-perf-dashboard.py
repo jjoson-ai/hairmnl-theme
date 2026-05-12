@@ -1104,10 +1104,10 @@ function filterByRange(allLabels, allData, days) {
 }
 
 const CHART_TARGETS = {
-  score: { threshold: 90,  higherIsBetter: true  },
-  lcp:   { threshold: 2.5, higherIsBetter: false },
-  tbt:   { threshold: 200, higherIsBetter: false },
-  cls:   { threshold: 0.10, higherIsBetter: false },
+  score: { higherIsBetter: true,  good: 90,   needs: 50,   bestCase: 100 },
+  lcp:   { higherIsBetter: false, good: 2.5,  needs: 4.0,  bestCase: 0 },
+  tbt:   { higherIsBetter: false, good: 200,  needs: 600,  bestCase: 0 },
+  cls:   { higherIsBetter: false, good: 0.10, needs: 0.25, bestCase: 0 },
 };
 
 const baseConfig = (label, color, allData, allMin, allMax, fmt, chartKey) => {
@@ -1115,7 +1115,7 @@ const baseConfig = (label, color, allData, allMin, allMax, fmt, chartKey) => {
   const filtMin = filterByRange(CHART_DATA.labels, allMin, activeRange);
   const filtMax = filterByRange(CHART_DATA.labels, allMax, activeRange);
   const t = CHART_TARGETS[chartKey];
-  const lineColor = t.higherIsBetter ? '#22C55E' : '#EF4444';
+
   const bandColor = color + '18';
   return {
     type: 'line',
@@ -1142,27 +1142,29 @@ const baseConfig = (label, color, allData, allMin, allMax, fmt, chartKey) => {
         legend: { display: false },
         tooltip: { callbacks: { label: (ctx) => fmt ? fmt(ctx.parsed.y) : ctx.parsed.y } },
         annotation: {
-          annotations: {
-            targetLine: {
-              type: 'line',
-              yMin: t.threshold,
-              yMax: t.threshold,
-              borderColor: lineColor,
-              borderDash: [5, 5],
-              borderWidth: 1.5,
-              label: {
-                display: true,
-                content: `${t.higherIsBetter ? '▲' : '▼'} ${fmt(t.threshold)}`,
-                color: lineColor,
-                font: { size: 10 },
-              }
+          annotations: (() => {
+            const GOOD  = 'rgba(34, 197, 94, 0.12)';
+            const NEEDS = 'rgba(245, 158, 11, 0.12)';
+            const POOR  = 'rgba(239, 68, 68, 0.12)';
+            if (t.higherIsBetter) {
+              return {
+                zoneGood:  { type: 'box', yMin: t.good,    yMax: t.bestCase, backgroundColor: GOOD,  borderWidth: 0 },
+                zoneNeeds: { type: 'box', yMin: t.needs,   yMax: t.good,     backgroundColor: NEEDS, borderWidth: 0 },
+                zonePoor:  { type: 'box', yMin: 0,         yMax: t.needs,    backgroundColor: POOR,  borderWidth: 0 },
+              };
+            } else {
+              return {
+                zoneGood:  { type: 'box', yMin: t.bestCase, yMax: t.good,  backgroundColor: GOOD,  borderWidth: 0 },
+                zoneNeeds: { type: 'box', yMin: t.good,     yMax: t.needs, backgroundColor: NEEDS, borderWidth: 0 },
+                zonePoor:  { type: 'box', yMin: t.needs,    yMax: 999999,   backgroundColor: POOR,  borderWidth: 0 },
+              };
             }
-          }
+          })()
         }
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-        y: { beginAtZero: false, grid: { color: '#E5E7EB' }, ticks: { font: { size: 10 } } },
+        y: { beginAtZero: false, suggestedMin: 0, suggestedMax: { score: 100, lcp: 6, tbt: 800, cls: 0.35 }[chartKey], grid: { color: '#E5E7EB' }, ticks: { font: { size: 10 } } },
       }
     }
   };
@@ -1171,13 +1173,13 @@ const baseConfig = (label, color, allData, allMin, allMax, fmt, chartKey) => {
 function buildCharts() {
   Object.values(charts).forEach(c => c.destroy());
   charts.score = new Chart(document.getElementById('chart-score'),
-    baseConfig('Score', '#1E2761', CHART_DATA.score, CHART_DATA.score_min, CHART_DATA.score_max, v => `${v}/100`, 'score'));
+    baseConfig('Score', '#1F2937', CHART_DATA.score, CHART_DATA.score_min, CHART_DATA.score_max, v => `${v}/100`, 'score'));
   charts.lcp = new Chart(document.getElementById('chart-lcp'),
-    baseConfig('LCP', '#922525', CHART_DATA.lcp_s, CHART_DATA.lcp_s_min, CHART_DATA.lcp_s_max, v => `${v.toFixed(2)} s`, 'lcp'));
+    baseConfig('LCP', '#1F2937', CHART_DATA.lcp_s, CHART_DATA.lcp_s_min, CHART_DATA.lcp_s_max, v => `${v.toFixed(2)} s`, 'lcp'));
   charts.tbt = new Chart(document.getElementById('chart-tbt'),
-    baseConfig('TBT', '#8F5210', CHART_DATA.tbt_ms, CHART_DATA.tbt_ms_min, CHART_DATA.tbt_ms_max, v => `${v} ms`, 'tbt'));
+    baseConfig('TBT', '#1F2937', CHART_DATA.tbt_ms, CHART_DATA.tbt_ms_min, CHART_DATA.tbt_ms_max, v => `${v} ms`, 'tbt'));
   charts.cls = new Chart(document.getElementById('chart-cls'),
-    baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, CHART_DATA.cls_min, CHART_DATA.cls_max, v => v.toFixed(3), 'cls'));
+    baseConfig('CLS', '#1F2937', CHART_DATA.cls, CHART_DATA.cls_min, CHART_DATA.cls_max, v => v.toFixed(3), 'cls'));
 }
 
 function setRange(days) {
