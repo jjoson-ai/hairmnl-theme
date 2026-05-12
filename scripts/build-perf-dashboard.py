@@ -666,17 +666,41 @@ def _merge_daily_snapshot(existing: Optional[dict], incoming: dict) -> dict:
     psi_in = incoming.get("psi") or {}
     if psi_in:
         psi_out = existing.setdefault("psi", {})
-        psi_ts = existing.setdefault("_psi_timestamps", {})
+        psi_hist = existing.setdefault("_psi_history", {})
+        psi_minmax = existing.setdefault("_psi_minmax", {})
+        keep_keys = ("score", "lcp_ms", "tbt_ms", "cls")
         for strategy in ("mobile", "desktop"):
-            if psi_in.get(strategy) and incoming.get("timestamp", "") >= psi_ts.get(strategy, ""):
-                psi_out[strategy] = psi_in[strategy]
-                psi_ts[strategy] = incoming.get("timestamp", "")
+            run = psi_in.get(strategy)
+            if not run:
+                continue
+            trimmed = {k: run[k] for k in keep_keys if k in run}
+            if not trimmed:
+                continue
+            psi_hist.setdefault(strategy, []).append(trimmed)
+            hist = psi_hist[strategy]
+            psi_out[strategy] = {
+                k: int(median(r[k] for r in hist)) if k != "cls" else round(median(r[k] for r in hist), 3)
+                for k in keep_keys if all(k in r for r in hist)
+            }
+            for k, v in run.items():
+                if k not in keep_keys:
+                    psi_out[strategy][k] = v
+            for metric in keep_keys:
+                vals = [r[metric] for r in hist if metric in r]
+                if not vals:
+                    continue
+                psi_minmax.setdefault(strategy, {})[f"{metric}_min"] = min(vals)
+                psi_minmax.setdefault(strategy, {})[f"{metric}_max"] = max(vals)
 
     return existing
 
 
 def _strip_internal_snapshot_keys(snapshot: dict) -> dict:
-    return {k: v for k, v in snapshot.items() if not k.startswith("_")}
+    result = {k: v for k, v in snapshot.items() if not k.startswith("_")}
+    minmax = snapshot.get("_psi_minmax", {})
+    if minmax:
+        result["psi_minmax"] = minmax
+    return result
 
 
 def load_snapshots() -> list[dict]:
@@ -1086,18 +1110,31 @@ const CHART_TARGETS = {
   cls:   { threshold: 0.10, higherIsBetter: false },
 };
 
-const baseConfig = (label, color, allData, fmt, chartKey) => {
+const baseConfig = (label, color, allData, allMin, allMax, fmt, chartKey) => {
   const filtered = filterByRange(CHART_DATA.labels, allData, activeRange);
+  const filtMin = filterByRange(CHART_DATA.labels, allMin, activeRange);
+  const filtMax = filterByRange(CHART_DATA.labels, allMax, activeRange);
   const t = CHART_TARGETS[chartKey];
   const lineColor = t.higherIsBetter ? '#22C55E' : '#EF4444';
+  const bandColor = color + '18';
   return {
     type: 'line',
     data: {
       labels: filtered.labels,
-      datasets: [{
-        label, data: filtered.data, borderColor: color, backgroundColor: color + '22',
-        tension: 0.25, fill: true, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2,
-      }]
+      datasets: [
+        {
+          label: 'min', data: filtMin.data, borderColor: 'transparent', backgroundColor: bandColor,
+          fill: '+1', pointRadius: 0, tension: 0.25,
+        },
+        {
+          label, data: filtered.data, borderColor: color, backgroundColor: color + '22',
+          tension: 0.25, fill: false, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2,
+        },
+        {
+          label: 'max', data: filtMax.data, borderColor: 'transparent', backgroundColor: 'transparent',
+          fill: false, pointRadius: 0, tension: 0.25,
+        },
+      ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
@@ -1134,13 +1171,13 @@ const baseConfig = (label, color, allData, fmt, chartKey) => {
 function buildCharts() {
   Object.values(charts).forEach(c => c.destroy());
   charts.score = new Chart(document.getElementById('chart-score'),
-    baseConfig('Score', '#1E2761', CHART_DATA.score, v => `${v}/100`, 'score'));
+    baseConfig('Score', '#1E2761', CHART_DATA.score, CHART_DATA.score_min, CHART_DATA.score_max, v => `${v}/100`, 'score'));
   charts.lcp = new Chart(document.getElementById('chart-lcp'),
-    baseConfig('LCP', '#922525', CHART_DATA.lcp_s, v => `${v.toFixed(2)} s`, 'lcp'));
+    baseConfig('LCP', '#922525', CHART_DATA.lcp_s, CHART_DATA.lcp_s_min, CHART_DATA.lcp_s_max, v => `${v.toFixed(2)} s`, 'lcp'));
   charts.tbt = new Chart(document.getElementById('chart-tbt'),
-    baseConfig('TBT', '#8F5210', CHART_DATA.tbt_ms, v => `${v} ms`, 'tbt'));
+    baseConfig('TBT', '#8F5210', CHART_DATA.tbt_ms, CHART_DATA.tbt_ms_min, CHART_DATA.tbt_ms_max, v => `${v} ms`, 'tbt'));
   charts.cls = new Chart(document.getElementById('chart-cls'),
-    baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, v => v.toFixed(3), 'cls'));
+    baseConfig('CLS', '#3A4A8A', CHART_DATA.cls, CHART_DATA.cls_min, CHART_DATA.cls_max, v => v.toFixed(3), 'cls'));
 }
 
 function setRange(days) {
@@ -1810,12 +1847,21 @@ def build_chart_data(snapshots, max_points=30):
             label = dt.strftime("%b %d")
         except Exception:
             label = ts[:10]
+        mm = s.get("psi_minmax", {}).get("mobile", {})
         pts.append({
             "label": label,
             "score": psi["score"],
             "lcp_s": psi["lcp_ms"] / 1000,
             "tbt_ms": psi["tbt_ms"],
             "cls": psi["cls"],
+            "score_min": mm.get("score_min", psi["score"]),
+            "score_max": mm.get("score_max", psi["score"]),
+            "lcp_s_min": mm.get("lcp_ms_min", psi["lcp_ms"]) / 1000,
+            "lcp_s_max": mm.get("lcp_ms_max", psi["lcp_ms"]) / 1000,
+            "tbt_ms_min": mm.get("tbt_ms_min", psi["tbt_ms"]),
+            "tbt_ms_max": mm.get("tbt_ms_max", psi["tbt_ms"]),
+            "cls_min": mm.get("cls_min", psi["cls"]),
+            "cls_max": mm.get("cls_max", psi["cls"]),
         })
     pts = pts[-max_points:]
     return {
@@ -1824,6 +1870,14 @@ def build_chart_data(snapshots, max_points=30):
         "lcp_s": [p["lcp_s"] for p in pts],
         "tbt_ms": [p["tbt_ms"] for p in pts],
         "cls": [p["cls"] for p in pts],
+        "score_min": [p["score_min"] for p in pts],
+        "score_max": [p["score_max"] for p in pts],
+        "lcp_s_min": [p["lcp_s_min"] for p in pts],
+        "lcp_s_max": [p["lcp_s_max"] for p in pts],
+        "tbt_ms_min": [p["tbt_ms_min"] for p in pts],
+        "tbt_ms_max": [p["tbt_ms_max"] for p in pts],
+        "cls_min": [p["cls_min"] for p in pts],
+        "cls_max": [p["cls_max"] for p in pts],
     }
 
 
