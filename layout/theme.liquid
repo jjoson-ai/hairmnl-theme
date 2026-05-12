@@ -70,7 +70,6 @@
       requests on the homepage / PDP audits:
         - googletagmanager.com (GTM, 737 ms / 622 ms scripting)
         - cdn.reamaze.com (Reamaze chat, 735 ms / 255 ms scripting)
-        - cdn.visualquizbuilder.com (VQB quiz, 762 ms / 556 ms scripting)
         - edge.personalizer.io (LimeSpot personalizer, 588 ms)
         - sdk-static.loyaltylion.net (LoyaltyLion SDK, ~500 ms)
         - static.klaviyo.com (Klaviyo signup modal, ~600 ms)
@@ -82,7 +81,6 @@
     {%- endcomment -%}
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://cdn.reamaze.com">
-    <link rel="dns-prefetch" href="https://cdn.visualquizbuilder.com">
     <link rel="dns-prefetch" href="https://edge.personalizer.io">
     <link rel="dns-prefetch" href="https://sdk-static.loyaltylion.net">
     <link rel="dns-prefetch" href="https://static.klaviyo.com">
@@ -678,6 +676,59 @@
     </script>
 
     {% include "loyaltylion" %}
+
+    {%- comment -%}
+      VQB performance gate (bd hairmnl-theme-8z9):
+      VisualQuizBuilder loads 447KB on every page via SATCB dynamic injection.
+      Quiz pages live at /pages/*-quiz (confirmed 2026-05-12). Block everywhere else.
+      Guard runs before content_for_header so document.createElement is
+      overridden before SATCB fires (SATCB executes post-DOM-parse via async scripts).
+    {%- endcomment -%}
+    <script>
+    (function() {
+      var VQB_ORIGINS = ['cdn.visualquizbuilder.com'];
+      var path = window.location.pathname;
+      // Allow any /pages/ URL containing "quiz" (covers all current + future quiz pages)
+      var allowed = /\/pages\/[a-z0-9-]*quiz/i.test(path);
+      if (allowed) return; // quiz page — let VQB load normally
+
+      var _createElement = document.createElement.bind(document);
+      document.createElement = function(tag) {
+        var el = _createElement.apply(document, arguments);
+        if (typeof tag === 'string' && tag.toLowerCase() === 'script') {
+          var _setSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').set;
+          var blocked = false;
+          Object.defineProperty(el, 'src', {
+            configurable: true,
+            get: function() {
+              return Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').get.call(this);
+            },
+            set: function(v) {
+              if (!blocked && VQB_ORIGINS.some(function(o) { return String(v).indexOf(o) !== -1; })) {
+                blocked = true;
+                return; // swallow the src assignment — script never fetches
+              }
+              _setSrc.call(this, v);
+            }
+          });
+        }
+        return el;
+      };
+
+      // MutationObserver fallback: catch any script injected via innerHTML
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          m.addedNodes.forEach(function(node) {
+            if (node.tagName === 'SCRIPT' && node.src &&
+                VQB_ORIGINS.some(function(o) { return node.src.indexOf(o) !== -1; })) {
+              node.parentNode && node.parentNode.removeChild(node);
+            }
+          });
+        });
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    })();
+    </script>
 
     <!-- Shopify app scripts =========================================================== -->
     {{ content_for_header }}
