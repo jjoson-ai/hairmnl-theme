@@ -393,7 +393,136 @@ Each entry references a bd memory or commit for the long-form record.
 
 ---
 
-## 12. Things that are NOT in scope of this repo
+## 12. Replicating the perf dashboard on another tenant
+
+> **Audience for this section:** a Claude Code (or other agent) session
+> starting from zero on a different storefront, asked to "build me the
+> HairMNL-style perf dashboard for this site." Read this section end-to-end
+> before touching code — it captures both the architecture and the gotchas
+> we hit (and fixed) building this one.
+
+### 13.1 What you're building
+
+A self-hosted, append-only performance dashboard that combines three data sources into a single HTML page deployed to GitHub Pages:
+
+| Source | Provides | Cost | Auth |
+|---|---|---|---|
+| **PSI v5 API** (Google PageSpeed Insights) | Lab synthetic runs (Lighthouse): Performance score, LCP, TBT, CLS, network_by_origin, render-blocking resources | Free (with API key) | API key in macOS Keychain or GHA secret |
+| **CrUX HTTP API** (Chrome User Experience Report) | Field/RUM data — 28-day rolling p75 + histograms for LCP/CLS/INP/FCP/TTFB, mobile + desktop | Free, no auth | None |
+| **GA4 Data API** | Real-user CWV events (last 7-30d) with custom dimensions (template, debug_target, metric_rating, etc.) | Free up to quota | Service account JSON |
+
+Rendered output:
+- `dashboard/index.html` — single-file HTML, Chart.js + chartjs-plugin-annotation, no SPA framework
+- `dashboard/data/snapshots.jsonl` — append-only, one JSON object per scheduled run
+
+### 13.2 Components and where they live
+
+| Path | Role |
+|---|---|
+| `scripts/build-perf-dashboard.py` | The generator. ~2300 lines. Fetches PSI/CrUX/GA4, computes daily medians, accumulates min/max bands for noise, renders HTML with embedded Chart.js |
+| `.github/workflows/perf-dashboard.yml` | Daily 13:00 UTC cron + push trigger. Writes GA4 service account key from secret, runs the script, auto-commits dashboard updates |
+| `.github/workflows/pages.yml` | Deploys `dashboard/` to GitHub Pages. Triggered by `workflow_run` after perf-dashboard succeeds — no PAT needed, default GITHUB_TOKEN suffices |
+| `snippets/web-vitals-reporter.liquid` (Shopify) **or** any RUM beacon that pushes to dataLayer | Theme-side instrumentation — pushes `web_vital` events with `metric_name`, `metric_value`, `metric_rating`, `debug_target`, `template` dimensions per pageview |
+| GTM container (optional) | Maps dataLayer events → GA4 event params with custom dimensions registered |
+
+### 13.3 Tenant-specific values you must replace
+
+These are the values hardcoded in this repo. When porting, find each one and substitute:
+
+| Value | Current (HairMNL) | Where it appears |
+|---|---|---|
+| Storefront URL | `https://www.hairmnl.com/` | `scripts/build-perf-dashboard.py:56` (`DEFAULT_URL`), `scripts/build-perf-dashboard.py:985` (PSI link), `--url` CLI flag |
+| GA4 property ID | `248106289` | `GA4_PROPERTY_ID` env var (set in GHA `perf-dashboard.yml` secret), `scripts/build-perf-dashboard.py:1088` (footer text) |
+| GA4 service account key path | `~/.config/hairmnl-ga4-key.json` | `scripts/build-perf-dashboard.py:317` — for GHA, key is written from `GA4_SERVICE_ACCOUNT_KEY` secret to `~/.config/<tenant>-ga4-key.json` |
+| Pages deploy URL | `https://jjoson-ai.github.io/hairmnl-theme/` | GitHub Pages URL — auto-derived from `<user>.github.io/<repo>/` |
+| Cron schedule | `0 13 * * *` | `.github/workflows/perf-dashboard.yml:10` — pick a low-traffic UTC time |
+| Concurrency group / lock | n/a | the script writes to `dashboard/data/snapshots.jsonl` — concurrent runs will conflict (default-branch checkout assumption) |
+| Custom GA4 dimensions | `template`, `metric_rating`, `debug_target`, `error_type`, `error_message`, `error_source` | Must be registered in GA4 admin **before** the script can query them (event-scoped custom definitions) |
+| Bot filter cutoff date | `2026-05-05` | `scripts/build-perf-dashboard.py` `BOT_FILTER_CUTOFF` constant — forward-only, do not retroactively apply |
+
+The dashboard does NOT hardcode the Shopify-specific theme directly. Any platform (Shopify, WooCommerce, Magento, custom Next.js) that can push web-vitals events to GA4 will work.
+
+### 13.4 Setup steps (in order)
+
+For a new Claude Code session on a new tenant repo:
+
+1. **Confirm prerequisites** with the user:
+   - GA4 property ID
+   - Site URL(s) to monitor (homepage + one PDP + one collection minimum)
+   - Whether they already have a CWV RUM beacon shipping to GA4. If not — that must be built first (theme-side or Cloudflare worker or whatever fits their stack)
+   - Whether they want a GTM container in the middle (recommended for custom dimensions) or direct GA4 measurement protocol
+
+2. **Provision external resources:**
+   - PSI API key: https://developers.google.com/speed/docs/insights/v5/get-started → store in repo's GHA secrets as `PSI_API_KEY`
+   - GA4 service account: Cloud Console → Service Accounts → grant **Viewer** role on the GA4 property → download JSON key → paste full file contents as GHA secret `GA4_SERVICE_ACCOUNT_KEY` (yes the whole JSON, not a path)
+   - GA4 custom dimensions: register `template`, `metric_rating`, `debug_target` in GA4 admin → Property → Custom definitions → event-scoped
+   - GitHub Pages: enable in repo Settings → Pages → "GitHub Actions" source
+
+3. **Copy the dashboard scaffold:**
+   ```sh
+   # From the HairMNL repo (or a fork/template):
+   cp scripts/build-perf-dashboard.py   <new-repo>/scripts/
+   cp -r dashboard/                     <new-repo>/                    # empty dirs + README only
+   cp .github/workflows/perf-dashboard.yml  <new-repo>/.github/workflows/
+   cp .github/workflows/pages.yml           <new-repo>/.github/workflows/
+   ```
+   Delete `dashboard/data/snapshots.jsonl` — start with empty history.
+
+4. **Substitute tenant values** (see table in §13.3 above).
+
+5. **First manual run** to validate:
+   ```sh
+   GA4_PROPERTY_ID=<id> GA4_SERVICE_ACCOUNT_KEY="$(cat ~/.config/<tenant>-ga4-key.json)" \
+     PSI_API_KEY=<key> python3 scripts/build-perf-dashboard.py --no-crux --psi-runs 1
+   ```
+   - `--psi-runs 1` keeps the first run fast (~30s) for iteration
+   - Confirms env wiring before letting the GHA spend 5 minutes
+   - Inspect `dashboard/index.html` in a browser
+
+6. **Push and let the GHA take over.** First scheduled run produces the first canonical snapshot. After ~7 days you have enough history for the trend charts to be informative.
+
+### 13.5 Critical patterns we learned the hard way
+
+These are real regressions we lived through. Read each before changing the relevant code:
+
+**(a) PSI is noisy — never use a single run for the daily snapshot.** Default to `--psi-runs 3` and take the **median**, not the mean. One late-night API hiccup at 23:51 UTC produced LCP=32s where the actual was ~8s, which then overwrote the entire day's good runs. See bd `c0w` (`_merge_daily_snapshot` rewrite) + bd `u8w` (bumping cron to 3 runs).
+
+**(b) The latest-wins merge bug.** The original `_merge_daily_snapshot` kept the latest PSI value of the day, which let one bad late run trash earlier good runs. The current code accumulates a `_psi_history` list per strategy and computes the median + min/max band. **Do not regress this** — if you change snapshot merging, write a test against `dashboard/data/snapshots.jsonl` fixtures.
+
+**(c) GA4 bot contamination.** A `/pages/privacy-policy` URL (or equivalent) can receive 50× more traffic than your homepage from scrapers/bots, dragging down aggregate RUM metrics. We applied a `BOT_FILTER_CUTOFF` date — RUM queries forward of that date filter the problem path; older snapshots remain unfiltered for continuity. Per-tenant: identify their bot-magnet paths *before* trusting aggregate RUM.
+
+**(d) `workflow_dispatch` does not work with the default GitHub token.** Cross-workflow triggering (perf-dashboard → pages) MUST use `on: workflow_run` in the consumer (`pages.yml`), not `gh workflow run`. The latter fails with HTTP 403 because `GITHUB_TOKEN` cannot trigger workflow_dispatch in any repo. See the comment block in `pages.yml`.
+
+**(e) `[skip ci]` is global — never put it in a commit message.** It skips ALL workflows, including the downstream `pages.yml` deploy. To prevent self-triggering loops, use `paths-ignore: ['dashboard/**']` in the push trigger of the producer workflow.
+
+**(f) Chart trend lines need consistent color metaphor.** Single-color thresholds (green for "above target," red for "below target") create cognitive load because the meaning of "good" flips between charts. Use the **3-band Web Vitals zones** (Good / Needs Improvement / Poor) as background fills with neutral chart lines. See bd `bk2` for the implementation (commit `937446a`).
+
+**(g) GTM tag must use `Custom Event` trigger, not `Initialization - All Pages`.** A `js_error` GA4 tag firing on All Pages produces tens of thousands of empty (`not set`) events that drown out real errors. Wire the tag's firing trigger to `Custom Event: hairmnl_js_error` (or the equivalent dataLayer event name). See bd `l3g` debug post-mortem at `docs/gtm-js-error-handoff-2026-05-06.md`.
+
+**(h) Daily PSI run can hit transient API errors.** Today's run had 2/3 mobile runs error (timeout + HTTP 500). The script tolerates partial failures (median of remaining runs). If all 3 fail, the snapshot logs the error but doesn't overwrite the previous day's data. **Don't add retry-on-error logic at the URL level** — PSI's own retries inside the API are sufficient; client retries can DDoS yourself out of quota.
+
+### 13.6 What to leave hairmnl-specific (do NOT generalize)
+
+- `dashboard/compare-2026-04-29-vs-2026-05-05.html` — point-in-time perf delta from a specific sprint; not reusable
+- `BOT_FILTER_CUTOFF` value — a date specific to *when this tenant fixed their bot problem*; new tenant picks their own
+- Slack webhook integration (`SLACK_WEBHOOK_URL`) — optional, tenant-specific channel/threshold
+- `web-vitals-reporter.liquid` — Shopify Liquid syntax; rewrite for the new tenant's templating layer if not Shopify
+- All `bd hairmnl-theme-*` references in code comments — these are historical context, not behavior. Strip on port
+
+### 13.7 Reference bd memories (for the new session)
+
+Run `bd memories <keyword>` to retrieve. Key ones:
+- `gha-perf-dashboard-yml-fully-operational-as-of` — what the GHA does + how secrets flow
+- `per-template-cwv-slicing-live-as-of-2026` — how `template` dimension was wired
+- `js-error-pipeline-fixed-end-to-end-2026` — the GTM tag fix + how it failed
+- `ga4-privacy-policy-bot-2026-05-01` — the bot-contamination diagnosis pattern
+- `dashboard-sprint-complete-2026-05-05-18-issues` — the original 18-issue dashboard build sprint
+- `dashboard-3-band-zones-impl-2026-05-12` — bk2 chart UX redesign (added by this session)
+- `dashboard-replication-recipe-2026-05-12` — the high-level recipe for porting (added by this session)
+
+---
+
+## 13. Things that are NOT in scope of this repo
 
 So agents don't go looking:
 
