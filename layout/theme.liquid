@@ -678,19 +678,22 @@
     {% include "loyaltylion" %}
 
     {%- comment -%}
-      VQB performance gate (bd hairmnl-theme-8z9):
-      VisualQuizBuilder loads 447KB on every page via SATCB dynamic injection.
-      Quiz pages live at /pages/*-quiz (confirmed 2026-05-12). Block everywhere else.
-      Guard runs before content_for_header so document.createElement is
-      overridden before SATCB fires (SATCB executes post-DOM-parse via async scripts).
+      Performance gates (bd hairmnl-theme-8z9 + hairmnl-theme-xex):
+      VisualQuizBuilder (447KB) + BookThatApp (171KB) load on every page via SATCB
+      dynamic injection. VQB only needed on /pages/*quiz pages; BTA only needed on
+      /pages/studio-*, /pages/hairmnlstudio-*, and /apps/bta-* routes.
+      Block both everywhere else. Guard runs before content_for_header so
+      document.createElement is overridden before SATCB fires.
     {%- endcomment -%}
     <script>
     (function() {
-      var VQB_ORIGINS = ['cdn.visualquizbuilder.com'];
+      var BLOCKED_ORIGINS = ['cdn.visualquizbuilder.com', 'cdn.bookthatapp.com'];
       var path = window.location.pathname;
-      // Allow any /pages/ URL containing "quiz" (covers all current + future quiz pages)
-      var allowed = /\/pages\/[a-z0-9-]*quiz/i.test(path);
-      if (allowed) return; // quiz page — let VQB load normally
+      // Allowlist: quiz pages (VQB) + studio/booking pages (BTA)
+      var allowed = /\/pages\/[a-z0-9-]*quiz/i.test(path)                                // VQB
+                 || /\/pages\/(studio|hairmnlstudio)-/i.test(path)                      // BTA studio
+                 || /^\/apps\/bta-/i.test(path);                                          // BTA app routes
+      if (allowed) return; // allowlisted — let scripts load normally
 
       var _createElement = document.createElement.bind(document);
       document.createElement = function(tag) {
@@ -704,7 +707,7 @@
               return Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').get.call(this);
             },
             set: function(v) {
-              if (!blocked && VQB_ORIGINS.some(function(o) { return String(v).indexOf(o) !== -1; })) {
+              if (!blocked && BLOCKED_ORIGINS.some(function(o) { return String(v).indexOf(o) !== -1; })) {
                 blocked = true;
                 return; // swallow the src assignment — script never fetches
               }
@@ -720,7 +723,7 @@
         mutations.forEach(function(m) {
           m.addedNodes.forEach(function(node) {
             if (node.tagName === 'SCRIPT' && node.src &&
-                VQB_ORIGINS.some(function(o) { return node.src.indexOf(o) !== -1; })) {
+                BLOCKED_ORIGINS.some(function(o) { return node.src.indexOf(o) !== -1; })) {
               node.parentNode && node.parentNode.removeChild(node);
             }
           });
