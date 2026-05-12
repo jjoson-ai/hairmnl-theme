@@ -2655,3 +2655,45 @@ img.banner-slide-img,
   width: 100%;
   height: auto;
 }
+
+/* ── CLS fix 2026-05-12 hairmnl-theme-jvf (987 Phase 2 — /cart template) ──
+   GA4 RUM ties ~40 CLS events to #shopify-section-template-*__cart /
+   div.cart__template (cart page grid, not the slide-out drawer — drawer uses
+   .cart__drawer and never matches .cart__template).
+
+   Fixes are reservation + flex stability only — NO contain:layout|paint,
+   transform, filter, or will-change (freegifts/third-party nodes live in this
+   subtree; kt0 containment gotcha + .opencode_hints audit pattern).
+
+   1. body.template-cart .cart__template …quantity__wrapper / quantity__input
+      — Pipeline quantity controls lack min-height; font/subpixel reflow or
+      cart--loading state tweaks can change the measured row height in the
+      desktop cart grid → line-item CLS. 42px matches theme padding 8px*2 +
+      border + readable line box.
+
+   2. body.template-cart .cart__template …cart__items__price .line__price:first-of-type
+      — cart-page.css sets del/mark display:block; when compare-at or line
+      discounts render as two lines, the price cell grows after first paint.
+      min-height on desktop only reserves a typical two-line price stack so
+      single-line prices sit in the same vertical envelope without shifting
+      sibling grid tracks.
+
+   Media query limits (2) to min-width 768px where the 5-column cart__items__grid
+   applies (cart-page.css); stacked mobile layout is less sensitive to this shift.
+*/
+body.template-cart .cart__template .cart__items__quantity .quantity__wrapper {
+  min-height: 42px;
+  margin-bottom: 0;
+}
+
+body.template-cart .cart__template .cart__items__quantity .quantity__input {
+  min-height: 42px;
+  box-sizing: border-box;
+}
+
+@media only screen and (min-width: 768px) {
+  body.template-cart .cart__template .cart__items__price .line__price:first-of-type {
+    min-height: 2.75em;
+  }
+}
+/* ── End CLS fix hairmnl-theme-jvf ── */
