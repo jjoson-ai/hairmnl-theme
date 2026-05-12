@@ -73,7 +73,7 @@ jobs:
         env:
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
           PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
-        run: python3 scripts/build-perf-dashboard.py --psi-runs 2
+        run: python3 scripts/build-perf-dashboard.py --psi-runs 3
 
       - name: Commit updated dashboard
         id: commit
