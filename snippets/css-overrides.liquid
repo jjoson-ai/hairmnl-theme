@@ -304,6 +304,19 @@
     overflow: hidden;
   }
 
+  /* CLS fix 2026-05-13 hairmnl-theme-7i0 — Announcement bar ticker height lock.
+     Custom JS Ticker class (theme.dev.js Bar constructor) removes
+     ticker--unloaded after DOMContentLoaded. During that window, font FOUT
+     causes text reflow within max-content width, shifting the ticker frame
+     height. Pinning height + overflow:hidden prevents any vertical shift.
+     white-space:nowrap enforces single-line (announcement is line-height
+     constrained). No contain:layout — pure dimension pinning is kt0-safe. */
+  .announcement__wrapper [data-ticker-frame] {
+    height: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
   /* CLS fix 2026-05-10 kt0 — Desktop header element shift:
      GA4 RUM (last 14d, deviceCategory=desktop) shows header.theme__header
      contributing 165 poor-CLS events + 52 on the parent #shopify-section-header
