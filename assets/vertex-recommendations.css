@@ -366,15 +366,41 @@
   letter-spacing: 0.08em;
 }
 
-/* Phase 1 cutover (2026-05-13): cart_above_checkout vertical-stack
-   override REMOVED. Product owner asked for a horizontal slider on
-   the cart page that matches the cart drawer experience. By deleting
-   this override, the slot inherits the default `.vrec-slot__rail`
-   rules above (grid-auto-flow: column, scroll-snap rail, 2.25/3.3/4.5
-   cards visible at mobile/tablet/desktop). The compact-card markup
-   path in snippets/vertex-rec-card.liquid was also gated off in the
-   same commit so cards render in standard vertical layout, matching
-   the drawer cards visually. */
+/* Phase 1 cutover (2026-05-13): cart_above_checkout uses an explicit
+   horizontal-rail config — the default .vrec-slot__rail rules above
+   were inheriting weirdly on the cart-page container (cards expanded
+   to fill the rail because the % column-width resolved against the
+   wrong containing block, making images ~800px on desktop). Pinning
+   absolute widths here. Numbers mirror the original mobile-rail
+   override (88% mobile, 30%/22% tablet/desktop) so the visual density
+   matches the cart drawer slider. */
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 88%; /* mobile: 1.1 cards visible */
+  gap: 12px;
+  scroll-snap-type: x mandatory;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  padding: 0 16px 8px;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail::-webkit-scrollbar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
+    grid-auto-columns: 30%; /* tablet: ~3 cards */
+    gap: 16px;
+    padding: 0 0 8px;
+  }
+}
+@media (min-width: 1024px) {
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
+    grid-auto-columns: 22%; /* desktop: ~4 cards + peek */
+    gap: 20px;
+  }
+}
 
 /* — Skeleton — */
 .hairmnl-theme .vrec-card--skeleton {
