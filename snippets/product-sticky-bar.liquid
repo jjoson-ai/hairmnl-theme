@@ -1,0 +1,121 @@
+{%- comment -%}
+  PDP sticky purchase bar — desktop only, appears once primary ATC
+  leaves viewport. Per task-2-pdp-progression.md PR-2.
+
+  Renders at the bottom of sections/product.liquid (last sibling
+  before closing wrapper). Inline JS uses IntersectionObserver on
+  the primary [name="add"] button — no new dependencies, ~30 lines.
+
+  Mobile/tablet: the bar's container has `display: none` until
+  the ≥1024px media query in snippets/css-overrides.liquid; mobile
+  keeps the theme's existing mobile sticky-ATC pattern.
+
+  Variant + price stay in sync with the primary product form via
+  the Pipeline-theme variant-change event ("variant:change") that
+  bubbles from the form. Falls back to the first available variant
+  on page load.
+{%- endcomment -%}
+
+{%- liquid
+  assign first_variant = product.first_available_variant
+  if first_variant == nil
+    assign first_variant = product.variants.first
+  endif
+  assign thumb_img = product.featured_media.preview_image
+-%}
+
+{%- if product != blank -%}
+  <div class="vrec-product-sticky-bar"
+       id="vrec-product-sticky-bar"
+       data-product-id="{{ product.id }}"
+       aria-hidden="true">
+    {%- if thumb_img -%}
+      <div class="vrec-product-sticky-bar__thumb">
+        <img src="{{ thumb_img | image_url: width: 96 }}"
+             alt=""
+             width="48"
+             height="48"
+             loading="lazy">
+      </div>
+    {%- endif -%}
+    <div class="vrec-product-sticky-bar__info">
+      <p class="vrec-product-sticky-bar__title">{{ product.title | strip_html }}</p>
+      {%- if product.variants.size > 1 and first_variant -%}
+        <p class="vrec-product-sticky-bar__meta" data-vrec-sticky-variant>{{ first_variant.title }}</p>
+      {%- elsif product.vendor != blank -%}
+        <p class="vrec-product-sticky-bar__meta">{{ product.vendor }}</p>
+      {%- endif -%}
+    </div>
+    <p class="vrec-product-sticky-bar__price" data-vrec-sticky-price>{{ first_variant.price | money }}</p>
+    {%- form 'product', product, class: 'vrec-product-sticky-bar__form' -%}
+      <input type="hidden" name="id" value="{{ first_variant.id }}" data-vrec-sticky-id>
+      <input type="hidden" name="quantity" value="1">
+      <button type="submit"
+              name="add"
+              class="vrec-product-sticky-bar__cta"
+              {% unless first_variant.available %}disabled aria-disabled="true"{% endunless %}>
+        {%- if first_variant.available -%}
+          {{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}
+        {%- else -%}
+          {{ 'products.product.sold_out' | t | default: 'Sold out' }}
+        {%- endif -%}
+      </button>
+    {%- endform -%}
+  </div>
+
+  <script>
+    (function () {
+      // Desktop-only behavior — skip if viewport <1024 (mobile has its own bar)
+      if (window.matchMedia('(max-width: 1023px)').matches) return;
+
+      var bar = document.getElementById('vrec-product-sticky-bar');
+      if (!bar) return;
+
+      // Find the primary product-form ATC button. Pipeline uses
+      // <form action="/cart/add"> with button[name="add"].
+      var primaryATC = document.querySelector(
+        'form[action*="/cart/add"]:not(.vrec-product-sticky-bar__form) button[name="add"], ' +
+        'form[action*="/cart/add"]:not(.vrec-product-sticky-bar__form) input[name="add"]'
+      );
+      if (!primaryATC) return;
+
+      // Show the sticky bar when ATC leaves viewport
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            bar.classList.remove('is-visible');
+            bar.setAttribute('aria-hidden', 'true');
+          } else {
+            bar.classList.add('is-visible');
+            bar.setAttribute('aria-hidden', 'false');
+          }
+        });
+      }, { rootMargin: '0px 0px 0px 0px', threshold: 0 });
+      io.observe(primaryATC);
+
+      // Keep variant + price in sync. Pipeline fires `variant:change`
+      // on the product section when the variant selector updates.
+      // Best-effort — if the event shape differs, the sticky bar
+      // just keeps the first-variant defaults rendered server-side.
+      document.addEventListener('variant:change', function (e) {
+        var variant = e && e.detail && (e.detail.variant || e.detail);
+        if (!variant) return;
+        var idInput = bar.querySelector('[data-vrec-sticky-id]');
+        var priceEl = bar.querySelector('[data-vrec-sticky-price]');
+        var variantEl = bar.querySelector('[data-vrec-sticky-variant]');
+        if (idInput && variant.id) idInput.value = variant.id;
+        if (priceEl && variant.price != null) {
+          // Variant price is in cents on Shopify Liquid; format defensively.
+          var p = variant.price;
+          var formatted = typeof p === 'string' ? p : (p / 100).toLocaleString('en-PH', { style: 'currency', currency: 'PHP' });
+          priceEl.textContent = formatted;
+        }
+        if (variantEl && variant.title) variantEl.textContent = variant.title;
+        var btn = bar.querySelector('.vrec-product-sticky-bar__cta');
+        if (btn && typeof variant.available !== 'undefined') {
+          btn.disabled = !variant.available;
+        }
+      });
+    })();
+  </script>
+{%- endif -%}
