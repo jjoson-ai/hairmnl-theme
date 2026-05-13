@@ -310,20 +310,135 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+/* ── Cart-page slider (vertical cards in horizontal scroll rail) ────
+   Phase 1 cutover (2026-05-13 round 6): cart_above_checkout converted
+   from vertical-stack-of-compact-rows to a horizontal slider per PO
+   review. Uses fixed-px column widths (NOT %) because earlier %-based
+   attempts resolved against the wrong containing block on the cart
+   form/template hierarchy — cards rendered ~800px wide.
+
+   Explicit dimensions at every layer (rail, card, image, picture, img)
+   defend against the <img width="1600"> intrinsic-size push-through
+   that was the actual root cause of the giant-image bug.
+
+   Cart drawer slider unchanged — it uses the default vrec-card path
+   and the standard .vrec-slot__rail rules (which work fine there).
+   Only the cart-page slot needs this special handling. */
 .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
-  grid-auto-flow: row;
-  grid-auto-columns: auto;
-  gap: 0;
-  padding: 0;
-  overflow: visible;
-}
-.hairmnl-theme .vrec-slot--cart_above_checkout[data-viewport="mobile"] .vrec-slot__rail {
-  grid-auto-flow: column;
-  grid-auto-columns: 88%;
+  display: grid !important;
+  grid-auto-flow: column !important;
+  grid-auto-columns: 220px !important;
   gap: 12px;
   padding: 0 16px 8px;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
   scroll-snap-type: x mandatory;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail::-webkit-scrollbar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
+    grid-auto-columns: 240px !important;
+    gap: 16px;
+    padding: 0 0 8px;
+  }
+}
+@media (min-width: 1024px) {
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
+    grid-auto-columns: 240px !important;
+    gap: 20px;
+  }
+}
+
+/* Card itself — fixed width matching the column, flex column layout */
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  width: 220px !important;
+  max-width: 220px !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+  background: var(--vrec-card-bg);
+  text-decoration: none;
+  color: inherit;
+}
+@media (min-width: 768px) {
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider {
+    width: 240px !important;
+    max-width: 240px !important;
+  }
+}
+
+/* Image wrapper + picture + img — every layer clamped to 100% of card */
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card__image {
+  position: relative;
+  width: 100% !important;
+  max-width: 100% !important;
+  aspect-ratio: 1 / 1;
+  background: var(--vrec-image-bg);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card__image picture {
+  display: block !important;
+  width: 100% !important;
+  height: 100%;
+  max-width: 100% !important;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card__image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  object-fit: cover;
+}
+
+/* Card info column — title + price + ADD button stack */
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__info {
+  padding: 0 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__title-link,
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__image-link {
+  color: inherit;
+  text-decoration: none;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__cta-form {
+  margin: 8px 0 0;
+  display: block;
+  width: 100%;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 16px;
+  background: var(--vrec-cta-bg);
+  color: var(--vrec-cta-fg);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 120ms;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__cta:hover { background: var(--vrec-cta-bg-hover); }
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__cta:active { transform: translateY(1px); }
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__sold-out-label {
+  font-size: 11px;
+  color: var(--vrec-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 8px;
 }
 
 /* — Skeleton — */
@@ -583,8 +698,8 @@
     display: flex;
   }
 }
-/* Cart page is stacked vertical on desktop — no rail to navigate */
-.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__nav { display: none; }
+/* Phase 1 round 6: cart page is now a horizontal slider, so nav
+   buttons inherit visibility from the default rules above. */
 /*
  * Drawer slider nav — show in the drawer too (team requested).
  * Override the mobile-hide rule above + shrink to fit narrow drawer width.
