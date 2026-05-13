@@ -11,3 +11,6 @@ node_modules/
 
 # Claude Code worktrees (per-session, not project state)
 .claude/worktrees/
+
+# Python bytecode
+__pycache__/
