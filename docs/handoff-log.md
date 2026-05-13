@@ -4,6 +4,59 @@ Append-only log of coordinator sessions. Newest entries at the top.
 
 Format spec: see `docs/coordinator-handoff.md` §10.
 
+---
+
+### 2026-05-13 (Claude Sonnet 4.6 + Opus 4.7 1M — single coordinator session, no OC dispatch)
+
+**Issues touched:** p84, d00, fhh, dyp, gj0 (all closed); 89n (P3 filed)
+**Outcome:** 6 commits pushed to live + git, 49 dead snippet files removed, 4 caller files cleaned up.
+
+**What was done (chronologically):**
+
+1. **p84 (BTA bootstrap loader)** — Closed via OC's `/hh-orchestrate`. Added `/apps/bookthatapp/` to `layout/theme.liquid` BLOCKED_ORIGINS as belt-and-suspenders for the BTA cdn block. Coordinator ran merge-gate, pushed live (theme 131664707683 via `creations-gdc.myshopify.com`). Commit `212db65`.
+
+2. **d00 (GTM metric_rating empty for ~47% of CWV events)** — Root cause: `window.gtag()` + GTM internal bridge was double-firing every CWV event — once direct-to-GA4 (correct rating) and once via the bridge to tag 766 with empty DLV reads (`metric_rating=""`). Fix: prefer `window.dataLayer.push()` over `window.gtag()` in `snippets/web-vitals-reporter.liquid` when GTM is present. Tag 766 (trigger 758) was already correctly wired — no GTM publish required. Same commit `212db65`. 24h GA4 verification window pending; expect `(empty) + (not set)` to drop to <5%.
+
+3. **fhh (mobile /cart layout broken)** — Root cause: `assets/cart-page.css` was extracted from `theme.css` on 2026-04-26 (commit `949888a`) but the two `@media` wrappers (`(min-width: 768px)` desktop + `(max-width: 767px)` mobile) were stripped during extraction. Result: desktop 5-col `.cart__items__grid` + 4-col `.template__cart__footer` applied at every viewport on mobile, overriding theme.css mobile rules via source-order. Fix: restored both media-query wrappers, split `.template__cart__footer { margin-top: 2em }` so margin stays universal while grid declaration moves into desktop wrapper. All 42 original rules preserved + 2 @media wrappers + 1 split = 45 rules. Verified at 2343px desktop: `.cart__items__grid` computes to `"90px 359px 180px 180px 180px"` (5-col). Commit `2768465`.
+
+4. **BTA + VQB cleanup** — Product team confirmed both apps uninstalled. Removed: 55-line `createElement` guard from `layout/theme.liquid` (bd 8z9 / xex / p84) and the BTA app block reference from `config/settings_data.json` (`shopify://apps/bta-appointment-booking-app/...`). Commit `e939c03`.
+
+5. **dyp (BSS B2B Lock + Solution cleanup)** — Removed callers in `layout/theme.liquid:117-121` (bsscommerce_login_require capture chain) + `layout/theme.liquid:~795` (bss-passcode-to-see-price + bsscommerce-login-to-see-price chains, preserved bss-ltap-fl-redirect at that stage), `sections/main-register.liquid:50`, `templates/customers/register.liquid:50`, and the `bss-b2b-wholesale-solution` app block from `config/settings_data.json`. Deleted 33 dead snippets (20 `bss-b2b-*` for Solution + 13 `bsscommerce-*` / `bss-passcode-*` / `bss-custom-login` for Lock). Preserved Customer Portal files (`bss-b2b-cp-*` + shared `bss-b2b-js` / `bss-b2b-jquery-341-js` / `bss-b2b-currency-format` / `bss-b2b-featured-product-vat-styles` behind `content_for_header contains 'bss-b2b-cp'` gate). Commit `1c0da46`.
+
+6. **gj0 (BSS LTAP cleanup)** — Product team confirmed LTAP also uninstalled. Removed: the last `bss-ltap-fl-redirect` chain from `layout/theme.liquid:~795` (just leaves clean `</main>`), two duplicate inline BSS B2B Login redirect script blocks from `sections/product.liquid:1-4` (POSTed to `login-to-access-page-api.bsscommerce.com` on every PDP load), one orphan jQuery selector at `layout/theme.liquid:917` (targeted the removed `#shopify-section-bss-b2b-wholesaler-form-1959`), and 16 LTAP snippet files (15 `bss-ltap-*` + `bsscommerce-redirect-product-page-logic`). Commit `7dee6f5`.
+
+**Files modified:**
+- `layout/theme.liquid` (BTA+VQB guard removed, BSS Lock+Solution+LTAP caller blocks removed, orphan jQuery line removed; net ~80 lines deleted, ~5 added)
+- `config/settings_data.json` (BTA + BSS B2B Solution app blocks removed)
+- `snippets/web-vitals-reporter.liquid` (d00 gtag-vs-dataLayer priority swap)
+- `assets/cart-page.css` (fhh media-query wrappers restored)
+- `sections/product.liquid` (LTAP inline scripts removed, clean `{%- liquid` start)
+- `sections/main-register.liquid` + `templates/customers/register.liquid` (BSS wholesaler register form include removed)
+- 49 dead snippet files deleted (33 Lock+Solution + 16 LTAP)
+
+**Verification:**
+- `python3 scripts/check-overlay-css.py` — 0 kt0 violations (381 files; was 430 before this session, ↓49)
+- Live smoke tests on draft theme 140785582179 via Chrome MCP: PDP / cart / register / homepage all render with 0 Liquid errors and 0 BSS/LTAP references in the HTML
+- Each push verified: `git diff HEAD` reviewed before every `shopify theme push --allow-live`
+
+**Dashboard snapshot (2026-05-13T16:44:53Z, post-cleanup):**
+- CrUX p75 (28d real-shopper — won't reflect today's changes for ~3 weeks):
+  - Mobile: LCP 3185ms (poor) · CLS 0.060 (good) · INP 244ms (needs-improvement)
+  - Desktop: LCP 2720ms (poor) · CLS 0.190 (needs-improvement) · INP 143ms (good)
+- PSI mobile lab: score 16 / LCP 38.2s / TBT 1149ms across 3 identical runs — likely a bad PSI server window (today's earlier runs were 34 and 41; PSI single-run noise is well-documented for HairMNL).
+- GA4 RUM 7-day metric_rating still ~54-61% `unknown` because the d00 fix landed today — 7-day window needs to age out pre-fix data.
+
+**Open question for next session:**
+- Re-pull GA4 RUM in 24-48h to verify the d00 `metric_rating` fix (expect `(empty) + (not set)` < 5%).
+- CrUX next-meaningful-update is ~2026-06-03 (28-day window slides past today's commits). If LCP improves <3000ms p75 on mobile and CLS / INP move favorably, that confirms the cleanup helped real users.
+
+**Next-session handoff notes:**
+- bd 89n is the manual orphan-asset cleanup (49 snippet files still sitting in Shopify admin assets folder; harmless but ugly) — Shopify admin UI walk-through only, no code change.
+- bd bjk (founder decision on full BSS Customer Portal uninstall) is still open. If approved, the cleanup pattern is identical: 7 `bss-b2b-cp-*` and shared files + the gated load at `theme.liquid:~944`.
+- bd 987 (desktop CLS p75 stuck at 0.20) is still the highest-leverage open CLS item; CrUX desktop CLS at 0.190 confirms it.
+
+---
+
 ### 2026-05-12 (model: claude-sonnet-4-6, coordinated by claude-opus-4-7)
 
 **Issues touched:** d00 (GTM metric_rating parameter fix — publish confirmed)
