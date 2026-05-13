@@ -791,8 +791,7 @@
       {%- unless template contains 'customers/' -%}
         <limespot></limespot>
       {%- endunless -%}
-      
-    {% capture bss_ltap_fl_redirect %}{% render 'bss-ltap-fl-redirect' %}{% endcapture %}{% unless bss_ltap_fl_redirect contains "Liquid error" %}{% render 'bss-ltap-fl-redirect' %}{% endunless %}</main>
+    </main>
 
     {% section 'footer' %}
 
@@ -915,7 +914,6 @@
           $('.grid').css('margin-left', '0px');
           $('.grid__item').css('padding-left', '0px');
           $('.rte img').css('width', '-webkit-fill-available');
-          $('div#shopify-section-bss-b2b-wholesaler-form-1959 .formbuilder-radio').css('cssText', 'display: flex;align-items: center;');
           $('.site-footer-wrapper .section-header.text-center').remove();
           var width = $(window).width();
           if (width < 1400) {
