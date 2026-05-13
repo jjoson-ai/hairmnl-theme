@@ -63,15 +63,23 @@
       else if (attr.largestShiftTarget) params.debug_target = attr.largestShiftTarget;
       else if (attr.interactionTargetElement) params.debug_target = attr.interactionTargetElement;
 
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', metric.name, params);
-      } else if (window.dataLayer && window.dataLayer.push) {
-        // GTM path — push as a per-metric event with flat params so a single
-        // GA4 GTM tag (event name = {{Event}}, trigger = Custom Event matching
-        // LCP|CLS|INP|FCP|TTFB) forwards everything without parameter remapping.
+      if (window.dataLayer && window.dataLayer.push) {
+        // GTM path — always prefer a flat dataLayer push so DLV variables
+        // ({{metric_rating}}, {{metric_value}}, etc.) resolve correctly in
+        // tag 766 (GA4 – Web Vitals, trigger 758).
+        //
+        // Do NOT call window.gtag() when GTM is present: gtag() sends the event
+        // directly to GA4 (correct rating) AND fires GTM trigger 758 via GTM's
+        // internal gtag bridge. The bridge does NOT populate the flat dataLayer
+        // model, so tag 766 DLV reads return "" → GA4 receives every metric
+        // twice: once correct (direct GA4) and once with (empty) metric_rating
+        // (GTM bridge). Pushing to dataLayer directly avoids the double-fire.
         var payload = { event: metric.name };
         for (var k in params) { if (Object.prototype.hasOwnProperty.call(params, k)) payload[k] = params[k]; }
         window.dataLayer.push(payload);
+      } else if (typeof window.gtag === 'function') {
+        // Non-GTM fallback: Shopify's native GA4 integration without GTM.
+        window.gtag('event', metric.name, params);
       }
     } catch (e) { /* never break the page on reporting */ }
   }

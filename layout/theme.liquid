@@ -687,7 +687,7 @@
     {%- endcomment -%}
     <script>
     (function() {
-      var BLOCKED_ORIGINS = ['cdn.visualquizbuilder.com', 'cdn.bookthatapp.com'];
+      var BLOCKED_ORIGINS = ['cdn.visualquizbuilder.com', 'cdn.bookthatapp.com', '/apps/bookthatapp/'];
       var path = window.location.pathname;
       // Allowlist: quiz pages (VQB) + studio/booking pages (BTA)
       var allowed = /\/pages\/[a-z0-9-]*quiz/i.test(path)                                // VQB
