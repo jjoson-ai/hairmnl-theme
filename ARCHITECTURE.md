@@ -370,6 +370,8 @@ Each entry references a bd memory or commit for the long-form record.
 | 2026-05-11 | Layer 3 (Playwright smoke test) shipped; generalized as global Claude skill `~/.claude/skills/smoke-test-overlays/`. | commit be0e9cd + bd68477 |
 | 2026-05-11 | `metric_rating` GTM fix staged (tag 771 was missing the param mapping; ~50-60% of CWV events had blank rating). Container Version 143 pending publish. | bd `d00`, `docs/handoff-log.md` |
 | 2026-05-12 | OC dispatch tier-leak diagnosed — `commands/hh-*.md` per-command `model:` frontmatter was overriding the symlink. Stripped from all 6 hh-* files; `oc-tier.sh` helper added. | global `CLAUDE.md` |
+| 2026-05-13 | **Phase 1 cutover (LimeSpot → Vertex FBT)** prepared on branch `phase1-cutover-fbt-clean` (HEAD `3cef732`). LimeSpot SDK disabled, Vertex FBT slot active on PDP / cart drawer / cart page. Pipeline "BUY IT WITH" upsells removed. PO copy applied (Title Case headings). Cart-page slot is a horizontal slider with inline ADD-to-cart. Awaiting team approval before Day 0 live push. | bd `cji` epic + memory `phase-1-limespot-vertex-fbt-cutover-prep-2026` |
+| 2026-05-13 | **Phase 1.5 — PDP white-space progression** shipped to draft theme alongside Phase 1. Sticky gallery (Option 1, ~50 bytes CSS in `snippets/css-overrides.liquid`) + sticky purchase bar (Option 2, new `snippets/product-sticky-bar.liquid` + IntersectionObserver JS). Featured-review module (Option 3) filed as bd `dnb` for Q3 — needs Judge.me API backfill (distribution histogram + featured-review data not exposed via standard Shopify metafields). | bd memory `pdp-white-space-progression-task-2-pdp-progression` |
 
 ---
 
