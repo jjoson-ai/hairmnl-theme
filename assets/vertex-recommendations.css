@@ -390,11 +390,16 @@
 .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail::-webkit-scrollbar {
   display: none;
 }
+/* Target ANY card variant inside the cart_above_checkout slot, not
+   just .vrec-card--cart-slider — the Liquid conditional may render
+   the default .vrec-card if our snippet edit hasn't deployed yet,
+   and we want the CSS clamp to win either way. */
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card,
 .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider {
   flex: 0 0 220px !important;
-  width: 220px;
-  max-width: 220px;
-  min-width: 0;
+  width: 220px !important;
+  max-width: 220px !important;
+  min-width: 0 !important;
   box-sizing: border-box;
 }
 @media (min-width: 768px) {
@@ -402,33 +407,45 @@
     gap: 16px;
     padding: 0 0 8px;
   }
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card,
   .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider {
     flex: 0 0 240px !important;
-    width: 240px;
-    max-width: 240px;
+    width: 240px !important;
+    max-width: 240px !important;
   }
 }
 @media (min-width: 1024px) {
   .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
     gap: 20px;
   }
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card,
   .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider {
     flex: 0 0 240px !important;
-    width: 240px;
-    max-width: 240px;
+    width: 240px !important;
+    max-width: 240px !important;
   }
 }
-/* Image must stay within the card; explicit width 100% + max-width
-   100% guards against the aspect-ratio:1/1 box trying to expand
-   when min-width:auto is in play upstream. */
-.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__image {
-  width: 100%;
-  max-width: 100%;
+/* THE actual root cause of the giant images: the <picture> element
+   is `display: inline` by default, and the inner <img> has a
+   `width="1600"` attribute. Without explicit CSS clamp, the picture
+   + img expand to their natural 1600px and push the card out from
+   inside. Clamping picture + img to 100% of the image wrapper
+   fixes the unbounded-content propagation. */
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card__image {
+  width: 100% !important;
+  max-width: 100% !important;
 }
-.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__image img {
-  width: 100%;
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card__image picture {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
   height: 100%;
-  max-width: 100%;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card__image img {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
   object-fit: cover;
 }
 
