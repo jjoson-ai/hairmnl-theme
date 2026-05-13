@@ -145,6 +145,64 @@ DO NOT trust comments in existing CSS that claim `contain: layout` is
 "no visual impact" or "purely a hint". That phrasing was the source of
 the kt0 regression — it's actively wrong.
 
+## CSS reservation parity — check BOTH stylesheets before editing
+
+There are TWO stylesheets that carry CLS reservations (`min-height`,
+`aspect-ratio`, `width`/`height`, `contain: layout`):
+
+- `snippets/css-overrides.liquid` — inline `<style>` rendered late in
+  `<head>` via `{% render 'css-overrides' %}`.
+- `assets/custom-theme.css` — external stylesheet loaded after
+  `theme.css`, before `css-overrides`.
+
+The May 2 / May 12 CLS sprints (`xn4`, `jvf`, `p52`, `dzi`, `38l`, `fan`)
+shipped fixes across BOTH files depending on which agent edited what.
+Some selectors are duplicated across both files. The 2026-05-13 `hod`
+fix shipped as a NO-OP initially because OC only edited
+`css-overrides.liquid` (`#freegifts-main-page-container { min-height:
+240px }`, specificity 0,1,1), while `custom-theme.css` had a more-
+specific rule (`body.template-cart #freegifts-main-page-container
+{ min-height: 80px }`, specificity 0,2,1) that won the cascade. Visible
+on the live page: `getComputedStyle(...).minHeight === "80px"`.
+
+**Required audit before editing any CSS reservation (`min-height`,
+`aspect-ratio`, `contain: layout`, etc.):**
+
+```bash
+# Grep both files for the target selector — edit BOTH if both have it.
+grep -n '<selector-substring>' \
+  snippets/css-overrides.liquid \
+  assets/custom-theme.css
+```
+
+If the selector exists in only one file, edit that one. If it exists in
+both, edit both AND verify with computed-style smoke test (below). The
+two files often differ in specificity (custom-theme.css tends to scope
+by `body.template-cart` / `body.template-product`; css-overrides.liquid
+tends to use the bare selector). If both files have the rule, the
+higher-specificity one wins regardless of source order.
+
+**Required verification AFTER pushing to draft (caught the `hod` NO-OP):**
+
+```javascript
+// Run in DevTools / Chrome MCP on the draft preview URL.
+const el = document.querySelector('<selector>');
+JSON.stringify({
+  minHeight: getComputedStyle(el).minHeight,
+  contain: getComputedStyle(el).contain,
+  // ... whichever property the fix targets
+}, null, 2);
+```
+
+The computed value MUST match the intended reservation. Playwright's
+drawer smoke test does NOT check this — it only verifies overlays
+render correctly. CLS reservation values need explicit verification by
+the agent staging the fix (paste the computed-style result into the bd
+notes alongside the `git show HEAD --stat` phantom-completion guard).
+
+If the computed value doesn't match the file you edited, you forgot the
+other file. Fix it before reporting back to coordinator.
+
 ## Pre-push smoke checklist (CSS / layout changes)
 
 Before any `shopify theme push --allow-live` that touches:
