@@ -678,60 +678,12 @@
     {% include "loyaltylion" %}
 
     {%- comment -%}
-      Performance gates (bd hairmnl-theme-8z9 + hairmnl-theme-xex):
-      VisualQuizBuilder (447KB) + BookThatApp (171KB) load on every page via SATCB
-      dynamic injection. VQB only needed on /pages/*quiz pages; BTA only needed on
-      /pages/studio-*, /pages/hairmnlstudio-*, and /apps/bta-* routes.
-      Block both everywhere else. Guard runs before content_for_header so
-      document.createElement is overridden before SATCB fires.
+      VisualQuizBuilder + BookThatApp uninstalled from Shopify 2026-05-13.
+      The createElement guard that blocked their CDN scripts on non-quiz/
+      non-studio pages (bd 8z9 + xex + p84) was removed in the same commit —
+      with the apps uninstalled, SATCB no longer fetches them, so the guard
+      has nothing to block. See bd hairmnl-theme-??? for the cleanup.
     {%- endcomment -%}
-    <script>
-    (function() {
-      var BLOCKED_ORIGINS = ['cdn.visualquizbuilder.com', 'cdn.bookthatapp.com', '/apps/bookthatapp/'];
-      var path = window.location.pathname;
-      // Allowlist: quiz pages (VQB) + studio/booking pages (BTA)
-      var allowed = /\/pages\/[a-z0-9-]*quiz/i.test(path)                                // VQB
-                 || /\/pages\/(studio|hairmnlstudio)-/i.test(path)                      // BTA studio
-                 || /^\/apps\/bta-/i.test(path);                                          // BTA app routes
-      if (allowed) return; // allowlisted — let scripts load normally
-
-      var _createElement = document.createElement.bind(document);
-      document.createElement = function(tag) {
-        var el = _createElement.apply(document, arguments);
-        if (typeof tag === 'string' && tag.toLowerCase() === 'script') {
-          var _setSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').set;
-          var blocked = false;
-          Object.defineProperty(el, 'src', {
-            configurable: true,
-            get: function() {
-              return Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').get.call(this);
-            },
-            set: function(v) {
-              if (!blocked && BLOCKED_ORIGINS.some(function(o) { return String(v).indexOf(o) !== -1; })) {
-                blocked = true;
-                return; // swallow the src assignment — script never fetches
-              }
-              _setSrc.call(this, v);
-            }
-          });
-        }
-        return el;
-      };
-
-      // MutationObserver fallback: catch any script injected via innerHTML
-      var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(m) {
-          m.addedNodes.forEach(function(node) {
-            if (node.tagName === 'SCRIPT' && node.src &&
-                BLOCKED_ORIGINS.some(function(o) { return node.src.indexOf(o) !== -1; })) {
-              node.parentNode && node.parentNode.removeChild(node);
-            }
-          });
-        });
-      });
-      observer.observe(document.documentElement, { childList: true, subtree: true });
-    })();
-    </script>
 
     <!-- Shopify app scripts =========================================================== -->
     {{ content_for_header }}
