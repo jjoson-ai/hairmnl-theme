@@ -2712,9 +2712,16 @@ body.template-index .jdgm-prev-badge {
   display: block;
 }
 
-/* ── CLS fix 2026-05-12 hairmnl-theme-dzi (987 Phase 2 — BOGOS cart container) ── */
+/* ── CLS fix 2026-05-12 hairmnl-theme-dzi / 2026-05-13 hairmnl-theme-hod (987 Phase 2 — BOGOS cart container) ── */
+/* dzi reserved 80px (1 row). hod increased to 240px (3 rows) after GA4 showed
+   84 cart__template shifts: heavy-promo carts inject up to 3 gift rows
+   (~70px each + ~10px header spacing ≈ 220px) which overflowed the 80px
+   reservation. The blank gap when fewer/no gifts are active is the accepted
+   trade-off. NOTE: this selector (specificity 0,2,1) wins over the matching
+   240px rule in css-overrides.liquid (selector specificity 0,1,1) — keep
+   both in sync. */
 body.template-cart #freegifts-main-page-container {
-  min-height: 80px;
+  min-height: 240px;
 }
 
 /* ── CLS fix 2026-05-12 hairmnl-theme-38l (987 Phase 2 — LimeSpot card image dims) ── */

@@ -241,16 +241,14 @@
     contain: layout;
   }
 
-  /* CLS fix 2026-05-01 T2 / 2026-05-02 1pi update — Cart page:
+  /* CLS fix 2026-05-01 T2 / 2026-05-02 1pi update / 2026-05-13 hod (987 Phase 2) — Cart page:
      #freegifts-main-page-container. Initial T2 fix reserved 80px (one gift
-     row). Post-fix GA4 still shows 141 poor-CLS events/7d on the outer cart
-     wrapper (div.wrapper.pt2.pb4). When active offers show 2 gift rows, the
-     injected height is ~160px — overflowing the 80px reservation and shifting
-     all cart items below. Increased to 160px (2 gift rows: each row ~70px +
-     ~10px header/spacing). The 160px blank gap when no gifts are active is
-     the accepted trade-off. contain:layout unchanged. */
+     row). 1pi increased to 160px (2 rows). hod increased to 240px (3 rows) after
+     GA4 showed 84 cart__template wrapper shifts — 160px still overflowed when
+     active offers showed 3+ gift rows. The blank gap when fewer/no gifts are
+     active is the accepted trade-off. contain:layout unchanged. */
   #freegifts-main-page-container {
-    min-height: 160px;
+    min-height: 240px;
     contain: layout;
   }
 
