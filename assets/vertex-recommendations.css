@@ -310,21 +310,15 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
-.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
-  grid-auto-flow: row;
-  grid-auto-columns: auto;
-  gap: 0;
-  padding: 0;
-  overflow: visible;
-}
-.hairmnl-theme .vrec-slot--cart_above_checkout[data-viewport="mobile"] .vrec-slot__rail {
-  grid-auto-flow: column;
-  grid-auto-columns: 88%;
-  gap: 12px;
-  padding: 0 16px 8px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-}
+/* Phase 1 cutover (2026-05-13): cart_above_checkout vertical-stack
+   override REMOVED. Product owner asked for a horizontal slider on
+   the cart page that matches the cart drawer experience. By deleting
+   this override, the slot inherits the default `.vrec-slot__rail`
+   rules above (grid-auto-flow: column, scroll-snap rail, 2.25/3.3/4.5
+   cards visible at mobile/tablet/desktop). The compact-card markup
+   path in snippets/vertex-rec-card.liquid was also gated off in the
+   same commit so cards render in standard vertical layout, matching
+   the drawer cards visually. */
 
 /* — Skeleton — */
 .hairmnl-theme .vrec-card--skeleton {
@@ -383,15 +377,11 @@
   .hairmnl-theme .vrec-card__title { font-size: 12px; }
   .hairmnl-theme .vrec-card__price { font-size: 13px; }
   .hairmnl-theme .vrec-card__vendor { font-size: 10px; }
-  /* Cart slot: stacked vertical desktop → horizontal scroll on mobile */
-  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
-    grid-auto-flow: column;
-    grid-auto-columns: 88%;
-    gap: 12px;
-    padding: 0 16px 8px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-  }
+  /* Phase 1 cutover (2026-05-13): cart_above_checkout mobile-rail
+     override REMOVED — the desktop override above also went away,
+     so the slot inherits the default rail at every breakpoint now
+     (mobile 2.25 cards, tablet 3.3, desktop 4.5). No special-case
+     needed for the cart page anymore. */
 }
 
 /*
@@ -583,8 +573,10 @@
     display: flex;
   }
 }
-/* Cart page is stacked vertical on desktop — no rail to navigate */
-.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__nav { display: none; }
+/* Phase 1 cutover (2026-05-13): nav buttons re-enabled on cart_above_checkout
+   slot. Previously stacked vertical with no rail, so nav was hidden.
+   Now a horizontal slider — nav buttons inherit the default
+   .vrec-slot__nav visibility from the desktop rules above. */
 /*
  * Drawer slider nav — show in the drawer too (team requested).
  * Override the mobile-hide rule above + shrink to fit narrow drawer width.

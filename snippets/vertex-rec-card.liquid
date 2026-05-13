@@ -60,7 +60,16 @@
   </div>
 {%- endcapture -%}
 
-{%- if placement == 'cart_above_checkout' -%}
+{%- comment -%}
+  Phase 1 cutover (2026-05-13): cart_above_checkout NO LONGER uses the
+  compact horizontal card. Product owner asked for a horizontal slider
+  on the cart page that matches the cart-drawer "Complete Your Cart"
+  experience. Falling through to the default vertical card below
+  (image-top, info-below) gives us slider parity. The compact-card
+  branch is gated `{%- if false and ... -%}` to preserve markup for
+  trivial rollback if we later want the inline-ADD behavior back.
+{%- endcomment -%}
+{%- if false and placement == 'cart_above_checkout' -%}
   {%- comment -%}
     Cart compact card — horizontal layout with inline ADD-to-cart button.
     Wrapped in {% form 'product' %} so the button does a native submit to

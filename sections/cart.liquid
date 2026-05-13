@@ -71,16 +71,17 @@
         </div>
 
         {%- comment -%}
-          Phase 1 cutover (2026-05-08): cart-page FBT — above checkout footer.
+          Phase 1 cutover (2026-05-13): cart-page recs slot — above checkout footer.
           Replaces LimeSpot JS-injected widget on the standalone cart page.
-          Inline ADD-to-cart via native form submit (page reloads after add).
-          Standardized title + dropped subtitle per Phase 1 copy decision.
+          Now renders as a horizontal slider matching the cart drawer (per
+          product-owner review pass). Compact inline-ADD card retired —
+          see snippets/vertex-rec-card.liquid for the gated rollback path.
         {%- endcomment -%}
         {%- if cart.item_count > 0 -%}
           {% render 'vertex-recommendations',
               placement: 'cart_above_checkout',
               cart: cart,
-              title: 'Often bought together'
+              title: 'Recommended for You'
           %}
         {%- endif -%}
 

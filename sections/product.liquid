@@ -194,11 +194,11 @@
           {% endcase %}
         {% endfor %}
 
-        {%- comment -%} Phase 1 cutover (2026-05-08): PDP below ATC — FBT widget. Replaces LimeSpot's JS-injected "Frequently Bought Together" widget. Standardized title per Phase 1 plan. {%- endcomment -%}
+        {%- comment -%} Phase 1 cutover (2026-05-13): PDP below ATC — FBT widget. Replaces LimeSpot's JS-injected "Frequently Bought Together" widget. Title updated per product-owner review pass (Title Case + HairMNL-voice phrasing). {%- endcomment -%}
         {% render 'vertex-recommendations',
             placement: 'pdp_below_atc',
             product: product,
-            title: 'Frequently bought together'
+            title: 'Complete Your Routine'
         %}
 
       </div>
