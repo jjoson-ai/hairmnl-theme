@@ -5,13 +5,36 @@
    .template__cart__footer (the page-bottom totals + checkout grid).
    Split out 2026-04-28 from cart.css to keep the ~4KB of page-only
    styles off non-/cart pages (PDP, collection, homepage, etc).
-   See beads hairmnl-theme-5zj. */
+   See beads hairmnl-theme-5zj.
+
+   HOTFIX 2026-05-13 (bd hairmnl-theme-fhh):
+   The 2026-04-26 extraction from theme.css (commit 949888a) stripped two
+   media-query wrappers, causing every cart-page rule to apply at all
+   viewports. Visible regressions on mobile /cart:
+     - Desktop 5-column .cart__items__grid forced 5 columns at 390px →
+       product-image cell collapsed below 90px, titles wrapped 6+ lines.
+     - Desktop 4-column .template__cart__footer overrode theme.css's
+       mobile 1fr layout (cart-page.css loads AFTER theme.css, source
+       order wins on equal specificity) → totals/checkout/notes/etc.
+       crashed into each other, and the 3rd-party "Buy It With" app
+       widget rendered into the wrong grid cell.
+     - Mobile-only rules (.cart__remove visually-hidden,
+       .cart__items__total display:none, .checkout__button width:100%,
+       etc.) leaked onto desktop.
+   Fix: restore the two media-query wrappers matching the original
+   theme.css structure pre-extraction (the .template__cart__footer
+   grid declaration is split — margin-top stays universal, the grid
+   layout moves into the desktop wrapper). */
 
 
 .cart__template .cart--hidden {
   display: none;
 }
 
+
+/* DESKTOP layout (≥768px) — 5-column items grid + 4-column footer grid.
+   Mobile uses theme.css's @media (max-width: 767px) overrides. */
+@media only screen and (min-width: 768px) {
   .cart__template .cart__items__grid {
     display: grid;
     width: 100%;
@@ -101,14 +124,26 @@
   }
 
 
+  /* Footer grid declaration — desktop only. margin-top stays universal
+     below this block. Mobile gets a 1fr stacked layout from theme.css's
+     @media (max-width: 767px) rule on .template__cart__footer. */
+  .template__cart__footer {
+    display: grid;
+    grid-template-areas: "product product total total" "notes notes update checkout" "shipping shipping empty empty" "additional additional additional additional";
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-column-gap: var(--gutter);
+    grid-row-gap: 10px;
+  }
+}
+
+
+/* UNIVERSAL footer rules — apply at all viewports. Children with
+   grid-area: <name> place correctly in either the desktop 4-column
+   layout (above) or the mobile 1fr stacked layout (from theme.css).
+   Typography rules below also apply everywhere. */
 .template__cart__footer {
   margin-top: 2em;
-  display: grid;
-  grid-template-areas: "product product total total" "notes notes update checkout" "shipping shipping empty empty" "additional additional additional additional";
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto auto auto auto;
-  grid-column-gap: var(--gutter);
-  grid-row-gap: 10px;
 }
 
 
@@ -198,6 +233,12 @@
 }
 
 
+/* MOBILE-only rules (≤767px) — single-column cart presentation.
+   .cart__items__total hidden (line total is redundant when the row
+   stacks vertically and price already shows). .cart__remove visually
+   hidden (icon-bin in .cart__remove__icon takes its place).
+   .checkout__button stretches full width. */
+@media only screen and (max-width: 767px) {
   .template__cart__footer .drawer__bottom__shipping {
     margin-top: 15px;
   }
@@ -270,3 +311,4 @@
   .cart__template .cart__items__grid.cart__heading__wrapper {
     grid-row-gap: 0;
   }
+}
