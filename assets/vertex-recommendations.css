@@ -310,6 +310,62 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+
+/* — Cart-page slider card (vertical with inline ADD-to-cart) —
+   Phase 1 cutover (2026-05-13, round 2): vertical card variant used
+   on the /cart page slider. Reuses .vrec-card__image / __info /
+   __title / __price from the default card; adds a full-width ADD
+   button below the price so customers can add a rec without leaving
+   /cart. Distinct from .vrec-card--compact (horizontal row, retired)
+   and the default link-wrapped vertical card (no inline ADD). */
+.hairmnl-theme .vrec-card--cart-slider {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background: var(--vrec-card-bg);
+  transition: transform 200ms ease-out;
+}
+.hairmnl-theme .vrec-card--cart-slider:hover .vrec-card__image img { transform: scale(1.02); }
+.hairmnl-theme .vrec-card--cart-slider .vrec-card__title-link,
+.hairmnl-theme .vrec-card--cart-slider .vrec-card__image-link {
+  color: inherit;
+  text-decoration: none;
+}
+.hairmnl-theme .vrec-card--cart-slider .vrec-card__cta-form {
+  margin: 8px 0 0;
+  display: block;
+  width: 100%;
+}
+.hairmnl-theme .vrec-card--cart-slider .vrec-card__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--vrec-cta-bg);
+  color: var(--vrec-cta-fg);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  min-height: 44px; /* touch target */
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  transition: background 120ms;
+}
+.hairmnl-theme .vrec-card--cart-slider .vrec-card__cta:hover { background: var(--vrec-cta-bg-hover); }
+.hairmnl-theme .vrec-card--cart-slider .vrec-card__cta:active { transform: translateY(1px); }
+.hairmnl-theme .vrec-card--cart-slider .vrec-card__sold-out-label {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--vrec-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 /* Phase 1 cutover (2026-05-13): cart_above_checkout vertical-stack
    override REMOVED. Product owner asked for a horizontal slider on
    the cart page that matches the cart drawer experience. By deleting
