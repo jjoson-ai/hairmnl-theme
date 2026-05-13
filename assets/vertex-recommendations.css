@@ -366,40 +366,70 @@
   letter-spacing: 0.08em;
 }
 
-/* Phase 1 cutover (2026-05-13): cart_above_checkout uses an explicit
-   horizontal-rail config — the default .vrec-slot__rail rules above
-   were inheriting weirdly on the cart-page container (cards expanded
-   to fill the rail because the % column-width resolved against the
-   wrong containing block, making images ~800px on desktop). Pinning
-   absolute widths here. Numbers mirror the original mobile-rail
-   override (88% mobile, 30%/22% tablet/desktop) so the visual density
-   matches the cart drawer slider. */
+/* Phase 1 cutover (2026-05-13, round 4): cart_above_checkout slider
+   forced to flexbox with EXPLICIT fixed-px card widths. The grid-%
+   approach inherited weirdly through the cart-page form/container
+   hierarchy on desktop — cards rendered ~800px wide. Flexbox with
+   `flex: 0 0 <px>` removes the % ambiguity entirely. !important +
+   tight specificity wins against the default `.vrec-slot__rail`
+   grid rules at the top of this file. */
 .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 88%; /* mobile: 1.1 cards visible */
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  grid-auto-flow: initial; /* belt-and-suspenders for grid->flex switch */
+  grid-auto-columns: initial;
   gap: 12px;
-  scroll-snap-type: x mandatory;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
   padding: 0 16px 8px;
+  margin: 0;
 }
 .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail::-webkit-scrollbar {
   display: none;
 }
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider {
+  flex: 0 0 220px !important;
+  width: 220px;
+  max-width: 220px;
+  min-width: 0;
+  box-sizing: border-box;
+}
 @media (min-width: 768px) {
   .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
-    grid-auto-columns: 30%; /* tablet: ~3 cards */
     gap: 16px;
     padding: 0 0 8px;
+  }
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider {
+    flex: 0 0 240px !important;
+    width: 240px;
+    max-width: 240px;
   }
 }
 @media (min-width: 1024px) {
   .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
-    grid-auto-columns: 22%; /* desktop: ~4 cards + peek */
     gap: 20px;
   }
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider {
+    flex: 0 0 240px !important;
+    width: 240px;
+    max-width: 240px;
+  }
+}
+/* Image must stay within the card; explicit width 100% + max-width
+   100% guards against the aspect-ratio:1/1 box trying to expand
+   when min-width:auto is in play upstream. */
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__image {
+  width: 100%;
+  max-width: 100%;
+}
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-card--cart-slider .vrec-card__image img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
 }
 
 /* — Skeleton — */
