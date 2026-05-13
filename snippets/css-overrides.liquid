@@ -144,6 +144,24 @@
     background: #f4f6f8;
   }
 
+  /* CLS fix 2026-05-13 hairmnl-theme-987 — Blog article body iframe/video embeds.
+     Shopify article rich-text content often includes <iframe> embeds (YouTube,
+     Vimeo) and <video> elements that render with no explicit dimensions or
+     aspect-ratio. These collapse to 0×0 then expand to full video height when
+     loaded, shifting all content below them in .blog__article__content (and
+     .rte on pages). This rule reserves a 16:9 box so the layout is stable
+     before the embed loads. */
+  .blog__article__content iframe,
+  .blog__article__content video,
+  .rte iframe,
+  .rte video {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #f4f6f8;
+  }
+
   /* CLS fix 2026-05-10 hairmnl-theme-ojx — Pro Blogger related-articles thumbnails.
      snippets/pro-blogger.snippet.related-item.liquid renders <img> without
      width/height attrs (lines 5 + 20); image URLs use Shopify CDN
