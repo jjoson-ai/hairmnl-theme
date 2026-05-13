@@ -114,12 +114,6 @@
     <link rel="preload"
       href="{{ 'custom-theme.css' | asset_url }}"
       as="style">
-    {% capture bsscommerce_login_require_template %}
-      {% include 'bsscommerce_login_require' %}{% endcapture %}
-    {% unless bsscommerce_login_require_template contains "Liquid error" %}
-      {{ bsscommerce_login_require_template }}{% endunless %}
-
-
     {%- comment -%}
       Deferred 2026-04-27 — was render-blocking 600 ms per Lighthouse PSI.
       tiny.content.min.css is the largest single render-blocking CSS in the head
@@ -798,7 +792,7 @@
         <limespot></limespot>
       {%- endunless -%}
       
-    {% capture bsscommerce_passcode_to_see_price_product_custom %}{% render 'bss-passcode-to-see-price-js' %}{% endcapture %}{% unless bsscommerce_passcode_to_see_price_product_custom contains "Liquid error" %}{% render 'bss-passcode-to-see-price-js' %}{% endunless %}{% capture bsscommerce_login_to_see_price_product_custom %}{% render 'bsscommerce-login-to-see-price-custom-js' %}{% endcapture %}{% unless bsscommerce_login_to_see_price_product_custom contains "Liquid error" %}{% render 'bsscommerce-login-to-see-price-custom-js' %}{% endunless %}{% capture bss_ltap_fl_redirect %}{% render 'bss-ltap-fl-redirect' %}{% endcapture %}{% unless bss_ltap_fl_redirect contains "Liquid error" %}{% render 'bss-ltap-fl-redirect' %}{% endunless %}</main>
+    {% capture bss_ltap_fl_redirect %}{% render 'bss-ltap-fl-redirect' %}{% endcapture %}{% unless bss_ltap_fl_redirect contains "Liquid error" %}{% render 'bss-ltap-fl-redirect' %}{% endunless %}</main>
 
     {% section 'footer' %}
 

@@ -3589,11 +3589,6 @@
         "disabled": false,
         "settings": {}
       },
-      "bss-b2b-a54806729d88": {
-        "type": "shopify://apps/bss-b2b-wholesale-solution/blocks/config-header/451233f2-9631-4c49-8b6f-057e4ebcde7f",
-        "disabled": true,
-        "settings": {}
-      },
       "4291333794791649201": {
         "type": "shopify://apps/loyalty-rewards-and-referrals/blocks/embed-sdk/6f172e67-4106-4ac0-89c5-b32a069b3101",
         "disabled": false,
