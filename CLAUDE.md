@@ -125,17 +125,22 @@ For higher-stakes pushes (layouts, snippets, anything in `layout/` or
 
 ## Known stash
 
-`stash@{0}` (as of 2026-04-26) holds:
+`stash@{0}` (as of 2026-04-26 — index re-verified after housekeeping
+2026-05-14) holds the April 26 prefix-strip + srcset work:
 
 - `snippets/css-overrides.liquid` (LimeSpot prefix-strip rules)
 - `snippets/product-grid-item.liquid` (responsive srcset polish)
 - `snippets/product-grid-item-branded-subcollection.liquid` (brand-strip)
 - `snippets/limespot-prefix-strip.liquid` (new untracked snippet)
 
-`product-grid-item-branded.liquid` was applied from this stash today
-(brand-strip on top of live's responsive srcset). When picking from
-the stash later, prefer cherry-pick over `git stash pop`, and always
-diff against live before pushing.
+`product-grid-item-branded.liquid` was applied from this stash on
+2026-04-26 (brand-strip on top of live's responsive srcset). The other
+three files are still parked — partial overlap with subsequent changes
+makes a clean apply risky. When picking from the stash later, prefer
+cherry-pick over `git stash pop`, and always diff against live before
+pushing. Verify the stash index with `git stash list` before referring
+to it by index (this file's reference can drift if other stashes are
+pushed on top of it).
 
 
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:ca08a54f -->

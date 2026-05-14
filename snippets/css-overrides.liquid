@@ -412,19 +412,24 @@
   /* CLS fix 2026-05-02 fan — PDP product price column:
      GA4 debug_target div.grid__item.medium-up--one-half logged 251 poor-CLS
      events/7d across all PDPs (Wella all-shades worst at 44 events, 52% poor).
-     Root cause: bss-b2b-product-vat.liquid inlines a <style> that hides
-     .shopify-section .product__price with display:none before BSS B2B JS
-     reveals the correct price. This collapses .product__price__wrap from its
-     rendered height (~44px for price text + padding) to 0, then BSS JS sets
-     display:block → the price area re-expands → shifts variant selector, ATC
-     button, and all content below.
 
-     Fix: reserve 44px on .product__price__wrap so the price row never
-     collapses to 0. contain:layout prevents internal price changes (sale
-     badges, strikethrough compare-at price) from cascading to siblings.
-     The 44px reservation is visible as a blank strip ONLY for users who load
-     the page before BSS B2B JS fires (sub-300ms window). Acceptable vs.
-     251 poor-CLS events/7d. */
+     Original root cause (now resolved at the source 2026-05-13): the
+     bss-b2b-product-vat snippet inlined a <style> that hid
+     .shopify-section .product__price with display:none before BSS B2B JS
+     revealed the correct price. This collapsed .product__price__wrap from
+     its rendered height (~44px) to 0, then BSS set display:block → the
+     price area re-expanded → shifted variant selector, ATC button, and
+     content below. BSS B2B Solution was uninstalled 2026-05-13 (bd dyp,
+     commit 1c0da46), removing that snippet, so the BSS-induced collapse
+     no longer occurs.
+
+     This rule is retained as a defensive reservation. If any future
+     vendor app injects a similar hide-then-reveal price pattern, the
+     min-height absorbs the shift without re-investigation. contain:layout
+     also isolates internal price changes (sale badges, strikethrough
+     compare-at price) from cascading to siblings. The 44px reservation
+     is invisible in the common case (price renders immediately at ≥44px
+     height); only matters if a future widget hides the price column. */
   .product__price__wrap {
     min-height: 44px;
     contain: layout;
