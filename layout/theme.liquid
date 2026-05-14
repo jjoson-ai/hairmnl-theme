@@ -679,6 +679,182 @@
       has nothing to block. See bd hairmnl-theme-??? for the cleanup.
     {%- endcomment -%}
 
+    {%- comment -%}
+      Reamaze defer-on-interaction guard — bd hairmnl-theme-meu.2 (Phase 3).
+      cdn.reamaze.com (~212 KB, ~255ms scripting) is blocked from loading
+      until one of six triggers fires. Placeholder snippet renders an
+      interactive bubble that visually matches the live Reamaze widget.
+
+      Pattern: MutationObserver scans for the static <script src> tag emitted
+      by content_for_header below; on detection, type is swapped to
+      'javascript/blocked' and src is moved to dataset.deferredSrc (prevents
+      execution). createElement override catches any dynamic injection.
+      On trigger, deferred srcs are replayed via newly-created script tags.
+
+      Triggers: placeholder click | any-click after 5s | scroll past 50% |
+      pointer hover near bubble (desktop) | [data-reamaze-trigger] click |
+      auto-disarm at 60s. Telemetry: GA4 events via window.dataLayer.
+
+      MUST be inline + above content_for_header so the observer is
+      registered before Shopify emits the Reamaze app embed block.
+    {%- endcomment -%}
+    <script>
+    (function() {
+      var BLOCKED = ['cdn.reamaze.com'];
+      var IDLE_MS = 5000;
+      var SCROLL_PCT = 0.5;
+      var AUTO_MS = 60000;
+      var HOVER_PX = 100;
+
+      var disarmed = false;
+      var deferred = [];
+      var triggerAt = null;
+
+      function dl(name, payload) {
+        (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: name }, payload || {}));
+      }
+      function isBlocked(src) {
+        return src && BLOCKED.some(function(o) { return String(src).indexOf(o) !== -1; });
+      }
+
+      var mo = new MutationObserver(function(muts) {
+        if (disarmed) return;
+        muts.forEach(function(m) {
+          m.addedNodes.forEach(function(n) {
+            if (n.nodeName === 'SCRIPT' && isBlocked(n.src)) {
+              var origSrc = n.src;
+              deferred.push(origSrc);
+              // Remove node entirely + null src — cancels the in-flight fetch in
+              // modern browsers (Chromium aborts when the SCRIPT element is
+              // detached from the document before script body has executed).
+              n.type = 'javascript/blocked';
+              n.removeAttribute('src');
+              if (n.parentNode) n.parentNode.removeChild(n);
+            }
+          });
+        });
+      });
+      mo.observe(document.documentElement, { childList: true, subtree: true });
+
+      // Always hide placeholder when real Reamaze widget paints — keeps
+      // rollback (empty BLOCKED) clean (no double bubble). Separate from
+      // disarm() because rollback path never calls disarm.
+      var phWatcher = new MutationObserver(function() {
+        if (document.querySelector('#reamaze-widget, #reamaze-widget-content, #reamaze-widget-label')) {
+          var ph = document.getElementById('reamaze-defer-placeholder');
+          if (ph && !ph.hidden) ph.hidden = true;
+          phWatcher.disconnect();
+        }
+      });
+      function startPhWatcher() { phWatcher.observe(document.body, { childList: true, subtree: true }); }
+      if (document.body) startPhWatcher();
+      else document.addEventListener('DOMContentLoaded', startPhWatcher);
+
+      var _ce = document.createElement.bind(document);
+      document.createElement = function(tag) {
+        var el = _ce.apply(document, arguments);
+        if (typeof tag === 'string' && tag.toLowerCase() === 'script') {
+          var setSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').set;
+          Object.defineProperty(el, 'src', {
+            configurable: true,
+            get: function() { return Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').get.call(this); },
+            set: function(v) {
+              if (!disarmed && isBlocked(v)) { deferred.push(String(v)); return; }
+              setSrc.call(this, v);
+            }
+          });
+        }
+        return el;
+      };
+
+      function setupEngagementTracking() {
+        var openTracked = false;
+        var msgCount = 0;
+        var eo = new MutationObserver(function() {
+          if (!openTracked && document.querySelector('#reamaze-widget-content[class*="open"], #reamaze-widget[class*="open"], .reamaze-widget-open')) {
+            openTracked = true;
+            dl('reamaze_widget_open', {});
+          }
+          var msgs = document.querySelectorAll('[class*="reamaze"][class*="customer"], [class*="reamaze"][class*="visitor"]');
+          if (msgs.length > msgCount) {
+            msgCount = msgs.length;
+            dl('reamaze_widget_message_sent', {});
+          }
+        });
+        eo.observe(document.body, { attributes: true, subtree: true, childList: true });
+      }
+
+      function disarm(path) {
+        if (disarmed) return;
+        disarmed = true;
+        triggerAt = Date.now();
+        dl('reamaze_load_path', { path: path });
+        mo.disconnect();
+        var ph = document.getElementById('reamaze-defer-placeholder');
+        if (ph) ph.hidden = true;
+        deferred.forEach(function(src, i) {
+          var s = _ce('script');
+          s.async = true;
+          if (i === 0) {
+            s.addEventListener('load', function() {
+              dl('reamaze_load_latency_ms', { ms: Date.now() - triggerAt });
+              setupEngagementTracking();
+            });
+          }
+          s.src = src;
+          document.head.appendChild(s);
+        });
+      }
+
+      document.addEventListener('click', function(e) {
+        var ph = e.target.closest && e.target.closest('#reamaze-defer-placeholder');
+        if (ph) { e.preventDefault(); disarm('placeholder_click'); return; }
+        var hot = e.target.closest && e.target.closest('[data-reamaze-trigger]');
+        if (hot) {
+          var mode = hot.getAttribute('data-reamaze-trigger') || 'warm';
+          if (mode === 'open') e.preventDefault();
+          disarm('hot_path_attribute');
+          if (mode === 'open') {
+            var t = setInterval(function() {
+              if (window._support && typeof window._support.run === 'function') {
+                try { window._support.run({ action: 'show' }); } catch(_) {}
+                clearInterval(t);
+              }
+            }, 100);
+            setTimeout(function() { clearInterval(t); }, 10000);
+          }
+        }
+      });
+
+      setTimeout(function() {
+        if (disarmed) return;
+        var h = function() { disarm('any_click_after_5s'); document.removeEventListener('click', h, true); };
+        document.addEventListener('click', h, true);
+      }, IDLE_MS);
+
+      var sh = function() {
+        var y = window.scrollY || 0;
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        if (h > 0 && y / h >= SCROLL_PCT) { disarm('scroll_50'); window.removeEventListener('scroll', sh); }
+      };
+      window.addEventListener('scroll', sh, { passive: true });
+
+      if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        var hh = function(e) {
+          var bx = window.innerWidth - 52;
+          var by = window.innerHeight - 110;
+          if (Math.hypot(e.clientX - bx, e.clientY - by) < HOVER_PX) {
+            disarm('pointer_hover');
+            document.removeEventListener('mousemove', hh);
+          }
+        };
+        document.addEventListener('mousemove', hh);
+      }
+
+      setTimeout(function() { if (!disarmed) disarm('auto_60s'); }, AUTO_MS);
+    })();
+    </script>
+
     <!-- Shopify app scripts =========================================================== -->
     {{ content_for_header }}
 
@@ -1000,6 +1176,7 @@
       obs.observe(document.body, { childList: true, subtree: true });
     })();
   </script>
+  {% include 'reamaze-placeholder' %}
   </body>
     {% render 'freegifts-snippet-change' %}
 </html>
