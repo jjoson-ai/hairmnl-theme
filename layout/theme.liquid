@@ -923,19 +923,15 @@
       }
     </script>
   {%- comment -%}
-    Conditionally load BSS B2B Customer Portal JS only for logged-in
-    backbar-approved customers (added 2026-04-26 PM). Was loading 185KB
-    of JS on every page even though Lighthouse measured 179KB / 96% as
-    unused for non-B2B sessions. The 'bss-b2b-cp' header marker fires
-    whenever the BSS app is installed (always true), so the previous
-    gate was a no-op. Now strictly limited to logged-in customers
-    carrying the 'backbar-approved' tag (HairMNL's B2B identifier).
-    Guest sessions and retail logged-in customers skip the load
-    entirely — single biggest mobile JS savings on the site.
+    BSS B2B Customer Portal uninstalled 2026-05-14 (bd bjk). The
+    conditional load for 'backbar-approved' customers (jquery-341-js +
+    bss-b2b-js, previously ~185 KB gated) was removed along with the
+    seven associated snippet files. Lock + Solution + LTAP variants of
+    BSS were uninstalled 2026-05-13 (bd dyp + gj0). No BSS apps remain
+    on the storefront.
   {%- endcomment -%}
-  {% if content_for_header contains 'bss-b2b-cp' and customer != blank and customer.tags contains 'backbar-approved' %}{% include 'bss-b2b-jquery-341-js' %}{% include 'bss-b2b-js' %}{% endif %}
-  
-  
+
+
     <style>
 
   .jdgm-all-reviews-text {
