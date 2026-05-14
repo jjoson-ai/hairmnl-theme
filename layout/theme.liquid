@@ -700,6 +700,37 @@
     {%- endcomment -%}
     <script>
     (function() {
+      // Canary kill-switch: set to true to disable the defer guard for ALL
+      // users (including those who already have reamaze_defer=1 cookie).
+      // Single-line rollback per Phase 2 design + Phase 4 spec.
+      var KILL_SWITCH = false;
+      if (KILL_SWITCH) return;
+
+      // Canary cohort selection: 10% of new visitors get defer behavior.
+      // Cookie persists 7 days so the same visitor gets consistent behavior
+      // across pageloads. Existing visitors keep their assigned bucket.
+      // Phase 4 = 10%. Phase 4 ramp = 50%. Phase 5 = 100% (remove this gate).
+      var CANARY_PCT = 0.10;
+      var COOKIE_NAME = 'reamaze_defer';
+      var COOKIE_MAX_AGE = 604800; // 7 days
+      var cookieMatch = document.cookie.match(/(?:^|; )reamaze_defer=([^;]*)/);
+      var bucket = cookieMatch ? cookieMatch[1] : null;
+      if (bucket === null) {
+        bucket = (Math.random() < CANARY_PCT) ? '1' : '0';
+        document.cookie = COOKIE_NAME + '=' + bucket + '; max-age=' + COOKIE_MAX_AGE + '; path=/; SameSite=Lax';
+      }
+      // Telemetry: fire bucket assignment so canary cohort size is visible in GA4.
+      (window.dataLayer = window.dataLayer || []).push({ event: 'reamaze_defer_bucket', bucket: bucket });
+      if (bucket !== '1') {
+        // Control group — let Reamaze load normally. Hide placeholder element
+        // (it'll be rendered at end of body regardless of this branch).
+        document.addEventListener('DOMContentLoaded', function() {
+          var ph = document.getElementById('reamaze-defer-placeholder');
+          if (ph) ph.hidden = true;
+        });
+        return;
+      }
+
       var BLOCKED = ['cdn.reamaze.com'];
       var IDLE_MS = 5000;
       var SCROLL_PCT = 0.5;
