@@ -578,3 +578,68 @@ When a task requires any of the above, surface to the coordinator — agents do 
 - Reporting view (lives in `hairmnl-data`; see that repo's `ARCHITECTURE.md` § Back-in-Stock waitlist analytics)
 - SMS bridge serverless function (if Option B/C is chosen; lives in `hairmnl-automation` or a new repo)
 - Appikon CSV export migration (Klaviyo admin + one-shot script; not theme code)
+
+## Stky Sticky Add-to-Cart replacement (planning, 2026-05-16)
+
+**Status:** Feasibility deck complete; engineering tickets created. Awaiting stakeholder approval on three asks before engineering phase begins.
+
+**Driver:** Replace the third-party **STKY ‑ Sticky Add To Cart Bar** Shopify app (by Codeinero, $6.99–$18.99/mo) with a theme-native implementation. Drivers:
+
+1. Recurring monthly cost — assumed Grow tier at $11.99/mo ≈ $144/year ≈ ₱8,300/year (verify in slide-8 ask #3).
+2. Performance — eliminate ~600ms third-party Azure CDN latency (`satcb.azureedge.net`).
+3. Correctness — fix two pre-existing integration bugs that need cleanup regardless of whether we replace the app:
+   - `layout/theme.liquid:969` has a hardcoded `<script src=".../satcb.min.js?shop=creations-gdc.myshopify.com">` — a stale leftover from when this theme was forked from another store. Loads in parallel with the legitimate Shopify App Embed.
+   - `layout/theme.liquid:78` documents `satcb.azureedge.net` as "Same-day store pickup widget" — wrong; it's the sticky add-to-cart bar. Comment hygiene.
+
+**Deck:** `docs/feasibility-replace-stky.pptx` (9 slides). Outlines: current state, the drift problem (slide 3), proposed architecture, 12-month cost / payback, scope decisions (Quick Buy is the stakeholder ask), timeline, three explicit asks.
+
+**bd epic:** `hairmnl-theme-a7av` — 7 children: `a7av.1` deck (CC, open) → `a7av.2` snippet (OC, blocked) → `a7av.3` JS (OC, blocked) → `a7av.4` CSS+kt0 (OC, blocked) → `a7av.5` Quick Buy [conditional, blocked] → `a7av.6` smoke test (CC, blocked) → `a7av.7` cutover (CC, blocked).
+
+### Current Stky integration footprint (replaced at cutover)
+
+| File | Action | Notes |
+|---|---|---|
+| `config/settings_data.json` | modify | Disable Stky app block (id `12643349056429947648`, type `shopify://apps/stky-sticky-add-to-cart/blocks/satcb/...`) |
+| `layout/theme.liquid:89` | modify | Remove `dns-prefetch` for `satcb.azureedge.net` |
+| `layout/theme.liquid:78` | modify | Remove the stale comment that mislabels `satcb.azureedge.net` |
+| `layout/theme.liquid:969` | **delete** | Hardcoded `<script src=".../satcb.min.js?shop=creations-gdc.myshopify.com">` — broken shop param, never should have been theme-baked |
+| `assets/theme.css:15678–15680` | **delete** | z-index override for `.satcb_quick_buy.satcb_qb_top_right` (only needed if T4 ships and reuses the selector — otherwise drop) |
+
+### Files this introduces (theme repo)
+
+| File | Action | Notes |
+|---|---|---|
+| `snippets/sticky-add-to-cart.liquid` | new | Markup for the bottom-fixed bar: product image, title, price, variant selector, qty, Add-to-Cart button. Rendered once before `</body>`; hidden by default. |
+| `assets/sticky-atc.dev.js` | new | ~150 LoC. IntersectionObserver on the primary product form. When the main ATC button scrolls out of view, the sticky bar becomes visible. Submits via the existing cart drawer flow — no parallel state. |
+| `assets/sticky-atc.js` | new | Minified mirror (dev↔min parity per house rule) |
+| `layout/theme.liquid` | modify | Render snippet once before `</body>`; load JS with `defer` |
+| `snippets/css-overrides.liquid` | modify | Append dated block: `.sticky-atc-bar`, mobile breakpoint, transition. Brand-styled, kt0-safe. |
+| `scripts/check-overlay-css.py` | modify | **Add `.sticky-atc-bar` to `OVERLAY_PATTERNS`** so kt0 lint catches future containment regressions on the new overlay |
+| `snippets/quick-buy-overlay.liquid` | conditional (T4) | Only if stakeholder approves recreating the collection-page Quick Buy feature |
+
+### Confirmed scope decisions (engineering-side; stakeholder asks open for §1 and §2)
+
+| Decision | Choice | Notes |
+|---|---|---|
+| PDP sticky bar | Recreate | Core feature; ~150 LoC JS, brand-styled |
+| Collection-page Quick Buy | **Stakeholder ask** | Engineering recommends drop for v1 (simpler PDP funnel, fewer tickets) |
+| Cart drawer / slider | Drop | Theme already has its own cart drawer; Stky's version is unused or duplicative |
+| Countdown urgency timer | Drop | Aggressive UX, minimal proven lift, not visible in current site |
+| Floating cart icon | Drop | Theme header cart icon already serves this purpose |
+| Mobile breakpoint | Required | Sticky bar must coexist with `env(safe-area-inset-bottom)` and any fixed footer/nav |
+
+### Cost reality check (also on deck slide 5)
+
+| Scenario | Monthly | Annual | 3-Year TCO |
+|---|---|---|---|
+| Stky Basic ($6.99) | $6.99 | $83.88 | ~$252 |
+| Stky Grow ($11.99, assumed) | $11.99 | $143.88 | ~$432 |
+| Theme-native replacement | $0 | $0 | $0 |
+
+Engineering effort ~4–6h serial (1–2 calendar days). At Grow tier, payback in 4–8 weeks; pure savings after.
+
+### Out of scope for the theme repo
+
+- Stky uninstall + Shopify Admin → App Embeds toggle (operator-driven; T6 cutover ticket documents the click path)
+- Reporting / conversion-rate measurement of the replacement (no new tracking added; existing GA4 `add_to_cart` events fire from the unified Add-to-Cart flow)
+- Audit of which Stky features are actually enabled in Stky admin (operator task — confirms Quick Buy / countdown / cart drawer status; informs T4 conditional ticket)
