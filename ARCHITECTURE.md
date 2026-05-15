@@ -537,3 +537,44 @@ So agents don't go looking:
 - **3rd-party app settings** (Judge.me, LimeSpot, Reamaze, BookThatApp, VisualQuizBuilder, etc.) — vendor admin UIs; theme-side gating is generally impossible for app embeds
 
 When a task requires any of the above, surface to the coordinator — agents do not have admin credentials and should not attempt to acquire them.
+
+---
+
+## 14. Back-in-Stock replacement (Appikon → Klaviyo-native) — in flight
+
+**Status:** Planned (2026-05-15). Phase 0 (feasibility deck) starts first; engineering gated on stakeholder approval.
+**Driver:** [Skill brief workbook](../../Downloads/skill-brief-replace-appikon.pdf) — replace Appikon Back in Stock to eliminate $14.99/mo + SMS surcharge, centralize on Klaviyo, gain top-5-SKU + conversion + revenue reporting.
+**Master plan:** `~/.claude/plans/users-y9378348c-downloads-skill-brief-r-logical-wadler.md`.
+**bd epic:** [`hairmnl-theme-g1n`](.beads) — 10 children (T0 deck → T7 cutover, plus T11 conditional SMS bridge).
+
+### Decision
+
+**Klaviyo-native, no new backend service.** PDP modal POSTs to Klaviyo's public Back-in-Stock Subscription API; Klaviyo owns persistence, segmentation, dispatch via its existing Shopify Catalog integration. The empty `hairmnl-shopify-app` scaffold is **not** standing up a server for this — that path was rejected on cost + time-to-ship.
+
+### Constraints surfaced during planning
+
+- **SMS to Philippines is not supported by Klaviyo's native SMS.** Stakeholder deck slide 5–6 presents three paths: Skip SMS / Semaphore (PH-local, ~₱0.50/SMS) / Twilio (~$0.05/SMS). Engineering branches post-decision.
+- **"Notify oldest 5 first when restock < 5" is best-effort, not strict FIFO.** Klaviyo flows are event-driven and rate-throttled, not waitlist-ordered. Acceptable for HairMNL volume; documented in deck as a known limitation.
+- **Phone input is PH-only** (hardcoded `+63` prefix, no country picker). Deviation from brief; revisit if international growth becomes a near-term goal.
+- **Sticky tab visibility:** PDPs only, sold-out variant only. JS+CSS load only on product pages.
+
+### Files this introduces (theme repo)
+
+| File | Action | Notes |
+|---|---|---|
+| `snippets/notify-when-available-modal.liquid` | new | Micromodal markup, mirrors `snippets/video-popup.liquid` |
+| `assets/notify-when-available.dev.js` | new | ~250 LoC readable source |
+| `assets/notify-when-available.js` | new | minified mirror (dev↔min parity per house rule) |
+| `snippets/product-form.liquid` | modify | Swap sold-out CTA to `[data-notify-trigger]` button |
+| `layout/theme.liquid` | modify | Render modal once before `</body>`; load JS with `defer` |
+| `snippets/css-overrides.liquid` | modify | Append dated block: `.btn--notify`, `.notify-tab`, modal form styles |
+| `locales/en.default.json` | modify | New i18n keys for modal copy |
+| `scripts/check-overlay-css.py` | modify | **Add `.notify-tab` + `.modal--notify` to `OVERLAY_PATTERNS`** so kt0 lint catches future containment regressions on the new overlay |
+| `assets/subscribe-it.js` | **delete (at cutover)** | Appikon's only theme footprint |
+
+### Out of scope for the theme repo
+
+- Klaviyo flow + template configuration (Klaviyo admin, human-driven)
+- Reporting view (lives in `hairmnl-data`; see that repo's `ARCHITECTURE.md` § Back-in-Stock waitlist analytics)
+- SMS bridge serverless function (if Option B/C is chosen; lives in `hairmnl-automation` or a new repo)
+- Appikon CSV export migration (Klaviyo admin + one-shot script; not theme code)
