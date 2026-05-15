@@ -588,7 +588,7 @@ When a task requires any of the above, surface to the coordinator — agents do 
 1. Recurring monthly cost — assumed Grow tier at $11.99/mo ≈ $144/year ≈ ₱8,300/year (verify in slide-8 ask #3).
 2. Performance — eliminate ~600ms third-party Azure CDN latency (`satcb.azureedge.net`).
 3. Correctness — fix two pre-existing integration bugs that need cleanup regardless of whether we replace the app:
-   - `layout/theme.liquid:969` has a hardcoded `<script src=".../satcb.min.js?shop=creations-gdc.myshopify.com">` — a stale leftover from when this theme was forked from another store. Loads in parallel with the legitimate Shopify App Embed.
+   - `layout/theme.liquid:969` hardcodes a `<script src=".../satcb.min.js?shop=creations-gdc.myshopify.com">` tag. The shop param is correct (`creations-gdc.myshopify.com` is HairMNL's primary myshopify subdomain), but Stky is ALSO loaded via the Shopify App Embed in `config/settings_data.json`. The hardcoded tag is the pre-App-Embed legacy path — Stky's script ends up loaded twice per page.
    - `layout/theme.liquid:78` documents `satcb.azureedge.net` as "Same-day store pickup widget" — wrong; it's the sticky add-to-cart bar. Comment hygiene.
 
 **Deck:** `docs/feasibility-replace-stky.pptx` (9 slides). Outlines: current state, the drift problem (slide 3), proposed architecture, 12-month cost / payback, scope decisions (Quick Buy is the stakeholder ask), timeline, three explicit asks.
@@ -602,7 +602,7 @@ When a task requires any of the above, surface to the coordinator — agents do 
 | `config/settings_data.json` | modify | Disable Stky app block (id `12643349056429947648`, type `shopify://apps/stky-sticky-add-to-cart/blocks/satcb/...`) |
 | `layout/theme.liquid:89` | modify | Remove `dns-prefetch` for `satcb.azureedge.net` |
 | `layout/theme.liquid:78` | modify | Remove the stale comment that mislabels `satcb.azureedge.net` |
-| `layout/theme.liquid:969` | **delete** | Hardcoded `<script src=".../satcb.min.js?shop=creations-gdc.myshopify.com">` — broken shop param, never should have been theme-baked |
+| `layout/theme.liquid:969` | **delete** | Hardcoded `<script src=".../satcb.min.js?shop=creations-gdc.myshopify.com">` — shop param is correct, but this is the legacy pre-App-Embed path. Stky's script is already loaded by the App Embed; this tag duplicates it. |
 | `assets/theme.css:15678–15680` | **delete** | z-index override for `.satcb_quick_buy.satcb_qb_top_right` (only needed if T4 ships and reuses the selector — otherwise drop) |
 
 ### Files this introduces (theme repo)
