@@ -1992,7 +1992,18 @@ def render_html(snapshots: list[dict]) -> str:
         rum.get("wow_prev", {}),
         rum.get("days", 7),
     ))
-    html = html.replace("__CHART_DATA__", json.dumps(chart_data))
+    # XSS hardening per epic-audit dashboard-20260515 (Critical finding):
+    # chart_data is JSON injected into a <script> block. Without this escape,
+    # any string value containing `</script>` would break out of the script
+    # context and become executable HTML. `<!--` would start an HTML comment
+    # that browsers parse leniently. The values in chart_data come from GA4
+    # RUM events (page paths, debug_target CSS selectors, etc.) which are
+    # not fully controlled by us. Replace the sequences with backslash-
+    # escaped equivalents — still valid JSON, but no longer terminates the
+    # script element on the browser side.
+    chart_json = json.dumps(chart_data)
+    chart_json = chart_json.replace("</", "<\\/").replace("<!--", "<\\!--")
+    html = html.replace("__CHART_DATA__", chart_json)
     # Inline tooltips for friction page section headers + trend chart cards
     html = html.replace("__TIP_LCP__", _tooltip("LCP"))
     html = html.replace("__TIP_INP__", _tooltip("INP"))

@@ -77,6 +77,11 @@ jobs:
 
       - name: Commit updated dashboard
         id: commit
+        # Hard cap to bound CI-minute burn if the retry loop hangs against an
+        # unresponsive remote. The loop itself does 3 attempts with 5+10+15=30s
+        # max backoff, plus 3 git operations per attempt. 5 minutes is generous.
+        # Per epic-audit dashboard-20260515 (Low finding).
+        timeout-minutes: 5
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"

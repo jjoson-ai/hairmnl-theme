@@ -53,8 +53,19 @@ SLIDES_MIME = "application/vnd.google-apps.presentation"
 DEFAULT_NAME = "HairMNL Theme Modernization Deck"
 
 
+def _write_secret(path: Path, content: str) -> None:
+    """Write a sensitive credential file with owner-only permissions (0600).
+    Per epic-audit dashboard-20260515: token files and OAuth secrets must
+    not be world-readable. chmod after write to guarantee restrictive perms
+    even if the file already existed with default 0644."""
+    import os
+    path.write_text(content)
+    os.chmod(path, 0o600)
+
+
 def get_creds():
     """Get user OAuth credentials, prompting browser consent if needed."""
+    import os
     creds = None
     if TOKEN_PATH.exists():
         try:
@@ -66,7 +77,7 @@ def get_creds():
     if creds and creds.expired and creds.refresh_token:
         try:
             creds.refresh(Request())
-            TOKEN_PATH.write_text(creds.to_json())
+            _write_secret(TOKEN_PATH, creds.to_json())
             return creds
         except Exception as e:
             print(f"  warn: token refresh failed ({e}) — will reauthorize", file=sys.stderr)
@@ -74,10 +85,18 @@ def get_creds():
         print(f"ERROR: OAuth client file missing at {CLIENT_PATH}", file=sys.stderr)
         print("  Create a Desktop OAuth client in Google Cloud Console + save the JSON here.", file=sys.stderr)
         sys.exit(1)
+    # Harden CLIENT_PATH (OAuth client secret JSON) to owner-only too.
+    # Per epic-audit dashboard-20260515 (High): contains client_id +
+    # client_secret which, while not strictly secret for desktop OAuth
+    # clients per Google's docs, are still credentials worth protecting.
+    try:
+        os.chmod(CLIENT_PATH, 0o600)
+    except OSError as e:
+        print(f"  warn: could not chmod {CLIENT_PATH} to 0600 ({e})", file=sys.stderr)
     flow = InstalledAppFlow.from_client_secrets_file(str(CLIENT_PATH), SCOPES)
     print("  Opening browser for OAuth consent (Drive scope)…", flush=True)
     creds = flow.run_local_server(port=0)
-    TOKEN_PATH.write_text(creds.to_json())
+    _write_secret(TOKEN_PATH, creds.to_json())
     print(f"  Saved token to {TOKEN_PATH}", flush=True)
     return creds
 
