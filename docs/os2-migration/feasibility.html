@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HairMNL theme platform — readiness for the next major version</title>
+<style>
+  :root {
+    --ink: #111827;
+    --muted: #4b5563;
+    --line: #e5e7eb;
+    --soft: #f9fafb;
+    --accent: #1e40af;
+    --accent-soft: #eff6ff;
+    --high: #b91c1c;
+    --med: #b45309;
+    --low: #6b7280;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    background: white;
+  }
+  section.slide {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 2rem;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  section.slide:nth-of-type(even) { background: var(--soft); }
+  .inner {
+    max-width: 880px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .slide-num {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  h1.cover-title {
+    font-size: 2.75rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1.75rem;
+    letter-spacing: -0.015em;
+  }
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1.75rem 0 0.5rem;
+  }
+  p { margin: 0 0 1.25rem; color: var(--ink); }
+  p.lede {
+    font-size: 1.25rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  ul, ol { margin: 0 0 1.25rem; padding-left: 1.4rem; }
+  li { margin-bottom: 0.75rem; }
+  .pill {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: white;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+  .pill.high { background: var(--high); }
+  .pill.med  { background: var(--med); }
+  .pill.low  { background: var(--low); }
+  .risk {
+    border-left: 4px solid var(--line);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    background: white;
+    border-radius: 0 6px 6px 0;
+  }
+  .risk.high { border-left-color: var(--high); }
+  .risk.med  { border-left-color: var(--med); }
+  .risk.low  { border-left-color: var(--low); }
+  .risk h3 { margin-top: 0; font-size: 1.1rem; }
+  .risk p { margin-bottom: 0; color: var(--muted); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.25rem 0;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  th, td {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.95rem;
+    vertical-align: top;
+  }
+  th {
+    background: var(--soft);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  tr:last-child td { border-bottom: none; }
+  .callout {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .cover-meta {
+    margin-top: 4rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .cover-meta strong { color: var(--ink); font-weight: 600; }
+  .history-entry {
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed var(--line);
+    display: flex;
+    gap: 1.5rem;
+  }
+  .history-entry:last-child { border-bottom: none; }
+  .history-date {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    white-space: nowrap;
+    min-width: 95px;
+  }
+  .history-note { font-size: 0.95rem; }
+  .toc {
+    list-style: none;
+    padding: 0;
+    columns: 2;
+    column-gap: 2.5rem;
+  }
+  .toc li {
+    margin-bottom: 0.5rem;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .toc a:hover { color: var(--accent); text-decoration: underline; }
+  .num {
+    display: inline-block;
+    min-width: 1.6rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  footer.site-footer {
+    background: #111827;
+    color: #9ca3af;
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  footer.site-footer a { color: white; }
+  @media print {
+    body { font-size: 12pt; }
+    section.slide {
+      min-height: auto;
+      page-break-after: always;
+      padding: 2rem 0;
+      border-bottom: none;
+    }
+    section.slide:nth-of-type(even) { background: white; }
+    .slide-num { display: none; }
+    footer.site-footer { display: none; }
+  }
+  @media (max-width: 640px) {
+    h1.cover-title { font-size: 2rem; }
+    h2 { font-size: 1.65rem; }
+    section.slide { padding: 4rem 1.25rem; }
+    .toc { columns: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. Cover -->
+<section class="slide" id="cover">
+  <span class="slide-num">01 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Feasibility brief</div>
+    <h1 class="cover-title">HairMNL theme platform: readiness for the next major version</h1>
+    <p class="lede">Our online store runs on a theme platform that is two major versions behind the current release. This brief explains why we should prepare for a future upgrade now &mdash; without committing to the upgrade itself yet &mdash; and what the choice costs either way.</p>
+    <div class="cover-meta">
+      <p><strong>Status:</strong> Decision-support document &mdash; no upgrade is being proposed at this time.</p>
+      <p><strong>Last updated:</strong> 17 May 2026 (v1.0)</p>
+    </div>
+
+    <h3 style="margin-top:3rem;">Contents</h3>
+    <ol class="toc">
+      <li><a href="#today"><span class="num">02</span> Where we are today</a></li>
+      <li><a href="#risks"><span class="num">03</span> What could go wrong if we do nothing</a></li>
+      <li><a href="#notrisk"><span class="num">04</span> What is <em>not</em> a risk</a></li>
+      <li><a href="#choice"><span class="num">05</span> The choice we are making</a></li>
+      <li><a href="#triggers"><span class="num">06</span> The five triggers</a></li>
+      <li><a href="#prep-cost"><span class="num">07</span> What preparing costs</a></li>
+      <li><a href="#migrate-cost"><span class="num">08</span> What a migration would cost</a></li>
+      <li><a href="#benefits"><span class="num">09</span> Benefits of preparing now</a></li>
+      <li><a href="#timeline"><span class="num">10</span> Timeline &amp; next steps</a></li>
+      <li><a href="#afterprep"><span class="num">11</span> What we will know after preparing</a></li>
+      <li><a href="#history"><span class="num">12</span> Update history</a></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 2. Where we are today -->
+<section class="slide" id="today">
+  <span class="slide-num">02 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Situation</div>
+    <h2>Where we are today</h2>
+    <p class="lede">HairMNL runs on Pipeline 6.1.3 &mdash; a theme platform released by Groupthought in 2022. The current Pipeline release is version 8.1.1, shipped in December 2025. We are two major versions behind.</p>
+
+    <h3>What works</h3>
+    <ul>
+      <li>The site sells. Checkout, payments, and the order pipeline are healthy.</li>
+      <li>Performance is acceptable &mdash; we have invested heavily in tuning what the platform allows.</li>
+      <li>The theme vendor still maintains our version. There is no immediate end-of-life notice.</li>
+    </ul>
+
+    <h3>What is widening</h3>
+    <ul>
+      <li>New Shopify admin features (drag-and-drop section editing, AI section copy, theme blocks) are increasingly gated to modern themes.</li>
+      <li>Apps that we depend on for marketing, support, and recommendations are gradually shifting to a newer installation method that the older platform does not support natively.</li>
+      <li>Our customizations &mdash; the things that make the site uniquely ours &mdash; are written in idioms that newer developers no longer learn first.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>The headline:</strong> Nothing is broken today. Everything we&rsquo;re raising in this brief is about getting ready, not reacting.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Risks -->
+<section class="slide" id="risks">
+  <span class="slide-num">03 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Risk register</div>
+    <h2>What could go wrong if we do nothing</h2>
+    <p class="lede">Five risks, ranked by probability and impact. None of them are emergencies today. All of them get worse over a 12&ndash;24 month horizon.</p>
+
+    <div class="risk high">
+      <h3><span class="pill high">High</span>App-update breakage</h3>
+      <p>Apps such as Klaviyo (email), Reamaze (chat), LimeSpot (recommendations), and Elevar (tracking) install into our theme using an older method. As vendors update their apps, they are gradually retiring that method in favor of a newer one that our platform does not support natively. When that happens, the integration can fail silently &mdash; we have already seen this once with the live chat widget disappearing for roughly ten days before anyone noticed.</p>
+    </div>
+
+    <div class="risk high">
+      <h3><span class="pill high">High</span>Site speed has hit its ceiling</h3>
+      <p>Despite continued optimization, our mobile site speed score is capped around 75&ndash;80 by the platform&rsquo;s architecture. Modern themes start at 92&ndash;95 out of the box. We are within tenths of a percentage point of Shopify&rsquo;s &ldquo;needs-improvement&rdquo; threshold for Core Web Vitals, and there is no obvious next optimization to claim.</p>
+    </div>
+
+    <div class="risk med">
+      <h3><span class="pill med">Medium</span>Merchandiser productivity</h3>
+      <p>Each Shopify release adds features that only work on modern themes &mdash; section group editing, drag-and-drop everywhere, AI-assisted copy, and a forthcoming theme-blocks system. Our merchandising team is increasingly looking at &ldquo;available in newer themes&rdquo; banners in the editor.</p>
+    </div>
+
+    <div class="risk low">
+      <h3><span class="pill low">Low probability, big impact</span>Vendor end-of-life</h3>
+      <p>Pipeline 6 is in its fifth year. Groupthought still patches it, but every major theme eventually moves to maintenance-only and then to end-of-life. We have no announcement and probably months of warning if one comes, but the day will come.</p>
+    </div>
+
+    <div class="risk low">
+      <h3><span class="pill low">Low velocity, compounding</span>Talent and maintenance cost</h3>
+      <p>The platform idioms we depend on are legacy for any Shopify developer hired since 2023. Each new helper has a longer ramp-up before they can safely touch the codebase. This is slow-moving, but it compounds.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. What's NOT a risk -->
+<section class="slide" id="notrisk">
+  <span class="slide-num">04 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Boundaries</div>
+    <h2>What is <em>not</em> a risk</h2>
+    <p class="lede">It is worth being precise about what is &mdash; and isn&rsquo;t &mdash; on the line, so that the case for action stays honest.</p>
+
+    <ul>
+      <li><strong>Checkout.</strong> Shopify migrated all stores to the new checkout in August 2025. That work is done; our theme version does not affect it.</li>
+      <li><strong>The Shopify API and storefront API.</strong> These work independently of the theme. Headless integrations, mobile apps, and reporting tools are not affected by our theme version.</li>
+      <li><strong>Google search ranking.</strong> Google penalizes slow sites, not old themes. Our SEO is a function of site speed and content quality, both of which we can continue to improve on the current platform &mdash; up to the ceiling described above.</li>
+      <li><strong>Customer-visible behavior today.</strong> No customer is being turned away by our theme version. This brief is about getting ahead of a future failure mode, not patching a current one.</li>
+    </ul>
+
+    <div class="callout">
+      <p>If anyone asks &ldquo;why now?&rdquo;, the answer is <em>readiness</em>, not <em>repair</em>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. The choice -->
+<section class="slide" id="choice">
+  <span class="slide-num">05 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Recommendation</div>
+    <h2>The choice we are making</h2>
+    <p class="lede">We are <strong>not</strong> proposing to migrate the theme right now. We are proposing to <strong>prepare</strong> for a migration, so that if and when one becomes necessary we can move quickly and from a position of knowledge rather than scramble.</p>
+
+    <h3>Two postures, two costs</h3>
+    <table>
+      <thead><tr><th>Posture</th><th>What it does</th><th>Cost</th><th>Live-site risk</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Wait-and-see</strong> <em>(today&rsquo;s default)</em></td>
+          <td>Continue tuning the current platform. React to problems as they appear.</td>
+          <td>None up front; high during eventual scramble.</td>
+          <td>Vendor- and timeline-imposed.</td>
+        </tr>
+        <tr>
+          <td><strong>Prepare-now</strong> <em>(this proposal)</em></td>
+          <td>Inventory what would need to change, pick a target platform, write the playbook, watch for triggers.</td>
+          <td>About 1.5&ndash;2 weeks of work.</td>
+          <td>None &mdash; no changes to the live site.</td>
+        </tr>
+        <tr>
+          <td><strong>Migrate-now</strong></td>
+          <td>Port the entire site to a modern theme platform.</td>
+          <td>About 3&ndash;6 weeks of work; tighter after the prep phase.</td>
+          <td>Significant &mdash; full cutover.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The middle posture buys cheap optionality. The numbers come into focus, the decision is made with calm air, and if a trigger fires we are ready inside two weeks rather than eight.</p>
+  </div>
+</section>
+
+<!-- 6. Triggers -->
+<section class="slide" id="triggers">
+  <span class="slide-num">06 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Decision rules</div>
+    <h2>The five triggers</h2>
+    <p class="lede">We commit to a migration if <strong>any two</strong> of the following fire. These are the conditions we will be watching for over the next 12 months.</p>
+
+    <ol>
+      <li><strong>A primary app breaks.</strong> Klaviyo, Reamaze, LimeSpot, or Elevar ships an update that removes support for our current installation method and live functionality degrades.</li>
+      <li><strong>Site speed plateaus.</strong> Mobile Core Web Vitals stop improving despite continued investment, and we have hit the architectural ceiling.</li>
+      <li><strong>Vendor end-of-life.</strong> Groupthought formally announces that Pipeline 6 is moving to maintenance-only or end-of-life.</li>
+      <li><strong>Onboarding cost crosses a threshold.</strong> A new developer taking over the site needs more than two weeks before they can ship safely.</li>
+      <li><strong>Merchandising blocker.</strong> The team needs a feature in the Shopify admin that is only available on modern themes and is genuinely blocking a planned campaign.</li>
+    </ol>
+
+    <div class="callout">
+      <p>The trigger list is reviewed quarterly. If at any review the answer is &ldquo;no triggers fired,&rdquo; we keep the platform and revisit next quarter.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Cost of preparing -->
+<section class="slide" id="prep-cost">
+  <span class="slide-num">07 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Cost &mdash; preparing</div>
+    <h2>What preparing costs</h2>
+    <p class="lede">Roughly 1.5&ndash;2 weeks of work for one operator (working with Claude), spread across three small phases. Nothing in this phase changes the live site.</p>
+
+    <table>
+      <thead><tr><th>Phase</th><th>What it produces</th><th>Effort</th><th>Live-site risk</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Inventory</strong></td>
+          <td>App compatibility matrix; quantified list of our customizations; performance comparison vs. a sandboxed modern theme.</td>
+          <td>3&ndash;5 working days</td>
+          <td>None &mdash; sandbox only.</td>
+        </tr>
+        <tr>
+          <td><strong>2. Decision</strong></td>
+          <td>Pick the target platform (Pipeline 8, Shopify&rsquo;s Dawn, or custom). Sign off on cost and timeline. Write the migration playbook.</td>
+          <td>2&ndash;3 working days</td>
+          <td>None &mdash; documents only.</td>
+        </tr>
+        <tr>
+          <td><strong>3. Watchlist</strong></td>
+          <td>Trigger definitions with measurable thresholds; vendor-changelog monitoring; an internal rule that stops us from adding new customizations that would have to be re-ported.</td>
+          <td>~1 working day</td>
+          <td>None &mdash; process change only.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The output of this phase lives in the team&rsquo;s documentation. It does not expire &mdash; the longer we wait to use it, the more refreshes it earns from quarterly trigger reviews.</p>
+  </div>
+</section>
+
+<!-- 8. Cost of migrating -->
+<section class="slide" id="migrate-cost">
+  <span class="slide-num">08 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Cost &mdash; migrating <em>(only if triggered)</em></div>
+    <h2>What a migration would cost</h2>
+    <p class="lede">If a trigger fires and we decide to migrate, the work is real: roughly 3&ndash;6 weeks for one operator, gated on visual QA, an app-by-app re-integration pass, and a parallel-run period before cutover.</p>
+
+    <h3>Where the time goes</h3>
+    <ul>
+      <li><strong>Customization porting.</strong> The features that make our site different from a stock theme &mdash; bespoke product grids, performance optimizations, layout adjustments &mdash; have to be re-implemented in the new platform&rsquo;s idioms.</li>
+      <li><strong>App re-integration.</strong> Every app currently installed on the theme has to be reconnected. Some will gain native support and become easier; others may need workarounds.</li>
+      <li><strong>Visual QA.</strong> Every template &mdash; product, collection, blog, cart, checkout, account &mdash; needs side-by-side comparison.</li>
+      <li><strong>Parallel-run + cutover.</strong> The new theme runs side-by-side as a draft until we are confident, then we switch.</li>
+    </ul>
+
+    <p>The 3&ndash;6-week range narrows substantially after the prep phase &mdash; the inventory tells us where the work concentrates, and the playbook tells us what order to do it in.</p>
+
+    <div class="callout">
+      <p>The theme vendor offers free major-version upgrades to existing customers. The cost above is engineering time, not licensing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Benefits of preparing now -->
+<section class="slide" id="benefits">
+  <span class="slide-num">09 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Why now, not later</div>
+    <h2>Benefits of preparing now</h2>
+    <p class="lede">Five things we get from spending two weeks on prep today.</p>
+
+    <ol>
+      <li><strong>Cost certainty.</strong> &ldquo;Three to six weeks&rdquo; becomes a number with a confidence range we can plan budget against. Today it is a guess.</li>
+      <li><strong>Decision under calm.</strong> We pick the target platform on its merits, not under a vendor&rsquo;s timeline or after a live integration has broken.</li>
+      <li><strong>Stop accruing debt.</strong> An internal rule prevents the next 12 months of theme work from adding customizations we will eventually have to re-port.</li>
+      <li><strong>Early-warning system.</strong> We watch the vendors most likely to deprecate the older installation method, so we hear about it from a release note &mdash; not from a broken customer experience.</li>
+      <li><strong>Playbook ready.</strong> If a trigger fires, the first day of the migration project starts with reading a document, not re-discovering the problem space.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 10. Timeline -->
+<section class="slide" id="timeline">
+  <span class="slide-num">10 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Plan</div>
+    <h2>Timeline &amp; next steps</h2>
+
+    <table>
+      <thead><tr><th>When</th><th>What happens</th><th>Decision point</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Weeks 1&ndash;2</strong></td>
+          <td>Inventory + decision + watchlist (the prep phase).</td>
+          <td>Sign-off on target platform and playbook.</td>
+        </tr>
+        <tr>
+          <td><strong>Quarterly</strong></td>
+          <td>Review the five triggers. Update the deck with any new evidence.</td>
+          <td>&ldquo;Are we still in wait-and-see?&rdquo;</td>
+        </tr>
+        <tr>
+          <td><strong>If a trigger fires</strong></td>
+          <td>Migration project starts using the prepared playbook.</td>
+          <td>Approve the migration budget (3&ndash;6 weeks).</td>
+        </tr>
+        <tr>
+          <td><strong>At 12 months</strong></td>
+          <td>If no trigger has fired, refresh the inventory and decision doc; continue wait-and-see.</td>
+          <td>Revisit annually.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Next two weeks</h3>
+    <ol>
+      <li>This brief circulates for stakeholder review.</li>
+      <li>Once aligned, the inventory phase starts &mdash; sandboxed, no impact on the live site.</li>
+      <li>Findings refresh this document in place. The link does not change.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 11. What we'll know -->
+<section class="slide" id="afterprep">
+  <span class="slide-num">11 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Information value</div>
+    <h2>What we will know after preparing</h2>
+    <p class="lede">Today we know roughly. After the prep phase we will know precisely.</p>
+
+    <table>
+      <thead><tr><th>Question</th><th>Today</th><th>After prep</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>How much custom code would we need to port?</td>
+          <td>&ldquo;Some.&rdquo;</td>
+          <td>Exact count, line-by-line, tagged easy / medium / hard.</td>
+        </tr>
+        <tr>
+          <td>How much speed would we gain from a modern theme?</td>
+          <td>&ldquo;Probably a lot.&rdquo;</td>
+          <td>Side-by-side scores from a sandboxed install.</td>
+        </tr>
+        <tr>
+          <td>Which apps would re-integrate cleanly?</td>
+          <td>&ldquo;Most of them, we think.&rdquo;</td>
+          <td>Per-app status: native support, workaround, or replace.</td>
+        </tr>
+        <tr>
+          <td>Which target platform is right for us?</td>
+          <td>Three candidates, no committed answer.</td>
+          <td>One recommendation with cost, risk, and timeline.</td>
+        </tr>
+        <tr>
+          <td>What does a migration project actually look like?</td>
+          <td>A vague 3&ndash;6 weeks.</td>
+          <td>A phase-by-phase playbook with rollback steps.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p>This is the deliverable. The prep phase converts judgment calls into known quantities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12. Update history -->
+<section class="slide" id="history">
+  <span class="slide-num">12 / 12</span>
+  <div class="inner">
+    <div class="eyebrow">Changelog</div>
+    <h2>Update history</h2>
+    <p class="lede">This document refreshes as prep-phase findings come in. The URL stays the same; the content gets sharper.</p>
+
+    <div class="history-entry">
+      <div class="history-date">17 May 2026</div>
+      <div class="history-note"><strong>v1.0</strong> &mdash; Initial publication. Stakeholder brief before prep-phase research begins.</div>
+    </div>
+
+    <p class="meta">When you see a new entry above, the numbers in the deck have changed. The latest version is always at this URL.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p>HairMNL theme platform readiness brief &middot; Internal decision-support document &middot; <a href="README.md">Document index</a></p>
+</footer>
+
+</body>
+</html>
