@@ -8873,6 +8873,16 @@
       if (collectionSliderEls.length > 0) {
         var initCollectionSlider = function(el) {
           var spinnerEl = el.previousElementSibling;
+          // bd 4crg-bug (2026-05-16): scope navigation buttons to this slider's
+          // own .wrapper parent. The original ".navigator-box .swiper-button-*"
+          // selectors were global — every Swiper instance bound to every
+          // navigator-box on the page, so clicking any arrow moved ALL sliders.
+          // The bug was always there but was masked by sequential one-at-a-time
+          // init pre-Fix-B; Fix B's batch init (rootMargin 1200px) exposed it.
+          // Pass DOM element references instead of selector strings.
+          var sliderWrapper = el.closest('.wrapper');
+          var navNextEl = sliderWrapper ? sliderWrapper.querySelector('.navigator-box .swiper-button-next') : null;
+          var navPrevEl = sliderWrapper ? sliderWrapper.querySelector('.navigator-box .swiper-button-prev') : null;
           new core_default(el, {
             modules: [Navigation],
             grabCursor: true,
@@ -8899,8 +8909,8 @@
               }
             },
             navigation: {
-              nextEl: ".navigator-box .swiper-button-next",
-              prevEl: ".navigator-box .swiper-button-prev"
+              nextEl: navNextEl,
+              prevEl: navPrevEl
             },
             allowSlidePrev: false,
             on: {
