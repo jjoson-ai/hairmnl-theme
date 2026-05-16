@@ -5,8 +5,8 @@ Working directory for the theme platform readiness program. **No migration is in
 ## Start here
 
 - **[feasibility.html](feasibility.html)** — non-technical rationale + feasibility brief. Stakeholder-facing. Updates in place as research findings land.
-  - **Shareable link (post-merge to main):** https://jjoson-ai.github.io/hairmnl-theme/os2-migration/feasibility.html
-  - The GH Pages publish workflow (`.github/workflows/pages.yml`) rebuilds the site whenever this directory changes.
+  - **Live shareable link:** https://jjoson-ai.github.io/hairmnl-theme/os2-migration/feasibility.html
+  - The GH Pages publish workflow (`.github/workflows/pages.yml`) rebuilds the site whenever this directory changes. Changes typically appear within 1–2 minutes of landing on `main`.
 
 ## Research outputs (populated as work progresses)
 

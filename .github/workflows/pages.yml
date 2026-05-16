@@ -1,9 +1,9 @@
-name: Deploy dashboard + docs to GitHub Pages
+name: Deploy dashboard + os2-migration to GitHub Pages
 
 # Publishes the Pages site at https://jjoson-ai.github.io/hairmnl-theme/
 # Layout served:
-#   /                            → dashboard/ (perf dashboard, root index.html)
-#   /os2-migration/feasibility.html → docs/os2-migration/feasibility.html
+#   /                                → dashboard/ (perf dashboard, root index.html)
+#   /os2-migration/feasibility.html  → os2-migration/feasibility.html
 # Fires on changes to either source tree, or to this workflow.
 
 on:
@@ -11,7 +11,7 @@ on:
     branches: [main]
     paths:
       - 'dashboard/**'
-      - 'docs/os2-migration/**'
+      - 'os2-migration/**'
       - '.github/workflows/pages.yml'
   # Auto-fire after the perf-dashboard refresh completes. Default GITHUB_TOKEN
   # cannot trigger workflow_dispatch (HTTP 403 "Resource not accessible by
@@ -49,13 +49,13 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v4
 
-      - name: Stage Pages site (dashboard at /, docs/os2-migration/ at /os2-migration/)
+      - name: Stage Pages site (dashboard at /, os2-migration/ at /os2-migration/)
         run: |
           set -e
           rm -rf _site
           mkdir -p _site/os2-migration
           cp -R dashboard/. _site/
-          cp -R docs/os2-migration/. _site/os2-migration/
+          cp -R os2-migration/. _site/os2-migration/
           echo "Staged files:"
           find _site -maxdepth 2 -type f | sort
 
