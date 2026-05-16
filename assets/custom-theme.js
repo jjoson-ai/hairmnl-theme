@@ -8916,7 +8916,14 @@
         collectionSliderEls.forEach(function(el) {
           // qku 2026-05-12: IntersectionObserver-only init (no getBoundingClientRect /
           // window.innerHeight at DCL). IO delivers isIntersecting for sliders already
-          // in view plus rootMargin 200px — same deferral semantics as the prior branch.
+          // in view plus rootMargin — defers Swiper layout-measurement to when needed.
+          // 80z0-prelude (Fix B, 2026-05-16): bumped rootMargin 200px → 1200px. The
+          // 200px margin meant below-fold sliders init'd one-at-a-time as user scrolled
+          // past each (because pre-init slider height was ~1185px each — wider than
+          // viewport+margin). With Fix A capping pre-init to 500px AND this 1200px
+          // window, several sliders fit in the IO trigger zone and batch-init together
+          // before user reaches them. Cost: ~5-15ms more Swiper init work earlier in
+          // the page session, but spread across IO callbacks so no TBT impact.
           var observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
@@ -8924,7 +8931,7 @@
                 initCollectionSlider(el);
               }
             });
-          }, { rootMargin: "200px 0px" });
+          }, { rootMargin: "1200px 0px" });
           observer.observe(el);
         });
       }

@@ -2381,6 +2381,18 @@ body.template-index .homepage-blog .article__card.section--details .title {
 .collection-slider .spinner-wrapper.hide {
   display: none;
 }
+/* 80z0-prelude (Fix A, 2026-05-16): cap pre-init slider height so the
+ * spinner-wrapper isn't a ~1185px gray block while Swiper.js is still
+ * pending init. Real post-init slider height is ~341px (desktop) / ~420px
+ * (mobile). Capping at 500px makes the gray placeholder proportional AND
+ * shrinks each pre-init slider enough that 3 fit in the IntersectionObserver
+ * rootMargin window — so below-fold sliders batch-init together instead of
+ * one-by-one as user scrolls. Swiper adds .swiper-initialized class on
+ * init(); the cap lifts then. Issue: pre-bd (sibling of C). */
+.collection-slider .swiper.collection:not(.swiper-initialized) {
+  max-height: 500px;
+  overflow: hidden;
+}
 .collection-slider .spinner {
   width: 70px;
   text-align: center;
