@@ -5,6 +5,33 @@
 - **Live theme**: `131664707683` (" Pipeline 6 - Fix share image")
 - **Draft theme**: `140785582179` (Claude Code draft)
 
+## Pipeline 6 customization freeze — ask before adding bespoke code
+
+The store is on Pipeline 6.1.3 (transitional OS 2.0). A future migration to Pipeline 8.1.1 is on the trigger watchlist at `os2-migration/migration-triggers.md` (quarterly review). Every new Pipeline-6-specific customization is migration debt — porting cost on day-zero of any future migration.
+
+**Before adding any new Pipeline 6 customization (any new bespoke Liquid, new custom snippet, new `.scss.liquid` file, new CSS override block, new `custom-theme.js` behavior, new layout/theme.liquid edit beyond what an app embed handles), ask these three questions in order:**
+
+1. **Can this be a no-op for migration?** Could the same outcome be achieved by:
+   - A Shopify theme setting (color, font, layout choice exposed by the theme editor)?
+   - A Shopify app (existing app's TAE block, or a small app install)?
+   - A theme-independent intervention (GTM tag, Klaviyo block, Smart SEO config)?
+   - A merchandising change (collection setup, product metafield, content edit)?
+   - If yes to any: do that instead. No code customization added.
+2. **If code is required, is it a stock OS-2.0 pattern?** Section block, JSON template, theme app extension hook, app embed block. These survive migration as-is. Prefer them over bespoke Pipeline 6 snippets.
+3. **If bespoke Pipeline 6 code is genuinely required**, document the migration cost explicitly:
+   - Tag the new code with a comment: `{# MIGRATION-DEBT: will need port to OS 2.0; reason = ... #}` (or equivalent for CSS / JS).
+   - Add a row to `os2-migration/customization-audit.md` § "Recent additions" (create the section if missing) with: file path, LoC, what it does, port difficulty (easy / medium / hard), and why the no-op alternatives in step 1 weren't sufficient.
+   - This makes the cost visible to the next migration-decision review and to the operator at the time of cutover.
+
+**Exceptions that don't require this process:**
+- **Critical bug fixes** to existing customizations (the bug already exists, the fix just makes it work).
+- **CLS / perf fixes** that the kt0 / customization-audit table already counts as `need-port` — these are continuations of known migration debt, not new debt.
+- **Removing** Pipeline 6 customizations (subtraction is always free).
+
+**Why this rule exists:** P1.2 (`os2-migration/customization-audit.md`) inventoried ~19,000 bespoke LoC across ~75 files. ~46 of those need porting on migration. Every new bespoke line widens that porting surface. The cost of asking the three questions is seconds; the cost of porting an unnecessary customization through Phase 3 of the runbook is hours per file. The freeze isn't "stop all work" — it's "be deliberate about whether code is the right tool."
+
+**Reference:** `os2-migration/` directory contains the full migration program. Quarterly trigger review per `migration-triggers.md`.
+
 ## CSS containment kt0 rule (regression history: 2026-05-11 header, 2026-05-12 Reamaze)
 
 These CSS properties create a new containing block for **fixed/absolute-positioned
