@@ -734,6 +734,66 @@
       with the apps uninstalled, SATCB no longer fetches them, so the guard
       has nothing to block. See bd hairmnl-theme-??? for the cleanup.
     {%- endcomment -%}
+    {%- comment -%}
+      Pro Blogger interim CSS defer (bd 01vl.2, 2026-05-16). Intercepts
+      problogger.css + owl.carousel.min.css + owl.theme.min.css <link
+      rel=stylesheet> insertions and swaps them to media=print + onload
+      rel=stylesheet pattern, removing Pro Blogger from the LCP critical
+      path. INTERIM until Vertex AI replacement (bd oyw + 01vl.3 Vertex
+      wiring) lands; remove this guard at that time.
+    {%- endcomment -%}
+    <script>
+    (function() {
+      var PATTERNS = ['problogger.css', 'owl.carousel'];
+      var matches = function(href) {
+        if (typeof href !== 'string') return false;
+        for (var i = 0; i < PATTERNS.length; i++) {
+          if (href.indexOf(PATTERNS[i]) !== -1) return true;
+        }
+        return false;
+      };
+      var deferCSS = function(el) {
+        if (el.tagName !== 'LINK') return;
+        if (el.rel !== 'stylesheet') return;
+        if (!matches(el.href)) return;
+        el.media = 'print';
+        el.onload = function() {
+          this.media = 'all';
+          this.onload = null;
+        };
+      };
+
+      // 1. createElement override — catches dynamic createElement('link')
+      var _createElement = document.createElement.bind(document);
+      document.createElement = function(tag) {
+        var el = _createElement.apply(document, arguments);
+        if (typeof tag === 'string' && tag.toLowerCase() === 'link') {
+          var set = Object.getOwnPropertyDescriptor(HTMLLinkElement.prototype, 'href').set;
+          Object.defineProperty(el, 'href', {
+            configurable: true,
+            get: function() {
+              return Object.getOwnPropertyDescriptor(HTMLLinkElement.prototype, 'href').get.call(this);
+            },
+            set: function(v) {
+              set.call(this, v);
+              deferCSS(this);
+            }
+          });
+        }
+        return el;
+      };
+
+      // 2. MutationObserver — catches parser-inserted <link> from content_for_header
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          m.addedNodes.forEach(function(node) {
+            if (node.tagName === 'LINK') deferCSS(node);
+          });
+        });
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    })();
+    </script>
 
     <!-- Shopify app scripts =========================================================== -->
     {{ content_for_header }}
