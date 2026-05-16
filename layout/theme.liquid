@@ -230,6 +230,62 @@
         type="image/webp">
     {%- endif -%}
 
+    {%- comment -%}
+      First-body-image LCP preload (bd iy4m, 2026-05-16). The 9hw preload
+      above covers article.image, but field audit (2026-05-16) showed many
+      high-traffic articles have a blank article.image OR have
+      section.settings.blog_show_featured_image = false → the hero block at
+      sections/article.liquid:27-39 does NOT render. In that case the actual
+      LCP is the FIRST body <img>, which article-content-with-img-dims:170-184
+      (issue 7tq) marks fetchpriority="high" + loading="eager" — but no
+      preload is issued, so the LCP image loads cold from the post-CSS
+      critical path.
+
+      Fix: extract the first <img src=> from article.content and emit a
+      preload. Liquid has no regex; uses split chains:
+        article.content → split '<img ' → [1] → split '>' → first
+                       → split 'src="' → [1] → split '"' → first.
+
+      Verified pre-fix curl audit on three top-offending articles:
+        salon-hair-color-vs-box-dye-...:    hero block missing, 0 preloads.
+        before-and-after-purple-shampoo:    hero block missing, 0 preloads.
+        purple-vs-blue-shampoo-philippines: hero block missing, 0 preloads.
+      Each has an eager body img that loads cold — this preload covers them.
+
+      Browser handles the case where article.image preload also fires: both
+      preloads are queued; whichever the page actually renders as LCP wins
+      the race. No harm from over-preloading by ~1 image; it's a known LCP
+      optimisation pattern (Lighthouse "preload LCP image" suggestion).
+    {%- endcomment -%}
+    {%- if request.page_type == 'article' -%}
+      {%- comment -%}
+        Normalise article.content so the extraction is robust to whitespace
+        variations in the rich-text editor's output. Two-step normalisation:
+          1. Replace `<img` with `<img ` (force trailing space).
+          2. Split on '<img ' — chunks[1] is everything after the first <img.
+        Then split on 'src="' (with double-quote fallback to single-quote)
+        to extract the src URL. Skip if URL doesn't look like a valid path.
+      {%- endcomment -%}
+      {%- assign _normalised = article.content | default: '' | replace: '<img', '<img ' -%}
+      {%- assign _body_chunks = _normalised | split: '<img ' -%}
+      {%- assign _first_body_img_url = '' -%}
+      {%- if _body_chunks.size > 1 -%}
+        {%- assign _first_img_attrs = _body_chunks[1] | split: '>' | first -%}
+        {%- assign _src_segments_dq = _first_img_attrs | split: 'src="' -%}
+        {%- if _src_segments_dq.size > 1 -%}
+          {%- assign _first_body_img_url = _src_segments_dq[1] | split: '"' | first -%}
+        {%- else -%}
+          {%- assign _src_segments_sq = _first_img_attrs | split: "src='" -%}
+          {%- if _src_segments_sq.size > 1 -%}
+            {%- assign _first_body_img_url = _src_segments_sq[1] | split: "'" | first -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+      {%- if _first_body_img_url and _first_body_img_url != '' and _first_body_img_url contains '/' -%}
+        <link rel="preload" as="image" href="{{ _first_body_img_url }}" fetchpriority="high">
+      {%- endif -%}
+    {%- endif -%}
+
     {%- if settings.favicon != blank -%}
       <link
         rel="shortcut icon"
