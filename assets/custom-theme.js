@@ -8905,7 +8905,11 @@
             allowSlidePrev: false,
             on: {
               init: function() {
-                spinnerEl.style.display = "none";
+                // Fix C (4crg): spinner-wrapper removed from template; guard
+                // prevents TypeError if previousElementSibling is not it.
+                if (spinnerEl && spinnerEl.classList.contains('spinner-wrapper')) {
+                  spinnerEl.style.display = 'none';
+                }
               },
               slideNextTransitionStart: function() {
                 this.allowSlidePrev = true;
