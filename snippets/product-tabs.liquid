@@ -82,7 +82,8 @@
             {%- if _looks_escaped_html -%}
               {%- if _resolved_content contains '<' -%}
                 {%- assign _test_raw = _resolved_content | split: '<' | last -%}
-                {%- unless _test_raw | slice: 0, 1 | plus: 0 > 0 and _test_raw | slice: 0, 1 | plus: 0 < 255 -%}
+                {%- assign _test_char_num = _test_raw | slice: 0, 1 | plus: 0 -%}
+                {%- unless _test_char_num > 0 and _test_char_num < 255 -%}
                   {%- assign _resolved_content = _resolved_content | replace: '&lt;', '<' | replace: '&gt;', '>' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' -%}
                 {%- endunless -%}
               {%- else -%}
@@ -176,7 +177,8 @@
             {%- if _looks_escaped_html -%}
               {%- if _resolved_content contains '<' -%}
                 {%- assign _test_raw = _resolved_content | split: '<' | last -%}
-                {%- unless _test_raw | slice: 0, 1 | plus: 0 > 0 and _test_raw | slice: 0, 1 | plus: 0 < 255 -%}
+                {%- assign _test_char_num = _test_raw | slice: 0, 1 | plus: 0 -%}
+                {%- unless _test_char_num > 0 and _test_char_num < 255 -%}
                   {%- assign _resolved_content = _resolved_content | replace: '&lt;', '<' | replace: '&gt;', '>' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' -%}
                 {%- endunless -%}
               {%- else -%}

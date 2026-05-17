@@ -78,6 +78,9 @@
   {{ 'font-settings.css' | asset_url | stylesheet_tag: preload: true }}
 
   {% render 'css-variables' %}
+  {% render 'custom-fonts' %}
+  {%- comment -%} P4-visual-parity: render P6 CSS override layers {%- endcomment -%}
+  {% render 'css-overrides' %}
 
   {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
 
