@@ -1,0 +1,146 @@
+{%- comment -%}
+  Vertex AI Recommendations — Pipeline 8 section wrapper.
+  Bead: hairmnl-theme-2i8b.9 (P4.vertex).
+
+  Wraps the existing snippets/vertex-recommendations.liquid (303 LoC,
+  metafield-driven, theme-independent) so the rec rails can be placed
+  via Pipeline 8's theme editor — drag/drop onto pages, configure per-
+  placement settings, remove without code changes.
+
+  The underlying snippet handles all 5 placements via its `placement:`
+  param. This section exposes that param as a select setting and
+  conditionally guards rendering against the current template so a
+  PDP placement doesn't accidentally render on the cart page (etc.).
+
+  Phase 5 visual QA checks:
+   ☐ Each placement renders on its intended template
+   ☐ Empty-state suppression works (no "0 products" message on live)
+   ☐ Preview chrome (VERTEX badge) appears in theme editor, not live
+   ☐ Scroll-snap rail navigation works on touch + mouse
+   ☐ Card hover states match P6 visual
+{%- endcomment -%}
+
+{%- assign placement = section.settings.placement -%}
+{%- assign show_title = section.settings.title | default: 'Recommended for you' -%}
+{%- assign show_subtitle = section.settings.subtitle -%}
+{%- assign template_handle = template | replace: '.', ' ' | truncatewords: 1, '' | handle -%}
+
+{%- comment -%} Guard each placement against its expected template — prevents
+    accidentally rendering a PDP rec rail on, say, the homepage. {%- endcomment -%}
+{%- assign render_ok = false -%}
+{%- case placement -%}
+  {%- when 'pdp_below_atc', 'pdp_below_description' -%}
+    {%- if template_handle == 'product' -%}{%- assign render_ok = true -%}{%- endif -%}
+  {%- when 'cart_above_checkout' -%}
+    {%- if template_handle == 'cart' -%}{%- assign render_ok = true -%}{%- endif -%}
+  {%- when 'home_below_hero' -%}
+    {%- if template_handle == 'index' -%}{%- assign render_ok = true -%}{%- endif -%}
+  {%- when 'cart_drawer_below_items' -%}
+    {%- comment -%} Cart drawer is global — always render-eligible {%- endcomment -%}
+    {%- assign render_ok = true -%}
+  {%- else -%}
+    {%- assign render_ok = false -%}
+{%- endcase -%}
+
+{%- if render_ok -%}
+  {%- render 'vertex-recommendations',
+       placement: placement,
+       product: product,
+       cart: cart,
+       customer: customer,
+       title: show_title,
+       subtitle: show_subtitle,
+       rationale: section.settings.rationale
+  -%}
+{%- elsif request.design_mode -%}
+  {%- comment -%} Theme editor: show a placeholder so merchants know the section
+      is wired but inactive for the current template. {%- endcomment -%}
+  <div class="vertex-section-placeholder" style="padding: 1rem; border: 2px dashed #ccc; text-align: center; color: #666;">
+    <strong>Vertex Recommendations:</strong> placement <code>{{ placement }}</code>
+    is set but the current template is <code>{{ template_handle }}</code>.
+    Move this section to a {{ placement }}-compatible template, or change
+    the placement setting.
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Vertex Recommendations",
+  "tag": "section",
+  "class": "vertex-recommendations-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Placement"
+    },
+    {
+      "type": "select",
+      "id": "placement",
+      "label": "Where this rail renders",
+      "options": [
+        { "value": "pdp_below_atc", "label": "Product page — below add-to-cart (similar products)" },
+        { "value": "pdp_below_description", "label": "Product page — below description (alternatives)" },
+        { "value": "cart_above_checkout", "label": "Cart page — above checkout (cart recs)" },
+        { "value": "home_below_hero", "label": "Homepage — below hero (recommended for you / trending)" },
+        { "value": "cart_drawer_below_items", "label": "Cart drawer — below line items" }
+      ],
+      "default": "home_below_hero",
+      "info": "Each placement reads from a different metafield. See snippets/vertex-recommendations.liquid header for the data source map."
+    },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Recommended for you"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Dev"
+    },
+    {
+      "type": "textarea",
+      "id": "rationale",
+      "label": "Dev note (theme editor only — never shown on live)",
+      "info": "Use this to document WHY this placement is here, what data source feeds it, and any A/B context. Appears in the theme editor's VERTEX badge tooltip but not on the live storefront."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vertex — Homepage trending",
+      "category": "AI Recommendations",
+      "settings": {
+        "placement": "home_below_hero",
+        "title": "Trending now"
+      }
+    },
+    {
+      "name": "Vertex — PDP similar",
+      "category": "AI Recommendations",
+      "settings": {
+        "placement": "pdp_below_atc",
+        "title": "You may also like"
+      }
+    },
+    {
+      "name": "Vertex — Cart upsell",
+      "category": "AI Recommendations",
+      "settings": {
+        "placement": "cart_above_checkout",
+        "title": "Complete your order"
+      }
+    }
+  ],
+  "enabled_on": {
+    "templates": ["index", "product", "cart"]
+  }
+}
+{% endschema %}
