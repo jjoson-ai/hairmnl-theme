@@ -601,4 +601,31 @@
     background-color: #ffffff !important;
     border: 1px solid #1a1a1a !important;
   }
+
+  /* P4-visual-parity: logo opacity fix.
+     Pipeline 8 theme.css starts .logo__img at opacity:0 and restores it only
+     when the JS lazyload library adds the "lazyloaded" class. The header uses
+     native loading="lazy" (no data-src), so the JS library never fires and the
+     logo stays invisible. Force the color logo visible directly. */
+  .logo__img--color {
+    opacity: 1 !important;
+  }
+
+  /* P4-visual-parity: search predictive popdown — hide by default.
+     P8 theme.liquid renders the search--popdown div after the footer in document
+     flow with no default CSS. Theme.js reveals it on search icon click. */
+  .search--popdown {
+    display: none;
+  }
+  .search--popdown.is-visible,
+  .search--popdown.dirty {
+    display: block;
+  }
+
+  /* P4-visual-parity: P6 footer.liquid always renders a footer-secondary bar
+     (copyright + secondary links) even when social/payment are disabled.
+     P8 subfooter handles copyright already — hide the duplicate. */
+  .footer-secondary-wrapper {
+    display: none;
+  }
 </style>
