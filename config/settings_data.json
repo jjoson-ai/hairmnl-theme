@@ -373,8 +373,8 @@
           "featured_collection_section_description": "",
           "featured_collection_1": "kerastase-gloss-absolu",
           "featured_collection_1_subtitle": "Anti-Frizz & Glossier Hair",
-          "featured_collection_2": "kerastase-genesis",
-          "featured_collection_2_subtitle": "Anti-Hairfall",
+          "featured_collection_2": "kerastase-chroma-absolu",
+          "featured_collection_2_subtitle": "Restoring Color Care",
           "featured_collection_3": "kerastase-elixir-ultime",
           "featured_collection_3_subtitle": "Exceptional Hair Oils for Ultimate Shine",
           "discover_collection_section_description": "",
@@ -3581,11 +3581,6 @@
       },
       "7002299155580658037": {
         "type": "shopify://apps/reamaze-live-chat-helpdesk/blocks/reamaze-config/ef7a830c-d722-47c6-883b-11db06c95733",
-        "disabled": false,
-        "settings": {}
-      },
-      "1744161739547163668": {
-        "type": "shopify://apps/hextom-timer-bar/blocks/ctb-embeded-block/f7b88b6e-2e87-46bc-87a9-3e3638a24fa9",
         "disabled": false,
         "settings": {}
       },
