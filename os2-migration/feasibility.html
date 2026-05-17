@@ -234,7 +234,7 @@
     <p class="lede">Our online store runs on a theme platform that is two major versions behind the current release. This brief explains why we should prepare for a future upgrade now &mdash; without committing to the upgrade itself yet &mdash; and what the choice costs either way.</p>
     <div class="cover-meta">
       <p><strong>Status:</strong> Decision-support document &mdash; no upgrade is being proposed at this time.</p>
-      <p><strong>Last updated:</strong> 17 May 2026 (v1.0)</p>
+      <p><strong>Last updated:</strong> 17 May 2026 (v1.1 &mdash; prep phase complete; see slide 12 for what changed)</p>
     </div>
 
     <h3 style="margin-top:3rem;">Contents</h3>
@@ -297,7 +297,7 @@
 
     <div class="risk high">
       <h3><span class="pill high">High</span>Site speed has hit its ceiling</h3>
-      <p>Despite continued optimization, our mobile site speed score is capped around 75&ndash;80 by the platform&rsquo;s architecture. Modern themes start at 92&ndash;95 out of the box. We are within tenths of a percentage point of Shopify&rsquo;s &ldquo;needs-improvement&rdquo; threshold for Core Web Vitals, and there is no obvious next optimization to claim.</p>
+      <p>The prep-phase sandbox install of the next major theme version confirmed this is real and measurable: <strong>main-thread blocking time drops by 87&ndash;93%</strong> (the metric most tied to perceived responsiveness on phones) and <strong>layout shift goes to zero</strong> on a clean modern theme. Re-installing our apps would shrink those gains but the architectural wins on responsiveness and layout-stability survive. Page weight on the same store, same product catalog, drops by roughly half before apps and ~20% after. The exact field-data improvement (real customer experience) takes 4&ndash;8 weeks of real-user data to confirm after publishing, so lab gains do not directly translate &mdash; but the underlying architecture clearly outperforms ours.</p>
     </div>
 
     <div class="risk med">
@@ -522,42 +522,42 @@
   <span class="slide-num">11 / 12</span>
   <div class="inner">
     <div class="eyebrow">Information value</div>
-    <h2>What we will know after preparing</h2>
-    <p class="lede">Today we know roughly. After the prep phase we will know precisely.</p>
+    <h2>What we know now &mdash; prep phase complete</h2>
+    <p class="lede">A month ago we had guesses. Now we have numbers.</p>
 
     <table>
-      <thead><tr><th>Question</th><th>Today</th><th>After prep</th></tr></thead>
+      <thead><tr><th>Question</th><th>Before prep</th><th>What we know now</th></tr></thead>
       <tbody>
         <tr>
           <td>How much custom code would we need to port?</td>
           <td>&ldquo;Some.&rdquo;</td>
-          <td>Exact count, line-by-line, tagged easy / medium / hard.</td>
+          <td>About 19,000 lines across 75 files. Roughly a fifth can be dropped, two-thirds need a straightforward port, and the remainder needs a rebuild.</td>
         </tr>
         <tr>
           <td>How much speed would we gain from a modern theme?</td>
           <td>&ldquo;Probably a lot.&rdquo;</td>
-          <td>Side-by-side scores from a sandboxed install.</td>
+          <td>Main-thread blocking time drops ~90%; layout shift goes to zero. Real-user impact takes 4&ndash;8 weeks post-publish to confirm.</td>
         </tr>
         <tr>
           <td>Which apps would re-integrate cleanly?</td>
           <td>&ldquo;Most of them, we think.&rdquo;</td>
-          <td>Per-app status: native support, workaround, or replace.</td>
+          <td>Of 30 apps audited: ~17 install cleanly on the modern theme via vendor-supported blocks; ~10 need verification or manual port; the rest are being replaced or removed anyway.</td>
         </tr>
         <tr>
           <td>Which target platform is right for us?</td>
           <td>Three candidates, no committed answer.</td>
-          <td>One recommendation with cost, risk, and timeline.</td>
+          <td><strong>Pipeline 8.1.1</strong> &mdash; same vendor as today, free upgrade, lowest porting cost, best feature parity. Dawn and a fully-custom headless build were both evaluated and ruled out for our scale.</td>
         </tr>
         <tr>
           <td>What does a migration project actually look like?</td>
           <td>A vague 3&ndash;6 weeks.</td>
-          <td>A phase-by-phase playbook with rollback steps.</td>
+          <td>A 5-week sprint &mdash; 3.5&ndash;5.5 person-weeks of work &mdash; with a written, phase-by-phase playbook including rollback steps.</td>
         </tr>
       </tbody>
     </table>
 
     <div class="callout">
-      <p>This is the deliverable. The prep phase converts judgment calls into known quantities.</p>
+      <p>None of this commits us to migrating. It commits us to being ready &mdash; with budget, target, and playbook in hand &mdash; the moment a trigger fires.</p>
     </div>
   </div>
 </section>
@@ -569,6 +569,11 @@
     <div class="eyebrow">Changelog</div>
     <h2>Update history</h2>
     <p class="lede">This document refreshes as prep-phase findings come in. The URL stays the same; the content gets sharper.</p>
+
+    <div class="history-entry">
+      <div class="history-date">17 May 2026</div>
+      <div class="history-note"><strong>v1.1</strong> &mdash; Prep phase complete. Risk #2 (&ldquo;site speed has hit its ceiling&rdquo;) sharpened with measured numbers from the sandbox install. Slide 11 flipped from &ldquo;what we will know&rdquo; to &ldquo;what we know now&rdquo;. Headline findings: ~19,000 lines of custom code inventoried; 30 apps audited; modern-theme architecture confirmed to deliver ~90% blocking-time reduction and zero layout shift; recommended target is <strong>Pipeline 8.1.1</strong> on a 5-week sprint when (and only when) a trigger fires.</div>
+    </div>
 
     <div class="history-entry">
       <div class="history-date">17 May 2026</div>
