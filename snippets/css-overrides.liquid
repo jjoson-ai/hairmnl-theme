@@ -1,5 +1,41 @@
 <style>
   /* ============================================================
+   * P4-parity FIX 2026-05-18 — fix invalid font-family declarations.
+   *
+   * Pipeline 8's snippets/css-variables.liquid renders the body and
+   * heading font stacks as `<custom_font>, <base_font.fallback_families>`.
+   * On this store, settings.type_base_font (= "questrial_n4") returns a
+   * STRING rather than a Shopify font object, so `.fallback_families`
+   * renders empty — producing invalid CSS like:
+   *
+   *     ---font-stack-body: BasisGrotesquePro-Regular
+   *         ,
+   *         ;
+   *
+   * The trailing comma makes the entire `font-family` declaration invalid,
+   * browsers drop it, and body falls back to the user-agent default
+   * (Times serif on macOS / Safari, Chrome). Diagnosed 2026-05-18 via JS
+   * inspection: `getPropertyValue('---font-stack-body')` returned the
+   * literal string `"BasisGrotesquePro-Regular\n    ,"`. Custom @font-face
+   * declarations were never triggered to load because no element validly
+   * referenced them.
+   *
+   * Fix: re-declare the font-stack custom properties with explicit, valid
+   * fallback chains. Highest-specificity declaration in :root wins over
+   * the broken one in css-variables.liquid (both have specificity 0,0,1,0
+   * but later cascade wins). Both layers render in the same <head> but
+   * css-overrides comes after css-variables in layout/theme.liquid line
+   * 80-83, so this declaration cascades last.
+   * ============================================================
+   */
+  :root {
+    ---font-stack-body: "BasisGrotesquePro-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    ---font-stack-heading: "SelfModern", Georgia, "Times New Roman", serif;
+    ---font-stack-accent: "BasisGrotesquePro-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    ---font-stack-product-heading: "SelfModern", Georgia, "Times New Roman", serif;
+  }
+
+  /* ============================================================
    * HairMNL CSS overrides — Pipeline 8 port (M3)
    *
    * Ported 2026-05-17 from Pipeline 6's snippets/css-overrides.liquid.
