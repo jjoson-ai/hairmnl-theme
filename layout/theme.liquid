@@ -230,6 +230,62 @@
         type="image/webp">
     {%- endif -%}
 
+    {%- comment -%}
+      First-body-image LCP preload (bd iy4m, 2026-05-16). The 9hw preload
+      above covers article.image, but field audit (2026-05-16) showed many
+      high-traffic articles have a blank article.image OR have
+      section.settings.blog_show_featured_image = false → the hero block at
+      sections/article.liquid:27-39 does NOT render. In that case the actual
+      LCP is the FIRST body <img>, which article-content-with-img-dims:170-184
+      (issue 7tq) marks fetchpriority="high" + loading="eager" — but no
+      preload is issued, so the LCP image loads cold from the post-CSS
+      critical path.
+
+      Fix: extract the first <img src=> from article.content and emit a
+      preload. Liquid has no regex; uses split chains:
+        article.content → split '<img ' → [1] → split '>' → first
+                       → split 'src="' → [1] → split '"' → first.
+
+      Verified pre-fix curl audit on three top-offending articles:
+        salon-hair-color-vs-box-dye-...:    hero block missing, 0 preloads.
+        before-and-after-purple-shampoo:    hero block missing, 0 preloads.
+        purple-vs-blue-shampoo-philippines: hero block missing, 0 preloads.
+      Each has an eager body img that loads cold — this preload covers them.
+
+      Browser handles the case where article.image preload also fires: both
+      preloads are queued; whichever the page actually renders as LCP wins
+      the race. No harm from over-preloading by ~1 image; it's a known LCP
+      optimisation pattern (Lighthouse "preload LCP image" suggestion).
+    {%- endcomment -%}
+    {%- if request.page_type == 'article' -%}
+      {%- comment -%}
+        Normalise article.content so the extraction is robust to whitespace
+        variations in the rich-text editor's output. Two-step normalisation:
+          1. Replace `<img` with `<img ` (force trailing space).
+          2. Split on '<img ' — chunks[1] is everything after the first <img.
+        Then split on 'src="' (with double-quote fallback to single-quote)
+        to extract the src URL. Skip if URL doesn't look like a valid path.
+      {%- endcomment -%}
+      {%- assign _normalised = article.content | default: '' | replace: '<img', '<img ' -%}
+      {%- assign _body_chunks = _normalised | split: '<img ' -%}
+      {%- assign _first_body_img_url = '' -%}
+      {%- if _body_chunks.size > 1 -%}
+        {%- assign _first_img_attrs = _body_chunks[1] | split: '>' | first -%}
+        {%- assign _src_segments_dq = _first_img_attrs | split: 'src="' -%}
+        {%- if _src_segments_dq.size > 1 -%}
+          {%- assign _first_body_img_url = _src_segments_dq[1] | split: '"' | first -%}
+        {%- else -%}
+          {%- assign _src_segments_sq = _first_img_attrs | split: "src='" -%}
+          {%- if _src_segments_sq.size > 1 -%}
+            {%- assign _first_body_img_url = _src_segments_sq[1] | split: "'" | first -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+      {%- if _first_body_img_url and _first_body_img_url != '' and _first_body_img_url contains '/' -%}
+        <link rel="preload" as="image" href="{{ _first_body_img_url }}" fetchpriority="high">
+      {%- endif -%}
+    {%- endif -%}
+
     {%- if settings.favicon != blank -%}
       <link
         rel="shortcut icon"
@@ -678,18 +734,87 @@
       with the apps uninstalled, SATCB no longer fetches them, so the guard
       has nothing to block. See bd hairmnl-theme-??? for the cleanup.
     {%- endcomment -%}
-
     {%- comment -%}
-      Reamaze defer-on-interaction guard — bd hairmnl-theme-meu.2 (Phase 3).
+      Pro Blogger interim CSS defer (bd 01vl.2, 2026-05-16). Intercepts
+      problogger.css + owl.carousel.min.css + owl.theme.min.css <link
+      rel=stylesheet> insertions and swaps them to media=print + onload
+      rel=stylesheet pattern, removing Pro Blogger from the LCP critical
+      path. INTERIM until Vertex AI replacement (bd oyw + 01vl.3 Vertex
+      wiring) lands; remove this guard at that time.
+    {%- endcomment -%}
+    <script>
+    (function() {
+      var PATTERNS = ['problogger.css', 'owl.carousel'];
+      var matches = function(href) {
+        if (typeof href !== 'string') return false;
+        for (var i = 0; i < PATTERNS.length; i++) {
+          if (href.indexOf(PATTERNS[i]) !== -1) return true;
+        }
+        return false;
+      };
+      var deferCSS = function(el) {
+        if (el.tagName !== 'LINK') return;
+        if (el.rel !== 'stylesheet') return;
+        if (!matches(el.href)) return;
+        el.media = 'print';
+        el.onload = function() {
+          this.media = 'all';
+          this.onload = null;
+        };
+      };
+
+      // 1. createElement override — catches dynamic createElement('link')
+      var _createElement = document.createElement.bind(document);
+      document.createElement = function(tag) {
+        var el = _createElement.apply(document, arguments);
+        if (typeof tag === 'string' && tag.toLowerCase() === 'link') {
+          var set = Object.getOwnPropertyDescriptor(HTMLLinkElement.prototype, 'href').set;
+          Object.defineProperty(el, 'href', {
+            configurable: true,
+            get: function() {
+              return Object.getOwnPropertyDescriptor(HTMLLinkElement.prototype, 'href').get.call(this);
+            },
+            set: function(v) {
+              set.call(this, v);
+              deferCSS(this);
+            }
+          });
+        }
+        return el;
+      };
+
+      // 2. MutationObserver — catches parser-inserted <link> from content_for_header
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          m.addedNodes.forEach(function(node) {
+            if (node.tagName === 'LINK') deferCSS(node);
+          });
+        });
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    })();
+    </script>
+    {%- comment -%}
+      Reamaze defer-on-interaction guard — bd hairmnl-theme-meu (Phase 5, 100% rollout).
       cdn.reamaze.com (~212 KB, ~255ms scripting) is blocked from loading
       until one of six triggers fires. Placeholder snippet renders an
       interactive bubble that visually matches the live Reamaze widget.
 
+      History:
+        - Phase 3 (bd meu.2, 2026-05-14): defer guard + placeholder, draft theme.
+        - Phase 4 (bd meu.3, 2026-05-14): 10% canary on live for 35h. Smoke +
+          Reamaze inbound rate forensics showed zero customer harm. Canary code
+          was overwritten on live at ~2026-05-16 09:52 UTC by an unrelated theme
+          push from main (the 2026-04-26 push-regression pattern, replayed).
+        - Phase 5 (bd meu.4, 2026-05-17): unconditional defer rollout. Cookie
+          canary cohort removed (vestigial at 100%). KILL_SWITCH kept for
+          single-line rollback.
+
       Pattern: MutationObserver scans for the static <script src> tag emitted
       by content_for_header below; on detection, type is swapped to
       'javascript/blocked' and src is moved to dataset.deferredSrc (prevents
-      execution). createElement override catches any dynamic injection.
-      On trigger, deferred srcs are replayed via newly-created script tags.
+      execution). createElement override catches any dynamic injection. On
+      trigger, deferred srcs are replayed via newly-created script tags.
 
       Triggers: placeholder click | any-click after 5s | scroll past 50% |
       pointer hover near bubble (desktop) | [data-reamaze-trigger] click |
@@ -697,39 +822,14 @@
 
       MUST be inline + above content_for_header so the observer is
       registered before Shopify emits the Reamaze app embed block.
+
+      ROLLBACK: set KILL_SWITCH=true, push layout/theme.liquid to live.
+      Time-to-revert: ~30s push + ~30s edge invalidation.
     {%- endcomment -%}
     <script>
     (function() {
-      // Canary kill-switch: set to true to disable the defer guard for ALL
-      // users (including those who already have reamaze_defer=1 cookie).
-      // Single-line rollback per Phase 2 design + Phase 4 spec.
       var KILL_SWITCH = false;
       if (KILL_SWITCH) return;
-
-      // Canary cohort selection: 10% of new visitors get defer behavior.
-      // Cookie persists 7 days so the same visitor gets consistent behavior
-      // across pageloads. Existing visitors keep their assigned bucket.
-      // Phase 4 = 10%. Phase 4 ramp = 50%. Phase 5 = 100% (remove this gate).
-      var CANARY_PCT = 0.10;
-      var COOKIE_NAME = 'reamaze_defer';
-      var COOKIE_MAX_AGE = 604800; // 7 days
-      var cookieMatch = document.cookie.match(/(?:^|; )reamaze_defer=([^;]*)/);
-      var bucket = cookieMatch ? cookieMatch[1] : null;
-      if (bucket === null) {
-        bucket = (Math.random() < CANARY_PCT) ? '1' : '0';
-        document.cookie = COOKIE_NAME + '=' + bucket + '; max-age=' + COOKIE_MAX_AGE + '; path=/; SameSite=Lax';
-      }
-      // Telemetry: fire bucket assignment so canary cohort size is visible in GA4.
-      (window.dataLayer = window.dataLayer || []).push({ event: 'reamaze_defer_bucket', bucket: bucket });
-      if (bucket !== '1') {
-        // Control group — let Reamaze load normally. Hide placeholder element
-        // (it'll be rendered at end of body regardless of this branch).
-        document.addEventListener('DOMContentLoaded', function() {
-          var ph = document.getElementById('reamaze-defer-placeholder');
-          if (ph) ph.hidden = true;
-        });
-        return;
-      }
 
       var BLOCKED = ['cdn.reamaze.com'];
       var IDLE_MS = 5000;
@@ -754,32 +854,15 @@
           m.addedNodes.forEach(function(n) {
             if (n.nodeName === 'SCRIPT' && isBlocked(n.src)) {
               var origSrc = n.src;
-              deferred.push(origSrc);
-              // Remove node entirely + null src — cancels the in-flight fetch in
-              // modern browsers (Chromium aborts when the SCRIPT element is
-              // detached from the document before script body has executed).
               n.type = 'javascript/blocked';
               n.removeAttribute('src');
-              if (n.parentNode) n.parentNode.removeChild(n);
+              n.dataset.deferredSrc = origSrc;
+              deferred.push(origSrc);
             }
           });
         });
       });
       mo.observe(document.documentElement, { childList: true, subtree: true });
-
-      // Always hide placeholder when real Reamaze widget paints — keeps
-      // rollback (empty BLOCKED) clean (no double bubble). Separate from
-      // disarm() because rollback path never calls disarm.
-      var phWatcher = new MutationObserver(function() {
-        if (document.querySelector('#reamaze-widget, #reamaze-widget-content, #reamaze-widget-label')) {
-          var ph = document.getElementById('reamaze-defer-placeholder');
-          if (ph && !ph.hidden) ph.hidden = true;
-          phWatcher.disconnect();
-        }
-      });
-      function startPhWatcher() { phWatcher.observe(document.body, { childList: true, subtree: true }); }
-      if (document.body) startPhWatcher();
-      else document.addEventListener('DOMContentLoaded', startPhWatcher);
 
       var _ce = document.createElement.bind(document);
       document.createElement = function(tag) {
@@ -837,6 +920,18 @@
         });
       }
 
+      // Auto-hide placeholder when real Reamaze widget paints (e.g., from a non-defer code path).
+      var phWatcher = new MutationObserver(function() {
+        if (document.querySelector('#reamaze-widget, #reamaze-widget-content, #reamaze-widget-label')) {
+          var ph = document.getElementById('reamaze-defer-placeholder');
+          if (ph) ph.hidden = true;
+          phWatcher.disconnect();
+        }
+      });
+      document.addEventListener('DOMContentLoaded', function() {
+        phWatcher.observe(document.body, { childList: true, subtree: true });
+      });
+
       document.addEventListener('click', function(e) {
         var ph = e.target.closest && e.target.closest('#reamaze-defer-placeholder');
         if (ph) { e.preventDefault(); disarm('placeholder_click'); return; }
@@ -885,6 +980,7 @@
       setTimeout(function() { if (!disarmed) disarm('auto_60s'); }, AUTO_MS);
     })();
     </script>
+
 
     <!-- Shopify app scripts =========================================================== -->
     {{ content_for_header }}
