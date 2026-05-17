@@ -1,0 +1,108 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/kerastase-elixir-sis.jpg",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "elixir-fw_text_with_media-1": {
+          "type": "fw_text_with_media",
+          "settings": {
+            "fw_text_with_media_section_title": "New Kérastase Elixir Ultime. The iconic hair oil, now refillable!",
+            "fw_text_with_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/JWtoFpERa8A?si=KlOuY4gj6eu1GPio\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen=\"\"></iframe>"
+          }
+        },
+        "elixir-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the Elixir Ultime Hair Oils",
+            "section-sub-heading": "Use an Elixir Ultime Hair Oil on towel-dried hair to protect and nourish hair. It may also be used on dry hair for extra shine and fragrance. Choose the hair oil that best fits your hair’s needs."
+          }
+        },
+        "elixir-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Elixir_Original_Normal_to_Thick_Hair.png",
+            "description_1": "<strong>Kérastase Elixir Ultime Original Hair Oil 100ml</strong><br>\nRevives the natural strength of hair, providing nourishment deep into the hair fiber and gives the hair ultimate shine.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-elixir-ultime-original-100ml",
+            "link_label_1": "Shop Hair Oil",
+            "product_image_2": "shopify://shop_images/Elixir_Rose_Colored_Hair.png",
+            "description_2": "<strong>Kérastase Elixir Ultime Hair Oil For Colored Hair 100ml\n</strong><br>\nBeautifying hair oil that works to enhance colour vibrancy whilst conditioning and protecting color-treated hair.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-elixir-ultime-for-colored-hair-100ml",
+            "link_label_2": "Shop Hair Oil",
+            "product_image_3": "shopify://shop_images/Elixir_Bi-Phase_Fine_Hair.png",
+            "description_3": "<strong>Kérastase Elixir Ultime Bi-Phase Hair Oil Spray 100ml\n</strong><br>\nVolume-enhancing beautifying oil for all hair types with all the nourishing benefits of hair oils without being weighed down.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-elixir-ultime-bi-phase-oil-100ml",
+            "link_label_3": "Shop Hair Oil"
+          }
+        },
+        "elixir-section_header-2": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine",
+            "section-sub-heading": "Pure shine, opulent volume the must-have range to beautify hair, putting the power of Marula and Camellia oils at the heart of its formula. Kérastase created a customized 3-step beauty routine: cleanse, treat and texturize with carefully conceived methods for shiny and extremely radiant hair."
+          }
+        },
+        "elixir-3x3_grid_tile-2": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Elixir_1_800x_crop_center_594fc5dc-c246-49ce-b988-47c36c91e2a5.webp",
+            "description_1": "<b>Kérastase Elixir Ultime Shampoo 250ml</b><br>\nVersatile nourishing oil shampoo that provides ultimate shine and hair nourishment.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-elixir-ultime-bain-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Elixir_2_mask_800x_crop_center_aac83f9e-aa6d-41c5-98dd-5be819d88ec1.webp",
+            "description_2": "<b>Kérastase Elixir Ultime Hair Mask 200ml</b><br>\nShiny hair beautifying oil with camellia oil and Argan oil for all hair types.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-elixir-ultime-hair-masque-200ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Layouts-_All_products_-_Revised_3_Texturize_3_copy_800x_crop_center_f4da0575-1ff5-44de-b37c-e166eceee233.webp",
+            "description_3": "<b>Kérastase Elixir Ultime Original Hair Oil</b><br>\nKérastase's iconic hair oil for all hair types.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-elixir-ultime-original-oil",
+            "link_label_3": "Shop Hair Oil"
+          }
+        },
+        "elixir-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "kerastase-elixir-ultime"
+          }
+        },
+        "elixir-left_image_with_text-1": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "<a href=\"https://www.hairmnl.com/blogs/news/hair-science\">How Hair Loses Luminosity</a>",
+            "left_image_with_text_image": "shopify://shop_images/Picture1_48f01a45-ebf1-4442-9d23-ae37c63e8301.png",
+            "left_image_with_text_copy": "Several causes could be to blame for dulling your hair's natural shine -- most of which create a state of dehydration. And although not all of these causes can be controlled, you can counteract the effects. Before devising your approach to better hair health, however, let's take a look at 3 common reasons dull hair happens. <br><br>\n<a href=\"https://www.hairmnl.com/blogs/hair-education/hair-science\">Read More</a>"
+          }
+        },
+        "elixir-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "<a href=\"https://www.hairmnl.com/blogs/news/q-amp-a-proper-use-of-hair-oil\">Q&A: Proper Use of Hair Oil</a>",
+            "right_image_with_text_image": "shopify://shop_images/Picture2_c4af54e3-fed4-487b-a452-42e7e73e16af.png",
+            "right_image_with_text_copy": "Often, the success of hair oil depends on the application. Proper technique, measurement and timing can make the difference between fail and holy grail. Here, indulge in tips from our experts that guarantee a perfect result, every time.<br><br>\n<a href=\"https://www.hairmnl.com/blogs/hair-tutorials/q-amp-a-proper-use-of-hair-oil\">Read More</a>"
+          }
+        }
+      },
+      "block_order": [
+        "elixir-fw_text_with_media-1",
+        "elixir-section_header-1",
+        "elixir-3x3_grid_tile-1",
+        "elixir-section_header-2",
+        "elixir-3x3_grid_tile-2",
+        "elixir-best_sellers-1",
+        "elixir-left_image_with_text-1",
+        "elixir-right_image_with_text-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

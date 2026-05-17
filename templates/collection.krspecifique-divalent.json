@@ -1,0 +1,106 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_page_header_title": "Kèrastase Spécifique Divalent",
+        "brand_featured_image": "shopify://shop_images/Divalent_SIS_14fe3232-ec07-4341-980a-de579ac56e15.jpg",
+        "brand_featured_text": "<p>The Kérastase Spécifique Divalent range is the expert range dedicated to oily scalp and sensitized lengths. It has been designed to perfectly regulate excess sebum production and to repair and nourish sensitized areas of the hair. The scalp is purified, the hair feels softer.</p>",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "krspecifique-divalent-fw_text_with_media-1": {
+          "type": "fw_text_with_media",
+          "settings": {
+            "fw_text_with_media_section_title": "Ultimate Hair Rehab",
+            "fw_text_with_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/EmXDalas7tE\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"></iframe>"
+          }
+        },
+        "krspecifique-divalent-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Greasy Scalps and Dry Lengths",
+            "section-sub-heading": "It’s difficult to cure a greasy scalp whilst hydrating dry lengths, until now. Discover the new range that will balance your hair and scalp beautifully."
+          }
+        },
+        "krspecifique-divalent-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Kerastase_Specifique_Divalent_1_Bathe_-_Bain_800x_crop_center_f035d0a5-3678-4892-a7b7-a6163fe14b2e.webp",
+            "description_1": "<b>Kérastase Spécifique Divalent Anti-Oiliness Balancing Shampoo 250ml</b><br>\nBalancing shampoo for oily roots, sensitized lengths.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-specifique-bain-divalent-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Kerastase_Specifique_Divalent_1_Bathe_-_Argile_800x_crop_center_f988367c-1f0c-41be-9d9a-0f2f80a3cc3e.webp",
+            "description_2": "<b>Kérastase Spécifique Divalent Anti-Oiliness Detox Cleanser 250ml</b><br>\nA weekly detox cleanser that deeply yet gently cleanses and purifies the scalp.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-specifique-divalent-anti-oiliness-detox-cleanser-250ml",
+            "link_label_2": "Shop Detox Cleanser",
+            "product_image_3": "shopify://shop_images/Kerastase_Specifique_Divalent_2_Treat_-_Masque_800x_crop_center_93d7aff6-c8e5-43e0-a385-a3c35bcf2ec9.webp",
+            "description_3": "<b>Kérastase Spécifique Divalent Anti-Oiliness Mask 200ml</b><br>\nLightweight gel-masque that instantly rebalances hair essential hydration level.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-specifique-divalent-anti-oiliness-mask-200ml",
+            "link_label_3": "Shop Mask",
+            "product_image_4": "shopify://shop_images/Potentialiste_Serum_800x_crop_center_5cbe344a-8120-478f-84d2-e7f06f07c757.webp",
+            "description_4": "<b>Kérastase Spécifique Potentialiste Serum 90ml</b><br>\nUniversal defense serum for unbalanced scalps.",
+            "link_url_4": "https://hairmnl.com/products/kerastase-specifique-potentialiste-serum-90ml",
+            "link_label_4": "Shop Serum"
+          }
+        },
+        "krspecifique-divalent-left_image_with_text-1": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "Meet the NEW Kerastase Specifique Potentialiste Serum - A Super Serum for a Healthy Scalp",
+            "left_image_with_text_image": "shopify://shop_images/Kerastase_Specifique_Potentialiste_Serum_90ml_Lifestyle_bc83c958-2ead-4f6e-a753-dd506b46aa4a.jpg",
+            "left_image_with_text_copy": "Get to know more about the universal defense serum for an unbalanced scalp helps to create a healthy feeling scalp and beautiful hair.\n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/meet-the-new-kerastase-specifique-potentialiste-serum-a-super-serum-for-a-healthy-scalp\">Learn More</a>"
+          }
+        },
+        "krspecifique-divalent-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "A Simple Guide to Balancing Your Greasy Scalp and Dry Lengths",
+            "right_image_with_text_image": "shopify://shop_images/Specifique_Divalent_-_A_Simple_Guide_1800x_b8f4f7ab-d046-401e-83e5-9e3c4b930dab.webp",
+            "right_image_with_text_copy": "Get rid of an oily scalp and greasy roots, while nourishing and hydrating hair lengths with Kerastase's NEW Spécifique Divalent range.\n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/a-simple-guide-to-balancing-your-greasy-scalp-and-dry-lengths\">Learn More</a>"
+          }
+        },
+        "krspecifique-divalent-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Spécifique Divalent Range",
+            "best_sellers_collection": "kerastase-specifique-divalent"
+          }
+        },
+        "krspecifique-divalent-left_image_with_text-2": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "Tips to Get Healthy Hair with Long-Lasting Freshness",
+            "left_image_with_text_image": "shopify://shop_images/Specifique_Divalent_-_Tips_to_Get_Healthy_Hair_1800x_bce5e2af-29cc-47d1-a73d-9785bf7bae49.webp",
+            "left_image_with_text_copy": "Discover the secrets to lasting hair freshness, so you can eliminate greasy and oily roots, increase volume and keep your hair beautiful and clean for longer.\n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/tips-to-get-healthy-hair-with-long-lasting-freshness\">Learn More</a>"
+          }
+        },
+        "krspecifique-divalent-right_image_with_text-2": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "The Cleansing Duo You Need for Fresh, Healthy Hair with Kérastase",
+            "right_image_with_text_image": "shopify://shop_images/unnamed_22_1800x_a63204df-dc59-4ae7-98fe-e875d2ad0c85.webp",
+            "right_image_with_text_copy": "Ever feel like your hair is never quite clean enough? Meet the cleansing duo that will leave your hair feeling its fresh best.\n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/the-cleansing-duo-you-need-for-fresh-healthy-hair\">Learn More</a>"
+          }
+        }
+      },
+      "block_order": [
+        "krspecifique-divalent-fw_text_with_media-1",
+        "krspecifique-divalent-section_header-1",
+        "krspecifique-divalent-4x3_grid_tile-1",
+        "krspecifique-divalent-left_image_with_text-1",
+        "krspecifique-divalent-right_image_with_text-1",
+        "krspecifique-divalent-best_sellers-1",
+        "krspecifique-divalent-left_image_with_text-2",
+        "krspecifique-divalent-right_image_with_text-2"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

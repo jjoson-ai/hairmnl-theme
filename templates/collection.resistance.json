@@ -1,0 +1,170 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/Resistance_SIS_017cb3b6-0d4d-4274-a020-969a9cb79335.png",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "resistance-new_arrivals-1": {
+          "type": "new_arrivals",
+          "settings": {
+            "new_arrivals_collection_section_title": "Best Sellers",
+            "new_arrivals_collection": "kerastase-resistance-collection"
+          }
+        },
+        "resistance-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 4-Step Routine for Longer Hair",
+            "section-sub-heading": "Exceptional hair knows no limits. Extend your hair limits with our first 90 day hair program designed to optimize and reinforce the length of damaged hair."
+          }
+        },
+        "resistance-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Layouts-_All_products_-_Revised_-_Resized_1024x1024-10_800x_crop_center_3d1f1f28-bd48-426d-b2e9-7b2d7b194cde.webp",
+            "description_1": "<b>Kérastase Resistance Extentioniste Shampoo 250ml</b><br>\nLength strengthening shampoo for slow growing, damaged lengths.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-resistance-bain-extentioniste-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Layouts-_All_products_-_Revised_-_Resized_1024x1024-11_800x_crop_center_abf80a57-e8d8-4687-b787-7e3b619ee9a1.webp",
+            "description_2": "<b>Kérastase Resistance Extentioniste Conditioner 200ml</b><br>\nLength strengthening conditioner for slow growing, damaged lengths.<br><br><h5><u><a href=\"https://www.hairmnl.com/products/kerastase-resistance-fondant-extentioniste-conditioner-200ml\">Shop Conditioner</a></u></h5><b>Kérastase Resistance Extentioniste Mask 200ml</b><br>\nLength strengthening hair mask for slow growing, damaged lengths.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-resistance-masque-extentioniste-200ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Layouts-_All_products_-_Revised_-_Resized_1024x1024-12_800x_crop_center_4daf4445-a81f-4813-83a4-9190a9b31720.webp",
+            "description_3": "<b>Kérastase Resistance Extentioniste Sérum 50ml</b><br>\nStrengthening scalp and hair serum for stronger fibre from the roots.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-resistance-serum-extentioniste-50ml",
+            "link_label_3": "Shop Serum",
+            "product_image_4": "shopify://shop_images/Layouts-_All_products_-_Revised_-_Resized_1024x1024-42_800x_crop_center_32839d1e-654b-4778-9212-77b1ab318952.webp",
+            "description_4": "<b>Kérastase Resistance Extentioniste Thermique 150ml</b><br>\nLength strengthening gel cream and blow-dry care for healthy-looking lengths. Infused with Creatine R and Taurine.",
+            "link_url_4": "https://www.hairmnl.com/collections/kerastase-resistance-collection/products/kerastase-resistance-extentioniste-thermique-150ml",
+            "link_label_4": "Shop Thermique"
+          }
+        },
+        "resistance-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Extentioniste Range",
+            "best_sellers_collection": "kerastase-resistance-extentioniste"
+          }
+        },
+        "resistance-section_header-2": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Severely Damaged Hair"
+          }
+        },
+        "resistance-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Resistane_Therapiste_1_800x_crop_center_1e159dfa-dca7-4c83-911c-a2359b1c9078.webp",
+            "description_1": "<b>Kérastase Resistance Thérapiste Shampoo 250ml</b><br>\nRepairing shampoo for weak, over-processed and damaged hair.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-resistance-bain-therapiste-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Resistane_Therapiste_2_800x_crop_center_3fb37b02-a386-4f55-a71e-e64bdb77bdbb.webp",
+            "description_2": "<b>Kérastase Resistance Thérapiste Soin Premier Conditioner 200ml</b><br>\nRepairing conditioner for weak, over-processed and damaged hair.<br><br><h5><u><a href=\"https://www.hairmnl.com/products/kerastase-resistance-soin-premier-therapiste-conditioner-200ml\">Shop Conditioner</a></u></h5><br><b>Kérastase Resistance Thérapiste Mask 200ml</b><br>\nRepairing masque for weak, over-processed and damaged hair.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-resistance-therapiste-masque-200ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Resistane_Therapiste_3_800x_crop_center_e22c2a93-4d00-4ef3-a412-feed6a15e64f.webp",
+            "description_3": "<b>Kérastase Resistance Thérapiste Sérum 30ml</b><br>\nRepairing dual-serum for weak, over-processed and damaged hair.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-resistance-serum-therapiste-30ml",
+            "link_label_3": "Shop Serum"
+          }
+        },
+        "resistance-best_sellers-2": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Thérapiste Range",
+            "best_sellers_collection": "kerastase-resistance-therapiste"
+          }
+        },
+        "resistance-section_header-3": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Weakened Hair"
+          }
+        },
+        "resistance-3x3_grid_tile-2": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Resistance_Architecte_1_800x_crop_center_4c0bc864-d231-4778-8a40-830f3a01678e.webp",
+            "description_1": "<b>Kérastase Resistance Force Architecte Shampoo 250ml</b><br>\nReconstructing shampoo for weak and damaged hair.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-resistance-bain-force-architecte-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Resistance_Architecte_2_800x_crop_center_ad36f438-ad8a-41a7-9165-7c60c8b60d82.webp",
+            "description_2": "<b>Kérastase Resistance Ciment Anti-Usure Conditioner 200ml</b><br>\nRepairing anti-breakage conditioner for weak hair and damaged hair.<br><br><h5><u><a href=\"https://www.hairmnl.com/products/kerastase-resistance-ciment-anti-usure-conditioner-200m\">Shop Conditioner</a></u></h5><br><b>Kérastase Resistance Force Architecte Mask 200ml</b><br>\nReconstructing masque for damaged hair and over-processed hair.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-resistance-masque-force-architecte-conditioner-200ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Resistance_Architecte_3_800x_crop_center_3c8cc538-c300-4fff-a9d5-6bde5e52f568.webp",
+            "description_3": "<b>Kérastase Resistance Ciment Thermique Blow Dry Primer 150ml</b><br>\nStrengthening leave-in treatment for weak, over-processed and damaged hair.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-resistance-ciment-thermique-blow-dry-primer-150ml",
+            "link_label_3": "Shop Blow Dry Primer"
+          }
+        },
+        "resistance-best_sellers-3": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Force Architecte Range",
+            "best_sellers_collection": "kerastase-resistance-force-architecte"
+          }
+        },
+        "resistance-right_media_with_text-1": {
+          "type": "right_media_with_text",
+          "settings": {
+            "right_media_with_text_section_title": "Want 99% Less Breakage & 78% Less Split Ends*",
+            "right_media_with_text_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/M3mUxvic5o4?rel=0\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen=\"\"></iframe>",
+            "right_media_with_text_copy": "Tired of asking your stylist for a trim in order to keep your hair healthy? Extentioniste targets hair fiber from root to tip to keep it fortified while repairing split ends and breakage.<br><br>\n\n<i>* Following in-salon and at home training program (In-salon Soin 1 and Soin 2 not available in the Philippines)</i>"
+          }
+        },
+        "resistance-left_image_with_text-1": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "Go to Great Lengths",
+            "left_image_with_text_image": "shopify://shop_images/HeroBanner_1_1800x_b1b44265-1ec7-4599-9561-fa9ce3a661ed.webp",
+            "left_image_with_text_copy": "Introducing Résistance Extentioniste, the ultimate advantage in the quest for long hair. It’s a new family of products focused on keeping hair strong and healthy, so it can grow as long as you like, always looking glossy and gorgeous.<br><br>\n<a href=\"https://www.hairmnl.com/blogs/product-spotlight/go-to-great-lengths\">Learn More</a>"
+          }
+        },
+        "resistance-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "Extend Your Limits. Spring Training for Long Hair",
+            "right_image_with_text_image": "shopify://shop_images/Kera_-_1_1800x_50b9d03b-2cdb-4d5f-8b0a-aa459a3ee165.jpg",
+            "right_image_with_text_copy": "With any training program, the goals are strength, stamina and speed. Hair goals aren’t much different. Start your program to get your hair in the best shape of your life.<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/strengthening-training-for-long-hair-kerastase-extentioniste\">Learn More</a>"
+          }
+        },
+        "resistance-left_image_with_text-2": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "How to Care For Longer Hair",
+            "left_image_with_text_image": "shopify://shop_images/Kerastase_Resistance_Extentioniste_6b1ee500-a55c-4601-b3f4-3e5d6682eff0.jpg",
+            "left_image_with_text_copy": "Cascading from a brilliant woman’s head to whatever length she pleases, her hair seems an extension of herself, the next level of her being. The longer it is, the longer it’s been with her, full of secrets, waving in the air with wisdom. “There is something iconic about long hair. Mythical even.”<br><br>\n<a href=\"https://www.hairmnl.com/blogs/product-spotlight/how-to-care-for-longer-hair\">Learn More</a>"
+          }
+        }
+      },
+      "block_order": [
+        "resistance-new_arrivals-1",
+        "resistance-section_header-1",
+        "resistance-4x3_grid_tile-1",
+        "resistance-best_sellers-1",
+        "resistance-section_header-2",
+        "resistance-3x3_grid_tile-1",
+        "resistance-best_sellers-2",
+        "resistance-section_header-3",
+        "resistance-3x3_grid_tile-2",
+        "resistance-best_sellers-3",
+        "resistance-right_media_with_text-1",
+        "resistance-left_image_with_text-1",
+        "resistance-right_image_with_text-1",
+        "resistance-left_image_with_text-2"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

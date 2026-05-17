@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/HairMNL_L_Oreal_Mythic_Oil_SIS.png",
+        "brand_featured_text": "<strong>Experience the most Sensorial Hair Care with Mythic Oil</strong><br>\nA luxurious range that gives the most sensorial haircare experience with a unique combination of 14 essential oils",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "shop-loreal-professionnel",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "lp-mythicoil-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Experience the most Sensorial Hair Care with this 3-Step Routine",
+            "section-sub-heading": "Mythic Oil is L’Oreal Professionnel’s luxurious range that gives the most sensorial haircare experience with a unique combination of 14 essential oils"
+          }
+        },
+        "lp-mythicoil-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/L_Oreal_Mythic_Oil_Shampoo_Thick_Hair_250ml.png",
+            "description_1": "<strong>L'Oréal Mythic Oil Shampoo Thick Hair 250ml</strong><br>\nAn oil Nourishing Shampoo that allows\nyou to recreate the luxurious hair care treatment experienced at your salon in your very own home. The Hair is left feeling nourished and soft, supple and brilliantly shiny.",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-mythic-oil-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/L_Oreal_Mythic_Oil_Masque_Thick_Hair_200ml.png",
+            "description_2": "<strong>L'Oréal Mythic Oil Masque Thick Hair 200ml</strong><br>A rich buttery mask that disciplines\nunruly, thick hair with an instant, deep nutrition for greater manageability and shine.",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-mythic-oil-masque-thick-hair-200ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/L_Oreal_Huile_Original_Mythic_Oil_100ml.png",
+            "description_3": "<strong> L'Oréal Huile Original Mythic Oil 100ml</strong><br>A Luxurious multi-purpose Serum\ninfused with rich precious oils that softens, adds shine and radiance to the hair without weighing it down. It provides heat protection of up to 230°C.",
+            "link_url_3": "https://www.hairmnl.com/products/loreal-mythic-oil-shampoo-250ml",
+            "link_label_3": "Shop Oil"
+          }
+        },
+        "lp-mythicoil-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "<a href=\"https://www.hairmnl.com/blogs/product-spotlight/will-using-hair-oil-make-my-hair-look-greasy\">Will Using Hair Oil Make My Hair Look Greasy?</a>",
+            "right_image_with_text_image": "shopify://shop_images/IMG_6328_1e766384-e965-4844-94b8-d9dc8e9ce554.jpg",
+            "right_image_with_text_copy": "Using hair oil has many benefits like giving hair shine and preventing breakage. But what is hair oil, how do you use it, and will it make hair look greasy? All the answers for you to make the best decision, here.\n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/will-using-hair-oil-make-my-hair-look-greasy\">Learn More</a>"
+          }
+        },
+        "lp-mythicoil-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "loreal-professionnel-mythic-oil"
+          }
+        }
+      },
+      "block_order": [
+        "lp-mythicoil-section_header-1",
+        "lp-mythicoil-3x3_grid_tile-1",
+        "lp-mythicoil-right_image_with_text-1",
+        "lp-mythicoil-best_sellers-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/HairMNL_LOreal_Scalp_Advanced_SIS.png",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "shop-loreal-professionnel",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "lp-scalpadvanced-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 2-Step Routine to Combat Hair Loss",
+            "section-sub-heading": "The Serioxyl Advanced range is L’Oreal Professionnel’s #1 hair loss program that regains lost density and thickness of hair in just 3 months."
+          }
+        },
+        "lp-scalpadvanced-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Serioxyl_1-Shampoo.png",
+            "description_1": "<strong> L'Oréal Professionnel Serioxyl Advanced Densifying Shampoo 300ml / 500ml</strong><br>Clarifying shampoo for thinning hair. Its hypoallergenic formula enriched in Polysorbate 21 and  Magnesium Sulfate and purifies the scalp and bodifies the fiber for densified and cleansed hair.",
+            "link_url_1": "https://www.hairmnl.com/collections/loreal-professionnel-serioxyl/products/loreal-professionnel-serioxyl-advanced-densifying-shampoo-300ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Serioxyl_2-Conditioner.png",
+            "description_2": "<strong> L'Oréal Professionnel Serioxyl Conditioner 150ml</strong><br>A Thickening &amp; detangling conditioner for thinning hair with a Hypoallergenic formula suitable for sensitive scalps",
+            "link_url_2": "https://www.hairmnl.com/collections/loreal-professionnel-serioxyl/products/loreal-professionnel-serioxyl-conditioner-150ml",
+            "link_label_2": "Shop Conditioner",
+            "product_image_3": "shopify://shop_images/Serioxyl_3-Thicker_Serum.png",
+            "description_3": "<strong> L'Oréal Professionnel Serioxyl Thicker Hair Serum</strong><br>An everyday fiber-thickening serum for the lengths that leaves hair looking thicker. It increases hair density and protects the scalp",
+            "link_url_3": "https://www.hairmnl.com/collections/loreal-professionnel-serioxyl/products/serioxyl-thicker-hair-serum",
+            "link_label_3": "Shop Serum",
+            "product_image_4": "shopify://shop_images/Serioxyl_4-Denser_Serum.png",
+            "description_4": "<strong> L'Oréal Professionnel Serioxyl Advanced Denser Hair Serum 90ml</strong><br>A serum that\nmultiplies the number of hairs with daily use, for denser hair.",
+            "link_url_4": "https://www.hairmnl.com/collections/loreal-professionnel-serioxyl/products/loreal-professionnel-serioxyl-advanced-denser-hair-serum",
+            "link_label_4": "Shop Serum"
+          }
+        },
+        "lp-scalpadvanced-2x3_grid_tile-1": {
+          "type": "2x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/L_OrealProfessionnelSerioxylAdvancedDensifyingShampoo300mlBestSeller.jpg",
+            "description_1": "<strong> L'Oréal Professionnel Serioxyl Advanced Densifying Shampoo 300ml / 500ml</strong><br>Clarifying shampoo for thinning hair. Its hypoallergenic formula enriched in Polysorbate 21 and  Magnesium Sulfate and purifies the scalp and bodifies the fiber for densified and cleansed hair.",
+            "link_url_1": "https://www.hairmnl.com/collections/loreal-professionnel-serioxyl/products/loreal-professionnel-serioxyl-advanced-densifying-shampoo-300ml",
+            "link_label_1": "Shop Shampooo",
+            "product_image_2": "shopify://shop_images/L_OrealProfessionnelSerioxylAdvancedDenserHairSerum90mlBestSeller.jpg",
+            "description_2": "<strong> L'Oréal Professionnel Serioxyl Advanced Denser Hair Serum 90ml</strong><br>A serum that\nmultiplies the number of hairs with daily use, for denser hair.",
+            "link_url_2": "https://www.hairmnl.com/collections/loreal-professionnel-serioxyl/products/loreal-professionnel-serioxyl-advanced-denser-hair-serum",
+            "link_label_2": "Shop Serum"
+          }
+        },
+        "lp-scalpadvanced-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "<a>Shop the Anti-Thinning Range</a>",
+            "best_sellers_collection": "loreal-professionnel-serioxyl-advanced"
+          }
+        },
+        "lp-scalpadvanced-section_header-2": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine to Purify Oily Scalps",
+            "section-sub-heading": "The Scalp Advanced Anti-Oiliness Range unclogs and deeply purifies the scalp    from residue, sweat and oil, leaving the scalp feeling clean and refreshed."
+          }
+        },
+        "lp-scalpadvanced-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Scalp_Advanced_Anti-Oiliness-1-Shampoo.jpg",
+            "description_1": "<strong>L'Oreal Serie Expert Scalp Advanced Anti-Oiliness Shampoo 300ml / 500ml</strong><br>Anti-oiliness dermo-purifier shampoo for oily scalps. This lightweight gel purifies the scalp and the fiber from residue, sweat and oil for a fresher and cleaner feel.",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-serie-expert-scalp-advanced-anti-oiliness-shampoo",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Scalp_Advanced_Anti-Oiliness-2-Mask.jpg",
+            "description_2": "<strong>L'Oreal Serie Expert Scalp Advanced Anti-Oiliness Masque 250ml</strong><br>Anti-oiliness 2-in-1 deep purifier for oily scalps.\nThis versatile multi-usage clay deeply unclogs residue, sweat and oil when used as a shampoo and deeply purifies residue, sweat and oil when used as a mask.\nHair feels lightweight and volumized.",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-serie-expert-scalp-advanced-anti-oiliness-masque-250ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Scalp_Advanced_Anti-Oiliness-3-Treatment.jpg",
+            "description_3": "<strong>L'Oreal Serie Expert Scalp Advanced Anti-Discomfort Intense Soother Treatment 200ml</strong><br>Anti-oiliness dermo-purifier shampoo for oily scalps.\nThis lightweight gel purifies the scalp and the fiber from residue, sweat and oil for a fresher and cleaner feel.",
+            "link_url_3": "https://www.hairmnl.com/products/loreal-professionnel-serie-expert-scalp-advanced-anti-discomfort-intense-soother-treatment-200ml",
+            "link_label_3": "Shop Treatment"
+          }
+        },
+        "lp-scalpadvanced-best_sellers-2": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "<a>Shop the Anti-Oiliness Range</a>",
+            "best_sellers_collection": "loreal-professionnel-serie-expert-scalp-advanced-anti-oiliness"
+          }
+        },
+        "lp-scalpadvanced-section_header-3": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 2-Step Routine to Control Dandruff",
+            "section-sub-heading": "The Scalp Advanced Anti-Dandruff range gently clarifies and removes dry or oily dandruff while calming the scalp."
+          }
+        },
+        "lp-scalpadvanced-2x3_grid_tile-2": {
+          "type": "2x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Scalp_Advanced_Anti-Dandruff-1-Shampoo.jpg",
+            "description_1": "<strong>L'Oreal Serie Expert Scalp Advanced Anti-Dandruff Shampoo 300ml / 500ml</strong><br>This lightweight cream gently clarifies and effectively removes dry and oily dandruff, while calming the scalp.",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-serie-expert-instant-clear-pure-anti-dandruff-shampoo-300ml",
+            "link_label_1": "Shop Shampooo",
+            "product_image_2": "shopify://shop_images/Scalp_Advanced_Anti-Dandruff-2-Mask.jpg",
+            "description_2": "<strong>L'Oreal Serie Expert Scalp Advanced Anti-Oiliness Masque 250ml</strong><br>Anti-oiliness 2-in-1 deep purifier for oily scalps.\nThis versatile multi-usage clay deeply unclogs residue, sweat and oil when used as a shampoo and deeply purifies residue, sweat and oil when used as a mask.\nHair feels lightweight and volumized.",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-serie-expert-scalp-advanced-anti-oiliness-masque-250ml",
+            "link_label_2": "Shop Mask"
+          }
+        },
+        "lp-scalpadvanced-best_sellers-3": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "<a>Shop the Anti-Dandruff Range</a>",
+            "best_sellers_collection": "loreal-professionnel-serie-expert-scalp-advanced-anti-dandruff"
+          }
+        },
+        "lp-scalpadvanced-section_header-4": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 2-Step Routine to Sooth Sensitive Scalps",
+            "section-sub-heading": "The Scalp Advanced Anti-Discomfort range intensely and instantly calms and soothes sensitive scalps without weighing down the hair."
+          }
+        },
+        "lp-scalpadvanced-2x3_grid_tile-3": {
+          "type": "2x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Scalp_Advanced_Anti-Discomfort-1-Shampoo.jpg",
+            "description_1": "<strong>L'Oreal Serie Expert Scalp Advanced Anti-Discomfort Shampoo 300ml / 500ml</strong><br> Anti-discomfort dermo-regulator shampoo for sensitive scalps.\nThis lightweight gel was targeted-formulated with Niacinamide, a vitamin from the B3 family, known for its regulating and soothing powers. Gently cleanses while soothing and calming sensitive scalps",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-professionnel-serie-expert-scalp-advanced-anti-discomfort-shampoo",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Scalp_Advanced_Anti-Discomfort-1-Treatment.jpg",
+            "description_2": "<strong>L'Oreal Serie Expert Scalp Advanced Anti-Discomfort Intense Soother Treatment 200ml</strong><br>Intense soother treatment for sensitive scalps.\n\nThis lightweight gel intensely and instantly calms and soothes scalp discomfort, without weighting down the fiber.",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-professionnel-serie-expert-scalp-advanced-anti-discomfort-intense-soother-treatment-200ml",
+            "link_label_2": "Shop Treatment"
+          }
+        },
+        "lp-scalpadvanced-best_sellers-4": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "<a>Shop the Anti-Discomfort Range</a>",
+            "best_sellers_collection": "loreal-professionnel-serie-expert-scalp-advanced-anti-discomfort"
+          }
+        }
+      },
+      "block_order": [
+        "lp-scalpadvanced-section_header-1",
+        "lp-scalpadvanced-4x3_grid_tile-1",
+        "lp-scalpadvanced-2x3_grid_tile-1",
+        "lp-scalpadvanced-best_sellers-1",
+        "lp-scalpadvanced-section_header-2",
+        "lp-scalpadvanced-3x3_grid_tile-1",
+        "lp-scalpadvanced-best_sellers-2",
+        "lp-scalpadvanced-section_header-3",
+        "lp-scalpadvanced-2x3_grid_tile-2",
+        "lp-scalpadvanced-best_sellers-3",
+        "lp-scalpadvanced-section_header-4",
+        "lp-scalpadvanced-2x3_grid_tile-3",
+        "lp-scalpadvanced-best_sellers-4"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

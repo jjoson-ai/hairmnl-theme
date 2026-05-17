@@ -1,0 +1,88 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_logo": "shopify://shop_images/lorealprofessionnelparis_logo.png",
+        "brand_featured_image": "shopify://shop_images/loreal-pro-april-2026-always-on-sis.jpg",
+        "brand_featured_image_link": "https://www.hairmnl.com/collections/loreal-professionnel-special-offers",
+        "grid_setting_large": 6,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "shop-loreal-professionnel",
+        "featured_collection_1": "loreal-professionnel-serie-expert-absolut-repair-molecular",
+        "featured_collection_1_subtitle": "For Severely Damaged Hair",
+        "featured_collection_2": "loreal-professionnel-serie-expert-vitamino-color-spectrum",
+        "featured_collection_2_subtitle": "For Lasting Hair Color",
+        "featured_collection_3": "loreal-professionnel-serioxyl-advanced",
+        "featured_collection_3_subtitle": "For Thinning Hair",
+        "discover_collection_2": "loreal-professionnel-serie-expert-absolut-repair-molecular",
+        "discover_collection_2_subtitle": "For Severely Damaged Hair",
+        "discover_collection_3": "loreal-professionnel-serie-expert-vitamino-color-spectrum",
+        "discover_collection_3_subtitle": "For Lasting Hair Color",
+        "discover_collection_4": "loreal-professionnel-serioxyl-advanced",
+        "discover_collection_4_subtitle": "For Hair Density",
+        "discover_collection_5": "loreal-professionnel-serie-expert-absolut-repair-gold",
+        "discover_collection_5_subtitle": "For Dry, Damaged Hair",
+        "discover_collection_6": "loreal-professionnel-serie-expert-silver",
+        "discover_collection_6_subtitle": "For Fighting Brassiness",
+        "discover_collection_7": "loreal-professionnel-tecni-art",
+        "discover_collection_7_subtitle": "For Hair Styling",
+        "discover_collection_8": "loreal-professionnel-vitamino-color",
+        "discover_collection_8_subtitle": "For Color Protection",
+        "discover_collection_9": "loreal-professionnel-serie-expert-metal-detox",
+        "discover_collection_9_subtitle": "For Anti-Hair Breakage & Color Shift",
+        "discover_collection_10": "loreal-professionnel-serie-expert-scalp-advanced",
+        "discover_collection_10_subtitle": "For Deregulated Scalps",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "lorealprofessionnel-new_arrivals-1": {
+          "type": "new_arrivals",
+          "settings": {
+            "new_arrivals_collection": "loreal-professionnel-new-arrivals"
+          }
+        },
+        "lorealprofessionnel-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_description": "<a href=\"https://www.hairmnl.com/collections/loreal-professionnel-best-sellers\">View All</a>",
+            "best_sellers_collection": "loreal-professionnel-best-sellers"
+          }
+        },
+        "lorealprofessionnel-best_sellers-2": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_description": "<a href=\"https://www.hairmnl.com/collections/loreal-professionnel-serie-expert-special-offers\">View All</a>",
+            "best_sellers_collection": "loreal-professionnel-best-sellers"
+          }
+        },
+        "lorealprofessionnel-left_media_with_text-1": {
+          "type": "left_media_with_text",
+          "settings": {
+            "left_media_with_text_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/5kjnwWkz15U\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"></iframe>",
+            "left_media_with_text_copy": "What has happened since model-endorser Brent Javier started his #Serioxyl Hair Journey with #LOrealPro a month ago? Watch this video and find out!"
+          }
+        },
+        "lorealprofessionnel-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "<a href=\"https://www.hairmnl.com/blogs/product-spotlight/meet-the-loreal-serie-expert-lines-learn-how-to-add-them-to-your-hair-routine-to-get-your-best-hair\">Meet the L'Oréal Serie Expert Lines! Learn How to Add Them to Your Hair Routine to Get Your Best Hair</a>",
+            "right_image_with_text_image": "shopify://shop_images/Loreal_Serie_Expert.jpg",
+            "right_image_with_text_copy": "Discover targeted professional hair care for your different needs! From purple toning, color care, anti-frizz, anti-dandruff, and more, L'Oreal Serie Expert has the solutions for you.\n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/meet-the-loreal-serie-expert-lines-learn-how-to-add-them-to-your-hair-routine-to-get-your-best-hair\">Learn More</a>"
+          }
+        }
+      },
+      "block_order": [
+        "lorealprofessionnel-new_arrivals-1",
+        "lorealprofessionnel-best_sellers-1",
+        "lorealprofessionnel-best_sellers-2",
+        "lorealprofessionnel-left_media_with_text-1",
+        "lorealprofessionnel-right_image_with_text-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

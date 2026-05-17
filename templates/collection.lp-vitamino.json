@@ -1,0 +1,67 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/VITAMINO_COLOR_HEADER_8fc1a2ef-7aad-4683-af44-6275ee68120a.png",
+        "brand_featured_text": "<strong>Indulge in the sensorial color-protecting Vitamino Color A-OX to get instantly soft and vibrant hair</strong><br>\nThe L'Oreal Professionnel Vitamino Color A-OX range is enriched with a powerful anti-oxidant complex and UV filters to prevent color fading and maintain the beauty of hair color",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "shop-loreal-professionnel",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "lp-vitamino-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Vibrant Colored Hair",
+            "section-sub-heading": "The L'Oreal Professionnel Vitamino Color A-OX range is enriched with a powerful anti-oxidant complex and UV filters to prevent color-fading and maintain the beauty of hair color"
+          }
+        },
+        "lp-vitamino-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/VITAMINO_COLOR-STEP-01_b70c4897-3b39-483f-bc87-74f5f513d231.png",
+            "description_1": "<strong> L'Oréal Serie Expert Vitamino Color Shampoo</strong><br>A gentle daily cleanser for color-treated hair that helps prolong color radiance",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-serie-expert-vitamino-color-resveratol-shampoo",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/VITAMINO_COLOR-STEP-02-MASK_a89e8ade-d1a2-4c40-949b-771925143519.jpg",
+            "description_2": "<strong> L'Oréal Serie Expert Vitamino Color Masque</strong><br>A lightweight mask that targets and deeply nourishes the damaged areas of color- treated hair for prolonged radiance",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-serie-expert-vitamino-color-resveratrol-masque",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/VITAMINO_COLOR-STEP-03-SPRAY_a44206e0-b685-4c52-a617-7e9e735fdd27.jpg",
+            "description_3": "<strong> L'Oréal Serie Expert Vitamino Color 10-in-1 Spray</strong><br>A finishing spray that helps prolong color radiance of dry, color treated hair",
+            "link_url_3": "https://www.hairmnl.com/products/loreal-serie-expert-vitamino-color-a-ox-color-10-in-1-spray-190ml",
+            "link_label_3": "Shop Spray"
+          }
+        },
+        "lp-vitamino-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "link_url_1": "https://hairmnl.com/",
+            "link_url_2": "https://hairmnl.com/",
+            "link_url_3": "https://hairmnl.com/",
+            "link_url_4": "https://hairmnl.com/"
+          }
+        },
+        "lp-vitamino-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "loreal-professionnel-vitamino-color"
+          }
+        }
+      },
+      "block_order": [
+        "lp-vitamino-section_header-1",
+        "lp-vitamino-3x3_grid_tile-1",
+        "lp-vitamino-4x3_grid_tile-1",
+        "lp-vitamino-best_sellers-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

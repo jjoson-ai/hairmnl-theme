@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "grid_setting_large": 3,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": true,
+        "overlay_opacity": 25
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

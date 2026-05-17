@@ -1,0 +1,122 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/820x460_-_Blond_Absolu_Banner.jpg",
+        "brand_featured_text": "<p>Whatever your blonde hair: you dare, we care.</p><p>Being a blonde bombshell is exhilarating. But bleaching the hair leaves it naked and vulnerable. The Blond Absolu range provides deep ultraviolet care for bleached hair. It hydrates sensitized hair, protects hair from oxydation, instantly neutralises brassiness and boosts color luminosity for bright shiny blonde hair. Find the blonde care routine designed for your blonde.</p>",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "blondabsolu-fw_text_with_media-1": {
+          "type": "fw_text_with_media",
+          "settings": {
+            "fw_text_with_media_section_title": "You Dare, We Care.",
+            "fw_text_with_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/VShxCe4IdXs\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"></iframe>"
+          }
+        },
+        "blondabsolu-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Anti-Brass",
+            "section-sub-heading": "Blond Absolu is the ultimate answer for all blondes. A unique combination of potent Hyaluronic Acid and Edelweiss flower deeply nourishes fiber and neutralizes brassiness for an illuminated blonde."
+          }
+        },
+        "blondabsolu-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Layouts-_All_products_-_1024x1024_-_Blond_Absolu_2023_Step_1_-_Neutralize-_Blond_Absolu.jpg",
+            "description_1": "<b>Kérastase Blond Absolu Bain Ultra-Violet Shampoo 250ml</b><br><br>\nIridescent purple shampoo for faux-blonde hair to neutralize brassiness and unwanted yellow tones in very light or grey hair for a nourished cool blonde",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-blond-absolu-purple-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Layouts-_All_products_-_1024x1024_-_Blond_Absolu_2023_Step_2_-_Treat_-_Blond_Absolu.jpg",
+            "description_2": "<b>Kérastase Blond Absolu Ultra-Violet Mask 200ml\n</b><br><br>\nA rich deep purple mask that neutralizes brassiness and unwanted yellow tones while deeply nourishing and restoring sensitized, lightened hair",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-blond-absolu-purple-masque-200ml",
+            "link_label_2": "Shop Hair Mask",
+            "product_image_3": "shopify://shop_images/Layouts-_All_products_-_1024x1024_-_Blond_Absolu_2023_Step_3_-_Prime_-_Blond_Absolu.jpg",
+            "description_3": "<b>Kérastase Blond Absolu Cicaplasme Serum 150ml\n</b><br><br>\nSeals split ends and smoothes the hair fiber for a uniform touch and long-lasting frizz control.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-blond-absolu-cicaplasme-150ml",
+            "link_label_3": "Shop Serum"
+          }
+        },
+        "blondabsolu-section_header-2": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 4-Step Routine for Ash Shades",
+            "section-sub-heading": "Blond Absolu is the ultimate answer for all blondes. A unique combination of potent Hyaluronic Acid and Edelweiss flower deeply nourishes fiber and neutralizes brassiness for an illuminated blonde."
+          }
+        },
+        "blondabsolu-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/1_Bathe_-_Kerastase_Le_Bain_Cicaextreme_Shampoo-in-Cream_250ml_c0ca6f3f-8c4f-44b4-9d2f-e62a020e142d.jpg",
+            "description_1": "<b>Kérastase Blond Absolu Le Bain Cicaextreme Shampoo-in-Cream 250ml</b><br><br>\nUltra moisturizing shampoo-in-cream to gently cleanse and reconstruct sensitized post-bleached hair",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-blond-absolu-cicaextreme-shampoo-250ml",
+            "link_label_1": "Shop Shampoo-in-Cream",
+            "product_image_2": "shopify://shop_images/2_Neutralize_-_Kerastase_Bain_Ultra-Violet_Shampoo_250ml_b00f5910-f160-48be-9d5a-d243f7a3984d.jpg",
+            "description_2": "<b>Kérastase Blond Absolu Bain Ultra-Violet Shampoo 250ml</b><br><br>\nIridescent purple shampoo for faux-blonde hair to neutralize brassiness and unwanted yellow tones in very light or grey hair for a nourished cool blonde",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-blond-absolu-purple-shampoo-250ml",
+            "link_label_2": "Shop Shampoo",
+            "product_image_3": "shopify://shop_images/3_Treat_-_Kerastase_Cicaextreme_Masque_200ml_721c566e-9b1e-4037-a2b0-0264a4bfd138.jpg",
+            "description_3": "<b>Kérastase Blond Absolu Cicaextreme Masque 200ml</b><br><br>\nIntense conditioning and deep restorative post-bleaching procedure masque for sensitized lightened or highlighted hair.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-blond-absolu-cicaextreme-masque-200ml",
+            "link_label_3": "Shop Hair Mask",
+            "product_image_4": "shopify://shop_images/4_Texturize_-_Kerastase_Huile_Cicaextreme_Hair_Oil_100ml_25500a25-d4b5-4144-9144-8faec9af7986.jpg",
+            "description_4": "<b>Kérastase Blond Absolu Huile Cicaextreme Hair Oil 100ml</b><br><br>\nAn intense blonde strengthening oil concentrate for sensitized, lightened or highlighted hair.",
+            "link_url_4": "https://www.hairmnl.com/products/kerastase-blond-absolu-cicaextreme-hair-oil-100ml",
+            "link_label_4": "Shop Hair Oil"
+          }
+        },
+        "blondabsolu-right_media_with_text-1": {
+          "type": "right_media_with_text",
+          "settings": {
+            "right_media_with_text_section_title": "<a href=\"https://www.youtube.com/watch?v=DpF2uN5Sclc\">Discover Your Blonde Ritual with Kérastase Blonde Absolu</a>",
+            "right_media_with_text_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/DpF2uN5Sclc\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"></iframe>",
+            "right_media_with_text_copy": "Get real advice for nourishing and toning bleached blonde hair with Kérastase Senior Educator, Del de Leon."
+          }
+        },
+        "blondabsolu-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "kerastase-blond-absolu"
+          }
+        },
+        "blondabsolu-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "You Dare, We Care",
+            "right_image_with_text_image": "shopify://shop_images/Blond_Absolu_-_Cica_Range_fa58b512-b8cf-429e-b54e-57a0dbf94982.jpg",
+            "right_image_with_text_copy": "Blonde is more than a look. It is a statement. Being a blonde bombshell is exhilarating. But bleaching the hair leaves it vulnerable to dryness. Color fades and loses its unique tone. Meet Blond Absolu, the ultra-violet healing hair care that preserves the bright look and bold spirit of the modern blonde.<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/you-dare-we-care-with-kerastase\">Read More</a><p></p>"
+          }
+        },
+        "blondabsolu-left_image_with_text-1": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "The Faux-Blonde’s Survival Guide",
+            "left_image_with_text_image": "shopify://shop_images/HairMNL_Kerastase_Blond_Absolu_-_The_Faux-Blonde_s_Survival_Guide_cbe53eff-8071-41a7-951f-e73e58e31fb5.jpg",
+            "left_image_with_text_copy": "Colorist Johnny Ramirez is responsible for some of the most beautiful blondes in Los Angeles. He's known for his soft, natural, sun-kissed looks---what he calls \"lived-in color\". Here are his top tips for living with salon-born blonde.\n<br><br>\n<a href=\"https://www.hairmnl.com/blogs/product-spotlight/the-faux-blonde-s-survival-guide\">Read More</a>"
+          }
+        }
+      },
+      "block_order": [
+        "blondabsolu-fw_text_with_media-1",
+        "blondabsolu-section_header-1",
+        "blondabsolu-3x3_grid_tile-1",
+        "blondabsolu-section_header-2",
+        "blondabsolu-4x3_grid_tile-1",
+        "blondabsolu-right_media_with_text-1",
+        "blondabsolu-best_sellers-1",
+        "blondabsolu-right_image_with_text-1",
+        "blondabsolu-left_image_with_text-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

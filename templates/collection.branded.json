@@ -1,0 +1,98 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/kerastase-april-2026-always-on-storewide-sis.jpg",
+        "brand_featured_image_link": "https://www.hairmnl.com/collections/kerastase-special-offers",
+        "grid_setting_large": 3,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "featured_collection_1": "kerastase-gloss-absolu",
+        "featured_collection_1_subtitle": "Anti-Frizz & Glossier Hair",
+        "featured_collection_2": "kerastase-genesis",
+        "featured_collection_2_subtitle": "Anti-Hairfall",
+        "featured_collection_3": "kerastase-elixir-ultime",
+        "featured_collection_3_subtitle": "Exceptional Hair Oils for Ultimate Shine",
+        "discover_collection_1_subtitle": "Natural and Lightweight",
+        "discover_collection_2": "kerastase-blond-absolu",
+        "discover_collection_2_subtitle": "Bleach Neutralizing & Nourishing",
+        "discover_collection_3": "kerastase-chroma-absolu",
+        "discover_collection_3_subtitle": "Restoring Color Care",
+        "discover_collection_4": "kerastase-chronologiste",
+        "discover_collection_4_subtitle": "Hair and Scalp Regeneration Treatment",
+        "discover_collection_5": "kerastase-curl-manifesto",
+        "discover_collection_5_subtitle": "Curl Enhancing Care",
+        "discover_collection_6": "kerastase-densifique",
+        "discover_collection_6_subtitle": "Hair Density",
+        "discover_collection_7": "kerastase-discipline",
+        "discover_collection_7_subtitle": "Discipline and Anti-Frizz",
+        "discover_collection_8": "kerastase-elixir-ultime",
+        "discover_collection_8_subtitle": "Exceptional Hair Oils for Ultimate Shine",
+        "discover_collection_9": "kerastase-genesis",
+        "discover_collection_9_subtitle": "Anti-Hairfall",
+        "discover_collection_10": "kerastase-nutritive",
+        "discover_collection_10_subtitle": "Nourishment and Hydration",
+        "discover_collection_11": "kerastase-premiere",
+        "discover_collection_11_subtitle": "Dual Action Repair",
+        "discover_collection_12": "kerastase-resistance-collection",
+        "discover_collection_12_subtitle": "Strength and Repair",
+        "discover_collection_13": "kerastase-specifique",
+        "discover_collection_13_subtitle": "Scalp Care",
+        "discover_collection_14": "kerastase-symbiose",
+        "discover_collection_14_subtitle": "Anti-Dandruff",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "branded-new_arrivals-1": {
+          "type": "new_arrivals",
+          "settings": {
+            "new_arrivals_collection_section_title": "New Arrivals",
+            "new_arrivals_collection": "kerastase-new-arrivals"
+          }
+        },
+        "branded-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Best Sellers",
+            "best_sellers_collection": "kerastase-best-sellers"
+          }
+        },
+        "branded-best_sellers-2": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Kérastase Rituals and Programs",
+            "best_sellers_collection": "kerastase-rituals-and-programs"
+          }
+        },
+        "branded-right_media_with_text-1": {
+          "type": "right_media_with_text",
+          "settings": {
+            "right_media_with_text_section_title": "About Emily",
+            "right_media_with_text_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/b0oZbzhpM8E\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen=\"\"></iframe>",
+            "right_media_with_text_copy": "<p>There are lots of reasons\nwhy Emily Ratajkowski is\nunforgettably\nmagnetic. It’s not just\nher stunning looks that\nmake her a fascinating\nfigure around the\nworld. It’s her attitude,\nher artistry and her\nintellect. Let's get to\nknow her.</p>"
+          }
+        },
+        "branded-fw_text_with_media-1": {
+          "type": "fw_text_with_media",
+          "settings": {
+            "fw_text_with_media_section_title": "<a name=\"diagnosis\">Find the Right Kérastase Ritual for You</a>",
+            "fw_text_with_media_copy": "In a few questions Kérastase will help to analyse the nature of your hair, and will recommend a Kérastase ritual that will help address your hair concerns. You’ll be able to view the results online or have the option to email the results to a desired email address.",
+            "fw_text_with_media_html": "<div id=\"ker-ediag\" data-config='{\"language\":\"en\",\"country\":\"PH\",\"hasLogo\":true}'></div>\n<script src=\"https://diagnostic.kerastase.com/static/js/main.js\" async=\"\"></script>"
+          }
+        }
+      },
+      "block_order": [
+        "branded-new_arrivals-1",
+        "branded-best_sellers-1",
+        "branded-best_sellers-2",
+        "branded-right_media_with_text-1",
+        "branded-fw_text_with_media-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

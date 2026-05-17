@@ -1,0 +1,118 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/Densifique_SIS.png",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "densifique-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop Kérastase Scalp Care Coffrets"
+          }
+        },
+        "densifique-best_sellers-2": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "New Arrivals",
+            "best_sellers_collection": "kerastase-densifique-collection"
+          }
+        },
+        "densifique-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 4-Step Routine for Women's Thinning Hair",
+            "section-sub-heading": "Hair loss and loss of density are different hair concerns that Kérastase treats with a dedicated ritual."
+          }
+        },
+        "densifique-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Densifique_Femme_1-Bathe_1.png",
+            "description_1": "<b>Kérastase Densifique Shampoo (for Women) 250ml</b><br>Bodifying shampoo to amp up hair density",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-densifique-bain-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Densifique_Homme_2-Treat_1.png",
+            "description_2": "<b>Kérastase Densifique Density Mask 200ml</b><br> Replenishing gel masque to amp up hair density",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-densifique-masque-densite-200ml",
+            "link_label_2": "Shop Hair Mask",
+            "product_image_3": "shopify://shop_images/Densifique_Femme_3-Cure_1.png",
+            "description_3": "<b>Kérastase Densifique Cure Femme Density Treatment (for women) 6ml x 30</b><br>Hair density treatment with Stemoxydine 5%: thinning hair becomes denser &amp; thicker",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-densifique-cure-femme-6ml-x-30",
+            "link_label_3": "Shop Treatment",
+            "product_image_4": "shopify://shop_images/Densifique_Homme_4-Texturize_1.png",
+            "description_4": "<b>Kérastase Densifique Jeunesse Sérum 120ml</b><br>A treatment for thinning and greying hair from the first application",
+            "link_url_4": "https://www.hairmnl.com/products/kerastase-densifique-serum-jeunesse",
+            "link_label_4": "Shop Serum"
+          }
+        },
+        "densifique-best_sellers-3": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Densifique Range for Women",
+            "best_sellers_collection": "kerastase-densifique-women"
+          }
+        },
+        "densifique-section_header-2": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 4-Step Routine for Men's Thinning Hair",
+            "section-sub-heading": "Hair loss and loss of density are different hair concerns that Kérastase treats with a dedicated ritual."
+          }
+        },
+        "densifique-4x3_grid_tile-2": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Densifique_Homme_1-Bathe_1.png",
+            "description_1": "<b>Kérastase Densifique Homme Shampoo (for Men) 250ml</b><br>\nMen’s shampoo to amp up hair density.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-densifique-bain-homme-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Densifique_Homme_2-Treat_1.png",
+            "description_2": "<b>Kérastase Densifique Density Mask 200ml</b><br> Replenishing gel masque to amp up hair density",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-densifique-masque-densite-200ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Densifique_Homme_3-Cure_1.png",
+            "description_3": "<b>Kérastase Densifique Cure Homme Density Treatment (for Men) 6ml x 30</b><br>\nMen's density treatment with Stemoxydine: thinning hair bodyfied with new hairs.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-densifique-cure-homme-6ml-x-31",
+            "link_label_3": "Shop Treatment",
+            "product_image_4": "shopify://shop_images/Densifique_Homme_4-Texturize_1.png",
+            "description_4": "<b>Kérastase Densifique Jeunesse Sérum 120ml</b><br>A treatment for thinning and greying hair from the first application",
+            "link_url_4": "https://www.hairmnl.com/products/kerastase-densifique-serum-jeunesse",
+            "link_label_4": "Shop Serum"
+          }
+        },
+        "densifique-best_sellers-4": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Densifique Range for Men",
+            "best_sellers_collection": "kerastase-densifique-men"
+          }
+        },
+        "densifique-best_sellers-5": {
+          "type": "best_sellers",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "densifique-best_sellers-1",
+        "densifique-best_sellers-2",
+        "densifique-section_header-1",
+        "densifique-4x3_grid_tile-1",
+        "densifique-best_sellers-3",
+        "densifique-section_header-2",
+        "densifique-4x3_grid_tile-2",
+        "densifique-best_sellers-4",
+        "densifique-best_sellers-5"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

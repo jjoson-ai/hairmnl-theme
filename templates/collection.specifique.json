@@ -1,0 +1,189 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/Specifique_SIS_2e6138fd-a916-442d-b3fe-4e7932f39a0e.png",
+        "brand_featured_text": "<p>The Kérastase Spécifique range was created to address scalp-related issues such as scalp sensitivity, itchiness, dandruff, hair loss and oily roots. The products of this collection were designed to treat these concerns to reveal a well-balanced scalp.</p>",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "specifique-new_arrivals-1": {
+          "type": "new_arrivals",
+          "settings": {
+            "new_arrivals_collection_section_title": "New Arrivals",
+            "new_arrivals_collection": "kr-specifique-bundles"
+          }
+        },
+        "specifique-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 2-Step Routine for Dandruff",
+            "section-sub-heading": "The anti-dandruff range has been designed as an efficient treatment against oily and dry flakes, for the scalp to remain healthy and purified, and the hair to feel light."
+          }
+        },
+        "specifique-2x3_grid_tile-1": {
+          "type": "2x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Specifique_Anti-Dandruff_1_800x_crop_center_58a1267f-54d9-477c-9b19-ad94be834e3d.webp",
+            "description_1": "<b>Kérastase Spécifique Anti-Dandruff Shampoo 250ml</b><br>Targets dry and oily dandruff<br>\nAnti-dandruff agents<br>\nEliminates scalp impurities<br>\nOffers 8 weeks dandruff anti-relapse action*<br><br>\n<i>* Clinical test on 43 people</i>",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-specifique-bain-anti-pecullaire-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Specifique_Anti-Dandruff_2_800x_crop_center_2330a0c3-ca03-45f8-b682-318d43854667.webp",
+            "description_2": "<b>Kérastase Spécifique Cure Anti-Dandruff Treatment 6ml x 12</b><br>Eliminates oily and dry dandruff flakes<br>\nProtects against oxidative stress.<br>\nAnti relapse action: reduces the appearance of visible flakes up to 4 weeks after the treatment is stopped*<br><br>\n<i>*Clinical study on 36 volunteers</i>",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-specifique-cure-anti-pelliculaire-treatment-12",
+            "link_label_2": "Shop Cure"
+          }
+        },
+        "specifique-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Anti-Dandruff Range",
+            "best_sellers_collection": "keratase-specifique-anti-dandruff"
+          }
+        },
+        "specifique-section_header-2": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Greasy Scalps and Dry Lengths",
+            "section-sub-heading": "The Spécifique Divalent range is the expert range dedicated to oily scalp and sensitized lengths. It has been designed to perfectly regulate excess sebum production and to repair and nourish sensitized areas of the hair. The scalp is purified, the hair feels softer."
+          }
+        },
+        "specifique-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Scalp_Advanced_Anti-Oiliness-1-Shampoo.jpg",
+            "description_1": "<strong>L'Oreal Serie Expert Scalp Advanced Anti-Oiliness Shampoo 300ml / 500ml</strong><br>Anti-oiliness dermo-purifier shampoo for oily scalps.\nThis lightweight gel purifies the scalp and the fiber from residue, sweat and oil for a fresher and cleaner feel.",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-serie-expert-scalp-advanced-anti-oiliness-shampoo",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Scalp_Advanced_Anti-Oiliness-2-Mask.jpg",
+            "description_2": "<strong>L'Oreal Serie Expert Scalp Advanced Anti-Oiliness Masque 250ml</strong><br>Anti-oiliness 2-in-1 deep purifier for oily scalps.\nThis versatile multi-usage clay deeply unclogs residue, sweat and oil when used as a shampoo and deeply purifies residue, sweat and oil when used as a mask.\nHair feels lightweight and volumized.",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-serie-expert-scalp-advanced-anti-oiliness-masque-250ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Scalp_Advanced_Anti-Oiliness-3-Treatment.jpg",
+            "description_3": "<strong>L'Oreal Serie Expert Scalp Advanced Anti-Discomfort Intense Soother Treatment 200ml</strong><br>Anti-oiliness dermo-purifier shampoo for oily scalps.\nThis lightweight gel purifies the scalp and the fiber from residue, sweat and oil for a fresher and cleaner feel.",
+            "link_url_3": "https://www.hairmnl.com/products/loreal-professionnel-serie-expert-scalp-advanced-anti-discomfort-intense-soother-treatment-200ml",
+            "link_label_3": "Shop Treatment"
+          }
+        },
+        "specifique-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Kerastase_Specifique_Divalent_1_Bathe_-_Bain_800x_crop_center_f035d0a5-3678-4892-a7b7-a6163fe14b2e.webp",
+            "description_1": "<b>Kérastase Spécifique Divalent Anti-Oiliness Balancing Shampoo 250ml</b><br>\nBalancing shampoo for oily roots, sensitized lengths.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-specifique-bain-divalent-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Kerastase_Specifique_Divalent_1_Bathe_-_Argile_800x_crop_center_f988367c-1f0c-41be-9d9a-0f2f80a3cc3e.webp",
+            "description_2": "<b>Kérastase Spécifique Divalent Anti-Oiliness Detox Cleanser 250ml</b><br>\nA weekly detox cleanser that deeply yet gently cleanses and purifies the scalp.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-specifique-divalent-anti-oiliness-detox-cleanser-250ml",
+            "link_label_2": "Shop Detox Cleanser",
+            "product_image_3": "shopify://shop_images/Kerastase_Specifique_Divalent_2_Treat_-_Masque_800x_crop_center_93d7aff6-c8e5-43e0-a385-a3c35bcf2ec9.webp",
+            "description_3": "<b>Kérastase Spécifique Divalent Anti-Oiliness Mask 200ml</b><br>\nLightweight gel-masque that instantly rebalances hair essential hydration level.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-specifique-divalent-anti-oiliness-mask-200ml",
+            "link_label_3": "Shop Mask",
+            "product_image_4": "shopify://shop_images/Potentialiste_Serum_800x_crop_center_5cbe344a-8120-478f-84d2-e7f06f07c757.webp",
+            "description_4": "<b>Kérastase Spécifique Potentialiste Serum 90ml</b><br>\nUniversal defense serum for unbalanced scalps.",
+            "link_url_4": "https://hairmnl.com/products/kerastase-specifique-potentialiste-serum-90ml",
+            "link_label_4": "Shop Serum"
+          }
+        },
+        "specifique-best_sellers-2": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Anti-Oiliness Range",
+            "best_sellers_collection": "kerastase-specifique-divalent"
+          }
+        },
+        "specifique-section_header-3": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 2-Step Routine for Sensitive and Irritated Scalps",
+            "section-sub-heading": "This range is dedicated to treating sensitive scalp concerns. It has been designed to soothe scalp discomforts such as inflammation, redness, itchiness and tinglings. The scalp is left soothed and nourished, the first steps to revealing supple and revitalized hair."
+          }
+        },
+        "specifique-3x3_grid_tile-2": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Specifique_Anti-Hair_Loss_1_800x_crop_center_360d73e1-89e9-4bc7-98f0-aa0b505c1847.webp",
+            "description_1": "<b>Kérastase Spécifique Prévention Shampoo 250ml</b><br>\nDaily preventive shampoo for hair loss.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-specifique-bain-prevention-shampoo-200ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Specifique_Anti-Hair_Loss_2_800x_crop_center_f133e1b6-d854-4fc4-a7ba-e04f03ab6e18.webp",
+            "description_2": "<b>Kérastase Spécifique Cure Anti-Hairloss Treatment 6ml x 10</b><br>\nIntense anti-thinning care that helps maintain hair density. Daily application for 6 weeks.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-specifique-cure-anti-chute-10",
+            "link_label_2": "Shop Treatment",
+            "product_image_3": "shopify://shop_images/Specifique_Anti-Hair_Loss_3_800x_crop_center_05c1da14-3f22-4fa7-aba3-731bc77e6b5b.webp",
+            "description_3": "<b>Kérastase Spécifique Stimuliste Anti-Hairloss Spray 125 ml</b><br>\nNutri-energising daily anti-hairloss leave-in spray.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-specifique-stimuliste-spray-125ml",
+            "link_label_3": "Shop Spray"
+          }
+        },
+        "specifique-best_sellers-3": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Anti-Hair Loss Range",
+            "best_sellers_collection": "kerastase-specifique-anti-hair-loss"
+          }
+        },
+        "specifique-section_header-4": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 2-Step Routine for Sensitive and Irritated Scalps",
+            "section-sub-heading": "This range is dedicated to treating sensitive scalp concerns. It has been designed to soothe scalp discomforts such as inflammation, redness, itchiness and tinglings. The scalp is left soothed and nourished, the first steps to revealing supple and revitalized hair."
+          }
+        },
+        "specifique-2x3_grid_tile-2": {
+          "type": "2x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Specifique_Anti-Irritation_1_800x_crop_center_861bd37a-5000-4998-b474-1876d44a4094.webp",
+            "description_1": "<b>Kérastase Spécifique Anti-Irritation Shampoo 250ml</b><br>\nCleansing shampoo for dry or sensitive scalp.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-specifique-bain-vital-dermo-calm-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Specifique_Anti-Irritation_2_800x_crop_center_ce288eee-e4d3-4644-9a64-91ece74f216a.webp",
+            "description_2": "<b>Kérastase Spécifique Cure Anti-Irritation Treatment 6ml x 12</b><br>\nIntense-anti-discomfort soothing care that soothes sensitive scalps.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-specifique-cure-apaisante",
+            "link_label_2": "Shop Treatment"
+          }
+        },
+        "specifique-best_sellers-4": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Anti-Irritation Range",
+            "best_sellers_collection": "kerastase-specifique-anti-irritation"
+          }
+        },
+        "specifique-best_sellers-5": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Browse the Entire Spécifique Range",
+            "best_sellers_collection": "kerastase-specifique"
+          }
+        }
+      },
+      "block_order": [
+        "specifique-new_arrivals-1",
+        "specifique-section_header-1",
+        "specifique-2x3_grid_tile-1",
+        "specifique-best_sellers-1",
+        "specifique-section_header-2",
+        "specifique-3x3_grid_tile-1",
+        "specifique-4x3_grid_tile-1",
+        "specifique-best_sellers-2",
+        "specifique-section_header-3",
+        "specifique-3x3_grid_tile-2",
+        "specifique-best_sellers-3",
+        "specifique-section_header-4",
+        "specifique-2x3_grid_tile-2",
+        "specifique-best_sellers-4",
+        "specifique-best_sellers-5"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

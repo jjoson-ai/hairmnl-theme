@@ -1,0 +1,53 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/Silver_Header_6555cd39-6d8d-4674-959f-e964cbb289c0.png",
+        "brand_featured_text": "<strong>Bye Bye Brassy, Hello Classy Bleached Hair</strong><br><br>\nShowcase the beauty of ash, light blonde or silver/white hair with our number one colour clarifying purple shampoo and conditioner. The neutralising system, enriched with magnesium and anti-yellowing agents, counteracts unwanted brassy tones.",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "shop-loreal-professionnel",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "lp-silver-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 2-Step Anti-Brassiness Routine",
+            "section-sub-heading": "Showcase the beauty of ash, light blonde or silver/white hair with our number one colour clarifying purple shampoo and conditioner. The neutralising system, enriched with magnesium and anti-yellowing agents, counteracts unwanted brassy tones."
+          }
+        },
+        "lp-silver-2x3_grid_tile-1": {
+          "type": "2x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/SILVER-STEP-01_f65efd74-530a-4af9-8fed-e0cf22098291.png",
+            "description_1": "<strong>L'Oréal Serie Expert Silver Shampoo</strong><br>A clarifying purple shampoo with anti-yellowing agents that counteracts and neutralizes unwanted brassiness to maintain the perfect tone of bleached hair with a boost of shine",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-serie-expert-silver-shampoo-300ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/SILVER-STEP-02_6d0ea7ef-e36b-4a15-a57a-19624fcaf2bb.png",
+            "description_2": "<strong> L'Oréal Serie Expert Silver Conditioner</strong><br>A lightweight silver neutralising cream treatment that counteracts unwanted brassy tones and gives bleached hair softness and shine. It enhances white, grey and light blonde hair and\ncontrasts yellow undertones",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-serie-expert-silver-conditioner-200ml",
+            "link_label_2": "Shop Conditioner"
+          }
+        },
+        "lp-silver-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "loreal-professionnel-serie-expert-silver"
+          }
+        }
+      },
+      "block_order": [
+        "lp-silver-section_header-1",
+        "lp-silver-2x3_grid_tile-1",
+        "lp-silver-best_sellers-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/Chronologiste_SIS_1.png",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "chronologiste-fw_text_with_media-1": {
+          "type": "fw_text_with_media",
+          "settings": {
+            "fw_text_with_media_section_title": "Youth Revitalizing Care",
+            "fw_text_with_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Sj_tYCFG6k0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen=\"\"></iframe>"
+          }
+        },
+        "chronologiste-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 4-Step Routine",
+            "section-sub-heading": "Give your hair an exceptional and complete ritual Chronologiste combines luxurious advanced technology and unique sensory experience. This restorative treatment sublimates all hair types, from scalp to ends."
+          }
+        },
+        "chronologiste-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/KR_Chronologiste_Ritual_-_1_-_Prepare_-_Soin_1.png",
+            "description_1": "<b>Kérastase Chronologiste Soin Gommage Exfoliating Pre-Shampoo 200ml</b><br> Exfoliating and purifying scalp and hair treatment for all hair types.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-chronologiste-soin-gommage-200ml",
+            "link_label_1": "Shop Pre-Shampoo",
+            "product_image_2": "shopify://shop_images/KR_Chronologiste_Ritual_-_2_-_Bathe_-_Bain_1.png",
+            "description_2": "<b>Kérastase Chronologiste Shampoo 250ml</b><br> Purifying shampoo for all hair types.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-chronologiste-bain-250ml",
+            "link_label_2": "Shop Shampoo",
+            "product_image_3": "shopify://shop_images/KR_Chronologiste_Ritual_-_3_-_Treat_-_Masque_1.png",
+            "description_3": "<b>Kérastase Chronologiste Mask 200ml</b><br>Hair smoothing balm for scalp and hair. All hair types.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-chronologiste-masque-200ml",
+            "link_label_3": "Shop Mask",
+            "product_image_4": "shopify://shop_images/KR_Chronologiste_Ritual_-_4_-_Texturize_-_Parfum_1.png",
+            "description_4": "<b>Kérastase Chronologiste Parfum Hair Oil 120ml</b><br>\nDelicate leave-in perfume oil creates ultimate touch of softness and shine for all hair types.",
+            "link_url_4": "https://www.hairmnl.com/products/kerastase-chronologiste-parfum-hair-oil-120ml",
+            "link_label_4": "Shop Hair Oil"
+          }
+        },
+        "chronologiste-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "kerastase-chronologiste"
+          }
+        }
+      },
+      "block_order": [
+        "chronologiste-fw_text_with_media-1",
+        "chronologiste-section_header-1",
+        "chronologiste-4x3_grid_tile-1",
+        "chronologiste-best_sellers-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

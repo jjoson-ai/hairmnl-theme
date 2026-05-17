@@ -1,0 +1,78 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/SIS_Banner_1400x788_20624747-5181-4c5d-9cf1-56fa8130a0ad.jpg",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "nutritive-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 4-Step Routine",
+            "section-sub-heading": "Nutritive is nourishing care for dry hair, a powerful range designed to make hair supple and irresistibly soft to the touch. Customized hair care targets symptoms for three levels of dryness."
+          }
+        },
+        "nutritive-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Layouts-_All_products_-_1024x1024_-_Nutritive_2023_Step_1_-_Bathe_-_Nutritive.jpg",
+            "description_1": "<b>Kérastase Nutritive Satin Shampoo 250ml</b><br>\nHydrating shampoo for normal to slightly dry hair.\n<br><br>\n<h5><a href=\"https://www.hairmnl.com/products/kerastase-nutritive-satin-shampoo-250ml\">Shop Shampoo</a></h5><br>\n<b>Kérastase Nutritive Satin Riche Shampoo 250ml</b><br>\nHigh nutrition rich shampoo for extremely dry, sensitized hair.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-nutritive-satin-riche-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Layouts-_All_products_-_1024x1024_-_Nutritive_2023_Step_2_-_Care_-_Nutritive.jpg",
+            "description_2": "<b>Kérastase Nutritive Lait Vital Conditioner 200ml</b><br>\nHighly nutritious ultra-light detangling conditioner for fine to medium-dry hair.\n<br><br>\n<h5><a href=\"https://www.hairmnl.com/products/kerastase-nutritive-lait-vital-conditioner-200ml-1\">Shop Conditioner</a></h5><br>\n<b>Kérastase Nutritive Masquintense Mask Riche 200ml</b><br>\nNourishing treatment for dry, extremely sensitized and thick hair.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-nutritive-masquintense-mask-riche-200ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Layouts-_All_products_-_1024x1024_-_Nutritive_2023_Step_3_-_Prime_-_Nutritive.jpg",
+            "description_3": "<b>Kérastase Nutritive Lotion Thermique Sublimatrice 150ml</b><br>\nLeave-in heat protectant for dry fine to medium hair.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-nutritive-lotion-thermique-sublimatrice-150ml",
+            "link_label_3": "Shop Leave-In",
+            "product_image_4": "shopify://shop_images/Layouts-_All_products_-_1024x1024_-_Nutritive_2023_Step_4_-_Treat_-Nutritive.jpg",
+            "description_4": "<b>Kérastase 8-Hour Magic Night Serum 90ml</b><br>This overnight leave-in serum gives a nourishing boost to all dry hair types.",
+            "link_url_4": "https://www.hairmnl.com/products/kerastase-8h-magic-night-serum-90ml",
+            "link_label_4": "Shop Serum"
+          }
+        },
+        "nutritive-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "kerastase-nutritive"
+          }
+        },
+        "nutritive-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "How to Treat Dry Hair: Say Goodbye to Dry Hair with Kérastase",
+            "right_image_with_text_image": "shopify://shop_images/nutri_1_1800x_58e89daf-f2cb-493b-8fc8-ba1162fa0168.webp",
+            "right_image_with_text_copy": "Are your locks brittle, difficult to detangle and lack shine? If this sounds familiar, you most likely have dry hair. Check these top tips from Kerastase on how to get your hair looking shiny and feeling silky soft again in no time!\n<br><br>\n<a href=\"https://www.hairmnl.com/blogs/product-spotlight/how-to-treat-dry-hair-say-goodbye-to-dry-hair-with-kerastase\">Learn More</a>"
+          }
+        },
+        "nutritive-left_image_with_text-1": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "The Hair of Your Dreams",
+            "left_image_with_text_image": "shopify://shop_images/KR_Nutritive.jpg",
+            "left_image_with_text_copy": "Introducing Nutritive 8H Magic Night Serum, the moisturizing hair serum that transforms dry hair overnight. Like an intensive night cream, it works while you sleep to repair and nourish, leaving it silky and smooth by morning.\n<br><br>\n<a href=\"How%20to%20Get%20Soft%20Nourished%20Waves\">Discover How to Get Nourished Waves.</a>\n<br><br>\n<a href=\"https://www.hairmnl.com/blogs/product-spotlight/the-hair-of-your-dreams\">Achieve the Hair of Your Dreams.</a>"
+          }
+        }
+      },
+      "block_order": [
+        "nutritive-section_header-1",
+        "nutritive-4x3_grid_tile-1",
+        "nutritive-best_sellers-1",
+        "nutritive-right_image_with_text-1",
+        "nutritive-left_image_with_text-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

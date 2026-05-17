@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/INFORCER-HEADER_7e4af9c4-9466-4f08-9a99-44448380209b.png",
+        "brand_featured_text": "<strong>Inforcer for Anti Split-ends and Stronger Hair</strong><br>\nDiscover professional solutions for Split-ends and Brittle hair. Powered by Vitamin B6 + Biotin, #Inforcer enforces, strengthens, and makes the hair more resistant.",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "shop-loreal-professionnel",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "lp-inforcer-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 2-Step Strengthening Routine for Anti-Breakage",
+            "section-sub-heading": "The Inforcer regimen is powered by Vitamin B6 + Biotin that strengthens the hair, making it more resistant and easier to detangle. This enforces brittle hair to become stronger."
+          }
+        },
+        "lp-inforcer-2x3_grid_tile-1": {
+          "type": "2x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/INFORCER-STEP-01_fb80f637-b803-4efb-a52c-6848bc2d9f80.png",
+            "description_1": "<strong>L'Oréal Serie Expert Inforcer Strengthening Anti-Breakage Shampoo</strong><br>A gentle daily cleanser that instantly reduces split-ends and breakage making brittle hair more resistant and stronger",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-serie-expert-inforcer-anti-breakage-shampoo-300ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/INFORCER-STEP-02-MASK_2a1a3892-4c5f-49a9-8c0d-ab38f2c11dca.jpg",
+            "description_2": "<strong>L'Oréal Serie Expert Inforcer Strengthening Anti-Breakage Masque</strong><br>A hair treatment with an indulgent reinforcing formula that deeply conditions hair\nto instantly reduce split-ends and breakage for stronger hair",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-serie-expert-inforcer-anti-breakage-shampoo-300ml",
+            "link_label_2": "Shop Mask"
+          }
+        },
+        "lp-inforcer-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "link_url_1": "https://hairmnl.com/",
+            "link_url_2": "https://hairmnl.com/",
+            "link_url_3": "https://hairmnl.com/"
+          }
+        },
+        "lp-inforcer-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "inforcer-anti-breakage"
+          }
+        }
+      },
+      "block_order": [
+        "lp-inforcer-section_header-1",
+        "lp-inforcer-2x3_grid_tile-1",
+        "lp-inforcer-3x3_grid_tile-1",
+        "lp-inforcer-best_sellers-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

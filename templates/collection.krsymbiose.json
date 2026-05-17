@@ -1,0 +1,76 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_page_header_title": "Kérastase Symbiose",
+        "brand_featured_image": "shopify://shop_images/kerastase-symbiose-sis-header-banner.jpg",
+        "brand_featured_image_link": "https://www.hairmnl.com/collections/kerastase-symbiose",
+        "brand_featured_text": "<p>Kérastase Symbiose is a powerful alliance of anti-dandruff efficacy and luxurious care. It insantly eliminates dandruff by regulating cellular renewal speed and deeply hydrates to replenish fiber. Symbiose provides 7 weeks of anti-dandruff efficacy.</p>",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "krsymbiose-fw_text_with_media-1": {
+          "type": "fw_text_with_media",
+          "settings": {
+            "fw_text_with_media_section_title": "Alliance is Power",
+            "fw_text_with_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/fU2CYoxvp9U\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen=\"\"></iframe>"
+          }
+        },
+        "krsymbiose-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Anti-Dandruff Care",
+            "section-sub-heading": "Instantly eliminates dandruff and hydrates hair & scalp"
+          }
+        },
+        "krsymbiose-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Step_1_-_Bathe_-_Symbiose_Shampoo-8.png",
+            "description_1": "Silicone and sulfate-free shampoo for sensitive scalp prone to dandruff.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-symbiose-purifying-anti-dandruff-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Step_2_-_Care_-_Symbiose_Conditioner-8.png",
+            "description_2": "Sulfate-free and silicone-free conditioner for sensitive scalp, prone to dandruff",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-symbiose-anti-dandruff-conditioner-200ml",
+            "link_label_2": "Shop Conditioner",
+            "product_image_3": "shopify://shop_images/Step_3_-_Cure_-_Symbiose_Night_Serum-8.png",
+            "description_3": "Scalp serum that targets all types of dandruff",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-symbiose-anti-dandruff-night-serum-90ml",
+            "link_label_3": "Shop Serum"
+          }
+        },
+        "krsymbiose-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "Kérastase Symbiose: Anti-Dandruff Efficacy with Luxurious Care",
+            "right_image_with_text_image": "shopify://shop_images/Symbiose.jpg",
+            "right_image_with_text_copy": "The new Kérastase Symbiose is a breakthrough anti-dandruff hair care range that instantly eliminates dandruff while hydrating hair and scalp. It regulates cell renewal on the scalp to help eliminate dandruff at the source for long term efficacy.\n<br><br>\n<strong><u>\n<a href=\"https://www.hairmnl.com/blogs/product-spotlight/introducing-kerastase-symbiose-the-ultimate-solution-for-dandruff-control\">\nREAD MORE\n</a></u></strong>&lt;&gt;"
+          }
+        },
+        "krsymbiose-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Kérastase Symbiose",
+            "best_sellers_collection": "kerastase-symbiose"
+          }
+        }
+      },
+      "block_order": [
+        "krsymbiose-fw_text_with_media-1",
+        "krsymbiose-section_header-1",
+        "krsymbiose-3x3_grid_tile-1",
+        "krsymbiose-right_image_with_text-1",
+        "krsymbiose-best_sellers-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

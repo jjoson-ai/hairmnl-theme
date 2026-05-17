@@ -1,0 +1,125 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/Kerastase_Genesis_SIS_Banner_820x460_6cfcaa71-c2c1-4bef-9ef5-feebd1d69644.jpg",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "krgenesis-fw_text_with_media-1": {
+          "type": "fw_text_with_media",
+          "settings": {
+            "fw_text_with_media_section_title": "Never Be Afraid of Falling",
+            "fw_text_with_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Omqzuoa_coE?si=K2nYj_z32qxoZYoo\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen=\"\"></iframe>"
+          }
+        },
+        "krgenesis-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 4-Step Anti-Hair Fall Routine for Thin Hair",
+            "section-sub-heading": "Work, play, rinse, repeat. You get addicted to the pace, caught up in the excitement. It’s all very exhilarating until the stress starts to affect your hair. Genesis is the first anti-fall action haircare to address both reasons of hair-fall: hair-fall from the roots and hair-fall from breakage."
+          }
+        },
+        "krgenesis-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Genesis_Thin_1-Bathe.png",
+            "description_1": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Shampoo for Thin Hair 250ml</b><br><br>\nAnti hair-fall fortifying shampoo for weakened hair, prone to falling due to breakage",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-shampoo-for-thin-hair-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Genesis_Thin_2-Treat.png",
+            "description_2": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Conditioner 200ml</b><br><br>\nAnti Hair-fall Fortifying conditioner for weakened hair, prone to falling due to breakage",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-conditioner-200ml",
+            "link_label_2": "Shop Conditioner",
+            "product_image_3": "shopify://shop_images/Genesis_3-Activate.png",
+            "description_3": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Serum 90ml</b><br><br>\nDaily anti hair-fall fortifying serum for weakened hair, prone to falling from the root",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-serum-90ml",
+            "link_label_3": "Shop Serum",
+            "product_image_4": "shopify://shop_images/Genesis_4-Texturize.png",
+            "description_4": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Blow-dry Fluid 150ml</b><br><br>\nAnti hair-fall fortifying blow-dry fluid for weakened hair, prone to falling due to breakage",
+            "link_url_4": "https://www.hairmnl.com/collections/kerastase-genesis/products/kerastase-genesis-anti-hair-fall-fortifying-blow-dry-fluid-150ml",
+            "link_label_4": "Shop Primer"
+          }
+        },
+        "krgenesis-section_header-2": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 4-Step Anti-Hair Fall Routine for Thick Hair",
+            "section-sub-heading": "Work, play, rinse, repeat. You get addicted to the pace, caught up in the excitement. It’s all very exhilarating until the stress starts to affect your hair. Genesis is the first anti-fall action haircare to address both reasons of hair-fall: hair-fall from the roots and hair-fall from breakage."
+          }
+        },
+        "krgenesis-4x3_grid_tile-2": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Genesis_Thick_1-Bathe.png",
+            "description_1": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Shampoo for Thick Hair 250ml</b><br><br>\nAnti hair-fall fortifying shampoo for weakened hair, prone to falling due to breakage",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-shampoo-for-thick-hair-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Genesis_Thick_2-Treat.png",
+            "description_2": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Mask 200ml</b><br><br>\nAnti hair-fall intense fortifying masque for weakened hair, prone to falling due to breakage",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-mask-200ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Genesis_3-Activate.png",
+            "description_3": "<b> Kérastase Genesis Anti Hair-Fall Fortifying Serum 90ml</b><br><br>\nDaily anti hair-fall fortifying serum for weakened hair, prone to falling from the root",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-serum-90ml",
+            "link_label_3": "Shop Serum",
+            "product_image_4": "shopify://shop_images/Genesis_4-Texturize.png",
+            "description_4": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Blow-dry Fluid 150ml</b><br><br>\nAnti hair-fall fortifying blow-dry fluid for weakened hair, prone to falling due to breakage",
+            "link_url_4": "https://www.hairmnl.com/collections/kerastase-genesis/products/kerastase-genesis-anti-hair-fall-fortifying-blow-dry-fluid-150ml",
+            "link_label_4": "Shop Primer"
+          }
+        },
+        "krgenesis-right_media_with_text-1": {
+          "type": "right_media_with_text",
+          "settings": {
+            "right_media_with_text_section_title": "<a href>Create Your Anti-Hair Fall Routine with Kérastase Genesis</a>",
+            "right_media_with_text_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/RU7-nmJ-7cI\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"></iframe>",
+            "right_media_with_text_copy": "Don't let hair fall woes hold you back. Never be afraid of falling hair with this routine recommended by Del De Leon, our Kérastase Senior Educator."
+          }
+        },
+        "krgenesis-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "<a name=\"bundles\">Shop the Range</a>",
+            "best_sellers_collection": "kerastase-genesis"
+          }
+        },
+        "krgenesis-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "<a href=\"https://www.hairmnl.com/blogs/product-spotlight/how-can-you-stop-your-hair-from-falling-out\">How Can You Stop Your Hair from Falling Out?</a>",
+            "right_image_with_text_image": "shopify://shop_images/unnamed_31_1800x_466b1362-11b0-413f-bfa6-e35baa6a703e.webp",
+            "right_image_with_text_copy": "Hair fall and breakage are part of everyday life. Here’s everything you need to know about how to help stop hair falling out due to breakage, with a targeted hair care range designed to meet your needs.<br><br>\n<p><a href=\"https://www.hairmnl.com/blogs/product-spotlight/how-can-you-stop-your-hair-from-falling-out\">Learn More</a></p>"
+          }
+        },
+        "krgenesis-left_image_with_text-1": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "Never Be Afraid of Falling",
+            "left_image_with_text_image": "shopify://shop_images/Mobile_Banner_-_Genesis_Main_KV_Visual_1800x_fc9dcec0-c3c4-49fd-88bb-2ee5a89bb734.webp",
+            "left_image_with_text_copy": "Genesis is the first range to treat both kinds of hair-fall - at the root and from fiber breakage, for all women, in all lifestyles, with all degree of hair fall. A collection of 7 products supercharged with the most potent complex to answer to hair-fall needs: Aminexil, Edelweiss native cells, Ginger roots.<br><br>\n<p><a href=\"https://www.hairmnl.com/blogs/product-spotlight/never-be-afraid-of-falling-with-the-new-genesis-by-kerastase\">Learn More</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "krgenesis-fw_text_with_media-1",
+        "krgenesis-section_header-1",
+        "krgenesis-4x3_grid_tile-1",
+        "krgenesis-section_header-2",
+        "krgenesis-4x3_grid_tile-2",
+        "krgenesis-right_media_with_text-1",
+        "krgenesis-best_sellers-1",
+        "krgenesis-right_image_with_text-1",
+        "krgenesis-left_image_with_text-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

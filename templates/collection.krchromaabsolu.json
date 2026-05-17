@@ -1,0 +1,111 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_page_header_title": "Kérastase Chroma Absolu",
+        "brand_featured_image": "shopify://shop_images/HairMNL_Kerastase_Chroma_Absolu_Restoring_Care_for_Colored_Hair_SIS_0ea5c165-1177-4174-8ff1-5ba0439bcf8a.jpg",
+        "brand_featured_text": "<p>The Kérastase Chroma Absolu hair care collection is the ultimate color care solution for all types of colored hair. It strengthens hair by providing restorative care and nourishment for color-treated hair, preventing color fading, featuring anti-frizz properties and resulting in healthy, shiny hair.</p>",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "krchromaabsolu-fw_text_with_media-1": {
+          "type": "fw_text_with_media",
+          "settings": {
+            "fw_text_with_media_section_title": "You Dare, We Care",
+            "fw_text_with_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/rXrAutZ7HQ0\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"></iframe>"
+          }
+        },
+        "krchromaabsolu-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Sensitized or Damaged Color-Treated Hair",
+            "section-sub-heading": "Explore the 3-Step Routine for Sensitized or Damaged Color-Treated Hair"
+          }
+        },
+        "krchromaabsolu-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Kerastase_Chroma_Absolu_1_Bathe_Thin_-_Bain_Chroma_Respect_81e1a44f-0aca-486f-83c3-3a201d2476fa.png",
+            "description_1": "<b>Kérastase Chroma Absolu Sulfate-Free Shampoo (Thin Hair) 250ml</b><br>\nAnti-porosity strengthening conditioner.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-chroma-absolu-sulfate-free-shampoo-thin-hair-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Kerastase_Chroma_Absolu_2_Treat_Thin_784ff7ac-5fde-43ca-9c42-40fdbb04e59d.jpg",
+            "description_2": "<b>Kérastase Chroma Absolu Conditioner 200ml</b><br>\nAnti-porosity strengthening conditioner.<br><br><h5><u><a href=\"https://www.hairmnl.com/products/kerastase-chroma-absolu-conditioner-200ml\">Shop Conditioner</a></u></h5><br><b>Kérastase Chroma Absolu Gloss 210ml</b><br>\nResurfacing high shine rinse treatment.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-chroma-absolu-gloss-210ml",
+            "link_label_2": "Shop Leave-In Treatment",
+            "product_image_3": "shopify://shop_images/Kerastase_Chroma_Absolu_3_Texturize_-_Serum_Chroma_Thermique_a4001023-5984-441d-8271-1318f3363170.png",
+            "description_3": "<b>Kérastase Chroma Absolu Serum 150ml</b><br>\nAnti-frizz antioxidant heat protectant serum.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-chroma-absolu-serum-150ml",
+            "link_label_3": "Shop Serum"
+          }
+        },
+        "krchromaabsolu-3x3_grid_tile-2": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Kerastase_Chroma_Absolu_1_Bathe_Thick_-_Bain_Riche_Chroma_Respect_b89291cc-ad50-4e34-a72f-3e4575022b68.png",
+            "description_1": "<b>Kérastase Chroma Absolu Sulfate-Free Shampoo (Thick Hair) 250ml</b><br>\nNourishing protective shampoo.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-chroma-absolu-sulfate-free-shampoo-thick-hair-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Kerastase_Chroma_Absolu_2_Treat_Thick_de1b1ed9-316d-4130-a55a-5d7aa2ef47d3.jpg",
+            "description_2": "<b>Kérastase Chroma Absolu Masque 200ml</b><br>\nAnti-porosity, deep-filling mask.<br><br><h5><u><a href=\"https://www.hairmnl.com/products/kerastase-chroma-absolu-masque-200ml\">Shop Mask</a></u></h5><br><b>Kérastase Chroma Absolu Gloss 210ml</b><br>\nResurfacing high shine rinse treatment.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-chroma-absolu-gloss-210ml",
+            "link_label_2": "Shop Leave-In Treatment",
+            "product_image_3": "shopify://shop_images/Kerastase_Chroma_Absolu_3_Texturize_-_Serum_Chroma_Thermique_a4001023-5984-441d-8271-1318f3363170.png",
+            "description_3": "<b>Kérastase Chroma Absolu Serum 150ml</b><br>\nAnti-frizz antioxidant heat protectant serum.",
+            "link_url_3": "https://hairmnl.com/",
+            "link_label_3": "Shop Serum"
+          }
+        },
+        "krchromaabsolu-section_header-2": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Heading",
+            "section-sub-heading": "Section description"
+          }
+        },
+        "krchromaabsolu-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "<a href=\"https://www.hairmnl.com/blogs/product-spotlight/meet-the-new-kerastase-chroma-absolu-ritual-now-on-hairmnl\">Meet the NEW Kérastase Chroma Absolu Ritual - Now on HairMNL</a>",
+            "right_image_with_text_image": "shopify://shop_images/New_Kerastase_Chroma_Absolu_Now_on_HairMNL_2e69487f-a908-4acc-8597-92ae0eb79845.jpg",
+            "right_image_with_text_copy": "With a complete team of experts, stylists, and scientists, Kérastase uncovers formulas to target challenges that damaged, color-treated hair clients may face.\n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/meet-the-new-kerastase-chroma-absolu-ritual-now-on-hairmnl\">Learn More</a>"
+          }
+        },
+        "krchromaabsolu-left_image_with_text-1": {
+          "type": "left_image_with_text",
+          "settings": {}
+        },
+        "krchromaabsolu-right_image_with_text-2": {
+          "type": "right_image_with_text",
+          "settings": {}
+        },
+        "krchromaabsolu-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "kerastase-chroma-absolu"
+          }
+        }
+      },
+      "block_order": [
+        "krchromaabsolu-fw_text_with_media-1",
+        "krchromaabsolu-section_header-1",
+        "krchromaabsolu-3x3_grid_tile-1",
+        "krchromaabsolu-3x3_grid_tile-2",
+        "krchromaabsolu-section_header-2",
+        "krchromaabsolu-right_image_with_text-1",
+        "krchromaabsolu-left_image_with_text-1",
+        "krchromaabsolu-right_image_with_text-2",
+        "krchromaabsolu-best_sellers-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

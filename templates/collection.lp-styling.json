@@ -3,8 +3,8 @@
     "main": {
       "type": "brand-collection",
       "settings": {
-        "grid_setting_large": 4,
-        "collection_custom_nav_list": "shop-loreal-professionnel"
+        "collection_custom_nav_list": "shop-loreal-professionnel",
+        "grid_setting_large": 4
       }
     }
   },

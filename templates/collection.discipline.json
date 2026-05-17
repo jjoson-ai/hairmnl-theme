@@ -1,0 +1,157 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_page_header_title": "Kérastase Discipline",
+        "brand_featured_image": "shopify://shop_images/Discipline_Oleo-Relax_SIS.png",
+        "brand_featured_image_link": "https://www.hairmnl.com/collections/kerastase-discipline",
+        "brand_featured_text": "<p>The Kérastase Discipline range has been developed for all unruly curly hair looking for shape and definition.</p>",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "discipline-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Best Sellers",
+            "best_sellers_collection": "kerastase-discipline-best-sellers"
+          }
+        },
+        "discipline-new_arrivals-1": {
+          "type": "new_arrivals",
+          "settings": {
+            "new_arrivals_collection_section_title": "New Arrivals",
+            "new_arrivals_collection": "kerastase-discipline"
+          }
+        },
+        "discipline-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Frizzy Hair"
+          }
+        },
+        "discipline-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Discipline_Oleo-Relax_1-Bathe.png",
+            "description_1": "<strong>Kérastase Discipline Oléo-Relax Shampoo 250ml</strong><br>Control-in-motion nourishing &amp; smoothening shampoo for unruly, rebellious hair",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-discipline-bain-oleo-relax-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Discipline_Oleo-Relax_2-Treat.png",
+            "description_2": "<strong>Kérastase Discipline Oléo-Relax Mask 200ml</strong><br>Controls frizz and de-volumizes unruly, rebellious hair.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-discipline-masque-oleo-relax-200ml",
+            "link_label_2": "Shop Hair Mask",
+            "product_image_3": "shopify://shop_images/Discipline_Oleo-Relax_3-Texturize.png",
+            "description_3": "<strong>Kérastase Discipline Oléo-Relax Hair Oil 120 ml</strong><br>Leave-in care for immediate all day sleek hair.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-discipline-oleo-relax-serum-100ml",
+            "link_label_3": "Shop Hair Oil"
+          }
+        },
+        "discipline-best_sellers-2": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Oléo-Relax Range",
+            "best_sellers_collection": "kerastase-discipline-oleo-relax-collection"
+          }
+        },
+        "discipline-section_header-2": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Unmanageable Hair"
+          }
+        },
+        "discipline-3x3_grid_tile-2": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Discipline_Fluidealiste_1-Bathe.png",
+            "description_1": "<b>Kérastase Discipline Fluidealiste Shampoo 250ml</b><br>\nHair smoothing sulfate-free shampoo for frizzy, unmanageable hair.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-discipline-fluidealiste-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Discipline_Fluidealiste_2-Treat.png",
+            "description_2": "<b>Kérastase Discipline Fluidealiste Conditioner 200ml</b><br>\nHair smoothing conditioner for frizzy, unmanageable hair.<br><br><h5><u><a href=\"https://www.hairmnl.com/collections/kerastase-discipline/products/kerastase-discipline-fondant-fluidealiste-200ml\">Shop Conditioner<br></a></u></h5><b>Kérastase Discipline Maskeratine Mask 200ml</b><br>\nHair-smoothing moisturizing masque for frizzy, unmanageable hair.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-discipline-maskeratine-200ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Discipline_Fluidealiste_3-Prime.png",
+            "description_3": "<b>Kérastase Discipline Keratin Thermique Blow Dry Primer 150ml</b><br>\nHair smoothing leave-in treatment for frizzy, unmanageable hair.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-discipline-keratin-thermique-150ml",
+            "link_label_3": "Shop Blow Dry Primer"
+          }
+        },
+        "discipline-best_sellers-3": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Fluidealiste Range",
+            "best_sellers_collection": "kerastase-discipline-fluidealiste"
+          }
+        },
+        "discipline-section_header-3": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Routine for Unruly Curls"
+          }
+        },
+        "discipline-3x3_grid_tile-3": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Discipline_Curl_1-Bathe.png",
+            "description_1": "<b>Kérastase Discipline Curl Idéal Cleansing Conditioner 400ml</b><br>\nCurl defining cleansing conditioner for frizzy curly or permed hair.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-discipline-bain-curl-ideal-250ml",
+            "link_label_1": "Shop Cleansing Conditioner",
+            "product_image_2": "shopify://shop_images/Discipline_Curl_2-Treat.png",
+            "description_2": "<b>Kérastase Discipline Curl Idéal Mask 200ml</b><br>\nShape-in-motion masque for overly-voluminous curly or permed hair.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-discipline-masque-curl-ideal-250ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Discipline_Curl_3-Texturize.png",
+            "description_3": "<b>Kérastase Discipline Oleo-Curl Hair Cream 150ml</b><br>\nCurl defining suppleness leave-in cream for frizzy curly or permed hair.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-discipline-creme-oleo-curl-150ml",
+            "link_label_3": "Shop Cream"
+          }
+        },
+        "discipline-best_sellers-4": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Curl Idéal Range",
+            "best_sellers_collection": "kerastase-discipline-curl"
+          }
+        },
+        "discipline-section_header-4": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Care for your Hair",
+            "section-sub-heading": "Section descriptionDiscover the latest haircare advice, tips, and secrets."
+          }
+        },
+        "discipline-left_image_with_text-1": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "A Star is Reborn",
+            "left_image_with_text_image": "shopify://shop_images/10-044OLEOrelax2C-HD_1_1800x_6afc50b5-2aa0-4ba6-a6f3-39293ddcc318.webp",
+            "left_image_with_text_copy": "The French Classic Oléo-Relax gets an Asian Makeover\nEvery morning it’s the same thing. You wake up and prepare for battle. You take up your blow dryer as a weapon in the War on Frizz. Determined, you do not give up until every strand is smooth shiny… perfect.\n<br><br>\n<a href=\"https://www.hairmnl.com/blogs/hair-tutorials/a-star-is-reborn-the-french-classic-oleo-relax-gets-an-asian-makeover\">Read More</a>"
+          }
+        }
+      },
+      "block_order": [
+        "discipline-best_sellers-1",
+        "discipline-new_arrivals-1",
+        "discipline-section_header-1",
+        "discipline-3x3_grid_tile-1",
+        "discipline-best_sellers-2",
+        "discipline-section_header-2",
+        "discipline-3x3_grid_tile-2",
+        "discipline-best_sellers-3",
+        "discipline-section_header-3",
+        "discipline-3x3_grid_tile-3",
+        "discipline-best_sellers-4",
+        "discipline-section_header-4",
+        "discipline-left_image_with_text-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

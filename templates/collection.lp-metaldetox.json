@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/HairMNL_LOreal_Metal_DX_SIS.png",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "shop-loreal-professionnel",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "lp-metaldetox-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Your 2-Step Anti-Metal Routine",
+            "section-sub-heading": "The Metal Detox range detoxifies and protects the hair from unwanted metals, resulting to healthier, shinier, and stronger hair.<br>87% less hair breakage.* 100% reliable hair color.**"
+          }
+        },
+        "lp-metaldetox-2x3_grid_tile-1": {
+          "type": "2x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Metal_Detox_1-Shampoo.jpg",
+            "description_1": "<strong>L'Oréal Professionnel Serie Expert Metal Detox Shampoo 300ml</strong><br> Anti-metal cleansing cream shampoo detoxifies hair after any color, balayage or lightening service.",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-professionnel-serie-expert-metal-detox-shampoo-300ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Metal_Detox_2-Mask.jpg",
+            "description_2": "<strong>L'Oréal Professionnel Serie Expert Metal Detox Mask 250ml</strong><br>Anti-deposit protector mask protects the fiber from particle deposits after any color, balayage or lightening service.",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-professionnel-serie-expert-metal-detox-mask-250ml",
+            "link_label_2": "Shop Mask"
+          }
+        },
+        "lp-metaldetox-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "<a href=\"https://www.hairmnl.com/collections/loreal-professionnel-serie-expert-metal-detox\">Shop the Metal Detox Range</a>",
+            "best_sellers_collection": "loreal-professionnel-serie-expert-metal-detox"
+          }
+        }
+      },
+      "block_order": [
+        "lp-metaldetox-section_header-1",
+        "lp-metaldetox-2x3_grid_tile-1",
+        "lp-metaldetox-best_sellers-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

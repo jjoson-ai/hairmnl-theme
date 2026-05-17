@@ -1,0 +1,145 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_page_header_title": "Kérastase Curl Manifesto",
+        "brand_featured_image": "shopify://shop_images/Curl_Manifesto_Institutional_-_SIS_Banner_b6398921-8898-4544-9f16-9de4cc478a61.jpg",
+        "brand_featured_text": "<p>Curl Manifesto is the ultimate professional care for all curls and coils. Formulated with hydrating Manuka Honey and cementing Ceramide, it provides the perfect combination of hydration, definition & strength. As a result, you get beautiful, healthy and bouncy curls.</p>",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "krcurlmanifesto-fw_text_with_media-1": {
+          "type": "fw_text_with_media",
+          "settings": {
+            "fw_text_with_media_section_title": "Manifest Your Greatness",
+            "fw_text_with_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/7GwKay97ufc\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"></iframe>"
+          }
+        },
+        "krcurlmanifesto-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 4-Step Routine for Wavy to Curly Hair",
+            "section-sub-heading": "Whether you’ve had a rocky relationship with your curls, or you’ve spent decades straightening your strands, now is the time to embrace your natural curly hair."
+          }
+        },
+        "krcurlmanifesto-4x3_grid_tile-1": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Curl_Manifesto_Ritual_-_1_Bathe_-_Bain_9a37508d-6d9e-4cfb-b5d1-4c59c272c962.jpg",
+            "description_1": "<b>Kérastase Curl Manifesto Shampoo 250ml</b><br><br>Gentle hydrating creamy shampoo for curly, very curly and coily hair. Gently cleanses scalp and hair without removing natural oils and intensely moisturizes curls.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-curl-manifesto-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Curl_Manifesto_Ritual_-_2_Treat_-_Fondant_e9580d59-adda-4517-8e96-f9ee2ee0daf4.jpg",
+            "description_2": "<b>Kérastase Curl Manifesto Conditioner 250ml</b><br><br>Lightweight moisture replenishing conditioner for curly and very curly hair. Infuses curls with moisture with no weigh down, enhances bounce and gently detangles knots.",
+            "link_url_2": "https://www.hairmnl.com/products/kerastase-curl-manifesto-conditioner-250ml",
+            "link_label_2": "Shop Conditioner",
+            "product_image_3": "shopify://shop_images/Layouts-_All_products_-_Revised_-_Resized_1024x1024_-_Smaller_File_Size_-_Genesis_Onwards-20.jpg",
+            "description_3": "<b>Kérastase Curl Manifesto Hair Cream 150ml</b><br><br>Daily moisturizing frizz-reducing leave-in for curly, very curly and coily hair. Ultra-lightweight cream that provides hydration and heat protection while reducing frizz.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-curl-manifesto-hair-cream-150ml",
+            "link_label_3": "Shop Hair Cream",
+            "product_image_4": "shopify://shop_images/Layouts-_All_products_-_Revised_-_Resized_1024x1024_-_Smaller_File_Size_-_Genesis_Onwards-21.jpg",
+            "description_4": "<b>Kérastase Curl Manifesto Curl Refresh Spray 190ml</b><br><br>Second day curl refreshing spray for curly, very curly and coily hair. Lightweight mist instantly rehydrates and reactivates curl definition, shine and bounce between washes.",
+            "link_url_4": "https://www.hairmnl.com/products/kerastase-curl-manifesto-curl-refresh-spray-190ml",
+            "link_label_4": "Shop Refresher"
+          }
+        },
+        "krcurlmanifesto-section_header-2": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 4-Step Routine for Very Curly to Coily Hair",
+            "section-sub-heading": "Whether you’ve had a rocky relationship with your curls, or you’ve spent decades straightening your strands, now is the time to embrace your natural curly hair."
+          }
+        },
+        "krcurlmanifesto-4x3_grid_tile-2": {
+          "type": "4x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/Curl_Manifesto_Ritual_-_1_Bathe_-_Bain_9a37508d-6d9e-4cfb-b5d1-4c59c272c962.jpg",
+            "description_1": "<b>Kérastase Curl Manifesto Shampoo 250ml</b><br><br>Gentle hydrating creamy shampoo for curly, very curly and coily hair. Gently cleanses scalp and hair without removing natural oils and intensely moisturizes curls.",
+            "link_url_1": "https://www.hairmnl.com/products/kerastase-curl-manifesto-shampoo-250ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/Curl_Manifesto_Ritual_-_2_Treat_-_Masque_07efb23c-ab03-43f1-9921-5fd687a63ca3.jpg",
+            "description_2": "<b>Kérastase Curl Manifesto Mask 200ml</b><br><br>Extra-rich nourishing mask treatment for very curly and coily hair. Intensely nourishes, promotes hair elasticity and reinforces brittle curls to prevent breakage.",
+            "link_url_2": "https://hairmnl.com/https://www.hairmnl.com/products/kerastase-curl-manifesto-mask-200ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/Curl_Manifesto_Ritual_-_4_Texturize_-_Creme_81228e1e-67bb-46dc-9603-0a5b1caac39f.jpg",
+            "description_3": "<b>Kérastase Curl Manifesto Hair Cream 150ml</b><br><br>Daily moisturizing frizz-reducing leave-in for curly, very curly and coily hair. Ultra-lightweight cream that provides hydration and heat protection while reducing frizz.",
+            "link_url_3": "https://www.hairmnl.com/products/kerastase-curl-manifesto-hair-cream-150ml",
+            "link_label_3": "Shop Hair Cream",
+            "product_image_4": "shopify://shop_images/Layouts-_All_products_-_Revised_-_Resized_1024x1024_-_Smaller_File_Size_-_Genesis_Onwards-21.jpg",
+            "description_4": "<b>Kérastase Curl Manifesto Curl Refresh Spray 190ml</b><br><br>Second day curl refreshing spray for curly, very curly and coily hair. Lightweight mist instantly rehydrates and reactivates curl definition, shine and bounce between washes.",
+            "link_url_4": "https://www.hairmnl.com/products/kerastase-curl-manifesto-curl-refresh-spray-190ml",
+            "link_label_4": "Shop Refresher"
+          }
+        },
+        "krcurlmanifesto-right_media_with_text-1": {
+          "type": "right_media_with_text",
+          "settings": {
+            "right_media_with_text_section_title": "<a href>Discover Your Curl Routine with Kérastase Curl Manifesto</a>",
+            "right_media_with_text_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/gtptoBe84Xg\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"></iframe>",
+            "right_media_with_text_copy": "Not all curls are the same. From waves, to curls and coils, learn about how you can better care for them with Del De Leon, Senior Educator for Kérastase Paris, Philippines."
+          }
+        },
+        "krcurlmanifesto-left_image_with_text-1": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "<a href=\"https://www.hairmnl.com/blogs/product-spotlight/refresh-absolu-a-hero-product-for-reviving-curls\">Refresh Absolu: A Hero Product For Reviving Curls</a>",
+            "left_image_with_text_image": "shopify://shop_images/Kerastase_Curl_Manifesto_Curl_Refresh_Spray_190ml_Range_-_Edited.png",
+            "left_image_with_text_copy": "Limit unnecessary hair washing with the all-new Refresh Absolu, a curl-reviving mist that you’ll wonder how you ever lived without. \n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/refresh-absolu-a-hero-product-for-reviving-curls\">Learn More</a>"
+          }
+        },
+        "krcurlmanifesto-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Curl Manifesto Range",
+            "best_sellers_collection": "kerastase-curl-manifesto"
+          }
+        },
+        "krcurlmanifesto-right_image_with_text-1": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "<a href=\"https://www.hairmnl.com/blogs/product-spotlight/now-is-the-time-to-embrace-your-natural-hair%22\">Now is the Time to Embrace Your Natural Hair</a>",
+            "right_image_with_text_image": "shopify://shop_images/K1.jpg",
+            "right_image_with_text_copy": "Whether your natural hair is wavy, curly or coily, now is the time to show off your strands in all their glory. Care for your curly hair with Kérastase's NEW Curl Manifesto.\n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/kerastase-the-finest-ingredients-on-earth\">Learn More</a>"
+          }
+        },
+        "krcurlmanifesto-left_image_with_text-2": {
+          "type": "left_image_with_text",
+          "settings": {
+            "left_image_with_text_section_title": "<a href>The Curl-Loving Ingredients Worth Having on Your Radar</a>",
+            "left_image_with_text_image": "shopify://shop_images/k3.jpg",
+            "left_image_with_text_copy": "Care for your curly hair with Kérastase’s Curl Manifesto line, formulated for wavy, curly, and coily strands. The collection of 5 at-home products are designed to offer curly, and coily strands the perfect combination of nourishments, definition and strength.\n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/curl-manifesto-the-curl-loving-ingredients-worth-having-on-your-radar\">Learn More</a>"
+          }
+        },
+        "krcurlmanifesto-right_image_with_text-2": {
+          "type": "right_image_with_text",
+          "settings": {
+            "right_image_with_text_section_title": "<a href>Find the Curly Hair Routine For You, For Your Best Hair Yet</a>",
+            "right_image_with_text_image": "shopify://shop_images/Kerastase_Curl_Manifesto_Curl_Enhancing_Ritual_for_Wavy_to_Curly_Hair_Range.jpg",
+            "right_image_with_text_copy": "A personalized routine is key for enhancing your natural curls and revealing natural hair you love. Find the best curly hair routine with Kérastase’s Curl Manifesto.\n<br><br><a href=\"https://www.hairmnl.com/blogs/product-spotlight/find-the-curly-hair-routine-for-you-for-your-best-hair-yet\">Learn More</a>"
+          }
+        }
+      },
+      "block_order": [
+        "krcurlmanifesto-fw_text_with_media-1",
+        "krcurlmanifesto-section_header-1",
+        "krcurlmanifesto-4x3_grid_tile-1",
+        "krcurlmanifesto-section_header-2",
+        "krcurlmanifesto-4x3_grid_tile-2",
+        "krcurlmanifesto-right_media_with_text-1",
+        "krcurlmanifesto-left_image_with_text-1",
+        "krcurlmanifesto-best_sellers-1",
+        "krcurlmanifesto-right_image_with_text-1",
+        "krcurlmanifesto-left_image_with_text-2",
+        "krcurlmanifesto-right_image_with_text-2"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

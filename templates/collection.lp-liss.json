@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/LISS_HEADER_297137ad-4471-4bb7-8983-4e8780e522b6.png",
+        "brand_featured_text": "<strong>Liss Unlimited for Anti-Frizz and Nourishment</strong><br>\nRebellious, frizzy and dry hair have finally met their match! Enriched with Pro-Keratin, Kukui, and Primrose oil, the #LissUnlimited range provides up to 4 days of anti-frizz effect, even with 80% level of humidity.",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "shop-loreal-professionnel",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "lp-liss-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Anti-Frizz Routine",
+            "section-sub-heading": "Enriched with Pro-Keratine and Kukui & Evening Primrose Oil, the Liss Unlimited range purifies the hair & scalp providing up to 4 days of anti-frizz effect, even with a 80% level of humidity"
+          }
+        },
+        "lp-liss-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/LISS_UNLIMITED-STEP-01_93057cd2-c564-4b38-9528-e3ea6953446d.png",
+            "description_1": "<strong>L'Oréal Serie Expert Liss Unlimited Shampoo</strong><br>\nA gentle daily cleanser that replenishes and smoothes rebellious hair for a manageable frizz-free result",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-serie-expert-prokeratin-liss-unlimited-shampoo-300ml-1",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/LISS_UNLIMITED-STEP-02_f5b80f00-2dd9-4f49-8878-f03b8b572543.png",
+            "description_2": "<strong> L'Oréal Serie Expert Liss Unlimited Masque\n</strong><br>A luscious smoothing mask treatment that deeply conditions the hair and protects the fibers against humidity, for enhanced control and shine",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-serie-expert-prokeratin-liss-unlimited-masque",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/LISS_UNLIMITED-STEP-03_a1f31443-73c8-4f3e-8ee6-75d80c02bbbe.png",
+            "description_3": "<strong> L'Oréal Serie Expert Liss Unlimited Blow Drying Oil</strong><br>A light, water-soluble formula serum that seals the hair giving it a fabulous shine and controlled smoothness",
+            "link_url_3": "https://www.hairmnl.com/products/loreal-serie-expert-primrose-oil-liss-unlimited-blow-drying-oil-125ml",
+            "link_label_3": "Shop Serum"
+          }
+        },
+        "lp-liss-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "prokeratin-liss-unlimited"
+          }
+        }
+      },
+      "block_order": [
+        "lp-liss-section_header-1",
+        "lp-liss-3x3_grid_tile-1",
+        "lp-liss-best_sellers-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

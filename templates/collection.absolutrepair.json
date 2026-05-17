@@ -1,0 +1,65 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-collection",
+      "settings": {
+        "brand_page_header_title": "L'Oréal Professionnel Serie Expert Absolut Repair Gold",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "shop-loreal-professionnel",
+        "collection_sorting": false
+      },
+      "blocks": {
+        "absolutrepair-fw_text_with_media-1": {
+          "type": "fw_text_with_media",
+          "settings": {
+            "fw_text_with_media_section_title": "Defy Damage with the New Absolut Repair",
+            "fw_text_with_media_copy": "Discover professional solutions to transform hair damage with the new Absolut Repair Range. With an exclusive co-emulsion technology that targets very damaged areas, hair is instantly restored while keeping it soft and shiny.",
+            "fw_text_with_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Abljr3ob_Zw\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"></iframe>"
+          }
+        },
+        "absolutrepair-section_header-1": {
+          "type": "section_header",
+          "settings": {
+            "section-heading": "Explore the 3-Step Repair Routine for Dry and Damaged Hair",
+            "section-sub-heading": "The Absolut Repair regimen gives the optimal resurfacing results for very dry and damaged hair. Powered by Gold Quinoa and Protein, hair fibers are restructured for shinier, smoother, and healthier hair."
+          }
+        },
+        "absolutrepair-3x3_grid_tile-1": {
+          "type": "3x3_grid_tile",
+          "settings": {
+            "product_image_1": "shopify://shop_images/ARG-STEP-01_eccc4489-9b19-4fd3-9067-619de224a93b.png",
+            "description_1": "<strong>L'Oreal Serie Expert Absolut Repair Gold Shampoo</strong><br>Immediately cleanses and restructures sensitized hair, while leaving it with a lightweight touch",
+            "link_url_1": "https://www.hairmnl.com/products/loreal-serie-expert-absolut-repair-gold-shampoo-300ml",
+            "link_label_1": "Shop Shampoo",
+            "product_image_2": "shopify://shop_images/ARG-STEP-02-MASK_c8615956-5e4e-401a-bc7a-7f7a7aad42aa.jpg",
+            "description_2": "<strong>L'Oreal Serie Expert Absolut Repair Gold Masque</strong><br>Instantly restores very sensitized hair. Its professional butter-like formula leaves the fibre 7x shinier and smooth, for an overall controlled look",
+            "link_url_2": "https://www.hairmnl.com/products/loreal-serie-expert-absolut-repair-gold-masque-250ml",
+            "link_label_2": "Shop Mask",
+            "product_image_3": "shopify://shop_images/ARG-STEP-03-SPRAY_bedc8e21-9721-43c2-8d71-35f2a77b9899.jpg",
+            "description_3": "<strong>L'Oréal Serie Expert Absolut Repair Gold 10-in-1 Perfecting Spray</strong><br>A finishing spray with 10 instant benefits, applied post-shower for heat protection, an easy blow-dry, and nourishment for very dry and damaged hair",
+            "link_url_3": "https://www.hairmnl.com/products/loreal-serie-expert-absolut-repair-gold-10-in-1-perfecting-spray-90-ml",
+            "link_label_3": "Shop Spray"
+          }
+        },
+        "absolutrepair-best_sellers-1": {
+          "type": "best_sellers",
+          "settings": {
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection": "loreal-professionnel-serie-expert-absolut-repair-gold"
+          }
+        }
+      },
+      "block_order": [
+        "absolutrepair-fw_text_with_media-1",
+        "absolutrepair-section_header-1",
+        "absolutrepair-3x3_grid_tile-1",
+        "absolutrepair-best_sellers-1"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
