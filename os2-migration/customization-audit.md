@@ -88,6 +88,10 @@ Layout file: 1,121 lines. Stock Pipeline 6 `theme.liquid` is ~500 lines; the Hai
 | 858 | `{% include "code-customizer-header" %}` — Code Customizer app | **easy** | App-injected; drop with app uninstall or use OS 2.0 app embed. |
 | 878–879 | Vertex AI recommendations CSS (disabled) | **easy** | Will be activated with Vertex AI Phase 1; needs section-level CSS in OS 2.0. |
 
+### 1.3a Notable Stock-Pipeline Gaps: STKY Duplicate-Load
+
+**STKY Sticky Add-to-Cart** has both a TAE app embed block (`shopify://apps/stky-sticky-add-to-cart/blocks/satcb/...`) in `config/settings_data.json` **and** a legacy hardcoded `<script src=".../satcb.min.js?shop=creations-gdc.myshopify.com">` at line 969 of `layout/theme.liquid`. This causes duplicate initialization — the script loads twice per page. Cleanup is needed regardless of migration timing.
+
 ### 1.4 Body Footer (Lines 882–1121)
 
 | Lines | Customization | Difficulty | Notes |
@@ -195,7 +199,7 @@ These are all variants of `collection-branded.liquid` (1,568 lines), each heavil
 | swymSnippet.liquid | 206 | Swym wishlist integration | App has OS 2.0 embed | **can-drop** |
 | swym-product-view.liquid | * | Swym product page event tracking | App has OS 2.0 embed | **can-drop** |
 | judgeme_widgets.liquid | 126 | Judge.me review widget rendering | App has OS 2.0 embed | **can-drop** |
-| judgeme_static_stars.liquid | * | Judge.me star rating badge | App has OS 2.0 embed | **can-drop** |
+| judgeme_static_stars.liquid | * | Judge.me star rating badge (deferred loader pattern — loads after page render to reduce blocking) | App has OS 2.0 embed | **can-drop** |
 | judgeme_all_reviews.liquid | * | Judge.me aggregate reviews page | App has OS 2.0 embed | **can-drop** |
 | mbc-bundles.liquid | 19 | MBC Bundles app embed | App has OS 2.0 embed | **can-drop** |
 | wc_cart.liquid | 431 | Wholesale Cart (BSS B2B) — BSS uninstalled | Dead code | **can-drop** |

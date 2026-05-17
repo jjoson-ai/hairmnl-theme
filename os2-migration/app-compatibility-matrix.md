@@ -62,7 +62,7 @@
 |----------|-------|------|
 | **Total apps enumerated** | **30** | 15 app-embed blocks + 15 script/snippet/other |
 | 🟢 TAE-ready | 10 | Smart SEO (×2), Klaviyo, Shopify Inbox, Nova Cookie Bar, Hextom Timer Bar, LoyaltyLion (×2), LDT Gift Wrap, OXI Social Login |
-| 🟡 Mixed / some TAE | 5 | BOGOS, Judge.me, Elevar, Re:amaze, STKY, SWYM, Zapiet |
+| 🟡 Mixed / some TAE | 7 | BOGOS, Judge.me, Elevar, Re:amaze, STKY, SWYM, Zapiet |
 | 🔴 Legacy only / NEED-VERIFY | 10 | Searchanise, Personalizer.io, BookThatApp, VisualQuizBuilder, Pro Blogger, MBC Bundles, PluginSEO, Google Maps API, Growave, (+ partial: STKY legacy side) |
 | ⚪ Out of scope / being replaced | 4 | Appikon (→ Klaviyo BIS), BSS B2B (uninstall), LimeSpot (→ Vertex AI), GTM (content_for_header, no TAE path) |
 
