@@ -24,16 +24,16 @@
         "2ce9123d-62d7-4f6d-b029-f969c0353bb6": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/2026-mar-apr-e-comm-site-banners-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/2026-mar-apr-e-comm-site-banners-mobile.jpg",
+            "slide_image_desktop": "shopify://shop_images/2026-may-jun-e-comm-site-banners_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/2026-may-jun-e-comm-site-banners_mobile.jpg",
             "slide_image_url": "shopify://collections/special-offers"
           }
         },
         "banner_slide_F4jBPQ": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/2026-mar-apr-salon-site-banners-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/2026-mar-apr-salon-site-banners-mobile.jpg",
+            "slide_image_desktop": "shopify://shop_images/2026-may-jun-salon-site-banners_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/2026-may-jun-salon-site-banners_mobile.jpg",
             "slide_image_url": "shopify://pages/hairmnl-studio"
           }
         },
@@ -42,7 +42,7 @@
           "settings": {
             "slide_image_desktop": "shopify://shop_images/k18-brand-spotlight-mar-apr-2026-site-banners-1.jpg",
             "slide_image_mobile": "shopify://shop_images/k18-brand-spotlight-mar-apr-2026-site-banners.jpg",
-            "slide_image_url": "shopify://collections/davines"
+            "slide_image_url": "shopify://collections/k18"
           }
         },
         "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-1": {
@@ -57,16 +57,16 @@
         "37610dcd-b373-4d89-a3e5-cae6fda04ac5": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/kerastase-april-2026-always-on-storewide-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/kerastase-april-2026-always-on-storewide-mobile.jpg",
+            "slide_image_desktop": "shopify://shop_images/kerastase-may-2026-always-on-min-spend-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/kerastase-may-2026-always-on-min-spend-mobile.jpg",
             "slide_image_url": "shopify://collections/kerastase"
           }
         },
         "ef834652-e573-46ca-a607-d78f3767abf2": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/loreal-pro-april-2026-always-on-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/loreal-pro-april-2026-always-on-mobile.jpg",
+            "slide_image_desktop": "shopify://shop_images/loreal-pro-may-2026-always-on-bestsellers-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/loreal-pro-may-2026-always-on-bestsellers-mobile.jpg",
             "slide_image_url": "shopify://collections/lorealprofessionnel"
           }
         },
