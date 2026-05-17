@@ -1,0 +1,58 @@
+{%- comment -%}
+  Reamaze defer placeholder — bd hairmnl-theme-meu.2 (Phase 3 of epic meu).
+
+  Server-rendered chat bubble that visually matches the live Reamaze widget
+  configured in admin (widgetColor=rgb(102,90,68), gradient=true, desktop
+  bottom:80px right:22px, mobile bottom:50px right:16px). Clickable from
+  first paint — the guard inline in layout/theme.liquid listens for clicks
+  on #reamaze-defer-placeholder and triggers SDK load.
+
+  Once Reamaze SDK paints its own widget, the guard sets [hidden] on this
+  button so the two never co-exist visually.
+
+  kt0 compliance (CLAUDE.md): uses position:fixed only. No contain, no
+  transform, no filter — those would create containing blocks for any
+  absolute-positioned descendants of the bubble (per 2026-05-12 7fz
+  regression history).
+{%- endcomment -%}
+<button
+  type="button"
+  id="reamaze-defer-placeholder"
+  aria-label="Open chat support"
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="28" height="28">
+    <path fill="#fff" d="M12 2C6.48 2 2 6.13 2 11.2c0 2.83 1.4 5.36 3.62 7.08L5 22l3.96-1.72C10.06 20.74 11.02 21 12 21c5.52 0 10-4.13 10-9.8S17.52 2 12 2z"/>
+  </svg>
+</button>
+<style>
+  #reamaze-defer-placeholder {
+    position: fixed;
+    bottom: 80px;
+    right: 22px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgb(102, 90, 68) 0%, rgb(128, 113, 85) 100%);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    z-index: 9998;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @media (max-width: 767px) {
+    #reamaze-defer-placeholder {
+      bottom: 50px;
+      right: 16px;
+    }
+  }
+  #reamaze-defer-placeholder svg,
+  #reamaze-defer-placeholder svg * {
+    pointer-events: none;
+  }
+  #reamaze-defer-placeholder[hidden] {
+    display: none !important;
+  }
+</style>

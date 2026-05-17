@@ -1,0 +1,464 @@
+{% if false %}
+        {% assign discount_code_form_header_text = "Discount Code" %}
+        {% assign discount_code_apply_button = "Apply" %}
+        {% assign discount_code_message_null = "The discount code field must not be blank." %}
+        {% assign discount_code_message_success_discount_code = "Discount code applied successful" %}
+        {% assign discount_code_message_error_discount_code = "Failed to apply this discount code, please try another" %}
+    <script>
+    if (typeof BSS_B2B !== "undefined") {
+        {% comment %} BSS integrated and compatible discount code with LangShop {% endcomment %}
+        if (BSS_B2B.integrate && BSS_B2B.integrate.langShop && BSS_B2B.integrate.langShop.handleAllTranslation) {
+            window.addEventListener('load', ()=>{
+                setTimeout(()=>{
+                      BSS_B2B.integrate.langShop.handleAllTranslation('dc');
+                }, 1000)
+            })
+        }
+        BSS_B2B.dcTranslations = {
+            form_header_text: "{{ discount_code_form_header_text }}",
+            message_success_discount_code: "{{ discount_code_message_success_discount_code }}",
+            message_error_discount_code: "{{ discount_code_message_error_discount_code }}",
+            button_apply: "{{ discount_code_apply_button }}",
+            message_discount_code_null: "{{ discount_code_message_null }}"
+        };
+    }
+</script>
+<div class="bss-b2b-discount-code-wrapper">
+    <h3 class="bss-b2b-translation-dc-form_header_text">{{ discount_code_form_header_text }}</h3>
+    <div id="bss-b2b-discount-code-input-wrapper">
+        <input type="text" id="bss-b2b-discount-code-input"/>
+    </div>
+    <div id="bss-b2b-discount-code-message"></div>
+    <div id="bss-b2b-discount-code-applied-wrapper"></div>
+    <button id="bss-b2b-discount-code-submit" class="bss-b2b-translation-dc-button_apply">{{ discount_code_apply_button }}</button>
+</div>
+<style type="text/css">
+    #bss-b2b-discount-code-submit {
+        margin-top: 20px;
+        min-height: auto;
+        width: auto;
+        appearance: none;
+        display: inline-block;
+        text-decoration: none;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        padding: 8px 15px;
+        background-color: black;
+        color: white;
+        letter-spacing: .08em;
+        white-space: normal;
+        font-size: calc(((var(--font-size-base) - 2) / (var(--font-size-base))) * 1em);
+    }
+    .bss-b2b-discount-code-wrapper {
+        margin-bottom: 30px;
+        display: none;
+        width: 300px;
+    }
+
+    #bss-b2b-discount-code-input-wrapper {
+        border: 1px #a5a5a5 solid;
+        border-radius: 20px;
+    }
+    #bss-b2b-discount-code-input-wrapper input#bss-b2b-discount-code-input {
+        min-height: 35px;
+        height: 2em;
+        width: 85%;
+        border: 0px;
+        outline: none;
+        border-radius: 4px;
+        color: #666;
+        margin: 0 15px;
+        background: transparent;
+    }
+    #bss-b2b-clear-discount-code {
+        position: relative;
+        float: right;
+        height: 20px;
+        width: 20px;
+        right: 5px;
+        border-radius: 20px;
+        background: #a5a5a5;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+    }
+    #bss-b2b-clear-discount-code:hover {
+        background: #ccc;
+    }
+    #bss-b2b-discount-code-applied-wrapper {
+        display: flex;
+    }
+    #bss-b2b-discount-code-applied span {
+        margin-right: 20px;
+    }
+    div#bss-b2b-discount-code-applied {
+        border-radius: 4px;
+        background-color: rgba(113,113,113,0.11);
+        color: #717171;
+        font-size: 15px;
+        padding: 5px 0 5px 5px;
+        overflow: hidden;
+        margin-left: 5px;
+    }
+    #bss-b2b-discount-code-message {
+        margin-top: 5px;
+        margin-left: 5px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .bss-b2b-discount-code-wrapper {
+            width: 70%;
+            margin-left: 15%;
+            margin-top: 5%;
+        }
+
+    }
+      .bss-modal-warning-dc-wrap {
+        top: 21%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: table;
+        z-index: 199999999;
+        position: fixed;
+        outline: none !important;
+        -webkit-backface-visibility: hidden;
+        pointer-events: none;
+      }
+      .bss-modal-dc {
+        opacity: .5;
+        color: black;
+        background-color: white;
+        max-width: 500px;
+        margin: 18px auto;
+        width: calc(100% - 36px);
+        pointer-events: auto;
+        border: solid white 1px;
+      }
+    .bss-modal-dc.activeDc {
+        opacity: 1;
+        transition: all 0.25s ease-in;
+        border-width: 0px;
+      }
+      .bss-modal-dc-header {
+        padding: 10px;
+        background: #ff9800;
+      }
+      .bss-modal-dc-title{
+        margin-left: 12px;
+        color: #000;
+        font-size: 20px;
+      }
+      .bss-modal-dc button {
+        user-select: none;
+        -webkit-user-select: none;
+        cursor: pointer;
+        float: right;
+        width: unset;
+    }
+      .bss-modal-dc-button-close {
+        font-style: normal;
+        margin-top: -5px;
+        margin-right: -5px;
+        font-size: 35px;
+        font-family: Arial, Baskerville, monospace;
+        overflow: visible;
+        background: transparent;
+        border: 0;
+        -webkit-appearance: none;
+        display: block;
+        outline: none;
+        padding: 0 0 0 10px;
+        box-shadow: none;
+        opacity: .65;
+    }
+      .bss-modal-dc-body {
+        padding: 18px;
+        background: #ffffff;
+        color: #000000;
+      }
+      .bss-dc-list-warning {
+        margin-left: 10px;
+        margin-top: -10px;
+        }
+      .bss-warning-minimum-amount-title {
+
+      }
+      .bss-dc-list-warning-amount {
+
+      }
+      .bss-amo-text-warning {
+            list-style: none;
+        position: relative;
+        padding: 3px 0 2px 40px;
+      }
+</style>
+
+<script type="text/javascript" id="bss-b2b-discount-code-script">
+    function handleApplyDiscountCode() {
+
+        var hrefArr = window.location.href.split("/");
+        var isCart = (hrefArr[hrefArr.length - 1]   == "cart" || hrefArr[hrefArr.length - 1].includes("cart"));
+        if (([2631, 2303].indexOf(BSS_B2B.storeId) !== -1) && isCart) {
+            let documentWidth = window.innerWidth;
+            if (documentWidth > 766) {
+                let mobileWrapper = document.querySelector(".cart--root[data-view=mobile] .bss-b2b-discount-code-wrapper");
+                if (mobileWrapper) {
+                    mobileWrapper.remove();
+                }
+            } else {
+                let unusualMobileEl = document.querySelector('.off-canvas--right-sidebar .cart--root[data-view=mobile] .bss-b2b-discount-code-wrapper');
+                let desktopWrapper = document.querySelector(".cart--root[data-view=desktop] .bss-b2b-discount-code-wrapper");
+                if (unusualMobileEl) {
+                    unusualMobileEl.remove();
+                }
+                if (desktopWrapper) {
+                    desktopWrapper.remove();
+                }
+            }
+        }
+
+        if (BSS_B2B.storeId == 4258 && isCart) {
+            let cartDrawerDCForm = document.querySelector('#CartDrawerForm .bss-b2b-discount-code-wrapper');
+            if (cartDrawerDCForm) {
+                cartDrawerDCForm.remove();
+            }
+        }
+
+        let btnApplyDiscountCodes = document.querySelectorAll("#bss-b2b-discount-code-submit");
+        let messageDiscountCodes = document.querySelectorAll("#bss-b2b-discount-code-message");
+        let discountCodeInputs = document.querySelectorAll("#bss-b2b-discount-code-input");
+        let discountCodesApplied = document.querySelectorAll("#bss-b2b-discount-code-applied-wrapper");
+
+        if (btnApplyDiscountCodes.length && messageDiscountCodes.length && discountCodeInputs.length && discountCodesApplied.length) {
+            for (let j = 0; j < btnApplyDiscountCodes.length; j++) {
+                let btnApplyDiscountCode = btnApplyDiscountCodes[j];
+                let messageDiscountCode = messageDiscountCodes[j];
+                let discountCodeInput = discountCodeInputs[j];
+                let discountCodeApplied = discountCodesApplied[j];
+
+                btnApplyDiscountCode && btnApplyDiscountCode.addEventListener('click', async (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    messageDiscountCode.innerHTML = '';
+                    let discountCode = discountCodeInput.value;
+
+                    if (discountCode == null || discountCode.trim() === "") {
+                        let messageNull = BSS_B2B.dcTranslations.messageNull;
+                        if (BSS_B2B.integrate && BSS_B2B.integrate.langShop && BSS_B2B.integrate.langShop.dcTranslations
+                            && BSS_B2B.integrate.langShop.dcTranslations.message_discount_code_null
+                        ) {
+                            messageNull = BSS_B2B.integrate.langShop.dcTranslations.message_discount_code_null;
+                        }                    
+                        messageDiscountCode.style.color = "red";
+                        messageDiscountCode.innerHTML = '<span class="bss-b2b-translation-dc-message_discount_code_null">' + messageNull + '</span>';
+                    } else {
+                        let today = new Date();
+                        let moment = today.toLocaleTimeString();
+                        let shopDataHTML = JSON.parse(document.getElementById('bss-b2b-store-data').innerHTML);
+                        let shopDataRes = await fetch(`https://${shopDataHTML.shop.domain}/cart.js`);
+                        let shopData = await shopDataRes.json();
+                        var handleUrls = [];
+                        var handles = [];
+                        let keyIdMap = new Map();
+                        let keyPriceMap = new Map();
+                        let keyQuantityMap = new Map();
+                        let totalPrice = 0;
+                        let shopModules = BSS_B2B.shopModules;
+                        let isEnableCP = true;
+                        let isEnableQB = true;
+                        shopModules.forEach(function (sm) {
+                            if (sm.code === "cp") {
+                                isEnableCP = sm.status;
+                            } else if (sm.code === "qb") {
+                                isEnableQB = sm.status;
+                            }
+                        });
+                        for (let i = 0; i < shopData.items.length; i++) {
+                            let item = shopData.items[i];
+                            totalPrice += item.line_price;
+                            var proId = item.product_id;
+                            if (handles.indexOf(proId) === -1) {
+                                handles.push(proId);
+                                handleUrls.push('id:"' + proId + '"');
+                                keyIdMap.set(proId, []);
+                                keyPriceMap.set(proId, []);
+                                keyQuantityMap.set(proId, []);
+                            }
+
+                            let productItemKeys =  keyIdMap.get(proId);
+                            productItemKeys.push(item.key)
+                            keyIdMap.set(proId, productItemKeys);
+                            keyPriceMap.set(proId, item.price);
+                            keyQuantityMap.set(proId, item.quantity);
+                        }
+
+                        var urlData = '/search.js?q=' + handleUrls.join(' OR ') + '&view=bss.b2b';
+                        let productCartPage = await fetch(`https://${shopDataHTML.shop.domain}/${urlData}`);
+                        let responseProducts = await productCartPage.json();
+                        if (responseProducts.length > 0) {
+                            var productMap = []
+                            var checkUnique = [];
+                            for (var i = 0; i < responseProducts.length; i++) {
+                                var pro = responseProducts[i];
+                                if (checkUnique.indexOf(pro.id) === -1) {
+                                    checkUnique.push(pro.id);
+                                    keyIdMap.get(pro.id).forEach(function (key) {
+                                        productMap.push({
+                                            id: pro.id,
+                                            tags: pro.tags,
+                                            collections: pro.collections,
+                                            key: key,
+                                            price:parseFloat(keyPriceMap.get(pro.id)),
+                                            title:pro.title,
+                                            quantity:parseInt(keyQuantityMap.get(pro.id))
+                                        });
+                                    })
+                                }
+                            }
+
+                            let data = {
+                                today: today,
+                                moment: moment,
+                                customer: shopDataHTML.customer,
+                                cart_items: productMap,
+                                domain: shopDataHTML.shop.permanent_domain,
+                                discount_code: discountCode,
+                                totalPrice:totalPrice,
+                                isEnableCP:isEnableCP,
+                                isEnableQB:isEnableQB,
+                                qbRules:BSS_B2B.qbRules,
+                                cpRules:BSS_B2B.cpRules
+                            }
+                            await fetch(bssB2bApiServer + "/dc/rules/get-applied-rule?domain=" + Shopify.shop, {
+                                method: "POST",
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            })
+                                .then(response => response.json())
+                                .then(async function (data) {
+                                    if (data.success) {
+                                        if (BSS_B2B.storeId !== 3793) {
+                                            messageDiscountCode.style.color = "green";
+                                            messageDiscountCode.innerHTML = data.message;
+                                            BSS_B2B.integrate.langShop.handleAllTranslation('dc', ['message_success_discount_code']);
+                                            discountCodeInput.setAttribute('discount-code', true);
+                                            discountCodeApplied.innerHTML = "<div id=\"bss-b2b-discount-code-applied\">" +
+                                                "<span>"
+                                                + discountCode +
+                                                "</span>" +
+                                                "<div id=\"bss-b2b-clear-discount-code\">\n" +
+                                                "X\n" +
+                                                "</div>" +
+                                                "</div>";
+                                            handleRemoveDiscountCodeApplied();
+                                            let dataUpdateJSON = JSON.stringify({
+                                                dc_keys: data.listKeysItemAppliedDC,
+                                                discount_value: data.discountValue,
+                                                discount_type: data.discountType,
+                                                discount_code: data.discountCode,
+                                                discount_order_or_prod: data.discountOrderOrProduct
+                                            });
+                                            let dataUpdate = {
+                                                attributes: {
+                                                    discountCodeRule: dataUpdateJSON
+                                                }
+                                            };
+                                            const cartDataRes = await fetch("/cart/update.js", {
+                                                method: "POST",
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(dataUpdate)
+                                            });
+
+                                            if(BSS_B2B.storeId === 7597){
+                                                const cartData = await cartDataRes.json();
+                                                BSS_B2B.customize.dc.showDiscountPrice(
+                                                    BSS_B2B, cartData, 
+                                                    JSON.parse(dataUpdateJSON), false
+                                                );
+                                            }
+                                        } else {
+                                            BSS_B2B.customize.dc.checkLimitAmount(data, messageDiscountCode, discountCodeInput, discountCodeApplied, Shopify);
+                                        }
+                                    } else {
+                                        messageDiscountCode.style.color = "red";
+                                        messageDiscountCode.innerHTML = data.message;
+                                        BSS_B2B.integrate.langShop.handleAllTranslation('dc', ['message_error_discount_code']);
+                                    }
+                                })
+                                .catch((error) => {
+                                    // eslint-disable-next-line no-console
+                                    console.error('Error:', error);
+                                });
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    function handleRemoveDiscountCodeApplied () {
+        let clearDiscountCodeBtn = document.getElementById("bss-b2b-clear-discount-code");
+        clearDiscountCodeBtn.addEventListener('click', async (event) => {
+            event.preventDefault();
+
+            let messageDiscountCodes = document.querySelectorAll("#bss-b2b-discount-code-message");
+            let discountCodeInputs = document.querySelectorAll("#bss-b2b-discount-code-input");
+            let discountCodesApplied = document.querySelectorAll("#bss-b2b-discount-code-applied-wrapper");
+
+            if (messageDiscountCodes.length && discountCodeInputs.length && discountCodesApplied.length) {
+                for (let j = 0; j < messageDiscountCodes.length; j++) {
+                    let messageDiscountCode = messageDiscountCodes[j];
+                    let discountCodeInput = discountCodeInputs[j];
+                    let discountCodeApplied = discountCodesApplied[j];
+                    discountCodeInput.value = "";
+                    discountCodeInput.removeAttribute('discount-code')
+                    discountCodeApplied.innerHTML = "";
+                    messageDiscountCode.innerHTML = "";
+                }
+            }
+            let dataUpdateJSON = JSON.stringify({
+            })
+            let dataUpdate = {
+                attributes: {
+                    discountCodeRule: dataUpdateJSON
+                }
+            }
+            const cartDataRes = await fetch("/cart/update.js", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataUpdate)
+            })
+
+            if(BSS_B2B.storeId === 7597){
+                const cartData = await cartDataRes.json();
+                BSS_B2B.customize.dc.showDiscountPrice(
+                    BSS_B2B, cartData, 
+                    JSON.parse(dataUpdateJSON), false
+                );
+            }
+        })
+    }
+
+    if (BSS_B2B.storeId !== 2631) {
+        handleApplyDiscountCode()
+    } else {
+        setTimeout(function() {
+             handleApplyDiscountCode();
+           }, 1000)
+    }
+</script>
+{% endif %}

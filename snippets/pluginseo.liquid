@@ -1,0 +1,26 @@
+{% comment %}
+  version: 1.2.0
+{% endcomment %}
+
+{%- comment -%}
+  ----------------------------------------------------------------------------------
+   Plug in SEO Plus for Shopify
+
+   Copyright (c) 2018 Pemberton Rank Ltd, a company registered in England 7341337
+
+   This file is subject to the license at https://www.pluginseo.com/eula
+  ----------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- assign licensedTo = 'ac903c36-e893-4dae-87f4-9c1939b19410' -%}
+{%- assign pluginseoVerbose = false -%}
+{%- assign pageUnderscoreTitle = 'page' | append: '_' | append: 'title' -%}
+{%- assign pageUnderscoreDescription = 'page' | append: '_' | append: 'description' -%}
+
+{%- include 'pluginseo-langify' -%}
+{%- include 'pluginseo-page-title' -%}
+{%- include 'pluginseo-meta-description' -%}
+{%- include 'pluginseo-structured-data' -%}
+{%- include 'pluginseo-not-found' -%}
+
+<meta name="pluginseo" content="Plug in SEO Plus" data-ptf="{{- pTF -}}" data-mdf="{{- mDF -}}" />

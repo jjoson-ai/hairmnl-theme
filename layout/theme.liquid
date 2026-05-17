@@ -341,14 +341,10 @@
     Flickity / MicroModal / scrollLock / Rellax. Keep this file ≤1K LoC after M5.
   {%- endcomment -%}
   <script src="{{ 'hairmnl-custom.js' | asset_url }}" defer="defer"></script>
-
-  {%- comment -%} P4-TODO: assets/custom-theme.css is the ~5K-LoC P6 CSS override bundle
-    that contains all our brand styling, button overrides, etc. Phase 4 has not yet
-    produced a P8-ported version. This script tag is commented out until that port
-    lands (bd hairmnl-theme-2i8b.4 M3 handles css-overrides.liquid; a separate
-    follow-up ticket handles custom-theme.css proper).
-    {% comment %} <link rel="stylesheet" href="{{ 'custom-theme.css' | asset_url }}"> {% endcomment %}
-  {%- endcomment -%}
+  {%- comment -%} P4-visual-parity: load P6 custom bundles for dev preview parity.
+    Remove once M3 (css-overrides) + M5 (custom-theme.js port) land in P8. {%- endcomment -%}
+  <script src="{{ 'custom-theme.js' | asset_url }}" defer="defer"></script>
+  <link rel="stylesheet" href="{{ 'custom-theme.css' | asset_url }}">
 
   {%- comment -%} HairMNL inline JS: A/B framework + JS-error tracking + Klaviyo events.
     These three patterns were inline in P6's theme.liquid (lines 629-687 + 960-972).

@@ -1,0 +1,14 @@
+<script> var aaaAnnConfig = {"isWebpushPermission":1}</script>    
+
+{% if template == 'product' %}
+  <select style="display:none!important;" name="aaa-ann-variantid">
+    {% for variant in product.variants %}
+
+
+    <option id="aaa-ann-variant-id-{{ variant.id }}" {% if variant.available == false %} value="0"{% endif %} {% if variant.available == true %} value="1"{% endif %} > {{ variant.title }}
+     </option>
+
+
+    {% endfor %}
+  </select>
+{% endif %}

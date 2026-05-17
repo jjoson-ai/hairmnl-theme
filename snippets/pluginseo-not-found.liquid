@@ -1,0 +1,20 @@
+{%- if rootTemplate == '404' -%}
+  <script>
+    var LICENSED_TO = '{{- licensedTo-}}';
+    (function() {
+      var loadScript = function(url) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+
+        script.src = url;
+        document.getElementsByTagName("head")[0].appendChild(script);
+      }
+
+      if ((typeof jQuery === 'undefined') || (parseFloat(jQuery.fn.jquery) < 1.7)) {
+        loadScript('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
+      }
+
+      loadScript('https://api.pluginseo.com/t.js');
+    })()
+  </script>
+{%- endif -%}

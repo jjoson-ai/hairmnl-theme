@@ -1,0 +1,54 @@
+{{ 'bss-file-configdata.js' | asset_url | script_tag }} {{ 'bss-file-configdata-banner.js' | asset_url | script_tag}} {{ 'bss-file-configdata-popup.js' | asset_url | script_tag}}<script>
+                if (typeof BSS_PL == 'undefined') {
+                    var BSS_PL = {};
+                }
+                var bssPlApiServer = "https://product-labels-pro.bsscommerce.com";
+                BSS_PL.customerTags = {% if customer %}'{%for tag in customer.tags%}{{ tag }},{% endfor %}'{% else %}'null'{% endif %};
+                BSS_PL.customerId = {% if customer %}'{{customer.id}}'{% else %}'null'{% endif %};
+                BSS_PL.configData = configDatas;
+                BSS_PL.configDataBanner = configDataBanners ? configDataBanners : [];
+                BSS_PL.configDataPopup = configDataPopups ? configDataPopups : [];
+                BSS_PL.storeId = 8645;
+                BSS_PL.currentPlan = "ten_usd";
+                BSS_PL.storeIdCustomOld = "10678";
+                BSS_PL.storeIdOldWIthPriority = "12200";
+                BSS_PL.apiServerProduction = "https://product-labels-pro.bsscommerce.com";
+                
+                BSS_PL.integration = {"laiReview":{"status":0,"config":[]}}
+                </script>
+            <style>
+.homepage-slideshow .slick-slide .bss_pl_img {
+    visibility: hidden !important;
+}
+</style><script>function fixBugForStores($, BSS_PL, parent, page, htmlLabel) { let appended = false; if ($(parent).hasClass('limespot-recommendation-box-item') && $(parent).find('.ls-image-wrap').length) {
+    $(parent).find('.ls-image-wrap').append(htmlLabel);
+    appended = true;
+}
+if ($(parent).parent().hasClass('product-grid-item ')) {
+    $(parent).find(".lazy-image").append(htmlLabel);
+    appended = true;
+}
+if ($(parent).hasClass('snize-product')) {
+    $(parent).find(".snize-thumbnail").append(htmlLabel);
+    appended = true;
+}
+if (page == 'products') {
+    if ($(parent).hasClass('product__photo')) {
+        $(parent).closest('.product__slides').find('.product__photo').append(htmlLabel);
+    }
+    if ($(parent).hasClass('lazy-image')) {
+        $(parent).closest('.product__media').append(htmlLabel);
+    }
+    appended = true;
+}
+if ((page == 'collections' || page == "") && $(parent).hasClass('grid__item')) {
+    $(parent).find('.grid__image').append(htmlLabel);
+    appended = true;
+}
+if (window.location.pathname == '/' && $(parent).hasClass('product')) {
+    let label = $(parent).find('.image')
+    if (label.length && !label.find('.bss_pl_img').length) {
+        label.prepend(htmlLabel);
+        appended = true
+    }
+}  return appended;}</script>

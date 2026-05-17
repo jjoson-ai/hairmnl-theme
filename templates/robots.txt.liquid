@@ -1,0 +1,75 @@
+{%- comment -%}
+  HairMNL robots.txt — explicit AI bot allow rules + Shopify defaults.
+
+  Why this exists
+  ---------------
+  Shopify's default robots.txt addresses Googlebot but is silent on
+  modern AI crawlers (GPTBot, ClaudeBot, PerplexityBot, etc), which
+  leaves them inheriting wildcard ('*') rules. That works in practice
+  but is ambiguous: future wildcard tweaks could silently block AI
+  crawlers, and bot operators sometimes interpret silence as 'crawl
+  cautiously / not at all.'
+
+  This template names each bot we want to keep open and gives them an
+  explicit Allow directive plus the same admin/cart/checkout/account
+  Disallow protections the wildcard block has. Then it appends
+  Shopify's default rules unchanged via `{{- default_robots -}}`, so
+  nothing else regresses.
+
+  Bots NOT named here
+  -------------------
+  - Bytespider (ByteDance / TikTok). Has a reputation for ignoring
+    robots.txt; if you want to block it, add a User-agent: Bytespider
+    block with a Disallow: / inside the loop. Default policy is to
+    leave it alone — falls under wildcard rules.
+
+  Maintained by the seo-platform repo. Source of truth:
+  infra/shopify/robots.txt.liquid. Pushed via
+  scripts/push_robots_to_shopify.sh.
+{%- endcomment -%}
+
+{%- assign ai_bots = "GPTBot,OAI-SearchBot,ChatGPT-User,ClaudeBot,Claude-Web,PerplexityBot,Perplexity-User,Google-Extended,Applebot-Extended,Meta-ExternalAgent,CCBot" | split: "," -%}
+
+# HairMNL — robots.txt
+# Explicit AI bot rules layered on top of Shopify's defaults.
+# Source: infra/shopify/robots.txt.liquid in seo-platform.
+{%- comment -%}
+  We mirror Shopify's default group rules into each AI-bot block by
+  iterating ``robots.default_groups`` once (it has exactly one group:
+  the wildcard '*'), and reusing its rule list for each bot. This
+  keeps our AI-bot blocks in sync with whatever Shopify decides the
+  defaults should be — if Shopify adds or removes a Disallow next
+  year, our AI bots inherit the change automatically.
+{%- endcomment -%}
+{%- assign default_group = robots.default_groups | first -%}
+
+{%- for bot in ai_bots %}
+
+User-agent: {{ bot }}
+Allow: /
+{%- for rule in default_group.rules %}
+{{ rule }}
+{%- endfor -%}
+{%- if default_group.sitemap %}
+{{ default_group.sitemap }}
+{%- endif %}
+{%- endfor %}
+
+{%- comment -%}
+  Then emit Shopify's default groups verbatim — currently just the
+  wildcard '*' block governing Googlebot, Bingbot, and every crawler
+  we haven't named above. CRITICAL: omitting this would silently
+  remove those crawlers' Disallow directives entirely (covers /admin,
+  /cart, /checkout, /search etc), which is the bug an earlier version
+  of this template shipped with.
+{%- endcomment -%}
+{%- for group in robots.default_groups %}
+
+{{ group.user_agent }}
+{%- for rule in group.rules %}
+{{ rule }}
+{%- endfor -%}
+{%- if group.sitemap %}
+{{ group.sitemap }}
+{%- endif %}
+{%- endfor %}
