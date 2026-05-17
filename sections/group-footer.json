@@ -54,7 +54,9 @@
         "logo_max_limit": 120,
         "width": "wrapper--full",
         "padding_top": 50,
-        "padding_bottom": 50
+        "padding_bottom": 50,
+        "footer_social_enable": false,
+        "footer_payment_enable": false
       }
     },
     "subfooter": {
