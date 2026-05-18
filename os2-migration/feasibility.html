@@ -231,10 +231,10 @@
   <div class="inner">
     <div class="eyebrow">Feasibility brief</div>
     <h1 class="cover-title">HairMNL theme platform: readiness for the next major version</h1>
-    <p class="lede">Our online store runs on a theme platform that is two major versions behind the current release. This brief explains why we should prepare for a future upgrade now &mdash; without committing to the upgrade itself yet &mdash; and what the choice costs either way.</p>
+    <p class="lede">Our online store runs on a theme platform two major versions behind the current release. Prep work is complete and migration porting is now underway on a development theme &mdash; no customer impact, but real measurement against the live site. This brief tracks the upgrade decision: what we have learned, where the development theme stands today, and what still has to be true before we cut over.</p>
     <div class="cover-meta">
-      <p><strong>Status:</strong> Decision-support document &mdash; no upgrade is being proposed at this time.</p>
-      <p><strong>Last updated:</strong> 18 May 2026 (v1.2 &mdash; dev-theme porting underway; see slide 12 for what changed)</p>
+      <p><strong>Status:</strong> Active porting on a development theme. Live site unchanged. Cutover not authorised until parity criteria met (see slide 11).</p>
+      <p><strong>Last updated:</strong> 18 May 2026 (v1.3 &mdash; dev-theme measurements added; see slide 12 for what changed)</p>
     </div>
 
     <h3 style="margin-top:3rem;">Contents</h3>
@@ -248,7 +248,7 @@
       <li><a href="#migrate-cost"><span class="num">08</span> What a migration would cost</a></li>
       <li><a href="#benefits"><span class="num">09</span> Benefits of preparing now</a></li>
       <li><a href="#timeline"><span class="num">10</span> Timeline &amp; next steps</a></li>
-      <li><a href="#afterprep"><span class="num">11</span> What we will know after preparing</a></li>
+      <li><a href="#afterprep"><span class="num">11</span> Where the development theme stands today</a></li>
       <li><a href="#history"><span class="num">12</span> Update history</a></li>
     </ol>
   </div>
@@ -522,21 +522,67 @@
   <span class="slide-num">11 / 12</span>
   <div class="inner">
     <div class="eyebrow">Information value</div>
-    <h2>What we know now &mdash; prep phase complete</h2>
-    <p class="lede">A month ago we had guesses. Now we have numbers.</p>
+    <h2>Where the development theme stands today</h2>
+    <p class="lede">A month ago we had guesses. Now we have measurements against the live site, page by page, on a development copy that no customer can see.</p>
 
+    <h3>Page-by-page speed comparison (18 May 2026)</h3>
+    <p>Google PageSpeed Insights, n=3 per cell. Higher is better; arrows show how the development theme stacks against today's live site.</p>
+
+    <table>
+      <thead><tr><th>Page type</th><th>Live (today)</th><th>Dev theme (in progress)</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Cart</strong> (mobile)</td>
+          <td>Speed score <strong>22</strong></td>
+          <td>Speed score <strong>40</strong></td>
+          <td>&uarr; <strong>+18</strong> &mdash; dev wins decisively</td>
+        </tr>
+        <tr>
+          <td><strong>Cart</strong> (desktop)</td>
+          <td>Speed score <strong>42</strong></td>
+          <td>Speed score <strong>43</strong></td>
+          <td>= dev matches live</td>
+        </tr>
+        <tr>
+          <td><strong>Home</strong> (desktop)</td>
+          <td>Speed score <strong>56</strong></td>
+          <td>Speed score <strong>42</strong></td>
+          <td>&darr; -14 &mdash; layout-shift work in progress</td>
+        </tr>
+        <tr>
+          <td><strong>Collection</strong> (desktop)</td>
+          <td>Speed score <strong>65</strong></td>
+          <td>Speed score <strong>59</strong></td>
+          <td>&darr; -6 &mdash; product-card image work in progress</td>
+        </tr>
+        <tr>
+          <td><strong>Product page</strong> (desktop)</td>
+          <td>Speed score <strong>72</strong></td>
+          <td>Speed score <strong>58</strong></td>
+          <td>&darr; -14 &mdash; image gallery layout work in progress</td>
+        </tr>
+        <tr>
+          <td><strong>Product page</strong> (mobile)</td>
+          <td>Speed score <strong>54</strong></td>
+          <td>Speed score <strong>21</strong></td>
+          <td>&darr; -33 &mdash; <strong>highest-priority fix in flight</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>What we have learned</h3>
     <table>
       <thead><tr><th>Question</th><th>Before prep</th><th>What we know now</th></tr></thead>
       <tbody>
         <tr>
           <td>How much custom code would we need to port?</td>
           <td>&ldquo;Some.&rdquo;</td>
-          <td>About 19,000 lines across 75 files. Roughly a fifth can be dropped, two-thirds need a straightforward port, and the remainder needs a rebuild.</td>
+          <td>About 19,000 lines across 75 files. Of that, roughly a fifth can be dropped, two-thirds need a straightforward port, the rest needs a rebuild. Of our 9,118-line custom JavaScript bundle, <strong>~94% turned out to be unused vendor code</strong> that can come out entirely &mdash; the actual hand-written behaviour is closer to 750 lines.</td>
         </tr>
         <tr>
           <td>How much speed would we gain from a modern theme?</td>
           <td>&ldquo;Probably a lot.&rdquo;</td>
-          <td>The clean-room install of the modern theme was ~90% faster on main-thread blocking and had zero layout shift. <strong>However</strong>, porting our custom code on top is where the gain is won or lost. As of 18 May, the development theme is faster than live on the cart page (mobile speed score 40 vs 22) but still slower on home and product pages while we work through the fixes. Real-user impact is verified only after publishing &mdash; lab numbers are directional only.</td>
+          <td>The clean install of the modern theme was ~90% faster on main-thread blocking and had zero layout shift. Porting our customisations on top is where the gain is won or lost &mdash; an early attempt that loaded our legacy 455&nbsp;KB JavaScript bundle for visual continuity erased the speed advantage entirely. <strong>That bundle has since been removed from the development theme.</strong></td>
         </tr>
         <tr>
           <td>Which apps would re-integrate cleanly?</td>
@@ -551,13 +597,18 @@
         <tr>
           <td>What does a migration project actually look like?</td>
           <td>A vague 3&ndash;6 weeks.</td>
-          <td>A 5-week sprint &mdash; 3.5&ndash;5.5 person-weeks of work &mdash; with a written, phase-by-phase playbook including rollback steps.</td>
+          <td>A 5-week sprint &mdash; 3.5&ndash;5.5 person-weeks of work &mdash; with a written, phase-by-phase playbook including rollback steps. Active porting work is currently in week 2 of that sprint, on a development theme not visible to customers.</td>
+        </tr>
+        <tr>
+          <td>What still has to happen before we can cut over?</td>
+          <td><em>(Not asked &mdash; this is the new question.)</em></td>
+          <td>Sixteen tracked fixes remain. The largest single one is a layout-shift fix on the mobile product page (the page type with the worst current gap). After that: image-gallery layout reservation, modern app-block migration for ten ready-to-go apps, and a homepage main-thread investigation. We re-measure after each fix.</td>
         </tr>
       </tbody>
     </table>
 
     <div class="callout">
-      <p>None of this commits us to migrating. It commits us to being ready &mdash; with budget, target, and playbook in hand &mdash; the moment a trigger fires.</p>
+      <p><strong>Cutover criteria.</strong> The development theme has to match or exceed the live site speed score on home, collection, product page, cart, and brand-collection &mdash; on both mobile and desktop &mdash; before we authorise pushing it live. We are partway there: cart is already past the bar; the others need the fixes in flight.</p>
     </div>
   </div>
 </section>
@@ -569,6 +620,11 @@
     <div class="eyebrow">Changelog</div>
     <h2>Update history</h2>
     <p class="lede">This document refreshes as prep-phase findings come in. The URL stays the same; the content gets sharper.</p>
+
+    <div class="history-entry">
+      <div class="history-date">18 May 2026</div>
+      <div class="history-note"><strong>v1.3</strong> &mdash; Slide 11 rewritten with concrete page-by-page measurements. The development theme has been benchmarked against the live site across home, collection, product page, cart, and brand-collection &mdash; both mobile and desktop. Headline numbers: <strong>cart wins decisively on mobile (+18 speed score)</strong>; product page mobile is the largest remaining gap (-33) and is the highest-priority fix in flight. Sixteen tracked fixes remain, organised in waves. Slide also introduces explicit cutover criteria (parity across all five page types on both viewports). Cover page status line changed from &ldquo;no upgrade is being proposed&rdquo; to &ldquo;active porting on a development theme &mdash; live site unchanged.&rdquo;</div>
+    </div>
 
     <div class="history-entry">
       <div class="history-date">18 May 2026</div>
