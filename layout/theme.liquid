@@ -770,6 +770,63 @@
       })();
     </script>
 
+    {%- if request.path == '/cart' -%}
+    {%- comment -%}
+      tyio.1 (bd hairmnl-theme-njj1): Defer LoyaltyLion init on /cart until
+      first user interaction. The createElement override intercepts
+      loyaltylion.net script creation, which is triggered by the existing
+      llDefer queue flush in snippets/loyaltylion.liquid at ~8s or on
+      interaction. Without this guard, LoyaltyLion's ~538ms CPU init +
+      post-load API callback (~400ms at t=28-35s) lands in the user
+      interaction window on /cart, causing 15.9% poor INP. This override
+      blocks the scripts from loading at all until the user clicks, taps,
+      or presses a key on /cart.
+    {%- endcomment -%}
+    <script>
+    (function() {
+      var BLOCKED = ['loyaltylion.net'];
+      var _released = false;
+      var _deferred = [];
+      var _origCE = document.createElement.bind(document);
+      document.createElement = function(tag) {
+        var el = _origCE(tag);
+        if (tag.toLowerCase() === 'script') {
+          var srcDesc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src');
+          Object.defineProperty(el, 'src', {
+            configurable: true,
+            get: function() { return srcDesc.get.call(this); },
+            set: function(v) {
+              if (v && !_released) {
+                var s = String(v);
+                if (BLOCKED.some(function(p) { return s.indexOf(p) !== -1; })) {
+                  _deferred.push({el: this, src: s});
+                  return;
+                }
+              }
+              srcDesc.set.call(this, v);
+            }
+          });
+        }
+        return el;
+      };
+      function release() {
+        if (_released) return;
+        _released = true;
+        document.createElement = _origCE;
+        _deferred.forEach(function(item) {
+          var s = _origCE('script');
+          s.src = item.src;
+          document.head.appendChild(s);
+        });
+        _deferred = [];
+      }
+      ['click','touchstart','keydown'].forEach(function(ev) {
+        document.addEventListener(ev, release, {once: true, passive: true});
+      });
+    })();
+    </script>
+    {%- endif -%}
+
     {% include "loyaltylion" %}
 
     {%- comment -%}
