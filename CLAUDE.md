@@ -5,6 +5,50 @@
 - **Live theme**: `131664707683` (" Pipeline 6 - Fix share image")
 - **Draft theme**: `140785582179` (Claude Code draft)
 
+## START HERE: Migration Contract (read before touching layout / sections / snippets)
+
+This repo runs **two parallel streams of work** on the same `main` branch:
+
+| Stream | Scope | bd label |
+|---|---|---|
+| LIVE | Pipeline 6.1.3 storefront optimization (CWV / perf / bugs) | `stream:a` |
+| MIGRATION | Pipeline 8.1.1 port (`bd hairmnl-theme-2i8b` epic) | `stream:b` |
+| INTERFACE | Touches both — coordinated review required | `stream:both` |
+
+**Full contract: `MIGRATION-CONTRACT.md`** at the repo root. It governs
+how refactors in one stream avoid silently undoing work in the other.
+
+The contract enforces three guards:
+
+1. **CI lint** — `scripts/check-snippet-wiring.py` catches the
+   "file kept, callsite dropped" regression class (this is what caused
+   bd `yxte` on 2026-05-18 — a P4 refactor silently disabled 23 CLS fixes
+   + the entire RUM data pipeline). Runs in `.github/workflows/snippet-wiring.yml`
+   and as a `.githooks/pre-push` hook.
+2. **bd label discipline** — every issue gets `stream:a`, `stream:b`, or
+   `stream:both` so cross-stream changes get the right review.
+3. **PR "Wiring delta" table** — MIGRATION refactors that touch
+   `layout/theme.liquid` (or any file with `{% render %}` callsites) must
+   list every callsite and its disposition (KEPT / DEFERRED-with-bd-id /
+   RETIRED-to-TAE).
+
+### Pre-push hook setup (one-time per clone)
+
+```bash
+git config core.hooksPath .githooks
+```
+
+The hook runs `scripts/check-snippet-wiring.py` automatically before every
+push. Bypassing with `--no-verify` requires explicit user approval.
+
+### Snippets known to be dormant during migration
+
+See `os2-migration/intentionally-orphan.txt` — each entry has a bd-id and
+`target_wire_by` date. Entries past their date emit a STALE warning
+(weekly triage recommended).
+
+---
+
 ## Pipeline 6 customization freeze — ask before adding bespoke code
 
 The store is on Pipeline 6.1.3 (transitional OS 2.0). A future migration to Pipeline 8.1.1 is on the trigger watchlist at `os2-migration/migration-triggers.md` (quarterly review). Every new Pipeline-6-specific customization is migration debt — porting cost on day-zero of any future migration.

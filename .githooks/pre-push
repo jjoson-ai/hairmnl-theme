@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Pre-push hook — enforces MIGRATION-CONTRACT.md.
+#
+# Install once per clone:
+#   git config core.hooksPath .githooks
+#
+# What it checks (currently 1 thing, will grow):
+#   1. scripts/check-snippet-wiring.py — catches dropped {% render %} callsites
+#      (the yxte 2026-05-18 regression class).
+#
+# To bypass for an emergency push (NOT RECOMMENDED — coordinator review required):
+#   git push --no-verify
+#
+# But you should never need to. If the lint fails, fix the underlying issue.
+
+set -euo pipefail
+
+REPO="$(git rev-parse --show-toplevel)"
+
+# 1) Snippet wiring lint
+if [ -x "$REPO/scripts/check-snippet-wiring.py" ]; then
+    echo "→ Running scripts/check-snippet-wiring.py …" >&2
+    if ! python3 "$REPO/scripts/check-snippet-wiring.py" >&2; then
+        echo "" >&2
+        echo "✗ Pre-push: snippet wiring lint failed." >&2
+        echo "  See MIGRATION-CONTRACT.md for the rules." >&2
+        echo "  Run locally for details: python3 scripts/check-snippet-wiring.py" >&2
+        exit 1
+    fi
+fi
+
+# Add additional checks here as the contract grows.
+# Examples for future:
+#   - scripts/check-overlay-css.py  (already runs in CI; could mirror locally)
+#   - shopify theme check (Liquid lint)
+#   - visual diff for refactor commits
+
+exit 0

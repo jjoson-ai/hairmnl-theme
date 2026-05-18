@@ -1,0 +1,78 @@
+name: Snippet wiring lint
+
+# Catches the yxte (2026-05-18) regression class: a refactor that drops a
+# {% render %} callsite while keeping the snippet file on disk, silently
+# disabling whatever the snippet did. See MIGRATION-CONTRACT.md.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'layout/**/*.liquid'
+      - 'sections/**/*.liquid'
+      - 'snippets/**/*.liquid'
+      - 'templates/**/*.liquid'
+      - 'blocks/**/*.liquid'
+      - 'assets/**/*.liquid'
+      - 'os2-migration/intentionally-orphan.txt'
+      - 'scripts/check-snippet-wiring.py'
+      - '.github/workflows/snippet-wiring.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'layout/**/*.liquid'
+      - 'sections/**/*.liquid'
+      - 'snippets/**/*.liquid'
+      - 'templates/**/*.liquid'
+      - 'blocks/**/*.liquid'
+      - 'assets/**/*.liquid'
+      - 'os2-migration/intentionally-orphan.txt'
+      - 'scripts/check-snippet-wiring.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run snippet wiring lint
+        run: |
+          set -e
+          python3 scripts/check-snippet-wiring.py
+          echo ""
+          echo "::notice::Lint passed. See MIGRATION-CONTRACT.md for the rules."
+
+      - name: Failure guidance
+        if: failure()
+        run: |
+          cat <<'EOF'
+          ::error::Snippet wiring lint failed.
+
+          One or more files in `snippets/*.liquid` are not rendered or
+          included anywhere in the codebase. This is the exact class of
+          regression that caused bd hairmnl-theme-yxte on 2026-05-18 — a
+          refactor dropped a {% render %} callsite, silently disabling
+          the snippet's effect on live.
+
+          To fix:
+            1. Re-add the {% render '<name>' %} callsite in the right
+               file (probably layout/theme.liquid or a section), OR
+            2. Delete the snippet if it's truly dead, OR
+            3. If the snippet is intentionally orphan during the P4 → P8
+               migration, add it to os2-migration/intentionally-orphan.txt
+               with a bd-id and a target_wire_by date.
+
+          Run locally: python3 scripts/check-snippet-wiring.py
+
+          Read: MIGRATION-CONTRACT.md
+          EOF
+          exit 1

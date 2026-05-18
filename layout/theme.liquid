@@ -349,6 +349,20 @@
 
   <!-- Shopify app scripts =========================================================== -->
   {{ content_for_header }}
+
+  {%- comment -%} Core Web Vitals → GA4 RUM reporter. Captures LCP/CLS/INP/
+    FCP/TTFB + attribution (debug_target selector for shifts/interactions)
+    on every pageview. Powers the dashboard's RUM section and bd-issue
+    debugging.
+
+    2026-05-18 hairmnl-theme-yxte audit: discovered this snippet was also
+    orphaned by the same P4 wave-a refactor (0cd30cf) that dropped
+    css-overrides. Without it, GA4 receives only Shopify-native CWV
+    sampling (no custom dimensions, no debug_target attribution) — the
+    perf dashboard's top_inp_targets + every CLS investigation depends on
+    these custom events. Wiring back here so it loads on every pageview;
+    the snippet itself self-defers via requestIdleCallback. {%- endcomment -%}
+  {% render 'web-vitals-reporter' %}
 </head>
 
 
