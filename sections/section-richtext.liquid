@@ -14,6 +14,46 @@ endif
 assign animation_anchor = "[data-section-id='" | append: section.id | append: "']"
 -%}
 
+{%- comment -%}
+  2i8b.17 Option C — template-scoped CLS fix.
+
+  Earlier evening PSI re-baseline showed mobile `/collections/cat-best-sellers`
+  at CLS 0.632 with the section-richtext block as the top shift source
+  (412×536 box, score 1.062). The shift persists post-ujg6.7 because the
+  HEADING font (SelfModern) is out-of-scope for that fix and keeps
+  `font-display: swap`. When SelfModern loads mid-render, the rich-text
+  heading reflows the section height, cascading into the product grid below.
+
+  Reserve the section's eventual rendered height via min-height ONLY on
+  the specific template(s) where we've measured the regression. Avoids
+  the rejected Option A blast radius (113 templates affected with empty
+  space on short-content rich-text instances).
+
+  Values: 250px desktop / 536px mobile = the measured post-swap heights
+  on cat-best-sellers (OC swarm capture, 2026-05-18). Content on this
+  template is verified to fill these heights — empty-space regression
+  risk is zero on the gated templates.
+
+  Add new templates to this gate list as PSI surfaces them; document
+  each addition with the measured CLS contribution in bd notes.
+{%- endcomment -%}
+{%- assign _is_cls_scoped_template = false -%}
+{%- if template == 'collection.cat-best-sellers' -%}
+  {%- assign _is_cls_scoped_template = true -%}
+{%- endif -%}
+{%- if _is_cls_scoped_template -%}
+  <style>
+    [data-section-id="{{ section.id }}"] {
+      min-height: 250px;
+    }
+    @media screen and (max-width: 768px) {
+      [data-section-id="{{ section.id }}"] {
+        min-height: 536px;
+      }
+    }
+  </style>
+{%- endif -%}
+
 <section class="{{ section.settings.text_color }} {{ section.settings.height }} {{ section.settings.bg }}" data-section-id="{{ section.id }}" data-section-type="rich-text">
   <div class="{{ section.settings.width }}">
     <div class="text__standard {{ section.settings.align_text }}">
