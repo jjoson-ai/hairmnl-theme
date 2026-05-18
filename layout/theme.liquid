@@ -840,11 +840,187 @@
     })();
     </script>
 
+  {%- comment -%}
+    Reamaze defer-on-interaction guard (bd hw7 + meu, 2026-05-14).
+    Re-ported from Pipeline 6 commit d6efd9e onto P8 structure per bd fsaa.
+    Intercepts cdn.reamaze.com scripts emitted by content_for_header,
+    defers them until user interaction. Six triggers, KILL_SWITCH for
+    single-line rollback, GA4 telemetry on load path + latency.
+    Deferred scripts: ~212 KB / ~255ms scripting saved per non-interaction
+    pageload.
+  {%- endcomment -%}
+  <script>
+  (function() {
+    var KILL_SWITCH = false;
+    if (KILL_SWITCH) return;
+
+    var BLOCKED = ['cdn.reamaze.com'];
+    var IDLE_MS = 5000;
+    var SCROLL_PCT = 0.5;
+    var AUTO_MS = 60000;
+    var HOVER_PX = 100;
+
+    var disarmed = false;
+    var deferred = [];
+    var triggerAt = null;
+
+    function dl(name, payload) {
+      (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: name }, payload || {}));
+    }
+    function isBlocked(src) {
+      return src && BLOCKED.some(function(o) { return String(src).indexOf(o) !== -1; });
+    }
+
+    // MutationObserver fallback — catches scripts injected via content_for_header
+    var mo = new MutationObserver(function(muts) {
+      if (disarmed) return;
+      muts.forEach(function(m) {
+        m.addedNodes.forEach(function(n) {
+          if (n.nodeName === 'SCRIPT' && isBlocked(n.src)) {
+            var origSrc = n.src;
+            n.type = 'javascript/blocked';
+            n.removeAttribute('src');
+            n.dataset.deferredSrc = origSrc;
+            deferred.push(origSrc);
+          }
+        });
+      });
+    });
+    mo.observe(document.documentElement, { childList: true, subtree: true });
+
+    // createElement override — belt-and-suspenders for dynamic script creation
+    var _ce = document.createElement.bind(document);
+    document.createElement = function(tag) {
+      var el = _ce.apply(document, arguments);
+      if (typeof tag === 'string' && tag.toLowerCase() === 'script') {
+        var setSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').set;
+        Object.defineProperty(el, 'src', {
+          configurable: true,
+          get: function() { return Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').get.call(this); },
+          set: function(v) {
+            if (!disarmed && isBlocked(v)) { deferred.push(String(v)); return; }
+            setSrc.call(this, v);
+          }
+        });
+      }
+      return el;
+    };
+
+    // Engagement tracking — after Reamaze SDK loads
+    function setupEngagementTracking() {
+      var openTracked = false;
+      var msgCount = 0;
+      var eo = new MutationObserver(function() {
+        if (!openTracked && document.querySelector('#reamaze-widget-content[class*="open"], #reamaze-widget[class*="open"], .reamaze-widget-open')) {
+          openTracked = true;
+          dl('reamaze_widget_open', {});
+        }
+        var msgs = document.querySelectorAll('[class*="reamaze"][class*="customer"], [class*="reamaze"][class*="visitor"]');
+        if (msgs.length > msgCount) {
+          msgCount = msgs.length;
+          dl('reamaze_widget_message_sent', {});
+        }
+      });
+      eo.observe(document.body, { attributes: true, subtree: true, childList: true });
+    }
+
+    // Disarm — load all deferred Reamaze scripts
+    function disarm(path) {
+      if (disarmed) return;
+      disarmed = true;
+      triggerAt = Date.now();
+      dl('reamaze_load_path', { path: path });
+      mo.disconnect();
+      var ph = document.getElementById('reamaze-defer-placeholder');
+      if (ph) ph.hidden = true;
+      deferred.forEach(function(src, i) {
+        var s = _ce('script');
+        s.async = true;
+        if (i === 0) {
+          s.addEventListener('load', function() {
+            dl('reamaze_load_latency_ms', { ms: Date.now() - triggerAt });
+            setupEngagementTracking();
+          });
+        }
+        s.src = src;
+        document.head.appendChild(s);
+      });
+    }
+
+    // Auto-hide placeholder when real Reamaze widget loads (belt-and-suspenders)
+    var phWatcher = new MutationObserver(function() {
+      if (document.querySelector('#reamaze-widget, #reamaze-widget-content, #reamaze-widget-label')) {
+        var ph = document.getElementById('reamaze-defer-placeholder');
+        if (ph) ph.hidden = true;
+        phWatcher.disconnect();
+      }
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      phWatcher.observe(document.body, { childList: true, subtree: true });
+    });
+
+    // ---- TRIGGERS ----
+
+    // 1. Placeholder click
+    document.addEventListener('click', function(e) {
+      var ph = e.target.closest && e.target.closest('#reamaze-defer-placeholder');
+      if (ph) { e.preventDefault(); disarm('placeholder_click'); return; }
+      var hot = e.target.closest && e.target.closest('[data-reamaze-trigger]');
+      if (hot) {
+        var mode = hot.getAttribute('data-reamaze-trigger') || 'warm';
+        if (mode === 'open') e.preventDefault();
+        disarm('hot_path_attribute');
+        if (mode === 'open') {
+          var t = setInterval(function() {
+            if (window._support && typeof window._support.run === 'function') {
+              try { window._support.run({ action: 'show' }); } catch(_) {}
+              clearInterval(t);
+            }
+          }, 100);
+          setTimeout(function() { clearInterval(t); }, 10000);
+        }
+      }
+    });
+
+    // 2. Any click after 5 seconds
+    setTimeout(function() {
+      if (disarmed) return;
+      var h = function() { disarm('any_click_after_5s'); document.removeEventListener('click', h, true); };
+      document.addEventListener('click', h, true);
+    }, IDLE_MS);
+
+    // 3. Scroll past 50% of page height
+    var sh = function() {
+      var y = window.scrollY || 0;
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      if (h > 0 && y / h >= SCROLL_PCT) { disarm('scroll_50'); window.removeEventListener('scroll', sh); }
+    };
+    window.addEventListener('scroll', sh, { passive: true });
+
+    // 4. Pointer hover near chat bubble (desktop only)
+    if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      var hh = function(e) {
+        var bx = window.innerWidth - 52;
+        var by = window.innerHeight - 110;
+        if (Math.hypot(e.clientX - bx, e.clientY - by) < HOVER_PX) {
+          disarm('pointer_hover');
+          document.removeEventListener('mousemove', hh);
+        }
+      };
+      document.addEventListener('mousemove', hh);
+    }
+
+    // 5. Auto-disarm at 60 seconds
+    setTimeout(function() { if (!disarmed) disarm('auto_60s'); }, AUTO_MS);
+  })();
+  </script>
+
     <!-- Shopify app scripts =========================================================== -->
     {{ content_for_header }}
 
     <link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}"></noscript>
+    {% render 'reamaze-placeholder' %}
     {%- comment -%}
       AOS animations CSS extracted 2026-04-27 from theme.css (37KB,
       8.4% of theme.css, 252 rules). Used on 125 JSON templates (blog,
