@@ -296,3 +296,33 @@ The ujg6.28 investigation does NOT block Phase B.2. The bundle work proceeds as 
 3. Will surface still-firing tags as part of the migration audit
 
 `2i8b.15` is closing as wontfix-deferred-to-ujg6.12.
+
+---
+
+## Klaviyo onsite audit — 2i8b.16 CC-side investigation (2026-05-18)
+
+### Headline
+
+**Klaviyo loader is `async` ✓** — does not block HTML parse. The +19ms P6→P8 mainThreadTime delta is **feature-enable-driven, not load-mode-driven**. Cited bundles (back-in-stock + signup-forms) are webpack chunks loaded by klaviyo.js at runtime, triggered by admin-side feature toggles.
+
+### TAE app block emits (verbatim from live HTML)
+
+```html
+<script async src="https://static.klaviyo.com/onsite/js/JAws9h/klaviyo.js?company_id=JAws9h"></script>
+<script>!function(){...}</script>  <!-- Proxy queue stub, <1KB inline -->
+<script>window.klaviyoReviewsProductDesignMode = false</script>
+```
+
+### Why operator-side admin audit is the right lever
+
+- Bundle load mode is internal to klaviyo.js — theme/site has no direct control.
+- The only operator action available is toggling features on/off in Klaviyo admin.
+- Defer-on-interaction (the Reamaze pattern from `fsaa`) would break first-visit signup form display — a marketing/conversion regression. Don't apply.
+
+### Operator action items (admin-only)
+
+1. Klaviyo admin → Signup Forms → audit active forms; archive stale.
+2. Klaviyo admin → Onsite → Back in Stock → confirm intentional or disable.
+3. Klaviyo admin → Reviews → confirm enabled/disabled state.
+
+`2i8b.16` closed as CC-side audit complete; admin audit deferred to operator.

@@ -83,8 +83,6 @@
 {%- elsif grid_width_large == 'large-up--one-fifth' -%}
   {%- assign product_count = 50 -%}
 {%- endif -%}
-{%- paginate collection.products by product_count -%}
-
 {%- assign collection_sidebar = false -%}
 {%- if section.settings.collection_custom_nav_list != blank or section.settings.collection_standard_nav or section.settings.collection_type_nav or section.settings.collection_vendor_nav or section.settings.collection_tag_nav -%}
   {%- assign collection_sidebar = true -%}
@@ -95,6 +93,12 @@
   {%- assign brand_title = collection.title -%}
 {%- endif -%}
 
+{%- if request.design_mode or request.page_type == null -%}
+  {%- comment -%}
+    Theme Editor preview OR Section Rendering API request (?section_id=...):
+    render the full section normally.
+  {%- endcomment -%}
+{%- paginate collection.products by product_count -%}
 <div data-section-id="{{ section.id }}" data-section-type="collection">
     
   <div class="collection collection-branded">
@@ -897,6 +901,839 @@
     </div>
   </div>
 </div>
+
+{%- else -%}
+  {%- comment -%}
+    Normal pageload: emit a lightweight placeholder that IntersectionObserver
+    will replace with the real section content when it approaches the viewport.
+    <noscript> fallback ensures crawlers and non-JS users see the content.
+  {%- endcomment -%}
+  <div
+    data-lazy-render
+    data-lazy-url="/?section_id={{ section.id }}"
+    data-section-id="{{ section.id }}"
+    data-section-type="collection"
+    style="min-height: 600px;">
+    <!-- placeholder — populated by hairmnl-common.js section 8 IO -->
+  </div>
+  <noscript>
+{%- paginate collection.products by product_count -%}
+<div data-section-id="{{ section.id }}" data-section-type="collection">
+    
+  <div class="collection collection-branded">
+    {% unless collection.image %}
+      <div class="wrapper collection-title text-center color-text {{ section.settings.text_color }}">
+        <div class="grid">
+          <h1 class="title grid__item one-whole">{{ collection.title }}</h1>
+          {% if collection.description.size > 0 %}
+            <div class="collection-text--body rte grid__item large-up--three-fifths push--large-up--one-fifth">
+              <p>{{ collection.description }}</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endunless %}
+    <div class="wrapper">
+      {% if section.settings.collection_sorting or collection_sidebar %}
+        {% if collection_sidebar %}
+          <div class="text-left">
+            <button id="toggleFilters" class="left btn btn--clear uppercase toggle-filters">
+              <img src="{{ 'nav.svg' | asset_url }}" width="20" height="20" alt="{{ 'collections.sidebar.more' | t }}"/>
+            </button>
+          </div>
+        {% endif %}
+        {% if section.settings.collection_sorting %}
+          <div class="row text-right collection__sort">
+            {% render 'collection-sorting' %}
+          </div>
+        {% endif %}
+        <hr class="hr--small">
+      {% endif %}
+      <div class="page-margin grid collection-sidebar">
+        {% if collection_sidebar %}
+          <div class="grid__item large-up--one-quarter collection-filters" id="collectionFilters">
+            {% comment %}
+              {% if collection.image %}
+                <div class="brand-logo desktop-only">
+                  <img src="{{ collection.image | img_url: "500x" }}" alt="{{ collection.title }} Logo">
+                </div>
+              {% endif %}
+            {% endcomment %}
+            {% render 'collections-sidebar' %}
+          </div>
+        {% endif %}
+        {% if collection_sidebar %}
+          <div class="grid__item large-up--three-quarters">
+        {% else  %}
+          <div class="grid__item one-whole">
+        {% endif %}
+          <div class="page-header text-center">
+            {% if section.settings.brand_logo %}
+              <div class="brand-logo">
+                <img src="{{ section.settings.brand_logo | img_url: '500x' }}" width="{{ section.settings.brand_logo.width }}" height="{{ section.settings.brand_logo.height }}" alt="{{ brand_title }} Logo">
+              </div>
+            {% endif %}
+
+            <h1 class="page_header__title">
+              {% if section.settings.brand_page_header_title != blank %}
+                {{ section.settings.brand_page_header_title }}
+              {% else %}
+                {{ collection.title }}
+              {% endif %}
+            </h1>
+
+            {% if section.settings.brand_page_header_subtitle != blank %}
+              <p class="page_header__subtitle">{{ section.settings.brand_page_header_subtitle }}</p>
+            {% else %}
+              <p>{{ collection.description }}</p>
+            {% endif %}
+
+
+            {% if section.settings.brand_featured_image %}
+              {% assign brand_featured_image = section.settings.brand_featured_image %}
+              <div class="collection-brand-image preventOverflow" id="FeaturedImage-{{ section.id }}">
+                {% if section.settings.brand_featured_image_link != blank %}
+                  <a href="{{ section.settings.brand_featured_image_link }}">
+                    <img src="{{ brand_featured_image | img_url: '1400x' }}" srcset="{{ brand_featured_image | img_url: '540x' }} 540w, {{ brand_featured_image | img_url: '720x' }} 720w, {{ brand_featured_image | img_url: '1080x' }} 1080w, {{ brand_featured_image | img_url: '1400x' }} 1400w" sizes="100vw" width="{{ brand_featured_image.width }}" height="{{ brand_featured_image.height }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
+                  </a>
+                {% else %}
+                  <img src="{{ brand_featured_image | img_url: '1400x' }}" srcset="{{ brand_featured_image | img_url: '540x' }} 540w, {{ brand_featured_image | img_url: '720x' }} 720w, {{ brand_featured_image | img_url: '1080x' }} 1080w, {{ brand_featured_image | img_url: '1400x' }} 1400w" sizes="100vw" width="{{ brand_featured_image.width }}" height="{{ brand_featured_image.height }}" alt="{{ brand_featured_image.alt | default: collection.title | escape }}" class="responsive-wide-image" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}/>
+                {% endif %}
+              </div>
+            {% endif %}
+
+            {% if section.settings.brand_featured_text %}
+              <div class="collection-text--body rte">
+                <div class="h4--body rte brand-featured-text">{{ section.settings.brand_featured_text }}</div>
+              </div>
+            {% endif %}
+
+            {% if section.settings.brand_description_html %}
+              <div class="collection-text--body rte brand-description">
+                {{ section.settings.brand_description_html }}
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Featured Collections -->
+          {% assign featured_collection_1_handle = section.settings.featured_collection_1 %}
+          {% assign featured_collection_2_handle = section.settings.featured_collection_2 %}
+          {% assign featured_collection_3_handle = section.settings.featured_collection_3 %}
+          {% assign featured_collection_handles = featured_collection_1_handle | append: ", " | append: featured_collection_2_handle | append: ", " | append: featured_collection_3_handle | split: ", " %}
+
+          {% unless featured_collection_handles.size == 0 %}
+            <hr>
+            <div class="featured-collections">
+              <div class="section-header text-center">
+                <h2 class="h2--body rte section-header__title">Featured Collections</h2>
+                {% unless section.settings.featured_collection_section_description == blank %}
+                  <p class="section-header__description">{{ section.settings.featured_collection_section_description }}</p>
+                {% endunless %}
+              </div>
+
+              <div class="grid {% if settings.image_autoheight_enable %} image_autoheight_enable{% endif %}">
+                {% unless collections[featured_collection_1_handle] == blank %}
+                  {% assign featured_collection_1 = collections[featured_collection_1_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item featured-collection">
+                    <a href="{{ featured_collection_1.url }}">
+                      {% if featured_collection_1.image %}
+                        <img src="{{ featured_collection_1.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_1.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <h6 class="featured-collection__title">{{ featured_collection_1.title }}</h6>
+                      {% if section.settings.featured_collection_1_subtitle %}
+                        <p class="featured-collection__subtitle">{{ section.settings.featured_collection_1_subtitle }}</p>
+                      {% endif %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[featured_collection_2_handle] == blank %}
+                  {% assign featured_collection_2 = collections[featured_collection_2_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item featured-collection">
+                    <a href="{{ featured_collection_2.url }}">
+                      {% if featured_collection_2.image %}
+                        <img src="{{ featured_collection_2.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_2.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="featured-collection__title">{{ featured_collection_2.title }}</p>
+                      {% unless section.settings.featured_collection_2_subtitle == blank %}
+                        <p class="featured-collection__subtitle">{{ section.settings.featured_collection_2_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[featured_collection_3_handle] == blank %}
+                  {% assign featured_collection_3 = collections[featured_collection_3_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item featured-collection">
+                    <a href="{{ featured_collection_3.url }}">
+                      {% if featured_collection_3.image %}
+                        <img src="{{ featured_collection_3.image | img_url: '700x700', crop: 'center' }}" width="700" height="700" alt="{{ featured_collection_3.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="featured-collection__title">{{ featured_collection_3.title }}</p>
+                      {% unless section.settings.featured_collection_3_subtitle == blank %}
+                        <p class="featured-collection__subtitle">{{ section.settings.featured_collection_3_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+              </div>
+
+            </div>
+          {% endunless %}
+
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when "section_header" %}
+              <!-- Section Heading -->
+              <hr>
+              <div class="section-header text-center">
+                <h2 class="h2--body rte section-header__title">{{ block.settings.section-heading }}</h2>  
+                  <div class="text-center"><p>{{ block.settings.section-sub-heading }}</p></div>
+              </div>
+            
+              {% when "3x1_box_right_content" %}
+              <!-- 3X1 content & media -->
+              <div class="grid 3x1_box_right_content">
+                  <div class="mobile-only grid__item">
+                    <div>{{ block.settings.right_text_html }}</div>
+                  </div>
+                  <div class="grid__item small--one-half medium--one-half large-up--one-third product-grid-item">
+                    <img src="{{ block.settings.left_media_html | img_url: '1800x' }}" width="{{ block.settings.left_media_html.width }}" height="{{ block.settings.left_media_html.height }}" alt="{{ block.settings.left_media_html_alt }}">
+                  </div>
+                  <div class="grid__item small--one-half medium--one-half large-up--one-third product-grid-item no-pad-left pad-right-30">
+                    <img src="{{ block.settings.middle_media_html | img_url: '1800x' }}" width="{{ block.settings.middle_media_html.width }}" height="{{ block.settings.middle_media_html.height }}" alt="{{ block.settings.middle_media_html_alt }}">
+                  </div>
+                  <div class="grid__item small--one-half medium--one-half large-up--one-third tagged no-pad-left">
+                      <div class="desktop-only">{{ block.settings.right_text_html }}</div>
+                  </div>
+              </div>
+            
+              {% when "3x3_grid_tile" %}
+              <!-- 3X3 Grid -->
+              <div class="grid 3x3_grid_tile margin-bottom-20 collection-branded">
+                {% if block.settings.product_image_1 != "" %}
+                <div class="grid__item small--one-whole medium--one-third large-up--one-third product-grid-item">
+                  <img src="{{ block.settings.product_image_1 | img_url: '800x', crop: 'center' }}" width="{{ block.settings.product_image_1.width }}" height="{{ block.settings.product_image_1.height }}" alt="{{ block.settings.product_image_1_alt }}">
+                  <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_1 }}</div>
+                  {% unless block.settings.link_url_1 == blank %}
+                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a>
+                  {% endunless %}
+                </div>
+                {% endif %}
+                {% if block.settings.product_image_2 != "" %}
+                <div class="grid__item small--one-whole medium--one-third large-up--one-third product-grid-item">
+                  <img src="{{ block.settings.product_image_2 | img_url: '800x', crop: 'center' }}" width="{{ block.settings.product_image_2.width }}" height="{{ block.settings.product_image_2.height }}" alt="{{ block.settings.product_image_2_alt }}">
+                  <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_2 }}</div>
+                  {% unless block.settings.link_url_2 == blank %}
+                  <a href="{{ block.settings.link_url_2 }}"><h5>{{ block.settings.link_label_2 }}</h5></a>
+                  {% endunless %}
+                </div>
+                {% endif %}
+                {% if block.settings.product_image_3 != "" %}
+                <div class="grid__item small--one-whole medium--one-third large-up--one-third product-grid-item">
+                  <img src="{{ block.settings.product_image_3 | img_url: '800x', crop: 'center' }}" width="{{ block.settings.product_image_3.width }}" height="{{ block.settings.product_image_3.height }}" alt="{{ block.settings.product_image_3_alt }}">
+                  <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_3 }}</div>
+                  {% unless block.settings.link_url_3 == blank %}
+                  <a href="{{ block.settings.link_url_3 }}"><h5>{{ block.settings.link_label_3 }}</h5></a>
+                  {% endunless %}
+                </div>
+                {% endif %}
+            </div>
+            
+            {% when "4x3_grid_tile" %}
+              <!-- 4X3 Grid -->
+              <div class="grid 3x3_grid_tile margin-bottom-20 collection-branded">
+                {% if block.settings.product_image_1 != "" %}
+                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">
+                  <img src="{{ block.settings.product_image_1 | img_url: '800x', crop: 'center' }}" width="{{ block.settings.product_image_1.width }}" height="{{ block.settings.product_image_1.height }}" alt="{{ block.settings.product_image_1_alt }}">
+                  <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_1 }}</div>
+                  {% unless block.settings.link_url_1 == blank %}
+                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a>
+                  {% endunless %}
+                </div>
+                {% endif %}
+                {% if block.settings.product_image_2 != "" %}
+                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">
+                  <img src="{{ block.settings.product_image_2 | img_url: '800x', crop: 'center' }}" width="{{ block.settings.product_image_2.width }}" height="{{ block.settings.product_image_2.height }}" alt="{{ block.settings.product_image_2_alt }}">
+                  <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_2 }}</div>
+                  {% unless block.settings.link_url_2 == blank %}
+                  <a href="{{ block.settings.link_url_2 }}"><h5>{{ block.settings.link_label_2 }}</h5></a>
+                  {% endunless %}
+                </div>
+                {% endif %}
+                {% if block.settings.product_image_3 != "" %}
+                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">
+                  <img src="{{ block.settings.product_image_3 | img_url: '800x', crop: 'center' }}" width="{{ block.settings.product_image_3.width }}" height="{{ block.settings.product_image_3.height }}" alt="{{ block.settings.product_image_3_alt }}">
+                  <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_3 }}</div>
+                  {% unless block.settings.link_url_3 == blank %}
+                  <a href="{{ block.settings.link_url_3 }}"><h5>{{ block.settings.link_label_3 }}</h5></a>
+                  {% endunless %}
+                </div>
+                {% endif %}
+                {% if block.settings.product_image_4 != "" %}
+                <div class="grid__item small--one-whole medium--one-half large-up--one-quarter product-grid-item">
+                  <img src="{{ block.settings.product_image_4 | img_url: '800x', crop: 'center' }}" width="{{ block.settings.product_image_4.width }}" height="{{ block.settings.product_image_4.height }}" alt="{{ block.settings.product_image_4_alt }}">
+                  <div class="3x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_4 }}</div>
+                  {% unless block.settings.link_url_4 == blank %}
+                  <a href="{{ block.settings.link_url_4 }}"><h5>{{ block.settings.link_label_4 }}</h5></a>
+                  {% endunless %}
+                </div>
+                {% endif %}
+            </div>
+            
+            {% when "2x3_grid_tile" %}
+              <!-- 2X3 Grid -->
+              <div class="grid 2x3_grid_tile margin-bottom-20 collection-branded">
+                {% if block.settings.product_image_1 != "" %}
+                <div class="grid__item small--one-whole medium--one-half large-up--one-half product-grid-item">
+                  <img src="{{ block.settings.product_image_1 | img_url: '800x', crop: 'center' }}" width="{{ block.settings.product_image_1.width }}" height="{{ block.settings.product_image_1.height }}" alt="{{ block.settings.product_image_1_alt }}">
+                  <div class="2x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_1 }}</div>
+                  {% unless block.settings.link_url_1 == blank %}
+                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a>
+                  {% endunless %}
+                </div>
+                {% endif %}
+                {% if block.settings.product_image_2 != "" %}
+                <div class="grid__item small--one-whole medium--one-half large-up--one-half product-grid-item">
+                  <img src="{{ block.settings.product_image_2 | img_url: '800x', crop: 'center' }}" width="{{ block.settings.product_image_2.width }}" height="{{ block.settings.product_image_2.height }}" alt="{{ block.settings.product_image_2_alt }}">
+                  <div class="2x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_2 }}</div>
+                  {% unless block.settings.link_url_2 == blank %}
+                  <a href="{{ block.settings.link_url_2 }}"><h5>{{ block.settings.link_label_2 }}</h5></a>
+                  {% endunless %}
+                </div>
+                {% endif %}
+            </div>
+            
+            {% when "1x3_grid_tile" %}
+              <!-- 1X3 Grid -->
+              <div class="grid 2x3_grid_tile margin-bottom-20 collection-branded">
+                {% if block.settings.product_image_1 != "" %}
+                <div class="grid__item small--one-whole medium--one-half large-up--one-half product-grid-item">
+                  <img src="{{ block.settings.product_image_1 | img_url: '300x300', crop: 'center' }}" width="{{ block.settings.product_image_1.width }}" height="{{ block.settings.product_image_1.height }}" alt="{{ block.settings.product_image_1_alt }}" align="center">
+                  <div class="2x3_grid_content margin-top-20 margin-bottom-20">{{ block.settings.description_1 }}</div>
+                  {% unless block.settings.link_url_1 == blank %}
+                  <a href="{{ block.settings.link_url_1 }}"><h5>{{ block.settings.link_label_1 }}</h5></a>
+                  {% endunless %}
+                </div>
+                {% endif %}
+              </div>
+            
+            {% when "left_media_with_text" %}
+                <!-- Left Media with Text -->
+                <hr>
+                <div class="grid custom-section">
+                  <div class="grid__item large-up--two-thirds">
+                    {% comment %}
+                      TODO: Add alt-text and customisation for image location
+                    {% endcomment %}
+                    <div class="mobile-only">
+                      <h4 class="h4--body rte section-title">{{ block.settings.left_media_with_text_section_title }}</h4>
+                    </div>
+                    {{ block.settings.left_media_with_text_media_html }}
+                  </div>
+                  <div class="grid__item large-up--one-third">
+                    <div class="desktop-only">
+                      <h4 class="h4--body rte section-title">{{ block.settings.left_media_with_text_section_title }}</h4>
+                    </div>
+                    {{ block.settings.left_media_with_text_copy }}
+                  </div>
+                </div>
+
+                {% when "right_media_with_text" %}
+                  <!-- Right Media with Text -->
+                  <hr>
+                  <div class="grid custom-section">
+                    <div class="grid__item large-up--one-third desktop-only">
+                      <h4 class="h4--body rte section-title">{{ block.settings.right_media_with_text_section_title }}</h4>
+
+                      {{ block.settings.right_media_with_text_copy }}
+                    </div>
+                    <div class="grid__item large-up--two-thirds">
+                      {% comment %}
+                        TODO: Add alt-text and customisation for image location
+                      {% endcomment %}
+                      <div class="mobile-only">
+                        <h4 class="h4--body rte section-title">{{ block.settings.right_media_with_text_section_title }}</h4>
+                      </div>
+                      {{ block.settings.right_media_with_text_media_html }}
+                    </div>
+                    <div class="grid__item large-up--one-third mobile-only">
+                      {{ block.settings.right_media_with_text_copy }}
+                    </div>
+                  </div>
+
+                {% when "left_image_with_text" %}
+                  <!-- Left Image with Text -->
+                  <!--<hr>-->
+                  <div class="grid custom-section">
+                    <div class="grid__item large-up--one-half">
+                      <div class="mobile-only">
+                        <h4 class="h4--body rte section-title">{{ block.settings.left_image_with_text_section_title }}</h4>
+                      </div>
+                      <img src="{{ block.settings.left_image_with_text_image | img_url: '1800x' }}" width="{{ block.settings.left_image_with_text_image.width }}" height="{{ block.settings.left_image_with_text_image.height }}" alt="{{ block.settings.left_image_with_text_image_alt }}">
+                    </div>
+                    <div class="grid__item large-up--one-half">
+                      <div class="desktop-only">
+                        <h4 class="h4--body rte section-title">{{ block.settings.left_image_with_text_section_title }}</h4>
+                      </div>
+
+                      {{ block.settings.left_image_with_text_copy }}
+                    </div>
+                  </div>
+
+
+                {% when "right_image_with_text" %}
+                  <!-- Right Image with Text -->
+                   <!-- Removing so that no HR break for 3-step><hr><-->
+                  <div class="grid custom-section">
+                    <div class="grid__item large-up--one-third desktop-only">
+                      <h4 class="h4--body rte section-title">{{ block.settings.right_image_with_text_section_title }}</h4>
+
+                      {{ block.settings.right_image_with_text_copy }}
+                    </div>
+                    <div class="grid__item large-up--two-thirds">
+                      <div class="mobile-only">
+                        <h4 class="h4--body rte section-title">{{ block.settings.right_image_with_text_section_title }}</h4>
+                      </div>
+                      <img src="{{ block.settings.right_image_with_text_image | img_url: '1800x' }}" width="{{ block.settings.right_image_with_text_image.width }}" height="{{ block.settings.right_image_with_text_image.height }}" alt="{{ block.settings.right_image_with_text_image_alt }}">
+                    </div>
+                    <div class="grid__item large-up--one-third mobile-only">
+                      {{ block.settings.right_image_with_text_copy }}
+                    </div>
+                  </div>
+
+                {% when "fw_text_with_media" %}
+                  <!-- Full Width Text with Media -->
+                  <hr>
+                  <div class="grid custom-section full-width text-center">
+                    <div class="grid__item large-up--one-whole">
+                      <div class="section-header">
+                        <h2 class="h2--body rte section-title">{{ block.settings.fw_text_with_media_section_title }}</h2>
+
+                        {{ block.settings.fw_text_with_media_copy }}
+                      </div>
+                      <div>{{ block.settings.fw_text_with_media_html }}</div>
+                    </div>
+                  </div>
+
+                {% when "fw_text_with_image" %}
+                  <!-- Full Width Text with Image -->
+                  <hr>
+                  <div class="grid custom-section full-width text-center">
+                    <div class="grid__item large-up--one-half">
+                      <div class="section-header">
+                        <h2 class="h2--body rte section-title">{{ block.settings.fw_text_with_image_section_title }}</h2>
+
+                        {{ block.settings.fw_text_with_image_copy }}
+                      </div>
+                      <div><img src="{{ block.settings.fw_text_with_image_image | img_url: '1800x' }}" width="{{ block.settings.fw_text_with_image_image.width }}" height="{{ block.settings.fw_text_with_image_image.height }}" alt="{{ block.settings.fw_text_with_image_image_alt }}"></div>
+                    </div>
+                  </div>
+
+              {% when "best_sellers" %}
+                {% assign best_sellers_collection = collections[block.settings.best_sellers_collection] %}
+                {% assign best_selling_products = best_sellers_collection.products %}
+                {% if best_selling_products.size > 0 %}
+                  <hr>
+                  <div class="best-sellers {% if settings.image_autoheight_enable %} image_autoheight_enable{% endif %}">
+                    <div class="section-header text-center">
+                      <h2 class="h2--body rte section-header__title">{{ block.settings.best_sellers_collection_section_title }}</h2>
+                      {% unless block.settings.best_sellers_collection_section_description == blank %}
+                        <p class="section-header__description">{{ block.settings.best_sellers_collection_section_description }}</p>
+                      {% endunless %}
+
+                    </div>
+                    <!-- Add the 'normalised-product-name-height' class to the div below, next to the 'grid' class, to fix errors in products stacking in the grid -->
+                    <div class="grid normalised-product-name-height">
+                      {% for product in best_selling_products %} <!-- limit: section.settings.grid_setting_large %}
+{% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
+{% assign base_product = product %}
+{% assign base_variant = product.selected_or_first_available_variant %}
+
+{% if shop.metafields.sawholesale['base_price'] == blank %}
+  {% assign base_price = 'compare_at_price' %}
+{% else %}
+  {% assign base_price = shop.metafields.sawholesale['base_price'] %}
+{% endif %}
+
+{% assign saw_discount = 0 %}{% assign saw_has_discount = false %}
+
+{% if customer.tags != blank %}
+  {% for mf in base_product.metafields.sawholesale %}
+    {% capture product_customer_tag %}{{ mf | first | replace: 'discount_', '' }}{% endcapture %}
+    {% if customer.tags contains product_customer_tag %}
+      {% assign saw_has_discount = true %}
+      {% assign discount_key = product_customer_tag | prepend: 'discount_' %}
+      {% assign price_key = product_customer_tag | prepend: 'price_' %}
+      {% assign saw_discount = base_product.metafields.sawholesale[discount_key] | divided_by: 100.0 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% assign saw_discount = 1 | minus: saw_discount %}
+
+{% if base_price == 'price' or base_variant.compare_at_price == blank  or base_variant.compare_at_price == 0 or base_variant.compare_at_price < base_variant.price %}
+  {% assign saw_variant_compare_at_price = base_variant.price %}
+{% else %}
+  {% assign saw_variant_compare_at_price = base_variant.compare_at_price %}
+{% endif %}
+
+{% assign cpe = shop.metafields.sawholesale['cpe'] | default: "true" %}
+{% if base_variant.metafields.sawholesale[price_key] != blank and cpe == "true" %}
+  {% assign saw_variant_price = base_variant.metafields.sawholesale[price_key] %}
+{% else %}
+  {% assign saw_variant_price = saw_variant_compare_at_price | times: saw_discount %}
+{% endif %}
+
+{% if saw_has_discount == false or saw_variant_price >= saw_variant_compare_at_price %}
+  {% assign WCProduct_Price = product.price %}
+  {% assign WCProduct_ComparePrice = product.compare_at_price %}
+  {% assign WCProduct_PriceMin = product.price_min %}
+  {% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}
+  {% assign WCProduct_PriceMax = product.price_max %}
+  {% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}
+  {% assign WCProduct_VariantPrice = base_variant.price %}
+  {% assign WCProduct_VariantComparePrice = base_variant.compare_at_price %}
+{% else %}   
+  {% assign WCProduct_Price = saw_variant_price %}
+  {% assign WCProduct_PriceMin = product.price_min | times: saw_discount %}
+  {% assign WCProduct_PriceMax = product.price_max | times: saw_discount %}
+  {% assign WCProduct_ComparePrice = saw_variant_compare_at_price %}
+  {% if product.compare_at_price_min != 0 %}{% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}{% else %}{% assign WCProduct_ComparePriceMin = product.price_min %}{% endif %}
+  {% if product.compare_at_price_max != 0 %}{% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}{% else %}{% assign WCProduct_ComparePriceMax = product.price_max %}{% endif %}
+  {% assign WCProduct_VariantPrice = saw_variant_price %}
+  {% assign WCProduct_VariantComparePrice = saw_variant_compare_at_price %}
+{% endif %}
+{% comment %} Wholesale_Club_Product_Prices End {% endcomment %}
+ -->
+                        {% render 'product-grid-item-branded' %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
+
+              {% when "new_arrivals" %}
+                {% assign newest_products_collection = collections[block.settings.new_arrivals_collection] %}
+                {% assign newest_products = newest_products_collection.products %}
+                {% if newest_products.size > 0 %}
+                  <hr>
+                  <div class="new-arrivals {% if settings.image_autoheight_enable %} image_autoheight_enable{% endif %}">
+                    <div class="section-header text-center">
+                      <h2 class="h2--body rte section-header__title">{{ block.settings.new_arrivals_collection_section_title }}</h2>
+                      {% unless block.settings.new_arrivals_collection_section_description == blank %}
+                        <div class="section-header__description">{{ block.settings.new_arrivals_collection_section_description }}</div>
+                      {% endunless %}
+                      <div class="text-center"><a href="{{ newest_products_collection.url }}" class="collection-view-all">View All</a></div>
+                    </div>
+                    
+                    <!-- Add the 'normalised-product-name-height' class to the div below, next to the 'grid' class, to fix errors in products stacking in the grid -->
+                    <div class="grid">
+                      {% for product in newest_products limit: section.settings.grid_setting_large %}
+{% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
+{% assign base_product = product %}
+{% assign base_variant = product.selected_or_first_available_variant %}
+
+{% if shop.metafields.sawholesale['base_price'] == blank %}
+  {% assign base_price = 'compare_at_price' %}
+{% else %}
+  {% assign base_price = shop.metafields.sawholesale['base_price'] %}
+{% endif %}
+
+{% assign saw_discount = 0 %}{% assign saw_has_discount = false %}
+
+{% if customer.tags != blank %}
+  {% for mf in base_product.metafields.sawholesale %}
+    {% capture product_customer_tag %}{{ mf | first | replace: 'discount_', '' }}{% endcapture %}
+    {% if customer.tags contains product_customer_tag %}
+      {% assign saw_has_discount = true %}
+      {% assign discount_key = product_customer_tag | prepend: 'discount_' %}
+      {% assign price_key = product_customer_tag | prepend: 'price_' %}
+      {% assign saw_discount = base_product.metafields.sawholesale[discount_key] | divided_by: 100.0 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% assign saw_discount = 1 | minus: saw_discount %}
+
+{% if base_price == 'price' or base_variant.compare_at_price == blank  or base_variant.compare_at_price == 0 or base_variant.compare_at_price < base_variant.price %}
+  {% assign saw_variant_compare_at_price = base_variant.price %}
+{% else %}
+  {% assign saw_variant_compare_at_price = base_variant.compare_at_price %}
+{% endif %}
+
+{% assign cpe = shop.metafields.sawholesale['cpe'] | default: "true" %}
+{% if base_variant.metafields.sawholesale[price_key] != blank and cpe == "true" %}
+  {% assign saw_variant_price = base_variant.metafields.sawholesale[price_key] %}
+{% else %}
+  {% assign saw_variant_price = saw_variant_compare_at_price | times: saw_discount %}
+{% endif %}
+
+{% if saw_has_discount == false or saw_variant_price >= saw_variant_compare_at_price %}
+  {% assign WCProduct_Price = product.price %}
+  {% assign WCProduct_ComparePrice = product.compare_at_price %}
+  {% assign WCProduct_PriceMin = product.price_min %}
+  {% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}
+  {% assign WCProduct_PriceMax = product.price_max %}
+  {% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}
+  {% assign WCProduct_VariantPrice = base_variant.price %}
+  {% assign WCProduct_VariantComparePrice = base_variant.compare_at_price %}
+{% else %}   
+  {% assign WCProduct_Price = saw_variant_price %}
+  {% assign WCProduct_PriceMin = product.price_min | times: saw_discount %}
+  {% assign WCProduct_PriceMax = product.price_max | times: saw_discount %}
+  {% assign WCProduct_ComparePrice = saw_variant_compare_at_price %}
+  {% if product.compare_at_price_min != 0 %}{% assign WCProduct_ComparePriceMin = product.compare_at_price_min %}{% else %}{% assign WCProduct_ComparePriceMin = product.price_min %}{% endif %}
+  {% if product.compare_at_price_max != 0 %}{% assign WCProduct_ComparePriceMax = product.compare_at_price_max %}{% else %}{% assign WCProduct_ComparePriceMax = product.price_max %}{% endif %}
+  {% assign WCProduct_VariantPrice = saw_variant_price %}
+  {% assign WCProduct_VariantComparePrice = saw_variant_compare_at_price %}
+{% endif %}
+{% comment %} Wholesale_Club_Product_Prices End {% endcomment %}
+
+                        {% render 'product-grid-item-branded' %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
+
+            {% endcase %}
+          {% endfor %}
+
+          <!-- Discover Collections -->
+          {% assign discover_collection_1_handle = section.settings.discover_collection_1 %}
+          {% assign discover_collection_2_handle = section.settings.discover_collection_2 %}
+          {% assign discover_collection_3_handle = section.settings.discover_collection_3 %}
+          {% assign discover_collection_4_handle = section.settings.discover_collection_4 %}
+          {% assign discover_collection_5_handle = section.settings.discover_collection_5 %}
+          {% assign discover_collection_6_handle = section.settings.discover_collection_6 %}
+          {% assign discover_collection_7_handle = section.settings.discover_collection_7 %}
+          {% assign discover_collection_8_handle = section.settings.discover_collection_8 %}
+          {% assign discover_collection_9_handle = section.settings.discover_collection_9 %}
+          {% assign discover_collection_10_handle = section.settings.discover_collection_10 %}
+          {% assign discover_collection_handles = discover_collection_1_handle | append: ", " | append: discover_collection_2_handle | append: ", " | append: discover_collection_3_handle | append: ", " | append: discover_collection_4_handle | append: ", " | append: discover_collection_5_handle | append: ", " | append: discover_collection_6_handle | append: ", " | append: discover_collection_7_handle | append: ", " | append: discover_collection_8_handle | append: ", " | append: discover_collection_9_handle | append: ", " | append: discover_collection_10_handle | split: ", " %}
+
+          {% unless discover_collection_handles.size == 0 %}
+            <hr>
+            <div class="discover-collections">
+              <div class="section-header text-center">
+                <h2 class="h2--body rte section-header__title">Discover {{ brand_title }}</h2>
+                {% unless section.settings.discover_collection_section_description == blank %}
+                  <p class="section-header__description">{{ section.settings.discover_collection_section_description }}</p>
+                {% endunless %}
+              </div>
+
+              <div class="grid {% if settings.image_autoheight_enable %} image_autoheight_enable{% endif %}">
+                {% unless collections[discover_collection_1_handle] == blank %}
+                  {% assign discover_collection_1 = collections[discover_collection_1_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
+                    <a href="{{ discover_collection_1.url }}">
+                      {% if discover_collection_1.image %}
+                        <img src="{{ discover_collection_1.image | img_url: '700x700', crop: 'center' }}" width="{{ discover_collection_1.image.width }}" height="{{ discover_collection_1.image.height }}" alt="{{ discover_collection_1.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <h6 class="discover-collection__title">{{ discover_collection_1.title }}</h6>
+                      {% if section.settings.discover_collection_1_subtitle %}
+                        <p class="discover-collection__subtitle">{{ section.settings.discover_collection_1_subtitle }}</p>
+                      {% endif %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[discover_collection_2_handle] == blank %}
+                  {% assign discover_collection_2 = collections[discover_collection_2_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
+                    <a href="{{ discover_collection_2.url }}">
+                      {% if discover_collection_2.image %}
+                        <img src="{{ discover_collection_2.image | img_url: '700x700', crop: 'center' }}" width="{{ discover_collection_2.image.width }}" height="{{ discover_collection_2.image.height }}" alt="{{ discover_collection_2.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="discover-collection__title">{{ discover_collection_2.title }}</p>
+                      {% unless section.settings.discover_collection_2_subtitle == blank %}
+                        <p class="discover-collection__subtitle">{{ section.settings.discover_collection_2_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[discover_collection_3_handle] == blank %}
+                  {% assign discover_collection_3 = collections[discover_collection_3_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
+                    <a href="{{ discover_collection_3.url }}">
+                      {% if discover_collection_3.image %}
+                        <img src="{{ discover_collection_3.image | img_url: '700x700', crop: 'center' }}" width="{{ discover_collection_3.image.width }}" height="{{ discover_collection_3.image.height }}" alt="{{ discover_collection_3.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="discover-collection__title">{{ discover_collection_3.title }}</p>
+                      {% unless section.settings.discover_collection_3_subtitle == blank %}
+                        <p class="discover-collection__subtitle">{{ section.settings.discover_collection_3_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[discover_collection_4_handle] == blank %}
+                  {% assign discover_collection_4 = collections[discover_collection_4_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
+                    <a href="{{ discover_collection_4.url }}">
+                      {% if discover_collection_4.image %}
+                        <img src="{{ discover_collection_4.image | img_url: '700x700', crop: 'center' }}" width="{{ discover_collection_4.image.width }}" height="{{ discover_collection_4.image.height }}" alt="{{ discover_collection_4.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="discover-collection__title">{{ discover_collection_4.title }}</p>
+                      {% unless section.settings.discover_collection_4_subtitle == blank %}
+                        <p class="discover-collection__subtitle">{{ section.settings.discover_collection_4_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[discover_collection_5_handle] == blank %}
+                  {% assign discover_collection_5 = collections[discover_collection_5_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
+                    <a href="{{ discover_collection_5.url }}">
+                      {% if discover_collection_5.image %}
+                        <img src="{{ discover_collection_5.image | img_url: '700x700', crop: 'center' }}" width="{{ discover_collection_5.image.width }}" height="{{ discover_collection_5.image.height }}" alt="{{ discover_collection_5.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="discover-collection__title">{{ discover_collection_5.title }}</p>
+                      {% unless section.settings.discover_collection_5_subtitle == blank %}
+                        <p class="discover-collection__subtitle">{{ section.settings.discover_collection_5_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[discover_collection_6_handle] == blank %}
+                  {% assign discover_collection_6 = collections[discover_collection_6_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
+                    <a href="{{ discover_collection_6.url }}">
+                      {% if discover_collection_6.image %}
+                        <img src="{{ discover_collection_6.image | img_url: '700x700', crop: 'center' }}" width="{{ discover_collection_6.image.width }}" height="{{ discover_collection_6.image.height }}" alt="{{ discover_collection_6.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="discover-collection__title">{{ discover_collection_6.title }}</p>
+                      {% unless section.settings.discover_collection_6_subtitle == blank %}
+                        <p class="discover-collection__subtitle">{{ section.settings.discover_collection_6_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[discover_collection_7_handle] == blank %}
+                  {% assign discover_collection_7 = collections[discover_collection_7_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
+                    <a href="{{ discover_collection_7.url }}">
+                      {% if discover_collection_7.image %}
+                        <img src="{{ discover_collection_7.image | img_url: '700x700', crop: 'center' }}" width="{{ discover_collection_7.image.width }}" height="{{ discover_collection_7.image.height }}" alt="{{ discover_collection_7.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="discover-collection__title">{{ discover_collection_7.title }}</p>
+                      {% unless section.settings.discover_collection_7_subtitle == blank %}
+                        <p class="discover-collection__subtitle">{{ section.settings.discover_collection_7_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[discover_collection_8_handle] == blank %}
+                  {% assign discover_collection_8 = collections[discover_collection_8_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
+                    <a href="{{ discover_collection_8.url }}">
+                      {% if discover_collection_8.image %}
+                        <img src="{{ discover_collection_8.image | img_url: '700x700', crop: 'center' }}" width="{{ discover_collection_8.image.width }}" height="{{ discover_collection_8.image.height }}" alt="{{ discover_collection_8.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="discover-collection__title">{{ discover_collection_8.title }}</p>
+                      {% unless section.settings.discover_collection_8_subtitle == blank %}
+                        <p class="discover-collection__subtitle">{{ section.settings.discover_collection_8_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[discover_collection_9_handle] == blank %}
+                  {% assign discover_collection_9 = collections[discover_collection_9_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
+                    <a href="{{ discover_collection_9.url }}">
+                      {% if discover_collection_9.image %}
+                        <img src="{{ discover_collection_9.image | img_url: '700x700', crop: 'center' }}" width="{{ discover_collection_9.image.width }}" height="{{ discover_collection_9.image.height }}" alt="{{ discover_collection_9.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="discover-collection__title">{{ discover_collection_9.title }}</p>
+                      {% unless section.settings.discover_collection_9_subtitle == blank %}
+                        <p class="discover-collection__subtitle">{{ section.settings.discover_collection_9_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+
+                {% unless collections[discover_collection_10_handle] == blank %}
+                  {% assign discover_collection_10 = collections[discover_collection_10_handle] %}
+                  <div class="grid__item large-up--one-third product-grid-item discover-collection">
+                    <a href="{{ discover_collection_10.url }}">
+                      {% if discover_collection_10.image %}
+                        <img src="{{ discover_collection_10.image | img_url: '700x700', crop: 'center' }}" width="{{ discover_collection_10.image.width }}" height="{{ discover_collection_10.image.height }}" alt="{{ discover_collection_10.title }} Collection Image">
+                      {% else %}
+                        {{ 'collection-1' | placeholder_svg_tag }}
+                      {% endif %}
+                      <p class="discover-collection__title">{{ discover_collection_10.title }}</p>
+                      {% unless section.settings.discover_collection_10_subtitle == blank %}
+                        <p class="discover-collection__subtitle">{{ section.settings.discover_collection_10_subtitle }}</p>
+                      {% endunless %}
+                    </a>
+                  </div>
+                {% endunless %}
+              </div>
+
+            </div>
+          {% endunless %}
+              
+            
+
+          <!-- Pagination -->
+          {% comment %}
+          {% if paginate.pages > 1 %}
+          <hr>
+          <div class="text-center">
+            {% render 'pagination-custom' %}
+          </div>
+          {% endif %}
+          {% endcomment %}
+        </div>
+      </div>
+      {% endpaginate %}
+    </div>
+    </div>
+  </div>
+</div>
+  </noscript>
+  <style>
+    .brand-collection-placeholder,
+    [data-section-type="collection"][data-lazy-render] {
+      min-height: 600px;
+    }
+    @media screen and (max-width: 768px) {
+      .brand-collection-placeholder,
+      [data-section-type="collection"][data-lazy-render] {
+        min-height: 400px;
+      }
+    }
+  </style>
+{%- endif -%}
 
 {% schema %}
 {
