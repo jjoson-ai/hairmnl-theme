@@ -255,3 +255,44 @@ The ujg6.28 investigation does NOT block Phase B.2. The bundle work proceeds as 
 - Single-sample variance: n=1 PSI run per theme. Findings directionally reliable; specific magnitudes need n=3 to confirm.
 - The dev theme measures with preview-bar overhead. Subtract ~200-400ms when reasoning about production state.
 - Mobile TBT is not investigated here. Mobile shows different cost profile (cellular emulation slows JS evaluation differently). Open for separate investigation if needed.
+
+---
+
+## GTM trigger audit — 2i8b.15 CC-side investigation (2026-05-18)
+
+### Headline
+
+**GTM is NOT loaded by the HairMNL theme.** Zero references to `GTM-M4NKSBD`, `googletagmanager.com/gtm.js`, or `gtm.start` across any `.liquid`, `.js`, or `.html` file. Live HTML curl confirms zero GTM script tags directly emitted by the theme. The firing surface is entirely **Shopify Customer Events / Web Pixels Manager** (admin-side sandboxed iframe path).
+
+### Container state (current, from public gtm.js fetch)
+
+| Item | Value |
+|---|---|
+| Container ID | GTM-M4NKSBD |
+| Container version | 143 |
+| Container size | 553 KB |
+| GA4 destination | G-9LV7TG5ZH7 (matches ticket) |
+| AW-877099019 (Google Ads) | **REMOVED** since the P8 measurement |
+| AW-611729126 | present |
+| Event tags | purchase × 8, add_to_cart × 5, view_item × 5, begin_checkout × 3, sign_up × 1, page_view × 3 |
+| Functions | 111 vars, 49 click listeners, 26 custom tags, 13 Enhanced Conversion senders |
+
+### Why the +420ms TBT delta is a moving target
+
+- AW-877099019 (the biggest single contributor in P8's bootup-time top-10) is no longer in the container.
+- Either the container was updated after the P8 measurement OR the tag was conditional on a measurement context that no longer applies.
+- Re-running the desktop home TBT measurement today would likely show a smaller GTM delta.
+
+### What CAN'T be answered from CC
+
+- Trigger fire conditions per tag (encoded as opaque `function:__c` / `function:__cl` references in the public bundle; readable only in GTM admin workspace).
+- Verdict per tag (legitimate / redundant / misconfigured) — admin-only.
+
+### Recommendation
+
+**Defer trigger audit to `ujg6.12` (Web Pixels Manager migration).** Since GTM isn't in theme code, theme-side interventions can't reduce the firing surface. The Web Pixels Manager migration:
+1. Replaces the legacy GTM custom pixel with native Web Pixels events (deduplicates firings)
+2. Removes the overlap between Shopify-channel-native tag firing and GTM-orchestrated tag firing
+3. Will surface still-firing tags as part of the migration audit
+
+`2i8b.15` is closing as wontfix-deferred-to-ujg6.12.
