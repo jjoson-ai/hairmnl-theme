@@ -348,21 +348,30 @@
   // the P6 behavior — the drawer is healthy, the user just never sees it
   // because the popdown intercepts the event.
   //
-  // Fix: catch `theme:cart:popdown` in the capture phase, stop it from
-  // reaching P8's popdown handler, and dispatch `theme:drawer:open`
-  // directly on the cart drawer instead. `ln` (AJAX cart) is already
-  // listening on the drawer for `theme:drawer:open` and will fetch +
-  // render the updated cart HTML.
+  // Fix (v2): catch `theme:cart:popdown` in the capture phase to suppress
+  // the mini popdown. Set a flag, then open the drawer on the NEXT
+  // `theme:cart:change` event. P8's onSuccess() calls updateHeaderTotal()
+  // (async /cart.js fetch) before dispatching `theme:cart:popdown`
+  // synchronously. Opening the drawer immediately on the popdown event
+  // caused it to open with stale content because theme:cart:change (which
+  // sets stale=true on the drawer's AJAX cart controller) hadn't fired yet.
+  // Waiting for theme:cart:change guarantees the drawer's controller has
+  // fresh cart data and stale=true, so loadHTML() renders the added item.
   (function () {
+    var pendingOpen = false;
+
     document.addEventListener('theme:cart:popdown', function (e) {
-      // Capture phase: fires before P8's bo handler on document
       e.stopImmediatePropagation();
+      pendingOpen = true;
+    }, true);
+
+    document.addEventListener('theme:cart:change', function () {
+      if (!pendingOpen) return;
+      pendingOpen = false;
       var drawer = document.querySelector('[data-drawer="drawer-cart"]');
       if (!drawer) return;
-      drawer.dispatchEvent(new CustomEvent('theme:drawer:open', {
-        bubbles: false
-      }));
-    }, true);
+      drawer.dispatchEvent(new CustomEvent('theme:drawer:open', { bubbles: false }));
+    }, false);
   })();
 
   // ============================================================
