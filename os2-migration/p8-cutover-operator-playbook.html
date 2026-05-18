@@ -132,7 +132,7 @@
       <tr><th style="width:80px">Day</th><th>Phase</th><th style="width:140px">Time</th><th>What you do</th></tr>
     </thead>
     <tbody>
-      <tr><td><strong>Today</strong></td><td><strong>A. Browser smoke</strong></td><td>2–3 hours</td><td>Click around dev preview, confirm 7 changes look right</td></tr>
+      <tr><td><strong>Today</strong></td><td><strong>A. Browser smoke</strong></td><td>30 min + 1hr</td><td>Run automated suite (30 min unattended) + spot-check anything it flags (≤1 hr)</td></tr>
       <tr><td>+1–2</td><td><strong>B. Shopify admin TAE</strong></td><td>1–2 days</td><td>Flip 10 app embed toggles in admin</td></tr>
       <tr><td>+2–4</td><td><strong>C. Housekeeping</strong></td><td>~20 min</td><td>Fix one URL redirect, tune Cloudflare bot challenge</td></tr>
       <tr><td>+5–6</td><td><strong>D. Final QA + book slot</strong></td><td>2–3 hours</td><td>Last-pass visual QA + book cutover Tue/Wed AM</td></tr>
@@ -181,23 +181,39 @@
 <!-- ============================================================ -->
 <section class="slide" data-title="Phase A overview">
   <h2>Phase A — Browser smoke <span class="pill todo">TODAY</span></h2>
-  <p class="lede">Click around the dev preview and confirm 7 recent code changes look + behave correctly.</p>
+  <p class="lede">Mostly automated. ~30 minutes of script runtime + ≤1 hour of spot-checking anything flagged.</p>
 
-  <p>Each smoke check takes 5–15 minutes. There are 7 total. Plan on a focused 2-hour block.</p>
+  <div class="card success">
+    <h3 style="margin:0">Run the automated suite first</h3>
+    <p style="margin:8px 0">Open a terminal:</p>
+    <pre><code>cd scripts/smoke-tests
+npm install
+npm run install-browsers
+npx playwright codegen https://creations-gdc.myshopify.com/admin
+# → log in, then save storage to .auth/storageState.json, then close
 
-  <h3>What's being verified</h3>
+SHOPIFY_AUTH=.auth/storageState.json npm test
+npm run report  # opens the HTML report in your browser</code><button class="copy-btn">copy</button></pre>
+    <p style="margin:0">52 automated tests run unattended in ~5-8 minutes. The report shows pass/fail per smoke check + screenshots/videos for any failure.</p>
+  </div>
+
+  <h3>What the automated suite covers</h3>
   <ol>
-    <li><strong>Font CLS</strong> — text doesn't jump when fonts load</li>
-    <li><strong>Mobile brand-page CLS</strong> — brand grid stays stable on phones</li>
-    <li><strong>Per-template JS loading</strong> — collection-only and product-only scripts load on the right pages</li>
-    <li><strong>Reamaze chat defer</strong> — chat icon appears but Reamaze SDK doesn't load until you click</li>
-    <li><strong>Collection filter AJAX</strong> — filters update grid without full page reload</li>
-    <li><strong>Lazy-render sections</strong> — below-fold sections appear smoothly as you scroll</li>
-    <li><strong>Font preloads + homepage hero</strong> — fonts arrive early, hero image loads eagerly</li>
+    <li><strong>Font CLS</strong> — text doesn't jump when fonts load (smoke 1)</li>
+    <li><strong>Mobile brand-page CLS</strong> — brand grid stable on phones (smoke 2)</li>
+    <li><strong>Per-template JS loading</strong> — correct files on correct pages, no 404s (smoke 3)</li>
+    <li><strong>Reamaze chat defer</strong> — pre-interaction zero KB, click + scroll triggers fire (smoke 4)</li>
+    <li><strong>Collection filter AJAX</strong> — no reload + URL update + section fetch (smoke 5)</li>
+    <li><strong>Lazy-render sections</strong> — placeholders swap to content on scroll (smoke 6)</li>
+    <li><strong>Font preloads + hero</strong> — preload links in head + first slide eager+high (smoke 7)</li>
+    <li><strong>Visual parity vs baseline</strong> — 10 full-page + 8 region snapshots × 2 viewports detect any visual drift (smoke 8)</li>
   </ol>
 
+  <p>If everything passes, you're done with Phase A. Move to Phase B.</p>
+  <p>If anything fails, the next slides walk through the spot-check workflow for each smoke check — same content as before but only consult what failed.</p>
+
   <div class="card warn">
-    <p style="margin:0"><strong>Important:</strong> Always open the dev preview in a <strong>private/incognito window</strong>. The preview-bar that Shopify shows on regular sessions affects what you see.</p>
+    <p style="margin:0"><strong>First-time baselines:</strong> Smoke 8 needs an initial set of baseline screenshots. Run <code>npm run update-baselines</code> ONCE after you've verified the dev theme looks right, then commit the <code>__screenshots__/</code> directory. From then on, every run detects drift automatically.</p>
   </div>
 </section>
 

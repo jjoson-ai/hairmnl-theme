@@ -24,7 +24,7 @@ Open the HTML report after the run:
 npm run report
 ```
 
-## The 7 smoke tests
+## The 8 smoke tests
 
 | # | Spec file | What it verifies | bd ticket |
 |---|---|---|---|
@@ -35,6 +35,67 @@ npm run report
 | 5 | `smoke-05-facet-ajax.spec.ts` | Collection filter checkbox = no page reload + URL update + section_id fetch | ujg6.16 |
 | 6 | `smoke-06-lazy-render.spec.ts` | Below-fold placeholders swap to content on scroll; Section Rendering API returns full HTML | ujg6.18 (3 increments) |
 | 7 | `smoke-07-font-preloads.spec.ts` | 2 font preload `<link>` tags in head; preloads fetched in first 50 requests; homepage first slide is eager+high | ujg6.19 |
+| 8 | `smoke-08-visual-parity.spec.ts` | Visual regression vs committed baseline — 5 templates full-page + 4 regions + cart drawer × 2 viewports | (operator-time reducer) |
+
+## Visual parity workflow (smoke 8)
+
+Smoke 8 is the **operator-time reducer**. It replaces the 2-3 hour manual
+parallel-run visual QA in the operator playbook with an automated screenshot diff.
+
+### First-run setup (operator does this once)
+
+```bash
+# 1. Verify the dev theme looks the way you want it to (manual eyeball)
+# 2. Capture baselines from the current state:
+npm run update-baselines
+
+# 3. Commit the baselines
+git add __screenshots__/
+git commit -m "smoke-8: initial visual-parity baselines"
+```
+
+The `__screenshots__/` directory is committed to the repo. Each subsequent
+test run compares against these baselines.
+
+### Drift detection (every PR)
+
+```bash
+npm run test:visual
+```
+
+Any visual change > 1% pixel-ratio threshold fails the test. The HTML
+report (`npm run report`) shows:
+- The baseline image
+- The current screenshot
+- A diff image highlighting the changed pixels
+
+### Intentional design changes
+
+When a design change is intentional (new product card layout, etc.):
+
+```bash
+# After making the design change + verifying it looks right:
+npm run update-baselines
+
+# Commit alongside the design change PR — the reviewer sees the
+# new baselines as part of the diff, making intent obvious
+git add __screenshots__/ <your-design-files>
+git commit -m "feat(design): new product card layout"
+```
+
+### What's masked (dynamic regions that shouldn't fail the diff)
+
+The helpers/visual-parity.ts `DYNAMIC_REGIONS` array painted over before
+screenshot:
+- Reamaze placeholder + open chat widget
+- Klaviyo signup modals
+- LoyaltyLion points display + notifications
+- Cart count badge
+- Vertex/LimeSpot personalized recommendations
+- Recently-viewed (localStorage-driven)
+- Countdown timers, inventory status
+
+Add to the array as new dynamic content surfaces.
 
 ## Configuration
 
@@ -113,7 +174,7 @@ Playwright suite slots in as the behavioral half of that CI gate.
 Some checks are inherently human-eyeball or require infrastructure beyond
 Playwright. Documented for honesty:
 
-- **Visual regression** (does the brand-collection grid look right?) — could be added with `page.screenshot()` + pixelmatch, but needs a baseline-image management process. Out of scope V1.
+- **First-time design judgment** ("is this design good?") — there's no machine substitute. Smoke 8 detects DRIFT from a committed baseline; it can't tell you the baseline itself is correct.
 - **TAE app verification** (Klaviyo signup form appears, Judge.me badges render) — these load in iframes, async, and depend on app server state. Operator browser smoke is the right gate for these.
 - **PSI-quality timing measurement** — Playwright doesn't have PSI's standardized remote runners or Slow-4G throttling fidelity. Use `scripts/psi-baseline-matrix.py` for performance measurement; this suite is for behavior.
 - **Reamaze chat actually delivering a message** — requires Reamaze backend; flaky in CI. We assert the SDK starts loading after interaction; full chat flow is operator smoke.
