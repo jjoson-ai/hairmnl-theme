@@ -115,6 +115,27 @@
       href="{{ 'custom-theme.css' | asset_url }}"
       as="style">
     {%- comment -%}
+      ujg6.19: preload the two critical self-hosted fonts so the browser
+      starts the fetch during the head parse (parallel with CSS/JS preloads),
+      not after the parser hits the @font-face declaration. BasisGrotesque
+      is the body font (every page); SelfModern is the heading/H1 font
+      (used by every section that renders a title, which is effectively
+      every page above the fold). woff2 only — woff fallback is for
+      ancient browsers that won't honor preload anyway. crossorigin is
+      required for font preload per the CORS spec (matching the fetch's
+      anonymous credentials mode emitted by @font-face).
+    {%- endcomment -%}
+    <link rel="preload"
+      href="{{ 'BasisGrotesquePro-Regular.woff2' | asset_url }}"
+      as="font"
+      type="font/woff2"
+      crossorigin>
+    <link rel="preload"
+      href="{{ 'SelfModern.woff2' | asset_url }}"
+      as="font"
+      type="font/woff2"
+      crossorigin>
+    {%- comment -%}
       Deferred 2026-04-27 — was render-blocking 600 ms per Lighthouse PSI.
       tiny.content.min.css is the largest single render-blocking CSS in the head
       after critical-css; same media=print swap pattern as the other deferrals.

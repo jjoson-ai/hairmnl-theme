@@ -58,15 +58,25 @@
 
           {%- assign desktop_image_modifier = '' -%}
           {%- assign mobile_image = '' -%}
+          {%- comment -%}
+            ujg6.19: first slide is the homepage LCP candidate on the index template.
+            Pass eager:true so hero.liquid emits fetchpriority="high" + loading="eager"
+            on the <img>, letting the browser preload scanner pick it up during HTML
+            parse. Subsequent slides remain lazy.
+          {%- endcomment -%}
+          {%- assign hero_eager = false -%}
+          {%- if forloop.first -%}
+            {%- assign hero_eager = true -%}
+          {%- endif -%}
           {%- if block.settings.mobile_image != blank -%}
             {%- assign desktop_image_modifier = 'desktop' -%}
-            
+
             {%- capture mobile_image -%}
-              {% render 'hero', img_object: block.settings.mobile_image, frame_height_class: section.settings.height, bg_position: block.settings.bg_position, modifier: 'mobile' %}
+              {% render 'hero', img_object: block.settings.mobile_image, frame_height_class: section.settings.height, bg_position: block.settings.bg_position, modifier: 'mobile', eager: hero_eager %}
             {%- endcapture -%}
           {%- endif -%}
 
-          {% render 'hero', img_object: block.settings.image, frame_height_class: section.settings.height, bg_position: block.settings.bg_position, modifier: desktop_image_modifier %}
+          {% render 'hero', img_object: block.settings.image, frame_height_class: section.settings.height, bg_position: block.settings.bg_position, modifier: desktop_image_modifier, eager: hero_eager %}
 
           {{ mobile_image }}
 
