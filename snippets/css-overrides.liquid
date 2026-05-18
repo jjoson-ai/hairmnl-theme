@@ -653,33 +653,24 @@
     border: 1px solid #1a1a1a !important;
   }
 
-  /* P3.3 content-visibility:auto on below-fold sections — 2026-05-18 ujg6.17
-     Chromium skips render/layout/paint for off-screen content, reducing
-     initial page-load work. contain-intrinsic-size reserves placeholder
-     height so the scrollbar doesn't jump as the user scrolls sections into
-     view. Browser support: Chrome 85+, Edge 85+, FF 119+, Safari 18+ (>90%).
-     Older browsers ignore the property (no harm).
-     All selectors verified kt0-safe — no fixed/absolute descendants inside. */
+  /* P3.3 content-visibility:auto — ROLLED BACK 2026-05-18 evening (ujg6.17)
+     The 2026-05-18 evening PSI re-baseline showed `content-visibility: auto`
+     made things worse, not better, on PSI's lab measurement:
+       - Desktop home: .homepage-collection materialization shift score 0.518
+         (box 1335×1018) became the new top CLS source on the template.
+       - Mobile cart: .section-recent.recent__container materialization shift
+         score 1.048 (box 412×308) became the new top CLS source.
+     Lighthouse's measurement window scrolls below-fold sections into view to
+     compute LCP; each section materializes from contain-intrinsic-size
+     placeholder → real size during that scroll, which Lighthouse measures
+     as CLS. Real-user CrUX impact would likely be smaller (user materializes
+     each section after the initial CLS window closes), but PSI is the
+     cutover gate, so the optimization fails its acceptance threshold.
 
-  /* Homepage: best-sellers / featured-collections row (2 rows × 4 products) */
-  .homepage-collection {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 800px;
-  }
+     The render-skip-when-off-screen goal is now tracked by bd ujg6.18
+     (JS-driven lazy-render via Section Rendering API + IntersectionObserver),
+     which doesn't trigger PSI's CLS measurement the same way.
 
-  /* Homepage + PDP: Vertex AI recommendation rail */
-  .vertex-recommendations-section {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 600px;
-  }
-
-  /* Homepage + PDP: recently viewed products slider */
-  .section-recent.recent__container {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 300px;
-  }
-
-  /* NOTE: .collection skipped — contains position:fixed sidebar
-     (.collection__filters__outer at z-index:20050) which would be
-     trapped by content-visibility's implicit contain:layout (kt0). */
+     See os2-migration/perf-regression-analysis.md addendum
+     (2026-05-18 evening) for the full attribution + decision. */
 </style>
