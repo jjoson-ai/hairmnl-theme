@@ -166,7 +166,14 @@ Sub-collection-only variables (set by stub, optional):
         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
         width="{{ _img.width }}"
         height="{{ _img.height }}"
-        loading="lazy"
+        {% if forloop.first %}
+          loading="eager"
+          fetchpriority="high"
+        {% elsif forloop.index <= 4 %}
+          loading="eager"
+        {% else %}
+          loading="lazy"
+        {% endif %}
         style="height:auto;max-width:100%;"
         alt="{{ _img.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
     </picture>
