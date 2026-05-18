@@ -304,6 +304,68 @@
   })();
 
   // ============================================================
+  // 8) lazy-render — IntersectionObserver Section Rendering API (bd ujg6.18)
+  // ----------------------------------------------------------------
+  // Below-fold heavy sections (featured-collections, brand-grid,
+  // related-products) render as lightweight placeholders on pageload
+  // and are fetched via Shopify's Section Rendering API when they
+  // approach the viewport. Reduces initial page weight and TTI on
+  // mobile. Triggered when the placeholder is 200px from viewport
+  // edge. Non-JS users and crawlers see the <noscript> fallback.
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', function () {
+    var placeholders = document.querySelectorAll('[data-lazy-render]');
+    if (!placeholders.length) return;
+
+    var pending = new Set();
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var url = el.getAttribute('data-lazy-url');
+        if (!url || pending.has(url)) return;
+
+        pending.add(url);
+        observer.unobserve(el);
+
+        fetch(url)
+          .then(function (r) {
+            if (!r.ok) throw new Error('Section fetch failed: ' + r.status);
+            return r.text();
+          })
+          .then(function (html) {
+            // Create a temporary container to parse the fetched HTML
+            var tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            // Find the section wrapper in the fetched content
+            var fetched = tmp.querySelector('[data-section-id="' + el.getAttribute('data-section-id') + '"]');
+            if (fetched) {
+              el.replaceWith(fetched);
+              // Dispatch a custom event so any section-specific init code can re-run
+              fetched.dispatchEvent(new CustomEvent('section:lazy-rendered', { bubbles: true }));
+            } else {
+              // Fallback: if we couldn't find the specific wrapper, use the whole response
+              el.innerHTML = html;
+            }
+          })
+          .catch(function (err) {
+            // Show the <noscript> fallback (it's a sibling of the placeholder)
+            var fallback = el.nextElementSibling;
+            if (fallback && fallback.tagName === 'NOSCRIPT') {
+              var div = document.createElement('div');
+              div.innerHTML = fallback.textContent;
+              el.replaceWith(div.firstElementChild || div);
+            }
+            pending.delete(url);
+          });
+      });
+    }, { rootMargin: '200px 0px' });
+
+    placeholders.forEach(function (el) { observer.observe(el); });
+  });
+
+  // ============================================================
   // DEFERRED — vendor-library-dependent scripts (Phase 5 visual QA)
   // ----------------------------------------------------------------
   // The following 4 P6 scripts depend on vendor libraries that P8's stock

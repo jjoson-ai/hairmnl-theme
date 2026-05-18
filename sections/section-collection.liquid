@@ -1,48 +1,115 @@
 {%- assign collection = collections[section.settings.collection] -%}
 {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
 
-<div
-  class="homepage-collection {{ section.settings.bg }}"
-  data-section-id="{{ section.id }}"
-  data-section-type="collection-row">
-  <div class="wrapper">
-    {% if section.settings.title != blank %}
-      <h2 class="home__subtitle">{{ section.settings.title | escape }}</h2>
-    {% endif %}
-    <div
-      class="js-grid"
-      data-grid-large="{{ section.settings.grid }}"
-      data-grid-small="2">
-      <!-- /snippets/product-grid-item.liquid -->
-      {% for product in collection.products limit: product_limit %}
-        {% render 'product-grid-item', product: product %}
-      {% else %}
-        {% render 'onboarding-product-grid-item', limit: product_limit %}
-      {% endfor %}
-    </div>
-    {% if section.settings.show_view_all %}
-      <div class="text-center">
-        <a href="{{ collection.url }}" class="btn--outline uppercase">
-          {{ 'collections.general.view_all' | t }}
-        </a>
+{%- if request.design_mode or request.page_type == null -%}
+  {%- comment -%}
+    Theme Editor preview OR Section Rendering API request (?section_id=...):
+    render the full section normally so the merchant sees it in the editor
+    and the API returns complete HTML.
+  {%- endcomment -%}
+  <div
+    class="homepage-collection {{ section.settings.bg }}"
+    data-section-id="{{ section.id }}"
+    data-section-type="collection-row">
+    <div class="wrapper">
+      {% if section.settings.title != blank %}
+        <h2 class="home__subtitle">{{ section.settings.title | escape }}</h2>
+      {% endif %}
+      <div
+        class="js-grid"
+        data-grid-large="{{ section.settings.grid }}"
+        data-grid-small="2">
+        <!-- /snippets/product-grid-item.liquid -->
+        {% for product in collection.products limit: product_limit %}
+          {% render 'product-grid-item', product: product %}
+        {% else %}
+          {% render 'onboarding-product-grid-item', limit: product_limit %}
+        {% endfor %}
       </div>
-    {% endif %}
+      {% if section.settings.show_view_all %}
+        <div class="text-center">
+          <a href="{{ collection.url }}" class="btn--outline uppercase">
+            {{ 'collections.general.view_all' | t }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
   </div>
-</div>
 
-<style>
-  #shopify-section-{{ section.id }} .homepage-collection {
-    padding-top: {{ section.settings.desktop_padding_top }}px;
-    padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
-  }
-
-  @media screen and (max-width: 640px) {
+  <style>
     #shopify-section-{{ section.id }} .homepage-collection {
-      padding-top: {{ section.settings.mobile_padding_top }}px;
-      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+      padding-top: {{ section.settings.desktop_padding_top }}px;
+      padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
     }
-  }
-</style>
+
+    @media screen and (max-width: 640px) {
+      #shopify-section-{{ section.id }} .homepage-collection {
+        padding-top: {{ section.settings.mobile_padding_top }}px;
+        padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+      }
+    }
+  </style>
+
+{%- else -%}
+  {%- comment -%}
+    Normal pageload: emit a lightweight placeholder that IntersectionObserver
+    will replace with the real section content when it approaches the viewport.
+    <noscript> fallback ensures crawlers and non-JS users see the content.
+  {%- endcomment -%}
+  <div
+    class="homepage-collection {{ section.settings.bg }}"
+    data-section-id="{{ section.id }}"
+    data-section-type="collection-row"
+    data-lazy-render
+    data-lazy-url="/?section_id={{ section.id }}">
+    <!-- placeholder — content will be fetched via Section Rendering API when
+         IntersectionObserver triggers. See hairmnl-common.js lazy-render init. -->
+  </div>
+  <noscript>
+    <div
+      class="homepage-collection {{ section.settings.bg }}"
+      data-section-id="{{ section.id }}"
+      data-section-type="collection-row">
+      <div class="wrapper">
+        {% if section.settings.title != blank %}
+          <h2 class="home__subtitle">{{ section.settings.title | escape }}</h2>
+        {% endif %}
+        <div
+          class="js-grid"
+          data-grid-large="{{ section.settings.grid }}"
+          data-grid-small="2">
+          <!-- /snippets/product-grid-item.liquid -->
+          {% for product in collection.products limit: product_limit %}
+            {% render 'product-grid-item', product: product %}
+          {% else %}
+            {% render 'onboarding-product-grid-item', limit: product_limit %}
+          {% endfor %}
+        </div>
+        {% if section.settings.show_view_all %}
+          <div class="text-center">
+            <a href="{{ collection.url }}" class="btn--outline uppercase">
+              {{ 'collections.general.view_all' | t }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </noscript>
+
+  <style>
+    #shopify-section-{{ section.id }} .homepage-collection {
+      padding-top: {{ section.settings.desktop_padding_top }}px;
+      padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    }
+
+    @media screen and (max-width: 640px) {
+      #shopify-section-{{ section.id }} .homepage-collection {
+        padding-top: {{ section.settings.mobile_padding_top }}px;
+        padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+      }
+    }
+  </style>
+{%- endif -%}
 
 {% schema %}
   {
