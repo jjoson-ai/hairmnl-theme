@@ -202,3 +202,45 @@ The bd-auto-export-bundling pattern hit 5 times in a single evening (commits 509
 5. **`ujg6.24` epic-audit closeout** on the p8-perf diff before promoting to live
 
 Cutover-readiness estimate per the runbook: **2.5–3.5 operator-weeks** remaining (1.5 weeks code + verification + Phase 4 admin TAE migration + parallel-run QA + cutover ceremony + post-cutover monitoring).
+
+---
+
+## 2026-05-18 ~22:00 — late-late arc (while operator was out)
+
+User stepped out and authorized continued CC work. Closed 2 more P1 tickets via audit and added 2 tooling guards. **No new dev-soak debt** — only research/closure work.
+
+### 2 more tickets closed via the audit pattern (now 14 closes total today)
+
+| Ticket | Outcome |
+|---|---|
+| `ujg6.12` Web Pixels Manager migration | wontfix-premise-misaligned-admin-migration-deferred — theme has 12 small dataLayer/gtag emitters; none contribute meaningfully to TBT; GTM not in theme code (per `2i8b.15`); desktop home TBT gap is admin-side |
+| `ujg6.13` Defer LL + Judge.me + Re:amaze | done-already-shipped — Re:amaze shipped tonight via `fsaa`, LoyaltyLion ALREADY DEFERRED pre-session in `snippets/loyaltylion.liquid` (rendered at theme.liquid:773), Judge.me 100% TAE-loaded with theme snippet allowlisted as dead code |
+
+This brings the "wontfix-premise-misaligned" thread to 4 tickets (`ujg6.12`, `ujg6.13` partial, `ujg6.20`, `2i8b.15`/`16`). Pattern: these tickets were filed before the team fully understood that HairMNL's heavy-vendor surface is admin-loaded (Customer Events + TAE app embeds), not theme-loaded. Audit reframes the work as operator admin tasks.
+
+### Tooling additions (prevent future failures)
+
+1. **`scripts/safe-commit.sh`** (148 LoC) — explicit-file-list commit wrapper preventing the §5 #6 bd-auto-export-bundling pattern that hit 5 times tonight. Updates `MIGRATION-CONTRACT.md` §5 #6 to mandate the wrapper.
+2. **`scripts/psi-baseline-matrix.py` preflight URL check** — fails fast (exit 2) if any cell URL returns non-200 or wrong pageType. Bypass: `--skip-preflight`.
+3. **`scripts/psi-cls-attribution.py` 404-detection guard** — `BAD_BODY_ID_RX` catches `body#404-not-found`, `body#password`, `body#maintenance`, `body#robot-challenge`, `body#customers-login` in layout-shifts attribution selectors. Emits warning banner + inline ⚠️ markers in the report.
+
+Both guards passed the dogfood test on tonight's PSI data (URL fix in commit 61e1532 means no bad-page cells currently). Dormant on healthy matrix, loud when something breaks.
+
+### Repo state at session end
+
+- `main` head: `5b38ea2`
+- Tonight's commits delivered code shipping: ujg6.7, ujg6.14, ujg6.16, ujg6.18 ×3, 2i8b.18, 2i8b.19, fsaa, ujg6.19 — all on P8 dev `141168312419` awaiting browser smoke
+- Tonight's commits delivered documentation: PSI comparison, GTM trigger audit, Klaviyo audit, Web Pixels audit, defer audit, full session synthesis
+- Tonight's commits delivered tooling: safe-commit.sh, 2i8b.17 preflight + attribution guards
+- Working tree: only foreign `snippets/article-content-with-img-dims.liquid` (stream:a parked across entire session, never bundled)
+
+### Cutover-readiness verdict
+
+P8 dev is **substantially better than P6 live on mobile LCP** (massive wins across all 5 cells) and **on CLS post-tonight's-fixes** (5 cells improved by 0.16-0.34). Desktop home TBT gap remains but is admin-side, not theme code. The remaining critical work for cutover is:
+
+1. **Operator browser smoke** — 6 commits on dev needs ground-truth verification
+2. **Operator admin migrations** — TAE toggles for 10 GREEN apps, Stky uninstall, Appikon uninstall, GTM workspace audit
+3. **`ujg6.21` PSI verification matrix** post-cutover (blocked on cutover)
+4. **`ujg6.24` epic-audit closeout** on the p8-perf diff before live promote
+
+Per the runbook: **2.5–3.5 operator-weeks** to cutover remain.
