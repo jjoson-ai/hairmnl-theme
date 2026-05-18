@@ -121,3 +121,84 @@ score: 0.4472
 
 - `main` is at commit `5289eb4`. `sections/section-richtext.liquid` clean.
 - OC's `/hh-orchestrate hairmnl-theme-ujg6.14` is in flight (in_progress, 1712 chars bd notes, 3 new JS files in working tree: hairmnl-{common,collection,product}.js, layout/theme.liquid untouched per spec). Working tree files pending OC commit + close.
+
+---
+
+## 2026-05-18 ~21:00 — full evening synthesis (session closeout)
+
+After a long arc spanning roughly 8 hours of CC + OC coordination, this section captures the final state across all closed tickets, deliveries, and lessons.
+
+### 12 tickets closed tonight
+
+| Ticket | Type | Disposition |
+|---|---|---|
+| `2i8b.11` | code | OC paid: P6 vs P8 css-overrides parity audit — clean, no porting needed |
+| `2i8b.15` | research | GTM trigger investigation: GTM is NOT in theme code; defer to ujg6.12 |
+| `2i8b.16` | research | Klaviyo onsite audit: loader is async ✓; admin-side feature audit deferred to operator |
+| `2i8b.17` | invalid | section-richtext CLS premise was a 404-page measurement artifact |
+| `2i8b.18` | code | mobile menu-buttons CLS mobile-breakpoint fix (CLS 0.291 → 0.044) |
+| `2i8b.19` | code | wired hairmnl-{common,collection,product}.js loaders in layout/theme.liquid |
+| `ujg6.7` | code | font CLS line-box overrides + font-display:optional on accent weights |
+| `ujg6.14` | code | OC paid: tree-shake hairmnl-custom.js into 3 per-template bundles |
+| `ujg6.18` | code | lazy-render below-fold sections via Section API + IO (3 increments: section-collection, brand-collection, related) |
+| `ujg6.19` | code | font preloads + slideshow eager:true (LCP element investigation revealed wrong test target) |
+| `ujg6.20` | misconceived | cart drawer `Shopify.section.refresh` is theme-editor-only API; small follow-up `2i8b.21` filed instead |
+| `ujg6.16` | code | facet AJAX via Section Rendering API for collection filter/sort |
+
+### 5 follow-up tickets filed
+
+- `2i8b.19` (B.2.2 loader wiring — closed same session)
+- `2i8b.20` (delete hairmnl-custom.js post-soak, blocked until 2026-05-25)
+- `2i8b.21` (post-cutover: dispatch `shopify:section:load` after cart drawer reload)
+- `2i8b.22` (ujg6.18 increment 2: brand-grid lazy-render — closed same session)
+- `2i8b.23` (ujg6.18 increment 3: PDP related-products lazy-render — closed same session)
+
+### Verification debt outstanding
+
+All shipped to P8 dev theme `141168312419`; **none yet browser-smoked**:
+- ujg6.7 font CLS overrides
+- 2i8b.18 mobile menu-buttons
+- 2i8b.19 loader wiring (B.2.2)
+- fsaa Reamaze defer guard (also blocked on `meu.4` live rollout)
+- ujg6.16 facet AJAX
+- ujg6.18 lazy-render ×3 (section-collection, brand-collection, related)
+- ujg6.19 font preloads + slideshow eager
+
+Each closed ticket's bd notes contain concrete DevTools + PSI repro steps for operator smoke. Before live cutover the operator must work through these.
+
+### PSI numbers (from `os2-migration/psi-baseline-2026-05-18-late.md`)
+
+**P8 dev vs P8 dev evening (impact of tonight's tickets):**
+- Brand mobile CLS: 0.291 → **0.044** (−0.247)
+- Brand desktop CLS: 0.173 → **0.009** (−0.164) + TBT −1430ms
+- Home desktop CLS: 0.173 → **0.009** (−0.164)
+- Cart desktop CLS: 0.306 → **0.055** (−0.251) + score +20
+- Collection mobile CLS: 0.354 → **0.019** (−0.335)
+
+**P8 dev vs P6 live (now):** P8 wins on mobile LCP across the board (−7.83s home, −14.14s PDP, −3.53s collection, −2.52s brand). Desktop home TBT +2511ms is the only big-magnitude P8 regression and is the long-tracked GTM tag-firing differential (will resolve via `ujg6.12`).
+
+**CrUX field (P6 real users, 28d):** P6 passes 4/6 origin CWV. Failing: origin-desktop CLS 0.11, home-mobile LCP 2906ms + INP 237ms, home-desktop CLS 0.17. Lab improvements suggest the home-desktop CLS field metric should recover post-cutover.
+
+### §5 #6 coordination-collision pattern — 5 strikes in one session
+
+The bd-auto-export-bundling pattern hit 5 times in a single evening (commits 5097433, 662cb0d, 691fa2d, 0778d71, plus the ujg6.18 sweep) despite being already codified in MIGRATION-CONTRACT.md. Functional outcomes were always harmless (OC work was real and lint-clean) but commit attribution was wrong.
+
+**Tooling response:** added `scripts/safe-commit.sh` as an explicit-file-list commit wrapper. Unstages everything bd touched, stages only the listed files, sanity-checks the set, then commits. MIGRATION-CONTRACT.md §5 #6 updated to mandate the wrapper for all CC commits during OC swarm activity.
+
+### Workspace state at session end
+
+- `main` head: `61e1532` (PSI comparison doc + `/collections/davines` URL fix)
+- Pending: `snippets/article-content-with-img-dims.liquid` foreign (stream:a Bloggle WIP, parked across the entire session without ever bundling)
+- Pending after this session: `scripts/safe-commit.sh` + `MIGRATION-CONTRACT.md` (§5 #6 update) + this `OVERNIGHT_STATUS.md` final synthesis — to commit next
+- 8 stashes belong to other workstreams; left untouched
+- All 5 PSI files cleaned from /tmp
+
+### Recommended next session
+
+1. **Operator browser smoke** of all 7 dev-soak ships before adding more code (concrete steps in each closed bd ticket's notes)
+2. **`ujg6.12` Web Pixels Manager migration** — highest-leverage remaining ticket; closes the desktop home TBT regression
+3. **`ujg6.13`** Defer LL + Judge.me + Re:amaze — extends the `fsaa` Reamaze pattern (mechanical OC fit)
+4. **`ujg6.21` PSI verification matrix** post-cutover (n=5 each)
+5. **`ujg6.24` epic-audit closeout** on the p8-perf diff before promoting to live
+
+Cutover-readiness estimate per the runbook: **2.5–3.5 operator-weeks** remaining (1.5 weeks code + verification + Phase 4 admin TAE migration + parallel-run QA + cutover ceremony + post-cutover monitoring).

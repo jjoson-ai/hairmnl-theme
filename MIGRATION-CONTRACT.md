@@ -348,35 +348,63 @@ Code, OpenCode). To prevent stream collisions:
    files will be silently bundled into your next commit even when you
    only intended to commit your own work.
 
-   Observed pattern (2026-05-18, twice):
+   Observed pattern (2026-05-18, twice in AM, then 5 more times in
+   one evening session):
    - Commit `284de00` (Phase B.1 doc) silently bundled OC's
      `sections/menu-buttons.liquid` + `snippets/css-overrides.liquid`
      edits from the ujg6.27 + ujg6.29 swarm.
    - Commit `c60bd87` (TBT investigation doc) silently bundled OC's
      `snippets/css-overrides.liquid` edits from the ujg6.17 swarm.
+   - 2026-05-18 evening: 5 more strikes in a single CC session despite
+     this contract section being already codified — ee522e3 / 5097433
+     bundled ujg6.18 OC work; 662cb0d bundled 2i8b.22 brand-collection
+     into a Klaviyo-audit-titled commit; 691fa2d bundled `sections/related.liquid`
+     into the 2i8b.16 close; ujg6.19 close swept in OC's hairmnl-common.js
+     section 8 + sections/section-collection.liquid.
 
-   In both cases the functional outcome was harmless (the OC work was
+   In every case the functional outcome was harmless (the OC work was
    real, lint-clean, and got pushed). But commit attribution was wrong
    and a reviewer couldn't audit either commit cleanly — the doc
    commit's message said "no code changes" while a CSS file was being
    modified.
 
-   **Mitigation — required for every CC commit when any OC swarm is
-   active or recently completed:**
+   **Mitigation — REQUIRED tooling for every CC commit when any OC
+   swarm is active or recently completed.** The 7-strike rate across
+   two sessions despite a prose mitigation proves that "remember to
+   run git diff --cached" is insufficient discipline. The mitigation
+   needs to be a tool:
 
-   1. **Before `git commit`**, run `git diff --cached` (or
-      `git status` with the staged list visible) and verify the
-      staged file list matches your *intended* commit scope.
-   2. **If foreign files are staged**, use
-      `git restore --staged <file>` to unstage them. Either commit
-      them separately with a proper message + bd attribution, or
-      leave them for the OC session to commit itself.
+   1. **Use `scripts/safe-commit.sh`** — explicit-file-list commit
+      wrapper. Unstages everything bd touched, stages only the listed
+      files, sanity-checks the staged set matches the request, then
+      commits. Usage:
+      ```
+      bash scripts/safe-commit.sh -m "message" path/to/file1 path/to/file2
+      # OR for multi-line messages:
+      bash scripts/safe-commit.sh -F /tmp/msg.txt path/to/file
+      ```
+      The script logs any pre-staged foreign files as evidence — if
+      it reports a non-empty pre-staged set, that's the §5 #6 pattern
+      catching a near-miss.
+
+   2. **If you must use raw `git commit`** (one-off, hooks, etc.),
+      run `git diff --cached --stat` IMMEDIATELY before commit and
+      verify the file list matches your intended scope. If foreign
+      files appear, `git restore --staged <file>` to unstage them
+      before committing.
+
    3. **Never assume your commit-message file list matches reality**
-      — write the commit only after `git diff --cached` matches.
+      — write the commit only after `git diff --cached --stat` matches
+      what your commit message describes.
 
    The cheaper alternative for high-coordination periods: pause CC
    commits until the OC swarm has explicitly committed and pushed its
    own work. Then rebase onto OC's commit and commit your work on top.
+
+   **What does NOT work:** a blocking `pre-commit` hook. bd's
+   auto-export legitimately runs `git add` on bd-state files; a
+   blanket "don't commit multi-file" guard breaks bd's workflow.
+   The proactive `safe-commit.sh` wrapper is the right layer.
 
 ---
 
