@@ -721,6 +721,30 @@
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
 
     {%- comment -%}
+      ujg6.14 / B.2.2 — load the per-template split of hairmnl-custom.js.
+      - hairmnl-common.js: every template (sections 3-7: header-mobile-slide-rule,
+        lion-points, domparser, hover-line, cart-drawer-on-atc)
+      - hairmnl-collection.js: collection templates only (section 1: sticky-filter-bar)
+      - hairmnl-product.js: product templates only (section 2: product-tabs-v1)
+
+      All `defer` so they execute after theme.js (deferred scripts run in
+      document order). assets/hairmnl-custom.js stays on disk (allowlisted as
+      P8-PENDING) until 2i8b.20 verifies this wiring on dev + deletes the
+      unsplit original.
+
+      The Liquid `template` variable resolves to e.g. 'product' or
+      'collection.brand-davines' — `contains 'collection'` matches every
+      collection.*.json template. Same for 'product'.
+    {%- endcomment -%}
+    <script src="{{ 'hairmnl-common.js' | asset_url }}" defer="defer"></script>
+    {%- if template contains 'collection' -%}
+      <script src="{{ 'hairmnl-collection.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    {%- if template contains 'product' -%}
+      <script src="{{ 'hairmnl-product.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- comment -%}
       Cart pre-init dispatcher. 2026-04-28: removed the requestIdleCallback
       wrapper that delayed the cart fetch until the main thread was idle.
       That delay was several hundred ms on a busy page (especially after

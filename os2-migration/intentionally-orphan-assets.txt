@@ -29,10 +29,7 @@
 # [P8-PENDING] — P8 migration files not yet wired
 # ----------------------------------------------------------------------------
 
-assets/hairmnl-custom.js                2i8b      2026-09-30   [P8-PENDING] P8 replacement for custom-theme.js (per spike 64b034f, "6-8x scope reduction"). Currently NOT loaded — pre-P4 theme.liquid is on live (revert 49ae3dc). Wire back when P8 cutover happens.
-assets/hairmnl-common.js                ujg6.14   2026-09-30   [P8-PENDING] Tree-shake split of hairmnl-custom.js — sections 3-7 (common, every template). Wiring to layout/theme.liquid is Phase B.2.2 (separate ticket per ujg6.14 design); currently unwired by design.
-assets/hairmnl-collection.js            ujg6.14   2026-09-30   [P8-PENDING] Tree-shake split — section 1 (sticky-filter-bar, collection templates only). Wiring is B.2.2.
-assets/hairmnl-product.js               ujg6.14   2026-09-30   [P8-PENDING] Tree-shake split — section 2 (product-tabs-v1, product templates only). Wiring is B.2.2.
+assets/hairmnl-custom.js                2i8b.20   2026-09-30   [P8-PENDING] Pre-split monolith. Now superseded by hairmnl-{common,collection,product}.js — those are wired in layout/theme.liquid per ujg6.14 B.2.2. This file is on the chopping block — bd 2i8b.20 deletes it after dev-theme soak verifies the split works.
 
 # ----------------------------------------------------------------------------
 # [TAE] — Apps moved to Theme App Extensions (Shopify App Embed blocks)
