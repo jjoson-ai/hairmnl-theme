@@ -81,6 +81,24 @@
 
   {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
 
+  {%- comment -%} P5-parity: restore P6 CSS assets omitted from M3/M1 port.
+    cart.css kept render-blocking (cart drawer can appear above-fold via ATC).
+    Remaining 6 files are async-loaded via preload+onload swap — none are
+    above-fold-critical on any template. {%- endcomment -%}
+  {{ 'cart.css' | asset_url | stylesheet_tag }}
+  <link rel="preload" as="style" href="{{ 'deferred-templates.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ 'deferred-templates.css' | asset_url }}"></noscript>
+  <link rel="preload" as="style" href="{{ 'deferred-extras.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ 'deferred-extras.css' | asset_url }}"></noscript>
+  <link rel="preload" as="style" href="{{ 'aos.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ 'aos.css' | asset_url }}"></noscript>
+  <link rel="preload" as="style" href="{{ 'plyr.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
+  <link rel="preload" as="style" href="{{ 'bold-brain-widget.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}"></noscript>
+  <link rel="preload" as="style" href="{{ 'tiny.content.min.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ 'tiny.content.min.css' | asset_url }}"></noscript>
+
   <script>
     document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
 
@@ -303,11 +321,12 @@
   {%- render 'canonical' -%}
   {%- render 'hairsalon-schema' -%}
 
-  {%- comment -%} DNS prefetches for content_for_header-only apps (no TAE / no self-registering hints) {%- endcomment -%}
-  <link rel="dns-prefetch" href="//www.googletagmanager.com">
-  <link rel="dns-prefetch" href="//edge.personalizer.io">
-  <link rel="dns-prefetch" href="//static.klaviyo.com">
-  <link rel="dns-prefetch" href="//tracking.aws.judge.me">
+  {%- comment -%} Preconnects for content_for_header-only apps (no TAE / no self-registering hints) {%- endcomment -%}
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="preconnect" href="https://edge.personalizer.io" crossorigin>
+  <link rel="preconnect" href="https://static.klaviyo.com" crossorigin>
+  <link rel="preconnect" href="https://tracking.aws.judge.me" crossorigin>
 
   <!-- Shopify app scripts =========================================================== -->
   {{ content_for_header }}
