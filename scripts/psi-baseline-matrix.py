@@ -41,7 +41,10 @@ TEMPLATES = [
     ("collection", "/collections/best-sellers"),
     ("pdp", "/products/kerastase-genesis-anti-hair-fall-fortifying-serum"),
     ("cart", "/cart"),
-    ("brand", "/collections/loreal-professionnel"),
+    # 2026-05-18 late: /collections/loreal-professionnel returns 200 but
+    # pageType=index (serves homepage content as collection — broken handle).
+    # Replaced with /collections/davines (verified pageType=collection).
+    ("brand", "/collections/davines"),
 ]
 
 THEMES = [
