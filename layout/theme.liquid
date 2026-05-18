@@ -772,51 +772,54 @@
 
     {%- if request.path == '/cart' -%}
     {%- comment -%}
-      tyio.1 (bd hairmnl-theme-njj1): Defer LoyaltyLion init on /cart until
-      first user interaction. The createElement override intercepts
-      loyaltylion.net script creation, which is triggered by the existing
-      llDefer queue flush in snippets/loyaltylion.liquid at ~8s or on
-      interaction. Without this guard, LoyaltyLion's ~538ms CPU init +
-      post-load API callback (~400ms at t=28-35s) lands in the user
-      interaction window on /cart, causing 15.9% poor INP. This override
-      blocks the scripts from loading at all until the user clicks, taps,
-      or presses a key on /cart.
+      tyio.1 v2 (bd hairmnl-theme-njj1): Defer LoyaltyLion init on /cart until
+      first user interaction.
+
+      v1 used document.createElement override (BROKEN — release() fired
+      prematurely on synthetic page-load events, restoring _origCE before
+      llDefer's flushLL had populated _deferred. Scripts loaded at t≈7.4s
+      through the restored original createElement).
+
+      v2 intercepts Element.prototype.appendChild + insertBefore instead.
+      These fire immediately before the browser inserts a <script> into the
+      DOM — BEFORE loading starts, and independent of release() timing.
+      When llDefer's run() calls document.head.appendChild(scriptEl) at t≈8s,
+      we catch the node, stash its src, and return the node without inserting
+      it. On first click/touchstart/keydown, we restore the originals and
+      re-inject the stashed srcs.
     {%- endcomment -%}
     <script>
     (function() {
-      var BLOCKED = ['loyaltylion.net'];
+      var BLOCKED = 'loyaltylion.net';
       var _released = false;
       var _deferred = [];
-      var _origCE = document.createElement.bind(document);
-      document.createElement = function(tag) {
-        var el = _origCE(tag);
-        if (tag.toLowerCase() === 'script') {
-          var srcDesc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src');
-          Object.defineProperty(el, 'src', {
-            configurable: true,
-            get: function() { return srcDesc.get.call(this); },
-            set: function(v) {
-              if (v && !_released) {
-                var s = String(v);
-                if (BLOCKED.some(function(p) { return s.indexOf(p) !== -1; })) {
-                  _deferred.push({el: this, src: s});
-                  return;
-                }
-              }
-              srcDesc.set.call(this, v);
-            }
-          });
-        }
-        return el;
+      var _proto = Element.prototype;
+      var _origAC = _proto.appendChild;
+      var _origIB = _proto.insertBefore;
+      function _guard(node) {
+        return !_released &&
+               node &&
+               node.nodeName === 'SCRIPT' &&
+               typeof node.src === 'string' &&
+               node.src.indexOf(BLOCKED) !== -1;
+      }
+      _proto.appendChild = function(node) {
+        if (_guard(node)) { _deferred.push(node.src); return node; }
+        return _origAC.call(this, node);
+      };
+      _proto.insertBefore = function(node, ref) {
+        if (_guard(node)) { _deferred.push(node.src); return node; }
+        return _origIB.call(this, node, ref);
       };
       function release() {
         if (_released) return;
         _released = true;
-        document.createElement = _origCE;
-        _deferred.forEach(function(item) {
-          var s = _origCE('script');
-          s.src = item.src;
-          document.head.appendChild(s);
+        _proto.appendChild = _origAC;
+        _proto.insertBefore = _origIB;
+        _deferred.forEach(function(src) {
+          var s = document.createElement('script');
+          s.src = src;
+          _origAC.call(document.head, s);
         });
         _deferred = [];
       }
