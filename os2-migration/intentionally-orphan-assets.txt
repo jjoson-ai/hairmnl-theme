@@ -26,14 +26,31 @@
 #   [INVESTIGATE] = unclear why orphan; needs a bd ticket to investigate
 
 # ----------------------------------------------------------------------------
-# (No entries yet — populated by Rule 9 lint extension, bd 4brc.lint)
+# [P8-PENDING] — P8 migration files not yet wired
 # ----------------------------------------------------------------------------
-#
-# When the lint extension lands, it will flag orphan assets/*.js + assets/*.css
-# files. Each orphan must be either:
-#   (a) re-referenced via asset_url in a Liquid file, OR
-#   (b) deleted from assets/, OR
-#   (c) added here with a bd-id + target_wire_by + category tag.
-#
-# DO NOT add entries speculatively. Wait for the lint to identify real
-# orphans, then triage each one.
+
+assets/hairmnl-custom.js                2i8b      2026-09-30   [P8-PENDING] P8 replacement for custom-theme.js (per spike 64b034f, "6-8x scope reduction"). Currently NOT loaded — pre-P4 theme.liquid is on live (revert 49ae3dc). Wire back when P8 cutover happens.
+
+# ----------------------------------------------------------------------------
+# [TAE] — Apps moved to Theme App Extensions (Shopify App Embed blocks)
+# ----------------------------------------------------------------------------
+
+assets/appstle-init.js                  2i8b      2026-09-30   [TAE] Appstle Subscriptions — app self-loads via TAE. Verify before delete.
+assets/appstle-subscription.js          2i8b      2026-09-30   [TAE] Appstle Subscriptions secondary — app self-loads via TAE.
+assets/bold-upsell.css                  2i8b      2026-09-30   [TAE] Bold Upsell core CSS — app self-loads via TAE.
+assets/bold-upsell-custom.css           2i8b      2026-09-30   [TAE] Bold Upsell brand override CSS — app self-loads via TAE.
+
+# ----------------------------------------------------------------------------
+# [DEV-ONLY] — Dev-mode files never loaded in production
+# ----------------------------------------------------------------------------
+
+assets/theme.dev.css                    (none)    2026-12-31   [DEV-ONLY] Unminified theme.css for local debugging. Production loads theme.css. Keep on disk for the dev workflow.
+assets/theme.dev.js                     (none)    2026-12-31   [DEV-ONLY] Unminified theme.js for local debugging. Production loads theme.js.
+
+# ----------------------------------------------------------------------------
+# [INVESTIGATE] — unclear status; needs follow-up
+# ----------------------------------------------------------------------------
+
+assets/growthhero_config.js             (none)    2026-06-15   [INVESTIGATE] GrowthHero affiliate tracking config. App may be uninstalled — verify before delete. File a bd if still installed.
+assets/special-offers.js                (none)    2026-06-15   [INVESTIGATE] Homepage special-offers section JS. May have been replaced by a section file. Trace usage before delete.
+assets/respond.min.js                   (none)    2026-06-15   [INVESTIGATE] IE9 polyfill (respond.js for CSS media queries). HairMNL probably dropped IE9 support years ago — verify, delete if confirmed.

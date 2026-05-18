@@ -4,9 +4,11 @@
 # Install once per clone:
 #   git config core.hooksPath .githooks
 #
-# What it checks (currently 1 thing, will grow):
-#   1. scripts/check-snippet-wiring.py — catches dropped {% render %} callsites
-#      (the yxte 2026-05-18 regression class).
+# What it checks:
+#   1. scripts/check-snippet-wiring.py — catches TWO regression classes:
+#      a) Dropped {% render '<snippet>' %} callsites (yxte 2026-05-18 AM)
+#      b) Dropped {{ '<file>' | asset_url }} references (cache-shadow
+#         2026-05-18 PM — see MIGRATION-CONTRACT.md Rule 9)
 #
 # To bypass for an emergency push (NOT RECOMMENDED — coordinator review required):
 #   git push --no-verify
@@ -17,14 +19,15 @@ set -euo pipefail
 
 REPO="$(git rev-parse --show-toplevel)"
 
-# 1) Snippet wiring lint
+# 1) Snippet + asset wiring lint (both regression classes from 2026-05-18)
 if [ -x "$REPO/scripts/check-snippet-wiring.py" ]; then
     echo "→ Running scripts/check-snippet-wiring.py …" >&2
     if ! python3 "$REPO/scripts/check-snippet-wiring.py" >&2; then
         echo "" >&2
-        echo "✗ Pre-push: snippet wiring lint failed." >&2
-        echo "  See MIGRATION-CONTRACT.md for the rules." >&2
+        echo "✗ Pre-push: snippet/asset wiring lint failed." >&2
+        echo "  See MIGRATION-CONTRACT.md Rules 1 + 9 for the rules." >&2
         echo "  Run locally for details: python3 scripts/check-snippet-wiring.py" >&2
+        echo "  Modes: --snippets-only / --assets-only / --json / --verbose" >&2
         exit 1
     fi
 fi
