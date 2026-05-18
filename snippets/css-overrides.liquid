@@ -187,23 +187,39 @@
     background: #f4f6f8;
   }
 
-  /* CLS fix 2026-04-29 — Judge.me medals wrapper starts as `.jdgm-hidden`
-     (display: none) in the initial HTML and gets revealed by Judge.me's
-     loader.js once badges hydrate. The reveal grows the wrapper from 0
-     to ~80px tall, pushing all subsequent in-flow content down → CLS.
+  /* CLS fix 2026-04-29 (updated 2026-05-18 hairmnl-theme-gso0) — Judge.me
+     medals wrapper starts as `.jdgm-hidden` (display: none) in the initial
+     HTML and gets revealed by Judge.me's loader.js once badges hydrate.
+     The reveal grows the wrapper from the reserved size to its rendered
+     height, pushing all in-flow content below it down → CLS.
 
      Real-shopper RUM showed /products/wella-professionals-koleston-
      perfect-ppd-free 49.1% poor CLS (n=116 events). Wella PDP image
      gallery is dimensioned correctly (width=1180 height=1180), so the
      remaining CLS source is the medals wrapper appearing post-load.
-     Same pattern likely affects all PDPs with Judge.me reviews snippet.
+     Same pattern affects EVERY page since the widget renders at the top
+     of sections/footer.liquid.
+
+     2026-05-18 gso0 update — measured actual rendered heights via Chrome
+     DevTools on https://www.hairmnl.com/ (jdgm-medals-wrapper has
+     flex-wrap behavior that varies dramatically by viewport width):
+       - viewport ≥ 768px: 133px (verified-wrapper + separator + 5 medals
+         all on one row)
+       - viewport <  768px: 411px (children wrap to 3 stacked rows on
+         mobile because verified-wrapper 200px + separator + medals 320px
+         won't fit in 412px viewport)
+     The previous 80px reservation was correct for 5-medals-in-a-row
+     desktop but undersized the mobile case by ~331px. PSI 2026-05-18
+     attributed 0.185 cumulative CLS to #shopify-section-footer shifts
+     from this widget — fully explained by the 80→411 reveal on mobile.
 
      Fix: while .jdgm-hidden is applied, override display to block but
      keep visibility: hidden so the element occupies its eventual height
-     without showing content. min-height: 80px reserves the typical
-     rendered height of 5 badges in a row. contain: layout prevents
-     residual size variance from cascading to siblings. When Judge.me
-     removes .jdgm-hidden, the badges become visible in the same space.
+     without showing content. Mobile-first min-height matches the wrapped
+     layout; desktop breakpoint drops to single-row height. contain: layout
+     prevents residual size variance from cascading to siblings. When
+     Judge.me removes .jdgm-hidden, the badges become visible in the same
+     reserved space — no shift.
 
      Caveat: if Judge.me's JS gates hydration on display: none → display:
      block transition, this override could break their logic. Loader.js
@@ -213,8 +229,13 @@
   .jdgm-medals-wrapper.jdgm-hidden {
     display: block !important;
     visibility: hidden !important;
-    min-height: 80px;
+    min-height: 411px;
     contain: layout;
+  }
+  @media (min-width: 768px) {
+    .jdgm-medals-wrapper.jdgm-hidden {
+      min-height: 134px;
+    }
   }
 
   /* CLS fix 2026-05-10 hairmnl-theme-z9y — Judge.me preview badge top-of-PDP shift.
