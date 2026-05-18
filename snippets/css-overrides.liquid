@@ -652,4 +652,36 @@
     background-color: #ffffff !important;
     border: 1px solid #1a1a1a !important;
   }
+
+  /* P3.3 content-visibility:auto on below-fold sections — 2026-05-18 ujg6.17
+     Chromium skips render/layout/paint for off-screen content, reducing
+     initial page-load work. contain-intrinsic-size reserves placeholder
+     height so the scrollbar doesn't jump as the user scrolls sections into
+     view. Browser support: Chrome 85+, Edge 85+, FF 119+, Safari 18+ (>90%).
+     Older browsers ignore the property (no harm).
+     All selectors verified kt0-safe — no fixed/absolute descendants inside. */
+
+  /* Homepage: best-sellers / featured-collections row (2 rows × 4 products) */
+  .homepage-collection {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
+  }
+
+  /* Homepage + PDP: Vertex AI recommendation rail */
+  .vertex-recommendations-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+  }
+
+  /* Homepage + PDP: recently viewed products slider */
+  .section-recent.recent__container {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 300px;
+  }
+
+  /* Collection pages: main product grid */
+  .collection {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1200px;
+  }
 </style>
