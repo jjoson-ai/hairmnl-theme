@@ -411,13 +411,20 @@
   {%- endcomment -%}
   <script src="{{ 'hairmnl-custom.js' | asset_url }}" defer="defer"></script>
 
-  {%- comment -%} P4-TODO: assets/custom-theme.css is the ~5K-LoC P6 CSS override bundle
-    that contains all our brand styling, button overrides, etc. Phase 4 has not yet
-    produced a P8-ported version. This script tag is commented out until that port
-    lands (bd hairmnl-theme-2i8b.4 M3 handles css-overrides.liquid; a separate
-    follow-up ticket handles custom-theme.css proper).
-    {% comment %} <link rel="stylesheet" href="{{ 'custom-theme.css' | asset_url }}"> {% endcomment %}
-  {%- endcomment -%}
+  {%- comment -%} assets/custom-theme.css is the ~5K-LoC P6 CSS override bundle
+    that drives the megamenu, hero carousel, product cards, sliders, and all
+    P6 brand styling. The P4 wave-a port (0cd30cf, 2026-04-24) commented this
+    out pending a "P8-ported version" — but for 24 days Shopify's stale page
+    cache continued serving the previous render that DID load it, hiding the
+    latent regression.
+
+    2026-05-18 — RE-ACTIVATED (urgent): operator-reported homepage breakage
+    (no megamenu, vertical hero carousel, missing product images, vertical
+    sliders) appeared as soon as cache invalidation forced a re-render with
+    the current theme.liquid. P8-ported version is a follow-up (bd 2i8b);
+    load the P6 file as-is until that lands. Loaded render-blocking
+    (synchronous) to avoid FOUC on above-the-fold megamenu/hero. {%- endcomment -%}
+  {{ 'custom-theme.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%} HairMNL inline JS: A/B framework + JS-error tracking + Klaviyo events.
     These three patterns were inline in P6's theme.liquid (lines 629-687 + 960-972).
