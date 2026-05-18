@@ -266,6 +266,8 @@ A grid item for products used in collection grid view
       <img
         class="responsive-wide-image"
         src="{{ product.featured_media.preview_image | image_url: width: 360 }}"
+        width="{{ product.featured_media.preview_image.width }}"
+        height="{{ product.featured_media.preview_image.height }}"
         alt="{{ product.featured_media.alt | default: product.title | replace: 'HairMNL ', '' | replace: 'Hair MNL ', '' | replace: 'hairmnl ', '' | replace: 'HAIRMNL ', '' | strip | strip_html | escape }}">
       {{ badge }}
     </a>
