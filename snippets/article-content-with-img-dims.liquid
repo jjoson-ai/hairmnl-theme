@@ -210,4 +210,91 @@
 {%- assign _output = _output | replace: '<div style="text-align:center;">', '<p style="text-align:center;">' -%}
 {%- assign _output = _output | replace: '</a></div>', '</a></p>' -%}
 
+{%- comment -%}
+  Pass 4: balance stray closing tags from WYSIWYG-corrupted article body
+  HTML. Root cause: pasting from Word / Google Docs / mid-article copy
+  drops extra `</div>` / `</article>` tokens into article.content. The
+  surrounding `<article class="grid__item">` column in sections/article.liquid
+  then gets prematurely closed by the FIRST stray `</article>`, dumping all
+  subsequent content (paragraphs, lists, related products) at full body
+  width outside the constrained column.
+
+  Observed 2026-05-18 on /blogs/salon-services/best-hair-color-for-morenas-...
+  — content after a stray `</article>` (Bold Blacks section) rendered
+  full-width, including the product list at the bottom of the post.
+
+  Strategy: count opens vs closes for `<div`/`</div>` and `<article`/`</article>`.
+  If closes > opens, strip the excess closes from the END of the content
+  (where stray closes tend to cluster — typically near the article's
+  closing paragraphs after the editor went through nested formatting).
+
+  Liquid has no count/regex; we split on the close token to get N+1 chunks,
+  then rejoin keeping the first M close separators and dropping the last
+  (N - M) — `M = open_count` is the safe target.
+
+  This is defense-in-depth, not a substitute for fixing the source article
+  in Shopify admin. Editors should clean up the HTML in the rich text
+  source view. But until that happens, this prevents the layout collapse.
+{%- endcomment -%}
+
+{%- comment -%} ----- balance </div> ----- {%- endcomment -%}
+{%- assign _div_open_parts = _output | split: '<div' -%}
+{%- assign _div_open_count = _div_open_parts.size | minus: 1 -%}
+{%- assign _div_close_parts = _output | split: '</div>' -%}
+{%- assign _div_close_count = _div_close_parts.size | minus: 1 -%}
+{%- if _div_close_count > _div_open_count -%}
+  {%- assign _div_keep = _div_open_count -%}
+  {%- assign _rebuilt = '' -%}
+  {%- for _piece in _div_close_parts -%}
+    {%- if forloop.first -%}
+      {%- assign _rebuilt = _piece -%}
+    {%- elsif forloop.index0 <= _div_keep -%}
+      {%- assign _rebuilt = _rebuilt | append: '</div>' | append: _piece -%}
+    {%- else -%}
+      {%- assign _rebuilt = _rebuilt | append: _piece -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign _output = _rebuilt -%}
+{%- endif -%}
+
+{%- comment -%} ----- balance </article> ----- {%- endcomment -%}
+{%- assign _art_open_parts = _output | split: '<article' -%}
+{%- assign _art_open_count = _art_open_parts.size | minus: 1 -%}
+{%- assign _art_close_parts = _output | split: '</article>' -%}
+{%- assign _art_close_count = _art_close_parts.size | minus: 1 -%}
+{%- if _art_close_count > _art_open_count -%}
+  {%- assign _art_keep = _art_open_count -%}
+  {%- assign _rebuilt = '' -%}
+  {%- for _piece in _art_close_parts -%}
+    {%- if forloop.first -%}
+      {%- assign _rebuilt = _piece -%}
+    {%- elsif forloop.index0 <= _art_keep -%}
+      {%- assign _rebuilt = _rebuilt | append: '</article>' | append: _piece -%}
+    {%- else -%}
+      {%- assign _rebuilt = _rebuilt | append: _piece -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign _output = _rebuilt -%}
+{%- endif -%}
+
+{%- comment -%} ----- balance </section> (same WYSIWYG hazard class) ----- {%- endcomment -%}
+{%- assign _sec_open_parts = _output | split: '<section' -%}
+{%- assign _sec_open_count = _sec_open_parts.size | minus: 1 -%}
+{%- assign _sec_close_parts = _output | split: '</section>' -%}
+{%- assign _sec_close_count = _sec_close_parts.size | minus: 1 -%}
+{%- if _sec_close_count > _sec_open_count -%}
+  {%- assign _sec_keep = _sec_open_count -%}
+  {%- assign _rebuilt = '' -%}
+  {%- for _piece in _sec_close_parts -%}
+    {%- if forloop.first -%}
+      {%- assign _rebuilt = _piece -%}
+    {%- elsif forloop.index0 <= _sec_keep -%}
+      {%- assign _rebuilt = _rebuilt | append: '</section>' | append: _piece -%}
+    {%- else -%}
+      {%- assign _rebuilt = _rebuilt | append: _piece -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign _output = _rebuilt -%}
+{%- endif -%}
+
 {{- _output -}}
