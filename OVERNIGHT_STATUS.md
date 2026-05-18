@@ -77,3 +77,47 @@ Status: `open`. Blocked on operator decision.
 - OC swarm 2-ticket dispatch (`/hh-swarm 2i8b.17 2i8b.18`) returned 2/2 INCREMENT_DONE; CC merge-gate rejected 1/2 due to broad blast-radius (113-template scope). The swarm followed its brief but did not catch the cross-template impact — split coordinator review caught it.
 - Foreign file `snippets/article-content-with-img-dims.liquid` (stream:a Bloggle WIP) remained correctly parked across 3 commits this session via stash-around-rebase + per-commit `git restore --staged` discipline (MIGRATION-CONTRACT §5 #6).
 - PSI single-fresh-load mobile runs show high variance; the cat-best-sellers 0.632 is a single n=3 measurement. Worth a 2nd-day re-baseline before committing to Option C.
+
+---
+
+## 2026-05-18 late evening — Option C revealed PSI URL bug (2i8b.17 invalid)
+
+### Headline finding
+
+**`/collections/cat-best-sellers` is a 404 page.** The Shopify collection handle doesn't exist. All prior 2i8b.17 baselines that cited "mobile collection section-richtext CLS 0.354" then "0.632" were measuring 404-page footer shifts, NOT section-richtext shifts.
+
+Evidence:
+```
+curl -sIL "https://www.hairmnl.com/collections/cat-best-sellers"
+→ HTTP/2 404, theme=131664707683, pageType=404
+```
+
+PSI CLS attribution selector confirmed:
+```
+score: 0.4472
+  selector: body#404-not-found > div#shopify-section-footer
+```
+
+### What I did
+
+1. **Shipped Option C** (commit 8c12397) — template-scoped min-height on `collection.cat-best-sellers`. PSI verify showed CLS unchanged at 0.632 across n=3 clean runs.
+2. **Pulled Lighthouse audit JSON via PSI API** to get layout-shift attribution. Selector revealed the 404 body.
+3. **Reverted Option C** (commit 210af92 → push 5289eb4). `sections/section-richtext.liquid` back to clean state on both git + dev theme.
+4. **Closed 2i8b.17 as `wontfix-invalid`** with full diagnosis in bd notes.
+
+### What this also invalidates
+
+- **2i8b.18 test URL** (`/collections/loreal-professionnel`) — also doesn't resolve cleanly. The "mobile brand CLS 0.036" we cited as the 2i8b.18 verification was actually measuring the HOMEPAGE (the URL 301-redirects to `/`). Menu-buttons IS on the homepage (per index.json: 2× menu-buttons sections), so the fix is still valid — but the page being measured was wrong. 2i8b.18 stays closed; the fix is real even though the test URL was wrong.
+- **Per-collection PSI runs throughout this evening** — many of the URLs we cited (cat-best-sellers, loreal-professionnel) are not valid collections. The PSI bot followed redirects to 404 or homepage, then measured those. CLS values for "mobile collection X" PSI runs should be re-evaluated against valid collection handles.
+
+### Lessons (codifying for the runbook)
+
+1. **Always verify PSI target URL returns 200** (or follows expected redirects to the real target) BEFORE filing CLS attribution as evidence. A 5-second `curl -sIL` would have caught this immediately.
+2. **PSI CLS attribution selectors are diagnostic** — when a selector cites `body#404-not-found` or any 404-ish identifier, the entire PSI run is measuring an error page and must be discarded.
+3. **Add a 404 body-id detection guard to `scripts/psi-cls-attribution.py`** — file a follow-up.
+4. **Audit `os2-migration/perf-regression-analysis.md` PSI test URLs** for similar 404 conditions — many of the regressions we identified there may be 404 artifacts.
+
+### Status after revert
+
+- `main` is at commit `5289eb4`. `sections/section-richtext.liquid` clean.
+- OC's `/hh-orchestrate hairmnl-theme-ujg6.14` is in flight (in_progress, 1712 chars bd notes, 3 new JS files in working tree: hairmnl-{common,collection,product}.js, layout/theme.liquid untouched per spec). Working tree files pending OC commit + close.
