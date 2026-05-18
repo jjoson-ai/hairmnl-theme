@@ -134,7 +134,7 @@
     <tbody>
       <tr><td><strong>Today</strong></td><td><strong>A. Browser smoke</strong></td><td>2–3 hours</td><td>Click around dev preview, confirm 7 changes look right</td></tr>
       <tr><td>+1–2</td><td><strong>B. Shopify admin TAE</strong></td><td>1–2 days</td><td>Flip 10 app embed toggles in admin</td></tr>
-      <tr><td>+2–4</td><td><strong>C. Housekeeping</strong></td><td>2–3 hours</td><td>Uninstall Stky + Appikon, delete orphan files, fix one URL redirect</td></tr>
+      <tr><td>+2–4</td><td><strong>C. Housekeeping</strong></td><td>~20 min</td><td>Fix one URL redirect, tune Cloudflare bot challenge</td></tr>
       <tr><td>+5–6</td><td><strong>D. Final QA + book slot</strong></td><td>2–3 hours</td><td>Last-pass visual QA + book cutover Tue/Wed AM</td></tr>
       <tr><td>+7</td><td><strong>D. Cutover ceremony</strong></td><td>~4 hours</td><td>Live with CC, publish P8, monitor first hour</td></tr>
       <tr><td>+7 → +28</td><td><strong>E. Field monitoring</strong></td><td>15 min/day</td><td>Daily RUM check, CrUX milestones at +7d, +14d, +28d</td></tr>
@@ -542,7 +542,7 @@
 <section class="slide" data-title="Phase C: Housekeeping">
   <h2>Phase C — Pre-cutover housekeeping <span class="pill todo">+2 to +4 days</span></h2>
 
-  <p class="lede">Five small admin chores that should happen before live cutover. None block cutover (we could do them after) but cleaner to handle pre-flight.</p>
+  <p class="lede">Two small admin chores that should happen before live cutover. Neither blocks cutover (we could do them after) but cleaner to handle pre-flight.</p>
 
   <table>
     <thead><tr><th>Task</th><th>Where</th><th>Time</th></tr></thead>
@@ -557,23 +557,13 @@
         <td>Cloudflare dashboard → Security → WAF</td>
         <td>15 min</td>
       </tr>
-      <tr>
-        <td><strong>Delete BSS Product Labels orphan files</strong> — uninstalled app left ~6 orphan assets</td>
-        <td>Shopify admin → theme code editor (or shopify CLI)</td>
-        <td>10 min</td>
-      </tr>
-      <tr>
-        <td><strong>Delete BSS B2B Lock orphan snippets</strong> — uninstalled app left snippets behind</td>
-        <td>Shopify admin → theme code editor</td>
-        <td>10 min</td>
-      </tr>
-      <tr>
-        <td><strong>Delete 4 legacy AMP image assets + Pro Blogger legacy .css.liquid files</strong></td>
-        <td>Shopify admin → Files / theme code</td>
-        <td>10 min</td>
-      </tr>
     </tbody>
   </table>
+
+  <div class="card success">
+    <h3 style="margin:0">Already done (inherent in P8)</h3>
+    <p style="margin:8px 0 0">The previous version of this playbook listed BSS Product Labels / B2B Lock orphan files, AMP logos, and Pro Blogger <code>.css.liquid</code> legacy assets as cleanup chores. <strong>P8 doesn't ship any of those files</strong> — they only exist in the LIVE P6 theme's storage. When you cut over, the P6 backup theme retains them (harmless; not customer-facing); after the 4-week rollback window expires + the backup is archived, they're gone.</p>
+  </div>
 
   <h3>What you do NOT do yet</h3>
   <ul>
@@ -581,7 +571,7 @@
     <li><span class="pill danger">DO NOT YET</span> Uninstall Appikon — wait for the Klaviyo-native back-in-stock replacement (g1n.* chain) to complete + test.</li>
   </ul>
 
-  <p class="hint">Specific issue tickets for the housekeeping rows: 3q4 · fcn · nra · 89n · ary · f3i. Engineer can look these up in beads if you want the full context per item.</p>
+  <p class="hint">Specific issue tickets for the two active rows: <code>3q4</code> (URL redirect) · <code>fcn</code> (Cloudflare). The stale-but-now-closed tickets are <code>nra · 89n · ary · f3i</code> — engineer audited 2026-05-19 and confirmed already resolved.</p>
 </section>
 
 <!-- ============================================================ -->
