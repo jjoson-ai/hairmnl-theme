@@ -679,9 +679,7 @@
     contain-intrinsic-size: auto 300px;
   }
 
-  /* Collection pages: main product grid */
-  .collection {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 1200px;
-  }
+  /* NOTE: .collection skipped — contains position:fixed sidebar
+     (.collection__filters__outer at z-index:20050) which would be
+     trapped by content-visibility's implicit contain:layout (kt0). */
 </style>
