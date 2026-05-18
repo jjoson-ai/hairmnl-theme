@@ -38,6 +38,7 @@ snippets/custom-fonts.liquid            2i8b.4    2026-06-30   [P4-PORT] @font-f
 snippets/critical-css.liquid            2i8b.4    2026-06-30   [P4-PORT] P6 inline critical CSS bundle. P8 stock theme.css is small enough that fragmentation does not pay (per layout/theme.liquid:330 comment). Likely retire.
 snippets/font-settings-inline.liquid    2i8b.4    2026-06-30   [P4-PORT] Was an inlined version of font-settings.css. P4 uses stylesheet_tag at theme.liquid:78 instead.
 snippets/feature-flags.liquid           2i8b.4    2026-06-30   [P4-PORT] Per-feature kill switches. Verify if flags are still consulted by any rendered template before retiring.
+snippets/notify-when-available-modal.liquid g1n.4 2026-09-30   [P4-PORT] BIS notify-when-available Micromodal — shipped via g1n.3 (Appikon replacement chain). Wired by g1n.4 (sold-out CTA swap in product-form.liquid). Currently unwired by design.
 
 # ----------------------------------------------------------------------------
 # [TAE] — Apps moved to Theme App Extensions (Shopify App Embed blocks)
