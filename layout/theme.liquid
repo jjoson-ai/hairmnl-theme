@@ -99,6 +99,25 @@
   <link rel="preload" as="style" href="{{ 'tiny.content.min.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="{{ 'tiny.content.min.css' | asset_url }}"></noscript>
 
+  {%- comment -%} HairMNL CSS overrides — Pipeline 6 brand styling + ~23 CLS
+    fix layers (Judge.me medals, announcement bar, points-box, blog article
+    images, BOGOS, Klaviyo body-injected modal, LoyaltyLion body popup,
+    Nova cookie bar, etc.).
+
+    2026-05-18 hairmnl-theme-yxte — CRITICAL FIX: this render call was
+    introduced on a feature branch (claude/p4-pathb-cc commit 3c01f58) but
+    never reached main. Without it, ~23 documented CLS fixes from
+    snippets/css-overrides.liquid (added across April-May 2026) were
+    silently no-op on live since the P4 wave-a port at commit 0cd30cf.
+    Field RUM data showed #MainContent as the dominant CLS shift target
+    (422+ events across templates over 14 days) because all the chrome
+    reservation rules were dormant. Re-activating restores months of
+    CLS hardening work.
+
+    Position: AFTER all CSS asset loads so its !important rules win cascade
+    over theme.css / cart.css and the 6 deferred preload+onload sheets. {%- endcomment -%}
+  {% render 'css-overrides' %}
+
   <script>
     document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
 
