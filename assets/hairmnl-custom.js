@@ -375,25 +375,151 @@
   })();
 
   // ============================================================
-  // DEFERRED — vendor-library-dependent scripts (Phase 5 visual QA)
-  // ----------------------------------------------------------------
-  // The following 4 P6 scripts depend on vendor libraries that P8's stock
-  // theme.js doesn't include:
-  //
-  //   - cross-post-blogs.js  (98 LoC)  — uses Swiper
-  //   - banner-slider.js     (23 LoC)  — uses Swiper
-  //   - collection-slider.js (99 LoC)  — uses Swiper
-  //   - consent-modal.js     (138 LoC) — uses sweetalert2
-  //
-  // Pipeline 8 ships Flickity (slider) + MicroModal (modal) but the APIs
-  // differ from Swiper / sweetalert2. Per-script API translation + visual
-  // QA decision deferred to Phase 5 when the dev-theme preview is live.
-  //
-  // Per-script options (operator picks during P5):
-  //   (a) Rewrite using P8 stock equivalents — cleanest, ~3h work per script
-  //   (b) Vendor-load Swiper + sweetalert2 from CDN — faster, +90 KB JS
-  //   (c) Drop the script, replace behavior with P8 stock equivalent
-  //
-  // Reference: os2-migration/p4-spike-report.md (vendor-lib analysis).
+  // B.2 — Phase 2 sub-ticket stubs (2i8b.B2.x)
   // ============================================================
+  // Sections 8–11 are stubs waiting on per-section implementation per
+  // os2-migration/p8-bundle-architecture.md D3 + B.2 sub-ticket list.
+  // Each section follows the pattern in hover-line (section 6) — outer
+  // IIFE, SEL constants, vanilla function+prototype, DOM-presence guard.
+  //
+  // Section 12 (swiper-chunk-loader) is implemented in this commit as
+  // the canonical pattern for sections 8–10 to follow when they land.
+  // ============================================================
+
+  // ============================================================
+  // 8) cross-post-blogs — TODO bd 2i8b.B2.2 (Opus 4.7 / Medium)
+  // ----------------------------------------------------------------
+  // Port from custom-theme.js lines 8429–8526 (~98 LoC). Uses Swiper.
+  // Active on article + collection + thebackbar collections.
+  // Waits for theme:swiper:ready (Section 12) before initializing.
+  //
+  // Replaces: custom-theme.js cross-post-blogs behavior + Swiper bundle
+  // ============================================================
+  // STUB — implementation pending B.2.2.
+
+  // ============================================================
+  // 9) banner-slider — TODO bd 2i8b.B2.3 (Sonnet 4.6 / Medium → OC)
+  // ----------------------------------------------------------------
+  // Port from custom-theme.js lines 8831–8853 (~22 LoC). Uses Swiper
+  // (Navigation + Pagination + Autoplay). Active on home + many
+  // collection templates + hairmnlstudio pages.
+  //
+  // Selector: .banner-slider .swiper
+  // Waits for theme:swiper:ready (Section 12) before initializing.
+  // ============================================================
+  // STUB — implementation pending B.2.3.
+
+  // ============================================================
+  // 10) collection-slider — TODO bd 2i8b.B2.4 (Sonnet 4.6 / Medium → OC)
+  // ----------------------------------------------------------------
+  // Port from custom-theme.js lines 8855–8953 (~98 LoC). Uses Swiper
+  // (Navigation). Active on home (8 instances), collection pages,
+  // brand-collection pages, many blog/article pages.
+  //
+  // Selector: .swiper.collection
+  // Existing IO-defer pattern with 1200px rootMargin preserved.
+  // Waits for theme:swiper:ready (Section 12) before initializing.
+  // ============================================================
+  // STUB — implementation pending B.2.4.
+
+  // ============================================================
+  // 11) consent-modal — TODO bd 2i8b.B2.5 (Opus 4.7 / Medium)
+  // ----------------------------------------------------------------
+  // Replace custom-theme.js consent-modal (lines 8980–9103, ~123 LoC)
+  // + the entire SweetAlert2 bundle (~2,631 LoC) + `he` HTML entities
+  // dep (~241 LoC) with native <dialog> + ~30 LoC vanilla JS + ~40
+  // LoC CSS in snippets/css-overrides.liquid.
+  //
+  // Selectors: form.cart, .cart__items__row[data-with-consent],
+  //            [data-drawer="drawer-cart"], .checkout__button
+  // Active on /cart page only when products with `with-consent` tag
+  // are in cart.
+  //
+  // Per-D7 (bundle architecture): native <dialog> element. Polyfill
+  // decision for Safari <15.4 deferred to operator browser-share
+  // audit before Phase D.
+  // ============================================================
+  // STUB — implementation pending B.2.5.
+
+  // ============================================================
+  // 12) swiper-chunk-loader — Phase B.2.1 (Opus 4.7 / Medium) [DRAFT]
+  // ----------------------------------------------------------------
+  // Async-loads assets/swiper-bundle.min.js (vendored, ~90 KB minified,
+  // Phase B.2.6) only when slider selectors are present in DOM.
+  // Dispatches `theme:swiper:ready` on document when Swiper global is
+  // available. Sections 8/9/10 listen for this event before init.
+  //
+  // Per D4 (bundle architecture): vendored chunk, not CDN.
+  // Per D5 (budget): chunk loaded only on slider pages; non-slider
+  //                  pages (cart, account, search-empty) skip Swiper
+  //                  parse cost entirely.
+  //
+  // Requires `window.theme.swiperBundleUrl` to be set inline in
+  // layout/theme.liquid (Phase B.2.8 wires this — until then, the
+  // loader logs a warning and dispatches the ready event with a
+  // null Swiper to let dependent sections short-circuit gracefully).
+  // ============================================================
+  (function () {
+    var sliderSelectors = [
+      '.swiper.collection',
+      '.banner-slider .swiper',
+      '.cross-post-blogs .swiper-container',
+    ];
+    var hasSlider = sliderSelectors.some(function (sel) {
+      return document.querySelector(sel) !== null;
+    });
+    if (!hasSlider) return;
+
+    // Already loaded? (defensive — covers edge case where another
+    // session already loaded Swiper or P8's theme.js exposed it)
+    if (window.Swiper) {
+      document.dispatchEvent(new CustomEvent('theme:swiper:ready', {
+        detail: { source: 'pre-loaded', Swiper: window.Swiper },
+      }));
+      return;
+    }
+
+    // Phase B.2.8 will set this via inline <script> in layout/theme.liquid:
+    //   <script>window.theme = window.theme || {};
+    //           window.theme.swiperBundleUrl = "{{ 'swiper-bundle.min.js' | asset_url }}";
+    //   </script>
+    var bundleUrl = (window.theme && window.theme.swiperBundleUrl) || null;
+    if (!bundleUrl) {
+      // Pre-B.2.8 dormant state. Log once, dispatch null-Swiper event so
+      // Sections 8/9/10 can graceful-degrade (no slider; static markup
+      // remains in place per server-rendered Liquid).
+      if (window.console && console.warn) {
+        console.warn(
+          '[hairmnl-custom] section 12: swiper bundle URL not set ' +
+          '(layout/theme.liquid not yet wired per B.2.8). ' +
+          'Sliders will render as static markup until then.'
+        );
+      }
+      document.dispatchEvent(new CustomEvent('theme:swiper:ready', {
+        detail: { source: 'unwired', Swiper: null },
+      }));
+      return;
+    }
+
+    // Inject async <script> for the bundle. Defer-loaded; non-blocking.
+    var s = document.createElement('script');
+    s.src = bundleUrl;
+    s.defer = true;
+    s.onload = function () {
+      document.dispatchEvent(new CustomEvent('theme:swiper:ready', {
+        detail: { source: 'chunk-loaded', Swiper: window.Swiper || null },
+      }));
+    };
+    s.onerror = function () {
+      if (window.console && console.error) {
+        console.error('[hairmnl-custom] swiper chunk failed to load:', bundleUrl);
+      }
+      // Still dispatch (with null Swiper) so dependent sections can
+      // graceful-degrade rather than hanging.
+      document.dispatchEvent(new CustomEvent('theme:swiper:ready', {
+        detail: { source: 'chunk-error', Swiper: null },
+      }));
+    };
+    document.head.appendChild(s);
+  })();
 })();
