@@ -338,6 +338,34 @@
   })();
 
   // ============================================================
+  // 7) cart-drawer-on-atc — P6 UX parity for add-to-cart
+  // ----------------------------------------------------------------
+  // Pipeline 6's add-to-cart slid the cart drawer open immediately on
+  // success. Pipeline 8's stock flow instead shows a mini product popdown
+  // (the `bo` class in theme.js dispatches `theme:cart:popdown`, then the
+  // user has to click "View Cart" in the popdown to actually open the
+  // drawer). Reads as "slide cart drawer doesn't work" for anyone used to
+  // the P6 behavior — the drawer is healthy, the user just never sees it
+  // because the popdown intercepts the event.
+  //
+  // Fix: catch `theme:cart:popdown` in the capture phase, stop it from
+  // reaching P8's popdown handler, and dispatch `theme:drawer:open`
+  // directly on the cart drawer instead. `ln` (AJAX cart) is already
+  // listening on the drawer for `theme:drawer:open` and will fetch +
+  // render the updated cart HTML.
+  (function () {
+    document.addEventListener('theme:cart:popdown', function (e) {
+      // Capture phase: fires before P8's bo handler on document
+      e.stopImmediatePropagation();
+      var drawer = document.querySelector('[data-drawer="drawer-cart"]');
+      if (!drawer) return;
+      drawer.dispatchEvent(new CustomEvent('theme:drawer:open', {
+        bubbles: false
+      }));
+    }, true);
+  })();
+
+  // ============================================================
   // DEFERRED — vendor-library-dependent scripts (Phase 5 visual QA)
   // ----------------------------------------------------------------
   // The following 4 P6 scripts depend on vendor libraries that P8's stock
