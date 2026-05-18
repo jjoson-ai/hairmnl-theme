@@ -349,6 +349,23 @@
     Remove once M3 (css-overrides) + M5 (custom-theme.js port) land in P8. {%- endcomment -%}
   <script src="{{ 'custom-theme.js' | asset_url }}" defer="defer"></script>
   <link rel="stylesheet" href="{{ 'custom-theme.css' | asset_url }}">
+  {%- comment -%} P5-parity: restore P6 CSS assets omitted from M3/M1 port.
+    All 7 files exist in /assets/ but were never wired into this layout.
+    cart.css: free-shipping progress bar in cart drawer/page.
+    deferred-templates.css: blog cards, search dropdown, account/order tables, password page.
+    deferred-extras.css: Bold Upsell modals, BCPO product options, Font Awesome icons.
+    aos.css: AOS scroll-animation library (AOS is already initialised line ~91 of this file).
+    plyr.css: Plyr video player component.
+    bold-brain-widget.css: Bold Brain recommendation widget.
+    tiny.content.min.css: TinyIMG CMS content styles.
+  {%- endcomment -%}
+  {{ 'cart.css' | asset_url | stylesheet_tag }}
+  {{ 'deferred-templates.css' | asset_url | stylesheet_tag }}
+  {{ 'deferred-extras.css' | asset_url | stylesheet_tag }}
+  {{ 'aos.css' | asset_url | stylesheet_tag }}
+  {{ 'plyr.css' | asset_url | stylesheet_tag }}
+  {{ 'bold-brain-widget.css' | asset_url | stylesheet_tag }}
+  {{ 'tiny.content.min.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%} HairMNL inline JS: A/B framework + JS-error tracking + Klaviyo events.
     These three patterns were inline in P6's theme.liquid (lines 629-687 + 960-972).
