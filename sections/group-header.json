@@ -57,6 +57,7 @@
       "blocks": {
         "collection_K6cFA8": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "position": "2",
             "collection": "",
