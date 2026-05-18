@@ -26,42 +26,42 @@ against the post-revert live baseline.
 
 ### A.1 — Read mandatory context
 
-- [ ] Read `MIGRATION-CONTRACT.md` **end-to-end**, with special attention to:
+- [x] Read `MIGRATION-CONTRACT.md` **end-to-end**, with special attention to:
   - Rules 5–10 (cache-shadow defense, added 2026-05-18 PM)
   - "Incident log" section (both 2026-05-18 events)
   - "What MIGRATION ports must preserve" — non-negotiables list (now includes
     8 asset_url loads + 5 renders + infrastructure items)
-- [ ] Read `os2-migration/intentionally-orphan.txt` (snippet allowlist)
-- [ ] Read `os2-migration/intentionally-orphan-assets.txt` (asset allowlist —
+- [x] Read `os2-migration/intentionally-orphan.txt` (snippet allowlist)
+- [x] Read `os2-migration/intentionally-orphan-assets.txt` (asset allowlist —
       new file from 2026-05-18 PM)
-- [ ] Run `python3 scripts/check-snippet-wiring.py` locally to confirm both
+- [x] Run `python3 scripts/check-snippet-wiring.py` locally to confirm both
       checks pass on `main` HEAD (snippets: 0 blocking; assets: 0 blocking).
 
 ### A.2 — Sync dev theme to post-revert live baseline
 
-- [ ] `shopify theme pull --theme=131664707683 --path=/tmp/p8-live-snapshot --nodelete`
-- [ ] Diff `/tmp/p8-live-snapshot/layout/theme.liquid` against
+- [x] `shopify theme pull --theme=131664707683 --path=/tmp/p8-live-snapshot --nodelete`
+- [x] Diff `/tmp/p8-live-snapshot/layout/theme.liquid` against
       `git show 6d4a246:layout/theme.liquid`. Should match byte-for-byte
       (the revert restored to this commit's state).
-- [ ] Push `main` HEAD to dev theme `141168312419`:
+- [x] Push `main` HEAD to dev theme `141168312419`:
       `shopify theme push --theme=141168312419 --nodelete`
-- [ ] Cache-bypass curl on dev preview URL, confirm dev = live for `<script src>` +
+- [x] Cache-bypass curl on dev preview URL, confirm dev = live for `<script src>` +
       `<link rel="stylesheet">` tags. Reference:
       `https://creations-gdc.myshopify.com/?preview_theme_id=141168312419&_cb=$(date +%s%N)`
 
 ### A.3 — Behavior inventory
 
-- [ ] Refresh `os2-migration/custom-theme-js-audit.md` (from `04e6f9e`). Confirm
+- [x] Refresh `os2-migration/custom-theme-js-audit.md` (from `04e6f9e`). Confirm
       every behavior in `custom-theme.js` is classified as either:
       - **KEEP in bundle** — implementing in P8 bundled theme.js
       - **MIGRATE TO TAE** — moving to a Shopify app extension
       - **DROP** — no longer needed (must document why)
-- [ ] Same for `shop.js` and `jquery.min.js`. (Jquery is mostly required by
+- [x] Same for `shop.js` and `jquery.min.js`. (Jquery is mostly required by
       app snippets; check the app-compatibility-matrix.md for TAE coverage.)
-- [ ] `lazysizes.js` is mostly replaceable by native `loading="lazy"`. Confirm
+- [x] `lazysizes.js` is mostly replaceable by native `loading="lazy"`. Confirm
       the `.fade-in` opacity-flip dependency on the `lazyloaded` class is
       resolved (either by removing `.fade-in` or replacing the JS hook).
-- [ ] `custom-theme.css` (5K LoC P6 brand bundle): inventory each rule's fate
+- [x] `custom-theme.css` (5K LoC P6 brand bundle): inventory each rule's fate
       — port to `theme.css`, port to a section's `{% stylesheet %}` block, or
       retire.
 
@@ -265,7 +265,7 @@ _(Document anything that prevents Phase D completion. Operator reviews.)_
 
 | Phase | Status | Date completed |
 |---|---|---|
-| A. Re-orient | NOT STARTED | — |
+| A. Re-orient | COMPLETE | 2026-05-18 |
 | B. Build bundle | NOT STARTED | — |
 | C. Side-by-side verify | NOT STARTED | — |
 | D. Cutover | NOT STARTED | — |
