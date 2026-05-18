@@ -1,477 +1,1121 @@
+{%- comment -%}
+  Removed 2026-04-27: duplicate bsscommerce_login_require call. The
+  same snippet was being included twice in this file (once here,
+  pre-doctype; once inside <head> at line ~73). Pre-doctype output
+  lands in the document prologue which browsers ignore for meta tags
+  anyway. The in-<head> call (kept) is the correct place. Halves the
+  per-pageview Liquid execution cost of this BSS B2B Login snippet
+  + its 4-5 sub-snippet includes.
+{%- endcomment -%}
 <!doctype html>
-{% capture rtl_codes %},ar,arc,ckb,dv,fa,ha,he,khw,ks,ps,sd,ur,uz_AF,yi,{% endcapture %}
-{% assign is_code_separator = request.locale.iso_code | append: ',' | prepend: ',' %}
-{% assign is_rtl =  nil %}
-{% if rtl_codes contains is_code_separator %}
-  {% assign is_rtl =  true %}
-{% endif %}
-<html class="no-js" lang="{{ request.locale.iso_code }}" {% if is_rtl %} dir="rtl"{% endif %}>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
 
-{%- assign title_override = false -%}
-{%- assign default_description = false -%}
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="{{ settings.color_secondary }}">
-  {%- if canonical_url != blank -%}
-    <link rel="canonical" href="{{ canonical_url }}">
-  {%- endif -%}
+  {%- assign title_override = false -%}
+  {%- assign default_description = false -%}
+    <head>
+    <meta charset="utf-8">
+    <style>{%- render 'critical-css' -%}</style>
+    {%- comment -%}
+      Deferred 2026-04-27 — was render-blocking 150 ms per Lighthouse PSI.
+      bss-hide-variant.css is BSS-app CSS; only needed once cart/PDP UI hydrates.
+      media=print swap loads at low priority, then promotes to all on load.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'bss-hide-variant.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'bss-hide-variant.css' | asset_url }}"></noscript>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_secondary }}">
+    {% render 'canonical' %}
+    {% render 'hairsalon-schema' %}
 
-  <!-- ======================= Pipeline Theme V8.1.1 ========================= -->
+    {%- comment -%}
+      Hotjar tracking removed 2026-04-26: team confirmed it's not in
+      use. Was loading the bootstrap inline + an async <script> to
+      static.hotjar.com on every page. Removed both the inline
+      bootstrap and the corresponding preconnect hint below.
+    {%- endcomment -%}
+    <!-- ======================= Pipeline Theme V6.1.3 ========================= -->
 
-  <!-- Preloading ================================================================== -->
+    <link
+      rel="preconnect"
+      href="https://cdn.shopify.com"
+      crossorigin>
+    <link
+      rel="preconnect"
+      href="https://fonts.shopify.com"
+      crossorigin>
+    <link
+      rel="preconnect"
+      href="https://monorail-edge.shopifysvc.com"
+      crossorigin>
+    <link
+      rel="preconnect"
+      href="https://cdn.judge.me"
+      crossorigin>
+    {%- comment -%}
+      Removed 2026-04-26 PM: preconnects to fonts.googleapis.com +
+      fonts.gstatic.com. Playfair Display now self-hosted from
+      /assets/ (see snippets/font-settings-inline.liquid). Lighthouse
+      had warned "More than 4 preconnect connections were found".
+    {%- endcomment -%}
 
-  <link rel="preconnect" href="https://fonts.shopify.com" crossorigin>
-  {%- assign font_body_family = settings.font_body_family | font_url -%}
-  {%- assign font_heading_family = settings.font_heading_family | font_url -%}
-  {%- assign font_accent_family = settings.font_accent_family | font_url -%}
-  {%- if font_body_family != blank -%}
-      <link rel="preload" href="{{ font_body_family }}" as="font" type="font/woff2" crossorigin>
-  {%- endif -%}
-  {%- if font_heading_family != blank -%}
-    <link rel="preload" href="{{ font_heading_family }}" as="font" type="font/woff2" crossorigin>
-  {%- endif -%}
-  {%- if font_accent_family != blank -%}
-      <link rel="preload" href="{{ font_accent_family }}" as="font" type="font/woff2" crossorigin>
-  {%- endif -%}
+    {%- comment -%}
+      DNS prefetch for top third-party origins flagged as slow in
+      2026-04-28 PSI network-requests audit. dns-prefetch only
+      resolves DNS (no TCP+TLS handshake like preconnect), so the
+      "max 4 preconnect" Lighthouse warning doesn't apply. Saves
+      ~50-150 ms on the FIRST request to each origin (when the
+      browser would otherwise sequentially do DNS lookup → connect
+      → handshake). Origins picked from the actual heavy network
+      requests on the homepage / PDP audits:
+        - googletagmanager.com (GTM, 737 ms / 622 ms scripting)
+        - cdn.reamaze.com (Reamaze chat, 735 ms / 255 ms scripting)
+        - edge.personalizer.io (LimeSpot personalizer, 588 ms)
+        - sdk-static.loyaltylion.net (LoyaltyLion SDK, ~500 ms)
+        - static.klaviyo.com (Klaviyo signup modal, ~600 ms)
+        - tracking.aws.judge.me (Judge.me tracking, 800 ms)
+        - analytics.tiktok.com (TikTok Pixel, 737 ms ping)
+        - satcb.azureedge.net (Same-day store pickup widget, ~600 ms)
+        - searchanise-ef84.kxcdn.com (Searchanise CDN — templates.js, preload_data.js,
+          product images; origin used on every search results pageload)
+    {%- endcomment -%}
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://cdn.reamaze.com">
+    <link rel="dns-prefetch" href="https://edge.personalizer.io">
+    <link rel="dns-prefetch" href="https://sdk-static.loyaltylion.net">
+    <link rel="dns-prefetch" href="https://static.klaviyo.com">
+    <link rel="dns-prefetch" href="https://tracking.aws.judge.me">
+    <link rel="dns-prefetch" href="https://analytics.tiktok.com">
+    <link rel="dns-prefetch" href="https://satcb.azureedge.net">
+    <link rel="preconnect" href="https://searchanise-ef84.kxcdn.com" crossorigin>
 
-  <!-- Title and description ================================================ -->
-  {%- if settings.favicon != blank -%}
-    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
-  {%- else -%}
-    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
-  {%- endif -%}
 
-  {% capture seo_title %}
-    {%- assign title_content = page_title -%}
-    {% if title_override %}
-      {%- assign title_content = title_override -%}
-    {% endif %}
-    {{ title_content }}
-    {%- if current_tags -%}
-      {%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}
-    {%- endif -%}
-    {%- if current_page != 1 -%}
-      &ndash; {{ 'general.meta.page' | t: page: current_page }}
-    {%- endif -%}
-    {%- assign title_downcase = title_content | downcase | strip -%}
-    {%- assign name_downcase = shop.name | downcase | strip -%}
-    {%- unless title_downcase contains name_downcase -%}
-      &ndash; {{ shop.name }}
-    {%- endunless -%}
-  {% endcapture %}
-  <title>
-    {{ seo_title }}
-  </title>
 
-  {%- if page_description -%}
-    <meta name="description" content="{{ page_description | escape }}">
-  {% elsif default_description %}
-    <meta name="description" content="{{ default_description | escape }}">
-  {%- endif -%}
-
-  {%- render 'social-meta-tags' -%}
-
-  <!-- CSS ================================================================== -->
-
-  {{ 'font-settings.css' | asset_url | stylesheet_tag: preload: true }}
-
-  {% render 'css-variables' %}
-
-  {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
-
-  {%- comment -%} P5-parity: restore P6 CSS assets omitted from M3/M1 port.
-    cart.css kept render-blocking (cart drawer can appear above-fold via ATC).
-    Remaining 6 files are async-loaded via preload+onload swap — none are
-    above-fold-critical on any template. {%- endcomment -%}
-  {{ 'cart.css' | asset_url | stylesheet_tag }}
-  <link rel="preload" as="style" href="{{ 'deferred-templates.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'deferred-templates.css' | asset_url }}"></noscript>
-  <link rel="preload" as="style" href="{{ 'deferred-extras.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'deferred-extras.css' | asset_url }}"></noscript>
-  <link rel="preload" as="style" href="{{ 'aos.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'aos.css' | asset_url }}"></noscript>
-  <link rel="preload" as="style" href="{{ 'plyr.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
-  <link rel="preload" as="style" href="{{ 'bold-brain-widget.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}"></noscript>
-  <link rel="preload" as="style" href="{{ 'tiny.content.min.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'tiny.content.min.css' | asset_url }}"></noscript>
-
-  {%- comment -%} P4 regression fixes (bd 9t1l / h1vt / v2ux — 2026-05-18):
-    pswp.css + vertex-recommendations.css + cart-page.css were present on the
-    pre-P4 theme but dropped by the wave-a port (commit 0cd30cf). None are
-    render-blocking: PhotoSwipe only activates on zoom open, Vertex rails are
-    below-fold, and cart-page styles are only needed on /cart.
-    - pswp.css: deferred async (preload+onload) — 61 .pswp__ rules used by
-      snippets/zoom-pswp.liquid (rendered by sections/product.liquid).
-    - vertex-recommendations.css: render-blocking acceptable (appears
-      above-the-fold on /cart and PDP; avoid FOUC on vrec-card/.vrec-slot).
-    - cart-page.css: deferred async, conditional on cart template only.
-  {%- endcomment -%}
-  {{ 'vertex-recommendations.css' | asset_url | stylesheet_tag }}
-  <link rel="preload" as="style" href="{{ 'pswp.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}"></noscript>
-  {%- if template == 'cart' -%}
-    <link rel="preload" as="style" href="{{ 'cart-page.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ 'cart-page.css' | asset_url }}"></noscript>
-  {%- endif -%}
-
-  {%- comment -%} HairMNL CSS overrides — Pipeline 6 brand styling + ~23 CLS
-    fix layers (Judge.me medals, announcement bar, points-box, blog article
-    images, BOGOS, Klaviyo body-injected modal, LoyaltyLion body popup,
-    Nova cookie bar, etc.).
-
-    2026-05-18 — UPSTREAM REVERT of yxte fix (commit b0997d3). Re-activating
-    css-overrides.liquid after 24 days of dormancy (since P4 wave-a 0cd30cf)
-    caused a customer-visible homepage regression. The 23 CLS fixes are
-    valuable but at least one rule in the snippet now conflicts with current
-    homepage section styling. Re-enable rule-by-rule via a follow-up bd
-    ticket after isolating the culprit; the site has run fine without these
-    fixes for 24 days, so leaving them off restores the pre-regression state.
-
-    Position: AFTER all CSS asset loads so its !important rules win cascade
-    over theme.css / cart.css and the 6 deferred preload+onload sheets. {%- endcomment -%}
-  {%- comment -%} {% render 'css-overrides' %} — DISABLED, see comment above {%- endcomment -%}
-
-  <script>
-    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
-
-    {% if settings.animations_scroll_enable %}
-      document.documentElement.classList.add('aos-initialized');
-    {%- endif -%}
-
-    let root = '{{ routes.root_url }}';
-    if (root[root.length - 1] !== '/') {
-      root = `${root}/`;
-    }
-    var theme = {
-      routes: {
-        root_url: root,
-        cart: '{{ routes.cart_url }}',
-        cart_add_url: '{{ routes.cart_add_url }}',
-        product_recommendations_url: '{{ routes.product_recommendations_url }}',
-        account_addresses_url: '{{ routes.account_addresses_url }}',
-        predictive_search_url: '{{ routes.predictive_search_url }}'
-      },
-      state: {
-        cartOpen: null,
-      },
-      sizes: {
-        small: 480,
-        medium: 768,
-        large: 1100,
-        widescreen: 1400
-      },
-      assets: {
-        photoswipe: '{{ "photoswipe.js" | asset_url }}',
-        smoothscroll: '{{ "smoothscroll.js" | asset_url }}',
-        swatches: '{{ "swatches.json" | asset_url }}',
-        noImage: '{{ "nil" | img_url: "master" }}',
-        {% comment %} Used to get the base path for images {% endcomment %}
-        {% # theme-check-disable MissingAsset %}
-        base: '{{ "nil.jpg" | asset_url | split: "nil.jpg" | first }}'
-        {% # theme-check-enable MissingAsset %}
-      },
-      strings: {
-        swatchesKey: {{ 'general.swatches.color' | t | json }},
-        addToCart: {{ 'products.product.add_to_cart' | t | json }},
-        estimateShipping: {{ 'cart.shipping.estimate_shipping' | t | json }},
-        noShippingAvailable: {{ 'cart.shipping.no_shipping_available' | t | json }},
-        free: {{ 'cart.shipping.free' | t | json }},
-        from: {{ 'products.general.from' | t | json }},
-        preOrder: {{ 'products.product.pre_order' | t | json }},
-        soldOut: {{ 'products.product.sold_out' | t | json }},
-        sale: {{ 'products.product.sale' | t | json }},
-        subscription: {{ 'products.product.subscription' | t | json }},
-        unavailable: {{ 'products.product.unavailable' | t | json }},
-        unitPrice: {{ 'products.product.unit_price_label' | t | json }},
-        unitPriceSeparator: {{ 'general.accessibility.unit_price_separator' | t | json }},
-        stockout: {{ 'cart.general.stockout' | t | json }},
-        products: {{ 'products.general.products' | t | json }},
-        pages: {{ 'general.page.pages' | t | json }},
-        collections: {{ 'collections.sidebar.collections' | t | json }},
-        resultsFor: {{ 'general.search.results_for' | t | json }},
-        noResultsFor: {{ 'general.search.no_results_for' | t | json }},
-        articles: {{ 'blogs.article.articles' | t | json }},
-        successMessage: {{ 'general.share.success_message' | t | json }},
-      },
-      settings: {
-        badge_sale_type: {{ settings.badge_sale_type | json }},
-        animate_hover: {{ settings.animations_hover_enable | json }},
-        animate_scroll: {{ settings.animations_scroll_enable | json }},
-        show_locale_desktop: {{ settings.show_locale_desktop | json }},
-        show_locale_mobile: {{ settings.show_locale_mobile | json }},
-        show_currency_desktop: {{ settings.show_currency_desktop | json }},
-        show_currency_mobile: {{ settings.show_currency_mobile | json }},
-        currency_select_type: {{ settings.currency_select_type | json }},
-        currency_code_enable: {{ settings.currency_code_enable | json }},
-        cycle_images_hover_delay: {{ settings.cycle_images_hover_delay }}
-      },
-      info: {
-        name: 'pipeline'
-      },
-      version: '8.1.1',
-      moneyFormat: {{ shop.money_format | json }},
-      shopCurrency: {{ shop.currency | json }},
-      currencyCode: {{ cart.currency.iso_code | json }}
-    }
-    let windowInnerHeight = window.innerHeight;
-    document.documentElement.style.setProperty('--full-screen', `${windowInnerHeight}px`);
-    document.documentElement.style.setProperty('--three-quarters', `${windowInnerHeight * 0.75}px`);
-    document.documentElement.style.setProperty('--two-thirds', `${windowInnerHeight * 0.66}px`);
-    document.documentElement.style.setProperty('--one-half', `${windowInnerHeight * 0.5}px`);
-    document.documentElement.style.setProperty('--one-third', `${windowInnerHeight * 0.33}px`);
-    document.documentElement.style.setProperty('--one-fifth', `${windowInnerHeight * 0.2}px`);
-
-    window.isRTL = document.documentElement.getAttribute('dir') === 'rtl';
-  </script>
-
-  {%- if request.page_type contains 'customers/' -%}
-    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
-  {%- endif -%}
-
-  <!-- Theme Javascript ============================================================== -->
-  <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
-  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
-
-  {% comment %} Critical JS {% endcomment %}
-  <script>
-    function addLoadingClassToLoadingImages(container) {
-      container.querySelectorAll('[data-needs-loading-animation] img').forEach((el) => {
-        if (!el.complete) {
-          el.parentNode.classList.add('loading-shimmer');
+    {%- comment -%}
+      Removed 2026-04-26 PM: lazysizes.js preload + script tag below.
+      All theme-side data-src/data-bgset usages migrated to native
+      loading="lazy" earlier today. Theme.js's lazySizes API call is
+      guarded (window.lazySizes && ...) so no-ops cleanly. The
+      "lazyloaded" event listener at theme.js:7207 is now a no-op
+      (event never fires) but only cleared placeholder background-
+      images on .lazy-image elements — cosmetic, no functional break.
+    {%- endcomment -%}
+    <link
+      rel="preload"
+      href="{{ 'vendor.js' | asset_url }}"
+      as="script">
+    <link
+      rel="preload"
+      href="{{ 'theme.js' | asset_url }}"
+      as="script">
+    <link rel="preload"
+      href="{{ 'theme.css' | asset_url }}"
+      as="style">
+    <link rel="preload"
+      href="{{ 'custom-theme.css' | asset_url }}"
+      as="style">
+    {%- comment -%}
+      Deferred 2026-04-27 — was render-blocking 600 ms per Lighthouse PSI.
+      tiny.content.min.css is the largest single render-blocking CSS in the head
+      after critical-css; same media=print swap pattern as the other deferrals.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'tiny.content.min.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'tiny.content.min.css' | asset_url }}"></noscript>
+    
+    {% include 'pro-blogger-section-wrapper' %}
+    {%- comment -%}
+      Replaced 2026-04-26 PM (second iteration): the previous attempt
+      deferred 4 separate CSS files (bcpo, font-awesome, bold-upsell
+      x2) via media=print swap. That triggered 4 separate style-recalc
+      events on async load and TBT regressed +2,850ms. Bundling all
+      4 into a single deferred-extras.css = one fetch, one recalc.
+      Loaded right before custom-theme.css so it can be overridden if
+      needed. font-awesome and bcpo are now self-hosted (was Bootstrap
+      CDN + Heroku); cuts 2 third-party origin handshakes too.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'deferred-extras.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'deferred-extras.css' | asset_url }}"></noscript>
+    <script>
+      var bcpo_product = {{ product | json }};{% if product.metafields.bcpo.bcpo_data %}
+        var bcpo_data = {{ product.metafields.bcpo.bcpo_data }};{% endif %}{% if shop.metafields.bcpo.bcpo_settings %}
+        var bcpo_settings = {{ shop.metafields.bcpo.bcpo_settings }};{% endif %}var inventory_quantity = [];{% for v in product.variants %}inventory_quantity.push({{v.inventory_quantity}});{% endfor %}if (bcpo_product) {
+        for (var i = 0; i < bcpo_product.variants.length; i += 1) {
+          bcpo_product.variants[i].inventory_quantity = inventory_quantity[i];
         }
-      });
-    }
-
-    // Remove loading class from all already loaded images
-    function removeLoadingClassFromLoadedImages(container) {
-      container.querySelectorAll('img').forEach((el) => {
-        if (el.complete) {
-          delete el.parentNode.dataset.needsLoadingAnimation;
-          el.parentNode.classList.remove('loading-shimmer');
-        }
-      });
-    }
-
-    // Remove loading class from image on `load` event
-    function handleImageLoaded(el) {
-      if (el.tagName == 'IMG' && el.parentNode.classList.contains('loading-shimmer')) {
-        delete el.parentNode.dataset.needsLoadingAnimation;
-        el.parentNode.classList.remove('loading-shimmer');
       }
-    }
+      window.bcpo = window.bcpo || {};
+      bcpo.cart = {{cart | json}};
+      bcpo.ogFormData = FormData;
+    </script>
 
-    // Watch for any load events that bubble up from child elements
-    document.addEventListener(
-      'load',
-      (e) => {
-        const el = e.target;
+    {% include 'shop-sheriff-pwa' %}
+    {%- comment -%}
+      Removed 2026-04-26: shop-sheriff-amp include. Was emitting
+      <link rel="amphtml"> on every product/collection/blog/article
+      page, which Google was crawling and using to auto-populate
+      mobile_link in Merchant Center (sending Google Shopping mobile
+      traffic to /a/s/ AMP URLs). Removing the include lets Google
+      drop mobile_link on next crawl (~24-48h). Step 1 of 2 in the
+      AMP sunset — step 2 is uninstall Shop Sheriff AMP app from
+      Shopify admin (saves $99/mo).
+    {%- endcomment -%}
 
-        // Capture load events from img tags and then remove their `loading-shimmer` class
-        handleImageLoaded(el);
-      },
-      true
-    );
+    {%- comment -%} Defer Searchanise init.js to unblock first paint; widget enhances after parse. {%- endcomment -%}
+    <script src="//www.searchanise.com/widgets/shopify/init.js?a=7K0f1C4k5q" defer="defer"></script>
 
-    // Tasks to run when the DOM elements are available
-    window.addEventListener('DOMContentLoaded', () => {
-      addLoadingClassToLoadingImages(document);
-    });
-  </script>
+    {%- comment -%}
+      LimeSpot SDK gated 2026-04-28 — was loading on every template
+      including /customers/* (customer-area pages: account, login,
+      addresses, orders, register, reset-password, activate). LimeSpot's
+      own PageInfo init in snippets/limespot.liquid doesn't have a
+      branch for customer-area templates — it just loads the SDK
+      (300+ KB) but doesn't supply PageInfo, so the recs widget
+      silently no-ops. Was contributing to /account's 30% TTFB-good
+      and 44% LCP-good per real-shopper RUM (beads 2t5).
 
-  <script>
-    (function () {
-      function onPageShowEvents() {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(initCartEvent, { timeout: 500 })
-        } else {
-          initCartEvent()
+      Skip on customers/* templates (no commercial-discovery context
+      anyway — visitor is logged in, browsing their own account).
+      Real-shopper LimeSpot recs still load on homepage / collection /
+      PDP / cart / search where they actually drive conversion.
+    {%- endcomment -%}
+    {%- unless template contains 'customers/' -%}
+      {% include 'limespot' %}
+    {%- endunless -%}
+
+    {% comment %} 2026-05-09: Treedify uninstalled (issue ijh) — removed empty snippet render. {% endcomment %}
+
+    {% if product.featured_media.preview_image %}
+      {%- assign media = product.featured_media -%}
+      <link
+        rel="preload"
+        as="image"
+        href="{{ media.preview_image | image_url: width: 550 }}"
+        srcset="{%- if media.preview_image.width >= 550 -%}
+        {{ media.preview_image | image_url: width: 550 }} 550w,{%- endif -%}
+      {%- if media.preview_image.width >= 1100 -%}
+        {{ media.preview_image | image_url: width: 1100 }} 1100w,{%- endif -%}
+      {%- if media.preview_image.width >= 1680 -%}
+        {{ media.preview_image | image_url: width: 1680 }} 1680w,{%- endif -%}
+      {%- if media.preview_image.width >= 2048 -%}
+        {{ media.preview_image | image_url: width: 2048 }} 2048w,{%- endif -%}
+      {%- if media.preview_image.width >= 4096 -%}
+        {{ media.preview_image | image_url: width: 4096 }} 4096w{%- endif -%}"
+      sizes="(min-width: 768px), 50vw, 100vw">
+    {% endif %}
+
+    {%- comment -%}
+      Article hero LCP preload 2026-05-04 (issue 9hw). GA4 RUM showed
+      40–88% poor LCP on hair-education blog articles. The hero snippet
+      was loading="lazy" by default. Adding eager:true on the render call
+      (sections/article.liquid) adds fetchpriority=high, but the browser
+      still discovers the image late (after CSS/JS preload finishes).
+      This <link rel=preload> lets the browser queue the WebP fetch
+      during initial HTML parse — the browser preload scanner picks it
+      up before render-blocking resources finish.
+      Gated on request.page_type == 'article' + article.image so it only
+      fires on blog article pages that actually have a hero image.
+      imagesrcset/imagesizes are the correct attributes for preloading
+      responsive images (not srcset/sizes which are for <img>/<source>).
+    {%- endcomment -%}
+    {%- if request.page_type == 'article' and article.image -%}
+      <link
+        rel="preload"
+        as="image"
+        href="{{ article.image | image_url: width: 900, format: 'webp' }}"
+        imagesrcset="{%- if article.image.width >= 540 -%}{{ article.image | image_url: width: 540, format: 'webp' }} 540w,{%- endif -%}
+          {%- if article.image.width >= 900 -%}{{ article.image | image_url: width: 900, format: 'webp' }} 900w,{%- endif -%}
+          {%- if article.image.width >= 1400 -%}{{ article.image | image_url: width: 1400, format: 'webp' }} 1400w,{%- endif -%}
+          {%- if article.image.width >= 1800 -%}{{ article.image | image_url: width: 1800, format: 'webp' }} 1800w{%- endif -%}"
+        imagesizes="100vw"
+        type="image/webp">
+    {%- endif -%}
+
+    {%- comment -%}
+      First-body-image LCP preload (bd iy4m, 2026-05-16). The 9hw preload
+      above covers article.image, but field audit (2026-05-16) showed many
+      high-traffic articles have a blank article.image OR have
+      section.settings.blog_show_featured_image = false → the hero block at
+      sections/article.liquid:27-39 does NOT render. In that case the actual
+      LCP is the FIRST body <img>, which article-content-with-img-dims:170-184
+      (issue 7tq) marks fetchpriority="high" + loading="eager" — but no
+      preload is issued, so the LCP image loads cold from the post-CSS
+      critical path.
+
+      Fix: extract the first <img src=> from article.content and emit a
+      preload. Liquid has no regex; uses split chains:
+        article.content → split '<img ' → [1] → split '>' → first
+                       → split 'src="' → [1] → split '"' → first.
+
+      Verified pre-fix curl audit on three top-offending articles:
+        salon-hair-color-vs-box-dye-...:    hero block missing, 0 preloads.
+        before-and-after-purple-shampoo:    hero block missing, 0 preloads.
+        purple-vs-blue-shampoo-philippines: hero block missing, 0 preloads.
+      Each has an eager body img that loads cold — this preload covers them.
+
+      Browser handles the case where article.image preload also fires: both
+      preloads are queued; whichever the page actually renders as LCP wins
+      the race. No harm from over-preloading by ~1 image; it's a known LCP
+      optimisation pattern (Lighthouse "preload LCP image" suggestion).
+    {%- endcomment -%}
+    {%- if request.page_type == 'article' -%}
+      {%- comment -%}
+        Normalise article.content so the extraction is robust to whitespace
+        variations in the rich-text editor's output. Two-step normalisation:
+          1. Replace `<img` with `<img ` (force trailing space).
+          2. Split on '<img ' — chunks[1] is everything after the first <img.
+        Then split on 'src="' (with double-quote fallback to single-quote)
+        to extract the src URL. Skip if URL doesn't look like a valid path.
+      {%- endcomment -%}
+      {%- assign _normalised = article.content | default: '' | replace: '<img', '<img ' -%}
+      {%- assign _body_chunks = _normalised | split: '<img ' -%}
+      {%- assign _first_body_img_url = '' -%}
+      {%- if _body_chunks.size > 1 -%}
+        {%- assign _first_img_attrs = _body_chunks[1] | split: '>' | first -%}
+        {%- assign _src_segments_dq = _first_img_attrs | split: 'src="' -%}
+        {%- if _src_segments_dq.size > 1 -%}
+          {%- assign _first_body_img_url = _src_segments_dq[1] | split: '"' | first -%}
+        {%- else -%}
+          {%- assign _src_segments_sq = _first_img_attrs | split: "src='" -%}
+          {%- if _src_segments_sq.size > 1 -%}
+            {%- assign _first_body_img_url = _src_segments_sq[1] | split: "'" | first -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+      {%- if _first_body_img_url and _first_body_img_url != '' and _first_body_img_url contains '/' -%}
+        <link rel="preload" as="image" href="{{ _first_body_img_url }}" fetchpriority="high">
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="shortcut icon"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+        type="image/png">
+    {%- else -%}
+      <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    {%- endif -%}
+
+    <!-- Title and description ================================================ -->
+    {% capture seo_title %}
+      {%- assign title_content = page_title -%}
+      {% if title_override %}
+        {%- assign title_content = title_override -%}
+      {% endif %}
+      {{ title_content }}
+      {%- if current_tags -%}
+        {%- assign meta_tags = current_tags | join: ', ' -%}
+        &ndash;
+        {{ 'general.meta.tags' | t: tags: meta_tags }}
+      {%- endif -%}
+      {%- if current_page != 1 -%}
+        &ndash;
+        {{ 'general.meta.page' | t: page: current_page }}
+      {%- endif -%}
+      {%- assign title_downcase = title_content | downcase | strip -%}
+      {%- assign name_downcase = shop.name | downcase | strip -%}
+      {%- unless title_downcase contains name_downcase -%}
+        &ndash;
+        {{ shop.name }}
+      {%- endunless -%}
+    {% endcapture %}
+    {%- comment smartseo_integration_begin_meta_data -%}<title>
+      {{ seo_title }}
+    </title>{%- endcomment smartseo_integration_end_meta_data -%}
+
+    {%- if page_description -%}
+      {%- comment smartseo_integration_begin_meta_data -%}{%- comment smartseo_integration_begin_meta_data -%}<meta name="description" content="{{ page_description | escape }}">{%- endcomment smartseo_integration_end_meta_data -%}{%- endcomment smartseo_integration_end_meta_data -%}
+    {% elsif default_description %}
+      {%- comment smartseo_integration_begin_meta_data -%}{%- comment smartseo_integration_begin_meta_data -%}<meta name="description" content="{{ default_description | escape }}">{%- endcomment smartseo_integration_end_meta_data -%}{%- endcomment smartseo_integration_end_meta_data -%}
+    {%- endif -%}
+
+    {%- render 'social-meta-tags' -%}
+
+    <!-- CSS ================================================================== -->
+    {% render 'custom-fonts' %}
+
+    {%- comment -%}
+      Inlined 2026-04-26 PM: was render-blocking <link href="font-
+      settings.css" /> with ~450ms duration. Rendering inline saves
+      the round-trip + parse latency. The @font-face declarations
+      themselves are tiny (~1.5KB) and use font_display: 'swap'.
+    {%- endcomment -%}
+    <style>{% render 'font-settings-inline' %}</style>
+    {%- comment -%}
+      Removed 2026-04-26 PM: Google Fonts <link> for Playfair Display.
+      Now self-hosted via @font-face declarations in
+      snippets/font-settings-inline.liquid (inlined above). Eliminates:
+      - 1 third-party CSS fetch (fonts.googleapis.com)
+      - 1 third-party font fetch (fonts.gstatic.com)
+      - 2 unused preconnects (handled below)
+    {%- endcomment -%}
+
+    {% render 'css-variables' %}
+
+    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'theme.css' | asset_url }}"></noscript>
+    <link rel="stylesheet" href="{{ 'custom-theme.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'custom-theme.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      Plyr (video player) styles split out of theme.css 2026-04-26.
+      Was 32.6 KB of render-blocking CSS shipped on every page even
+      though Plyr only renders on PDPs and sections with video. Loaded
+      via preload+swap so it arrives async — Plyr JS hydration takes
+      seconds anyway, the styles just need to be present by then.
+    {%- endcomment -%}
+    {%- comment -%}
+      Switched 2026-04-26 PM from `preload as=style` to `media=print
+      + onload swap` for these 4 split CSS bundles. The preload
+      pattern marks the fetch HIGH PRIORITY, which on Slow 4G was
+      competing with the LCP image for bandwidth (Lighthouse showed
+      LCP regression from 6.8s -> 10.2s after the round-2 extraction).
+      The media=print pattern is the same async-load technique we use
+      for theme.css/custom-theme.css below — browser fetches at LOW
+      priority, doesn't block render, doesn't starve LCP.
+    {%- endcomment -%}
+    {%- comment -%}
+      Gated 2026-04-26 PM: load each split CSS only on templates that
+      actually use it. After round-2 split + media=print swap, mobile
+      LCP still regressed 6.8s -> 11.3s because 4 extra HTTP fetches
+      add TTFB on Slow 4G even at low priority. Gating reduces the
+      extra-fetch tax to 0 on the homepage and most pages, ~1 fetch
+      on cart, ~3 on PDP. Plyr also fires on collection (video block).
+    {%- endcomment -%}
+    {%- if template contains 'product' -%}
+      <link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
+      <link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}"></noscript>
+      <link rel="stylesheet" href="{{ 'model_viewer.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'model_viewer.css' | asset_url }}"></noscript>
+    {%- elsif template contains 'collection' -%}
+      <link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'plyr.css' | asset_url }}"></noscript>
+    {%- endif -%}
+    {%- comment -%}
+      cart.css = SHARED rules only (.cart__message free-shipping promo +
+      .cart__graph progress dots). Used by both the slide-out drawer
+      (snippets/cart-drawer.liquid, on every page) AND the standalone
+      /cart page. Loaded on every template here. Down from 465 lines
+      to 199 lines after the 2026-04-28 split (beads hairmnl-theme-5zj).
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'cart.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'cart.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      cart-page.css = page-only rules (.cart__template grid layout +
+      .template__cart__footer totals/checkout grid). Only used on the
+      standalone /cart page (sections/cart.liquid). Gated to template ==
+      'cart' to keep ~4KB / ~1KB gzipped off PDP/collection/homepage/etc.
+      Split out 2026-04-28 — see beads hairmnl-theme-5zj.
+    {%- endcomment -%}
+    {%- if template == 'cart' -%}
+      <link rel="stylesheet" href="{{ 'cart-page.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'cart-page.css' | asset_url }}"></noscript>
+    {%- endif -%}
+    {% render 'css-overrides' %}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      let root = '{{ routes.root_url }}';
+      if (root[root.length - 1] !== '/') {
+        root = `${root}/`;
+      }
+      var theme = {
+        routes: {
+          root_url: root,
+          cart: '{{ routes.cart_url }}',
+          cart_add_url: '{{ routes.cart_add_url }}',
+          product_recommendations_url: '{{ routes.product_recommendations_url }}'
+        },
+        assets: {
+          photoswipe: '{{ "photoswipe.js" | asset_url }}',
+          smoothscroll: '{{ "smoothscroll.js" | asset_url }}',
+          swatches: '{{ "swatches.json" | asset_url }}',
+          noImage: '{{ "nil.jpg" | asset_url }}',
+          base: '{{ "nil.jpg" | asset_url | split: "nil.jpg" | first }}'
+        },
+        strings: {
+          swatchesKey: {{ 'general.swatches.color' | t | json }},
+          addToCart: {{ 'products.product.add_to_cart' | t | json }},
+          estimateShipping: {{ 'cart.shipping.estimate_shipping' | t | json }},
+          noShippingAvailable: {{ 'cart.shipping.no_shipping_available' | t | json }},
+          free: {{ 'cart.shipping.free' | t | json }},
+          from: {{ 'products.general.from' | t | json }},
+          preOrder: {{ 'products.product.pre_order' | t | json }},
+          soldOut: {{ 'products.product.sold_out' | t | json }},
+          sale: {{ 'products.product.sale' | t | json }},
+          subscription: {{ 'products.product.subscription' | t | json }},
+          unavailable: {{ 'products.product.unavailable' | t | json }},
+          unitPrice: {{ 'products.product.unit_price_label' | t | json }},
+          unitPriceSeparator: {{ 'general.accessibility.unit_price_separator' | t | json }},
+          stockout: {{ 'cart.general.stockout' | t | json }},
+          products: {{ 'products.general.products' | t | json }},
+          pages: {{ 'general.page.pages' | t | json }},
+          collections: {{ 'collections.sidebar.collections' | t | json }},
+          resultsFor: {{ 'general.search.results_for' | t | json }},
+          noResultsFor: {{ 'general.search.no_results_for' | t | json }},
+          articles: {{ 'blogs.article.articles' | t | json }}
+        },
+        settings: {
+          badge_sale_type: {{ settings.badge_sale_type | json }},
+          search_products: {{ settings.search_products | json }},
+          search_collections: {{ settings.search_collections | json }},
+          search_pages: {{ settings.search_pages | json }},
+          search_articles: {{ settings.search_articles | json }},
+          animate_hover: {{ settings.animations_hover_enable | json }},
+          animate_scroll: {{ settings.animations_scroll_enable | json }}
+        },
+        info: {
+          name: 'pipeline'
+        },
+        moneyFormat: {{ shop.money_format | json }},
+        version: '6.1.3'
+      }
+      let windowInnerHeight = window.innerHeight;
+      document.documentElement.style.setProperty('--full-screen', `${windowInnerHeight}px`);
+      document.documentElement.style.setProperty('--three-quarters', `${
+        windowInnerHeight * 0.75
+      }px`);
+      document.documentElement.style.setProperty('--two-thirds', `${
+        windowInnerHeight * 0.66
+      }px`);
+      document.documentElement.style.setProperty('--one-half', `${
+        windowInnerHeight * 0.5
+      }px`);
+      document.documentElement.style.setProperty('--one-third', `${
+        windowInnerHeight * 0.33
+      }px`);
+      document.documentElement.style.setProperty('--one-fifth', `${
+        windowInnerHeight * 0.2
+      }px`);
+
+      window.lazySizesConfig = window.lazySizesConfig || {};
+      window.lazySizesConfig.loadHidden = false;
+    </script>
+
+    {%- if request.page_type contains 'customers/' -%}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    <!-- Theme Javascript ============================================================== -->
+    {%- comment -%}
+      Removed 2026-04-26 PM: lazysizes.js (~25 KB JS, 1,680 ms total
+      CPU per Lighthouse). Theme code no longer depends on it after
+      today's data-src + data-bgset migrations to native loading="lazy".
+      Asset file kept in /assets/ for rollback if needed.
+    {%- endcomment -%}
+    {%- comment -%}
+      Drawer-toggle click intercept (added 2026-04-28; rewritten 2026-04-28
+      after a Cloudflare-bot-challenge regression).
+
+      Background: header cart icon and other [data-drawer-toggle] buttons
+      have BOTH href={routes.cart_url} (link fallback) AND a click handler
+      bound by deferred theme.js that does preventDefault and opens the
+      drawer. On fast pages — or when theme.js fails to fully load (e.g.,
+      after a Cloudflare bot-detection challenge throttles the user's IP) —
+      the click falls through to link navigation and the user lands on the
+      standalone /cart page instead of seeing the drawer.
+
+      First version (queue + replay on DOMContentLoaded) caused a worse
+      regression: the synthetic queued.click() replay needed theme.js's
+      button-level handler to be bound by replay-time. If theme.js had
+      not bound (Cloudflare-induced loading delay/failure), the replayed
+      click bubbled to the link href and navigated.
+
+      This version is self-contained: capture-phase listener at document
+      level intercepts every [data-drawer-toggle] click, preventDefault +
+      stopImmediatePropagation (suppresses theme.js's redundant button-
+      level handler), and dispatches theme:drawer:toggle DIRECTLY on the
+      matched drawer element. The Drawer instance's listener (bound in
+      theme.js's drawer constructor at section-load time) handles toggle.
+
+      Works whether or not theme.js's connectToggle bound its own click
+      handler — only depends on the Drawer instance existing in DOM and
+      its toggle listener being attached. If theme.js fails entirely
+      (no Drawer instance), click does nothing — better than wrong /cart
+      navigation. ~450 bytes inline cost, runs before first paint.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-drawer-toggle]');
+          if (!btn) return;
+          var key = btn.getAttribute('data-drawer-toggle');
+          var drawer = document.querySelector('[data-drawer="' + key + '"]');
+          if (!drawer) return; // no drawer in DOM, let link fallback navigate
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          drawer.dispatchEvent(new CustomEvent('theme:drawer:toggle', { bubbles: false }));
+        }, true);
+      })();
+    </script>
+    {%- comment -%}
+      RUM removed 2026-04-28 PM — was a duplicate of the existing
+      snippets/web-vitals-reporter.liquid (shipped 2 days earlier in
+      commit 367f920 — uses Google's official web-vitals.js v4
+      attribution build with TTFB + metric_rating + debug_target +
+      navigation_type, richer than this inline block).
+
+      The existing reporter is rendered at theme.liquid line ~874
+      ({% render 'web-vitals-reporter' %}) and pushes events to GTM
+      as event=LCP|CLS|INP|FCP|TTFB (each metric its own event)
+      with params: value, metric_id, metric_value, metric_delta,
+      metric_rating, metric_navigation_type, debug_target, page_path.
+
+      My duplicate inline reporter would have double-counted every
+      vital event in GA4. Removing now. The js_error tracking below
+      is genuinely new (existing reporter doesn't track JS errors),
+      so kept.
+    {%- endcomment -%}
+    {%- comment -%}
+      JS error tracking — added 2026-04-28.
+
+      Captures uncaught exceptions and unhandled promise rejections,
+      pushes to window.dataLayer for GTM forwarding to GA4. Pairs with
+      the RUM reporter above — together: WHEN errors happen + how
+      they correlate with web-vitals degradation.
+
+      Why inline in head: error listeners must be installed BEFORE any
+      script can throw. An external file would miss errors from the
+      deferred bundle's first-frame execution.
+
+      Throttled to max 10 errors per session to avoid:
+        - Flooding GA4 quota (custom events have daily caps)
+        - Throttling shopper bandwidth on a runaway error loop
+        - Doxxing the error to GA4 hundreds of times in one session
+
+      Cost: ~500 bytes inline. Only activates on actual errors.
+
+      Receives in GTM:
+        event: hairmnl_js_error  (prefixed to avoid collision with Elevar's own js_error push)
+        error_message: error.message (truncated 200 chars)
+        error_source: filename:line:col (truncated 100 chars)
+        error_type: 'error' | 'rejection'
+
+      GA4-side event name is still 'js_error' (set in GTM tag eventName).
+      The dataLayer event name was renamed from js_error → hairmnl_js_error
+      on 2026-05-02 because Elevar's old install also pushes {event:'js_error'}
+      with its own field names — that collision fired our GTM trigger but our
+      DLVs (reading error_type etc.) returned undefined for Elevar's events,
+      producing ~30k (not set) hits/7d. GTM trigger updated to match.
+    {%- endcomment -%}
+    {%- comment -%}
+      A/B testing framework — added 2026-04-28.
+
+      Foundation for theme-side experiments. Currently NO TESTS DEFINED;
+      add entries to the `TESTS` object below to start an experiment.
+
+      How a test works:
+        1. Add a key to TESTS with weights (typically 50/50 split):
+             TESTS = {
+               'cart-bar-style': { weights: { A: 50, B: 50 } }
+             };
+        2. Variant is assigned ONCE per shopper, persisted in cookie
+           (_ab_<testId>) for 90 days, stable across pages and sessions.
+        3. Variant is added as a CSS class on <html>:
+             html.ab-cart-bar-style-A { ... A styling ... }
+             html.ab-cart-bar-style-B { ... B styling ... }
+           (or check via JS: document.documentElement.classList.contains(...))
+        4. Variant is pushed to window.dataLayer:
+             { event: 'ab_test', ab_test_id, ab_variant }
+           GTM forwards to GA4 as a custom event for segmentation.
+
+      QA override: append ?_ab=A or ?_ab=B to any URL to force a variant
+      (one URL param applies to all active tests — useful for spot checks,
+      not for production traffic). Override does NOT persist in cookie.
+
+      Cost: ~700 bytes inline. Zero overhead when TESTS is empty (default).
+      Cookie write only on first assignment per test.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        var TESTS = {
+          // Add experiments here. Example:
+          // 'cart-bar-style': { weights: { A: 50, B: 50 } },
+        };
+        if (Object.keys(TESTS).length === 0) return;
+        var dl = (window.dataLayer = window.dataLayer || []);
+        function getVariant(id, weights) {
+          var urlOverride = new URLSearchParams(location.search).get('_ab');
+          if (urlOverride) return urlOverride;
+          var key = '_ab_' + id;
+          var m = document.cookie.match(new RegExp('(^|;\\s*)' + key + '=([^;]+)'));
+          if (m) return m[2];
+          var total = 0;
+          for (var k in weights) total += weights[k];
+          var rand = Math.random() * total, sum = 0, variant = Object.keys(weights)[0];
+          for (var k2 in weights) { sum += weights[k2]; if (rand < sum) { variant = k2; break; } }
+          document.cookie = key + '=' + variant + ';path=/;max-age=' + (90 * 24 * 3600);
+          return variant;
         }
-        function initCartEvent(){
-          window.fetch(window.theme.routes.cart + '.js')
-          .then((response) => {
-            if(!response.ok){
-              throw {status: response.statusText};
-            }
-            return response.json();
-          })
-          .then((response) => {
-            document.dispatchEvent(new CustomEvent('theme:cart:change', {
-              detail: {
-                cart: response,
-              },
-              bubbles: true,
-            }));
-            return response;
-          })
-          .catch((e) => {
-            console.error(e);
+        for (var id in TESTS) {
+          var v = getVariant(id, TESTS[id].weights);
+          document.documentElement.classList.add('ab-' + id + '-' + v);
+          dl.push({ event: 'ab_test', ab_test_id: id, ab_variant: v });
+        }
+      })();
+    </script>
+    <script>
+      (function () {
+        var dl = (window.dataLayer = window.dataLayer || []);
+        var errorCount = 0;
+        var MAX_ERRORS = 10;
+        function send(type, message, source) {
+          if (errorCount >= MAX_ERRORS) return;
+          errorCount++;
+          dl.push({
+            event: 'hairmnl_js_error',
+            error_type: type,
+            error_message: String(message || '').slice(0, 200),
+            error_source: String(source || '').slice(0, 100)
           });
         }
+        addEventListener('error', function (e) {
+          var src = (e.filename || '') + ':' + (e.lineno || 0) + ':' + (e.colno || 0);
+          // p8j 2026-05-10: prefer e.error.name (TypeError, ReferenceError, SyntaxError, etc.)
+          // for first-party errors. Cross-origin errors have e.error redacted to null by the
+          // browser — those fall back to the literal "error" bucket. Promise rejections stay
+          // categorical via the unhandledrejection handler below.
+          var t = (e.error && e.error.name) ? e.error.name : 'error';
+          send(t, e.message, src);
+        }, { capture: true });
+        addEventListener('unhandledrejection', function (e) {
+          var msg = e.reason && (e.reason.message || e.reason.toString()) || 'unknown rejection';
+          var src = e.reason && e.reason.stack ? e.reason.stack.split('\n')[1] || '' : '';
+          send('rejection', msg, src.trim());
+        });
+      })();
+    </script>
+    <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
+    {%- comment -%}
+      jquery.min.js was loaded via Shopify's script_tag filter (which
+      emits no async/defer), making this 84KB lib render-blocking on
+      every page. Switched to defer + moved BEFORE theme.js because
+      theme.js calls jQuery.getJSON(); deferred scripts execute in
+      document order, so jQuery must come first. Inline <script>
+      blocks elsewhere that use $() were converted to use a
+      DOMContentLoaded wrapper (deferred scripts run before DCL fires,
+      so jQuery is loaded by the time those handlers run).
+    {%- endcomment -%}
+    <script src="{{ 'jquery.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+    {%- comment -%}
+      Cart pre-init dispatcher. 2026-04-28: removed the requestIdleCallback
+      wrapper that delayed the cart fetch until the main thread was idle.
+      That delay was several hundred ms on a busy page (especially after
+      today's perf-defer push pushed jquery + theme.js + storepickup.js +
+      vendor.js into the deferred queue). Without the cart pre-fetched,
+      opening the slide-out drawer triggered an on-demand /cart.js fetch
+      and rendered the loading skeleton for several seconds. Eager dispatch
+      starts the fetch the moment pageshow fires, so by user-click time
+      this.cart is usually populated and CartItems.loadHTML() runs instantly.
+
+      Kept the pageshow event (not a one-shot timer) so bfcache restores
+      also re-fire the cart init — important for back-button navigation.
+
+      Cost: a /cart.js fetch a few hundred ms earlier than before. /cart.js
+      is async, never render-blocking, so this doesn't move LCP/FCP.
+    {%- endcomment -%}
+    <script>
+      (function() {
+        function onPageShowEvents() {
+          document.documentElement.dispatchEvent(new CustomEvent('theme:cart:init', {bubbles: true}));
+        }
+        window.onpageshow = onPageShowEvents;
+      })();
+    </script>
+
+    {% include "loyaltylion" %}
+
+    {%- comment -%}
+      VisualQuizBuilder + BookThatApp uninstalled from Shopify 2026-05-13.
+      The createElement guard that blocked their CDN scripts on non-quiz/
+      non-studio pages (bd 8z9 + xex + p84) was removed in the same commit —
+      with the apps uninstalled, SATCB no longer fetches them, so the guard
+      has nothing to block. See bd hairmnl-theme-??? for the cleanup.
+    {%- endcomment -%}
+    {%- comment -%}
+      Pro Blogger interim CSS defer (bd 01vl.2, 2026-05-16). Intercepts
+      problogger.css + owl.carousel.min.css + owl.theme.min.css <link
+      rel=stylesheet> insertions and swaps them to media=print + onload
+      rel=stylesheet pattern, removing Pro Blogger from the LCP critical
+      path. INTERIM until Vertex AI replacement (bd oyw + 01vl.3 Vertex
+      wiring) lands; remove this guard at that time.
+    {%- endcomment -%}
+    <script>
+    (function() {
+      var PATTERNS = ['problogger.css', 'owl.carousel'];
+      var matches = function(href) {
+        if (typeof href !== 'string') return false;
+        for (var i = 0; i < PATTERNS.length; i++) {
+          if (href.indexOf(PATTERNS[i]) !== -1) return true;
+        }
+        return false;
       };
-      window.onpageshow = onPageShowEvents;
-    })();
-  </script>
+      var deferCSS = function(el) {
+        if (el.tagName !== 'LINK') return;
+        if (el.rel !== 'stylesheet') return;
+        if (!matches(el.href)) return;
+        el.media = 'print';
+        el.onload = function() {
+          this.media = 'all';
+          this.onload = null;
+        };
+      };
 
-  <script type="text/javascript">
-    if (window.MSInputMethodContext && document.documentMode) {
-      var scripts = document.getElementsByTagName('script')[0];
-      var polyfill = document.createElement("script");
-      polyfill.defer = true;
-      polyfill.src = "{{ 'ie11.js' | asset_url }}";
+      // 1. createElement override — catches dynamic createElement('link')
+      var _createElement = document.createElement.bind(document);
+      document.createElement = function(tag) {
+        var el = _createElement.apply(document, arguments);
+        if (typeof tag === 'string' && tag.toLowerCase() === 'link') {
+          var set = Object.getOwnPropertyDescriptor(HTMLLinkElement.prototype, 'href').set;
+          Object.defineProperty(el, 'href', {
+            configurable: true,
+            get: function() {
+              return Object.getOwnPropertyDescriptor(HTMLLinkElement.prototype, 'href').get.call(this);
+            },
+            set: function(v) {
+              set.call(this, v);
+              deferCSS(this);
+            }
+          });
+        }
+        return el;
+      };
 
-      scripts.parentNode.insertBefore(polyfill, scripts);
-    }
-  </script>
-
-  <!-- ============ HairMNL bespoke head additions (M1 port from Pipeline 6) ============ -->
-  {%- comment -%}
-    Ported 2026-05-17 from Pipeline 6's layout/theme.liquid. Per the audit
-    (os2-migration/customization-audit.md § 1), most P6 additions are
-    droppable on Pipeline 8 because P8 handles them natively or via app
-    embeds. The handful kept here:
-
-    - `canonical` snippet — handle overrides + collection query-string
-      stripping. Not in Pipeline 8 stock.
-    - `hairsalon-schema` snippet — HairSalon JSON-LD for Studio pages.
-      Custom business data.
-    - DNS prefetches for the 4 apps that DON'T self-register via
-      content_for_header. The other 9 P6 prefetches drop because their
-      apps now use App Embeds and inject their own resource hints.
-
-    Dropped vs P6 (no replacement needed on P8):
-    - 4 custom preconnects to Shopify CDNs (P8 auto-emits these)
-    - Critical-CSS inline + 5 template-gated CSS splits (P8's bundled
-      theme.css is small enough that fragmentation doesn't pay)
-    - jquery.min.js defer + custom theme.js + vendor.js preloads (P8 ships
-      a single bundled theme.js that doesn't need jQuery)
-    - Pro Blogger CSS defer interceptor (P8 lets apps self-manage)
-    - storepickup gated render (Zapiet has TAE now)
-    - bold-common, loyaltylion, mbc-bundles snippet renders (all moved
-      to TAEs per app-compatibility-matrix.md)
-  {%- endcomment -%}
-
-  {%- render 'canonical' -%}
-  {%- render 'hairsalon-schema' -%}
-
-  {%- comment -%} Preconnects for content_for_header-only apps (no TAE / no self-registering hints) {%- endcomment -%}
-  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-  <link rel="preconnect" href="https://edge.personalizer.io" crossorigin>
-  <link rel="preconnect" href="https://static.klaviyo.com" crossorigin>
-  <link rel="preconnect" href="https://tracking.aws.judge.me" crossorigin>
-
-  <!-- Shopify app scripts =========================================================== -->
-  {{ content_for_header }}
-
-  {%- comment -%} Core Web Vitals → GA4 RUM reporter. Captures LCP/CLS/INP/
-    FCP/TTFB + attribution (debug_target selector for shifts/interactions)
-    on every pageview. Powers the dashboard's RUM section and bd-issue
-    debugging.
-
-    2026-05-18 hairmnl-theme-yxte audit: discovered this snippet was also
-    orphaned by the same P4 wave-a refactor (0cd30cf) that dropped
-    css-overrides. Without it, GA4 receives only Shopify-native CWV
-    sampling (no custom dimensions, no debug_target attribution) — the
-    perf dashboard's top_inp_targets + every CLS investigation depends on
-    these custom events. Wiring back here so it loads on every pageview;
-    the snippet itself self-defers via requestIdleCallback. {%- endcomment -%}
-  {% render 'web-vitals-reporter' %}
-</head>
-
-
-<body id="{{ page_title | handle }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {{ settings.default_background }}{% if customer %} customer-logged-in{% endif %}">
-
-  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
-
-  {% sections 'group-header' %}
-  {% sections 'group-overlay' %}
-
-  <main class="main-content" id="MainContent">
-    {{ content_for_layout }}
-  </main>
-
-  {% sections 'group-footer' %}
-
-  <div class="search--popdown">
-    {% render 'search-predictive', version: 'search-popdown' %}
-  </div>
-
-  <div data-modal-container></div>
-
-  {%- comment -%} HairMNL custom JS — hand-written add-on (NOT bundled). Ported from
-    the P6 custom-theme.js per the spike report at os2-migration/p4-spike-report.md.
-    Only 3 of 10 behaviors are ported in this PR (sticky-filter-bar, product-tabs-v1,
-    header-mobile-slide-rule). Remaining 7 are scheduled in bd hairmnl-theme-2i8b.6 (M5).
-    DO NOT bundle vendor libs in here — Pipeline 8's stock theme.js already provides
-    Flickity / MicroModal / scrollLock / Rellax. Keep this file ≤1K LoC after M5.
-  {%- endcomment -%}
-  <script src="{{ 'hairmnl-custom.js' | asset_url }}" defer="defer"></script>
-
-  {%- comment -%} assets/custom-theme.css is the ~5K-LoC P6 CSS override bundle
-    that drives the megamenu, hero carousel, product cards, sliders, and all
-    P6 brand styling. The P4 wave-a port (0cd30cf, 2026-04-24) commented this
-    out pending a "P8-ported version" — but for 24 days Shopify's stale page
-    cache continued serving the previous render that DID load it, hiding the
-    latent regression.
-
-    2026-05-18 — RE-ACTIVATED (urgent): operator-reported homepage breakage
-    (no megamenu, vertical hero carousel, missing product images, vertical
-    sliders) appeared as soon as cache invalidation forced a re-render with
-    the current theme.liquid. P8-ported version is a follow-up (bd 2i8b);
-    load the P6 file as-is until that lands. Loaded render-blocking
-    (synchronous) to avoid FOUC on above-the-fold megamenu/hero. {%- endcomment -%}
-  {{ 'custom-theme.css' | asset_url | stylesheet_tag }}
-
-  {%- comment -%} HairMNL inline JS: A/B framework + JS-error tracking + Klaviyo events.
-    These three patterns were inline in P6's theme.liquid (lines 629-687 + 960-972).
-    Kept inline here to preserve the "fire before content_for_layout renders" semantics.
-    Drawer-toggle interceptor and cart pre-init dispatcher dropped — P8's stock theme.js
-    handles drawer + cart events natively via theme.events.
-  {%- endcomment -%}
-  <script>
-    (function () {
-      // A/B test framework — cookie-based variant assignment.
-      var cookieMatch = document.cookie.match(/(?:^|; )ab_variant=([^;]+)/);
-      var variant = cookieMatch ? cookieMatch[1] : (Math.random() < 0.5 ? 'a' : 'b');
-      if (!cookieMatch) {
-        document.cookie = 'ab_variant=' + variant + '; path=/; max-age=' + (60 * 60 * 24 * 30);
-      }
-      document.documentElement.classList.add('ab-' + variant);
-      (window.dataLayer = window.dataLayer || []).push({ event: 'ab_test_assigned', ab_variant: variant });
-
-      // JS error tracking — throttled to 10 per session.
-      var errorCount = 0;
-      window.addEventListener('error', function (e) {
-        if (errorCount >= 10) return;
-        errorCount++;
-        (window.dataLayer = window.dataLayer || []).push({
-          event: 'hairmnl_js_error',
-          error_message: e.message || 'unknown',
-          error_filename: e.filename || 'unknown',
-          error_lineno: e.lineno || 0,
+      // 2. MutationObserver — catches parser-inserted <link> from content_for_header
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          m.addedNodes.forEach(function(node) {
+            if (node.tagName === 'LINK') deferCSS(node);
+          });
         });
       });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    })();
+    </script>
 
-      // Klaviyo form events → gtag.
-      document.addEventListener('klaviyoForms', function (ev) {
-        if (!ev.detail || !ev.detail.type) return;
-        if (window.gtag) {
-          window.gtag('event', 'klaviyo_' + ev.detail.type, {
-            form_id: ev.detail.formId || 'unknown',
-          });
+    <!-- Shopify app scripts =========================================================== -->
+    {{ content_for_header }}
+
+    <link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      AOS animations CSS extracted 2026-04-27 from theme.css (37KB,
+      8.4% of theme.css, 252 rules). Used on 125 JSON templates (blog,
+      article, some collections); not used on homepage or most PDPs.
+      Async load via media=print swap so non-AOS pages get smaller
+      theme.css critical path. AOS JS init in theme.js is harmlessly
+      no-op when no [data-aos] elements exist on page.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'aos.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'aos.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      Per-template CSS round 3 (2026-04-27): account/customer + blog/
+      article + search + password styles extracted from theme.css
+      (94 rules / 11KB / 3% of theme.css). Async-loaded via media=print
+      swap so they don't block render on the homepage / PDP / collection
+      pages where they're never used. Template pages (login, blog post,
+      search results) still get them, just async — content renders
+      first, styles arrive within a few hundred ms.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'deferred-templates.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'deferred-templates.css' | asset_url }}"></noscript>
+
+    {%- render 'bold-common' -%}
+
+    <!-- Zapiet | Store Pickup + Delivery -->
+    {%- comment -%}
+      T6 perf 2026-05-01 — gate storepickup to product + cart only.
+      storepickup.liquid emits 9 KB inline CSS + loads 90 KB storepickup.js
+      on EVERY page. Zapiet's widget only renders on product pages (pickup
+      selector) and cart (slot confirmation) — it is never activated on
+      search results, homepage, collections, blog, or page templates.
+      Gating here saves ~99 KB (CSS + JS) on ~85% of pageviews and
+      reduces TBT on the search results page by removing one deferred script.
+    {%- endcomment -%}
+    {%- if template contains 'product' or template == 'cart' -%}
+      {% include 'storepickup' %}
+    {%- endif -%}
+    <!-- Zapiet | Store Pickup + Delivery -->
+    {%- comment -%}
+      Judge.me Core render removed 2026-04-26: the Judge.me app
+      auto-injects an identical jdgm-settings-script + jdgm-script
+      via content_for_header. Verified two byte-identical 32 KB
+      jdgmSettings dumps were emitted per page. Removing the manual
+      render saves ~34 KB inline per page with zero loss in widget
+      functionality (app injection includes more dns-prefetch hints
+      than the snippet did).
+    {%- endcomment -%}
+
+    {%- comment -%}
+      Removed 2026-04-27: gsf-conversion-pixels (Google Shopping Feed
+      app uninstalled). Snippet was 9.3 KB / 27 lines / 1 script per
+      pageview.
+    {%- endcomment -%}
+
+    <!-- AUTO GENERATED BY CODE CUSTOMIZER -->
+    {% include "code-customizer-header" %}
+    <!-- END CODE CUSTOMIZER -->
+    {%- comment -%}
+      Removed 2026-04-27: aaa-announcementbar-configuration + the
+      sibling aio_stats_lib_v1.min.js script tag. AAA Announcement Bar
+      app uninstalled. Snippet was 457 B / 14 lines / 1 script; the
+      external aio_stats lib was a separate render-blocking JS fetch
+      from staticxx.s3.amazonaws.com.
+    {%- endcomment -%}
+    {%- comment -%}
+      Removed 2026-04-26: bss-product-labels-configs unconditional
+      include. BSS Product Labels app was never installed but the
+      theme was loading the configs (3 separate JS asset files
+      bss-file-configdata*.js). Net waste with no functional effect.
+      Conditional includes for the JS itself at lines below already
+      gate on `content_for_header contains 'product_label'`, so if
+      the app is ever installed, BSS still works.
+    {%- endcomment -%}
+  
+
+    {%- comment -%} Temporarily disabled on main until vertex snippet ships. {%- endcomment -%}
+    {%- comment -%} {{ 'vertex-recommendations.css' | asset_url | stylesheet_tag }} {%- endcomment -%}
+
+</head>
+
+  <body id="{{ page_title | handle }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {{ settings.default_background }}{% if customer %} customer-logged-in{% endif %} hairmnl-theme">
+  
+    <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}
+    </a>
+
+    {% section 'announcement' %}
+    {% if template contains 'thebackbar' %}
+      {% section 'thebackbar-master-header' %}
+    {% else %}
+      {% section 'header' %}
+    {% endif %}
+
+    <main class="main-content" id="MainContent">
+      {{ content_for_layout }}<!-- End of layout -->
+	<noscript class="endOfLayoutContentX" type="text/mark"></noscript>
+      {% comment %} 2026-05-09: Treedify uninstalled (issue ijh) — removed treedify_script render. {% endcomment %}
+      {%- comment -%}
+        LimeSpot recs widget gated 2026-04-28 — same rationale as the
+        SDK include above. The <limespot> element is the recs container
+        the SDK populates with product cards. On customer-area pages
+        the SDK is also skipped (above), so this element would just
+        sit empty. Skipping the element entirely shaves a tiny bit of
+        DOM + CSS work for those templates.
+      {%- endcomment -%}
+      {%- unless template contains 'customers/' -%}
+        <limespot></limespot>
+      {%- endunless -%}
+    </main>
+
+    {% section 'footer' %}
+
+    {% section 'popups' %}
+
+    <div class="search--popdown">
+      {% render 'search-predictive', version: 'search-popdown' %}
+    </div>
+
+
+    {% render 'template-swatch' %}
+
+    <div data-modal-container></div>
+
+    {%- comment -%}
+    In order to use your custom javascript file at assets/custom.js
+    just cut this next line and paste it outside this comment.
+    <script src="{{ 'custom.js?enable_js_minification=1' | asset_url }}" defer="defer"></script>
+    {%- endcomment -%}
+    <script src="{{ 'custom-theme.js' | asset_url }}" defer="defer"></script>
+
+    <!-- Paste popup code or third party scripts below this comment line ============== -->
+    {%- comment -%}
+      Wrapped in DCL so we can defer jquery.min.js. Deferred scripts
+      execute before DCL fires, so jQuery + timber are both loaded by
+      the time this handler runs. The inner $(function(){}) shortcuts
+      were redundant once we're already in a DCL handler.
+    {%- endcomment -%}
+    <script>
+      {% if newHash %}
+        document.addEventListener('DOMContentLoaded', function () {
+          if (window.timber && timber.updateHash) timber.updateHash('{{ newHash }}');
+        });
+      {% endif %}
+      {% if resetPassword %}
+        document.addEventListener('DOMContentLoaded', function () {
+          if (window.timber && timber.resetPasswordSuccess) timber.resetPasswordSuccess();
+        });
+      {% endif %}
+    </script>
+    {%- comment -%}
+      Removed 2026-04-27: smile-initializer. Smile.io app uninstalled
+      (replaced by LoyaltyLion). Snippet was emitting a hidden
+      .smile-shopify-init div with HMAC-SHA256-computed customer data
+      attributes that nothing reads anymore. Removing skips the per-
+      pageview HMAC compute + dead HTML.
+    {%- endcomment -%}
+    {% comment %} 2026-05-09: Subscribe It uninstalled (issue ijh) — removed subscribe-it-helper include (~54 KB / 178 lines deleted). {% endcomment %}
+    <!-- Klaviyo Signup Script ============================================================== -->  
+    <script>
+      window.addEventListener("klaviyoForms", function(e) { 
+        if (e.detail.type == 'open' || e.detail.type == 'embedOpen') {
+          gtag('event', 'form_open', 'Klaviyo form', e.detail.formId);
+        }
+        if (e.detail.type == 'submit') {
+          gtag('event', 'form_submit', 'Klaviyo form', e.detail.formId);
+        }
+        if (e.detail.type == 'close') {
+          gtag('event', 'form_close', 'Klaviyo form', e.detail.formId);
         }
       });
+    </script>
+    <!-- End of Klaviyo Signup ============================================================== -->
+    {% comment %} 2026-05-09: Hextom CTB uninstalled (issue ijh) — removed hextom_ctb_main render. App embed in settings_data.json (line 3588) still references hextom-timer-bar — admin must remove via Online Store → Themes → Customize → App embeds. {% endcomment %}
+    {% render 'mbc-bundles' %}
+    {%- comment -%}
+      Booster Page Speed Optimizer was uninstalled 2026-04-25.
+      Removed the hardcoded script reference here so we stop pulling
+      ~50-100KB of zombie code from Booster's shared CDN
+      (shop 0194/1736/6592) on every page. Native theme lazy-loading
+      (loading="lazy" on <img>) handles what this app was nominally
+      doing, so no functional regression.
+    {%- endcomment -%}
+
+    <!-- Shop.js ============================================================== -->
+    {%- comment -%}
+      Defer 2026-04-29: shop.js is 177KB and was loaded via Shopify's
+      script_tag filter, which renders <script src> WITHOUT defer or
+      async — making it the only render-blocking external script on
+      the page. Slow 4G mobile audit traced ~1-1.5s of TBT here.
+
+      shop.js bundles its own lodash (no jQuery dep) and runs theme
+      Banner/Footer/etc. initializers — none of which need to fire
+      before HTML parse completes. Defer matches the pattern already
+      applied to vendor.js, theme.js, jquery.min.js, custom.js,
+      custom-theme.js, storepickup.js, and bss-b2b-js (see history
+      comments above for each).
+    {%- endcomment -%}
+    <script src="{{ 'shop.js' | asset_url }}" defer="defer"></script>
+
+    <!-- Core Web Vitals → GA4 reporter -->
+    {%- comment -%}
+      Briefly disabled 2026-04-26 EOD while investigating Schwarzkopf/
+      TIGI/K18 collection page hangs. Confirmed innocent — root cause
+      was pre-existing BSS Product Labels JS blocking lazysizes on
+      heavy collection landing pages. Re-enabled same day.
+    {%- endcomment -%}
+    {% render 'web-vitals-reporter' %}
+
+    <!-- And above this comment line ================================================== -->
+    {% if content_for_header contains 'bss-b2b' %}
+      
+    {% endif %}
+    {%- comment -%}
+      Removed 2026-04-26: dead conditional include for BSS Product
+      Labels. App not installed; orphan snippet/asset files deleted.
+    {%- endcomment -%}
+    {%- comment -%}
+      Wrapped in DCL so we can defer jquery.min.js. The B2B account
+      registration page styling now applies after DCL instead of at
+      parse time — minor flash of unstyled content on that one page,
+      but acceptable for a single low-traffic admin/registration flow.
+    {%- endcomment -%}
+    <script>
+      // BSs custom style /pages/the-backbar-account-registration
+      if (window.location.pathname == '/pages/the-backbar-account-registration') {
+        document.addEventListener('DOMContentLoaded', function () {
+          $('.rte').after($('.section-header.text-center'));
+          $('.grid').css('padding', '0 21%');
+          $('.grid').css('margin-left', '0px');
+          $('.grid__item').css('padding-left', '0px');
+          $('.rte img').css('width', '-webkit-fill-available');
+          $('.site-footer-wrapper .section-header.text-center').remove();
+          var width = $(window).width();
+          if (width < 1400) {
+            $('.grid').css('padding', '0 6%');
+          }
+        });
+      }
+    </script>
+  {%- comment -%}
+    BSS B2B Customer Portal uninstalled 2026-05-14 (bd bjk). The
+    conditional load for 'backbar-approved' customers (jquery-341-js +
+    bss-b2b-js, previously ~185 KB gated) was removed along with the
+    seven associated snippet files. Lock + Solution + LTAP variants of
+    BSS were uninstalled 2026-05-13 (bd dyp + gj0). No BSS apps remain
+    on the storefront.
+  {%- endcomment -%}
+
+
+    <style>
+
+  .jdgm-all-reviews-text {
+    text-align: center !important;
+}
+.jdgm-carousel-wrapper {
+    width: 100% !important;
+}
+.jdgm-carousel-item__review {
+  padding-bottom: 10px !important; 
+}
+.jdgm-carousel-item {  
+  padding-bottom: 10px !important; 
+}
+
+      /*   bogos CSS  */
+      @media (max-width:600px){
+        .content-promotion-message {
+          font-size: 14px;
+        } 
+      }
+      .content-promotion-message {
+          font-size: 16px;
+          font-family: 'BasisGrotesquePro-Regular';
+      }
+      a.sca-msg {
+            text-decoration: underline;
+      }
+      .slide-container.sca-modal-dialog-fg {
+            font-family: BasisGrotesquePro-Medium
+    , sans-serif !important;
+        }
+  </style>
+
+  <script src="https://satcb.azureedge.net/Scripts/satcb.min.js?shop=creations-gdc.myshopify.com" async="async" defer="defer"></script>
+
+  {%- comment -%}
+    A11y fix 9ct-3 — cc-dismiss label-content-name-mismatch.
+    Nova EU Cookie Bar injects a button with aria-label="dismiss cookie message"
+    whose visible text (e.g. "Got it" or "Dismiss") often doesn't contain the
+    full aria-label string, triggering Lighthouse label-content-name-mismatch.
+    Fix: after the cookieconsent banner mounts, sync the aria-label to the
+    button's own textContent so they match. Uses MutationObserver because
+    the banner is injected asynchronously after DOMContentLoaded.
+    Zero TBT cost — observer fires once then disconnects.
+  {%- endcomment -%}
+  <script>
+    (function () {
+      function fixCcDismissLabel(el) {
+        var text = el.textContent && el.textContent.trim();
+        if (text) el.setAttribute('aria-label', text);
+      }
+      var existing = document.querySelector('.cc-dismiss');
+      if (existing) { fixCcDismissLabel(existing); return; }
+      var obs = new MutationObserver(function (mutations, o) {
+        for (var i = 0; i < mutations.length; i++) {
+          for (var j = 0; j < mutations[i].addedNodes.length; j++) {
+            var node = mutations[i].addedNodes[j];
+            if (!node.querySelector) continue;
+            var btn = node.classList && node.classList.contains('cc-dismiss')
+              ? node : node.querySelector('.cc-dismiss');
+            if (btn) { fixCcDismissLabel(btn); o.disconnect(); return; }
+          }
+        }
+      });
+      obs.observe(document.body, { childList: true, subtree: true });
     })();
   </script>
-
-  <!-- Paste popup code or third party scripts below this comment line ============== -->
-
-
-  <!-- And above this comment line ================================================== -->
-
-</body>
+  </body>
+    {% render 'freegifts-snippet-change' %}
 </html>
