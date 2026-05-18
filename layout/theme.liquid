@@ -123,19 +123,17 @@
     images, BOGOS, Klaviyo body-injected modal, LoyaltyLion body popup,
     Nova cookie bar, etc.).
 
-    2026-05-18 hairmnl-theme-yxte — CRITICAL FIX: this render call was
-    introduced on a feature branch (claude/p4-pathb-cc commit 3c01f58) but
-    never reached main. Without it, ~23 documented CLS fixes from
-    snippets/css-overrides.liquid (added across April-May 2026) were
-    silently no-op on live since the P4 wave-a port at commit 0cd30cf.
-    Field RUM data showed #MainContent as the dominant CLS shift target
-    (422+ events across templates over 14 days) because all the chrome
-    reservation rules were dormant. Re-activating restores months of
-    CLS hardening work.
+    2026-05-18 — UPSTREAM REVERT of yxte fix (commit b0997d3). Re-activating
+    css-overrides.liquid after 24 days of dormancy (since P4 wave-a 0cd30cf)
+    caused a customer-visible homepage regression. The 23 CLS fixes are
+    valuable but at least one rule in the snippet now conflicts with current
+    homepage section styling. Re-enable rule-by-rule via a follow-up bd
+    ticket after isolating the culprit; the site has run fine without these
+    fixes for 24 days, so leaving them off restores the pre-regression state.
 
     Position: AFTER all CSS asset loads so its !important rules win cascade
     over theme.css / cart.css and the 6 deferred preload+onload sheets. {%- endcomment -%}
-  {% render 'css-overrides' %}
+  {%- comment -%} {% render 'css-overrides' %} — DISABLED, see comment above {%- endcomment -%}
 
   <script>
     document.documentElement.className = document.documentElement.className.replace('no-js', 'js');

@@ -25,6 +25,12 @@
 #   [INVESTIGATE] = unclear why orphan; needs a bd ticket to investigate
 
 # ----------------------------------------------------------------------------
+# [REGRESSION-DISABLE] — re-activation caused a customer-visible regression
+# ----------------------------------------------------------------------------
+
+snippets/css-overrides.liquid           yxte      2026-06-15   [REGRESSION-DISABLE] 2026-05-18: re-activating after 24 days dormant (b0997d3, yxte fix) broke homepage visuals. Rolled back via render-call disable. Re-enable rule-by-rule after isolating the culprit. Bd hairmnl-theme-yxte reopened.
+
+# ----------------------------------------------------------------------------
 # [P4-PORT] — Pipeline 8 migration in progress
 # ----------------------------------------------------------------------------
 
