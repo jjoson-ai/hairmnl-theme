@@ -536,7 +536,7 @@
         <tr>
           <td>How much speed would we gain from a modern theme?</td>
           <td>&ldquo;Probably a lot.&rdquo;</td>
-          <td>Main-thread blocking time drops ~90%; layout shift goes to zero. Real-user impact takes 4&ndash;8 weeks post-publish to confirm.</td>
+          <td>The clean-room install of the modern theme was ~90% faster on main-thread blocking and had zero layout shift. <strong>However</strong>, porting our custom code on top is where the gain is won or lost. As of 18 May, the development theme is faster than live on the cart page (mobile speed score 40 vs 22) but still slower on home and product pages while we work through the fixes. Real-user impact is verified only after publishing &mdash; lab numbers are directional only.</td>
         </tr>
         <tr>
           <td>Which apps would re-integrate cleanly?</td>
@@ -569,6 +569,11 @@
     <div class="eyebrow">Changelog</div>
     <h2>Update history</h2>
     <p class="lede">This document refreshes as prep-phase findings come in. The URL stays the same; the content gets sharper.</p>
+
+    <div class="history-entry">
+      <div class="history-date">18 May 2026</div>
+      <div class="history-note"><strong>v1.2</strong> &mdash; Dev-theme porting work is underway. A development copy of Pipeline 8 has been built on our store (unpublished, no customer impact) and is being measured against the live site iteratively. <strong>Cart page is already faster on the modern theme</strong> than on our current platform (mobile speed score +18 points, desktop level). Other templates show mixed results &mdash; home page and product page have regressions we are actively closing through small, measured fixes. One important lesson surfaced: when porting work re-loaded our legacy bundle (455 KB of vendor JavaScript) for visual continuity, the speed advantage of the modern theme almost completely disappeared. We have since removed that bundle from the development theme. <strong>Cutover is not authorised</strong> until the development theme matches or exceeds the live site across the five key page types.</div>
+    </div>
 
     <div class="history-entry">
       <div class="history-date">17 May 2026</div>
