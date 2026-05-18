@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * attach-and-save.mjs — extract storageState from an already-logged-in Chrome.
+ * attach-and-save.mjs — extract storageState from an already-logged-in
+ * Chromium-based browser (Chrome OR Microsoft Edge OR Brave OR Arc).
  *
  * Shopify's accounts.shopify.com page rejects ANY Playwright-controlled
  * browser, even with webdriver-flag stealth patches. Their detection
@@ -8,39 +9,53 @@
  * No client-side patch fully cloaks it.
  *
  * Workaround: don't fight the detection — use the operator's existing,
- * already-logged-in regular Chrome. Launch Chrome with the remote-
- * debugging port open, then attach Playwright via CDP and dump the
- * cookies + localStorage to a storageState.json file.
+ * already-logged-in regular browser. Launch it with the remote-debugging
+ * port open, then attach Playwright via CDP and dump the cookies +
+ * localStorage to a storageState.json file. The browser stays YOUR browser
+ * the whole time; Playwright never controls it.
  *
- * Operator workflow:
+ * Operator workflow (Microsoft Edge on macOS):
  *
- *   # 1. Quit Chrome FULLY first (otherwise the remote-debugging flag is ignored
- *   #    because there's already a Chrome process holding the user-data-dir)
- *   osascript -e 'tell application "Google Chrome" to quit'
+ *   # 1. Quit Edge FULLY first (otherwise the remote-debugging flag is ignored
+ *   #    because there's already an Edge process holding the user-data-dir)
+ *   osascript -e 'tell application "Microsoft Edge" to quit'
  *   # … wait a beat …
  *
- *   # 2. Relaunch Chrome with remote debugging enabled.
- *   #    Uses your normal Chrome profile (default User Data dir) so all
- *   #    your existing logins carry over.
- *   open -na "Google Chrome" --args --remote-debugging-port=9222
+ *   # 2. Relaunch Edge with remote debugging enabled.
+ *   #    Uses your normal Edge profile so all your existing logins carry over.
+ *   open -na "Microsoft Edge" --args --remote-debugging-port=9222
  *
- *   # 3. In that Chrome, log in to Shopify admin if not already logged in,
+ *   # 3. In that Edge, log in to Shopify admin if not already logged in,
  *   #    then visit the preview URL to confirm it works:
  *   #      https://creations-gdc.myshopify.com/?preview_theme_id=141168312419
  *   #    You should see the P8 dev theme. If you see a 404 or LIVE content,
  *   #    something is wrong; debug before continuing.
  *
- *   # 4. Run this script — it will attach to that Chrome and save cookies.
+ *   # 4. Run this script — it will attach to that Edge and save cookies.
  *   cd scripts/smoke-tests
  *   node bin/attach-and-save.mjs
  *
  *   # 5. Use cookies for tests:
  *   SHOPIFY_AUTH=.auth/storageState.json npm test
  *
- * The captured storageState includes cookies for ALL domains in your Chrome
- * session, not just Shopify. The .auth/ dir is gitignored so cookies stay
- * local. Treat the storageState.json file like a password — anyone with it
- * can act as you in Shopify admin until the session expires.
+ * Workflow on other browsers — same except step 1+2:
+ *
+ *   Google Chrome:
+ *     osascript -e 'tell application "Google Chrome" to quit'
+ *     open -na "Google Chrome" --args --remote-debugging-port=9222
+ *
+ *   Brave Browser:
+ *     osascript -e 'tell application "Brave Browser" to quit'
+ *     open -na "Brave Browser" --args --remote-debugging-port=9222
+ *
+ *   Arc (uses Chromium internals; same flag works):
+ *     osascript -e 'tell application "Arc" to quit'
+ *     open -na "Arc" --args --remote-debugging-port=9222
+ *
+ * The captured storageState includes cookies for ALL domains in your
+ * browser session, not just Shopify. The .auth/ dir is gitignored so
+ * cookies stay local. Treat the storageState.json file like a password —
+ * anyone with it can act as you in Shopify admin until the session expires.
  */
 
 import { chromium } from '@playwright/test';
@@ -61,16 +76,23 @@ let browser;
 try {
   browser = await chromium.connectOverCDP(CDP_URL);
 } catch (err) {
+  const browserApp = process.env.BROWSER_APP || 'Microsoft Edge';
   console.error('');
-  console.error('✗ Cannot connect to Chrome CDP.');
+  console.error('✗ Cannot connect to browser CDP.');
   console.error('');
-  console.error('  Chrome needs to be running with the remote-debugging flag.');
-  console.error('  Quit Chrome fully first (osascript -e \'tell application "Google Chrome" to quit\'),');
-  console.error('  then relaunch with:');
+  console.error(`  ${browserApp} needs to be running with the remote-debugging flag.`);
+  console.error('  Quit it fully first:');
   console.error('');
-  console.error('    open -na "Google Chrome" --args --remote-debugging-port=9222');
+  console.error(`    osascript -e 'tell application "${browserApp}" to quit'`);
   console.error('');
-  console.error('  After Chrome opens, log into Shopify admin if needed, then re-run this script.');
+  console.error('  Wait 2 seconds, then relaunch with the flag:');
+  console.error('');
+  console.error(`    open -na "${browserApp}" --args --remote-debugging-port=9222`);
+  console.error('');
+  console.error('  After it opens, log into Shopify admin if needed, then re-run this script.');
+  console.error('');
+  console.error('  (Set BROWSER_APP env var to use a different browser — e.g.,');
+  console.error('   BROWSER_APP="Google Chrome" or "Brave Browser" or "Arc")');
   console.error('');
   console.error(`  Underlying error: ${err.message}`);
   process.exit(1);
