@@ -28,14 +28,18 @@
       }
     }
   
-    $(function() {
-      $('#SortBy')
-        .val('{{ collection.sort_by | default: collection.default_sort_by }}')
-        .bind('change', function() {
-          Shopify.queryParams.sort_by = jQuery(this).val();
-          location.search = jQuery.param(Shopify.queryParams);
-        }
-      );
+    /* bd 2v8p 2026-05-18: jQuery removed in P4/P8 theme.js — replaced with
+       vanilla JS using URLSearchParams (preserves existing query params). */
+    document.addEventListener('DOMContentLoaded', function() {
+      var sortEl = document.getElementById('SortBy');
+      if (sortEl) {
+        sortEl.value = '{{ collection.sort_by | default: collection.default_sort_by }}';
+        sortEl.addEventListener('change', function() {
+          var params = new URLSearchParams(location.search);
+          params.set('sort_by', this.value);
+          location.search = params.toString();
+        });
+      }
     });
   </script>
   

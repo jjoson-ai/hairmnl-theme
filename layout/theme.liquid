@@ -99,6 +99,25 @@
   <link rel="preload" as="style" href="{{ 'tiny.content.min.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="{{ 'tiny.content.min.css' | asset_url }}"></noscript>
 
+  {%- comment -%} P4 regression fixes (bd 9t1l / h1vt / v2ux — 2026-05-18):
+    pswp.css + vertex-recommendations.css + cart-page.css were present on the
+    pre-P4 theme but dropped by the wave-a port (commit 0cd30cf). None are
+    render-blocking: PhotoSwipe only activates on zoom open, Vertex rails are
+    below-fold, and cart-page styles are only needed on /cart.
+    - pswp.css: deferred async (preload+onload) — 61 .pswp__ rules used by
+      snippets/zoom-pswp.liquid (rendered by sections/product.liquid).
+    - vertex-recommendations.css: render-blocking acceptable (appears
+      above-the-fold on /cart and PDP; avoid FOUC on vrec-card/.vrec-slot).
+    - cart-page.css: deferred async, conditional on cart template only.
+  {%- endcomment -%}
+  {{ 'vertex-recommendations.css' | asset_url | stylesheet_tag }}
+  <link rel="preload" as="style" href="{{ 'pswp.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ 'pswp.css' | asset_url }}"></noscript>
+  {%- if template == 'cart' -%}
+    <link rel="preload" as="style" href="{{ 'cart-page.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'cart-page.css' | asset_url }}"></noscript>
+  {%- endif -%}
+
   {%- comment -%} HairMNL CSS overrides — Pipeline 6 brand styling + ~23 CLS
     fix layers (Judge.me medals, announcement bar, points-box, blog article
     images, BOGOS, Klaviyo body-injected modal, LoyaltyLion body popup,
