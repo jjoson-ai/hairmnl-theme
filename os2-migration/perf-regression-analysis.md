@@ -5,6 +5,8 @@
 > **Raw data:** `/tmp/psi-baseline/*.json`, `/tmp/psi-baseline/summary.md`, `/tmp/psi-baseline/cls-attribution.md`.
 > **Status:** Synthesis (0.4). Sets the contract for Phases 1–3.
 
+> **⚠ IMPORTANT CAVEAT (consolidation to main, 2026-05-18 evening):** This diagnosis was authored on branch `claude/p4-pathb-cc`, which had commits `c108dc7` (re-enable `custom-theme.js` 456 KB) and `7d4c71c` (add 7 render-blocking CSS files) that are **NOT on `main`**. The TBT bisect in §4 attributes ~85% of the regression to `custom-theme.js` — that regression is real on `claude/p4-pathb-cc` but does not apply to main. After consolidation, the PSI baseline must be **re-measured against main** before relying on the numbers in §2 / §5. The CLS findings (§3 — menu-buttons section UUID `8e66ad54-...` and the search section UUID `2070a358-...` in `templates/index.json`) DO transfer to main, since `templates/index.json` content is shared. The Phase 1 menu-buttons fix (commit `64ada41` on main) also transfers and is valid. Phase 0.1 re-baseline against main is the next required step before formal Phase 1.x continuation.
+
 ---
 
 ## 1. Executive summary
