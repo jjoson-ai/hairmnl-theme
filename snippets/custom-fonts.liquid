@@ -1,9 +1,15 @@
 {% style %}
-  /* font-display: swap added on all faces — eliminates FOIT (invisible
-     text while font loads), text shows in fallback then swaps in.
-     Reduces LCP for text-heavy pages and stops worst-case font-blocked
-     paint on slow networks. May cause minor FOUT (visible swap),
-     considered acceptable trade-off for HairMNL's product pages. */
+  /* font-display strategy (ujg6.7 update 2026-05-18):
+     - BasisGrotesquePro-Regular (body text) stays `swap` + gets Arial-matched
+       line-box metric overrides (ascent/descent/line-gap) so the swap doesn't
+       reflow line-heights. Glyph widths intact (no size-adjust) to avoid
+       horizontal regression — accepts small width-shift on swap as the
+       ticket explicitly allows ("hairline-shifted body text is acceptable").
+     - BasisGrotesquePro-Bold/Medium/Black/Mono-Regular flipped to `optional`
+       — short-burst usage (badges, labels, accent text); fallback-only render
+       on slow networks is acceptable and removes their swap-CLS contribution.
+     - Geosans/SelfModern/FontAwesome unchanged (out of scope per ticket).
+  */
   @font-face {
     font-family: 'GeosansLight';
     font-style: normal;
@@ -40,7 +46,7 @@
     font-family: 'BasisGrotesqueProMono-Regular';
     font-style: normal;
     font-weight: normal;
-    font-display: swap;
+    font-display: optional; /* ujg6.7: short-burst accent usage, fallback-only on slow nets is OK */
     src: local('BasisGrotesqueProMono-Regular'), url('{{ "BasisGrotesqueProMono-Regular.woff" | asset_url }}') format('woff');
   }
 
@@ -49,6 +55,14 @@
     font-style: normal;
     font-weight: normal;
     font-display: swap;
+    /* ujg6.7: Arial-matched line-box metric overrides — eliminates vertical
+       CLS at swap time. Values approximate Arial's intrinsic line-box
+       metrics (units-per-em normalized): ascent 1854/2048=90.5%,
+       descent 434/2048=21.2%, line-gap 67/2048=3.3%. Glyph widths
+       left intact (no size-adjust) to avoid horizontal regression. */
+    ascent-override: 90.5%;
+    descent-override: 21.2%;
+    line-gap-override: 3.3%;
     src: local('BasisGrotesquePro-Regular'), url('{{ "BasisGrotesquePro-Regular.woff" | asset_url }}') format('woff');
   }
 
@@ -56,7 +70,7 @@
     font-family: 'BasisGrotesquePro-Bold';
     font-style: normal;
     font-weight: normal;
-    font-display: swap;
+    font-display: optional; /* ujg6.7: bold runs are short (buttons, headings); fallback-only OK */
     src: local('BasisGrotesquePro-Bold'), url('{{ "BasisGrotesquePro-Bold.woff" | asset_url }}') format('woff');
   }
 
@@ -64,7 +78,7 @@
     font-family: 'BasisGrotesquePro-Black';
     font-style: normal;
     font-weight: normal;
-    font-display: swap;
+    font-display: optional; /* ujg6.7: black weight = badges/CTAs only */
     src: local('BasisGrotesquePro-Black'), url('{{ "BasisGrotesquePro-Black.woff" | asset_url }}') format('woff');
   }
 
@@ -72,7 +86,7 @@
     font-family: 'BasisGrotesquePro-Medium';
     font-style: normal;
     font-weight: normal;
-    font-display: swap;
+    font-display: optional; /* ujg6.7: medium weight = nav/menu accent */
     src: local('BasisGrotesquePro-Medium'), url('{{ "BasisGrotesquePro-Medium.woff" | asset_url }}') format('woff');
   }
 
