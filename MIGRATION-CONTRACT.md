@@ -238,6 +238,23 @@ operator approval triggers incident review.
   but still on Shopify storage) auto-resolved their renders.
 - **Rules added**: Rules 5–10. Lint extension scheduled as bd `4brc.lint`.
 
+### 2026-05-18 evening — coordination-collision pattern (no live impact)
+
+- **Commits affected**: `284de00` (Phase B.1 architecture doc),
+  `c60bd87` (TBT investigation doc). Both authored by CC; both also
+  bundled OC swarm CSS edits to `snippets/css-overrides.liquid` and/or
+  `sections/menu-buttons.liquid` due to bd's `auto-export-git-add`
+  behavior staging OC's working-tree modifications during my bd
+  commands.
+- **Symptoms**: commit attribution mismatched (commit message said
+  "no code changes" but a CSS file was modified). Functional state on
+  origin/main was correct (OC work was lint-clean + intended). No
+  live-site impact (stream:b only).
+- **Mitigation**: §5 coordination protocol expanded with point #6
+  (pre-commit hygiene rule). Required `git diff --cached` check + use
+  `git restore --staged` for foreign files before every CC commit
+  when any OC swarm is active.
+
 ---
 
 ## What MIGRATION ports must preserve
@@ -324,6 +341,42 @@ Code, OpenCode). To prevent stream collisions:
    because two sessions (Stream A live perf + P8 migration) pushed
    independently and the cumulative effect produced unattributable
    regressions.
+6. **Pre-commit hygiene when an OC swarm is in flight**: bd's
+   auto-export hooks call `git add` on modified files when bd
+   commands run (e.g., `bd update`, `bd close`, `bd export`). If an
+   OC swarm has written files to your working tree mid-session, those
+   files will be silently bundled into your next commit even when you
+   only intended to commit your own work.
+
+   Observed pattern (2026-05-18, twice):
+   - Commit `284de00` (Phase B.1 doc) silently bundled OC's
+     `sections/menu-buttons.liquid` + `snippets/css-overrides.liquid`
+     edits from the ujg6.27 + ujg6.29 swarm.
+   - Commit `c60bd87` (TBT investigation doc) silently bundled OC's
+     `snippets/css-overrides.liquid` edits from the ujg6.17 swarm.
+
+   In both cases the functional outcome was harmless (the OC work was
+   real, lint-clean, and got pushed). But commit attribution was wrong
+   and a reviewer couldn't audit either commit cleanly — the doc
+   commit's message said "no code changes" while a CSS file was being
+   modified.
+
+   **Mitigation — required for every CC commit when any OC swarm is
+   active or recently completed:**
+
+   1. **Before `git commit`**, run `git diff --cached` (or
+      `git status` with the staged list visible) and verify the
+      staged file list matches your *intended* commit scope.
+   2. **If foreign files are staged**, use
+      `git restore --staged <file>` to unstage them. Either commit
+      them separately with a proper message + bd attribution, or
+      leave them for the OC session to commit itself.
+   3. **Never assume your commit-message file list matches reality**
+      — write the commit only after `git diff --cached` matches.
+
+   The cheaper alternative for high-coordination periods: pause CC
+   commits until the OC swarm has explicitly committed and pushed its
+   own work. Then rebase onto OC's commit and commit your work on top.
 
 ---
 
