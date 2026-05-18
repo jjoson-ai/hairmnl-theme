@@ -1,0 +1,39 @@
+# Intentionally orphan ASSETS — allowlist for scripts/check-snippet-wiring.py
+#
+# Each row whitelists an asset file (assets/*.js or assets/*.css) that exists
+# on disk but is NOT referenced via `{{ '<file>' | asset_url }}` anywhere in
+# the codebase. Catches the 2026-05-18 PM cache-shadow regression class where
+# the P4 wave-a port (0cd30cf) commented out 5 asset_url loads from
+# layout/theme.liquid without a replacement, hidden by Shopify edge cache.
+#
+# This file is the asset-load analog of os2-migration/intentionally-orphan.txt
+# (which covers snippet renders). Per MIGRATION-CONTRACT.md Rule 9, the lint
+# extension (bd 4brc.lint) will fail any orphan asset NOT in this list.
+#
+# Format (whitespace-separated; reason continues to end-of-line):
+#   <asset-path>   <bd-id>   <target_wire_by_YYYY-MM-DD>   <reason>
+#
+# target_wire_by is a soft signal: rows past their date emit STALE warnings
+# but the lint still passes. Intent: surface stale orphans for triage.
+#
+# Categories:
+#   [VENDOR-LIB]  = vendored third-party library, loaded by a snippet/app
+#                   indirectly (e.g., via Shopify app extension)
+#   [APP-LEGACY]  = file kept for an app that's currently TAE-loaded but
+#                   the asset path is still referenced by app code
+#   [DEAD]        = candidate for deletion; was used pre-P4 but P8 migration
+#                   replaced functionality
+#   [INVESTIGATE] = unclear why orphan; needs a bd ticket to investigate
+
+# ----------------------------------------------------------------------------
+# (No entries yet — populated by Rule 9 lint extension, bd 4brc.lint)
+# ----------------------------------------------------------------------------
+#
+# When the lint extension lands, it will flag orphan assets/*.js + assets/*.css
+# files. Each orphan must be either:
+#   (a) re-referenced via asset_url in a Liquid file, OR
+#   (b) deleted from assets/, OR
+#   (c) added here with a bd-id + target_wire_by + category tag.
+#
+# DO NOT add entries speculatively. Wait for the lint to identify real
+# orphans, then triage each one.
