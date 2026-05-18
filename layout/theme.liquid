@@ -828,6 +828,56 @@
       });
     })();
     </script>
+    {%- comment -%}
+      tyio.2 (bd hairmnl-theme-knz5): Defer BOGOS free gifts init on /cart to
+      requestIdleCallback. BOGOS loads two scripts (~416ms CPU) that make an
+      eligibility API call, then mutate the cart DOM — creating long tasks in
+      the 20-35s post-load window that land in user interaction frames.
+
+      Uses same Element.prototype.appendChild/insertBefore intercept as njj1
+      v2 (LL guard). Chaining is safe: at this point appendChild is already
+      patched by njj1, so _origAC here = njj1Guard. Call chain:
+      boGosGuard → njj1Guard → native. On rIC release, restores to njj1Guard
+      (LL guard stays active), then injects stashed BOGOS srcs through
+      njj1Guard (which passes bogos.io through) → native → loads.
+    {%- endcomment -%}
+    <script>
+    (function() {
+      var BOGOS = 'bogos.io';
+      var _released = false;
+      var _deferred = [];
+      var _proto = Element.prototype;
+      var _origAC = _proto.appendChild;
+      var _origIB = _proto.insertBefore;
+      function _guard(node) {
+        return !_released &&
+               node &&
+               node.nodeName === 'SCRIPT' &&
+               typeof node.src === 'string' &&
+               node.src.indexOf(BOGOS) !== -1;
+      }
+      _proto.appendChild = function(node) {
+        if (_guard(node)) { _deferred.push(node.src); return node; }
+        return _origAC.call(this, node);
+      };
+      _proto.insertBefore = function(node, ref) {
+        if (_guard(node)) { _deferred.push(node.src); return node; }
+        return _origIB.call(this, node, ref);
+      };
+      var rIC = window.requestIdleCallback || function(cb) { setTimeout(cb, 200); };
+      rIC(function() {
+        _released = true;
+        _proto.appendChild = _origAC;
+        _proto.insertBefore = _origIB;
+        _deferred.forEach(function(src) {
+          var s = document.createElement('script');
+          s.src = src;
+          _origAC.call(document.head, s);
+        });
+        _deferred = [];
+      }, { timeout: 3000 });
+    })();
+    </script>
     {%- endif -%}
 
     {% include "loyaltylion" %}
