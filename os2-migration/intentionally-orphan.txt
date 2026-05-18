@@ -43,12 +43,11 @@ snippets/feature-flags.liquid           2i8b.4    2026-06-30   [P4-PORT] Per-fea
 snippets/bold-common.liquid             2i8b      2026-09-30   [TAE] Bold Apps common loader — moved to TAE.
 snippets/loyaltylion.liquid             2i8b      2026-09-30   [TAE] LoyaltyLion deferred SDK loader — moved to TAE. Note: contains a defer-until-interaction wrapper that may need to be replicated in the TAE config to preserve perf.
 snippets/storepickup.liquid             2i8b      2026-09-30   [TAE] Zapiet store pickup — moved to TAE per theme.liquid:335.
-snippets/limespot.liquid                2i8b      2026-09-30   [TAE] LimeSpot loader. LimeSpot retired in Phase 1 cutover; snippet is dead.
 snippets/judgeme_core.liquid            2i8b      2026-09-30   [TAE] Judge.me core loader — app self-loads via TAE.
 snippets/swymSnippet.liquid             2i8b      2026-09-30   [TAE] Swym Wishlist Plus core — app self-loads via TAE.
 snippets/swym-product-view.liquid       2i8b      2026-09-30   [TAE] Swym product-view tracker — app self-loads via TAE.
 snippets/shop-sheriff-pwa.liquid        2i8b      2026-09-30   [TAE] Shop Sheriff PWA loader — app self-loads via TAE.
-snippets/smile-initializer.liquid       2i8b      2026-09-30   [TAE] Smile Loyalty (legacy, replaced by LoyaltyLion) — dead app, dead snippet. Candidate for delete.
+
 snippets/oxi-social-login.liquid        2i8b      2026-09-30   [TAE] Oxi Social Login — app self-loads via TAE.
 snippets/starapps-core.liquid           2i8b      2026-09-30   [TAE] StarApps core — app self-loads via TAE.
 snippets/starapps-language-meta.liquid  2i8b      2026-09-30   [TAE] StarApps language meta tags — app self-loads via TAE.
@@ -61,17 +60,6 @@ snippets/reamaze-placeholder.liquid     2i8b      2026-09-30   [TAE] Reamaze cha
 snippets/freegifts-snippet-change.liquid    2i8b  2026-09-30   [TAE] BOGOS/Secomapp Free Gifts — app self-loads via TAE.
 snippets/esf-rem-slash.liquid           2i8b      2026-09-30   [TAE] Easy Smart Filter rem/slash chip — app self-loads via TAE.
 snippets/code-customizer-header.liquid  2i8b      2026-09-30   [TAE] Code Customizer header injection point — app self-loads via TAE.
-
-# ----------------------------------------------------------------------------
-# [DEAD] — candidates for deletion, P4 migration replaced or removed
-# ----------------------------------------------------------------------------
-
-snippets/bgset.liquid                   2i8b      2026-06-30   [DEAD] Background-image set helper for P6 hero carousel — P8 ships a different hero.
-snippets/cross-post-blogs.liquid        2i8b      2026-06-30   [DEAD] Legacy cross-blog posting helper from a defunct CMS integration.
-snippets/product_infox.liquid           2i8b      2026-06-30   [DEAD] Old product info-x variant. Verify P8 product template equivalence, then delete.
-snippets/product-tabs-v1.liquid         2i8b      2026-06-30   [DEAD] v1 product tabs — replaced by P8 product-tabs. JS picks up DOM elements; snippet itself orphan.
-snippets/template-swatch.liquid         2i8b      2026-06-30   [DEAD] Color/option swatch template — P8 swatches use a different mechanism.
-snippets/snippet-tag-lists.liquid       2i8b      2026-06-30   [DEAD] Blog tag list snippet — verify if any blog template renders it, otherwise delete.
 
 # ----------------------------------------------------------------------------
 # [DYNAMIC] — referenced via {% render <variable> %} or content_for_*
@@ -93,19 +81,9 @@ snippets/pro-blogger.snippet.related-products-mid.liquid      01vl    2026-06-15
 snippets/vertex-preview-toolbar.liquid  c8mbn     2026-06-30   [INVESTIGATE] Vertex/LimeSpot A-B preview toolbar from bd c8mbn Phase 1 cutover. LimeSpot retired, may no longer need preview. Verify before delete.
 
 # ----------------------------------------------------------------------------
-# [TAE] — late additions (apps that load via TAE)
-# ----------------------------------------------------------------------------
-
-snippets/wishlisthero-collection-product.liquid    2i8b   2026-09-30   [TAE] Wishlist Hero — legacy wishlist app, replaced by Swym. Candidate for delete (verify Swym fully replaces).
-snippets/wishlisthero-custom-button.liquid         2i8b   2026-09-30   [TAE] Wishlist Hero — see collection-product.
-snippets/wishlisthero-header-icon.liquid           2i8b   2026-09-30   [TAE] Wishlist Hero — see collection-product.
-snippets/wishlisthero-styles.liquid                2i8b   2026-09-30   [TAE] Wishlist Hero — see collection-product.
-
-# ----------------------------------------------------------------------------
 # [DEAD] — unclear vendor prefix, likely defunct apps
 # ----------------------------------------------------------------------------
 
-snippets/wc_cart.liquid                 2i8b      2026-06-30   [DEAD] "wc_" prefix unclear — possibly Wholesale Club or Wholesale Genie cart hook. App likely uninstalled. Verify, then delete.
-snippets/wc_product_json.liquid         2i8b      2026-06-30   [DEAD] See wc_cart.
-snippets/wsg-header.liquid              2i8b      2026-06-30   [DEAD] "wsg-" prefix unclear — possibly Wholesale Gorilla / Wholesale Suite header. App likely uninstalled. Verify, then delete.
-snippets/wsg-status.liquid              2i8b      2026-06-30   [DEAD] See wsg-header.
+snippets/wsg-col-json.liquid            2i8b      2026-06-30   [DEAD] See wsg-header. Surfaced 2026-05-18 by pre-push hook after origin/main deleted two sibling wsg- snippets; these three were missed in that cleanup pass. Group with existing wsg- delete-candidates for the next sweep.
+snippets/wsg-dependencies.liquid        2i8b      2026-06-30   [DEAD] See wsg-col-json.
+snippets/wsg-transitions.liquid         2i8b      2026-06-30   [DEAD] See wsg-col-json.
