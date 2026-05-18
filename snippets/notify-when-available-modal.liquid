@@ -1,0 +1,147 @@
+{%- comment -%}
+  Back-in-Stock notification modal — Klaviyo-native replacement for Appikon
+  (bd epic g1n). Micromodal pattern; markup only. JS populated by
+  assets/notify-when-available.dev.js (g1n.5).
+  Rendered once in layout/theme.liquid before </body>.
+{%- endcomment -%}
+
+<div
+  class="modal micromodal-slide"
+  id="notify-when-available-modal"
+  data-modal
+  aria-hidden="true">
+  <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+    <button
+      data-micromodal-close
+      class="modal__close"
+      aria-label="{{ 'products.product.close' | t }}">
+    </button>
+    <div
+      class="modal__container modal__container--inline"
+      data-modal-content
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="notify-modal-title">
+      <div class="modal__content">
+        <h2 id="notify-modal-title" class="modal__title">
+          {{ 'products.product.notify_when_available_title' | t }}
+        </h2>
+
+        <p class="notify-modal__product-title" data-notify-product-title>
+          {%- comment -%}
+            Populated by JS from data-notify-product-title on trigger.
+            Falls back to product title via Liquid if available.
+          {%- endcomment -%}
+        </p>
+
+        <form class="notify-modal__form" data-notify-form novalidate>
+          {%- comment -%}
+            Channel selector — Email / SMS.
+            SMS radio only rendered if the store's BIS SMS feature is enabled.
+          {%- endcomment -%}
+          <fieldset class="notify-modal__channels">
+            <legend class="notify-modal__label">
+              {{ 'products.product.notify_channel_label' | t }}
+            </legend>
+
+            <label class="notify-modal__channel-option">
+              <input
+                type="radio"
+                name="notify_channel"
+                value="email"
+                checked
+                data-notify-channel="email">
+              <span>{{ 'products.product.channel_email' | t }}</span>
+            </label>
+
+            {%- if settings.bis_sms_enabled -%}
+              <label class="notify-modal__channel-option">
+                <input
+                  type="radio"
+                  name="notify_channel"
+                  value="sms"
+                  data-notify-channel="sms">
+                <span>{{ 'products.product.channel_sms' | t }}</span>
+              </label>
+            {%- endif -%}
+          </fieldset>
+
+          {%- comment -%}
+            Email input — always visible.
+          {%- endcomment -%}
+          <div class="notify-modal__field" data-notify-field="email">
+            <label class="notify-modal__label" for="notify-email">
+              {{ 'products.product.email_label' | t }}
+            </label>
+            <input
+              id="notify-email"
+              class="notify-modal__input"
+              type="email"
+              name="email"
+              placeholder="{{ 'products.product.email_placeholder' | t }}"
+              autocomplete="email"
+              required
+              data-notify-input="email">
+          </div>
+
+          {%- comment -%}
+            Phone input — only visible when SMS channel selected.
+            Static +63 prefix for PH market.
+          {%- endcomment -%}
+          {%- if settings.bis_sms_enabled -%}
+            <div class="notify-modal__field" hidden data-notify-field="sms">
+              <label class="notify-modal__label" for="notify-phone">
+                {{ 'products.product.phone_label' | t }}
+              </label>
+              <div class="notify-modal__phone-wrap">
+                <span class="notify-modal__phone-prefix" aria-hidden="true">+63</span>
+                <input
+                  id="notify-phone"
+                  class="notify-modal__input notify-modal__input--phone"
+                  type="tel"
+                  name="phone"
+                  pattern="^9\d{9}$"
+                  placeholder="9123456789"
+                  autocomplete="tel"
+                  data-notify-input="phone">
+              </div>
+              <p class="notify-modal__phone-hint">
+                {{ 'products.product.phone_format_hint' | t }}
+              </p>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%}
+            Newsletter consent checkbox — optional.
+          {%- endcomment -%}
+          <div class="notify-modal__field">
+            <label class="notify-modal__checkbox-label">
+              <input
+                type="checkbox"
+                name="accepts_marketing"
+                checked>
+              <span>{{ 'products.product.newsletter_consent_label' | t }}</span>
+            </label>
+          </div>
+
+          {%- comment -%}
+            Submit button.
+          {%- endcomment -%}
+          <button
+            type="submit"
+            class="btn btn--primary notify-modal__submit"
+            data-notify-submit>
+            {{ 'products.product.submit' | t }}
+          </button>
+        </form>
+
+        {%- comment -%}
+          Success state — hidden initially, shown by JS after successful subscription.
+        {%- endcomment -%}
+        <div class="notify-modal__success" hidden data-notify-success>
+          <p>{{ 'products.product.notify_success_message' | t }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
