@@ -1,0 +1,26 @@
+{
+  "name": "hairmnl-smoke-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright smoke tests for the P8 cutover — behavioral verification of the 7 smoke checks documented in os2-migration/p8-cutover-operator-playbook.html",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke-1": "playwright test smoke-01",
+    "test:smoke-2": "playwright test smoke-02",
+    "test:smoke-3": "playwright test smoke-03",
+    "test:smoke-4": "playwright test smoke-04",
+    "test:smoke-5": "playwright test smoke-05",
+    "test:smoke-6": "playwright test smoke-06",
+    "test:smoke-7": "playwright test smoke-07",
+    "test:mobile": "playwright test --project=mobile",
+    "test:desktop": "playwright test --project=desktop",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "install-browsers": "playwright install chromium",
+    "auth": "playwright codegen $BASE_URL --save-storage=.auth/storageState.json"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}
