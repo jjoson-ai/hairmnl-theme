@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P8 Cutover Playbook — Operator Edition</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --panel: #1a2027;
+    --panel-2: #232a33;
+    --ink: #e6e8ec;
+    --muted: #98a2b3;
+    --accent: #4ade80;
+    --warn: #fbbf24;
+    --danger: #f87171;
+    --link: #60a5fa;
+    --border: #2a3340;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font: 18px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif; }
+  #deck { max-width: 980px; margin: 0 auto; padding: 0 24px 80px; }
+  .slide { display: none; padding: 56px 0 32px; min-height: 92vh; }
+  .slide.active { display: block; }
+  h1 { font-size: 44px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 8px; }
+  h2 { font-size: 30px; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 20px; color: var(--ink); }
+  h3 { font-size: 20px; margin: 24px 0 10px; color: var(--ink); }
+  p { margin: 12px 0; }
+  ul, ol { padding-left: 22px; margin: 12px 0; }
+  li { margin: 6px 0; }
+  .lede { font-size: 22px; line-height: 1.4; color: var(--muted); margin: 8px 0 28px; }
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 13px;
+    font-weight: 600; letter-spacing: 0.02em; margin: 0 4px 0 0; }
+  .pill.done { background: rgba(74,222,128,0.16); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+  .pill.todo { background: rgba(251,191,36,0.16); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+  .pill.danger { background: rgba(248,113,113,0.16); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+  .pill.info { background: rgba(96,165,250,0.16); color: #60a5fa; border: 1px solid rgba(96,165,250,0.3); }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px 22px; margin: 16px 0; }
+  .card h3 { margin-top: 0; }
+  .card.tight { padding: 14px 18px; }
+  .card.warn { border-color: rgba(251,191,36,0.4); background: rgba(251,191,36,0.06); }
+  .card.danger { border-color: rgba(248,113,113,0.4); background: rgba(248,113,113,0.06); }
+  .card.success { border-color: rgba(74,222,128,0.4); background: rgba(74,222,128,0.06); }
+  code, .code { font-family: var(--mono); font-size: 0.92em; background: var(--panel-2);
+    padding: 2px 6px; border-radius: 4px; color: #93c5fd; }
+  pre { font-family: var(--mono); background: var(--panel-2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; overflow-x: auto; font-size: 14px;
+    margin: 12px 0; position: relative; }
+  pre code { background: none; padding: 0; color: #cbd5e1; }
+  .copy-btn { position: absolute; top: 8px; right: 8px; background: var(--panel);
+    color: var(--muted); border: 1px solid var(--border); border-radius: 6px;
+    padding: 4px 10px; font-size: 12px; cursor: pointer; font-family: inherit; }
+  .copy-btn:hover { color: var(--ink); background: var(--panel-2); }
+  .copy-btn.copied { color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 15px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
+  a { color: var(--link); }
+  kbd { font-family: var(--mono); font-size: 0.85em; background: var(--panel-2);
+    padding: 2px 7px; border-radius: 5px; border: 1px solid var(--border); color: var(--ink); }
+  .checklist li { list-style: none; padding-left: 28px; position: relative; margin: 10px 0; }
+  .checklist li::before { content: "☐"; position: absolute; left: 0; color: var(--muted);
+    font-size: 22px; line-height: 1; top: -1px; }
+  .checklist li.done::before { content: "✓"; color: var(--accent); }
+  .step { background: var(--panel); border-left: 3px solid var(--link); padding: 12px 18px;
+    margin: 14px 0; border-radius: 0 8px 8px 0; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; background: var(--link); color: var(--bg); border-radius: 50%;
+    font-weight: 700; font-size: 14px; margin-right: 10px; }
+  .key { color: var(--accent); font-weight: 600; }
+  .ts { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+  .footer { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,20,25,0.95);
+    border-top: 1px solid var(--border); padding: 10px 24px;
+    display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+  .footer .progress { flex: 1; max-width: 400px; margin: 0 16px; height: 4px;
+    background: var(--panel-2); border-radius: 2px; overflow: hidden; }
+  .footer .progress-bar { height: 100%; background: var(--accent); transition: width 0.3s; }
+  .footer button { background: var(--panel); color: var(--ink); border: 1px solid var(--border);
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 14px; }
+  .footer button:hover { background: var(--panel-2); }
+  .footer button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .footer-counter { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 50px; }
+  .toc { columns: 2; gap: 32px; }
+  .toc li { break-inside: avoid; margin: 8px 0; }
+  .toc a { display: block; padding: 6px 0; color: var(--ink); text-decoration: none; }
+  .toc a:hover { color: var(--link); }
+  .toc .num { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 8px; }
+  @media (max-width: 700px) { .toc { columns: 1; } }
+  .hint { color: var(--muted); font-size: 14px; margin: 6px 0; font-style: italic; }
+  .big-time { font-size: 32px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
+  .url { word-break: break-all; }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+<!-- ============================================================ -->
+<!-- SLIDE 1: Title -->
+<!-- ============================================================ -->
+<section class="slide active" data-title="Cover">
+  <h1>P8 Cutover Playbook</h1>
+  <p class="lede">Operator edition — what only humans can do.</p>
+
+  <p>The technical work is done. <span class="pill done">14 tickets shipped to dev</span> Now we need <strong>your eyes, your clicks, and your Shopify admin access</strong> to move P8 from dev preview to live.</p>
+
+  <div class="card success" style="margin-top:32px">
+    <h3 style="margin:0 0 6px">Total operator time</h3>
+    <p class="big-time">~6–8 hours of focused work, spread over 7 days</p>
+    <p style="margin:6px 0 0; color:var(--muted)">Plus 1 dedicated cutover morning (~4 hours, with CC live)</p>
+  </div>
+
+  <p class="hint" style="margin-top:36px">
+    Navigate: <kbd>→</kbd> next · <kbd>←</kbd> back · <kbd>Home</kbd> first · <kbd>End</kbd> last
+    · click anywhere on the right half of the screen to advance
+  </p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 2: TL;DR / sequence -->
+<!-- ============================================================ -->
+<section class="slide" data-title="The plan">
+  <h2>The plan, end to end</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:80px">Day</th><th>Phase</th><th style="width:140px">Time</th><th>What you do</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Today</strong></td><td><strong>A. Browser smoke</strong></td><td>2–3 hours</td><td>Click around dev preview, confirm 7 changes look right</td></tr>
+      <tr><td>+1–2</td><td><strong>B. Shopify admin TAE</strong></td><td>1–2 days</td><td>Flip 10 app embed toggles in admin</td></tr>
+      <tr><td>+2–4</td><td><strong>C. Housekeeping</strong></td><td>2–3 hours</td><td>Uninstall Stky + Appikon, delete orphan files, fix one URL redirect</td></tr>
+      <tr><td>+5–6</td><td><strong>D. Final QA + book slot</strong></td><td>2–3 hours</td><td>Last-pass visual QA + book cutover Tue/Wed AM</td></tr>
+      <tr><td>+7</td><td><strong>D. Cutover ceremony</strong></td><td>~4 hours</td><td>Live with CC, publish P8, monitor first hour</td></tr>
+      <tr><td>+7 → +28</td><td><strong>E. Field monitoring</strong></td><td>15 min/day</td><td>Daily RUM check, CrUX milestones at +7d, +14d, +28d</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card warn" style="margin-top:24px">
+    <p style="margin:0"><strong>Rollback safety net:</strong> P6 stays as an unpublished backup theme for 4 weeks post-cutover. We can revert at any moment with 1 click in Shopify admin.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 3: Decoder -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Decoder">
+  <h2>How to read these slides</h2>
+
+  <h3>Status pills</h3>
+  <p>
+    <span class="pill done">DONE</span> Already shipped, no action needed
+    &nbsp;&nbsp; <span class="pill todo">TODO</span> Your action required
+    &nbsp;&nbsp; <span class="pill info">FYI</span> Context only
+    &nbsp;&nbsp; <span class="pill danger">BLOCKING</span> Must complete before cutover
+  </p>
+
+  <h3>Key things you'll need</h3>
+  <ul>
+    <li><strong>Shopify admin access</strong> — full admin role on <code>creations-gdc.myshopify.com</code></li>
+    <li><strong>Chrome desktop</strong> — for DevTools (Inspect Element → Network/Performance tabs)</li>
+    <li><strong>Mobile phone</strong> — real device or Chrome mobile emulation, for mobile smoke tests</li>
+    <li><strong>The dev preview URL</strong> (always copy fresh; sessions expire):
+      <pre><code class="url">https://creations-gdc.myshopify.com?preview_theme_id=141168312419</code><button class="copy-btn">copy</button></pre>
+    </li>
+  </ul>
+
+  <h3>If you get stuck</h3>
+  <p>Each smoke check has a <strong>"what success looks like"</strong> line. If reality doesn't match, take a screenshot + note the URL + reply to the migration thread. CC will diagnose.</p>
+
+  <p class="hint">You don't need to understand the technical bits in code blocks. They're there for the engineer; you just verify the human-visible behavior.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 4: PHASE A overview -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Phase A overview">
+  <h2>Phase A — Browser smoke <span class="pill todo">TODAY</span></h2>
+  <p class="lede">Click around the dev preview and confirm 7 recent code changes look + behave correctly.</p>
+
+  <p>Each smoke check takes 5–15 minutes. There are 7 total. Plan on a focused 2-hour block.</p>
+
+  <h3>What's being verified</h3>
+  <ol>
+    <li><strong>Font CLS</strong> — text doesn't jump when fonts load</li>
+    <li><strong>Mobile brand-page CLS</strong> — brand grid stays stable on phones</li>
+    <li><strong>Per-template JS loading</strong> — collection-only and product-only scripts load on the right pages</li>
+    <li><strong>Reamaze chat defer</strong> — chat icon appears but Reamaze SDK doesn't load until you click</li>
+    <li><strong>Collection filter AJAX</strong> — filters update grid without full page reload</li>
+    <li><strong>Lazy-render sections</strong> — below-fold sections appear smoothly as you scroll</li>
+    <li><strong>Font preloads + homepage hero</strong> — fonts arrive early, hero image loads eagerly</li>
+  </ol>
+
+  <div class="card warn">
+    <p style="margin:0"><strong>Important:</strong> Always open the dev preview in a <strong>private/incognito window</strong>. The preview-bar that Shopify shows on regular sessions affects what you see.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 5: SMOKE 1 — Font CLS -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Smoke 1: Font CLS">
+  <h2>Smoke 1 — Font CLS <span class="pill info">~5 min</span></h2>
+
+  <div class="step">
+    <p><span class="step-num">1</span>Open <code>about:blank</code> in a new incognito Chrome window</p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">2</span>Press <kbd>Cmd/Ctrl+Shift+P</kbd> → type "throttling" → select <strong>Slow 4G</strong></p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">3</span>Paste this URL and press Enter:</p>
+    <pre><code class="url">https://creations-gdc.myshopify.com?preview_theme_id=141168312419</code><button class="copy-btn">copy</button></pre>
+  </div>
+  <div class="step">
+    <p><span class="step-num">4</span><strong>Watch the page render</strong>. Focus on the homepage headline and body text.</p>
+  </div>
+
+  <div class="card success">
+    <h3 style="margin:0">✅ What success looks like</h3>
+    <ul style="margin:8px 0 0">
+      <li>Text appears <strong>almost immediately</strong> in a fallback font</li>
+      <li>When the brand font loads (~1 second later), text might shift a hair sideways — that's OK</li>
+      <li>Nothing should jump <strong>vertically</strong>. No content should be pushed down the page.</li>
+    </ul>
+  </div>
+
+  <div class="card danger">
+    <h3 style="margin:0">❌ Smells bad if</h3>
+    <ul style="margin:8px 0 0">
+      <li>Headings or body text shift <strong>down the page</strong> when fonts load — that's the bug ujg6.7 fixed; would mean regression</li>
+      <li>Page is blank for &gt;3 seconds with no text at all</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 6: SMOKE 2 — Mobile menu-buttons -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Smoke 2: Mobile brand">
+  <h2>Smoke 2 — Mobile brand-page CLS <span class="pill info">~10 min</span></h2>
+
+  <p class="lede">Brand pages have a row of menu buttons. They used to jump on mobile. Verify that's fixed.</p>
+
+  <div class="step">
+    <p><span class="step-num">1</span>On your phone (or Chrome mobile emulation), open:</p>
+    <pre><code class="url">https://creations-gdc.myshopify.com/collections/davines?preview_theme_id=141168312419</code><button class="copy-btn">copy</button></pre>
+  </div>
+  <div class="step">
+    <p><span class="step-num">2</span><strong>Watch the menu buttons row</strong> as the page renders. They sit near the top under the page title.</p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">3</span>Repeat on another brand: <code class="url">…/collections/kerastase?preview_theme_id=141168312419</code></p>
+  </div>
+
+  <div class="card success">
+    <h3 style="margin:0">✅ Success</h3>
+    <p style="margin:8px 0 0">Menu buttons appear at the right size + bold weight <strong>from first paint</strong>. No re-layout when fonts swap in.</p>
+  </div>
+
+  <div class="card danger">
+    <h3 style="margin:0">❌ Regression</h3>
+    <p style="margin:8px 0 0">Menu buttons render thin/lowercase first, then snap to bold/uppercase — that's the bug 2i8b.18 fixed; report immediately.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 7: SMOKE 3 — Per-template JS loading -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Smoke 3: Per-template JS">
+  <h2>Smoke 3 — Per-template JS loading <span class="pill info">~10 min</span></h2>
+
+  <p class="lede">P8 splits its JS so collection pages load collection-specific code only, product pages load product code, etc. Verify the splits load correctly.</p>
+
+  <div class="step">
+    <p><span class="step-num">1</span>Open Chrome DevTools (<kbd>Cmd/Ctrl+Shift+I</kbd>) → <strong>Network</strong> tab → filter box, type <code>hairmnl-</code></p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">2</span>Visit each URL below and check what loads:</p>
+  </div>
+
+  <table>
+    <thead><tr><th>URL</th><th>Should load</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code class="url">/?preview_theme_id=141168312419</code> <span class="hint">(homepage)</span></td>
+        <td><code>hairmnl-common.js</code> only (1 file)</td>
+      </tr>
+      <tr>
+        <td><code class="url">/collections/davines?preview_theme_id=141168312419</code></td>
+        <td><code>hairmnl-common.js</code> + <code>hairmnl-collection.js</code> (2 files)</td>
+      </tr>
+      <tr>
+        <td><code class="url">/products/kerastase-genesis-anti-hair-fall-fortifying-serum?preview_theme_id=141168312419</code></td>
+        <td><code>hairmnl-common.js</code> + <code>hairmnl-product.js</code> (2 files)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card success">
+    <h3 style="margin:0">✅ Success</h3>
+    <p style="margin:8px 0 0">Each URL loads <strong>exactly</strong> the files listed. All three load with status 200 (green in DevTools).</p>
+  </div>
+
+  <div class="card danger">
+    <h3 style="margin:0">❌ Regression</h3>
+    <ul style="margin:8px 0 0">
+      <li>Any file shows status 404 — file missing from dev theme (we caught this once tonight; might recur)</li>
+      <li>Product page loads collection.js or vice versa — wrong Liquid gate</li>
+      <li>Homepage loads collection.js or product.js — wrong Liquid gate</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 8: SMOKE 4 — Reamaze defer -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Smoke 4: Reamaze defer">
+  <h2>Smoke 4 — Reamaze chat defer <span class="pill info">~10 min</span></h2>
+
+  <p class="lede">Reamaze chat used to slow every page load (~250 KB JS). It now loads only when a user interacts. Big win — but we need to verify the chat still WORKS when clicked.</p>
+
+  <div class="step">
+    <p><span class="step-num">1</span>Fresh incognito window. DevTools open → Network tab → filter <code>reamaze</code></p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">2</span>Visit homepage:</p>
+    <pre><code class="url">https://creations-gdc.myshopify.com?preview_theme_id=141168312419</code><button class="copy-btn">copy</button></pre>
+  </div>
+  <div class="step">
+    <p><span class="step-num">3</span><strong>Confirm:</strong> the chat icon (bottom-right) appears within ~1 second of page load, BUT the Network panel shows <strong>zero entries</strong> for cdn.reamaze.com.</p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">4</span>Click the chat icon. The Reamaze SDK should now load + chat window opens.</p>
+  </div>
+
+  <div class="card success">
+    <h3 style="margin:0">✅ Success</h3>
+    <ul style="margin:8px 0 0">
+      <li>Chat icon visible from first paint (small, bottom-right)</li>
+      <li>Network panel: <strong>0 KB</strong> from cdn.reamaze.com before clicking</li>
+      <li>After clicking: SDK loads + chat window opens normally</li>
+      <li>You can type a message + send it through to Reamaze</li>
+    </ul>
+  </div>
+
+  <div class="card danger">
+    <h3 style="margin:0">❌ Regression</h3>
+    <ul style="margin:8px 0 0">
+      <li>cdn.reamaze.com loads on first paint (defer broke — should be 0 KB)</li>
+      <li>Chat icon doesn't appear at all</li>
+      <li>Clicking the icon does nothing / SDK fails to load</li>
+    </ul>
+  </div>
+
+  <p class="hint">Bonus check: same flow on a PDP. And scroll the page past 50% — chat should ALSO load (one of the 5 triggers is "scrolled past 50%").</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 9: SMOKE 5 — Facet AJAX -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Smoke 5: Facet AJAX">
+  <h2>Smoke 5 — Collection filter AJAX <span class="pill info">~10 min</span></h2>
+
+  <p class="lede">Filtering a collection used to reload the whole page. Now it should swap in just the new grid + update the URL bar.</p>
+
+  <div class="step">
+    <p><span class="step-num">1</span>Visit a collection with filters:</p>
+    <pre><code class="url">https://creations-gdc.myshopify.com/collections/best-sellers?preview_theme_id=141168312419</code><button class="copy-btn">copy</button></pre>
+  </div>
+  <div class="step">
+    <p><span class="step-num">2</span>Find the filter sidebar (left side desktop, drawer on mobile). Tick a filter checkbox.</p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">3</span><strong>Watch the URL bar.</strong> It should update with <code>?filter.v.option1=…</code> WITHOUT the page flashing to white + reloading.</p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">4</span>Click the browser <strong>Back button</strong>. Should return to the unfiltered grid.</p>
+  </div>
+
+  <div class="card success">
+    <h3 style="margin:0">✅ Success</h3>
+    <ul style="margin:8px 0 0">
+      <li>Filter checkbox click → grid updates with new products in &lt;1 second</li>
+      <li>URL bar updates to reflect filter</li>
+      <li>No white-flash, no page reload</li>
+      <li>Back button works</li>
+      <li>Direct URL with <code>?filter.v.…</code> still loads with filter applied (try opening one of the filtered URLs in a fresh tab)</li>
+    </ul>
+  </div>
+
+  <div class="card danger">
+    <h3 style="margin:0">❌ Regression</h3>
+    <p style="margin:8px 0 0">Page flashes white + reloads on filter click — AJAX broke. Or grid doesn't update. Either way, report.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 10: SMOKE 6 — Lazy-render -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Smoke 6: Lazy-render">
+  <h2>Smoke 6 — Lazy-render sections <span class="pill info">~10 min</span></h2>
+
+  <p class="lede">Heavy below-fold sections now load only when you scroll near them. Saves ~200 KB on initial page load. Verify it doesn't look janky.</p>
+
+  <div class="step">
+    <p><span class="step-num">1</span>Open Chrome DevTools → Network tab → filter <code>section_id=</code></p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">2</span>Visit homepage with the page scrolled to top:</p>
+    <pre><code class="url">https://creations-gdc.myshopify.com?preview_theme_id=141168312419</code><button class="copy-btn">copy</button></pre>
+  </div>
+  <div class="step">
+    <p><span class="step-num">3</span>Slowly scroll down. Watch for <code>?section_id=…</code> requests firing in Network as you scroll near the brand-logo grid + featured-collections sections.</p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">4</span>Visit a PDP and scroll to the bottom — same pattern for the related-products section.</p>
+  </div>
+
+  <div class="card success">
+    <h3 style="margin:0">✅ Success</h3>
+    <ul style="margin:8px 0 0">
+      <li>Sections appear smoothly as you scroll near them — no visible flicker</li>
+      <li>Brand-logo grid renders with 30+ brand logos visible</li>
+      <li>Featured-collections row renders with the same products as P6</li>
+      <li>PDP related-products section + recently-viewed tabs both work</li>
+    </ul>
+  </div>
+
+  <div class="card danger">
+    <h3 style="margin:0">❌ Regression</h3>
+    <ul style="margin:8px 0 0">
+      <li>Empty space where sections should be — placeholder visible but never populates (JS broken)</li>
+      <li>Section content "pops in" jarringly — placeholder dimensions were wrong</li>
+      <li>Brand logos missing or wrong</li>
+    </ul>
+  </div>
+
+  <p class="hint">Bonus: open the Shopify theme editor. The same sections should render normally there (no placeholder visible).</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 11: SMOKE 7 — Font preloads + hero -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Smoke 7: Font preloads + hero">
+  <h2>Smoke 7 — Font preloads + homepage hero <span class="pill info">~5 min</span></h2>
+
+  <p class="lede">Fonts now preload in the page head (browser starts fetching them earlier). Homepage hero image now loads eagerly (no lazy-load delay).</p>
+
+  <div class="step">
+    <p><span class="step-num">1</span>DevTools → Network tab → filter <code>.woff2</code></p>
+  </div>
+  <div class="step">
+    <p><span class="step-num">2</span>Visit homepage in fresh incognito. Watch which fonts load and WHEN.</p>
+  </div>
+
+  <div class="card success">
+    <h3 style="margin:0">✅ Success</h3>
+    <ul style="margin:8px 0 0">
+      <li>You see <code>BasisGrotesquePro-Regular.woff2</code> + <code>SelfModern.woff2</code> fetching <strong>very early</strong> in the waterfall (top of the network list, before most other resources)</li>
+      <li>Homepage hero image (the top banner slide) loads + paints quickly — not after a delay</li>
+      <li>No flash of unstyled text (FOUT) on the hero headline</li>
+    </ul>
+  </div>
+
+  <p class="hint">If you want to compare: open the LIVE site (https://www.hairmnl.com/) and the dev preview side-by-side. Live's font preloads aren't there — you should see them on dev but not live.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 12: Smoke complete — what next -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Smoke complete">
+  <h2>Phase A done — what next</h2>
+
+  <div class="card success">
+    <p style="margin:0"><strong>All 7 smoke checks passed?</strong> 🎉 The technical work is verified. Move to Phase B.</p>
+  </div>
+
+  <div class="card danger">
+    <p style="margin:0"><strong>Any check failed?</strong> Don't proceed. Take a screenshot + note the URL + reply to the migration thread with details. CC will diagnose + push a fix.</p>
+  </div>
+
+  <h3>How to report a smoke failure cleanly</h3>
+  <ol>
+    <li>Which smoke check (1–7)</li>
+    <li>Which URL you were on</li>
+    <li>What you saw (screenshot helps a lot)</li>
+    <li>What you expected (the "what success looks like" item)</li>
+    <li>Browser + OS (e.g., Chrome 138 on macOS Sonoma)</li>
+  </ol>
+
+  <h3>You can also run an automated cross-check</h3>
+  <p>If you want belt-and-suspenders verification, ask the engineer to run:</p>
+  <pre><code>bash scripts/pre-cutover-smoke.sh</code><button class="copy-btn">copy</button></pre>
+  <p>This runs 30 automated checks (the "does the code exist on dev?" half of the verification). It already passed when commits shipped — but if you've waited a few days before doing browser smoke, re-running it is cheap insurance.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 13: PHASE B — TAE migration overview -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Phase B: TAE migration">
+  <h2>Phase B — Shopify admin TAE migration <span class="pill todo">+1 to +2 days</span></h2>
+
+  <p class="lede">Flip 10 app embed toggles in Shopify admin. Moves apps from the theme bundle into Shopify's sandboxed worker (faster + cleaner).</p>
+
+  <h3>The setting you'll use</h3>
+  <p>Shopify admin → <strong>Online Store</strong> → <strong>Themes</strong> → click <strong>Customize</strong> on the dev theme (Pipeline 8 Working Demo, ID 141168312419) → in the left sidebar, click the <strong>App embeds</strong> icon (looks like a plug).</p>
+
+  <h3>The 10 apps + 1 confirmation</h3>
+  <p>Each row below has a toggle. Flip it ON. Save. Verify the app's UI still appears on the dev preview.</p>
+
+  <table>
+    <thead><tr><th>App</th><th>Toggle name</th><th>Verify by</th></tr></thead>
+    <tbody>
+      <tr><td>Smart SEO (core)</td><td><code>smartseo</code></td><td>View page source on any product → look for SEO schema</td></tr>
+      <tr><td>Smart SEO (broken-link)</td><td><code>brokenLinkDetection</code></td><td>Same as above (passive)</td></tr>
+      <tr><td>Klaviyo</td><td><code>klaviyo-onsite-embed</code></td><td>Signup form modal appears after delay</td></tr>
+      <tr><td>Shopify Inbox</td><td><code>chat</code></td><td>Inbox widget renders (lower-right corner)</td></tr>
+      <tr><td>Nova EU Cookie Bar</td><td><code>app-embed</code></td><td>Cookie banner renders on first visit</td></tr>
+      <tr><td>Hextom Timer Bar</td><td><code>ctb-embeded-block</code></td><td>Timer bar renders if active campaign</td></tr>
+      <tr><td>LoyaltyLion (SDK)</td><td><code>embed-sdk</code></td><td>Logged-in customer sees points</td></tr>
+      <tr><td>LoyaltyLion (main)</td><td><code>embed-main</code></td><td>Logged-in customer sees /rewards page</td></tr>
+      <tr><td>LDT Gift Wrap</td><td><code>embed</code></td><td>Gift wrap option appears in cart drawer</td></tr>
+      <tr><td>OXI Social Login</td><td><code>social-login-embed</code></td><td>Social login buttons on /account/login</td></tr>
+      <tr><td>Searchanise</td><td><em>(auto-loaded; just verify)</em></td><td>Search box on header autocompletes results</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card warn">
+    <p style="margin:0"><strong>Take it slow:</strong> flip one, save, verify on preview, then move to the next. If any one breaks (app's UI fails to render), turn it back off + note which one + report. Most are self-contained but a few might fight each other.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 14: PHASE C — Housekeeping -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Phase C: Housekeeping">
+  <h2>Phase C — Pre-cutover housekeeping <span class="pill todo">+2 to +4 days</span></h2>
+
+  <p class="lede">Five small admin chores that should happen before live cutover. None block cutover (we could do them after) but cleaner to handle pre-flight.</p>
+
+  <table>
+    <thead><tr><th>Task</th><th>Where</th><th>Time</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Fix URL redirect</strong> — old <code>/products/davines-momo-shampoo</code> redirects to <code>/</code> (homepage). Should 404 OR redirect to a real replacement.</td>
+        <td>Shopify admin → Online Store → Navigation → URL Redirects</td>
+        <td>5 min</td>
+      </tr>
+      <tr>
+        <td><strong>Cloudflare bot challenge tuning</strong> — rapid add-to-cart sequences trigger a challenge for legitimate users. Adjust the rule.</td>
+        <td>Cloudflare dashboard → Security → WAF</td>
+        <td>15 min</td>
+      </tr>
+      <tr>
+        <td><strong>Delete BSS Product Labels orphan files</strong> — uninstalled app left ~6 orphan assets</td>
+        <td>Shopify admin → theme code editor (or shopify CLI)</td>
+        <td>10 min</td>
+      </tr>
+      <tr>
+        <td><strong>Delete BSS B2B Lock orphan snippets</strong> — uninstalled app left snippets behind</td>
+        <td>Shopify admin → theme code editor</td>
+        <td>10 min</td>
+      </tr>
+      <tr>
+        <td><strong>Delete 4 legacy AMP image assets + Pro Blogger legacy .css.liquid files</strong></td>
+        <td>Shopify admin → Files / theme code</td>
+        <td>10 min</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>What you do NOT do yet</h3>
+  <ul>
+    <li><span class="pill danger">DO NOT YET</span> Uninstall Stky app — wait for ticket <code>a7av.7</code> (Stky cutover). Theme-native replacement is being built separately.</li>
+    <li><span class="pill danger">DO NOT YET</span> Uninstall Appikon — wait for the Klaviyo-native back-in-stock replacement (g1n.* chain) to complete + test.</li>
+  </ul>
+
+  <p class="hint">Specific issue tickets for the housekeeping rows: 3q4 · fcn · nra · 89n · ary · f3i. Engineer can look these up in beads if you want the full context per item.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 15: PHASE D — Pre-cutover -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Phase D: Pre-cutover">
+  <h2>Phase D — Final pre-flight + booking <span class="pill todo">+5 to +6 days</span></h2>
+
+  <p class="lede">Last visual QA pass + book the cutover slot.</p>
+
+  <h3>1. Visual parallel-run QA (~1–2 hours)</h3>
+  <p>Open BOTH in side-by-side browser windows:</p>
+  <ul>
+    <li>Left: <code class="url">https://www.hairmnl.com/</code> (P6 live)</li>
+    <li>Right: <code class="url">https://creations-gdc.myshopify.com?preview_theme_id=141168312419</code> (P8 dev)</li>
+  </ul>
+
+  <p>Eyeball these 5 templates on both: <strong>home, a collection page (brand), a PDP, the cart, the search page</strong>. Anything visually different from P6 — note it.</p>
+
+  <div class="card warn">
+    <p style="margin:0"><strong>OK differences:</strong> font might render slightly different (the new font-display rules); brand-logo grid + featured-collections + related-products on PDP might appear slightly later as you scroll (the lazy-render). These are intentional.</p>
+  </div>
+
+  <div class="card danger">
+    <p style="margin:0"><strong>Not-OK differences:</strong> missing content (apps not loading), wrong colors / fonts / layout, broken images, broken links. Report these.</p>
+  </div>
+
+  <h3>2. Book the cutover slot</h3>
+  <p>Pick a <strong>Tuesday or Wednesday morning</strong> in the next 1–2 weeks. Block ~4 hours on your calendar (cutover itself is ~30 min; the rest is first-hour vigilance + immediate post-cutover spot-checks).</p>
+  <p>Coordinate with the engineer so CC is live during that window. Avoid Mondays (week's first traffic) and Fridays (weekend traffic, slow response if something breaks).</p>
+
+  <h3>3. Notify stakeholders</h3>
+  <p>Marketing, customer support, fulfillment — give them the cutover window. Particularly:</p>
+  <ul>
+    <li>Marketing: don't run new ad pushes during the cutover hour</li>
+    <li>Support: be aware that customer-facing issues might surface in week 1 — escalate any UI complaints fast</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 16: PHASE D — Cutover ceremony -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Cutover ceremony">
+  <h2>Phase D — Cutover ceremony (the big day) <span class="pill todo">~4 hours</span></h2>
+
+  <p class="lede">~30 min of actual cutover work; the rest is monitoring vigilance.</p>
+
+  <h3>What CC does (technical, ~30 min)</h3>
+  <ol>
+    <li>Verify dev theme is in a clean state (no uncommitted changes, pre-cutover-smoke passes)</li>
+    <li>Capture a pre-cutover snapshot of P6 live (PSI + CrUX) for rollback comparison</li>
+    <li>Duplicate the P6 theme as <strong>"Pipeline 6 - BACKUP"</strong> (this is your rollback target)</li>
+    <li>Publish P8 dev theme as the new live theme</li>
+    <li>Verify live URL serves P8 (curl + spot-check)</li>
+  </ol>
+
+  <h3>What YOU do (alongside CC, ~3.5 hours)</h3>
+  <ol>
+    <li><strong>Immediately post-publish:</strong> open <code>https://www.hairmnl.com/</code> in fresh incognito. Quick smoke: home renders, navigation works, can-add-to-cart, can-view-cart. (~5 min)</li>
+    <li><strong>First 30 min:</strong> watch for customer-facing errors. Check the support inbox + any monitoring dashboards. Be ready to call rollback.</li>
+    <li><strong>First hour:</strong> spot-check on a real mobile device. Try a complete checkout flow with a test order.</li>
+    <li><strong>First 4 hours:</strong> monitor real-user analytics for unexpected drops (cart-add rate, page views, bounce rate). GA4 + any RUM tooling.</li>
+  </ol>
+
+  <div class="card warn">
+    <h3 style="margin:0">If anything breaks during the cutover window</h3>
+    <p style="margin:8px 0 0"><strong>Immediate rollback:</strong> Shopify admin → Online Store → Themes → click <strong>"Actions" → "Publish"</strong> on the <em>Pipeline 6 - BACKUP</em> theme. Customers are back on P6 within seconds. Then debrief with CC.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 17: PHASE E — Post-cutover monitoring -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Phase E: Monitoring">
+  <h2>Phase E — Post-cutover monitoring <span class="pill todo">+7 to +56 days</span></h2>
+
+  <p class="lede">Stay vigilant for 4 weeks. CrUX data validates the migration over 28 days.</p>
+
+  <h3>First week: daily 15-minute check</h3>
+  <p>Each day, glance at:</p>
+  <ul>
+    <li><strong>GA4</strong> — page views, sessions, average engagement, conversion rate. Compare day-over-day; flag any drop &gt;10%.</li>
+    <li><strong>Cart-add → checkout conversion</strong> — this is the metric to watch for the mobile-cart regression. If it drops, we hit the worst-case from the cart investigation.</li>
+    <li><strong>Customer support tickets</strong> — any new UI complaints? "Can't add to cart", "page won't load", "chat broken" are signals.</li>
+    <li><strong>Search Console</strong> — once daily check for Core Web Vitals tab + any new errors.</li>
+  </ul>
+
+  <h3>The CrUX milestone schedule</h3>
+  <table>
+    <thead><tr><th>Day</th><th>What CrUX shows</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>Pre-cutover snapshot (last clean P6 measurement)</td><td>CC captures + archives</td></tr>
+      <tr><td>+7</td><td>~75% pre-cutover / 25% post-cutover window</td><td>First peek — early signal only</td></tr>
+      <tr><td>+14</td><td>~50/50 window</td><td>Meaningful trend</td></tr>
+      <tr><td>+28</td><td>Pure post-cutover window</td><td><strong>The canonical comparison.</strong> If CWV thresholds passing → celebrate. If not → investigate.</td></tr>
+      <tr><td>+56</td><td>Stability check</td><td>Confirm post-cutover state has settled</td></tr>
+    </tbody>
+  </table>
+
+  <p>CC will run the CrUX pull at each milestone + send you a one-page comparison. You don't need to do this manually — just review.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 18: Rollback -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Rollback">
+  <h2>Emergency rollback — when + how <span class="pill danger">important</span></h2>
+
+  <p class="lede">P6 backup theme is retained for 4 weeks post-cutover. Use it if needed — no shame.</p>
+
+  <h3>When to roll back</h3>
+  <div class="card danger">
+    <ul style="margin:0">
+      <li><strong>P0:</strong> site is broken / checkout fails / customers can't buy</li>
+      <li><strong>P1:</strong> cart-add → checkout conversion drops &gt;20% sustained over 2+ hours</li>
+      <li><strong>P1:</strong> major visual regression on a primary template (home, PDP) that's customer-visible</li>
+      <li><strong>P2 (judgment call):</strong> something subtle is off + you can't get a quick fix from engineering</li>
+    </ul>
+  </div>
+
+  <h3>What's NOT a rollback trigger</h3>
+  <div class="card">
+    <ul style="margin:0">
+      <li>One bug report from one customer (could be cache / their browser / unrelated)</li>
+      <li>Slightly lower PSI lab score on dev (lab measurements are noisy; field data wins)</li>
+      <li>A minor visual difference on a low-traffic template</li>
+      <li>"Chat icon takes 2 extra seconds to be clickable" (it's deferred by design)</li>
+    </ul>
+  </div>
+
+  <h3>How to roll back</h3>
+  <ol>
+    <li>Shopify admin → Online Store → Themes</li>
+    <li>Find the theme named <strong>"Pipeline 6 - BACKUP"</strong> (the duplicate CC made on cutover day)</li>
+    <li>Click <strong>Actions → Publish</strong></li>
+    <li>Confirm. P6 is live within seconds.</li>
+    <li>Notify CC immediately. We'll diagnose + fix + re-cutover later.</li>
+  </ol>
+
+  <p class="hint">The rollback window is 4 weeks. After that, the backup theme is archived (still recoverable but more involved). Don't put off a rollback decision — if something's broken, switch back, debrief, fix, re-cutover.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 19: Success criteria -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Success">
+  <h2>What success looks like <span class="pill done">+28 days</span></h2>
+
+  <p>You'll know the migration was successful when:</p>
+
+  <div class="card success">
+    <ul style="margin:0">
+      <li><strong>Day-28 CrUX</strong> shows P8 LIVE with: mobile LCP &lt; 2500ms · CLS &lt; 0.10 · INP &lt; 200ms on origin level (matching or beating P6's 79%/78%/80% good-rates)</li>
+      <li><strong>Home desktop CLS drops below 0.10</strong> in field data (P6 was failing this at 0.17; P8 dev lab shows 0.009)</li>
+      <li><strong>Home mobile LCP improves below 2500ms</strong> field threshold (P6 was 2906ms)</li>
+      <li><strong>Conversion rate unchanged or up</strong> versus the pre-cutover baseline week</li>
+      <li><strong>No P0 customer-facing issues</strong> filed during week 1</li>
+      <li><strong>Cart-add → checkout conversion stable</strong> (the mobile-cart score regression doesn't impact real users)</li>
+    </ul>
+  </div>
+
+  <h3>What we'll do at day 28</h3>
+  <p>Run the full PSI verification matrix on live + capture the CrUX snapshot. Compare against the pre-cutover baseline. Engineer writes a retrospective: what worked, what we'd do differently. File any remaining tickets surfaced.</p>
+
+  <p>Then archive the migration program. The store stays on P8 indefinitely.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 20: Contents / TOC -->
+<!-- ============================================================ -->
+<section class="slide" data-title="Contents">
+  <h2>Quick reference</h2>
+  <p class="lede">Jump to a slide if you want to re-read a specific step.</p>
+
+  <ul class="toc" id="toc"></ul>
+
+  <h3 style="margin-top:32px">Where to find the related docs (for the curious)</h3>
+  <ul>
+    <li><code>os2-migration/p8-vs-p6-readiness-report.md</code> — the data + decision framework behind this playbook</li>
+    <li><code>os2-migration/runbook.md</code> — the engineer-facing 7-phase migration runbook</li>
+    <li><code>os2-migration/smoke-results-2026-05-18.md</code> — the static-content smoke results from before this human verification</li>
+    <li><code>os2-migration/p8-mobile-cart-investigation.md</code> — why mobile cart score is lower on P8 + recovery plan</li>
+  </ul>
+
+  <p>Ask the engineer for specifics on any beads ticket id (e.g., <code>ujg6.7</code>, <code>fsaa</code>, <code>2i8b.18</code>) — they're the full context behind each smoke check.</p>
+</section>
+
+</div>
+
+<!-- Footer / nav -->
+<div class="footer">
+  <button id="prev">← Back</button>
+  <span class="footer-counter" id="counter">1 / —</span>
+  <div class="progress"><div class="progress-bar" id="progress"></div></div>
+  <span class="ts" id="slide-title">Cover</span>
+  <button id="next">Next →</button>
+</div>
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  const titleEl = document.getElementById('slide-title');
+  let current = 0;
+
+  function goto(idx) {
+    idx = Math.max(0, Math.min(total - 1, idx));
+    slides[current].classList.remove('active');
+    slides[idx].classList.add('active');
+    current = idx;
+    counter.textContent = `${idx + 1} / ${total}`;
+    progress.style.width = `${((idx + 1) / total) * 100}%`;
+    titleEl.textContent = slides[idx].dataset.title || '';
+    prev.disabled = idx === 0;
+    next.disabled = idx === total - 1;
+    location.hash = `slide=${idx + 1}`;
+    window.scrollTo(0, 0);
+  }
+
+  prev.addEventListener('click', () => goto(current - 1));
+  next.addEventListener('click', () => goto(current + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { goto(current + 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { goto(current - 1); e.preventDefault(); }
+    else if (e.key === 'Home') goto(0);
+    else if (e.key === 'End') goto(total - 1);
+  });
+
+  // Click right half of viewport to advance
+  document.addEventListener('click', e => {
+    if (e.target.closest('button, a, .copy-btn, pre, code, .footer, input')) return;
+    const w = window.innerWidth;
+    if (e.clientX > w * 0.7) goto(current + 1);
+    else if (e.clientX < w * 0.3) goto(current - 1);
+  });
+
+  // Copy buttons
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async e => {
+      e.stopPropagation();
+      const pre = btn.closest('pre');
+      const text = pre ? pre.querySelector('code').textContent : '';
+      try {
+        await navigator.clipboard.writeText(text.trim());
+        btn.textContent = 'copied';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1500);
+      } catch (err) {
+        btn.textContent = 'select+copy';
+      }
+    });
+  });
+
+  // Build TOC
+  const tocEl = document.getElementById('toc');
+  if (tocEl) {
+    slides.forEach((s, i) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = s.dataset.title || `Slide ${i + 1}`;
+      a.href = `#slide=${i + 1}`;
+      a.innerHTML = `<span class="num">${String(i + 1).padStart(2, '0')}.</span>${s.dataset.title}`;
+      a.addEventListener('click', e => { e.preventDefault(); goto(i); });
+      li.appendChild(a);
+      tocEl.appendChild(li);
+    });
+  }
+
+  // Hash deep-link
+  const hashMatch = location.hash.match(/slide=(\d+)/);
+  if (hashMatch) goto(parseInt(hashMatch[1]) - 1);
+  else goto(0);
+})();
+</script>
+</body>
+</html>
