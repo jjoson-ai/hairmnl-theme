@@ -18,6 +18,42 @@
     margin-top: {{ section.settings.space_top }}px;
     margin-bottom: {{ section.settings.space_bottom }}px;
   }
+
+  /* bd ujg6.5 — CLS fix: inline critical layout rules so the section
+     reserves its final dimensions on first paint. These rules also
+     live in assets/custom-theme.css but that file loads after FCP,
+     causing the .mb-menu container to grow from 0 → ~68px desktop
+     (or → ~313px mobile when items wrap), which was the dominant
+     CLS source on the homepage (PSI layout-shifts score 2.312 / run
+     across 3 desktop runs, per os2-migration/cls-attribution-2026-05-18.md).
+     Hover / border / typography rules stay in custom-theme.css. */
+  .menu-buttons .mb-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 1rem;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .menu-buttons .mb-menu-item-link {
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+  }
+  @media screen and (max-width: 1008px) {
+    .menu-buttons .mb-box { padding: 0; }
+    .menu-buttons .mb-menu {
+      grid-template-columns: 1fr;
+      grid-gap: 0;
+    }
+    .menu-buttons .mb-menu-item-link {
+      padding: 15px;
+      border-left: none;
+      border-right: none;
+    }
+  }
 </style>
 
 {% schema %}
