@@ -20,17 +20,29 @@ import { Page, expect } from '@playwright/test';
 
 const BASE_URL = process.env.BASE_URL || 'https://creations-gdc.myshopify.com';
 const PREVIEW_THEME_ID = process.env.PREVIEW_THEME_ID || '141168312419';
-// Post-cutover mode: when BASE_URL points at the canonical domain
-// (www.hairmnl.com), there's no theme to preview — we're testing live.
+// Three modes:
+//   1. dev-server mode: BASE_URL points at http://127.0.0.1:NNNN (the
+//      `shopify theme dev` local proxy). No preview_theme_id needed.
+//      This is the recommended pre-cutover testing mode.
+//   2. post-cutover mode: BASE_URL points at the canonical domain
+//      (www.hairmnl.com), no theme to preview — testing live.
+//   3. preview-cookie mode: BASE_URL points at the myshopify.com domain
+//      with a SHOPIFY_AUTH storageState containing admin cookies.
+//      Most fragile; use only if dev-server mode unavailable.
+const IS_DEV_SERVER = /^https?:\/\/(127\.0\.0\.1|localhost)/.test(BASE_URL);
 const IS_POST_CUTOVER =
-  BASE_URL.includes('hairmnl.com') && !BASE_URL.includes('myshopify.com');
+  !IS_DEV_SERVER &&
+  BASE_URL.includes('hairmnl.com') &&
+  !BASE_URL.includes('myshopify.com');
 
 /**
- * Build a dev-preview URL for a given path. In post-cutover mode this is
- * just the path on the canonical domain.
+ * Build a dev-preview URL for a given path.
+ *   - dev-server mode: localhost proxy serves the theme directly
+ *   - post-cutover mode: canonical domain, no preview param
+ *   - preview-cookie mode: myshopify.com with ?preview_theme_id=N
  */
 export function devUrl(path: string): string {
-  if (IS_POST_CUTOVER) return `${BASE_URL}${path}`;
+  if (IS_DEV_SERVER || IS_POST_CUTOVER) return `${BASE_URL}${path}`;
   const sep = path.includes('?') ? '&' : '?';
   return `${BASE_URL}${path}${sep}preview_theme_id=${PREVIEW_THEME_ID}`;
 }
@@ -46,13 +58,15 @@ export async function visitDev(page: Page, path: string): Promise<void> {
   // Soft sanity: if we landed on a different domain, warn loudly so it
   // shows up in the test report rather than failing in a confusing way later.
   if (
+    !IS_DEV_SERVER &&
     !IS_POST_CUTOVER &&
     !finalUrl.includes('myshopify.com') &&
     !finalUrl.includes('hairmnl.com')
   ) {
     throw new Error(
       `Unexpected redirect: tried ${url} but landed on ${finalUrl}. ` +
-        `Check Shopify admin auth (run 'npm run auth' once and set SHOPIFY_AUTH).`
+        `Check Shopify admin auth (run 'npm run auth' once and set SHOPIFY_AUTH), ` +
+        `or run via 'npm run smoke:dev' which uses the local proxy.`
     );
   }
   // Check we're not on a 404 page. The Shopify default body id is
@@ -79,4 +93,9 @@ export async function waitForSettled(page: Page, ms = 3000): Promise<void> {
   });
 }
 
-export const config = { BASE_URL, PREVIEW_THEME_ID, IS_POST_CUTOVER };
+export const config = {
+  BASE_URL,
+  PREVIEW_THEME_ID,
+  IS_DEV_SERVER,
+  IS_POST_CUTOVER,
+};

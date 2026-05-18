@@ -185,16 +185,20 @@
 
   <div class="card success">
     <h3 style="margin:0">Run the automated suite first</h3>
-    <p style="margin:8px 0">Open a terminal:</p>
+    <p style="margin:8px 0">One-time auth capture (~3 min), then run the suite. Cookies stay valid for weeks.</p>
     <pre><code>cd scripts/smoke-tests
 npm install
 npm run install-browsers
-npx playwright codegen https://creations-gdc.myshopify.com/admin
-# → log in, then save storage to .auth/storageState.json, then close
 
+# ONE-TIME: capture Shopify admin cookies
+mkdir -p .auth
+npx playwright codegen --save-storage=.auth/storageState.json https://creations-gdc.myshopify.com/admin
+# → log in, visit /?preview_theme_id=141168312419 to verify, close browser
+
+# EVERY RUN: test the dev theme
 SHOPIFY_AUTH=.auth/storageState.json npm test
-npm run report  # opens the HTML report in your browser</code><button class="copy-btn">copy</button></pre>
-    <p style="margin:0">52 automated tests run unattended in ~5-8 minutes. The report shows pass/fail per smoke check + screenshots/videos for any failure.</p>
+npm run report  # opens the HTML report</code><button class="copy-btn">copy</button></pre>
+    <p style="margin:0">54 automated tests run in ~5-8 minutes. The report shows pass/fail per smoke check + screenshots/videos for any failure.</p>
   </div>
 
   <h3>What the automated suite covers</h3>
@@ -213,7 +217,7 @@ npm run report  # opens the HTML report in your browser</code><button class="cop
   <p>If anything fails, the next slides walk through the spot-check workflow for each smoke check — same content as before but only consult what failed.</p>
 
   <div class="card warn">
-    <p style="margin:0"><strong>First-time baselines:</strong> Smoke 8 needs an initial set of baseline screenshots. Run <code>npm run update-baselines</code> ONCE after you've verified the dev theme looks right, then commit the <code>__screenshots__/</code> directory. From then on, every run detects drift automatically.</p>
+    <p style="margin:0"><strong>First-time baselines:</strong> Smoke 8 needs an initial set of baseline screenshots. After verifying the dev theme looks right (one quick eyeball pass), run <code>SHOPIFY_AUTH=.auth/storageState.json npm run update-baselines</code> ONCE, then commit the <code>__screenshots__/</code> directory. From then on, every <code>npm test</code> detects drift automatically.</p>
   </div>
 </section>
 

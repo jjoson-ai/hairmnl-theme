@@ -9,19 +9,62 @@ static-content suite (`scripts/pre-cutover-smoke.sh`):
 
 Both should pass before live cutover.
 
-## Quick start
+## Quick start — pre-cutover (recommended path)
+
+The reliable way to test the P8 dev theme is the Shopify admin auth flow.
+One-time setup, then every run uses the cached cookies.
+
+### Step 1 — one-time auth capture (~3 min)
 
 ```bash
 cd scripts/smoke-tests
 npm install
 npm run install-browsers
-npm test
+mkdir -p .auth
+npx playwright codegen --save-storage=.auth/storageState.json https://creations-gdc.myshopify.com/admin
 ```
 
-Open the HTML report after the run:
+A browser window opens. In it:
+1. Log in to the Shopify admin with a user that has theme-editor access
+2. Once logged in, visit `https://creations-gdc.myshopify.com/?preview_theme_id=141168312419` in that same window
+3. Confirm you see the P8 dev theme
+4. Close the browser — Playwright auto-saves cookies to `.auth/storageState.json`
+
+The `.auth/` directory is gitignored so cookies stay local.
+
+### Step 2 — run the suite
 
 ```bash
+SHOPIFY_AUTH=.auth/storageState.json npm test
 npm run report
+```
+
+54 tests, ~5-8 min. Re-run the test command any time; cookies stay valid
+until Shopify revokes the session (usually weeks).
+
+### Step 3 — capture visual-parity baselines (one-time)
+
+After verifying the dev theme looks correct via one manual eyeball pass:
+
+```bash
+SHOPIFY_AUTH=.auth/storageState.json npm run update-baselines
+git add __screenshots__/
+git commit -m "smoke-8: initial visual-parity baselines (P8 dev pre-cutover)"
+```
+
+From then on, every run diffs against these baselines.
+
+## Alternate paths
+
+```bash
+# Post-cutover: point at live (no preview_theme_id, no auth needed)
+BASE_URL=https://www.hairmnl.com npm test
+
+# `shopify theme dev` local proxy (experimental — see bin/smoke-against-dev-server.sh)
+# CAVEAT: known to fail on this codebase due to upload errors on legacy
+# per-brand collection liquid files. Use only if the auth flow above is
+# unavailable + after adding a .shopifyignore exclude list.
+npm run smoke:dev
 ```
 
 ## The 8 smoke tests

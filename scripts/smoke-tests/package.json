@@ -15,6 +15,8 @@
     "test:smoke-8": "playwright test smoke-08",
     "test:visual": "playwright test smoke-08",
     "update-baselines": "playwright test smoke-08 --update-snapshots",
+    "smoke:dev": "bash bin/smoke-against-dev-server.sh",
+    "smoke:dev:baselines": "bash bin/smoke-against-dev-server.sh --update-snapshots smoke-08",
     "test:mobile": "playwright test --project=mobile",
     "test:desktop": "playwright test --project=desktop",
     "test:headed": "playwright test --headed",
