@@ -326,3 +326,35 @@ The ujg6.28 investigation does NOT block Phase B.2. The bundle work proceeds as 
 3. Klaviyo admin → Reviews → confirm enabled/disabled state.
 
 `2i8b.16` closed as CC-side audit complete; admin audit deferred to operator.
+
+---
+
+## Web Pixels Manager migration — ujg6.12 CC-side investigation (2026-05-18 late)
+
+### Headline
+
+**Theme has 12 direct dataLayer/gtag emitters. None contribute meaningfully to TBT. Migrating them to Web Pixels Manager custom pixels would save microseconds, not the 200ms ujg6.12 acceptance criterion targets.**
+
+### The 12 theme-side custom events
+
+| Event | Source line | Status |
+|---|---|---|
+| `ab_test` × N variants | `layout/theme.liquid:650-677` | Inactive (TESTS = {}) |
+| `hairmnl_js_error` | `layout/theme.liquid:678-707` | Throttled 10/session |
+| `reamaze_load_path` + 3 more | `layout/theme.liquid:868` | Shipped tonight (fsaa) |
+| `CLS` `LCP` `INP` `FCP` `TTFB` | `snippets/web-vitals-reporter.liquid` | Conditional dataLayer XOR gtag |
+| `form_open` `form_submit` `form_close` | `layout/theme.liquid:1184-1190` | Klaviyo form interaction tracking |
+
+### Why this isn't the cutover lever
+
+- **GTM is NOT in theme code** (confirmed earlier via 2i8b.15). The desktop home TBT gap (+2511ms vs P6) comes from Shopify Customer Events / Web Pixels admin-side pixel firing — NOT from theme code.
+- All 12 theme-side emitters are tiny inline pushes (<100 bytes per push, no library loads). Migrating them to `analytics.publish()` would shave microseconds.
+- Web Vitals reporter is already well-architected (dataLayer XOR gtag, never both — per inline comment line 71-76).
+
+### The real lever is admin-side
+
+1. Audit Shopify admin → Settings → Customer Events → list active sources. Remove redundant.
+2. GTM workspace audit (per 2i8b.15 follow-up): unused tags, redundant Google Ads conversion linkers (3 `__awec` calls — confirm all needed).
+3. Web Pixels custom pixel migration ONLY for events with expensive pixel logic (none in HairMNL's case).
+
+ujg6.12 closing as wontfix-premise-misaligned-admin-migration-deferred. The cutover-blocking concern (desktop home TBT) needs admin audit, not theme code.
