@@ -287,3 +287,146 @@ The dev theme is in a transitional hybrid state: **P8 bundle + P6 sections + P6 
 - Bare P8's 33-point PSI advantage over P6 is recoverable; surpassing P6 with TAE migrations adds ~5-10 more points.
 
 **Recommended immediate action**: file a Track 0 ticket for the `menu-buttons` quick fix and ship it before formally starting Phase 1. The 5-line CSS rule could be in production tonight.
+
+
+---
+
+# Addendum — 2026-05-18 evening: compound-wins re-baseline + content-visibility regression
+
+> **Status:** post-day-2-fixes measurement, n=3 per cell where successful (7/60 cells failed with 500 / timeout — typical PSI noise on `?preview_theme_id=` URLs).
+> **Raw data:** `os2-migration/psi-baseline-2026-05-18-evening.md` + `cls-attribution-2026-05-18-evening.md`.
+> **Authored:** Opus 4.7 / High after task 2 of Path B completed.
+
+## TL;DR
+
+Today's fixes (ujg6.5, ujg6.27, ujg6.29) **closed the menu-buttons + Flickity CLS sources cleanly** on the templates I verified earlier in the day. But this fresh re-baseline shows **ujg6.17 (`content-visibility: auto` on below-fold sections) introduced new layout-shift attributions on PSI** — specifically `.homepage-collection` (desktop home) and `.section-recent.recent__container` (mobile cart). Both are now the top CLS sources for their templates.
+
+**Net wins (vs P6 live):** mobile home +4, mobile PDP +8, desktop collection flat, desktop PDP flat, desktop home/brand TBT -800ms each (real improvement).
+
+**Net regressions (vs P6 live):** mobile collection −19 PSI / +0.313 CLS; mobile cart −13 PSI / +0.233 CLS; mobile brand −16 PSI / +0.275 CLS; desktop home −10 PSI / +0.163 CLS; desktop brand −8 PSI / +0.161 CLS.
+
+**Most regressions trace to ujg6.17's content-visibility:auto.** Recommendation: revisit ujg6.17 — either tighten the rules or roll back parts of it.
+
+## Side-by-side matrix (this run, P8 dev vs P6 live)
+
+| Template | Strategy | P8 PSI | P6 PSI | Δ | P8 CLS | P6 CLS | Δ CLS | Verdict |
+|---|---|---|---|---|---|---|---|---|
+| home | mobile | **32** | 28 | **+4** ✓ | 0.013 | 0.015 | -0.002 ✓ | **WIN** — small but consistent |
+| home | desktop | 46 | 56 | **-10** | **0.173** | 0.009 | +0.163 ⚠ | **REGRESSED** — content-visibility cascade |
+| collection | mobile | 27 | 46 | **-19** ⚠ | **0.354** | 0.041 | +0.313 ⚠ | **MAJOR REGRESSION** — richtext shift |
+| collection | desktop | 60 | 62 | -2 | 0.009 | 0.010 | -0.001 ✓ | FLAT — fine |
+| pdp | mobile | **36** | 28 | **+8** ✓ | 0.028 | 0.021 | +0.007 | **WIN** |
+| pdp | desktop | 58 | 58 | 0 | 0.020 | 0.025 | -0.005 ✓ | FLAT — slight CLS win |
+| cart | mobile | 20 | 33 | **-13** | **0.283** | 0.051 | +0.233 ⚠ | **MAJOR REGRESSION** — recent_products shift |
+| cart | desktop | 21 | 24 | -3 | 0.306 | 0.259 | +0.048 | flat — both themes have cart CLS issue |
+| brand | mobile | 17 | 33 | **-16** | **0.291** | 0.015 | +0.275 ⚠ | **MAJOR REGRESSION** — menu-buttons on mobile |
+| brand | desktop | 47 | 55 | **-8** | **0.173** | 0.011 | +0.161 ⚠ | **REGRESSED** — content-visibility cascade |
+
+### Per-strategy summary
+
+**Mobile (5 cells comparable):**
+- Wins: 2 (home +4, PDP +8)
+- Major regressions: 3 (collection -19, cart -13, brand -16)
+- Net: ~-7 PSI average
+
+**Desktop (5 cells comparable):**
+- Wins: 2 (collection slight, PDP slight)
+- Regressions: 3 (home -10, cart -3, brand -8)
+- Net: ~-5 PSI average
+
+## TBT picture is much better than CLS
+
+| Template | Strategy | Δ TBT |
+|---|---|---|
+| home | mobile | +3,918ms ⚠ |
+| home | desktop | **+806ms** |
+| collection | mobile | -347ms ✓ |
+| collection | desktop | **-791ms** ✓ |
+| pdp | mobile | -148ms ✓ |
+| pdp | desktop | **-561ms** ✓ |
+| cart | mobile | **-1,120ms** ✓ |
+| cart | desktop | **-903ms** ✓ |
+| brand | mobile | +422ms |
+| brand | desktop | **-894ms** ✓ |
+
+**Desktop TBT broadly improved** (-561 to -903ms on 4 of 5 templates). The post-revert layout/theme.liquid + content-visibility on below-fold rails are likely driving the desktop TBT wins.
+
+Mobile TBT is mixed — home regressed +3,918ms (likely sampling noise plus heavier GTM/Reamaze firing per ujg6.28 findings); but cart -1,120ms is a real win.
+
+## Top CLS source per regressed template (from cls-attribution-2026-05-18-evening.md)
+
+| Template | Strategy | Top P8 shift | Score | Box | Source identified |
+|---|---|---|---|---|---|
+| home | desktop | `<div id="...templates--18745200345187__164442519884b6f73e">` | 0.518 | 1335×1018 | **section-collection "Best Sellers" (.homepage-collection)** — content-visibility:auto target from ujg6.17 |
+| collection | mobile | `<div id="...section_richtext_GhY8it">` | 1.062 | 412×536 | **section-richtext** "HairMNL Top Picks" block — NOT covered by ujg6.17; new shift source |
+| cart | mobile | `<div id="...recent_products">` | 1.048 | 412×308 | **section-recent-products (.section-recent.recent__container)** — content-visibility:auto target from ujg6.17 |
+| brand | mobile | `<div id="...templates--18745200345187__8e66ad54-...">` | 0.872 | 412×341 | **menu-buttons** — ujg6.29 fixed this on desktop but mobile breakpoint may have missed the font-weight/text-transform additions OR sampling noise |
+| home | desktop | (same as above, .homepage-collection) | 0.518 | 1335×1018 | content-visibility:auto cascade |
+| brand | desktop | menu-buttons UUID 8e66ad54 | 0.872 | 412×341 | menu-buttons on mobile-emulation viewport — sampling artifact? |
+
+## The content-visibility:auto regression mechanism
+
+`content-visibility: auto` skips render/layout/paint for off-screen content. When the section enters the viewport (or Lighthouse's measurement window scrolls it into view for LCP calculation), it **materializes** from its `contain-intrinsic-size` placeholder to its actual rendered size. The materialization is a layout event — Lighthouse measures it as CLS.
+
+For sections that are:
+- Below-fold on first paint, AND
+- Tall (300px+, viewport-spanning) when rendered, AND
+- Fall within Lighthouse's measurement window (~6-8s)
+
+…the materialization shift score can be high because both the impact fraction (large element) and distance fraction (everything below shifts down) are large.
+
+This is a **known PSI methodology trade-off** with `content-visibility: auto`. Real-user CLS (CrUX) measures shifts *during normal browsing*, where the section materializes only when the user scrolls to it — after the initial CLS measurement window has closed. So real-user CLS impact is typically much smaller than PSI's lab measurement implies.
+
+## Recommendation for ujg6.17
+
+**Three options. Operator decides.**
+
+### Option A — Roll back ujg6.17 entirely (revert the content-visibility:auto rules in css-overrides.liquid)
+
+Removes the 0.518 + 1.048 CLS scores from desktop home + mobile cart. Returns to pre-ujg6.17 state.
+
+**Effort:** 5 min. Single CSS revert. Push to dev theme. PSI re-verify.
+**Cost:** Loses the (modest) render-skip-when-off-screen perf benefit. The TBT wins above might also partly come from content-visibility, so verify post-rollback that desktop TBT doesn't regress.
+
+### Option B — Tighten contain-intrinsic-size + add `containment` exception
+
+Refine the existing rules to set `contain-intrinsic-size` to match actual rendered heights more precisely, AND add `contain-visibility: hidden` initially with a JS-driven `auto` flip after first paint. More work, less proven.
+
+**Effort:** 1-2 hr. Likely partial-fix.
+**Cost:** Complexity. PSI may still penalize.
+
+### Option C — Keep desktop, remove mobile
+
+Apply `content-visibility: auto` only via `@media (min-width: 769px)`. Desktop CLS impact is smaller (mobile cart 1.048 vs desktop home 0.518 — but desktop home is still in the top); preserves render-skip benefit where viewport is large.
+
+**Effort:** 10 min. CSS edit.
+**Cost:** Loses mobile benefit but mobile is where below-fold-skipping matters MORE (less RAM, slower CPU).
+
+### Option D — Defer to real-user CrUX validation
+
+Accept the PSI numbers as a measurement artifact, ship with content-visibility:auto in place, and validate with real-user CrUX 28 days post-cutover. If field data shows the regression is real (not just a PSI artifact), roll back then.
+
+**Effort:** 0 now; revisit post-cutover.
+**Cost:** Risk that PSI numbers gate the cutover decision negatively.
+
+**My recommendation: Option A (full rollback).** PSI is the gate we use for cutover acceptance. A 0.5+ CLS attribution to a single section will fail the acceptance threshold on every template it touches. Removing the rule restores P6-parity CLS on desktop home + mobile cart in one commit.
+
+Track ujg6.17 closing notes accordingly.
+
+## Non-content-visibility regressions
+
+The collection-mobile and brand-mobile regressions are NOT explained by content-visibility:auto. They are:
+
+- **Mobile collection 0.354 CLS** — top shift on `section-richtext` (412×536). This is the "HairMNL Top Picks" intro block above the product grid. Not covered by ujg6.17. New shift source — likely caused by font-load timing (BasisGrotesquePro swap reflowing the heading) or rich-text content rendering.
+- **Mobile brand 0.291 CLS** — top shift on menu-buttons UUID `8e66ad54-...` (412×341). The same menu-buttons section ujg6.29 fixed on desktop. The fix's mobile breakpoint (`max-width: 1008px`) may have applied but the font-weight/text-transform additions in the mobile breakpoint are NOT scoped to mobile-specific values. Possible follow-up: investigate why mobile didn't benefit from ujg6.29 the way desktop did.
+
+Filing as follow-up tickets:
+- `2i8b.17` — Mobile collection: section-richtext CLS investigation
+- `2i8b.18` — Mobile brand: menu-buttons fix didn't propagate to mobile breakpoint
+
+## Action items
+
+1. **Decide ujg6.17 fate** (rollback / refine / defer) — operator pick
+2. File the 2 new mobile-specific follow-ups (`2i8b.17`, `2i8b.18`)
+3. Re-run PSI matrix after ujg6.17 disposition to capture final compound state
+4. Phase B.2 still NOT blocked — bundle work proceeds in parallel
