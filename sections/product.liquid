@@ -120,7 +120,7 @@
         {%- endif -%}
       </div>
 
-      <div class="grid__item {{ product_description_width }}">
+      <div class="grid__item {{ product_description_width }} product__details-column">
         {% for block in section.blocks %}
           {% case block.type %}
             {%- when '@app' -%}
@@ -282,6 +282,38 @@
 }
 </script>
 {%- endcomment smartseo_integration_end_meta_data -%}
+
+<style>
+  /* bd ujg6.26 — mobile PDP CLS fix (stream:b, dev theme 141168312419 only).
+     The product details column (.grid__item.product__details-column) hosts
+     four TAE app blocks (ldt-gift-wrap, judgeme review_snippet, bogos
+     mix-match-view, bogos bundle-view) that inject content asynchronously.
+     On mobile each TAE injection cascades a layout shift through the
+     column and everything below it. PSI layout-shifts attributed score
+     1.346 to this <div> (mobile, box 396×1130) — the largest single shift
+     in the 2026-05-18 main re-baseline.
+
+     content-visibility:auto skips render of off-screen content; on mobile
+     this column is below the gallery and below-fold on initial paint, so
+     the browser defers its render until scroll-near — by which time the
+     TAE blocks have populated and there is no shift visible to the user.
+     On desktop the column is side-by-side with the gallery (above-fold)
+     so content-visibility:auto is a no-op — no behavior change there.
+
+     contain-intrinsic-size reserves placeholder height so the elements
+     below (Buy It With / Vertex recommendations / footer) don't shift
+     as this column materializes. Values tuned to the median rendered
+     height per viewport observed in PSI re-baseline. */
+  .product__details-column {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1000px;
+  }
+  @media screen and (max-width: 768px) {
+    .product__details-column {
+      contain-intrinsic-size: 1px 1200px;
+    }
+  }
+</style>
 
 {% schema %}
 {
