@@ -275,10 +275,40 @@
      (80px = 60px thumb + 10px top margin + 5px bottom margin + 5px buffer).
      contain:layout prevents internal Flickity reflows from cascading.
      overflow:hidden prevents any overflow during Flickity's brief transition. */
-  .media__thumb__wrapper {
-    min-height: 80px;
-    contain: layout;
-    overflow: hidden;
+   .media__thumb__wrapper {
+     min-height: 80px;
+     contain: layout;
+     overflow: hidden;
+   }
+
+  /* CLS fix 2026-05-18 T27 — PDP Flickity thumb items inside media__thumb__wrapper:
+      The wrapper-level fix (T8 above) set min-height + contain:layout on the
+      wrapper, but CLS persists (0.205, box 542×73). Root cause: before Flickity
+      initializes, .media__thumb items are inline-block flow children that
+      define the wrapper's intrinsic height. When Flickity fires, it wraps them
+      in .flickity-slider (position:absolute) inside .flickity-viewport — the
+      thumbs are removed from flow and the wrapper height briefly collapses
+      before the viewport inherits from the parent. The wrapper contain:layout
+      already isolates, but the individual thumbs still shift from inline-block
+      flow to absolute-positioned Flickity cells.
+
+      Fix: stabilize each .media__thumb with explicit dimensions matching the
+      base theme.css values (width:60px, height:60px) and force them to remain
+      inline-block regardless of Flickity class mutations. Also set explicit
+      width/height on the child img and aspect-ratio:1 as a fallback, so the
+      img cannot collapse if it loads after Flickity restructures the DOM. */
+  [data-product-thumbs] .media__thumb {
+    display: inline-block;
+    width: 60px;
+    min-width: 60px;
+    height: 60px;
+    min-height: 60px;
+  }
+  [data-product-thumbs] .media__thumb img {
+    display: block;
+    width: 60px;
+    height: 60px;
+    aspect-ratio: 1;
   }
 
   /* CLS fix 2026-05-01 T9 — Header CLS:

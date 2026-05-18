@@ -79,12 +79,12 @@ impact.
 
 ### B.1 — Bundle architecture
 
-- [ ] Decide bundle target: extend existing `theme.js`, or new file like
+- [x] Decide bundle target: extend existing `theme.js`, or new file like
       `hairmnl-custom.js`. Document choice in the PR. (Note: `hairmnl-custom.js`
       already exists from the P4 spike `64b034f` but is `[P8-PENDING]` in the
       asset allowlist — currently not loaded.)
-- [ ] Bundle MUST replace every behavior marked "KEEP in bundle" in Phase A.3.
-- [ ] Bundle MUST NOT exceed the budget. Reference: `bd ujg6.28` cited
+- [x] Bundle MUST replace every behavior marked "KEEP in bundle" in Phase A.3.
+- [x] Bundle MUST NOT exceed the budget. Reference: `bd ujg6.28` cited
       `custom-theme.js` at 456 KB as the source of ~85% of TBT regression.
       Target a budget that's substantially below 456 KB (proposed: ≤120 KB
       minified). Document the achieved size in the PR.

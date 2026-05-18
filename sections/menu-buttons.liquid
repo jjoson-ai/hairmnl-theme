@@ -41,12 +41,22 @@
     padding: 10px;
     border: 1px solid #ccc;
     text-decoration: none;
+    outline: none;
+    transition: 0.3s;
+    font-weight: var(---menu-btn-bold, normal);
+    text-transform: var(---menu-btn-caps, none);
   }
   @media screen and (max-width: 1008px) {
     .menu-buttons .mb-box { padding: 0; }
     .menu-buttons .mb-menu {
       grid-template-columns: 1fr;
       grid-gap: 0;
+    }
+    .menu-buttons .mb-menu .mb-menu-item > a {
+      border-bottom: none;
+    }
+    .menu-buttons .mb-menu .mb-menu-item:last-child a {
+      border-bottom: 1px solid #ccc;
     }
     .menu-buttons .mb-menu-item-link {
       padding: 15px;
