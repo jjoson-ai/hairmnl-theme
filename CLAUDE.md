@@ -158,7 +158,8 @@ several other perf optimizations that **were already live**. The
 
 ## The rule
 
-**Before any `shopify theme push --only=<file>`, always:**
+**Before any `shopify theme push --only=<file>` to the LIVE theme
+(`131664707683`), always:**
 
 1. Inspect `git diff HEAD <file>` — confirm the diff is exactly the
    intended hunks. If you see unexpected changes, stop.
@@ -169,9 +170,40 @@ several other perf optimizations that **were already live**. The
      --only=<file> --path=/tmp/live-pull` and diff against that.
 3. Only push after the diff matches the intended change.
 
-**Never** `shopify theme push` without `--only=<file>` flags. A
-no-filter push uploads the entire working tree, which is almost
-guaranteed to drag stale or WIP content into live.
+**Never** `shopify theme push` without `--only=<file>` flags **when
+targeting the LIVE theme `131664707683`**. A no-filter push to live
+uploads the entire working tree, which is almost guaranteed to drag
+stale or WIP content into customer-facing pages (this is the 2026-04-26
+regression class above).
+
+### Wide pushes to dev / draft themes are allowed and sometimes prescribed
+
+The "no-filter push" prohibition applies to **live theme only**. Wide
+pushes to the dev / draft themes are explicitly safe and sometimes
+required:
+
+| Theme target | Wide push (`shopify theme push --theme=<id> --nodelete`) | Why |
+|---|---|---|
+| **`131664707683`** (LIVE — "Pipeline 6 - Fix share image") | ❌ **Prohibited** | 2026-04-26 regression class. Always use `--only=<file>` filters AND `--allow-live`. |
+| **`140785582179`** (Draft — "Claude Code") | ✅ Allowed | Draft theme is the smoke-test surface; wide sync from main HEAD is the intended workflow. |
+| **`141168312419`** (Dev — "Pipeline 8 Working Demo") | ✅ Allowed | `os2-migration/p8-cutover-checklist.md` Phase A.2 **prescribes** a wide push to sync dev to current main HEAD. Required for P8 work. |
+
+Operationally: an AI session running the P8 cutover checklist will hit
+this distinction. The classifier should accept wide pushes to
+`140785582179` or `141168312419`; only `131664707683` triggers the
+prohibition. If you're an AI session and the classifier blocks a wide
+push to a dev / draft theme, surface the conflict to the operator —
+the operator can approve the specific bash run.
+
+### Cross-reference
+
+- Live-push verification beyond `--only=` filters: `MIGRATION-CONTRACT.md`
+  Rules 5 (cache-bypass verify) and 7 (pre-flight pull) apply to every
+  live `theme.liquid` push.
+- P8 cutover deployment gate (Rule 10): `os2-migration/p8-cutover-checklist.md`
+  Phases A–D. Phase A.2 explicitly prescribes the wide dev-theme push
+  that the original rule above seemed to forbid — this scoping makes the
+  intent explicit.
 
 ## Git as source of truth
 
