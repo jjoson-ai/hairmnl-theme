@@ -202,12 +202,183 @@
   Pass 3: Shopify themes collapse <div> wrappers around images when they
   follow <ul>/<li> elements. Convert image-containing <div
   style="text-align: center;"> to <p style="text-align: center;"> which
-  renders reliably. Bloggle stores centered image blocks as:
+  renders reliably. Bloggle / rich-text stores centered image blocks as:
     <div style="text-align: center;"><a ...><img ...></a></div>
-  Convert both opening and closing tags.
+    <div style="text-align: center;"><img ...></div>
+
+  CRITICAL: the open AND its matching close must both convert. An earlier
+  version only converted the open, leaving orphan </div> tokens scattered
+  through article.content. These orphans then closed parent wrappers
+  (blog__article__content, article column) prematurely on the live site
+  2026-05-18 — "Bold Blacks" section and below rendered at full body
+  width outside the constrained column on /best-hair-color-for-morenas...
+
+  Algorithm: split on the centered-div open marker, then for each
+  resulting chunk consume the FIRST </div> as the matching close (HTML
+  doesn't allow nested <div> inside an inline text-align wrapper in
+  rich-text-editor output, so first-close == matching close in practice).
 {%- endcomment -%}
-{%- assign _output = _output | replace: '<div style="text-align: center;">', '<p style="text-align: center;">' -%}
-{%- assign _output = _output | replace: '<div style="text-align:center;">', '<p style="text-align:center;">' -%}
-{%- assign _output = _output | replace: '</a></div>', '</a></p>' -%}
+
+{%- comment -%} ----- variant A: <div style="text-align: center;"> (with space) ----- {%- endcomment -%}
+{%- assign _ctr_open_a = '<div style="text-align: center;">' -%}
+{%- assign _ctr_parts_a = _output | split: _ctr_open_a -%}
+{%- if _ctr_parts_a.size > 1 -%}
+  {%- assign _output = _ctr_parts_a | first -%}
+  {%- for _chunk in _ctr_parts_a offset: 1 -%}
+    {%- assign _inner = _chunk | split: '</div>' -%}
+    {%- if _inner.size > 1 -%}
+      {%- assign _body = _inner | first -%}
+      {%- assign _rest = '' -%}
+      {%- for _p in _inner offset: 1 -%}
+        {%- if forloop.first -%}
+          {%- assign _rest = _p -%}
+        {%- else -%}
+          {%- assign _rest = _rest | append: '</div>' | append: _p -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign _output = _output | append: '<p style="text-align: center;">' | append: _body | append: '</p>' | append: _rest -%}
+    {%- else -%}
+      {%- comment -%} No matching </div> found — fall back to open-only conversion {%- endcomment -%}
+      {%- assign _output = _output | append: '<p style="text-align: center;">' | append: _chunk -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- comment -%} ----- variant B: <div style="text-align:center;"> (no space) ----- {%- endcomment -%}
+{%- assign _ctr_open_b = '<div style="text-align:center;">' -%}
+{%- assign _ctr_parts_b = _output | split: _ctr_open_b -%}
+{%- if _ctr_parts_b.size > 1 -%}
+  {%- assign _output = _ctr_parts_b | first -%}
+  {%- for _chunk in _ctr_parts_b offset: 1 -%}
+    {%- assign _inner = _chunk | split: '</div>' -%}
+    {%- if _inner.size > 1 -%}
+      {%- assign _body = _inner | first -%}
+      {%- assign _rest = '' -%}
+      {%- for _p in _inner offset: 1 -%}
+        {%- if forloop.first -%}
+          {%- assign _rest = _p -%}
+        {%- else -%}
+          {%- assign _rest = _rest | append: '</div>' | append: _p -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign _output = _output | append: '<p style="text-align:center;">' | append: _body | append: '</p>' | append: _rest -%}
+    {%- else -%}
+      {%- assign _output = _output | append: '<p style="text-align:center;">' | append: _chunk -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- comment -%}
+  Pass 3.5: handle WYSIWYG mismatched `<p style=...>... </div>` patterns.
+  The 2026-05-18 morena article has the pattern repeated 4 times:
+    <p style="text-align: center;"><img ... style="float: none;"></div>
+
+  The author/editor wrote `<p style="...">` as the open but typed `</div>`
+  as the close (likely from inline edit of a previously-`<div>`-wrapped
+  block). The mismatched close prematurely closes the parent
+  blog__article__content wrapper, dumping subsequent content out of the
+  article column.
+
+  Fix: targeted literal replacement of common stray patterns. We target
+  the specific suffixes observed in production article bodies:
+    - `style="float: none;"></div>`
+    - `style="margin-bottom: 16px; float: none;"></div>`
+    - generic `; float: none;"></div>`
+  Plus a fallback: ANY `"></div>` immediately followed by `<p` or `<h`
+  (whitespace-tolerant) at the start of the next block element, since
+  in article.content that nearly always means a misclosed inline block.
+
+  Safety: these replacements run ONLY on article.content (this snippet
+  is scoped to that parameter). Theme chrome (Judge.me medals, Pro
+  Blogger product cards, etc.) is not seen by this snippet.
+{%- endcomment -%}
+
+{%- assign _output = _output | replace: '; float: none;"></div>', '; float: none;"></p>' -%}
+{%- assign _output = _output | replace: 'float: none;"></div>', 'float: none;"></p>' -%}
+{%- assign _output = _output | replace: 'float:none;"></div>', 'float:none;"></p>' -%}
+{%- assign _output = _output | replace: 'float: left;"></div>', 'float: left;"></p>' -%}
+{%- assign _output = _output | replace: 'float: right;"></div>', 'float: right;"></p>' -%}
+
+{%- comment -%}
+  Fallback: `"></div>\n<p` or `"></div>\n<h` — a `"></div>` immediately
+  followed by a block-element open. In article.content this signals a
+  misclosed inline image block. The `replace` handles common whitespace
+  variants between the close and the next open.
+{%- endcomment -%}
+{%- assign _output = _output | replace: '"></div>\n<p', '"></p>\n<p' -%}
+{%- assign _output = _output | replace: '"></div>\n<h', '"></p>\n<h' -%}
+{%- assign _output = _output | replace: '"></div> <p', '"></p> <p' -%}
+{%- assign _output = _output | replace: '"></div> <h', '"></p> <h' -%}
+{%- assign _output = _output | replace: '"></div><p', '"></p><p' -%}
+{%- assign _output = _output | replace: '"></div><h', '"></p><h' -%}
+
+{%- comment -%}
+  Pass 4: balance stray closing tags from WYSIWYG-corrupted article body
+  HTML. Defense-in-depth after Pass 3 / 3.5. Root cause: pasting from
+  Word / Google Docs / mid-article copy drops extra </div> / </article>
+  tokens into article.content. If Pass 3/3.5 missed any (unusual variant
+  spacing, nested edge cases), Pass 4 counts opens vs closes per tag and
+  strips excess closes from the END of content. No-op when balanced.
+{%- endcomment -%}
+
+{%- comment -%} ----- balance </div> ----- {%- endcomment -%}
+{%- assign _div_open_parts = _output | split: '<div' -%}
+{%- assign _div_open_count = _div_open_parts.size | minus: 1 -%}
+{%- assign _div_close_parts = _output | split: '</div>' -%}
+{%- assign _div_close_count = _div_close_parts.size | minus: 1 -%}
+{%- if _div_close_count > _div_open_count -%}
+  {%- assign _div_keep = _div_open_count -%}
+  {%- assign _rebuilt = '' -%}
+  {%- for _piece in _div_close_parts -%}
+    {%- if forloop.first -%}
+      {%- assign _rebuilt = _piece -%}
+    {%- elsif forloop.index0 <= _div_keep -%}
+      {%- assign _rebuilt = _rebuilt | append: '</div>' | append: _piece -%}
+    {%- else -%}
+      {%- assign _rebuilt = _rebuilt | append: _piece -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign _output = _rebuilt -%}
+{%- endif -%}
+
+{%- comment -%} ----- balance </article> ----- {%- endcomment -%}
+{%- assign _art_open_parts = _output | split: '<article' -%}
+{%- assign _art_open_count = _art_open_parts.size | minus: 1 -%}
+{%- assign _art_close_parts = _output | split: '</article>' -%}
+{%- assign _art_close_count = _art_close_parts.size | minus: 1 -%}
+{%- if _art_close_count > _art_open_count -%}
+  {%- assign _art_keep = _art_open_count -%}
+  {%- assign _rebuilt = '' -%}
+  {%- for _piece in _art_close_parts -%}
+    {%- if forloop.first -%}
+      {%- assign _rebuilt = _piece -%}
+    {%- elsif forloop.index0 <= _art_keep -%}
+      {%- assign _rebuilt = _rebuilt | append: '</article>' | append: _piece -%}
+    {%- else -%}
+      {%- assign _rebuilt = _rebuilt | append: _piece -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign _output = _rebuilt -%}
+{%- endif -%}
+
+{%- comment -%} ----- balance </section> ----- {%- endcomment -%}
+{%- assign _sec_open_parts = _output | split: '<section' -%}
+{%- assign _sec_open_count = _sec_open_parts.size | minus: 1 -%}
+{%- assign _sec_close_parts = _output | split: '</section>' -%}
+{%- assign _sec_close_count = _sec_close_parts.size | minus: 1 -%}
+{%- if _sec_close_count > _sec_open_count -%}
+  {%- assign _sec_keep = _sec_open_count -%}
+  {%- assign _rebuilt = '' -%}
+  {%- for _piece in _sec_close_parts -%}
+    {%- if forloop.first -%}
+      {%- assign _rebuilt = _piece -%}
+    {%- elsif forloop.index0 <= _sec_keep -%}
+      {%- assign _rebuilt = _rebuilt | append: '</section>' | append: _piece -%}
+    {%- else -%}
+      {%- assign _rebuilt = _rebuilt | append: _piece -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign _output = _rebuilt -%}
+{%- endif -%}
 
 {{- _output -}}
