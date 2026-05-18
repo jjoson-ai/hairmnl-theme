@@ -8,6 +8,12 @@
 {%- endif -%}
 
 {% if has_related_products or has_recently_products %}
+
+  {%- if request.design_mode or request.page_type == null -%}
+    {%- comment -%}
+      Theme Editor preview OR Section Rendering API request (?section_id=...):
+      render the full section normally.
+    {%- endcomment -%}
   <div class="section-related js {{ section.settings.bg }}" data-section-id="{{ section.id }}" data-section-type="related">
     <div class="wrapper">
       <div class="collection-tabs">
@@ -77,6 +83,98 @@
       </div>
     </div>
   </div>
+
+  {%- else -%}
+    {%- comment -%}
+      Normal pageload: emit a lightweight placeholder.
+    {%- endcomment -%}
+    <div
+      class="section-related js {{ section.settings.bg }}"
+      data-lazy-render
+      data-lazy-url="/?section_id={{ section.id }}"
+      data-section-id="{{ section.id }}"
+      data-section-type="related"
+      style="min-height: 400px;">
+      <!-- placeholder — populated by hairmnl-common.js section 8 IO -->
+    </div>
+    <noscript>
+  <div class="section-related js {{ section.settings.bg }}" data-section-id="{{ section.id }}" data-section-type="related">
+    <div class="wrapper">
+      <div class="collection-tabs">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="home__subtitle">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      
+        {%- if has_related_products and has_recently_products != true -%}
+          <div class="related__products" data-tabs-holder>    
+            <div class="tab-content tab-content-0 current tabs__recommendation" data-tab-index="0">
+              <div data-related-section data-limit="{{ section.settings.limit }}" data-product-id="{{ product.id }}">
+                {%- render 'products-recommendation', product: product -%}
+              </div>
+            </div>
+      
+            <div class="tab-content tab-content-1 tabs__recently-viewed hide" data-tab-index="1" data-recently-viewed-tab></div>
+          </div>
+      
+        {%- elsif has_recently_products and has_related_products != true -%}
+          <div class="related__products" data-tabs-holder>    
+            <div class="tab-content tab-content-1 tabs__recently-viewed current" data-tab-index="1" data-recently-viewed-tab>
+              {%- render 'products-recently-viewed', product: product, limit: section.settings.product_recently_limit, product_recently_minimum: section.settings.product_recently_minimum -%}
+            </div>
+          </div>
+      
+        {%- elsif has_related_products and has_recently_products -%}
+          <div class="related__products" data-tabs-holder>
+            <div class="tab__scroll" data-tabs-holder-scroll>
+              <ul class="tabs tabs--center tabs--pill" data-scrollbar data-scrollbar-slider>
+                {%- if section.settings.product_recommendations_heading != blank and section.settings.product_recommendations_heading != '' -%}
+                  <li class="tab-link tab-link-0 current" data-tab="0" tabindex="0">
+                    <span class="recent__title">
+                      {{ section.settings.product_recommendations_heading -}}
+                    </span>
+                  </li>
+                {%- endif -%}
+        
+                {%- if section.settings.product_recently_heading != blank and section.settings.product_recently_heading != '' -%}
+                  <li class="tab-link tab-link-1 tab-link__recent hide" data-tab="1" tabindex="0" data-recent-link-tab>
+                    <span class="recent__title">
+                      {{ section.settings.product_recently_heading -}}
+                    </span>
+                  </li>
+                {%- endif -%}
+              </ul>
+      
+              <button type="button" class="tabs__arrow tabs__arrow--prev is-hidden" data-scrollbar-arrow-prev>
+                <span class="visually-hidden">{{ 'general.accessibility.see_all' | t }}</span>
+              </button>
+        
+              <button type="button" class="tabs__arrow tabs__arrow--next is-hidden" data-scrollbar-arrow-next>
+                <span class="visually-hidden">{{ 'general.accessibility.see_all' | t }}</span>
+              </button>
+            </div>
+      
+            <div class="tab-content tab-content-0 current tabs__recommendation" data-tab-index="0">
+              <div data-related-section data-limit="{{ section.settings.limit }}" data-product-id="{{ product.id }}">
+                {%- render 'products-recommendation', product: product, limit: section.settings.limit -%}
+              </div>
+            </div>
+      
+            <div class="tab-content tab-content-1 tabs__recently-viewed" data-tab-index="1" data-recently-viewed-tab>
+              {%- render 'products-recently-viewed', product: product, limit: section.settings.product_recently_limit, product_recently_minimum: section.settings.product_recently_minimum -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+    </noscript>
+    <style>
+      [data-section-type="related"][data-lazy-render] {
+        min-height: 400px;
+      }
+    </style>
+  {%- endif -%}
+
 {% endif %}
 
 {% schema %}
