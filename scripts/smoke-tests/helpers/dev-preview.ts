@@ -55,9 +55,11 @@ export async function visitDev(page: Page, path: string): Promise<void> {
         `Check Shopify admin auth (run 'npm run auth' once and set SHOPIFY_AUTH).`
     );
   }
-  // Check we're not on a 404 page
+  // Check we're not on a 404 page. The Shopify default body id is
+  // "404-not-found" — IDs starting with a digit aren't valid CSS
+  // identifiers (WebKit rejects), so use the attribute-selector form.
   const has404 = await page
-    .locator('body#404-not-found, body.template-404')
+    .locator('body[id="404-not-found"], body.template-404')
     .count();
   if (has404 > 0) {
     throw new Error(
