@@ -233,13 +233,95 @@ def render_markdown(summary: dict[str, Any], runs: int) -> str:
     return "\n".join(lines)
 
 
+def preflight_check_urls() -> list[str]:
+    """Verify every URL in TEMPLATES × THEMES resolves to a page whose
+    pageType matches the cell name. Returns list of warning strings (empty
+    if all URLs pass).
+
+    Catches the 2i8b.17 failure mode (cited in scripts/psi-cls-attribution.py
+    BAD_BODY_ID_RX): URL exists (200) but redirects to a different page
+    (e.g., /collections/loreal-professionnel → /, served as homepage).
+    PSI bot follows the redirect; CLS measurement is on the wrong page.
+
+    Heuristic: HEAD request follows redirects, then we check the
+    'pageType' field from Shopify's server-timing header. If the
+    pageType doesn't match the cell's template name (collection, product,
+    cart, index), warn.
+
+    Note: this is a heuristic on top of curl. For full correctness, the
+    operator should still spot-check `pageType` values manually. But this
+    catches the most common breakage (URL → homepage redirect).
+    """
+    import re as _re
+    warnings = []
+    SHOP_HOST_LOCAL = "https://www.hairmnl.com"
+    # Expected pageType per cell name. 'home' → 'index' is Shopify's convention.
+    expected_page_type = {
+        "home": "index",
+        "collection": "collection",
+        "brand": "collection",   # brand pages use the collection template
+        "pdp": "product",
+        "cart": "cart",
+    }
+    for theme_label, theme_qs in THEMES:
+        for tpl, tpl_path in TEMPLATES:
+            url = SHOP_HOST_LOCAL + tpl_path + theme_qs
+            try:
+                r = subprocess.run(
+                    ["curl", "-sIL", "--max-time", "10", url],
+                    capture_output=True, text=True, timeout=15
+                )
+                hdrs = r.stdout
+            except Exception as e:
+                warnings.append(f"  {theme_label} / {tpl}: curl failed ({e})")
+                continue
+            # Look at the LAST HTTP response (after redirects)
+            status_codes = _re.findall(r"^HTTP/[\d.]+ (\d+)", hdrs, _re.MULTILINE)
+            last_status = status_codes[-1] if status_codes else "?"
+            # Find the last pageType=desc field (after redirect chain)
+            pt_matches = _re.findall(r'pageType;desc="([^"]+)"', hdrs)
+            actual_pt = pt_matches[-1] if pt_matches else None
+            expected_pt = expected_page_type.get(tpl)
+            if last_status != "200":
+                warnings.append(f"  {theme_label} / {tpl}: HTTP {last_status} (url={url})")
+            elif actual_pt and expected_pt and actual_pt != expected_pt:
+                warnings.append(
+                    f"  {theme_label} / {tpl}: URL resolved to pageType={actual_pt}, expected {expected_pt} (url={url})"
+                )
+    return warnings
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--runs", type=int, default=3)
     p.add_argument("--concurrency", type=int, default=3)
+    p.add_argument(
+        "--skip-preflight",
+        action="store_true",
+        help="Skip the URL pre-flight check (don't use unless intentional)",
+    )
     args = p.parse_args()
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # 2i8b.17 guard: verify every URL resolves to its intended pageType
+    # BEFORE burning PSI quota. The most common breakage is a renamed
+    # collection handle (URL 301s to / or to the homepage), measured
+    # as a 200 but actually serving a different page.
+    if not args.skip_preflight:
+        print("→ Pre-flight: checking URL pageTypes …", flush=True)
+        warnings = preflight_check_urls()
+        if warnings:
+            print("", flush=True)
+            print("✗ Pre-flight URL check FAILED for the following cells:", flush=True)
+            for w in warnings:
+                print(w, flush=True)
+            print("", flush=True)
+            print("Fix the URLs in TEMPLATES at the top of this script, or", flush=True)
+            print("re-run with --skip-preflight to bypass (NOT RECOMMENDED — see 2i8b.17).", flush=True)
+            sys.exit(2)
+        print("  ✓ all URLs resolve to expected pageTypes", flush=True)
+        print("", flush=True)
 
     api_key = get_psi_api_key()
     total_cells = len(THEMES) * len(STRATEGIES) * len(TEMPLATES) * args.runs

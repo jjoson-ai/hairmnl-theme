@@ -70,10 +70,42 @@ def classify_node(snippet: str, selector: str, label: str) -> str:
     return "Other"
 
 
+# 404 / wrong-page detection. The PSI bot follows redirects; if a target
+# URL 301s or 404s, the bot may end up measuring an error page or homepage
+# while the cell's name still says "collection". Selectors in the
+# layout-shifts audit reveal this — error pages have a distinctive body id.
+# See 2i8b.17 (2026-05-18) for the incident: /collections/cat-best-sellers
+# silently measured a 404 footer shift score of 0.632 for weeks before this
+# guard caught it. Body-id patterns observed:
+#   - body#404-not-found   — Shopify default 404 controller
+#   - body#password        — store-locked password page
+#   - body#maintenance     — maintenance-mode page
+#   - body#customers-login — auth redirect (often when /cart hits a logged-out
+#     state on B2B-locked stores)
+BAD_BODY_ID_RX = re.compile(
+    r"body#(?:404-not-found|password|maintenance|robot-challenge|customers-login)",
+    re.IGNORECASE,
+)
+
+
+def detect_404_or_wrong_page(items: list) -> str | None:
+    """If any layout-shift selector matches a known error-page body id,
+    return that body id (otherwise None). When the result is non-None, the
+    cell's CLS measurements are bogus — the PSI bot measured an error page,
+    not the cell's actual template."""
+    for it in items:
+        sel = (it.get("node", {}) or {}).get("selector", "") or ""
+        m = BAD_BODY_ID_RX.search(sel)
+        if m:
+            return m.group(0).split("#", 1)[-1]
+    return None
+
+
 def aggregate_cell(json_files: list[Path]) -> dict:
     """For one (theme, strategy, template), aggregate layout shifts across runs."""
     all_shifts = []
     total_cls_values = []
+    bad_page: str | None = None
 
     for f in json_files:
         try:
@@ -85,6 +117,9 @@ def aggregate_cell(json_files: list[Path]) -> dict:
         if cls is not None:
             total_cls_values.append(cls)
         items = (audits.get("layout-shifts", {}) or {}).get("details", {}).get("items", [])
+        # 2i8b.17 guard: flag if the PSI bot ended up on an error page
+        if bad_page is None:
+            bad_page = detect_404_or_wrong_page(items)
         for it in items:
             score = it.get("score", 0)
             node = it.get("node", {})
@@ -117,6 +152,7 @@ def aggregate_cell(json_files: list[Path]) -> dict:
              for cat, score in by_cat.items()],
             key=lambda r: r["total_score"], reverse=True
         )[:5],
+        "bad_page": bad_page,  # body-id string if the PSI bot measured an error page; None if the cell looks legit
     }
 
 
@@ -133,6 +169,16 @@ def main() -> None:
         print("No PSI JSON files found in /tmp/psi-baseline/")
         return
 
+    # Pre-pass: detect bad-page cells before generating the report. These
+    # need a prominent warning at the top — silently treating their CLS
+    # as legitimate is the 2i8b.17 failure mode this guard exists to
+    # prevent.
+    bad_cells: dict[tuple[str, str, str], str] = {}
+    for cell, files in files_by_cell.items():
+        agg = aggregate_cell(files)
+        if agg.get("bad_page"):
+            bad_cells[cell] = agg["bad_page"]
+
     lines = []
     lines.append("# CLS attribution (Phase 0.2) — bd hairmnl-theme-ujg6.2")
     lines.append("")
@@ -145,6 +191,25 @@ def main() -> None:
                  "often returns 1 fresh + 2 cached. Treat `n_runs` as upper bound; effective unique "
                  "samples may be 1.")
     lines.append("")
+
+    # 404 / wrong-page warning banner (2i8b.17 guard)
+    if bad_cells:
+        lines.append("## ⚠️  BAD-PAGE CELLS DETECTED — measurements are bogus")
+        lines.append("")
+        lines.append("The following cells' CLS measurements are NOT trustworthy. The PSI bot "
+                     "ended up on an error/redirect page instead of the intended template — "
+                     "the layout-shift attribution selectors match a known bad-page body id "
+                     "(e.g., `body#404-not-found`). Per the 2i8b.17 incident (2026-05-18) "
+                     "where `/collections/cat-best-sellers` measured 0.632 CLS that turned out "
+                     "to be footer shifts on a 404 page.")
+        lines.append("")
+        lines.append("| Cell | Bad page detected | Fix |")
+        lines.append("|---|---|---|")
+        for (theme, strat, tpl), body_id in sorted(bad_cells.items()):
+            lines.append(f"| {theme} / {strat} / {tpl} | `body#{body_id}` | Verify the URL in `scripts/psi-baseline-matrix.py::TEMPLATES` resolves to the intended page (`curl -sIL <url>` should show pageType matching the cell name) |")
+        lines.append("")
+        lines.append("**Treat these cells' CLS values as ignored. Re-baseline after fixing URLs.**")
+        lines.append("")
 
     # Order: P6 first then P8, mobile then desktop, by template
     template_order = ["home", "collection", "pdp", "cart", "brand"]
@@ -171,6 +236,9 @@ def main() -> None:
                 )
                 med = a["median_cls"]
                 med_str = f"{med:.3f}" if med is not None else "—"
+                # 2i8b.17 guard: inline marker for bad-page cells
+                if a.get("bad_page"):
+                    med_str += f" ⚠️ {a['bad_page']}"
                 lines.append(f"| {theme} | {a['n_runs']} | {med_str} | {a['n_shifts_total']} | {cats} |")
             lines.append("")
 
