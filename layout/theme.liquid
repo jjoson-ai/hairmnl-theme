@@ -70,7 +70,6 @@
       requests on the homepage / PDP audits:
         - googletagmanager.com (GTM, 737 ms / 622 ms scripting)
         - cdn.reamaze.com (Reamaze chat, 735 ms / 255 ms scripting)
-        - edge.personalizer.io (LimeSpot personalizer, 588 ms)
         - sdk-static.loyaltylion.net (LoyaltyLion SDK, ~500 ms)
         - static.klaviyo.com (Klaviyo signup modal, ~600 ms)
         - tracking.aws.judge.me (Judge.me tracking, 800 ms)
@@ -81,7 +80,6 @@
     {%- endcomment -%}
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://cdn.reamaze.com">
-    <link rel="dns-prefetch" href="https://edge.personalizer.io">
     <link rel="dns-prefetch" href="https://sdk-static.loyaltylion.net">
     <link rel="dns-prefetch" href="https://static.klaviyo.com">
     <link rel="dns-prefetch" href="https://tracking.aws.judge.me">
@@ -1216,17 +1214,7 @@
       {{ content_for_layout }}<!-- End of layout -->
 	<noscript class="endOfLayoutContentX" type="text/mark"></noscript>
       {% comment %} 2026-05-09: Treedify uninstalled (issue ijh) — removed treedify_script render. {% endcomment %}
-      {%- comment -%}
-        LimeSpot recs widget gated 2026-04-28 — same rationale as the
-        SDK include above. The <limespot> element is the recs container
-        the SDK populates with product cards. On customer-area pages
-        the SDK is also skipped (above), so this element would just
-        sit empty. Skipping the element entirely shaves a tiny bit of
-        DOM + CSS work for those templates.
-      {%- endcomment -%}
-      {%- unless template contains 'customers/' -%}
-        <limespot></limespot>
-      {%- endunless -%}
+      {%- comment -%} LimeSpot SDK + element removed 2026-05-19 (za7u.3). SDK already dropped 2026-05-17 (commit 4303e70); empty element + dns-prefetch hint cleaned up here. {%- endcomment -%}
     </main>
 
     {% section 'footer' %}
