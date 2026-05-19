@@ -129,12 +129,14 @@
       href="{{ 'BasisGrotesquePro-Regular.woff2' | asset_url }}"
       as="font"
       type="font/woff2"
-      crossorigin>
+      crossorigin
+      fetchpriority="low">
     <link rel="preload"
       href="{{ 'SelfModern.woff2' | asset_url }}"
       as="font"
       type="font/woff2"
-      crossorigin>
+      crossorigin
+      fetchpriority="low">
     {%- comment -%}
       Deferred 2026-04-27 — was render-blocking 600 ms per Lighthouse PSI.
       tiny.content.min.css is the largest single render-blocking CSS in the head
