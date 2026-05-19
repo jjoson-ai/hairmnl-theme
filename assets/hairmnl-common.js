@@ -335,35 +335,52 @@
             return r.text();
           })
           .then(function (html) {
-            // Create a temporary container to parse the fetched HTML
-            var tmp = document.createElement('div');
-            tmp.innerHTML = html;
             var sid = el.getAttribute('data-section-id');
-            // Find the section wrapper in the fetched content
-            var fetched = tmp.querySelector('[data-section-id="' + sid + '"]');
             // ----------------------------------------------------------------
-            // bd 2i8b.30 defensive fallback:
+            // bd 2i8b.30 + 2i8b.34 — Parse with DOMParser from the start.
+            //
             // section-collection.liquid (and brand-collection / related)
             // use `{%- if request.design_mode or request.page_type == null -%}`
-            // to detect Section Rendering API requests. But Shopify does NOT
-            // null out request.page_type for ?section_id= requests — it
-            // returns the page's actual type ('index', 'product', etc).
-            // Result: the API returns the SAME lazy-render placeholder, so
-            // naive replaceWith loops placeholder→placeholder forever.
-            // The full content is only rendered inside <noscript>. Extract it
-            // from there when we detect the placeholder loop.
+            // to detect Section Rendering API requests. Shopify does NOT
+            // null out request.page_type for ?section_id= requests, so the
+            // API returns the SAME lazy-render placeholder + a <noscript>
+            // fallback containing the actual products. We extract from
+            // the <noscript>.
+            //
+            // Key: DOMParser('text/html') parses with "scripting disabled"
+            // context, so <noscript> contents become real DOM children
+            // (not opaque text as they would in a JS-enabled
+            // innerHTML parse). The earlier innerHTML approach collapsed
+            // nested <noscript>s inside each product card, losing 11/12
+            // products. bd 2i8b.34
             // ----------------------------------------------------------------
-            if (fetched && fetched.hasAttribute('data-lazy-render')) {
-              var noscript = tmp.querySelector('noscript');
-              if (noscript) {
-                var nsContainer = document.createElement('div');
-                nsContainer.innerHTML = noscript.textContent;
-                var realContent =
-                  nsContainer.querySelector('[data-section-id="' + sid + '"]') ||
-                  nsContainer.firstElementChild;
-                if (realContent) fetched = realContent;
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            // Find a non-placeholder section first (in case the page_type
+            // detection ever starts working)
+            var candidates = doc.querySelectorAll('[data-section-id="' + sid + '"]');
+            var fetched = null;
+            for (var i = 0; i < candidates.length; i++) {
+              if (!candidates[i].hasAttribute('data-lazy-render')) {
+                fetched = candidates[i];
+                break;
               }
             }
+            // If only placeholder candidates found, use the <noscript>
+            // fallback content. In DOMParser-parsed docs, noscript children
+            // ARE real DOM nodes.
+            if (!fetched) {
+              var noscripts = doc.querySelectorAll('noscript');
+              for (var j = 0; j < noscripts.length; j++) {
+                var match = noscripts[j].querySelector('[data-section-id="' + sid + '"]');
+                if (match) {
+                  fetched = match;
+                  break;
+                }
+              }
+            }
+            // Last resort: use first matching element regardless
+            if (!fetched && candidates.length) fetched = candidates[0];
+            if (fetched) fetched = document.adoptNode(fetched);
             if (fetched) {
               el.replaceWith(fetched);
               // Dispatch a custom event so any section-specific init code can re-run
