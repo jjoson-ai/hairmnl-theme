@@ -871,7 +871,16 @@
     </script>
     {%- endif -%}
 
-    {% include "loyaltylion" %}
+    {%- comment -%}
+      ujg6.51 (2026-05-19): gate LoyaltyLion SDK to pages where it's
+      actually used — logged-in customers (points/rewards), product pages
+      (earn-on-purchase messaging), and cart (redemption). Saves ~500 KB
+      SDK load on anonymous collection/homepage/blog/search pageviews
+      (~70% of traffic). KILL_SWITCH: remove the if/endif lines.
+    {%- endcomment -%}
+    {%- if customer or template contains 'product' or template == 'cart' -%}
+      {% include "loyaltylion" %}
+    {%- endif -%}
 
     {%- comment -%}
       VisualQuizBuilder + BookThatApp uninstalled from Shopify 2026-05-13.
@@ -941,6 +950,15 @@
     })();
     </script>
 
+  {%- comment -%}
+    ujg6.50 (2026-05-19): gate Reamaze defer-guard to product + cart.
+    Reamaze is a live-chat/support tool — customers need it on product pages
+    (pre-purchase questions) and cart (checkout support). On homepage, blog,
+    collections, search the chat widget adds ~212 KB scripting with no
+    conversion benefit. Guard still defers until interaction when active.
+    KILL_SWITCH: remove the if/endif wrappers below.
+  {%- endcomment -%}
+  {%- if template contains 'product' or template == 'cart' -%}
   {%- comment -%}
     Reamaze defer-on-interaction guard (bd hw7 + meu, 2026-05-14).
     Re-ported from Pipeline 6 commit d6efd9e onto P8 structure per bd fsaa.
@@ -1115,13 +1133,16 @@
     setTimeout(function() { if (!disarmed) disarm('auto_60s'); }, AUTO_MS);
   })();
   </script>
+  {%- endif -%}
 
     <!-- Shopify app scripts =========================================================== -->
     {{ content_for_header }}
 
     <link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}"></noscript>
-    {% render 'reamaze-placeholder' %}
+    {%- if template contains 'product' or template == 'cart' -%}
+      {% render 'reamaze-placeholder' %}
+    {%- endif -%}
     {%- comment -%}
       AOS animations CSS extracted 2026-04-27 from theme.css (37KB,
       8.4% of theme.css, 252 rules). Used on 125 JSON templates (blog,
@@ -1144,7 +1165,15 @@
     <link rel="stylesheet" href="{{ 'deferred-templates.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'deferred-templates.css' | asset_url }}"></noscript>
 
-    {%- render 'bold-common' -%}
+    {%- comment -%}
+      ujg6.48 (2026-05-19): gate Bold Common inline JS to product + cart.
+      Bold apps (upsell/subscriptions) only activate on product and cart
+      pages. Loading bold-common on homepage/blog/collection added ~3–5 KB
+      inline JS with no functional effect. KILL_SWITCH: remove the if/endif.
+    {%- endcomment -%}
+    {%- if template contains 'product' or template == 'cart' -%}
+      {%- render 'bold-common' -%}
+    {%- endif -%}
 
     <!-- Zapiet | Store Pickup + Delivery -->
     {%- comment -%}
@@ -1441,5 +1470,14 @@
     })();
   </script>
   </body>
-    {% render 'freegifts-snippet-change' %}
+    {%- comment -%}
+      ujg6.49 (2026-05-19): gate BOGOS freegifts-snippet-change to product
+      + cart. Free-gift logic only applies when a customer can add a
+      qualifying product or is in the cart reviewing their order. Loading
+      this snippet on every page added unnecessary JS on non-qualifying
+      templates. KILL_SWITCH: remove the if/endif wrappers.
+    {%- endcomment -%}
+    {%- if template contains 'product' or template == 'cart' -%}
+      {% render 'freegifts-snippet-change' %}
+    {%- endif -%}
 </html>
