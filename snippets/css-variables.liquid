@@ -558,10 +558,21 @@
 ---font-adjust-product-heading: var(--TYPE-ADJUST-PRODUCT-HEADING);
 ---font-weight-accent-bold: var(--TYPE-WEIGHT-ACCENT);
 
-/* Body/heading/accent typography */
----font-stack-body: var(--FONT-STACK-BODY);
----font-stack-heading: var(--FONT-STACK-HEADING);
----font-stack-accent: var(--FONT-STACK-ACCENT);
+/* Body/heading/accent typography
+ *
+ * 2026-05-19 (bd 2i8b.32): ---font-stack-* bridges REMOVED.
+ *   Shopify auto-emits these correctly from settings_data.json
+ *   via its <style data-shopify> block. Our bridge here was
+ *   resolving to var(--FONT-STACK-BODY) which is empty when
+ *   settings.font_body_family is null (the merchant configured
+ *   the OLD settings.type_base_font but never the NEW
+ *   settings.font_body_family). Empty value cascaded over
+ *   Shopify's correct value, making body render in Times serif.
+ *   Keeping ONLY the size/weight/style bridges below — those are
+ *   computed correctly by our css-variables.liquid (font-adjust
+ *   uses | default: 100, weight uses font_modify which handles
+ *   null gracefully).
+ */
 ---font-style-body: var(--FONT-STYLE-BODY);
 ---font-style-heading: var(--FONT-STYLE-HEADING);
 ---font-style-accent: var(--FONT-STYLE-ACCENT);
