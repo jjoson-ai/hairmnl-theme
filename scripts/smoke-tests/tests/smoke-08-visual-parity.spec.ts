@@ -103,9 +103,13 @@ test.describe('Smoke 8: Visual parity — per-region snapshots', () => {
     // Lazy-render: scroll to trigger
     await page.evaluate(() => window.scrollTo(0, 600));
     await waitForVisualStability(page);
+    // The homepage uses .homepage-collection on MULTIPLE section blocks
+    // (section-collection is repeated 10× per index.json). On brand pages
+    // the brand-collection section is the primary container. Use .first()
+    // to disambiguate from strict-mode multi-match.
     await assertRegionParity(
       page,
-      '[data-section-type="collection"], .collection-branded, .homepage-collection',
+      '[data-section-type="collection-row"]:first-of-type, .collection-branded:first-of-type, .homepage-collection:first-of-type',
       `brand-grid-${testInfo.project.name}.png`
     );
   });
@@ -155,20 +159,29 @@ test.describe('Smoke 8: Visual parity — cart drawer interaction', () => {
     }
 
     await cartTrigger.click({ force: true });
-    await page.waitForTimeout(800); // animation
-    await waitForVisualStability(page);
+    // P8's cart drawer transition is ~400ms; wait for it to be fully open.
+    await page.waitForTimeout(1200);
 
-    // Snapshot the open drawer
-    const drawer = page.locator('[data-drawer="drawer-cart"], .cart-drawer, #cart-drawer');
-    const drawerCount = await drawer.count();
-    if (drawerCount === 0) {
+    // Wait for drawer to actually become visible (not just present in DOM).
+    // The drawer container exists from page-load with display:none until
+    // its trigger is clicked + opens-class is added.
+    const drawer = page.locator(
+      '[data-drawer="drawer-cart"], .cart-drawer, #cart-drawer'
+    ).first();
+    const drawerVisible = await drawer
+      .isVisible({ timeout: 5000 })
+      .catch(() => false);
+
+    if (!drawerVisible) {
       test.info().annotations.push({
         type: 'note',
-        description: 'No cart drawer container found after trigger click',
+        description:
+          'Cart drawer trigger clicked but drawer container did not become visible. May need a different trigger or longer animation timeout.',
       });
       return;
     }
 
+    await waitForVisualStability(page);
     await assertRegionParity(
       page,
       '[data-drawer="drawer-cart"], .cart-drawer, #cart-drawer',

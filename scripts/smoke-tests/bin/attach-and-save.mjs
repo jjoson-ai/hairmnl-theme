@@ -134,6 +134,74 @@ if (shopifyTabs.length === 0) {
 console.log(`→ Saving storageState to ${AUTH_PATH} …`);
 const state = await ctx.storageState();
 
+// Sanitize cookies for Playwright/Chromium ingestion.
+//
+// Real Chrome / Edge export cookie fields that Playwright's CDP path
+// rejects with "Invalid cookie fields" on storageState.use:
+//   - priority: "Medium" / "High" / "Low" (Chrome-internal hint)
+//   - sourceScheme: "Secure" / "NonSecure" (Chrome-internal)
+//   - sameParty: false (deprecated Chrome feature)
+//   - partitionKey: { ... } (CHIPS, recent Chrome)
+//   - sourcePort: number (Chrome-internal)
+//   - sameSite: "no_restriction" / "unspecified" / "lax" (need exact case)
+//
+// We strip unknown fields and normalize sameSite to Playwright's
+// expected set: "Strict" | "Lax" | "None".
+const ALLOWED_COOKIE_FIELDS = new Set([
+  'name',
+  'value',
+  'domain',
+  'path',
+  'expires',
+  'httpOnly',
+  'secure',
+  'sameSite',
+]);
+
+const SAMESITE_MAP = {
+  no_restriction: 'None',
+  none: 'None',
+  None: 'None',
+  lax: 'Lax',
+  Lax: 'Lax',
+  strict: 'Strict',
+  Strict: 'Strict',
+  unspecified: 'Lax', // Chrome default
+};
+
+let stripped = 0;
+let normalized = 0;
+state.cookies = state.cookies.map((c) => {
+  const clean = {};
+  for (const k of Object.keys(c)) {
+    if (ALLOWED_COOKIE_FIELDS.has(k)) {
+      clean[k] = c[k];
+    } else {
+      stripped++;
+    }
+  }
+  if (clean.sameSite) {
+    const mapped = SAMESITE_MAP[clean.sameSite];
+    if (mapped) {
+      if (mapped !== clean.sameSite) normalized++;
+      clean.sameSite = mapped;
+    } else {
+      delete clean.sameSite;
+      normalized++;
+    }
+  }
+  // expires must be a number (-1 for session)
+  if (typeof clean.expires === 'string') clean.expires = Number(clean.expires);
+  if (clean.expires !== undefined && !Number.isFinite(clean.expires)) {
+    delete clean.expires;
+  }
+  return clean;
+});
+
+if (stripped > 0 || normalized > 0) {
+  console.log(`  ⚙ sanitized cookies: ${stripped} field(s) stripped, ${normalized} sameSite normalized`);
+}
+
 // Sanity check: did we get any cookies?
 const shopifyCookies = state.cookies.filter(
   (c) =>

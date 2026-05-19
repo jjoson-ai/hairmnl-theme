@@ -77,17 +77,32 @@ test.describe('Smoke 7: Font preloads + slideshow eager-loading', () => {
 
     // section-banner-slider's first slide has class .banner-slide-img
     // (this is the actual homepage LCP element per tonight's ujg6.19 audit).
-    // Note: ujg6.19 also added eager:true to section-slideshow's first slide,
-    // but that section isn't on the homepage — it's on blog templates etc.
+    // The section renders 2 <img> tags per slide (desktop + mobile picture
+    // variants); we need to inspect the one that's actually VISIBLE in the
+    // current viewport, not just the first one in DOM order. Picking the
+    // first matching `.banner-slide-img` whose computed-style is not display:none.
     const firstSlideAttrs = await page.evaluate(() => {
-      const img = document.querySelector(
-        '.banner-slide-img, [data-section-type="banner-slider"] img, .slideshow__slide:first-child img'
-      ) as HTMLImageElement | null;
+      // Scope to the first banner-slider section to avoid picking up
+      // images from other sections like section-slideshow on blog templates.
+      const bannerSection = document.querySelector(
+        '[data-section-type="banner-slider"], #shopify-section-banner-slider'
+      ) || document;
+      const imgs = Array.from(
+        bannerSection.querySelectorAll('img.banner-slide-img')
+      );
+      // First visible img is the active first slide for this viewport
+      const img = imgs.find(
+        (i) => {
+          const style = window.getComputedStyle(i);
+          return style.display !== 'none' && style.visibility !== 'hidden';
+        }
+      ) as HTMLImageElement | undefined;
       if (!img) return null;
       return {
         loading: img.getAttribute('loading'),
         fetchpriority: img.getAttribute('fetchpriority'),
         src: img.src.split('?')[0].slice(-80),
+        totalImgs: imgs.length,
       };
     });
 

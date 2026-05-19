@@ -43,13 +43,43 @@ test.describe('Smoke 6: Lazy-render below-fold sections', () => {
     // delta after scroll instead of absolute count.
     const initialFetches = net.count('section_id=');
 
-    // Scroll to bottom (triggers IO for all placeholders)
-    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
-    await page.waitForTimeout(3000);
+    // Scroll incrementally to trigger IO on each placeholder progressively.
+    // Single jump-to-bottom can miss intermediate placeholders if the IO's
+    // rootMargin doesn't catch them during the fast scroll.
+    await page.evaluate(async () => {
+      const totalHeight = document.documentElement.scrollHeight;
+      const step = 400;
+      for (let pos = 0; pos < totalHeight; pos += step) {
+        window.scrollTo(0, pos);
+        await new Promise((r) => setTimeout(r, 200));
+      }
+      // Hold at bottom for a final settle
+      window.scrollTo(0, totalHeight);
+      await new Promise((r) => setTimeout(r, 1000));
+    });
     await waitForSettled(page);
 
     // Verify additional section_id= fetches happened
     const fetchesAfterScroll = net.count('section_id=');
+
+    // Diagnostic: confirm the IO observer is even loaded (hairmnl-common.js
+    // section 8). If it's missing, lazy-render can't work regardless of scroll.
+    const observerInstalled = await page.evaluate(() => {
+      // The section 8 IO observes [data-lazy-render]; if loaded, there should
+      // be no orphan placeholders by now. We can't directly check the IO
+      // existence, but we can check if hairmnl-common.js loaded.
+      return typeof (window as any).IntersectionObserver === 'function';
+    });
+
+    if (fetchesAfterScroll === initialFetches) {
+      console.log('[smoke-6] No section_id fetches triggered. Diagnostics:');
+      console.log(`  initial placeholders: ${initialCount}`);
+      console.log(`  IntersectionObserver available: ${observerInstalled}`);
+      console.log(`  initial fetches: ${initialFetches}, after-scroll fetches: ${fetchesAfterScroll}`);
+      // Dump the loaded JS to see if hairmnl-common.js is present
+      console.log(`  hairmnl-common.js loaded: ${net.hasLoaded('hairmnl-common.js')}`);
+    }
+
     expect(
       fetchesAfterScroll,
       'Scrolling should trigger lazy-render fetches'
