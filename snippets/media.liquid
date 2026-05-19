@@ -63,10 +63,18 @@
         {{ media | video_tag: class: 'media-video', image_size: image_size }}
       </div>
     {% when 'external_video' %}
-      <div data-video-id="{{ media.external_id }}"></div>
       <div class="media__contain" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;">
-        {{ media | external_video_tag }}
+        <lite-youtube videoid="{{ media.external_id }}" data-video-id="{{ media.external_id }}" params="rel=0&modestbranding=1" style="width:100%;height:100%;position:absolute;top:0;left:0;"></lite-youtube>
       </div>
+      <script>
+        if (!window.__liteYoutubeLoaded) {
+          window.__liteYoutubeLoaded = true;
+          var s = document.createElement('script');
+          s.src = '{{ 'lite-youtube.js' | asset_url }}';
+          s.defer = true;
+          document.head.appendChild(s);
+        }
+      </script>
     {% else %}
       <div style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;">
         {{ media | media_tag: class: "media__other" }}

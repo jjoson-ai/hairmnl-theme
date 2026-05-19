@@ -8,13 +8,20 @@
 
 {%- liquid
 
-  assign body_font = settings.font_body_family
+  # 2026-05-19 (bd 2i8b.33): font_*_family is the NEW P8 setting name,
+  # but the HairMNL settings_data.json only has the OLD P6 names
+  # (type_base_font / type_heading_font / type_accent_font) configured.
+  # Fall back to the OLD names when the NEW name is null so body_font
+  # is always a usable font object instead of nil. Empty font_modify
+  # input produces empty CSS values which broke body typography
+  # (rendered as Times serif).
+  assign body_font = settings.font_body_family | default: settings.type_base_font
   assign body_font_bold = body_font | font_modify: 'weight', 'bolder'
 
-  assign heading_font = settings.font_heading_family
+  assign heading_font = settings.font_heading_family | default: settings.type_heading_font
   assign heading_font_bold = heading_font | font_modify: 'weight', 'bolder'
 
-  assign accent_font = settings.font_accent_family
+  assign accent_font = settings.font_accent_family | default: settings.type_accent_font
   assign accent_font_bold = accent_font | font_modify: 'weight', 'bolder'
 
   assign body_font_100 = body_font | font_modify: 'weight', '+100'
@@ -560,19 +567,24 @@
 
 /* Body/heading/accent typography
  *
- * 2026-05-19 (bd 2i8b.32): ---font-stack-* bridges REMOVED.
- *   Shopify auto-emits these correctly from settings_data.json
- *   via its <style data-shopify> block. Our bridge here was
- *   resolving to var(--FONT-STACK-BODY) which is empty when
- *   settings.font_body_family is null (the merchant configured
- *   the OLD settings.type_base_font but never the NEW
- *   settings.font_body_family). Empty value cascaded over
- *   Shopify's correct value, making body render in Times serif.
- *   Keeping ONLY the size/weight/style bridges below — those are
- *   computed correctly by our css-variables.liquid (font-adjust
- *   uses | default: 100, weight uses font_modify which handles
- *   null gracefully).
+ * 2026-05-19 (bd 2i8b.33): bridges RESTORED. Earlier (2i8b.32) I
+ *   removed these thinking Shopify's <style data-shopify> auto-emit
+ *   provided ---font-stack-body. That was wrong — webkit diagnostic
+ *   on shopifypreview.com confirmed Shopify does NOT auto-emit
+ *   these `---name` font variables, so removing the bridge left
+ *   `body { font-family: var(---font-stack-body) }` resolving to
+ *   nothing, falling back to Times serif.
+ *
+ *   Fix is two-part:
+ *     1. Above (line 11): body_font = settings.font_body_family
+ *        falls back to settings.type_base_font, so --FONT-STACK-BODY
+ *        gets a real value even when the NEW P8 setting is null.
+ *     2. Bridge below: ---font-stack-body: var(--FONT-STACK-BODY)
+ *        propagates to theme.css's `font-family: var(---font-stack-body)`.
  */
+---font-stack-body: var(--FONT-STACK-BODY);
+---font-stack-heading: var(--FONT-STACK-HEADING);
+---font-stack-accent: var(--FONT-STACK-ACCENT);
 ---font-style-body: var(--FONT-STYLE-BODY);
 ---font-style-heading: var(--FONT-STYLE-HEADING);
 ---font-style-accent: var(--FONT-STYLE-ACCENT);
