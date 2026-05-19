@@ -185,23 +185,12 @@
     <script src="//www.searchanise.com/widgets/shopify/init.js?a=7K0f1C4k5q" defer="defer"></script>
 
     {%- comment -%}
-      LimeSpot SDK gated 2026-04-28 — was loading on every template
-      including /customers/* (customer-area pages: account, login,
-      addresses, orders, register, reset-password, activate). LimeSpot's
-      own PageInfo init in snippets/limespot.liquid doesn't have a
-      branch for customer-area templates — it just loads the SDK
-      (300+ KB) but doesn't supply PageInfo, so the recs widget
-      silently no-ops. Was contributing to /account's 30% TTFB-good
-      and 44% LCP-good per real-shopper RUM (beads 2t5).
-
-      Skip on customers/* templates (no commercial-discovery context
-      anyway — visitor is logged in, browsing their own account).
-      Real-shopper LimeSpot recs still load on homepage / collection /
-      PDP / cart / search where they actually drive conversion.
+      LimeSpot SDK removed 2026-05-17 (Phase 4 M6, commit 4303e70).
+      Replaced by Vertex AI recommendations (see snippets/vertex-*.liquid).
+      The legacy include 'limespot' here was the last lingering reference
+      to the deleted snippet — removing it stops the in-<head> Liquid
+      error that broke <head>/<body> parsing on P8 dev (bd 2i8b.28).
     {%- endcomment -%}
-    {%- unless template contains 'customers/' -%}
-      {% include 'limespot' %}
-    {%- endunless -%}
 
     {% comment %} 2026-05-09: Treedify uninstalled (issue ijh) — removed empty snippet render. {% endcomment %}
 
@@ -1249,7 +1238,14 @@
     </div>
 
 
-    {% render 'template-swatch' %}
+    {%- comment -%}
+      template-swatch.liquid deleted in commit 97cd092. Snippet only
+      emitted a <script> template when settings.swatches_enable AND
+      settings.swatches_collection_enable were both true; neither is
+      enabled in current P8 settings, so removing this render is a
+      no-op behaviorally and stops the Liquid error (bd 2i8b.28).
+      Restore from git history if swatches get re-enabled.
+    {%- endcomment -%}
 
     <div data-modal-container></div>
 
@@ -1303,7 +1299,11 @@
     </script>
     <!-- End of Klaviyo Signup ============================================================== -->
     {% comment %} 2026-05-09: Hextom CTB uninstalled (issue ijh) — removed hextom_ctb_main render. App embed in settings_data.json (line 3588) still references hextom-timer-bar — admin must remove via Online Store → Themes → Customize → App embeds. {% endcomment %}
-    {% render 'mbc-bundles' %}
+    {%- comment -%}
+      mbc-bundles.liquid deleted in Phase 4 M6 (commit dbed076) — Make
+      Bundles app uninstalled. Render call removed 2026-05-19 to stop
+      the Liquid error that was breaking the document (bd 2i8b.28).
+    {%- endcomment -%}
     {%- comment -%}
       Booster Page Speed Optimizer was uninstalled 2026-04-25.
       Removed the hardcoded script reference here so we stop pulling

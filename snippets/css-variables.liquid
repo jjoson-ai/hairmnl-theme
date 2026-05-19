@@ -539,6 +539,14 @@
 
 }
 
-{% render 'font-size' %}
+{%- comment -%}
+  font-size.liquid does NOT exist in either P6 LIVE or P8 dev — verified via
+  `shopify theme pull` 2026-05-19. This was a dormant broken reference that
+  was emitting a Liquid error inside the {% style %} block (rendered as a
+  stray text node by Shopify). Removed 2026-05-19 (bd 2i8b.28).
+
+  If specific font-size CSS rules are needed beyond the variables above,
+  add them inline here rather than restoring the stale render call.
+{%- endcomment -%}
 
 {% endstyle %}

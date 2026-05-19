@@ -68,10 +68,11 @@ async function captureTheme(
   tplPath: string,
   tplLabel: string,
   viewport: string
-): Promise<{ path: string; bytes: number } | { error: string }> {
+): Promise<{ path: string; bytes: number; liquidErrors: string[] } | { error: string }> {
   const url = previewUrl(themeId, tplPath);
+  let response;
   try {
-    await page.goto(url, { waitUntil: 'load', timeout: 30_000 });
+    response = await page.goto(url, { waitUntil: 'load', timeout: 30_000 });
   } catch (e) {
     return { error: `navigation failed: ${(e as Error).message}` };
   }
@@ -82,6 +83,27 @@ async function captureTheme(
   const finalUrl = page.url();
   if (!finalUrl.includes(BASE.replace(/^https?:\/\//, '')) && !finalUrl.includes('hairmnl')) {
     return { error: `redirected off preview origin to ${finalUrl}` };
+  }
+
+  // Liquid-error detection (bd 2i8b.28 retrospective). A single Liquid
+  // include/render call to a missing snippet emits "Liquid error
+  // (layout/theme line N): Could not find asset snippets/X.liquid" as
+  // plain text content in the document. When that lands inside <head>
+  // the browser parser closes <head> early and pushes ~all subsequent
+  // CSS/JS into <body>, cascading into:
+  //   - transparent megamenu (CSS misplaced)
+  //   - no product photos (lazy-load JS misplaced)
+  //   - giant slider images (sizing CSS misplaced)
+  // The screenshot diff alone won't reliably catch this — the broken-
+  // rendering page can still look "almost right" in a thumbnail. We
+  // grep the raw HTML for "Liquid error" and capture all matches.
+  let liquidErrors: string[] = [];
+  try {
+    const raw = response ? await response.text() : '';
+    const matches = raw.match(/Liquid error[^<\n]{0,200}/g) || [];
+    liquidErrors = matches.map((m) => m.trim()).slice(0, 10);
+  } catch {
+    /* response body unavailable — skip */
   }
 
   await waitForVisualStability(page);
@@ -107,7 +129,7 @@ async function captureTheme(
     /* ignore */
   }
 
-  return { path: outPath, bytes };
+  return { path: outPath, bytes, liquidErrors };
 }
 
 test.describe('Smoke 9: P6 LIVE vs P8 DEV visual parity capture', () => {
@@ -140,6 +162,35 @@ test.describe('Smoke 9: P6 LIVE vs P8 DEV visual parity capture', () => {
         type: 'captured',
         description: `${tpl.label}/${viewport} — P6 ${Math.round(p6.bytes / 1024)}KB, P8 ${Math.round(p8.bytes / 1024)}KB`,
       });
+
+      // Hard fail on Liquid errors in EITHER theme — these are cutover-
+      // blocker bugs. P6 errors mean live theme has rot (rare); P8 errors
+      // mean migration introduced a regression. Either way the operator
+      // needs to know before the PNGs become "intentional" baselines.
+      // See bd hairmnl-theme-2i8b.28 for the canonical example: 4 stale
+      // {% include 'limespot' %} / {% render 'mbc-bundles' %} etc. were
+      // emitting plain-text Liquid errors inside <head>, breaking the
+      // entire page structure but rendering in screenshots as a thin
+      // strip of text the parity diff barely showed.
+      if (p6.liquidErrors.length > 0) {
+        testInfo.annotations.push({
+          type: 'liquid-error',
+          description: `P6 ${tpl.label}: ${p6.liquidErrors.join(' | ')}`,
+        });
+      }
+      if (p8.liquidErrors.length > 0) {
+        testInfo.annotations.push({
+          type: 'liquid-error',
+          description: `P8 ${tpl.label}: ${p8.liquidErrors.join(' | ')}`,
+        });
+      }
+      const combined = [...p6.liquidErrors, ...p8.liquidErrors];
+      if (combined.length > 0) {
+        throw new Error(
+          `${combined.length} Liquid error(s) detected in ${tpl.label}/${viewport}:\n  - ` +
+            combined.join('\n  - ')
+        );
+      }
     });
   }
 });
