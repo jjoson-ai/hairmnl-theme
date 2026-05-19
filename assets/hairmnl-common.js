@@ -338,8 +338,32 @@
             // Create a temporary container to parse the fetched HTML
             var tmp = document.createElement('div');
             tmp.innerHTML = html;
+            var sid = el.getAttribute('data-section-id');
             // Find the section wrapper in the fetched content
-            var fetched = tmp.querySelector('[data-section-id="' + el.getAttribute('data-section-id') + '"]');
+            var fetched = tmp.querySelector('[data-section-id="' + sid + '"]');
+            // ----------------------------------------------------------------
+            // bd 2i8b.30 defensive fallback:
+            // section-collection.liquid (and brand-collection / related)
+            // use `{%- if request.design_mode or request.page_type == null -%}`
+            // to detect Section Rendering API requests. But Shopify does NOT
+            // null out request.page_type for ?section_id= requests — it
+            // returns the page's actual type ('index', 'product', etc).
+            // Result: the API returns the SAME lazy-render placeholder, so
+            // naive replaceWith loops placeholder→placeholder forever.
+            // The full content is only rendered inside <noscript>. Extract it
+            // from there when we detect the placeholder loop.
+            // ----------------------------------------------------------------
+            if (fetched && fetched.hasAttribute('data-lazy-render')) {
+              var noscript = tmp.querySelector('noscript');
+              if (noscript) {
+                var nsContainer = document.createElement('div');
+                nsContainer.innerHTML = noscript.textContent;
+                var realContent =
+                  nsContainer.querySelector('[data-section-id="' + sid + '"]') ||
+                  nsContainer.firstElementChild;
+                if (realContent) fetched = realContent;
+              }
+            }
             if (fetched) {
               el.replaceWith(fetched);
               // Dispatch a custom event so any section-specific init code can re-run

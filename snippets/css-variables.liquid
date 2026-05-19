@@ -529,13 +529,147 @@
   --FONT-PRODUCT-HEADING-LETTER-SPACING: normal;
 {% endif %}
 
-/* P6 triple-hyphen-lowercase aliases for surviving custom CSS. Map to P8's UPPERCASE-DASH equivalents. */
+/* ================================================================
+ * P8 stock theme.css variable bridge (added 2026-05-19, bd 2i8b.29)
+ *
+ * Pipeline 8's theme.css references 80+ CSS variables using the
+ * `---name` (triple-hyphen-lowercase) convention. The M2 port of
+ * Pipeline 6's css-variables.liquid defines all the corresponding
+ * values under the `--NAME` (uppercase-dash) convention but only
+ * mapped a handful of typography aliases — leaving 80+ variables
+ * undefined and resolving to their CSS initial values (transparent
+ * for backgrounds, etc).
+ *
+ * Symptoms before this fix: transparent header (theme.css does
+ * `.theme__header { background: var(---color-bg) }`), transparent
+ * footer (same pattern with `---color-footer-bg`), missing button
+ * colors, empty homepage-collection sections, more.
+ *
+ * Fix: alias every `---name` reference in theme.css to the matching
+ * `--NAME` source defined above. Each line below is `---x: var(--X)`
+ * with X = uppercase-dash of x.
+ * ================================================================ */
+
+/* Typography product-heading aliases (original M2 set, preserved) */
 ---font-stack-product-heading: var(--TYPE-STACK-PRODUCT-HEADING);
 ---font-weight-product-heading: var(--TYPE-WEIGHT-PRODUCT-HEADING);
 ---font-product-heading-caps: var(--FONT-PRODUCT-HEADING-TRANSFORM);
 ---font-product-heading-space: var(--FONT-PRODUCT-HEADING-LETTER-SPACING);
 ---font-adjust-product-heading: var(--TYPE-ADJUST-PRODUCT-HEADING);
 ---font-weight-accent-bold: var(--TYPE-WEIGHT-ACCENT);
+
+/* Body/heading/accent typography */
+---font-stack-body: var(--FONT-STACK-BODY);
+---font-stack-heading: var(--FONT-STACK-HEADING);
+---font-stack-accent: var(--FONT-STACK-ACCENT);
+---font-style-body: var(--FONT-STYLE-BODY);
+---font-style-heading: var(--FONT-STYLE-HEADING);
+---font-style-accent: var(--FONT-STYLE-ACCENT);
+---font-style-product-heading: var(--FONT-STYLE-HEADING);
+---font-weight-body: var(--FONT-WEIGHT-BODY);
+---font-weight-body-bold: var(--FONT-WEIGHT-BODY-BOLD);
+---font-weight-heading: var(--FONT-WEIGHT-HEADING);
+---font-weight-heading-bold: var(--FONT-WEIGHT-HEADING-BOLD);
+---font-weight-accent: var(--FONT-WEIGHT-ACCENT);
+---font-adjust-body: var(--FONT-ADJUST-BODY);
+---font-adjust-heading: var(--FONT-ADJUST-HEADING);
+---font-adjust-accent: var(--FONT-ADJUST-ACCENT);
+---font-heading-caps: var(--FONT-HEADING-TRANSFORM);
+---font-heading-space: var(--FONT-HEADING-LETTER-SPACING);
+
+/* Nav/menu typography aliases */
+---menu-btn-bold: var(--FONT-WEIGHT-HEADING-BOLD); /* nav-bold not defined; fall back to heading-bold */
+---menu-btn-caps: var(--FONT-NAV-TRANSFORM);
+---nested-menu-caps: var(--FONT-NAV-TRANSFORM);
+---sidebar-item-caps: var(--FONT-NAV-TRANSFORM);
+---announcement-text-caps: var(--FONT-NAV-TRANSFORM);
+
+/* Backgrounds */
+---color-bg: var(--COLOR-BG);
+---color-bg-accent: var(--COLOR-BG-ACCENT);
+---color-bg-secondary: var(--COLOR-BG-ACCENT); /* no SECONDARY source; alias to ACCENT */
+
+/* Text */
+---color-text: var(--COLOR-TEXT);
+---color-text-dark: var(--COLOR-TEXT-DARK);
+---color-text-light: var(--COLOR-TEXT-LIGHT);
+
+/* Color alphas (currentColor at various opacities) */
+---color-a5: var(--COLOR-A5);
+---color-a10: var(--COLOR-A10);
+---color-a20: var(--COLOR-A20);
+---color-a35: var(--COLOR-A35);
+---color-a95: var(--COLOR-A95);
+
+/* Inverse palette (used on dark sections) */
+---inverse-bg: var(--INVERSE-BG);
+---inverse-bg-accent: var(--INVERSE-BG-ACCENT);
+---inverse-text: var(--INVERSE-TEXT);
+---inverse-text-dark: var(--INVERSE-TEXT-DARK);
+---inverse-text-light: var(--INVERSE-TEXT-LIGHT);
+---inverse-a5: var(--INVERSE-A5);
+---inverse-a10: var(--INVERSE-A10);
+---inverse-a20: var(--INVERSE-A20);
+---inverse-a35: var(--INVERSE-A35);
+---inverse-a80: var(--INVERSE-A80);
+---inverse-a90: var(--INVERSE-A90);
+---inverse-a95: var(--INVERSE-A95);
+---inverse-primary: var(--INVERSE-PRIMARY);
+---inverse-primary-fade: var(--INVERSE-PRIMARY-FADE);
+---inverse-primary-fade-hover: var(--INVERSE-PRIMARY-FADE-HOVER);
+---inverse-primary-hover: var(--INVERSE-PRIMARY-HOVER);
+---inverse-primary-opposite: var(--INVERSE-PRIMARY-OPPOSITE);
+---inverse-secondary: var(--INVERSE-SECONDARY);
+---inverse-secondary-fade: var(--INVERSE-SECONDARY-FADE);
+---inverse-secondary-fade-hover: var(--INVERSE-SECONDARY-FADE-HOVER);
+---inverse-secondary-hover: var(--INVERSE-SECONDARY-HOVER);
+---inverse-secondary-opposite: var(--INVERSE-SECONDARY-OPPOSITE);
+
+/* Primary/secondary brand colors */
+---color-primary: var(--COLOR-PRIMARY);
+---color-primary-fade: var(--COLOR-PRIMARY-FADE);
+---color-primary-fade-hover: var(--COLOR-PRIMARY-FADE-HOVER);
+---color-primary-hover: var(--COLOR-PRIMARY-HOVER);
+---color-primary-opposite: var(--COLOR-PRIMARY-OPPOSITE);
+---color-secondary: var(--COLOR-SECONDARY);
+---color-secondary-fade: var(--COLOR-SECONDARY-FADE);
+---color-secondary-fade-hover: var(--COLOR-SECONDARY-FADE-HOVER);
+---color-secondary-hover: var(--COLOR-SECONDARY-HOVER);
+---color-secondary-opposite: var(--COLOR-SECONDARY-OPPOSITE);
+
+/* Footer palette */
+---color-footer-bg: var(--COLOR-FOOTER-BG);
+---color-footer-text: var(--COLOR-FOOTER-TEXT);
+---color-footer-a5: var(--COLOR-FOOTER-A5);
+---color-footer-a15: var(--COLOR-FOOTER-A15);
+---color-footer-a90: var(--COLOR-FOOTER-A90);
+
+/* Header/nav palette */
+---color-nav: var(--COLOR-NAV);
+---color-nav-text: var(--COLOR-NAV-TEXT);
+---color-nav-border: var(--COLOR-NAV-BORDER);
+---color-nav-a10: var(--COLOR-NAV-A10);
+---color-nav-a50: var(--COLOR-NAV-A50);
+
+/* Announcement bar */
+---color-announcement-bg: var(--COLOR-ANNOUNCEMENT-BG);
+---color-announcement-text: var(--COLOR-ANNOUNCEMENT-TEXT);
+
+/* Badges */
+---color-badge: var(--COLOR-BADGE);
+---color-badge-text: var(--COLOR-BADGE-TEXT);
+
+/* Buttons (no dedicated --BTN-* source; alias to primary palette) */
+---btn-bg-color: var(--COLOR-PRIMARY);
+---btn-text-color: var(--COLOR-PRIMARY-OPPOSITE);
+---btn-border-color: var(--COLOR-PRIMARY);
+---btn-hover-bg-color: var(--COLOR-PRIMARY-HOVER);
+---btn-hover-text-color: var(--COLOR-PRIMARY-OPPOSITE);
+---btn-hover-border-color: var(--COLOR-PRIMARY-HOVER);
+---button-radius: var(--BUTTON-RADIUS);
+
+/* Select dropdown icon — small SVG arrow */
+---ico-select: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='currentColor' fill='none'/%3E%3C/svg%3E");
 
 }
 
