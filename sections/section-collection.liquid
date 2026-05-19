@@ -1,12 +1,38 @@
 {%- assign collection = collections[section.settings.collection] -%}
 {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
 
-{%- if request.design_mode or request.page_type == null -%}
-  {%- comment -%}
-    Theme Editor preview OR Section Rendering API request (?section_id=...):
-    render the full section normally so the merchant sees it in the editor
-    and the API returns complete HTML.
-  {%- endcomment -%}
+{%- comment -%}
+  2026-05-19 (bd 2i8b.35): lazy-render DISABLED, always render full content.
+
+  The earlier `{%- if request.design_mode or request.page_type == null -%}` gate
+  intended to render full content for editor preview AND for Section Rendering
+  API requests, then emit a tiny placeholder for normal pageloads (deferred
+  fetch via IntersectionObserver). But Shopify does NOT null out
+  request.page_type for ?section_id= requests — the API returned the
+  placeholder. We tried two JS-side workarounds:
+
+  - 2i8b.30: extract <noscript> fallback content via innerHTML — collapsed
+    nested per-product <noscript>s, dropping 11/12 cards.
+  - 2i8b.34: DOMParser-based extraction (parses noscript children as DOM).
+    Got the 12 cards visible inside the section, BUT also left ~5-11 orphan
+    `.product-grid-item` elements as direct children of <main> — each
+    1280px wide (no grid constraint). Operator perceived these as "giant
+    sliders" because they bled out of the grid.
+
+  Disabling lazy-render server-side eliminates the entire bug class. The
+  perf trade-off: each homepage-collection section renders its full grid
+  HTML on initial pageload instead of deferring to IntersectionObserver.
+  For HairMNL's 8 homepage sections at 12 products × ~3KB each = ~290KB
+  of HTML, that's an acceptable increase to ship a working page.
+
+  If lazy-render is needed in future, the proper Liquid-side detection
+  needs to be solved (request.page_type doesn't work; section.location
+  doesn't help either). Until then: always full-render.
+
+  brand-collection.liquid and related.liquid use the same pattern — they
+  should be updated similarly if their lazy-render shows the same symptom.
+{%- endcomment -%}
+{%- if true -%}
   <div
     class="homepage-collection {{ section.settings.bg }}"
     data-section-id="{{ section.id }}"
