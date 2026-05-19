@@ -267,6 +267,21 @@
           </div>
         </div>
         {% when 'youtube' %}
+        {%- comment -%}
+          YouTube Facade pattern — bd hairmnl-theme-ujg6.41.
+          The iframe used to load eagerly (loading="lazy" was set but the
+          iframe is above-the-fold in brand-page hero sections, so the
+          browser ignores the attribute). 941 KB of YouTube player CSS +
+          ~480 KB of player JS would download on cold pageload.
+
+          Facade approach: render a static thumbnail + play button as the
+          server response. On user click, JS swaps it for the real iframe.
+          Saves ~1.4 MB on cold load; zero bytes from youtube.com domain
+          until the user actually wants to watch.
+
+          The thumbnail uses YouTube's free maxresdefault.jpg endpoint;
+          if that 404s (some videos), the JS handler falls back to hqdefault.
+        {%- endcomment -%}
         <div
           class="brick__block"
           data-overflow-frame
@@ -274,12 +289,26 @@
           <div class="brick__block__video {{ block.settings.text_color }} {{ section.settings.height }}">
             <div class="hero__content__wrapper {{ block.settings.text_align }}">
               <div class="hero__content" data-overflow-content>
-                <iframe
-                  src="https://www.youtube.com/embed/{{- block.settings.yt_video_id -}}?rel=0&hd=1"
-                  frameborder="0"
-                  loading="lazy"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen></iframe>
+                <button
+                  type="button"
+                  class="yt-facade"
+                  data-yt-facade="{{ block.settings.yt_video_id }}"
+                  aria-label="Play video"
+                  style="aspect-ratio:16/9;width:100%;border:0;padding:0;background:transparent;cursor:pointer;position:relative;display:block;">
+                  <img
+                    src="https://img.youtube.com/vi/{{- block.settings.yt_video_id -}}/maxresdefault.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    style="width:100%;height:100%;object-fit:cover;display:block;"
+                    onerror="this.onerror=null;this.src='https://img.youtube.com/vi/{{- block.settings.yt_video_id -}}/hqdefault.jpg';">
+                  <span class="yt-facade__play" aria-hidden="true" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;">
+                    <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" focusable="false" style="width:100%;height:100%;">
+                      <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/>
+                      <path d="M45 24L27 14v20" fill="#fff"/>
+                    </svg>
+                  </span>
+                </button>
               </div>
             </div>
           </div>

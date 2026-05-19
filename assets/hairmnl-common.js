@@ -407,6 +407,37 @@
   });
 
   // ============================================================
+  // 9) YouTube Facade — click-to-load (bd hairmnl-theme-ujg6.41)
+  // ----------------------------------------------------------------
+  // section-double.liquid's 'youtube' block renders a <button.yt-facade>
+  // with a thumbnail in place of an <iframe>. On click, swap to a real
+  // iframe with autoplay=1 so playback starts immediately.
+  //
+  // Why: loading="lazy" on iframes is ignored when the iframe is already
+  // in initial viewport (brand-page hero is above the fold). YouTube
+  // player CSS + JS (~1.4 MB) was loading on cold pageload despite the
+  // lazy attribute. Facade defers all youtube.com network requests
+  // until the user opts in.
+  // ============================================================
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.yt-facade');
+    if (!btn) return;
+    e.preventDefault();
+    var vid = btn.getAttribute('data-yt-facade');
+    if (!vid) return;
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/' + vid + '?autoplay=1&rel=0&hd=1';
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.aspectRatio = '16/9';
+    iframe.style.border = '0';
+    btn.replaceWith(iframe);
+  });
+
+  // ============================================================
   // DEFERRED — vendor-library-dependent scripts (Phase 5 visual QA)
   // ----------------------------------------------------------------
   // The following 4 P6 scripts depend on vendor libraries that P8's stock
