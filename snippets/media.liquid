@@ -64,7 +64,26 @@
       </div>
     {% when 'external_video' %}
       <div class="media__contain" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;">
-        <lite-youtube videoid="{{ media.external_id }}" data-video-id="{{ media.external_id }}" params="rel=0&modestbranding=1" style="width:100%;height:100%;position:absolute;top:0;left:0;"></lite-youtube>
+        {%- comment -%}
+          za7u.1 (2026-05-19): embed poster <img> directly in HTML so the
+          browser's preload scanner can discover it during document parse,
+          making it a first-class LCP candidate. Before this change, the poster
+          was set via JS (background-image in connectedCallback) — invisible to
+          the scanner, so the image fetch didn't start until lite-youtube.js
+          executed. With the <img> in HTML, the browser queues the thumbnail
+          fetch alongside other above-fold resources.
+          lite-youtube.js updated to detect .lyt-poster and use it instead of
+          background-image (see assets/lite-youtube.js #render).
+        {%- endcomment -%}
+        <lite-youtube videoid="{{ media.external_id }}" data-video-id="{{ media.external_id }}" params="rel=0&modestbranding=1" style="width:100%;height:100%;position:absolute;top:0;left:0;">
+          <img class="lyt-poster"
+               src="https://i.ytimg.com/vi/{{ media.external_id }}/hqdefault.jpg"
+               alt="{{ product.title | escape }} — play video"
+               loading="eager"
+               fetchpriority="high"
+               width="480"
+               height="360">
+        </lite-youtube>
       </div>
       <script>
         if (!window.__liteYoutubeLoaded) {

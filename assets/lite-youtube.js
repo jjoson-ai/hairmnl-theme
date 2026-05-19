@@ -53,8 +53,17 @@ class LiteYT extends HTMLElement {
     wrapper.setAttribute('aria-label', 'Play YouTube video');
     wrapper.setAttribute('tabindex', '0');
 
-    // Poster background
-    wrapper.style.backgroundImage = `url('${posterUrl}')`;
+    // za7u.1 (2026-05-19): prefer a pre-existing <img class="lyt-poster"> injected
+    // from Liquid HTML so the browser's preload scanner discovered it during parse.
+    // If present, move it into the wrapper (it's already loading/loaded). Otherwise
+    // fall back to background-image (for backward compat with non-Liquid usage).
+    const existingPoster = this.querySelector('img.lyt-poster');
+    if (existingPoster) {
+      existingPoster.remove();
+      wrapper.appendChild(existingPoster);
+    } else {
+      wrapper.style.backgroundImage = `url('${posterUrl}')`;
+    }
 
     // Play button
     const playBtn = document.createElement('div');
@@ -139,11 +148,25 @@ lite-youtube {
   justify-content: center;
 }
 
+/* za7u.1: <img class="lyt-poster"> (injected from Liquid HTML for preload-scanner
+   visibility) is moved into .lyt-wrapper by JS and sized to fill it. */
+.lyt-wrapper img.lyt-poster {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
 .lyt-playbtn {
   width: 68px;
   height: 48px;
   opacity: 0.9;
   transition: opacity 0.2s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .lyt-wrapper:hover .lyt-playbtn,
