@@ -48,10 +48,18 @@
       rel="preconnect"
       href="https://monorail-edge.shopifysvc.com"
       crossorigin>
-    <link
-      rel="preconnect"
-      href="https://cdn.judge.me"
-      crossorigin>
+    {%- comment -%}
+      ujg6.38 (2026-05-20): cdn.judge.me demoted from unconditional preconnect
+      to template-gated preconnect. On non-product/collection pages (home, cart,
+      blog, brand) Judge.me assets never load ATF, so the preconnect slot was
+      wasted. Preconnect budget is 4 max before Lighthouse warns. Gating frees
+      one slot on 3 of 5 templates.
+    {%- endcomment -%}
+    {%- if template contains 'product' or template contains 'collection' -%}
+    <link rel="preconnect" href="https://cdn.judge.me" crossorigin>
+    {%- else -%}
+    <link rel="dns-prefetch" href="https://cdn.judge.me">
+    {%- endif -%}
     {%- comment -%}
       Removed 2026-04-26 PM: preconnects to fonts.googleapis.com +
       fonts.gstatic.com. Playfair Display now self-hosted from
@@ -64,30 +72,31 @@
       2026-04-28 PSI network-requests audit. dns-prefetch only
       resolves DNS (no TCP+TLS handshake like preconnect), so the
       "max 4 preconnect" Lighthouse warning doesn't apply. Saves
-      ~50-150 ms on the FIRST request to each origin (when the
-      browser would otherwise sequentially do DNS lookup → connect
-      → handshake). Origins picked from the actual heavy network
-      requests on the homepage / PDP audits:
-        - googletagmanager.com (GTM, 737 ms / 622 ms scripting)
-        - cdn.reamaze.com (Reamaze chat, 735 ms / 255 ms scripting)
-        - sdk-static.loyaltylion.net (LoyaltyLion SDK, ~500 ms)
-        - i.ytimg.com (YouTube thumbnail CDN, used by lite-youtube poster on PDPs with video, za7u.1)
-        - static.klaviyo.com (Klaviyo signup modal, ~600 ms)
-        - tracking.aws.judge.me (Judge.me tracking, 800 ms)
-        - analytics.tiktok.com (TikTok Pixel, 737 ms ping)
-        - satcb.azureedge.net (Same-day store pickup widget, ~600 ms)
-        - searchanise-ef84.kxcdn.com (Searchanise CDN — templates.js, preload_data.js,
-          product images; origin used on every search results pageload)
+      ~50-150 ms on the FIRST request to each origin.
+
+      ujg6.38 ordering (2026-05-20): highest-traffic sitewide first,
+      template-specific / lower-priority last.
+        - googletagmanager.com (GTM, sitewide, 737 ms scripting)
+        - static.klaviyo.com (Klaviyo, sitewide, ~600 ms)
+        - cdn.reamaze.com (Reamaze chat, sitewide-deferred, 735 ms)
+        - sdk-static.loyaltylion.net (LoyaltyLion SDK, cart+PDP, ~500 ms)
+        - tracking.aws.judge.me (Judge.me tracking, PDP/collection, 800 ms)
+        - analytics.tiktok.com (TikTok Pixel, sitewide, 737 ms ping)
+        - satcb.azureedge.net (SATCB widget, PDP+cart only, ~600 ms)
+        - i.ytimg.com (YouTube thumbnail CDN, brand page facade only)
+        - searchanise-ef84.kxcdn.com (search page only — dns-prefetch,
+          NOT preconnect; preconnect here was a bug, contradicted by the
+          comment above and triggered a 5th-preconnect Lighthouse warning)
     {%- endcomment -%}
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://static.klaviyo.com">
     <link rel="dns-prefetch" href="https://cdn.reamaze.com">
     <link rel="dns-prefetch" href="https://sdk-static.loyaltylion.net">
-    <link rel="dns-prefetch" href="https://i.ytimg.com">
-    <link rel="dns-prefetch" href="https://static.klaviyo.com">
     <link rel="dns-prefetch" href="https://tracking.aws.judge.me">
     <link rel="dns-prefetch" href="https://analytics.tiktok.com">
     <link rel="dns-prefetch" href="https://satcb.azureedge.net">
-    <link rel="preconnect" href="https://searchanise-ef84.kxcdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://i.ytimg.com">
+    <link rel="dns-prefetch" href="https://searchanise-ef84.kxcdn.com">
 
 
 
