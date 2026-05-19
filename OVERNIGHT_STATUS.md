@@ -397,3 +397,16 @@ P8 dev is **substantially better than P6 live on mobile LCP** (massive wins acro
 4. **`ujg6.24` epic-audit closeout** on the p8-perf diff before live promote
 
 Per the runbook: **2.5–3.5 operator-weeks** to cutover remain.
+
+---
+
+## [2026-05-19 loop tick] 2i8b.11 status check
+
+Loop fired to monitor OC dispatch on `hairmnl-theme-2i8b.11` (Phase 5 visual parity audit, css-overrides.liquid). Result:
+
+- **Ticket already closed** at 2026-05-18T00:08:38Z (yesterday). Status = `closed`, escape-hatch path: audit produced 0 code-changing follow-ups (P6-only rules were intentional drops: PWA modal + LimeSpot).
+- **No dispatch log present** — `/tmp/oc-dispatch-2i8b-11.log` does not exist (nothing in flight).
+- **kt0 lint result captured in original close notes**: 454 files scanned, 0 violations.
+- **No working-tree changes to merge-gate** — `git status` shows only the routine `.beads/issues.jsonl` update.
+
+Loop premise is stale (ticket closed yesterday). Per global rule: **do not auto-pick next ticket**. Stopping the loop.
