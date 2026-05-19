@@ -417,7 +417,7 @@
 --FONT-STYLE-BODY: {{ body_font.style }};
 --FONT-WEIGHT-BODY: {{ body_font.weight | default: 400 }};
 --FONT-WEIGHT-BODY-BOLD: {{ body_font_bold.weight | default: 700 }};
---FONT-ADJUST-BODY: {{ settings.font_body_size | divided_by: 100.0 }};
+--FONT-ADJUST-BODY: {{ settings.font_body_size | default: 100 | divided_by: 100.0 }};
 {% if settings.font_body_uppercase %}
   --FONT-BODY-TRANSFORM: uppercase;
   --FONT-BODY-LETTER-SPACING: {{ settings.font_uppercase_spacing | divided_by: 1000.0 | append: 'em' }};
@@ -430,7 +430,7 @@
 --FONT-STYLE-HEADING: {{ heading_font.style }};
 --FONT-WEIGHT-HEADING: {{ heading_font.weight | default: 400 }};
 --FONT-WEIGHT-HEADING-BOLD: {{ heading_font_bold.weight | default: 700 }};
---FONT-ADJUST-HEADING: {{ settings.font_heading_size | divided_by: 100.0 }};
+--FONT-ADJUST-HEADING: {{ settings.font_heading_size | default: 100 | divided_by: 100.0 }};
 {% if settings.font_heading_uppercase %}
   --FONT-HEADING-TRANSFORM: uppercase;
   --FONT-HEADING-LETTER-SPACING: {{ settings.font_uppercase_spacing | divided_by: 1000.0 | append: 'em' }};
@@ -443,7 +443,7 @@
 --FONT-STYLE-ACCENT: {{ accent_font.style }};
 --FONT-WEIGHT-ACCENT: {{ accent_font.weight | default: 400 }};
 --FONT-WEIGHT-ACCENT-BOLD: {{ accent_font_bold.weight | default: 700 }};
---FONT-ADJUST-ACCENT: {{ settings.font_accent_size | divided_by: 100.0 }};
+--FONT-ADJUST-ACCENT: {{ settings.font_accent_size | default: 100 | divided_by: 100.0 }};
 {% if settings.font_accent_uppercase %}
   --FONT-ACCENT-TRANSFORM: uppercase;
   --FONT-ACCENT-LETTER-SPACING: {{ settings.font_uppercase_spacing | divided_by: 1000.0 | append: 'em' }};
@@ -454,7 +454,7 @@
 
 --TYPE-STACK-NAV: {{ nav_font_drop.family }}, {{ nav_font_drop.fallback_families }};
 --TYPE-STYLE-NAV: {{ nav_font_drop.style }};
---TYPE-ADJUST-NAV: {{ type_nav_size | divided_by: 100.0 }};
+--TYPE-ADJUST-NAV: {{ type_nav_size | default: 100 | divided_by: 100.0 }};
 --TYPE-WEIGHT-NAV: {{ nav_font_drop.weight | default: 400 }};
 {% if settings.type_nav_uppercase %}
   --FONT-NAV-TRANSFORM: uppercase;
@@ -466,7 +466,7 @@
 
 --TYPE-STACK-BUTTON: {{ button_font_drop.family }}, {{ button_font_drop.fallback_families }};
 --TYPE-STYLE-BUTTON: {{ button_font_drop.style }};
---TYPE-ADJUST-BUTTON: {{ type_button_size | divided_by: 100.0 }};
+--TYPE-ADJUST-BUTTON: {{ type_button_size | default: 100 | divided_by: 100.0 }};
 --TYPE-WEIGHT-BUTTON: {{ button_font_drop.weight | default: 400 }};
 {% if settings.type_button_uppercase %}
   --FONT-BUTTON-TRANSFORM: uppercase;
@@ -478,7 +478,7 @@
 
 --TYPE-STACK-KICKER: {{ kicker_font_drop.family }}, {{ kicker_font_drop.fallback_families }};
 --TYPE-STYLE-KICKER: {{ kicker_font_drop.style }};
---TYPE-ADJUST-KICKER: {{ type_kicker_size | divided_by: 100.0 }};
+--TYPE-ADJUST-KICKER: {{ type_kicker_size | default: 100 | divided_by: 100.0 }};
 --TYPE-WEIGHT-KICKER: {{ kicker_font_drop.weight | default: 400 }};
 {% if settings.type_kicker_uppercase %}
   --FONT-KICKER-TRANSFORM: uppercase;
