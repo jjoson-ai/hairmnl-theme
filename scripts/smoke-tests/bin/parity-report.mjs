@@ -21,7 +21,8 @@
 
 import { readdir, readFile, writeFile, stat } from 'fs/promises';
 import { resolve, join, basename, extname } from 'path';
-import { dirname, fileURLToPath } from 'url';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PARITY_DIR = resolve(__dirname, '..', 'parity-screenshots');
