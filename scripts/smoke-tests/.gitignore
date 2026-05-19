@@ -3,3 +3,5 @@ playwright-report/
 test-results/
 .auth/
 *.log
+# P6 vs P8 parity screenshots — large PNGs, generated per-run, not committed
+parity-screenshots/
