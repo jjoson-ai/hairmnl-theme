@@ -4,6 +4,37 @@
 
 ---
 
+## 2026-05-19 ~03:00 — bd hairmnl-theme-2i8b.28 (P0 cutover blocker) — FIXED
+
+**Ticket:** [hairmnl-theme-2i8b.28](#) — "P8 cutover blocker: 4 stale Liquid render calls break page render"
+
+**Root cause discovered:** While reviewing smoke-09 parity screenshots, operator spotted a "Liquid error (layout/theme line 203): Could not find asset snippets/limespot.liquid" string at the top of the P8 dev preview, along with cascading visible damage: no product photos, transparent megamenu, oversized slider images. CC traced the actual mechanism: that error string renders as plain-text content **inside `<head>`**, which forces the browser parser to close `<head>` prematurely. ~1000 lines of CSS+JS that were supposed to load before `<body>` get re-positioned into `<body>`, breaking everything that depended on them being available pre-paint.
+
+**Four broken Liquid references found (not just the one visible at line 203):**
+
+| Reference | Snippet status | Why it stayed live |
+|---|---|---|
+| `layout/theme.liquid:203 {% include 'limespot' %}` | deleted in M6 (4303e70) | Cleanup wave removed the file but not this call |
+| `layout/theme.liquid:1252 {% render 'template-swatch' %}` | deleted in 97cd092 | Bundled with revert that removed multiple intentional-orphan candidates |
+| `layout/theme.liquid:1306 {% render 'mbc-bundles' %}` | deleted in dbed076 | M6 wave removed file, missed reference |
+| `snippets/css-variables.liquid:542 {% render 'font-size' %}` | never existed in P6 LIVE or P8 dev | Dormant broken reference (verified via shopify theme pull) |
+
+**Fix shipped:** All 4 references removed and replaced with explanatory comments citing this bd ticket. Pushed `--only=layout/theme.liquid --only=snippets/css-variables.liquid` to P8 dev theme 141168312419. Committed to main in `fcb0382`.
+
+**Verification:**
+- Server-rendered homepage HTML: 0 `Liquid error` matches (was 4+).
+- HTML structure valid: `</head>` at index 262547, `<body id=...>` at 262558.
+- smoke-09 ran 10 captures: **8 passed with 0 Liquid errors detected**; 2 mobile failures are the pre-existing webkit `waitForVisualStability` timeout shared with smoke-08 — not Liquid-related.
+
+**smoke-09 hardened (same commit):** added Liquid-error grep against raw server HTML inside `captureTheme()`. Any future Liquid error in either P6 or P8 fails smoke-09 with the matched error strings printed, so the test gates the cutover instead of letting broken renders sneak into screenshots that "look almost right" in thumbnails. The bug-shaped lesson from this incident is encoded as a permanent guard.
+
+**Operator action when waking:**
+1. Visually verify P8 dev preview URL: `https://creations-gdc.myshopify.com/?preview_theme_id=141168312419` — expect no error text, product photos rendering, megamenu styled correctly on hover.
+2. Open `/collections/davines` — separate bd ticket `2i8b.27` still tracks the missing brand hero banner (P1, theme-editor fix).
+3. Re-run `npm run test:parity && npm run parity:open` if you want fresh side-by-side captures with the fix applied.
+
+---
+
 ## 2026-05-18 ~02:10 — bd hairmnl-theme-2i8b.11 (Phase 5 visual parity audit) — CLOSED CLEAN
 
 **Ticket:** [hairmnl-theme-2i8b.11](#) — "Phase 5 visual parity: audit P6 vs P8 css-overrides.liquid for missed rules"
