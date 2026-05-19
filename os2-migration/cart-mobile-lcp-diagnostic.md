@@ -1,135 +1,143 @@
-# Cart mobile LCP diagnostic — bd hairmnl-theme-ujg6.35
+# Cart Mobile LCP Diagnostic
 
-> **TL;DR:** The "16-17s cart mobile LCP" is **a Lighthouse testing artifact on empty-cart pages**, not a real-user metric. The LCP candidate is the Nova EU Cookie Bar text span — not anything we control via theme code in a meaningful way. **Recommendation: close `ujg6.36` (the planned fix ticket) as `won't-do`** and instead change our PSI methodology to test cart-with-items, OR accept that this metric isn't actionable.
+**Date:** 2026-05-19
+**Issue:** hairmnl-theme-ujg6.35
+**Context:** Cart mobile LCP is 17.51s on P8 and 16.17s on P6. Lighthouse `largest-contentful-paint-element` audit returns empty in current PSI runs; LCP element identified via `lcp-breakdown-insight` audit.
 
-Date: 2026-05-19
-Investigator: CC (Opus 4.7)
-Data: `/tmp/psi-baseline/{p6-live,p8-dev}-mobile-cart-run{1,2,3}.json`
+## Methodology
 
----
+1. **PSI baseline runs** — Read prior run data from `/tmp/psi-baseline/{p6-live,p8-dev}-mobile-cart-run{1,2,3}.json` (6 total runs).
+2. **Lighthouse JSON extraction** — Extracted `largest-contentful-paint`, `lcp-breakdown-insight`, and `largest-contentful-paint-element` audits. The `largest-contentful-paint-element` audit returns `score: null` (empty), but `lcp-breakdown-insight` provides the actual node selector, snippet, and bounding rect.
+3. **Static codebase analysis** — Read `sections/cart.liquid` (226 lines), `snippets/cart-line-items.liquid` (178 lines), `snippets/cart-empty.liquid` (14 lines), and `snippets/freegifts-snippet-change.liquid` (17 lines). Searched for LoyaltyLion and Vertex AI references in cart-related templates.
 
-## 1. LCP element identification
-
-Lighthouse `lcp-breakdown-insight` reports the LCP candidate as the same element across all 6 runs (3 × P6 + 3 × P8):
-
-```
-selector: body#your-shopping-cart > div.cc-window > span#cookieconsent:desc
-snippet:  <span id="cookieconsent:desc" class="cc-message">
-content:  "This website uses cookies to ensure you get the best experience on our website…"
-bounding: top=681, width=348, height=54
-```
-
-The `cc-window` / `cc-message` class names + the `cookieconsent:desc` ID identify this as **Nova EU Cookie Bar** (the Shopify app the operator uses for GDPR compliance; tracked in the TAE migration list as toggle `app-embed`).
-
-### LCP across runs
+## PSI Run Results
 
 | Theme | Run | LCP | Element |
 |---|---|---|---|
-| P6 live | 1 | 15.5s | cookie banner span |
-| P6 live | 2 | 16.9s | cookie banner span |
-| P6 live | 3 | 14.8s | cookie banner span |
-| P8 dev  | 1 | 17.5s | cookie banner span |
-| P8 dev  | 2 | 17.5s | cookie banner span |
-| P8 dev  | 3 | 17.9s | cookie banner span |
+| P6 live | 1 | 15.5s | `body#your-shopping-cart > div.cc-window > span#cookieconsent:desc` |
+| P6 live | 2 | 16.9s | `body#your-shopping-cart > div.cc-window > span#cookieconsent:desc` |
+| P6 live | 3 | 14.8s | `body#your-shopping-cart > div.cc-window > span#cookieconsent:desc` |
+| P8 dev | 1 | 17.5s | `body#your-shopping-cart > div.cc-window > span#cookieconsent:desc` |
+| P8 dev | 2 | 17.5s | `body#your-shopping-cart > div.cc-window > span#cookieconsent:desc` |
+| P8 dev | 3 | 17.9s | `body#your-shopping-cart > div.cc-window > span#cookieconsent:desc` |
 
-P6 median: 15.5s · P8 median: 17.5s · **delta ~2s, but both dominated by the same root cause.**
+**P6 median:** 15.5s · **P8 median:** 17.5s · **delta ~2s**, both dominated by the same root cause.
 
----
+**LCP breakdown insight** (P8 run 3):
+- Time to first byte: 100ms
+- Element render delay: 3066ms
+- **Sum of breakdown: ~3.2s** — but headline LCP is 17.9s because Lighthouse keeps observing LCP candidates after initial render. The cookie banner continues re-painting through animations + cookie-state checks until ~17s.
 
-## 2. Why the cookie banner is the LCP candidate
+**FCP:** 2.3s (healthy — first paint is fast, the long tail is cookie-bar instability).
 
-The cart page has **no large content elements above the fold when the cart is empty**:
+## LCP Element Candidates on /cart
 
-- Header (~70px tall)
-- "Your cart is empty" small text (~30px)
-- "Continue browsing" link (small)
-- Bottom-fixed cookie banner span (~54px tall, 348px wide)
+### 1. Nova EU Cookie Bar (Primary LCP Element)
+- **Selector:** `body#your-shopping-cart > div.cc-window > span#cookieconsent:desc`
+- **Snippet:** `<span id="cookieconsent:desc" class="cc-message">`
+- **Content:** "This website uses cookies to ensure you get the best experience on our website…"
+- **Bounding rect:** top=681, width=348, height=54
+- **Source:** 3rd-party app (Nova EU Cookie Bar), NOT theme-controlled
+- **Why it's LCP:** On an empty cart page, the cookie banner span (348×54 = ~18,800 sq px) is the largest contentful element by area. PSI tests `/cart` with no cookies set → empty cart + visible cookie banner.
+- **Why LCP reports 15-18s:** The cookie banner runs through animations, position adjustments, and cookie-state checks after first paint. It keeps re-painting until ~17s, and each repaint resets the LCP timer.
 
-The cookie banner span (54 × 348 = ~18,800 sq px) is the largest contentful element by area. So Lighthouse correctly identifies it as the LCP candidate.
+### 2. First Cart Line-Item Image
+- **Selector:** `.cart__items__img`
+- **Source:** `snippets/cart-line-items.liquid` line 22
+- **Current markup:** `<img class="cart__items__img" src="{{ line_item | image_url: width: 180 }}" alt="{{ line_item.title | strip_html | escape }}">`
+- **Missing attributes:** No `loading="lazy"`, no `fetchpriority="high"`, no explicit `width`/`height`
+- **Impact:** Only renders when cart has items. PSI cold-load tests empty cart, so this element never appears in Lighthouse runs.
+- **Recommendation:** Add `fetchpriority="high"` and explicit `width="180" height="180"` to the first cart item image. This ensures that when real users visit with items in cart, the browser prioritizes the image for LCP.
 
-PSI tests `/cart` with no cookies set, which means the cart is empty AND the cookie banner is visible (no prior consent). This is the universal Lighthouse cold-load test condition.
+### 3. BOGOS Free-Gift Widget
+- **Selector:** `#freegifts-main-page-container`
+- **Source:** `sections/cart.liquid` line 35 — empty `<div>` rendered server-side
+- **Snippet injection:** `snippets/freegifts-snippet-change.liquid` (lines 1-17) — currently contains only a commented-out `setTimeout` and commented-out event listener. No active JS injection.
+- **Impact:** The container div is present in DOM but empty. No active JS populates it currently. Not contributing to LCP.
+- **Recommendation:** If BOGOS app is re-enabled, add `min-height` CSS reservation to prevent layout shift upon JS injection.
 
-### Real users vs PSI testing
+### 4. Empty-Cart State
+- **Source:** `snippets/cart-empty.liquid` (14 lines total)
+- **Content:** Text-only: "Your cart is empty" (`h4--body`), a "Continue browsing" link with an cart icon SVG
+- **No `<img>` elements** in the empty cart state — only text and inline SVG
+- **Impact:** On empty cart, LCP falls to the cookie bar text because no large content element exists above the fold
+- **Recommendation:** Consider adding a lightweight empty-cart hero image with `fetchpriority="high"` or inline SVG illustration to give the browser a meaningful LCP target that isn't the cookie banner
 
-| Scenario | LCP element | Typical LCP |
-|---|---|---|
-| Lighthouse cold-load (no cookies, empty cart) | cookie banner span | 15-18s |
-| Returning visitor (cookies set, no cart items) | "Your cart is empty" text | <2s |
-| Returning visitor with items in cart | first cart line-item image | ~3-5s (depends on image preload) |
+## Cart Line-Item Image Analysis
 
-**CrUX p75 for `/cart` URL is `404 (insufficient traffic)`** — real users rarely hit `/cart` directly often enough for it to have its own CrUX bucket. Their cart LCP rolls into the origin-mobile aggregate (currently 2212ms — healthy).
-
----
-
-## 3. Why the LCP measurement reports 15-18s when breakdown shows 3.1s
-
-The `lcp-breakdown-insight` reports:
-- Time to first byte: 110ms
-- Element render delay: 3018ms
-- **Sum: ~3.1s**
-
-But the headline `largest-contentful-paint` metric reports 15-18s. This is because Lighthouse keeps observing for LCP candidates after the initial element renders. Each time something larger paints, the LCP timer updates. The 17.5s value reflects the FINAL stable LCP after all asynchronous content (apps, lazy-render swaps, late-painting widgets) has settled.
-
-For the empty-cart page, the cookie banner span is the LAST element to stabilize because Nova EU Cookie Bar runs through animations + cookie-state checks + position adjustments after first paint. The element keeps re-painting / re-laying-out until ~17s after navigation.
-
----
-
-## 4. What this means for the optimization plan
-
-### Option A: change PSI methodology (RECOMMENDED)
-
-Stop testing `/cart` as an empty page. Instead, either:
-1. Test `/cart` with a pre-populated cart via a setup script that adds an item before each run
-2. Drop cart mobile from the PSI matrix entirely (it's not a meaningful metric for empty-cart) and rely on CrUX origin-aggregate
-
-The `/cart` page is rarely a *cold* entry point for real users. They land on home / collection / product first. Optimizing for cold `/cart` LCP doesn't reflect real shopper journeys.
-
-**Action:** edit `scripts/psi-baseline-matrix.py` to either skip `/cart` or add a pre-PSI step that adds a known product to cart via Shopify Cart API.
-
-### Option B: defer Nova EU Cookie Bar's render until after first paint
-
-The cookie banner would still appear, but later in the lifecycle. Result: LCP fires on whatever content IS visible at first paint (the "Your cart is empty" text or first product image), and the cookie banner appears below.
-
-**Risk:** compliance impact. GDPR requires the cookie consent UI to be visible before tracking cookies are set. If we defer the banner past the point where tracking scripts fire, we may be technically non-compliant for the first ~3s of the user's session.
-
-**Operator decision required.** Not something CC can ship without sign-off.
-
-### Option C: server-render a cart hero image
-
-Add a brand image to the empty-cart state (e.g., "Continue shopping" hero with a Davines / Kerastase brand image preloaded). This becomes the new LCP candidate, paints fast, and looks intentional.
-
-**Effort:** ~2 hrs of design + Liquid edit on `templates/cart.json` or `sections/cart.liquid`.
-**Visual judgment required** — needs operator sign-off on the empty-cart design.
-
-### Option D: don't fix — accept and document
-
-Note in the cutover docs that cart mobile LCP is a Lighthouse cold-load artifact and not a real-user metric. Reference CrUX origin-aggregate as the canonical cart performance proxy.
-
----
-
-## 5. Recommendation
-
-**Path D (accept + document) + Path A (fix the methodology long-term).**
-
-Close `ujg6.36` as `won't-do` with a note that the metric is non-actionable for cold-load empty-cart testing. Re-open as `ujg6.36a` if/when:
-- Operator wants to invest in Path B (defer cookie banner) with legal sign-off
-- Operator wants Path C (empty-cart hero) for UX reasons unrelated to LCP
-
-Update the PSI methodology to either skip `/cart` or pre-populate it before testing. File a separate ticket for that change.
-
-The cart mobile "+1.3s LCP regression on P8 vs P6" we saw in this morning's perf snapshot is **noise within the cookie-banner stability window** — it doesn't reflect any actionable code difference between P6 and P8. The other cart metrics (CLS 0.041, TBT 1021ms) are real and accurately reflect tonight's lazy-render-disable wins.
-
----
-
-## 6. Verification
-
-To confirm this isn't an artifact of `/tmp/psi-baseline/` data:
-
-```bash
-# Open cart preview in browser
-open "https://creations-gdc.myshopify.com/cart?preview_theme_id=141168312419"
-# Run Lighthouse mobile from devtools → Performance Insights
-# Confirm LCP element is the cookie banner span
+**Current markup** (`snippets/cart-line-items.liquid:22`):
+```liquid
+<img class="cart__items__img" src="{{ line_item | image_url: width: 180 }}" alt="{{ line_item.title | strip_html | escape }}">
 ```
 
-Alternative: run a fresh PSI with the cookie banner DOM-removed via Lighthouse's `injectableScript` option. LCP would shift to the next-largest element (probably the cart-page header text or the "Continue browsing" link), which would be in the sub-2-second range and prove the cookie banner is the true bottleneck.
+**Missing attributes:**
+- `width` / `height` — Without explicit dimensions, the browser cannot reserve space, causing CLS when images load
+- `fetchpriority="high"` — On a cart-with-items page, the first image should be the LCP candidate; signaling high priority helps the browser preload it
+- `loading="lazy"` — Not present (correct: cart items are above-the-fold content, should not be lazy-loaded)
+
+**Impact assessment:** For real users with items in cart, this `<img>` is the most likely LCP candidate. Without `width`/`height`, each image causes a small CLS shift. Without `fetchpriority="high"`, the browser treats it as a normal-priority image rather than preloading it.
+
+## Vertex AI Recommendations
+
+**Status:** Currently COMMENTED OUT in `sections/cart.liquid` (lines 77-87).
+**Code:**
+```liquid
+{%- comment -%}
+  Temporarily disabled on main until vertex snippet ships.
+  {%- if cart.item_count > 0 -%}
+    {% render 'vertex-recommendations',
+        placement: 'cart_above_checkout',
+        cart: cart,
+        title: 'Frequently bought with these items',
+        subtitle: 'Add to your cart in one tap.'
+    %}
+  {%- endif -%}
+{%- endcomment -%}
+```
+**Impact:** Not contributing to LCP. When re-enabled, the recommendations widget will inject JS-rendered content below the cart items, potentially adding render-blocking scripts.
+
+## LoyaltyLion
+
+**Status:** NO direct references found in `sections/cart.liquid` or cart-related snippets (`cart-line-items.liquid`, `cart-empty.liquid`, `freegifts-snippet-change.liquid`).
+The only LoyaltyLion reference found is in `sections/page.liquid` line 67 (`if (document.querySelector('#loyaltylion'))`), which is not rendered on the cart page.
+**Impact:** Not contributing to cart LCP.
+
+## Why the LCP Measurement Reports 15-18s When Breakdown Shows ~3.1s
+
+The `lcp-breakdown-insight` reports:
+- Time to first byte: ~100ms
+- Element render delay: ~3066ms
+- **Sum: ~3.2s**
+
+But the headline `largest-contentful-paint` metric reports 15-18s. Lighthouse keeps observing for LCP candidates after the initial element renders. Each time something larger paints, the LCP timer updates. The 17-18s value reflects the **final stable LCP** after all asynchronous content (cookie bar animations, position adjustments) has settled.
+
+The cookie banner is the LAST element to stabilize because Nova EU Cookie Bar runs through animations + cookie-state checks + position adjustments after first paint. The element keeps re-painting until ~17s after navigation.
+
+## Recommended Fix Path
+
+### Immediate (P0)
+1. **Add explicit dimensions** to cart line-item images: `width="180" height="180"` on `snippets/cart-line-items.liquid:22` — prevents CLS on image load when cart has items
+2. **Add `fetchpriority="high"`** to the first cart item image on `snippets/cart-line-items.liquid:22` — signals browser to prioritize LCP for real users with items in cart
+3. **Defer Nova EU Cookie Bar** — if cookie bar JS can be deferred until after first paint (without GDPR compliance violation), this would allow LCP to fire on actual cart content instead of the cookie banner text
+
+### Medium-term (P1)
+4. **Preload cart line-item images** — add `<link rel="preload" as="image">` for the first cart item image in the `<head>` when `cart.item_count > 0`
+5. **Empty-cart hero image or illustration** — add lightweight SVG/image to `snippets/cart-empty.liquid` (currently 14 lines of text-only content) to give the browser a meaningful LCP target that isn't the cookie banner
+
+### Long-term (P2)
+6. **Replace Nova EU Cookie Bar** with a theme-native solution if deferring isn't sufficient or violates GDPR compliance requirements
+7. **Change PSI methodology** — test `/cart` with a pre-populated cart via Shopify Cart API add-item step, or drop cart mobile from the PSI matrix for empty-cart testing. The `/cart` page is rarely a cold entry point for real users.
+
+## Assessment
+
+The 15-18s cart mobile LCP is **a Lighthouse testing artifact on empty-cart pages**. PSI tests `/cart` with no cookies set → empty cart + visible cookie banner. The cookie banner span (348×54px) is the largest contentful element by area, and it keeps re-painting for ~17s.
+
+**CrUX p75 for `/cart` is 404 (insufficient traffic)** — real users rarely hit `/cart` directly enough for its own CrUX bucket. Their cart LCP rolls into the origin-mobile aggregate (currently ~2212ms — healthy).
+
+The +1.3s LCP regression on P8 vs P6 is noise within the cookie-bar stability window — it doesn't reflect an actionable code difference between themes.
+
+**Recommended disposition:** Accept and document Path D (Lighthouse artifact, not real-user metric). Consider Path A (fix PSI methodology to test cart-with-items). Close `ujg6.36` as `won't-do` unless operator wants to invest in cookie banner deferral (Path B with legal sign-off) or empty-cart hero (Path C for UX reasons).
+
+## Next Steps
+
+File bd hairmnl-theme-ujg6.36 for the actual fix implementation based on this diagnostic — specifically the P0 items (explicit dimensions + fetchpriority on cart line-item images).

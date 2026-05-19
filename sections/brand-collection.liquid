@@ -83,6 +83,10 @@
 {%- elsif grid_width_large == 'large-up--one-fifth' -%}
   {%- assign product_count = 50 -%}
 {%- endif -%}
+{%- assign display_count = product_count -%}
+{%- unless request.design_mode -%}
+  {%- assign display_count = section.settings.initial_grid_count | default: 12 -%}
+{%- endunless -%}
 {%- assign collection_sidebar = false -%}
 {%- if section.settings.collection_custom_nav_list != blank or section.settings.collection_standard_nav or section.settings.collection_type_nav or section.settings.collection_vendor_nav or section.settings.collection_tag_nav -%}
   {%- assign collection_sidebar = true -%}
@@ -98,7 +102,7 @@
     Theme Editor preview OR Section Rendering API request (?section_id=...):
     render the full section normally.
   {%- endcomment -%}
-{%- paginate collection.products by product_count -%}
+{%- paginate collection.products by display_count -%}
 <div data-section-id="{{ section.id }}" data-section-type="collection">
     
   <div class="collection collection-branded">
@@ -917,7 +921,7 @@
     <!-- placeholder — populated by hairmnl-common.js section 8 IO -->
   </div>
   <noscript>
-{%- paginate collection.products by product_count -%}
+{%- paginate collection.products by display_count -%}
 <div data-section-id="{{ section.id }}" data-section-type="collection">
     
   <div class="collection collection-branded">
@@ -1838,6 +1842,16 @@
         "step": 1,
         "label": "Mobile",
         "default": 2
+      },
+      {
+        "type": "range",
+        "id": "initial_grid_count",
+        "min": 4,
+        "max": 96,
+        "step": 4,
+        "label": "Initial products shown",
+        "info": "Number of products rendered on first load. Remaining products load progressively.",
+        "default": 12
       },
       {
         "type": "header",
