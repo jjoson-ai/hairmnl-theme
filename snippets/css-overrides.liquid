@@ -702,4 +702,126 @@
     min-height: 0 !important;
     display: none !important;
   }
+
+  /* ── PDP Option 1 — Sticky gallery (Phase 1.5, 2026-05-13) ──
+     Per task-2-pdp-progression.md PR-1: removes the 500-800px white-space
+     void below the left-column thumbnails on long PDPs (Davines Purifying
+     Shampoo and equivalent long-description SKUs). The gallery sticks
+     to viewport while the right column scrolls, perceptually eliminating
+     the void. Sephora/Cult Beauty/Aritzia pattern.
+
+     Scope: desktop only (≥1024px). Mobile/tablet keep current behavior.
+     `align-self: flex-start` prevents the .grid flex parent from
+     stretching the sticky child to full container height (which would
+     defeat sticky).
+     Top offset hardcoded to 80px (header__desktop is 70px + breathing
+     room); promote to a JS-set --header-height later if announcement-bar
+     height starts varying. */
+  @media (min-width: 1024px) {
+    .product__media__wrapper {
+      position: sticky;
+      top: 80px;
+      align-self: flex-start;
+    }
+  }
+
+  /* ── PDP Option 2 — Sticky purchase bar (Phase 1.5, 2026-05-13) ──
+     Per task-2-pdp-progression.md PR-2: pinned mini-cart appears at
+     viewport bottom once user scrolls past the primary ATC. Keeps
+     purchase always-accessible on long PDPs. Glossier/Charlotte Tilbury/
+     Drunk Elephant/Mecca pattern.
+
+     Scope: desktop only (≥1024px). Mobile has its own sticky-ATC bar
+     (different markup); this one does NOT show below 1024px.
+     Hidden by default via translateY(100%); JS adds .is-visible to
+     slide it in once the IntersectionObserver fires.
+     Markup in snippets/product-sticky-bar.liquid, rendered from
+     sections/product.liquid. JS inline in the snippet (~30 lines). */
+  .vrec-product-sticky-bar {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .vrec-product-sticky-bar {
+      display: flex;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9000;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 24px;
+      background: #ffffff;
+      border-top: 1px solid var(--border, #e5e5e5);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+      transform: translateY(100%);
+      transition: transform 200ms ease-out;
+      font-family: inherit;
+    }
+    .vrec-product-sticky-bar.is-visible {
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vrec-product-sticky-bar {
+        transition: none;
+      }
+    }
+    .vrec-product-sticky-bar__thumb {
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      overflow: hidden;
+      background: var(--vrec-image-bg, #f3f0eb);
+    }
+    .vrec-product-sticky-bar__thumb img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .vrec-product-sticky-bar__info {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .vrec-product-sticky-bar__title {
+      font-size: 13px;
+      font-weight: 500;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .vrec-product-sticky-bar__meta {
+      font-size: 11px;
+      color: var(--text-light, #6b6b6b);
+      margin: 0;
+    }
+    .vrec-product-sticky-bar__price {
+      flex: 0 0 auto;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 16px 0 0;
+    }
+    .vrec-product-sticky-bar__cta {
+      flex: 0 0 auto;
+      min-height: 44px;
+      padding: 0 24px;
+      background: var(--vrec-cta-bg, #1a1a1a);
+      color: var(--vrec-cta-fg, #ffffff);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .vrec-product-sticky-bar__cta:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
 </style>

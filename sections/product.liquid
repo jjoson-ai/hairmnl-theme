@@ -210,6 +210,15 @@
   {% render 'zoom-pswp' %}
 {% endif %}
 
+{%- comment -%}
+  PDP Option 2 — sticky purchase bar (Phase 1.5, 2026-05-13).
+  Desktop only (snippet's CSS gates display: none below 1024px).
+  Appears once the primary [name="add"] button leaves the viewport;
+  IntersectionObserver in the snippet handles show/hide.
+  Per task-2-pdp-progression.md PR-2.
+{%- endcomment -%}
+{% render 'product-sticky-bar', product: product %}
+
 <script data-product-json type="application/json">
   {{ product | json }}
 </script>
