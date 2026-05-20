@@ -97,19 +97,25 @@
   endcase
 
   comment
-    Fallback to sample products so the slot is visually populated in the
-    preview/development theme before the precompute model goes ACTIVE.
-    On live with an ACTIVE model, the metafield branch above always fires
-    and this block is skipped.
+    Fallback to sample products so the slot is always visually populated,
+    even when the precompute model hasn't written its metafield yet (or
+    the metafield is empty / all handles failed to resolve). Two failure
+    modes both need this fallback:
+      • metafield missing entirely → rec_products is empty string ('')
+      • metafield present but empty array → rec_products is [] (truthy
+        in Liquid, so `unless rec_products` wouldn't fire)
+    Hence the explicit size check, not just truthiness.
   endcomment
-  unless rec_products
+  assign rec_products_size = rec_products.size | default: 0
+  if rec_products_size == 0
     for col in collections
       if col.products.size >= 4
         assign rec_products = col.products | sample: 4
+        assign rec_source   = 'fallback_sample'
         break
       endif
     endfor
-  endunless
+  endif
 
   assign card_count = rec_products.size | default: 0
 -%}
