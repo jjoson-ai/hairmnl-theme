@@ -163,6 +163,17 @@
   </script>
 {%- endif -%}
 
+{%- comment -%}
+  bd a7av.8 — sticky purchase bar on collection pages (full STKY app replacement).
+  Renders with the first product in the collection as a server-rendered fallback;
+  hairmnl-common.js hydrates to the last-viewed product from sessionStorage if
+  present, and updates on product-card click. Always-visible (no scroll trigger).
+  Desktop only — display:none below 1024px via css-overrides.liquid.
+{%- endcomment -%}
+{%- if collection.products.size > 0 -%}
+  {%- render 'product-sticky-bar', product: collection.products.first, is_collection: true -%}
+{%- endif -%}
+
 {% schema %}
   {
     "name": "Collection product grid",

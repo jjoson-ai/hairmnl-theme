@@ -1,19 +1,23 @@
 {%- comment -%}
-  PDP sticky purchase bar — desktop only, appears once primary ATC
-  leaves viewport. Per task-2-pdp-progression.md PR-2.
+  Sticky purchase bar — desktop only.
 
-  Renders at the bottom of sections/product.liquid (last sibling
-  before closing wrapper). Inline JS uses IntersectionObserver on
-  the primary [name="add"] button — no new dependencies, ~30 lines.
+  Two modes:
+  - PDP mode (default): appears when primary ATC leaves viewport
+    (IntersectionObserver). Per task-2-pdp-progression.md PR-2.
+  - Collection mode (is_collection=true): always-visible on collection
+    + brand pages (full STKY app replacement). Per bd a7av.8. JS
+    hydrates the bar with the last-viewed product from sessionStorage
+    if present; otherwise keeps the server-rendered first-product
+    fallback. Card clicks on the collection page update the bar
+    in-place via the JS in assets/hairmnl-common.js.
 
-  Mobile/tablet: the bar's container has `display: none` until
-  the ≥1024px media query in snippets/css-overrides.liquid; mobile
-  keeps the theme's existing mobile sticky-ATC pattern.
+  Arguments:
+    product       {Product}  required — what to render on first paint
+    is_collection {Boolean}  optional, default false — switch to
+                  collection always-visible mode
 
-  Variant + price stay in sync with the primary product form via
-  the Pipeline-theme variant-change event ("variant:change") that
-  bubbles from the form. Falls back to the first available variant
-  on page load.
+  Mobile/tablet: bar is display:none below 1024px (CSS gate in
+  snippets/css-overrides.liquid).
 {%- endcomment -%}
 
 {%- liquid
@@ -22,13 +26,17 @@
     assign first_variant = product.variants.first
   endif
   assign thumb_img = product.featured_media.preview_image
+  assign is_collection_mode = is_collection | default: false
 -%}
 
 {%- if product != blank -%}
-  <div class="vrec-product-sticky-bar"
+  <div class="vrec-product-sticky-bar{% if is_collection_mode %} vrec-product-sticky-bar--always-visible is-visible{% endif %}"
        id="vrec-product-sticky-bar"
        data-product-id="{{ product.id }}"
-       aria-hidden="true">
+       data-product-handle="{{ product.handle }}"
+       data-product-url="{{ product.url }}"
+       data-vrec-sticky-mode="{% if is_collection_mode %}collection{% else %}pdp{% endif %}"
+       aria-hidden="{% if is_collection_mode %}false{% else %}true{% endif %}">
     {%- if thumb_img -%}
       <div class="vrec-product-sticky-bar__thumb">
         <img src="{{ thumb_img | image_url: width: 96 }}"
@@ -71,8 +79,17 @@
       var bar = document.getElementById('vrec-product-sticky-bar');
       if (!bar) return;
 
-      // Find the primary product-form ATC button. Pipeline uses
-      // <form action="/cart/add"> with button[name="add"].
+      // Collection mode skips the IntersectionObserver — bar is always visible.
+      // Hydration + card-click updates handled in assets/hairmnl-common.js.
+      var mode = bar.getAttribute('data-vrec-sticky-mode');
+      if (mode === 'collection') {
+        // Track PDP-visit on PDP entry doesn't apply here (no product page-view
+        // on collection pages). hairmnl-common.js does the hydration work.
+        return;
+      }
+
+      // PDP mode: find the primary product-form ATC button and observe it.
+      // Pipeline uses <form action="/cart/add"> with button[name="add"].
       var primaryATC = document.querySelector(
         'form[action*="/cart/add"]:not(.vrec-product-sticky-bar__form) button[name="add"], ' +
         'form[action*="/cart/add"]:not(.vrec-product-sticky-bar__form) input[name="add"]'
@@ -92,6 +109,24 @@
         });
       }, { rootMargin: '0px 0px 0px 0px', threshold: 0 });
       io.observe(primaryATC);
+
+      // PDP mode also writes to sessionStorage so the collection-mode bar can
+      // hydrate to "last viewed product" on subsequent collection navigation.
+      try {
+        var sessionPayload = {
+          id: bar.getAttribute('data-product-id'),
+          handle: bar.getAttribute('data-product-handle'),
+          url: bar.getAttribute('data-product-url'),
+          title: bar.querySelector('.vrec-product-sticky-bar__title')?.textContent || '',
+          price_html: bar.querySelector('.vrec-product-sticky-bar__price')?.innerHTML || '',
+          thumb_src: bar.querySelector('.vrec-product-sticky-bar__thumb img')?.src || '',
+          variant_id: bar.querySelector('[data-vrec-sticky-id]')?.value || '',
+          variant_label: bar.querySelector('[data-vrec-sticky-variant]')?.textContent || '',
+          available: !bar.querySelector('.vrec-product-sticky-bar__cta')?.disabled,
+          ts: Date.now()
+        };
+        sessionStorage.setItem('hairmnl_last_viewed_product', JSON.stringify(sessionPayload));
+      } catch (e) { /* sessionStorage disabled — silent no-op */ }
 
       // Keep variant + price in sync. Pipeline fires `variant:change`
       // on the product section when the variant selector updates.

@@ -438,6 +438,119 @@
   });
 
   // ============================================================
+  // bd a7av.8 — Sticky-bar collection-mode hydration + card-click update.
+  // ----------------------------------------------------------------
+  // When sections/collection.liquid (or brand-collection.liquid) renders
+  // {% render 'product-sticky-bar', is_collection: true %}, the snippet
+  // outputs a bar pre-filled with the FIRST product in the collection as
+  // a server-rendered fallback. This block then:
+  //   1) on DOM ready: if sessionStorage has a `hairmnl_last_viewed_product`,
+  //      replace the bar's content with that product instead of the fallback.
+  //   2) on product-card click within the collection page, update the bar
+  //      to feature THAT product (no nav — let the link navigate the card,
+  //      and the new PDP's PDP-mode bar will be visible there too).
+  //   3) hide the bar entirely on cart / search / account / checkout pages
+  //      (defensive — render call should also be omitted from those templates).
+  //
+  // Hidden by default below 1024px (CSS gate in css-overrides.liquid).
+  // ============================================================
+  (function () {
+    var bar = document.getElementById('vrec-product-sticky-bar');
+    if (!bar) return;
+    if (bar.getAttribute('data-vrec-sticky-mode') !== 'collection') return;
+
+    // Defensive hide on excluded surfaces.
+    var path = window.location.pathname;
+    if (/^\/(cart|search|account|checkout)/.test(path)) {
+      bar.style.display = 'none';
+      return;
+    }
+
+    // Helper: update the bar DOM in-place from a payload object.
+    function applyPayload(p) {
+      if (!p || !p.id) return;
+      bar.setAttribute('data-product-id', p.id);
+      bar.setAttribute('data-product-handle', p.handle || '');
+      bar.setAttribute('data-product-url', p.url || '');
+
+      var titleEl = bar.querySelector('.vrec-product-sticky-bar__title');
+      if (titleEl && p.title) titleEl.textContent = p.title;
+
+      var thumbImg = bar.querySelector('.vrec-product-sticky-bar__thumb img');
+      if (thumbImg && p.thumb_src) thumbImg.src = p.thumb_src;
+
+      var priceEl = bar.querySelector('.vrec-product-sticky-bar__price');
+      if (priceEl && p.price_html) priceEl.innerHTML = p.price_html;
+
+      var variantEl = bar.querySelector('[data-vrec-sticky-variant]');
+      if (variantEl && p.variant_label) variantEl.textContent = p.variant_label;
+
+      var idInput = bar.querySelector('[data-vrec-sticky-id]');
+      if (idInput && p.variant_id) idInput.value = p.variant_id;
+
+      var btn = bar.querySelector('.vrec-product-sticky-bar__cta');
+      if (btn && typeof p.available !== 'undefined') {
+        btn.disabled = !p.available;
+        btn.setAttribute('aria-disabled', String(!p.available));
+      }
+    }
+
+    // Hydrate from sessionStorage if a previously-viewed product exists
+    // AND it's newer than the server-rendered fallback (always treat
+    // sessionStorage as more recent on collection pages).
+    try {
+      var stored = sessionStorage.getItem('hairmnl_last_viewed_product');
+      if (stored) {
+        var p = JSON.parse(stored);
+        // Sanity: stale entries (>2hr) get ignored — operator could have a
+        // long tab open while the catalog changes. Falls back to the
+        // first-product server render in that case.
+        if (p && p.ts && (Date.now() - p.ts) < 2 * 60 * 60 * 1000) {
+          applyPayload(p);
+        }
+      }
+    } catch (e) { /* sessionStorage disabled or parse error — keep fallback */ }
+
+    // Card-click handler: when user clicks a product card on the collection
+    // page, capture the product info and update the bar immediately. The
+    // anchor's natural navigation continues to PDP after this synchronously
+    // returns (no preventDefault).
+    document.addEventListener('click', function (e) {
+      var card = e.target.closest && e.target.closest('.product-grid-item, [data-product-grid-item]');
+      if (!card) return;
+      var anchor = card.querySelector('a[href*="/products/"]');
+      if (!anchor) return;
+
+      // Best-effort scrape from the card DOM (the home/collection card markup).
+      // Falls back gracefully if any field is missing.
+      var titleEl = card.querySelector('.product__grid__title, .product-grid-item__title, [class*="title"]');
+      var priceEl = card.querySelector('.product__grid__price, .product-grid-item__price, [class*="price"]');
+      var imgEl = card.querySelector('img');
+      var handleMatch = anchor.href.match(/\/products\/([^/?#]+)/);
+
+      var payload = {
+        id: card.getAttribute('data-product-id') || '',
+        handle: handleMatch ? handleMatch[1] : '',
+        url: anchor.getAttribute('href') || '',
+        title: titleEl ? titleEl.textContent.trim() : '',
+        price_html: priceEl ? priceEl.innerHTML : '',
+        thumb_src: imgEl ? imgEl.currentSrc || imgEl.src : '',
+        variant_id: '',         // collection card has no variant info; ADD will redirect to PDP
+        variant_label: '',
+        available: true,
+        ts: Date.now()
+      };
+
+      // Update bar visually for any brief moment before navigation.
+      applyPayload(payload);
+
+      // Persist for the next collection-page visit.
+      try { sessionStorage.setItem('hairmnl_last_viewed_product', JSON.stringify(payload)); }
+      catch (err) { /* sessionStorage disabled */ }
+    });
+  })();
+
+  // ============================================================
   // DEFERRED — vendor-library-dependent scripts (Phase 5 visual QA)
   // ----------------------------------------------------------------
   // The following 4 P6 scripts depend on vendor libraries that P8's stock

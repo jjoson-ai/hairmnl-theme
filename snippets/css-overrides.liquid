@@ -762,6 +762,15 @@
     .vrec-product-sticky-bar.is-visible {
       transform: translateY(0);
     }
+    /*
+     * a7av.8 — collection-mode bar is always-visible (no scroll trigger).
+     * Class added server-side by the snippet when is_collection: true.
+     * Mirrors STKY app's sitewide sticky-ATC behavior so the app can be
+     * uninstalled without losing the UX on collection + brand pages.
+     */
+    .vrec-product-sticky-bar--always-visible {
+      transform: translateY(0);
+    }
     @media (prefers-reduced-motion: reduce) {
       .vrec-product-sticky-bar {
         transition: none;

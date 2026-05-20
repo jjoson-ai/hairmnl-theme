@@ -1739,6 +1739,15 @@
   </style>
 {%- endif -%}
 
+{%- comment -%}
+  bd a7av.8 — sticky purchase bar on brand pages (full STKY app replacement).
+  Same hydration behavior as sections/collection.liquid. Always-visible on
+  desktop; mobile/tablet hidden via CSS gate.
+{%- endcomment -%}
+{%- if collection.products.size > 0 -%}
+  {%- render 'product-sticky-bar', product: collection.products.first, is_collection: true -%}
+{%- endif -%}
+
 {% schema %}
 {
     "name": "Brand Collection v2",
