@@ -1,0 +1,120 @@
+// ujg6.42 Wave A — real Chrome CSS Coverage via Puppeteer + Brave.
+//
+// Launches Brave, navigates to 5 templates, instruments CSS Coverage,
+// scrolls + interacts (open hamburger, hover a product card) to trigger
+// JS-injected classes that static analysis can't see, then saves the
+// per-template usage data as JSON for the Python bucketer.
+const puppeteer = require('puppeteer-core');
+const fs = require('fs');
+const path = require('path');
+
+const BRAVE = '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser';
+const OUT = '/tmp/ujg6.42/coverage';
+fs.mkdirSync(OUT, { recursive: true });
+
+const TEMPLATES = {
+  home: 'https://www.hairmnl.com/',
+  collection: 'https://www.hairmnl.com/collections/davines',
+  product: 'https://www.hairmnl.com/products/loreal-professionnel-serie-expert-absolut-repair-shampoo-300ml-oil-30ml',
+  cart: 'https://www.hairmnl.com/cart',
+  search: 'https://www.hairmnl.com/search?q=shampoo',
+};
+
+// CSS files we care about — order matters: more specific names first so
+// "custom-theme.css" isn't matched by the more general "theme.css" rule.
+const CSS_TARGETS = ['custom-theme.css', 'theme.css'];
+
+async function run() {
+  const browser = await puppeteer.launch({
+    executablePath: BRAVE,
+    headless: 'new',
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+
+  for (const [name, url] of Object.entries(TEMPLATES)) {
+    console.log(`[${name}] navigating to ${url}`);
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1280, height: 800 });
+    await page.setUserAgent(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
+      '(KHTML, like Gecko) Chrome/126.0 Safari/537.36'
+    );
+
+    await page.coverage.startCSSCoverage({ resetOnNavigation: false });
+
+    try {
+      await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
+    } catch (e) {
+      console.log(`  goto warn: ${e.message}`);
+    }
+
+    // Interact to trigger JS-injected classes
+    try {
+      // Scroll the page in chunks to trigger lazy-mounted components
+      const innerHeight = await page.evaluate('window.innerHeight');
+      const docHeight = await page.evaluate('document.body.scrollHeight');
+      for (let y = 0; y < docHeight; y += innerHeight * 0.8) {
+        await page.evaluate(`window.scrollTo(0, ${y})`);
+        await new Promise(r => setTimeout(r, 200));
+      }
+      await page.evaluate('window.scrollTo(0, 0)');
+
+      // Open the cart drawer if present (triggers cart drawer classes)
+      const cartIconSel = '[data-cart-toggle], [href="/cart"], .header__cart, .cart__icon';
+      const cart = await page.$(cartIconSel);
+      if (cart) {
+        await cart.hover();
+      }
+
+      // Open the mobile hamburger / search drawer to trigger header drawer classes
+      const drawer = await page.$('[data-drawer-toggle], .header__mobile__button');
+      if (drawer) {
+        try { await drawer.click({ delay: 50 }); } catch (e) {}
+        await new Promise(r => setTimeout(r, 500));
+      }
+
+      // Wait for any settled-state JS
+      await new Promise(r => setTimeout(r, 1500));
+    } catch (e) {
+      console.log(`  interact warn: ${e.message}`);
+    }
+
+    const coverage = await page.coverage.stopCSSCoverage();
+
+    // Filter to the theme.css and custom-theme.css entries
+    const wanted = coverage.filter(e =>
+      CSS_TARGETS.some(t => e.url.includes(t))
+    );
+
+    // Reduce to bytes-used range list per file
+    const out = {};
+    for (const entry of wanted) {
+      const file = CSS_TARGETS.find(t => entry.url.includes(t));
+      const total = entry.text ? entry.text.length : 0;
+      const used = entry.ranges.reduce((s, r) => s + (r.end - r.start), 0);
+      out[file] = {
+        url: entry.url,
+        total_bytes: total,
+        used_bytes: used,
+        used_pct: total ? Math.round(used / total * 1000) / 10 : null,
+        ranges: entry.ranges,
+      };
+      console.log(`  ${file}: used ${used}/${total} = ${out[file].used_pct}%`);
+    }
+
+    fs.writeFileSync(
+      path.join(OUT, `${name}.json`),
+      JSON.stringify(out, null, 2)
+    );
+
+    await page.close();
+  }
+
+  await browser.close();
+  console.log('\nDone. Per-template coverage JSON written to /tmp/ujg6.42/coverage/');
+}
+
+run().catch(e => {
+  console.error(e);
+  process.exit(1);
+});
