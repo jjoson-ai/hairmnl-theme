@@ -1207,8 +1207,14 @@
     {%- endcomment -%}
   
 
-    {%- comment -%} Temporarily disabled on main until vertex snippet ships. {%- endcomment -%}
-    {%- comment -%} {{ 'vertex-recommendations.css' | asset_url | stylesheet_tag }} {%- endcomment -%}
+    {%- comment -%}
+      Vertex recommendations stylesheet — used by all Vertex rec rails
+      (PDP/cart/home placements). media=print swap defers it without
+      blocking first paint; rec rails are below-the-fold on every
+      template, so swap-on-load is safe.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'vertex-recommendations.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'vertex-recommendations.css' | asset_url }}"></noscript>
 
 </head>
 
