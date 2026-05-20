@@ -125,18 +125,9 @@
     gap: 16px;
   }
 }
-/* pdp_below_atc keeps the original wider 4.5-card layout as the headline rail. */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .hairmnl-theme .vrec-slot--pdp_below_atc .vrec-slot__rail {
-    grid-auto-columns: 30%; /* tablet: ~3.3 cards visible */
-  }
-}
-@media (min-width: 1024px) {
-  .hairmnl-theme .vrec-slot--pdp_below_atc .vrec-slot__rail {
-    grid-auto-columns: 22%; /* desktop: ~4.5 cards visible */
-    gap: 20px;
-  }
-}
+/* (removed 2026-05-20 — pdp_below_atc previously kept the wider 4.5-card
+   "headline" layout, but the operator wants all rec rails to match the
+   homepage Best Sellers / Summer Essentials 6-across format uniformly.) */
 .hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-slot__rail {
   /* mockup-only override (kept for parity with the design preview file) */
   grid-auto-columns: 42%;
