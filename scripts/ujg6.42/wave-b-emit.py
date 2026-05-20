@@ -151,6 +151,13 @@ _FORCE_CORE_PATTERNS = [
     re.compile(r'\.drawer(?:-|__|\b)'),
     re.compile(r'\.popdown(?:-|__|\b)'),
     re.compile(r'\.popup(?:-|__|\b)'),
+    # Cart upsell ("Buy It With") widget — appears on cart page + cart drawer,
+    # AND on product page recommendations. Coverage bucketed it to product-only
+    # (regression fixed 2026-05-20 after user-reported cart-page breakage).
+    re.compile(r'\.upsell(?:__|\b)'),
+    # Cart-footer layout grid + nested elements (cart-page.css cascade dependency)
+    re.compile(r'\.template__cart(?:__|\b)'),
+    re.compile(r'\.cart__footer(?:__|\b)'),
     # Form error/loading states (only triggered on submit)
     re.compile(r'\.has-error\b'),
     re.compile(r'\.errors?\b'),

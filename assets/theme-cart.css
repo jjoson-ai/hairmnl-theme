@@ -526,37 +526,6 @@ ul.tabs--center {
   grid-column-start: image;
   grid-column-end: title;
 }
-@media (min-width: 480px) {
-.template__cart__footer .cart__footer__value {
-    font-size: calc(
-      (18.30206px + (331.96033vw - 1593.40956px) / 920) *
-        var(---font-adjust-body)
-    );
-  }
-}
-@media (min-width: 1400px) {
-.template__cart__footer .cart__footer__value {
-    font-size: calc(21.62167px * var(---font-adjust-body));
-  }
-}
-.cart__footer__checkout,
-.cart__footer__total,
-.cart__footer__update {
-  text-align: right;
-}
-.cart__footer__update {
-  display: none;
-}
-@media only screen and (max-width: 767px) {
-.template__cart__footer {
-    display: grid;
-    grid-template-areas: "product" "total" "checkout" "shipping" "update" "notes" "additional";
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    grid-column-gap: 0;
-    grid-row-gap: 10px;
-  }
-}
 .cart__update {
   display: none;
 }

@@ -34,12 +34,6 @@
 .collection-slider .spinner-wrapper.hide {
   display: none;
 }
-.upsell__holder .shopify-product-form {
-  max-width: 100%;
-}
-.upsell__holder .radio__fieldset .radio__button label {
-  font-size: calc(10px * var(---font-adjust-accent));
-}
 body.template-cart .cart__template .cart__items__quantity .quantity__wrapper {
   min-height: 42px;
   margin-bottom: 0;

@@ -2353,6 +2353,12 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
 .swal2-actions .swal2-confirm:focus {
   box-shadow: none;
 }
+.upsell__holder .shopify-product-form {
+  max-width: 100%;
+}
+.upsell__holder .radio__fieldset .radio__button label {
+  font-size: calc(10px * var(---font-adjust-accent));
+}
 .aos-initialized [data-aos="hero"] {
   opacity: 1 !important;
   animation-name: none !important;

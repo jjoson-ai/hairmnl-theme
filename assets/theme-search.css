@@ -887,10 +887,6 @@ input[type="number"].filter__price__input {
 .pickup__header__title .strong {
   font-weight: var(---font-weight-accent-bold);
 }
-.upsell__holder__title.strong,
-.upsell__holder__title .strong {
-  font-weight: var(---font-weight-accent-bold);
-}
 .rating__wrapper__grid,
 .rating__wrapper__grid.strong,
 .rating__wrapper__grid .strong {
