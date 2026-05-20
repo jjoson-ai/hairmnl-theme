@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Wave B — CSS split emitter (ujg6.42.2).
+"""Wave B — CSS split emitter (ujg6.42.2 / ujg6.42.5 --strict).
 
 Reads docs/ujg6.42-buckets.json (the Wave A real-Coverage output), the
 disk source CSS files (assets/theme.css, assets/custom-theme.css), AND
@@ -29,7 +29,15 @@ Output files are created fresh (overwrite if they exist).
 
 Usage:
   cd hairmnl-theme && python3 scripts/ujg6.42/wave-b-emit.py
+  cd hairmnl-theme && python3 scripts/ujg6.42/wave-b-emit.py --strict
+
+--strict mode (ujg6.42.5 Phase 2):
+  Reads /tmp/ujg6.42/unused-verification.json produced by verify-unused.py.
+  Any rule whose normalised selector appears in the REMOVE_CANDIDATE verdict
+  list is silently skipped — it is not emitted to any output chunk.
+  Requires verify-unused.py to have been run first.
 """
+import argparse
 import json
 import re
 import sys
@@ -54,6 +62,13 @@ OUT_PREFIX = {
 
 BUCKETS_JSON = REPO / 'docs/ujg6.42-buckets.json'
 CLASS_PRESENCE_JSON = Path('/tmp/ujg6.42/html-corrections/class-presence.json')
+UNUSED_VERIFICATION_JSON = Path('/tmp/ujg6.42/unused-verification.json')
+
+# Maps src-file label (key in SRC_FILES) -> chunk label in unused-verification.json
+SRC_TO_CHUNK_LABEL = {
+    'theme.css': 'theme-core.css',
+    'custom-theme.css': 'custom-theme-core.css',
+}
 
 
 def _verify_tempdir_perms(path: Path):
@@ -399,10 +414,60 @@ def destinations(bucket_name: str, out_prefix: Path) -> list:
 
 
 # ---------------------------------------------------------------------------
+# --strict mode: load REMOVE_CANDIDATE sets from verify-unused output
+# ---------------------------------------------------------------------------
+
+def load_remove_candidates() -> dict:
+    """Load REMOVE_CANDIDATE normalised selector sets from verify-unused.py output.
+
+    Returns {src_label: frozenset(norm_sel)} e.g.:
+        {'theme.css': frozenset({'...', ...}), 'custom-theme.css': frozenset({...})}
+
+    The selector strings in the JSON use the same '@@@ @media ... @@@ selector'
+    format as full_sel in this script, so norm() maps them to the same keys.
+    """
+    if not UNUSED_VERIFICATION_JSON.exists():
+        print(
+            f'ERROR: --strict requires {UNUSED_VERIFICATION_JSON}\n'
+            f'       Run: python3 scripts/ujg6.42/verify-unused.py first.',
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    data = json.loads(UNUSED_VERIFICATION_JSON.read_text())
+    result = {}
+    for src_label, chunk_label in SRC_TO_CHUNK_LABEL.items():
+        chunk_data = data.get(chunk_label, {})
+        rc_rules = chunk_data.get('verdicts', {}).get('REMOVE_CANDIDATE', [])
+        normed = frozenset(norm(r['sel']) for r in rc_rules)
+        result[src_label] = normed
+        print(
+            f'  --strict: {len(normed):,} REMOVE_CANDIDATE selectors loaded '
+            f'for {src_label} (from {chunk_label})',
+            file=sys.stderr,
+        )
+    return result
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
 def main():
+    parser = argparse.ArgumentParser(
+        description='Wave B CSS split emitter. See module docstring for full usage.')
+    parser.add_argument(
+        '--strict', action='store_true',
+        help='ujg6.42.5: skip REMOVE_CANDIDATE rules from verify-unused.py output '
+             '(omits ~102 KB of dead CSS from core chunks).')
+    args = parser.parse_args()
+
+    if args.strict:
+        print('--strict mode: loading REMOVE_CANDIDATE sets ...', file=sys.stderr)
+        remove_candidates = load_remove_candidates()
+    else:
+        remove_candidates = {}
+
     print(f'Loading {BUCKETS_JSON.name} ...', file=sys.stderr)
     buckets_all = json.loads(BUCKETS_JSON.read_text())
 
@@ -446,11 +511,21 @@ def main():
         unmatched = 0
         expanded_count = 0
         forced_core_count = 0
+        skipped_strict = 0
         unmatched_sample = []
         written_bytes = defaultdict(int)
 
+        # Per-label remove-candidate set (empty if not --strict)
+        remove_set = remove_candidates.get(label, frozenset())
+
         for full_sel, rule_text, _s, _e in rules:
             key = norm(full_sel)
+
+            # --strict: skip REMOVE_CANDIDATE rules entirely (do not emit to any chunk)
+            if remove_set and key in remove_set:
+                skipped_strict += 1
+                continue
+
             cov_bucket = sel_map.get(key)
 
             if cov_bucket is None:
@@ -490,6 +565,9 @@ def main():
               file=sys.stderr)
         print(f'  Forced-to-core (JS-lib/app/state): {forced_core_count:,}',
               file=sys.stderr)
+        if args.strict:
+            print(f'  --strict skipped (REMOVE_CANDIDATE): {skipped_strict:,}',
+                  file=sys.stderr)
         if unmatched_sample:
             print(f'  unmatched selectors (first {len(unmatched_sample)}):',
                   file=sys.stderr)
@@ -515,7 +593,8 @@ def main():
         }
 
     # Final summary
-    print('\n=== Wave B emission complete ===', file=sys.stderr)
+    mode_tag = ' [--strict]' if args.strict else ''
+    print(f'\n=== Wave B emission complete{mode_tag} ===', file=sys.stderr)
     print('\nExpected sizes (from docs/ujg6.42-coverage-analysis.md):', file=sys.stderr)
     print('  theme-core    : ~222 KB  (universal + unused)', file=sys.stderr)
     print('  theme-home    :  ~22 KB', file=sys.stderr)
