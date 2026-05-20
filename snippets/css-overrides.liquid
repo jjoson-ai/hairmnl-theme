@@ -141,10 +141,28 @@
      aspect-ratio. These collapse to 0×0 then expand to full video height when
      loaded, shifting all content below them in .blog__article__content (and
      .rte on pages). This rule reserves a 16:9 box so the layout is stable
-     before the embed loads. */
-  .blog__article__content iframe,
+     before the embed loads.
+
+     2026-05-21 (vzoa refinement): narrowed iframe scope to known LANDSCAPE
+     providers (YouTube, Vimeo, Dailymotion, Twitch). The blanket .rte iframe
+     rule above ALSO targeted vertical embeds (Instagram reels, TikTok),
+     which render at 9:16 — meaning the 16:9 box reserved INITIALLY was
+     wrong, causing a NET CLS regression instead of improvement. GA4 data
+     2026-05-14 → 2026-05-20 showed article-template CLS poor% jumped from
+     4.8% → 25.8% (+21pt) week-over-week. The <video> rule remains broad
+     because <video> tags on this storefront are uniformly landscape demo
+     clips, no vertical-video pattern observed. */
+  .blog__article__content iframe[src*="youtube"],
+  .blog__article__content iframe[src*="youtu.be"],
+  .blog__article__content iframe[src*="vimeo"],
+  .blog__article__content iframe[src*="dailymotion"],
+  .blog__article__content iframe[src*="twitch"],
   .blog__article__content video,
-  .rte iframe,
+  .rte iframe[src*="youtube"],
+  .rte iframe[src*="youtu.be"],
+  .rte iframe[src*="vimeo"],
+  .rte iframe[src*="dailymotion"],
+  .rte iframe[src*="twitch"],
   .rte video {
     aspect-ratio: 16 / 9;
     width: 100%;
