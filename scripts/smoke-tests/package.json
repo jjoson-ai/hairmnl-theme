@@ -19,6 +19,8 @@
     "parity:report": "node bin/parity-report.mjs",
     "parity:open": "npm run parity:report && open parity-screenshots/index.html",
     "test:smoke-9": "playwright test smoke-09",
+    "test:smoke-10": "playwright test smoke-10",
+    "test:fouc": "playwright test smoke-10 --reporter=list",
     "smoke:dev": "bash bin/smoke-against-dev-server.sh",
     "smoke:dev:baselines": "bash bin/smoke-against-dev-server.sh --update-snapshots smoke-08",
     "test:mobile": "playwright test --project=mobile",
@@ -32,6 +34,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.49.0",
-    "pixelmatch": "^5.3.0"
+    "@types/pngjs": "^6.0.5",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0"
   }
 }
