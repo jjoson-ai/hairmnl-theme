@@ -96,13 +96,9 @@
 /* — Rail (horizontal scroll-snap) — */
 /*
  * Mobile-first: 2.25 cards visible by default (42% per card). Tablet
- * bumps to 3.3 (~30%); desktop to 4.5 (~22%). The peek of the off-screen
- * card is the scroll affordance; nav buttons (added below) are the
- * desktop click affordance.
- *
- * The verbatim mockup CSS used `minmax(0, 1fr)` which squished N cards
- * into the available width with no overflow scroll — fixed here so the
- * rail behaves like a real slider.
+ * bumps to ~4 (23%); desktop to ~6 (15.5%) — matches the homepage
+ * Best Sellers / Summer Essentials Flickity sliders. PDP below-ATC
+ * keeps the wider 4.5-card layout as the headline rail.
  */
 .hairmnl-theme .vrec-slot__rail {
   display: grid;
@@ -118,14 +114,26 @@
 .hairmnl-theme .vrec-slot__rail::-webkit-scrollbar { display: none; }
 @media (min-width: 768px) {
   .hairmnl-theme .vrec-slot__rail {
-    grid-auto-columns: 30%; /* tablet: ~3.3 cards visible */
+    grid-auto-columns: 23%; /* tablet: ~4 cards visible */
     gap: 16px;
     padding: 0 0 8px;
   }
 }
 @media (min-width: 1024px) {
   .hairmnl-theme .vrec-slot__rail {
-    grid-auto-columns: 22%; /* desktop: ~4.5 cards visible (4 + peek) */
+    grid-auto-columns: 15.5%; /* desktop: ~6 cards visible — match home Best Sellers */
+    gap: 16px;
+  }
+}
+/* pdp_below_atc keeps the original wider 4.5-card layout as the headline rail. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hairmnl-theme .vrec-slot--pdp_below_atc .vrec-slot__rail {
+    grid-auto-columns: 30%; /* tablet: ~3.3 cards visible */
+  }
+}
+@media (min-width: 1024px) {
+  .hairmnl-theme .vrec-slot--pdp_below_atc .vrec-slot__rail {
+    grid-auto-columns: 22%; /* desktop: ~4.5 cards visible */
     gap: 20px;
   }
 }
@@ -224,12 +232,104 @@
 .hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-card__price { font-size: 13px; }
 .hairmnl-theme .vrec-slot[data-viewport="mobile"] .vrec-card__vendor { font-size: 10px; }
 
-/* — Cart compact card — */
+/* — Cart card with CTA (vertical layout + inline ADD button) — */
 /*
- * Horizontal layout with inline ADD button. Card is a <div> (not <a>)
- * because <button> can't be nested inside <a>. Image + vendor + title
- * are individual <a> links to the PDP.
+ * Vertical card matching the default layout (image-top, info-bottom)
+ * with an ADD TO CART button row pinned to the bottom of each card.
+ * margin-top:auto on the CTA row pushes it down so all CTAs line up
+ * neatly across cards of different title-line heights.
+ *
+ * Used for the cart_above_checkout placement. Other placements use the
+ * default vrec-card (no CTA).
  */
+.hairmnl-theme .vrec-card--with-cta {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  background: var(--vrec-card-bg);
+  text-decoration: none;
+}
+.hairmnl-theme .vrec-card--with-cta .vrec-card__image-link {
+  display: block;
+  text-decoration: none;
+}
+.hairmnl-theme .vrec-card--with-cta .vrec-card__info {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 0 4px;
+}
+.hairmnl-theme .vrec-card--with-cta .vrec-card__vendor-link,
+.hairmnl-theme .vrec-card--with-cta .vrec-card__title-link {
+  color: inherit;
+  text-decoration: none;
+}
+.hairmnl-theme .vrec-card--with-cta .vrec-card__vendor-link:hover,
+.hairmnl-theme .vrec-card--with-cta .vrec-card__title-link:hover {
+  text-decoration: underline;
+}
+.hairmnl-theme .vrec-card--with-cta .vrec-card__cta-row {
+  margin-top: auto;        /* pin CTA row to bottom — aligns CTAs across cards */
+  padding-top: 10px;
+}
+.hairmnl-theme .vrec-card--with-cta .vrec-card__cta-form {
+  margin: 0;
+  display: block;
+}
+.hairmnl-theme .vrec-card--with-cta .vrec-card__cta {
+  display: block;
+  width: 100%;
+  background: var(--vrec-cta-bg);
+  color: var(--vrec-cta-fg);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 12px;
+  min-height: 40px;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  text-align: center;
+}
+.hairmnl-theme .vrec-card--with-cta .vrec-card__cta:hover { background: var(--vrec-cta-bg-hover); }
+.hairmnl-theme .vrec-card--with-cta .vrec-card__cta:active { transform: translateY(1px); }
+.hairmnl-theme .vrec-card--with-cta .vrec-card__sold-out-label {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  color: var(--vrec-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 12px 0;
+}
+
+/* Cart placement: override the rail rules so vertical cards work right */
+.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
+  grid-auto-flow: column;
+  grid-auto-columns: 42%;
+  gap: 12px;
+  padding: 0 16px 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+@media (min-width: 768px) {
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
+    grid-auto-columns: 23%;
+    gap: 16px;
+    padding: 0 0 8px;
+  }
+}
+@media (min-width: 1024px) {
+  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
+    grid-auto-columns: 15.5%;
+    gap: 16px;
+  }
+}
+
+/* — Legacy cart compact card — kept for backward compat with any old templates — */
 .hairmnl-theme .vrec-card--compact {
   display: flex;
   flex-direction: row;
@@ -310,21 +410,10 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
-.hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
-  grid-auto-flow: row;
-  grid-auto-columns: auto;
-  gap: 0;
-  padding: 0;
-  overflow: visible;
-}
-.hairmnl-theme .vrec-slot--cart_above_checkout[data-viewport="mobile"] .vrec-slot__rail {
-  grid-auto-flow: column;
-  grid-auto-columns: 88%;
-  gap: 12px;
-  padding: 0 16px 8px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-}
+/* (removed 2026-05-20: cart_above_checkout no longer uses the row-flow
+   vertical-stack layout — see the .vrec-card--with-cta block above for
+   the new horizontal-scroll-row layout with bottom-aligned ADD TO CART
+   buttons that matches the homepage Best Sellers slider format.) */
 
 /* — Skeleton — */
 .hairmnl-theme .vrec-card--skeleton {
@@ -383,15 +472,6 @@
   .hairmnl-theme .vrec-card__title { font-size: 12px; }
   .hairmnl-theme .vrec-card__price { font-size: 13px; }
   .hairmnl-theme .vrec-card__vendor { font-size: 10px; }
-  /* Cart slot: stacked vertical desktop → horizontal scroll on mobile */
-  .hairmnl-theme .vrec-slot--cart_above_checkout .vrec-slot__rail {
-    grid-auto-flow: column;
-    grid-auto-columns: 88%;
-    gap: 12px;
-    padding: 0 16px 8px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-  }
 }
 
 /*
