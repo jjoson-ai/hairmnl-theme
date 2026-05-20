@@ -1016,5 +1016,23 @@
         "default": "#ffffff"
       }
     ]
+  },
+  {
+    "name": "Performance",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Homepage LCP preload"
+      },
+      {
+        "type": "paragraph",
+        "content": "Set this to the mobile image of the FIRST enabled hero slide. The image is preloaded in <head> to improve Largest Contentful Paint. Update whenever the first hero slide changes."
+      },
+      {
+        "type": "image_picker",
+        "id": "homepage_hero_mobile_image",
+        "label": "Homepage hero: mobile image (LCP preload)"
+      }
+    ]
   }
 ]

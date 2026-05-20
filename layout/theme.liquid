@@ -180,6 +180,28 @@
       crossorigin
       fetchpriority="low">
     {%- comment -%}
+      k83y (2026-05-21): Homepage hero LCP preload in <head>.
+      Preloading in the body section (section-banner-slider.liquid) fires
+      only after the announcement + header HTML is sent. This head preload
+      races alongside the CSS downloads and saves ~200ms on 1.6Mbps mobile.
+      Gated on template == 'index' + settings.homepage_hero_mobile_image.
+      imagesrcset (390, 552, 780w) matches the responsive <source srcset>
+      in section-banner-slider.liquid. imagesizes="100vw" (hero = full width).
+      ACTIVATION: go to Theme Editor → Performance → "Homepage LCP preload",
+      set the image to the first enabled hero slide's MOBILE image. Update
+      whenever the first hero slide changes. Without this setting, the body
+      preload (section-banner-slider.liquid) fires as fallback.
+    {%- endcomment -%}
+    {%- if template == 'index' and settings.homepage_hero_mobile_image != blank -%}
+      <link rel="preload"
+        as="image"
+        fetchpriority="high"
+        href="{{ settings.homepage_hero_mobile_image | image_url: width: 552, format: 'webp' }}"
+        imagesrcset="{{ settings.homepage_hero_mobile_image | image_url: width: 390, format: 'webp' }} 390w, {{ settings.homepage_hero_mobile_image | image_url: width: 552, format: 'webp' }} 552w, {{ settings.homepage_hero_mobile_image | image_url: width: 780, format: 'webp' }} 780w"
+        imagesizes="100vw"
+        type="image/webp">
+    {%- endif -%}
+    {%- comment -%}
       Deferred 2026-04-27 — was render-blocking 600 ms per Lighthouse PSI.
       tiny.content.min.css is the largest single render-blocking CSS in the head
       after critical-css; same media=print swap pattern as the other deferrals.

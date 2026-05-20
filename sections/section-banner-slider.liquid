@@ -29,11 +29,26 @@
   the preload entirely and adding ~2,581ms to resource_load_delay.
   type="image/webp" tells non-WebP browsers to skip this preload gracefully.
 {%- endcomment -%}
+{%- comment -%}
+  Body-side preload with imagesrcset (k83y, 2026-05-21). Matches the
+  responsive mobile <source srcset> below (390w, 552w, 780w). On the
+  homepage a head preload fires earlier (layout/theme.liquid, gated on
+  template == 'index'). On non-homepage templates (brand collection
+  pages, etc.) this body preload is the only one. Chrome deduplicates
+  on URL so if both fire for the same size, only one fetch occurs.
+  Removed single-URL pattern; added imagesrcset so 2x/3x-DPR phones
+  download the correctly-sized variant rather than always 552px.
+  NOTE: keep the three breakpoints (390, 552, 780) in sync with the
+  <source> srcset below and with theme.liquid's head preload.
+{%- endcomment -%}
 {%- if section.blocks.size > 0 -%}
   {%- assign first_block = section.blocks.first -%}
   {%- if first_block.settings.slide_image_mobile -%}
+    {%- assign _lcp_m = first_block.settings.slide_image_mobile -%}
     <link rel="preload" as="image" fetchpriority="high"
-          href="{{ first_block.settings.slide_image_mobile | image_url: width: 552, format: 'webp' }}"
+          href="{{ _lcp_m | image_url: width: 552, format: 'webp' }}"
+          imagesrcset="{{ _lcp_m | image_url: width: 390, format: 'webp' }} 390w, {{ _lcp_m | image_url: width: 552, format: 'webp' }} 552w, {{ _lcp_m | image_url: width: 780, format: 'webp' }} 780w"
+          imagesizes="100vw"
           type="image/webp">
   {%- endif -%}
 {%- endif -%}
@@ -90,7 +105,7 @@
             <a href="{{block.settings.slide_image_url}}">
               <picture>
                 {% if _img_d %}<source type="image/webp" media="(min-width: 1009px)" srcset="{{ _img_d | image_url: width: 1400, format: 'webp' }}">{% endif %}
-                {% if _img_m %}<source type="image/webp" srcset="{{ _img_m | image_url: width: 552, format: 'webp' }}">{% endif %}
+                {% if _img_m %}<source type="image/webp" srcset="{{ _img_m | image_url: width: 390, format: 'webp' }} 390w, {{ _img_m | image_url: width: 552, format: 'webp' }} 552w, {{ _img_m | image_url: width: 780, format: 'webp' }} 780w" sizes="100vw">{% endif %}
                 <source media="(min-width: 1009px)" srcset="{{ _img_d | image_url: height: 788 }}">
                 <img class="banner-slide-img" src="{{ _img_m | image_url: height: 502 }}" alt="Banner Slide 1" width="{{ _img_d.width | default: _img_m.width | default: 1400 }}" height="{{ _img_d.height | default: _img_m.height | default: 788 }}" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
               </picture>
@@ -98,7 +113,7 @@
           {%- else -%}
             <picture>
               {% if _img_d %}<source type="image/webp" media="(min-width: 1009px)" srcset="{{ _img_d | image_url: width: 1400, format: 'webp' }}">{% endif %}
-              {% if _img_m %}<source type="image/webp" srcset="{{ _img_m | image_url: width: 552, format: 'webp' }}">{% endif %}
+              {% if _img_m %}<source type="image/webp" srcset="{{ _img_m | image_url: width: 390, format: 'webp' }} 390w, {{ _img_m | image_url: width: 552, format: 'webp' }} 552w, {{ _img_m | image_url: width: 780, format: 'webp' }} 780w" sizes="100vw">{% endif %}
               <source media="(min-width: 1009px)" srcset="{{ _img_d | image_url: height: 788 }}">
               <img class="banner-slide-img" src="{{ _img_m | image_url: height: 502 }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
             </picture>
