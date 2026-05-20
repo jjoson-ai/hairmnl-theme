@@ -748,6 +748,13 @@
           });
         }
         addEventListener('error', function (e) {
+          // 8iom 2026-05-20: cross-origin redacted errors have no actionable info.
+          // Browser sets e.error=null, e.message='' or 'Script error.', e.filename=''
+          // for privacy. Skip rather than spam GA4 with ~28K useless events/week.
+          var msg = String(e.message || '');
+          if (!e.error && (msg === '' || msg === 'Script error.') && !(e.filename || '')) {
+            return;
+          }
           var src = (e.filename || '') + ':' + (e.lineno || 0) + ':' + (e.colno || 0);
           // p8j 2026-05-10: prefer e.error.name (TypeError, ReferenceError, SyntaxError, etc.)
           // for first-party errors. Cross-origin errors have e.error redacted to null by the
