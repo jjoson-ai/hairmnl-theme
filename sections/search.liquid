@@ -149,9 +149,10 @@
                 {% else %}
                   <div class="grid__item small-up--five-sixths small-up--push-one-sixth">
                 {% endif %}
-                  <p class="h6--body product__inline__title">
+                  {%- comment -%}2i8b.41 (2026-05-21): h2 for search result titles (products + articles). Visual class h6--body unchanged.{%- endcomment -%}
+                  <h2 class="h6--body product__inline__title">
                     {{ item.title | link_to: item.url }}
-                  </p>
+                  </h2>
                 
                   {% if item.object_type == 'product' %}
                     <p class="product__inline__price">
