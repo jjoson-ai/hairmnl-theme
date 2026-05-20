@@ -27,15 +27,12 @@
   endif
 -%}
 
-{%- comment -%}
-  Temporarily disabled on main until vertex snippet ships.
-  {% render 'vertex-recommendations',
-      placement: 'home_below_hero',
-      customer: customer,
-      title: rfy_title,
-      subtitle: rfy_subtitle
-  %}
-{%- endcomment -%}
+{% render 'vertex-recommendations',
+    placement: 'home_below_hero',
+    customer: customer,
+    title: rfy_title,
+    subtitle: rfy_subtitle
+%}
 
 {% schema %}
 {

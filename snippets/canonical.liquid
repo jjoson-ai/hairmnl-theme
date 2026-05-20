@@ -8,8 +8,6 @@
      systematically — no per-collection enumeration needed.
   3. Apply known product handle overrides (delete/recreate collisions,
      retired SKUs, etc.). Listed at bottom of this file.
-  4. Yield to LimeSpot's canonical when it owns the page
-     (curated-variation collections) to avoid duplicate canonical tags.
 
   Maintenance notes:
   - Product overrides listed here should IDEALLY be 301 redirects in
@@ -21,12 +19,6 @@
 
 {%- liquid
   assign canonical_final = canonical_url
-  assign skip_canonical = false
-
-  # --- LimeSpot owns the canonical on curated A/B variant collections
-  if template contains 'collection' and collection.metafields.LimeSpot['CuratedCollectionVariation'] == 'true'
-    assign skip_canonical = true
-  endif
 
   # --- Collection pages: strip query string (pagination, filters, sort)
   if template contains 'collection'
@@ -111,8 +103,6 @@
   endcase
 -%}
 
-{%- unless skip_canonical -%}
-  {%- if canonical_final != blank -%}
-    <link rel="canonical" href="{{ canonical_final }}">
-  {%- endif -%}
-{%- endunless -%}
+{%- if canonical_final != blank -%}
+  <link rel="canonical" href="{{ canonical_final }}">
+{%- endif -%}

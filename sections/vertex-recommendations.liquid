@@ -15,7 +15,6 @@
   Phase 5 visual QA checks:
    ☐ Each placement renders on its intended template
    ☐ Empty-state suppression works (no "0 products" message on live)
-   ☐ Preview chrome (VERTEX badge) appears in theme editor, not live
    ☐ Scroll-snap rail navigation works on touch + mouse
    ☐ Card hover states match P6 visual
 {%- endcomment -%}
@@ -43,24 +42,28 @@
 {%- endcase -%}
 
 {%- if render_ok -%}
-  {%- render 'vertex-recommendations',
-       placement: placement,
-       product: product,
-       cart: cart,
-       customer: customer,
-       title: show_title,
-       subtitle: show_subtitle,
-       rationale: section.settings.rationale
-  -%}
-{%- elsif request.design_mode -%}
-  {%- comment -%} Theme editor: show a placeholder so merchants know the section
-      is wired but inactive for the current template. {%- endcomment -%}
-  <div class="vertex-section-placeholder" style="padding: 1rem; border: 2px dashed #ccc; text-align: center; color: #666;">
-    <strong>Vertex Recommendations:</strong> placement <code>{{ placement }}</code>
-    is set but the current template is <code>{{ template_handle }}</code>.
-    Move this section to a {{ placement }}-compatible template, or change
-    the placement setting.
-  </div>
+  {%- comment -%}
+    Home placement: prefer per-customer Buy-it-again ("Time to restock") for
+    logged-in customers with a repurchase metafield. Falls back to the generic
+    recommended-for-you rail (anonymous visitors + customers without
+    repurchase data). The snippet's internal gates handle empty-state safely.
+  {%- endcomment -%}
+  {%- if placement == 'home_below_hero' and customer and customer.metafields.vertex.repurchase_handles.value and customer.metafields.vertex.repurchase_handles.value.size > 0 -%}
+    {%- render 'vertex-buy-it-again',
+         title: 'Time to restock',
+         subtitle: 'Based on your purchase history'
+    -%}
+  {%- else -%}
+    {%- render 'vertex-recommendations',
+         placement: placement,
+         product: product,
+         cart: cart,
+         customer: customer,
+         title: show_title,
+         subtitle: show_subtitle,
+         rationale: section.settings.rationale
+    -%}
+  {%- endif -%}
 {%- endif -%}
 
 {% schema %}

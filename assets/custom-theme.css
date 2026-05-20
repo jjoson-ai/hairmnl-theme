@@ -2745,13 +2745,3 @@ body.template-cart #freegifts-main-page-container {
   min-height: 240px;
 }
 
-/* ── CLS fix 2026-05-12 hairmnl-theme-38l (987 Phase 2 — LimeSpot card image dims) ── */
-[class*='LP_GridContainer'] img,
-[class*='LP_Inline'] img,
-[class*='LP_RecommendationsBlock'] img,
-[data-personalizer-fragment] img {
-  aspect-ratio: 1 / 1;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}

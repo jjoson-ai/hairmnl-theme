@@ -197,14 +197,6 @@
     {%- comment -%} Defer Searchanise init.js to unblock first paint; widget enhances after parse. {%- endcomment -%}
     <script src="//www.searchanise.com/widgets/shopify/init.js?a=7K0f1C4k5q" defer="defer"></script>
 
-    {%- comment -%}
-      LimeSpot SDK removed 2026-05-17 (Phase 4 M6, commit 4303e70).
-      Replaced by Vertex AI recommendations (see snippets/vertex-*.liquid).
-      The legacy include 'limespot' here was the last lingering reference
-      to the deleted snippet — removing it stops the in-<head> Liquid
-      error that broke <head>/<body> parsing on P8 dev (bd 2i8b.28).
-    {%- endcomment -%}
-
     {% comment %} 2026-05-09: Treedify uninstalled (issue ijh) — removed empty snippet render. {% endcomment %}
 
     {% if product.featured_media.preview_image %}
@@ -1236,7 +1228,6 @@
       {{ content_for_layout }}<!-- End of layout -->
 	<noscript class="endOfLayoutContentX" type="text/mark"></noscript>
       {% comment %} 2026-05-09: Treedify uninstalled (issue ijh) — removed treedify_script render. {% endcomment %}
-      {%- comment -%} LimeSpot SDK + element removed 2026-05-19 (za7u.3). SDK already dropped 2026-05-17 (commit 4303e70); empty element + dns-prefetch hint cleaned up here. {%- endcomment -%}
     </main>
 
     {% section 'footer' %}

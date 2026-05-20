@@ -74,17 +74,14 @@
           team feedback that click-through-only made the slot feel
           unfinished.
         {%- endcomment -%}
-        {%- comment -%}
-          Temporarily disabled on main until vertex snippet ships.
-          {%- if cart.item_count > 0 -%}
-            {% render 'vertex-recommendations',
-                placement: 'cart_above_checkout',
-                cart: cart,
-                title: 'Frequently bought with these items',
-                subtitle: 'Add to your cart in one tap.'
-            %}
-          {%- endif -%}
-        {%- endcomment -%}
+        {%- if cart.item_count > 0 -%}
+          {% render 'vertex-recommendations',
+              placement: 'cart_above_checkout',
+              cart: cart,
+              title: 'Frequently bought with these items',
+              subtitle: 'Add to your cart in one tap.'
+          %}
+        {%- endif -%}
 
         <div class="template__cart__footer" data-cart-bottom>
 

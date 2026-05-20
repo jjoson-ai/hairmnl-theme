@@ -148,84 +148,14 @@
 {%- assign rail_trimmed = rail_html | strip -%}
 {%- if card_count == 0 or rail_trimmed == '' -%}{%- else -%}
 
-{%- comment -%}
-  Show preview chrome + team-notes panel on any non-live theme:
-    theme.role == 'main'         → live theme   → chrome OFF
-    theme.role == 'unpublished'  → draft theme  → chrome ON
-    theme.role == 'demo'         → demo theme   → chrome ON
-  This also covers the Shopify theme editor (where request.design_mode
-  is true and theme.role is 'unpublished'). Lets reviewers see VERTEX
-  badges and decision notes via preview-themed shop URLs without an
-  admin login.
-{%- endcomment -%}
-{%- assign show_preview_chrome = false -%}
-{%- if theme.role != 'main' -%}
-  {%- assign show_preview_chrome = true -%}
-{%- endif -%}
-
 <section
-  class="vrec-slot vrec-slot--{{ placement }}{% if show_preview_chrome %} vrec-slot--preview{% endif %}"
+  class="vrec-slot vrec-slot--{{ placement }}"
   data-vertex-placement="{{ placement }}"
   data-vertex-anchor="{% if product %}{{ product.id }}{% endif %}"
   data-vertex-product-id="{% if product %}{{ product.id }}{% endif %}"
   data-vertex-source="{{ rec_source }}"
   aria-labelledby="vrec-title-{{ placement }}"
 >
-  {%- if show_preview_chrome -%}
-    <div class="vrec-slot__preview-chrome" aria-hidden="true">
-      <span class="vertex-rec-slot__badge">VERTEX</span>
-      <span class="vertex-rec-slot__placement-label">{{ placement | replace: '_', ' ' }}</span>
-    </div>
-
-    {%- comment -%}
-      Plain-language team-decision notes per placement.
-      Visible only on non-live themes; never on live (theme.role check).
-      Goal: every decision the team needs to approve appears INLINE next
-      to the slot it affects, so reviewing the draft theme is equivalent
-      to reading a decision memo.
-    {%- endcomment -%}
-    <aside class="vrec-slot__notes" data-vertex-notes>
-      <header class="vrec-slot__notes-header">
-        <span class="vrec-slot__notes-eyebrow">Team review · Decisions</span>
-        <span class="vrec-slot__notes-source" title="Data source for this slot">
-          source: <code>{{ rec_source }}</code>
-        </span>
-      </header>
-      <ul class="vrec-slot__notes-list">
-        {%- case placement -%}
-          {%- when 'pdp_below_atc' -%}
-            <li><strong>Look & feel:</strong> approve the new layout — centered serif title with hairline rule, scroll-snap rail (4 desktop / 2.25 mobile), no inline ADD button. Replaces the old grey "rationale" placeholder.</li>
-            <li><strong>Title copy:</strong> &ldquo;Complete the routine&rdquo; — keep, or change to something like &ldquo;Pairs well with this&rdquo; / &ldquo;Often bought together&rdquo;?</li>
-            <li><strong>Live status:</strong> this slot is the only one already live on every PDP today. PR-2 cleans up the placeholder.</li>
-          {%- when 'cart_above_checkout' -%}
-            <li><strong>Inline ADD button:</strong> wired via native form submit — clicking ADD posts to <code>/cart/add</code> and the page reloads with the new line item appended (Shopify default). No new JS. <strong>Decision:</strong> approve native-submit for v1, OR approve ~30 lines of inline AJAX so the page doesn't reload.</li>
-            <li><strong>Title copy:</strong> &ldquo;Frequently bought with these items&rdquo; — keep?</li>
-            <li><strong>Subtitle:</strong> &ldquo;Add to your cart in one tap.&rdquo; — restored. Keep?</li>
-            <li><strong>Layout:</strong> horizontal compact cards (image + content + ADD button). Approve.</li>
-          {%- when 'cart_drawer_below_items' -%}
-            <li><strong>Drawer FBT:</strong> 2.25-card horizontal scroll rail, no inline ADD (drawer AJAX-rerender has known race conditions). Cards click through to the PDP. Approve.</li>
-            <li><strong>Title copy:</strong> &ldquo;Add to your routine&rdquo; — fits HairMNL voice?</li>
-            <li><strong>Future v2:</strong> if engineering confirms the drawer AJAX rerender is atomic, we could add a <code>+</code> button on each card. Flagged for later.</li>
-          {%- when 'home_below_hero' -%}
-            <li><strong>Wiring:</strong> the homepage already has the maximum 25 sections, so this slot is <em>not</em> auto-added to the homepage. When the RFY model goes ACTIVE (~May 7), an admin needs to add &ldquo;Vertex recommendations&rdquo; via the theme editor between the hero and category-pills strip.</li>
-            <li><strong>Logged-in title:</strong> &ldquo;Trending in your routine&rdquo; — keep, or rename?</li>
-            <li><strong>Anonymous title:</strong> &ldquo;Trending now&rdquo; — keep, or rename?</li>
-            <li><strong>Subtitles:</strong> default empty. Approve, or set defaults like &ldquo;Picked for you, based on your history.&rdquo; / &ldquo;What HairMNL shoppers are loving this week.&rdquo;?</li>
-          {%- when 'pdp_below_description' -%}
-            <li><strong>Position:</strong> below the description tabs (recovery slot for users who scrolled past the ADD button without converting). Lower decorative weight than slot 1 — no hairline rule.</li>
-            <li><strong>Title copy:</strong> &ldquo;You may also like&rdquo; — keep?</li>
-            <li><strong>Conflict check:</strong> Pipeline 6.1.3&rsquo;s native &ldquo;You May Also Like&rdquo; section is NOT wired in <code>templates/product.json</code>, so no duplicate header. Verified.</li>
-            <li><strong>Status:</strong> similar-items model is currently TRAINING. Slot renders nothing on live until model goes ACTIVE.</li>
-          {%- else -%}
-            <li>Unknown placement <code>{{ placement }}</code>. No decisions registered.</li>
-        {%- endcase -%}
-      </ul>
-      <footer class="vrec-slot__notes-footer">
-        These notes are visible on draft / preview themes only. They will not render on the live theme.
-      </footer>
-    </aside>
-  {%- endif -%}
-
   <header class="vrec-slot__header">
     {%- comment -%}
       Use the theme's existing h2--body section-header__title classes so

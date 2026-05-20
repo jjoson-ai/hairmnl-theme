@@ -4,7 +4,7 @@
    *
    * Ported 2026-05-17 from Pipeline 6's snippets/css-overrides.liquid.
    * Most rules carry over without selector changes — Judge.me / Klaviyo /
-   * LoyaltyLion / Nova GDPR / BOGOS / Reamaze / LimeSpot classes are all
+   * LoyaltyLion / Nova GDPR / BOGOS / Reamaze classes are all
    * vendor-managed and theme-independent.
    *
    * Selectors that target Pipeline 6's own DOM (.header__desktop,
@@ -632,13 +632,9 @@
      every page body including /collections/all — their position:fixed + contain:layout
      above is the main CLS fix for the collection page.
 
-     SECONDARY fix (REMOVED 2026-05-17 M6): <limespot> custom element rule was here.
-     LimeSpot is being replaced by Vertex AI per bd hairmnl-theme-oyw — snippets/
-     limespot.liquid + snippets/limespot-ghost-placeholder.liquid both deleted in
-     M6 DROP wave (commit 4303e70). The <limespot> element will no longer render,
-     making this CSS rule dead. Vertex AI handles its own layout via
-     snippets/vertex-recommendations.liquid + sections/vertex-recommendations.liquid
-     (no contain:layout needed because Vertex pre-declares card dimensions). */
+     Vertex AI handles rec-rail layout via snippets/vertex-recommendations.liquid
+     and sections/vertex-recommendations.liquid — no contain:layout needed
+     because Vertex pre-declares card dimensions. */
 
   /* A11y fix 9ct-1 — LoyaltyLion notification action button contrast.
      Lighthouse color-contrast audit flags .lion-notification__action-button
