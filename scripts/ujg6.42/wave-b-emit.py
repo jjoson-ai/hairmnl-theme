@@ -1,31 +1,31 @@
 #!/usr/bin/env python3
 """Wave B — CSS split emitter (ujg6.42.2).
 
-Reads docs/ujg6.42-buckets.json (the Wave A real-Coverage output) and the
-disk source CSS files (assets/theme.css, assets/custom-theme.css).
+Reads docs/ujg6.42-buckets.json (the Wave A real-Coverage output), the
+disk source CSS files (assets/theme.css, assets/custom-theme.css), AND
+the HTML class-presence map at /tmp/ujg6.42/html-corrections/class-presence.json.
 
-For each rule in each CSS file, looks up the selector's bucket via
-normalized selector matching and routes the rule's DISK source text to the
-appropriate output file(s):
+For each rule:
+  1. Start with the Coverage-determined bucket (set of templates).
+  2. Extract class/id refs from the rule's selector.
+  3. Look up which templates have any of those classes in their rendered HTML.
+  4. UNION the HTML-detected templates with the Coverage bucket.
+  5. The expanded bucket determines the output destination.
 
-    _universal | _unused  ->  assets/theme-core.css
-    any other bucket      ->  assets/theme-{T}.css for each template T
+This corrects for Coverage's blind spots — rules that only fire during
+JS hydration, user interaction, or app injection (Swiper init, Flickity init,
+cart-loading state, modal/drawer open, error states, etc.) that Coverage's
+headless session didn't trigger.
 
-Same logic for custom-theme.css -> assets/custom-theme-*.css.
+Routing:
+    _universal (all 5)  ->  assets/theme-core.css
+    _unused    (0 of 5) ->  assets/theme-core.css   (kept as safe default)
+    any combo  ->  assets/theme-{T}.css for each T in expanded bucket
 
-Emission strategy (SAFE — per ujg6.42 analysis doc):
-  Multi-template combos are duplicated across per-template chunks
-  intentionally. Wave C wiring is then trivial: one {%if template%} per
-  template, no shared combo files.
+Same logic for custom-theme.css.
 
 Input files are NOT modified (Wave C can revert by changing theme.liquid).
 Output files are created fresh (overwrite if they exist).
-
-Selector normalization:
-  CDN-served CSS has whitespace stripped (e.g. "max-width:479px" vs disk's
-  "max-width: 479px"). The norm() function collapses whitespace around CSS
-  punctuation and strips attribute-selector quotes to reconcile the two.
-  Unmatched rules (merged/split across CDN<->disk) fall back to _unused->core.
 
 Usage:
   cd hairmnl-theme && python3 scripts/ujg6.42/wave-b-emit.py
@@ -53,6 +53,96 @@ OUT_PREFIX = {
 }
 
 BUCKETS_JSON = REPO / 'docs/ujg6.42-buckets.json'
+CLASS_PRESENCE_JSON = Path('/tmp/ujg6.42/html-corrections/class-presence.json')
+
+# Selector pattern -> extracts class names and ids
+_CLASS_RE = re.compile(r'\.([a-zA-Z_][a-zA-Z0-9_-]*)')
+_ID_RE = re.compile(r'#([a-zA-Z_][a-zA-Z0-9_-]*)')
+
+# ---------------------------------------------------------------------------
+# Forced-core selectors (JS-library bases, app injections, ATF layout-critical)
+# ---------------------------------------------------------------------------
+# These selectors are FORCED to _universal regardless of Coverage bucket or
+# HTML presence. They cover:
+#   - JS-init-dependent classes (Swiper, Flickity, AOS) - DOM gets these
+#     AFTER JS hydration, so HTML scrape misses them, but pre-hydration
+#     layout needs them.
+#   - App-injection state classes (FreeGifts, LimeSpot, etc.) - DOM
+#     populated by app JS, scrape misses, but ATF layout depends on them.
+#   - Cart loading states - shown briefly before AJAX completes.
+#   - Modal/drawer state classes - hidden by default, only visible on
+#     user interaction Coverage didn't trigger.
+#   - Section/layout wrappers used everywhere.
+#
+# When any class/id in the selector matches one of these patterns, the
+# whole rule moves to core.
+_FORCE_CORE_PATTERNS = [
+    # JS carousel libraries
+    re.compile(r'\.swiper(?:-|\b)'),
+    re.compile(r'\.flickity(?:-|\b)'),
+    # AOS / scroll animation library
+    re.compile(r'\.aos(?:-|\b)'),
+    re.compile(r'\[data-aos'),
+    # Lazy-image library
+    re.compile(r'\.lazy-image(?:\b|__)'),
+    re.compile(r'\.lazyload(?:ed|ing)?\b'),
+    # Plyr video player
+    re.compile(r'\.plyr(?:-|__|\b)'),
+    # Cart state classes (loading, hidden, empty)
+    re.compile(r'\.cart--hidden\b'),
+    re.compile(r'\.cart__empty\b'),
+    re.compile(r'\[data-cart-loading\]'),
+    re.compile(r'\.cart__loading\b'),
+    # App injection containers (these render late, layout depends on them)
+    re.compile(r'\.freegifts(?:-|\b)'),
+    re.compile(r'#freegifts'),
+    re.compile(r'\.judgeme(?:-|\b)'),
+    re.compile(r'\.jdgm(?:-|\b)'),
+    re.compile(r'\.spr(?:-|_)'),  # Shopify Product Reviews
+    re.compile(r'\.swym(?:-|\b)'),
+    re.compile(r'\.appstle(?:-|\b)'),
+    re.compile(r'\.limespot(?:-|\b)'),
+    re.compile(r'\.ufe(?:-|\b)'),
+    re.compile(r'\.bold-(?:upsell|product-options)\b'),
+    re.compile(r'\.satcb(?:-|_)'),
+    # Modal / drawer / popup state classes (hidden, only visible on JS)
+    re.compile(r'\.modal(?:-|_|\b)'),
+    re.compile(r'\.micromodal(?:-|\b)'),
+    re.compile(r'\.drawer(?:-|__|\b)'),
+    re.compile(r'\.popdown(?:-|__|\b)'),
+    re.compile(r'\.popup(?:-|__|\b)'),
+    # Form error/loading states (only triggered on submit)
+    re.compile(r'\.has-error\b'),
+    re.compile(r'\.errors?\b'),
+    re.compile(r'\.btn-state-(?:loading|complete)\b'),
+    re.compile(r'\.is-loading\b'),
+    re.compile(r'\.notice\b'),
+    re.compile(r'\.alert\b'),
+    # Hero / section layout (above-fold critical on multiple templates)
+    re.compile(r'\.hero(?:-|__|\b)'),
+    re.compile(r'\.section(?:-|__|\b)'),
+    re.compile(r'\.banner-slider(?:-|\b)'),
+    re.compile(r'\.banner-slide(?:-|\b)'),
+    re.compile(r'\.shopify-section(?:-|\b)'),
+    # Universal layout wrappers (used in every template's first paint)
+    re.compile(r'(^|\s|,)\.wrapper(?:\s|,|:|\.|\[|\{|$)'),
+    re.compile(r'\.main-content(?:\b|__)'),
+    # JS-toggled class state markers
+    re.compile(r'\.js-grid\b'),
+    re.compile(r'\.js-loaded\b'),
+    re.compile(r'\.js-sticky'),
+    # Product grid base layout (used in featured collections on every template)
+    re.compile(r'\.product-grid-item\b'),
+    re.compile(r'\.product__grid'),
+]
+
+
+def force_core_match(sel: str) -> bool:
+    """Return True if this selector matches a forced-core pattern."""
+    for pat in _FORCE_CORE_PATTERNS:
+        if pat.search(sel):
+            return True
+    return False
 
 # ---------------------------------------------------------------------------
 # Selector normalisation (CDN minifier parity)
@@ -206,6 +296,70 @@ def build_norm_to_bucket(bucket_data: dict) -> dict:
     return mapping
 
 
+def load_class_to_templates() -> dict:
+    """Return {class_name: set(templates)} from HTML scrape map.
+
+    Class names DON'T have a leading '.' here; IDs have a leading '#'.
+    Returns {} if the file is missing (graceful degradation — same behavior
+    as Coverage-only Wave B).
+    """
+    if not CLASS_PRESENCE_JSON.exists():
+        print(f'  NOTE: {CLASS_PRESENCE_JSON} not found — using Coverage '
+              f'only (no HTML-presence expansion)', file=sys.stderr)
+        return {}
+    data = json.loads(CLASS_PRESENCE_JSON.read_text())
+    return {c: set(ts) for c, ts in data['class_to_templates'].items()}
+
+
+def bucket_from_coverage(bucket_name: str) -> set:
+    """Convert a Coverage bucket name to a set of templates."""
+    if bucket_name == '_universal':
+        return set(TEMPLATES)
+    if bucket_name == '_unused':
+        return set()
+    return set(bucket_name.split('+'))
+
+
+def templates_to_bucket(tmpls: set) -> str:
+    """Convert a set of templates back to a bucket name."""
+    if not tmpls:
+        return '_unused'
+    if len(tmpls) == len(TEMPLATES):
+        return '_universal'
+    return '+'.join(sorted(tmpls))
+
+
+def expand_bucket_via_html(sel: str, cov_bucket: str,
+                            class_to_templates: dict) -> str:
+    """Take a Coverage bucket + selector text + HTML presence map.
+
+    Returns the (possibly expanded) bucket name. If the selector references
+    any class/id that appears in additional templates' HTML, those templates
+    are unioned into the bucket.
+
+    Special case: '_unused' rules are expanded only if HTML presence is found
+    AND that presence covers >= 1 template (otherwise stays in _unused -> core).
+    """
+    if not class_to_templates:
+        return cov_bucket
+
+    cov_set = bucket_from_coverage(cov_bucket)
+
+    classes = set(_CLASS_RE.findall(sel))
+    ids = set('#' + m for m in _ID_RE.findall(sel))
+
+    html_set = set()
+    for c in classes:
+        if c in class_to_templates:
+            html_set |= class_to_templates[c]
+    for i in ids:
+        if i in class_to_templates:
+            html_set |= class_to_templates[i]
+
+    expanded = cov_set | html_set
+    return templates_to_bucket(expanded)
+
+
 # ---------------------------------------------------------------------------
 # Emission helpers
 # ---------------------------------------------------------------------------
@@ -226,6 +380,11 @@ def destinations(bucket_name: str, out_prefix: Path) -> list:
 def main():
     print(f'Loading {BUCKETS_JSON.name} ...', file=sys.stderr)
     buckets_all = json.loads(BUCKETS_JSON.read_text())
+
+    print(f'Loading HTML class-presence map ...', file=sys.stderr)
+    class_to_templates = load_class_to_templates()
+    print(f'  {len(class_to_templates):,} unique classes/ids '
+          f'across templates', file=sys.stderr)
 
     all_stats = {}
 
@@ -260,21 +419,36 @@ def main():
 
         matched = 0
         unmatched = 0
+        expanded_count = 0
+        forced_core_count = 0
         unmatched_sample = []
         written_bytes = defaultdict(int)
 
         for full_sel, rule_text, _s, _e in rules:
             key = norm(full_sel)
-            bucket_name = sel_map.get(key)
+            cov_bucket = sel_map.get(key)
 
-            if bucket_name is None:
+            if cov_bucket is None:
                 unmatched += 1
                 if len(unmatched_sample) < 25:
                     unmatched_sample.append(full_sel[:100])
-                # Safe fallback: treat as _unused -> core
-                bucket_name = '_unused'
+                cov_bucket = '_unused'
             else:
                 matched += 1
+
+            # Expand bucket via HTML class presence
+            bucket_name = expand_bucket_via_html(full_sel, cov_bucket,
+                                                   class_to_templates)
+            if bucket_name != cov_bucket:
+                expanded_count += 1
+
+            # Override: forced-core selectors always go to core (regardless
+            # of Coverage or HTML expansion). Catches JS-library bases and
+            # app-injection classes that scrape methods miss.
+            if force_core_match(full_sel):
+                if bucket_name != '_universal':
+                    forced_core_count += 1
+                bucket_name = '_universal'
 
             for dest_path in destinations(bucket_name, out_prefix):
                 fh = outfiles[str(dest_path)]
@@ -286,6 +460,10 @@ def main():
             fh.close()
 
         print(f'  matched: {matched:,}  unmatched (->core): {unmatched}',
+              file=sys.stderr)
+        print(f'  HTML-expanded buckets: {expanded_count:,}',
+              file=sys.stderr)
+        print(f'  Forced-to-core (JS-lib/app/state): {forced_core_count:,}',
               file=sys.stderr)
         if unmatched_sample:
             print(f'  unmatched selectors (first {len(unmatched_sample)}):',
