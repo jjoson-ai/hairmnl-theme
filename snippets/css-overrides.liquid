@@ -665,8 +665,25 @@
 
      The render-skip-when-off-screen goal is now tracked by bd ujg6.18
      (JS-driven lazy-render via Section Rendering API + IntersectionObserver),
-     which doesn't trigger PSI's CLS measurement the same way.
+     which doesn't trigger PSI's CLS measurement the same way. */
 
-     See os2-migration/perf-regression-analysis.md addendum
-     (2026-05-18 evening) for the full attribution + decision. */
+  /* ============================================================
+   * SATCB icon suppression on cart (2026-05-20 — 2i8b.36 followup)
+   * ------------------------------------------------------------
+   * SATCB (Smart Add to Cart Button) injects a shopping-cart
+   * glyphicon next to every cart-line-item image as a "quick add
+   * again" affordance. Their CSS rule for the ::before content of
+   * `.satcb_glyphicon-shopping-cart` is rendering as empty (""),
+   * so the icon shows as a hollow square placeholder. Even when
+   * rendered correctly, the icon is redundant on the cart drawer
+   * and cart page — the user is already inside the cart, so
+   * a quick-add prompt next to each line item is noise rather
+   * than a CTA.
+   * ============================================================ */
+  .cart__drawer .satcb_glyphicon,
+  .cart__items .satcb_glyphicon,
+  .cart__items__row .satcb_glyphicon,
+  body.template-cart .satcb_glyphicon {
+    display: none !important;
+  }
 </style>
