@@ -686,4 +686,20 @@
   body.template-cart .satcb_glyphicon {
     display: none !important;
   }
+
+  /* ============================================================
+   * BOGOS empty free-gifts container suppression (2026-05-20 — 2i8b.36 followup)
+   * ------------------------------------------------------------
+   * sections/cart.liquid renders <div id="freegifts-main-page-container"></div>
+   * and assets/custom-theme.css reserves min-height: 240px on it for CLS
+   * prevention (so BOGOS doesn't shift cart content when it injects content
+   * async). But when BOGOS has no active free-gift campaign, the container
+   * stays empty and the reserved 240px is a wasted white-space gap below
+   * "Your Cart". Hide when empty; BOGOS removes :empty when it injects so
+   * the rule deactivates and full height is restored.
+   * ============================================================ */
+  body.template-cart #freegifts-main-page-container:empty {
+    min-height: 0 !important;
+    display: none !important;
+  }
 </style>

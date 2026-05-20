@@ -277,7 +277,7 @@
 }
 .hairmnl-theme .vrec-card--with-cta .vrec-card__cta-row {
   margin-top: auto;        /* pin CTA row to bottom — aligns CTAs across cards */
-  padding-top: 10px;
+  padding-top: 8px;
 }
 .hairmnl-theme .vrec-card--with-cta .vrec-card__cta-form {
   margin: 0;
@@ -288,17 +288,18 @@
   width: 100%;
   background: var(--vrec-cta-bg);
   color: var(--vrec-cta-fg);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 10px 12px;
-  min-height: 40px;
+  padding: 7px 8px;        /* slimmer button — matches the compact home-slider card proportions */
+  min-height: 30px;
   border: 0;
   cursor: pointer;
   font-family: inherit;
   text-decoration: none;
   text-align: center;
+  line-height: 1.2;
 }
 .hairmnl-theme .vrec-card--with-cta .vrec-card__cta:hover { background: var(--vrec-cta-bg-hover); }
 .hairmnl-theme .vrec-card--with-cta .vrec-card__cta:active { transform: translateY(1px); }
