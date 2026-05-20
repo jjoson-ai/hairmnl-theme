@@ -2,8 +2,17 @@
 
 ## Theme IDs
 
-- **Live theme**: `131664707683` (" Pipeline 6 - Fix share image")
-- **Draft theme**: `140785582179` (Claude Code draft)
+THREE themes exist on `creations-gdc.myshopify.com`. **Pushing to the wrong dev theme caused multiple bug-fix reverts** in 2026-05-20 (operator viewing P8 while CC pushed to Claude Code). Disambiguation:
+
+- **Live theme**: `131664707683` ("Pipeline 6 - Fix share image") — P6, never pushed to from CC without explicit operator confirm.
+- **Claude Code Draft**: `140785582179` ("Claude Code") — P6-based smoke-test surface for stream:a (LIVE optimization) work. Wide sync from `main` HEAD is OK.
+- **P8 Cutover Target**: `141168312419` ("Pipeline 8 Working Demo") — the actual P8 dev theme for the cutover. **stream:b (MIGRATION) work pushes here.** P8 has different theme structure than P6/`main`; some files (`templates/product.json`, `templates/cart.json`, `layout/theme.liquid`) are edited out-of-tree via `/tmp/p8-current/` checkout — see bd `hairmnl-theme-2i8b.38` for the tracking list.
+
+**Which theme to push to:**
+- Bug fixes that apply to both P6 + P8 (Vertex code, snippets, css-overrides, kt0 fixes) → push to BOTH `140785582179` AND `141168312419`
+- P8-only architecture work (cutover prep, P8 section wiring) → push to `141168312419` only
+- P6-only LIVE fixes → push to `140785582179` only (then operator promotes to live `131664707683`)
+- **Always verify which theme the operator is viewing** before declaring a fix verified. Check the `Pipeline 8 Working Demo Draft` vs `Claude Code Draft` badge in the bottom-left of the dev preview.
 
 ## START HERE: Migration Contract (read before touching layout / sections / snippets)
 
