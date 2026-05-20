@@ -182,12 +182,18 @@
           {% endcase %}
         {% endfor %}
 
-        {%- comment -%} Phase 1b-γ.8 Slot 1: PDP below ATC — FBT "Complete the routine" (PR-2). {%- endcomment -%}
-        {% render 'vertex-recommendations',
-            placement: 'pdp_below_atc',
-            product: product,
-            title: 'Complete Your Routine'
-        %}
+        {%- comment -%}
+          P8 cutover (2026-05-20): inline Vertex render disabled.
+          Pipeline 8's templates/product.json wires Vertex pdp_below_atc
+          via the 'vertex_pdp_recs' section ({{ section_id }}) — keeping
+          inline AND JSON would render a duplicate rail.
+          Code preserved here for P6 reference / rollback.
+            {% render 'vertex-recommendations',
+                placement: 'pdp_below_atc',
+                product: product,
+                title: 'Complete Your Routine'
+            %}
+        {%- endcomment -%}
 
       </div>
     </div>
@@ -197,14 +203,15 @@
 {% render 'product-info', product: product %}
 
 {%- comment -%} Phase 1b-γ.8 Slot 4: PDP below description — Similar items (PR-5).
-  Empty-state gate in vertex-recommendations.liquid suppresses this section
-  until product.metafields.vertex.similar is populated. Renders nothing
-  until the similar-items model is ACTIVE. {%- endcomment -%}
-{% render 'vertex-recommendations',
-    placement: 'pdp_below_description',
-    product: product,
-    title: 'You may also like'
-%}
+  P8 cutover (2026-05-20): inline Vertex render disabled. Pipeline 8's
+  templates/product.json wires Vertex pdp_below_description via the
+  'vertex_pdp_similar' section. Inline kept commented for P6 ref.
+  {% render 'vertex-recommendations',
+      placement: 'pdp_below_description',
+      product: product,
+      title: 'You may also like'
+  %}
+{%- endcomment -%}
 
 {% if section.settings.zoom_enable %}
   {% render 'zoom-pswp' %}

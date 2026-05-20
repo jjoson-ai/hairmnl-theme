@@ -35,10 +35,26 @@
 }
 
 /* — Slot container — */
+/*
+ * Constrain to the theme's standard content max-width so Vertex rec
+ * rails match the homepage Best Sellers / Summer Essentials sliders
+ * exactly (those use .wrapper which has max-width: --wrapper-width).
+ * Without this, the rail spans full viewport (~2300px on wide desktops)
+ * making cards 2× larger than the equivalent product-grid-item cards.
+ *
+ * Cart drawer placement inherits a narrow parent anyway so max-width
+ * is a no-op there. Cart page + PDP placements honor it.
+ *
+ * Per Pipeline theme conventions, --wrapper-width is set in settings;
+ * fall back to 1200px if undefined.
+ */
 .hairmnl-theme .vrec-slot {
   background: var(--vrec-bg);
   padding: 64px 24px 48px;
   position: relative;
+  max-width: var(--wrapper-width, 1200px);
+  margin-left: auto;
+  margin-right: auto;
 }
 .hairmnl-theme .vrec-slot--mobile,
 .hairmnl-theme .vrec-slot[data-viewport="mobile"] {
@@ -162,6 +178,19 @@
 }
 .hairmnl-theme .vrec-card:hover .vrec-card__image img { transform: scale(1.02); }
 .hairmnl-theme .vrec-card:active { opacity: 0.85; }
+/*
+ * vrec-card--standard renders the theme-native product-grid-item snippet.
+ * Strip the vrec-card flex container styles so product-grid-item's
+ * native layout drives the visual. Other vrec-card descendant rules
+ * don't match (product-grid-item uses .product-grid-item __ classes,
+ * not .vrec-card__ ones), so no further overrides needed.
+ */
+.hairmnl-theme .vrec-card--standard {
+  display: block;          /* override the flex container — product-grid-item brings its own layout */
+  background: transparent;
+  transition: none;
+  scroll-snap-align: start; /* keep the grid scroll-snap behavior */
+}
 .hairmnl-theme .vrec-card__image {
   position: relative;
   aspect-ratio: 1 / 1;
