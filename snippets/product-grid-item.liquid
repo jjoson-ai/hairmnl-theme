@@ -273,37 +273,29 @@ A grid item for products used in collection grid view
   <div class="product__grid__info product__grid__info--{{ settings.product_grid_style }} {{ text_align | default: settings.collection_text_alignment | default: 'text-center' }}">
     <a href="{{ product.url | within: collection | capitalize }}">
       <div class="product__grid__title__wrapper">
-        {%- comment -%}
-          2i8b.41 (2026-05-21): Promote from <p> to a heading element for SEO + a11y.
-          Default h2 (collection grid context). Pass heading_level: ‘h3’ from callers
-          whose parent section already renders an h2 (e.g. homepage featured sections).
-          Visual appearance is unchanged — class="product__grid__title" still drives
-          font-size and weight.
-        {%- endcomment -%}
-        {%- assign _title_el = heading_level | default: ‘h2’ -%}
-        <{{ _title_el }} class="product__grid__title">
+        <p class="product__grid__title">
           {%- comment -%}
             ujh 2026-04-29: brand-prefix strip is now GATED behind the
             strip_brand param. Branded landing-page sections
             (collection-branded, collection-lorealprofessionnel, the
-            various Kérastase / L’Oréal Pro sub-collection sections)
+            various Kérastase / L'Oréal Pro sub-collection sections)
             pass `strip_brand: true` because the brand is already in
             the page title/hero — repeating it on every card is
             redundant. Default callers (homepage, /collections/all,
             search, related products, generic collection pages) leave
             strip_brand unset/false, so brands stay in the title to
-            preserve HairMNL’s brand-forward UX.
+            preserve HairMNL's brand-forward UX.
 
             Earlier unconditional version of this strip was reverted
             in commit 2a84711 because it wiped brands from EVERY
             product card site-wide. Do not remove the gate.
           {%- endcomment -%}
           {%- if strip_brand -%}
-            {{ product.title | replace: "L’Oréal Professionnel ", "" | replace: "L’Oreal Professionnel ", "" | replace: "L’Oréal Professionnel ", "" | replace: "Kérastase ", "" | replace: "Kerastase ", "" | replace: "Davines ", "" | replace: "Naturaltech Davines ", "" | replace: "AVEDA ", "" | replace: "Aveda ", "" | replace: "K18 ", "" | replace: "Schwarzkopf Professional ", "" | replace: "Bed Head By TIGI ", "" | replace: "Wella Professionals ", "" | replace: "Revlon Professional ", "" }}
+            {{ product.title | replace: "L'Oréal Professionnel ", "" | replace: "L'Oreal Professionnel ", "" | replace: "L’Oréal Professionnel ", "" | replace: "Kérastase ", "" | replace: "Kerastase ", "" | replace: "Davines ", "" | replace: "Naturaltech Davines ", "" | replace: "AVEDA ", "" | replace: "Aveda ", "" | replace: "K18 ", "" | replace: "Schwarzkopf Professional ", "" | replace: "Bed Head By TIGI ", "" | replace: "Wella Professionals ", "" | replace: "Revlon Professional ", "" }}
           {%- else -%}
             {{ product.title }}
           {%- endif -%}
-        </{{ _title_el }}>
+        </p>
         {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product %}
         {%- if settings.product_grid_show_rating and product.metafields.reviews.rating.value != blank -%}
           <div class="rating__wrapper__grid">
