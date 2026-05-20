@@ -31,6 +31,31 @@ CSS_FILES = [
 ]
 COV_DIR = Path('/tmp/ujg6.42/coverage')
 
+# ujg6.42.4 (audit hardening): verify the pipeline tempdir is owner-only
+# before reading from it. Prevents trusting intermediate JSON files that
+# a co-resident process could have swapped between Coverage capture and
+# bucketing. Bail noisily if perms are wrong — a fix-it message beats a
+# silent injection.
+def _verify_tempdir_perms(path: Path):
+    if not path.exists():
+        return  # caller will fail naturally with FileNotFoundError
+    mode = path.stat().st_mode & 0o777
+    if mode != 0o700:
+        import sys
+        print(f'WARN: {path} has mode {oct(mode)} (expected 0o700). '
+              f'Run: chmod 700 {path}', file=sys.stderr)
+        # Auto-tighten if we own the dir — safer than continuing.
+        try:
+            path.chmod(0o700)
+        except PermissionError:
+            print('ERROR: cannot tighten perms — refusing to read possibly-'
+                  'tampered files.', file=sys.stderr)
+            sys.exit(2)
+
+
+_verify_tempdir_perms(Path('/tmp/ujg6.42'))
+_verify_tempdir_perms(COV_DIR)
+
 
 def load_used_ranges(file_label):
     """Return {template: [(start, end), ...]} for the given CSS file."""

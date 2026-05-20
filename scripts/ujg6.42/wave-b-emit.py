@@ -55,6 +55,31 @@ OUT_PREFIX = {
 BUCKETS_JSON = REPO / 'docs/ujg6.42-buckets.json'
 CLASS_PRESENCE_JSON = Path('/tmp/ujg6.42/html-corrections/class-presence.json')
 
+
+def _verify_tempdir_perms(path: Path):
+    """ujg6.42.4 (audit hardening): verify the pipeline tempdir is owner-only
+    before trusting its contents to influence the emitted chunk files. A
+    swapped class-presence.json could otherwise push selectors into wrong
+    template chunks, e.g. injecting hostile CSS into a per-template chunk."""
+    if not path.exists():
+        return  # caller will fail naturally; no perms to check
+    mode = path.stat().st_mode & 0o777
+    if mode != 0o700:
+        print(f'WARN: {path} has mode {oct(mode)} (expected 0o700). '
+              f'Run: chmod 700 {path}', file=sys.stderr)
+        try:
+            path.chmod(0o700)
+        except PermissionError:
+            print('ERROR: cannot tighten perms — refusing to read possibly-'
+                  'tampered files.', file=sys.stderr)
+            sys.exit(2)
+
+
+_verify_tempdir_perms(Path('/tmp/ujg6.42'))
+if CLASS_PRESENCE_JSON.parent.exists():
+    _verify_tempdir_perms(CLASS_PRESENCE_JSON.parent)
+
+
 # Selector pattern -> extracts class names and ids
 _CLASS_RE = re.compile(r'\.([a-zA-Z_][a-zA-Z0-9_-]*)')
 _ID_RE = re.compile(r'#([a-zA-Z_][a-zA-Z0-9_-]*)')
