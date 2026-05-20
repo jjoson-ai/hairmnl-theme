@@ -17,9 +17,10 @@
    * (harmless but useless).
    *
    * One block deliberately dropped vs the P6 version: #pwa-modal display:none
-   * for Shop Sheriff PWA. That app has been uninstalled since 2026-05-01,
-   * so the modal element no longer renders. Block removed; saves ~10 LoC
-   * and avoids carrying dead code to P8.
+   * for Shop Sheriff AMP (NOT the PWA app — PWA remains installed and is
+   * never being uninstalled per operator decision 2026-05-20). The AMP app
+   * was uninstalled 2026-05-01 and #pwa-modal was AMP-related cruft. PWA
+   * app's own modals (if any) are app-managed and don't need this override.
    *
    * kt0 lint compliance: this file MUST pass `python3 scripts/check-overlay-css.py`
    * before merge. All `contain: layout` uses on overlay-class selectors carry
