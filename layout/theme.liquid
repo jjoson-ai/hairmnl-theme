@@ -6,6 +6,12 @@
   anyway. The in-<head> call (kept) is the correct place. Halves the
   per-pageview Liquid execution cost of this BSS B2B Login snippet
   + its 4-5 sub-snippet includes.
+
+  ujg6.42 post-push cache-bust (2026-05-20): force-rerender after
+  Wave C live push. Shopify IndexController page_cache:14124580
+  lingered ~50min on the bare homepage URL while 4/5 templates
+  invalidated normally. No-op comment edit bumps theme version =
+  forces cache key rotation. Safe to leave in place or remove later.
 {%- endcomment -%}
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
