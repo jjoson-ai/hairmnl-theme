@@ -9,8 +9,18 @@ const fs = require('fs');
 const path = require('path');
 
 const BRAVE = '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser';
-const OUT = '/tmp/ujg6.42/coverage';
-fs.mkdirSync(OUT, { recursive: true });
+// ujg6.42.4 (audit hardening): create the pipeline tempdir as owner-only
+// (0o700). Without this, a co-resident user or compromised process on
+// the same machine could swap our intermediate JSON files between
+// coverage capture and bucketing, injecting arbitrary CSS into the
+// emitted chunk files. Path is stable (bucket.py + wave-b-emit.py read
+// from the same fixed location) but mode is owner-only.
+const TMP_ROOT = '/tmp/ujg6.42';
+const OUT = `${TMP_ROOT}/coverage`;
+fs.mkdirSync(TMP_ROOT, { recursive: true, mode: 0o700 });
+fs.chmodSync(TMP_ROOT, 0o700);
+fs.mkdirSync(OUT, { recursive: true, mode: 0o700 });
+fs.chmodSync(OUT, 0o700);
 
 const TEMPLATES = {
   home: 'https://www.hairmnl.com/',
@@ -25,10 +35,14 @@ const TEMPLATES = {
 const CSS_TARGETS = ['custom-theme.css', 'theme.css'];
 
 async function run() {
+  // ujg6.42.4 (audit hardening): keep Chromium's sandbox enabled so a
+  // renderer exploit in a crawled page can't escape to the host.
+  // Original ran with --no-sandbox to work around a launch flake; default
+  // sandbox works fine in normal use.
   const browser = await puppeteer.launch({
     executablePath: BRAVE,
     headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: [],
   });
 
   for (const [name, url] of Object.entries(TEMPLATES)) {
@@ -50,14 +64,18 @@ async function run() {
 
     // Interact to trigger JS-injected classes
     try {
-      // Scroll the page in chunks to trigger lazy-mounted components
-      const innerHeight = await page.evaluate('window.innerHeight');
-      const docHeight = await page.evaluate('document.body.scrollHeight');
+      // Scroll the page in chunks to trigger lazy-mounted components.
+      // ujg6.42.4 (audit hardening): use page.evaluate() function form +
+      // argument passing instead of string interpolation. Prevents any
+      // Node-side variable (even a numeric `y`) from being interpreted
+      // as JavaScript inside the page context.
+      const innerHeight = await page.evaluate(() => window.innerHeight);
+      const docHeight = await page.evaluate(() => document.body.scrollHeight);
       for (let y = 0; y < docHeight; y += innerHeight * 0.8) {
-        await page.evaluate(`window.scrollTo(0, ${y})`);
+        await page.evaluate((scrollY) => window.scrollTo(0, scrollY), y);
         await new Promise(r => setTimeout(r, 200));
       }
-      await page.evaluate('window.scrollTo(0, 0)');
+      await page.evaluate(() => window.scrollTo(0, 0));
 
       // Open the cart drawer if present (triggers cart drawer classes)
       const cartIconSel = '[data-cart-toggle], [href="/cart"], .header__cart, .cart__icon';
