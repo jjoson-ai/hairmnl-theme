@@ -117,12 +117,39 @@
       rel="preload"
       href="{{ 'theme.js' | asset_url }}"
       as="script">
+    {%- comment -%}
+      ujg6.42 (2026-05-20): per-template CSS chunks. theme-core and
+      custom-theme-core are universal (_universal + _unused buckets from
+      real Chrome Coverage). Template chunks add only rules Coverage
+      detected on that template.
+      KILL_SWITCH: if FOUC is observed, replace this entire block with
+      the original 4 lines:
+        <link rel="preload" href="{{ 'theme.css' | asset_url }}" as="style">
+        <link rel="preload" href="{{ 'custom-theme.css' | asset_url }}" as="style">
+      Originals are still on disk in assets/ — no cleanup needed.
+    {%- endcomment -%}
     <link rel="preload"
-      href="{{ 'theme.css' | asset_url }}"
+      href="{{ 'theme-core.css' | asset_url }}"
       as="style">
     <link rel="preload"
-      href="{{ 'custom-theme.css' | asset_url }}"
+      href="{{ 'custom-theme-core.css' | asset_url }}"
       as="style">
+    {%- if template == 'index' -%}
+      <link rel="preload" href="{{ 'theme-home.css' | asset_url }}" as="style">
+      <link rel="preload" href="{{ 'custom-theme-home.css' | asset_url }}" as="style">
+    {%- elsif template contains 'collection' -%}
+      <link rel="preload" href="{{ 'theme-collection.css' | asset_url }}" as="style">
+      <link rel="preload" href="{{ 'custom-theme-collection.css' | asset_url }}" as="style">
+    {%- elsif template contains 'product' -%}
+      <link rel="preload" href="{{ 'theme-product.css' | asset_url }}" as="style">
+      <link rel="preload" href="{{ 'custom-theme-product.css' | asset_url }}" as="style">
+    {%- elsif template == 'cart' -%}
+      <link rel="preload" href="{{ 'theme-cart.css' | asset_url }}" as="style">
+      <link rel="preload" href="{{ 'custom-theme-cart.css' | asset_url }}" as="style">
+    {%- elsif template contains 'search' -%}
+      <link rel="preload" href="{{ 'theme-search.css' | asset_url }}" as="style">
+      <link rel="preload" href="{{ 'custom-theme-search.css' | asset_url }}" as="style">
+    {%- endif -%}
     {%- comment -%}
       ujg6.19: preload the two critical self-hosted fonts so the browser
       starts the fetch during the head parse (parallel with CSS/JS preloads),
@@ -366,10 +393,40 @@
 
     {% render 'css-variables' %}
 
-    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="{{ 'theme.css' | asset_url }}"></noscript>
-    <link rel="stylesheet" href="{{ 'custom-theme.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="{{ 'custom-theme.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      ujg6.42 (2026-05-20): per-template CSS — see preload block above.
+      KILL_SWITCH: revert to the original 4 lines (theme.css / custom-theme.css).
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'theme-core.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'theme-core.css' | asset_url }}"></noscript>
+    <link rel="stylesheet" href="{{ 'custom-theme-core.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="{{ 'custom-theme-core.css' | asset_url }}"></noscript>
+    {%- if template == 'index' -%}
+      <link rel="stylesheet" href="{{ 'theme-home.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'theme-home.css' | asset_url }}"></noscript>
+      <link rel="stylesheet" href="{{ 'custom-theme-home.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'custom-theme-home.css' | asset_url }}"></noscript>
+    {%- elsif template contains 'collection' -%}
+      <link rel="stylesheet" href="{{ 'theme-collection.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'theme-collection.css' | asset_url }}"></noscript>
+      <link rel="stylesheet" href="{{ 'custom-theme-collection.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'custom-theme-collection.css' | asset_url }}"></noscript>
+    {%- elsif template contains 'product' -%}
+      <link rel="stylesheet" href="{{ 'theme-product.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'theme-product.css' | asset_url }}"></noscript>
+      <link rel="stylesheet" href="{{ 'custom-theme-product.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'custom-theme-product.css' | asset_url }}"></noscript>
+    {%- elsif template == 'cart' -%}
+      <link rel="stylesheet" href="{{ 'theme-cart.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'theme-cart.css' | asset_url }}"></noscript>
+      <link rel="stylesheet" href="{{ 'custom-theme-cart.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'custom-theme-cart.css' | asset_url }}"></noscript>
+    {%- elsif template contains 'search' -%}
+      <link rel="stylesheet" href="{{ 'theme-search.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'theme-search.css' | asset_url }}"></noscript>
+      <link rel="stylesheet" href="{{ 'custom-theme-search.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+      <noscript><link rel="stylesheet" href="{{ 'custom-theme-search.css' | asset_url }}"></noscript>
+    {%- endif -%}
     {%- comment -%}
       Plyr (video player) styles split out of theme.css 2026-04-26.
       Was 32.6 KB of render-blocking CSS shipped on every page even
