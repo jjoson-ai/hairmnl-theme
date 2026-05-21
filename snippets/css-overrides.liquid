@@ -827,21 +827,14 @@
 
 
   /* -- Judge.me review widget -- subdued text contrast fix 2026-05-21 hairmnl-theme-wlzx ---
-     P8 ---color-text-light = #c1c0c2 (1.81:1 on white), fails WCAG AA 4.5:1.
-     Judge.me meta-text renders in low-contrast grays. Fix: #595959 = 7:1 on white.
-     Updated: added reply header + buyer-info + helpful text selectors.
+     Judge.me's Vue widget drives ALL light text (date, location, "Reply from X:",
+     "Helpful?") via a single CSS custom property: --jm-review-widget-lighter-text-color.
+     P8's ---color-text-light = #c1c0c2 (1.81:1 on white) bleeds into this variable,
+     failing WCAG AA 4.5:1. Override the variable at the widget root to #595959 (7:1).
+     Confirmed class: .jm-text + .jm-shop-reply__author both use color: var(--jm-review-widget-lighter-text-color).
   --------------------------------------------------------------------------- */
-  .jdgm-rev__timestamp,
-  .jdgm-rev__location,
-  .jdgm-rev__buyer-info,
-  .jdgm-rev__prod-name,
-  .jdgm-rev__reply-header,
-  .jdgm-rev__reply-title,
-  .jdgm-helpful-btns,
-  .jdgm-helpful-btn,
-  .jdgm-helpful-btn span,
-  .jdgm-helpful-btn__txt,
-  .jdgm-helpful-count {
-    color: #595959 !important;
+  #judgeme_product_reviews,
+  .jm-review-widget {
+    --jm-review-widget-lighter-text-color: #595959;
   }
 </style>
