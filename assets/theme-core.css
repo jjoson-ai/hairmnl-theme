@@ -2129,6 +2129,16 @@ input[type="search"]::-webkit-search-decoration {
   }
 }
 @media only screen and (min-width: 768px) {
+.medium-up--one-half {
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 768px) {
+.medium-up--one-third {
+    width: 33.3333333333%;
+  }
+}
+@media only screen and (min-width: 768px) {
 .medium-up--two-thirds {
     width: 66.6666666667%;
   }
@@ -2166,6 +2176,16 @@ input[type="search"]::-webkit-search-decoration {
 @media only screen and (min-width: 768px) {
 .medium-up--four-fifths {
     width: 80%;
+  }
+}
+@media only screen and (min-width: 768px) {
+.medium-up--one-sixth {
+    width: 16.6666666667%;
+  }
+}
+@media only screen and (min-width: 768px) {
+.medium-up--two-sixths {
+    width: 33.3333333333%;
   }
 }
 @media only screen and (min-width: 768px) {
