@@ -8876,6 +8876,11 @@ img.auto {
   width: 100%;
   height: 100%;
 }
+.image__fill {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
 .no-js .image__fill {
   padding-top: 0 !important;
 }
