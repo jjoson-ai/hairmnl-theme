@@ -1,46 +1,10 @@
 <style>
   /* ============================================================
-   * P4-parity FIX 2026-05-18 — fix invalid font-family declarations.
-   *
-   * Pipeline 8's snippets/css-variables.liquid renders the body and
-   * heading font stacks as `<custom_font>, <base_font.fallback_families>`.
-   * On this store, settings.type_base_font (= "questrial_n4") returns a
-   * STRING rather than a Shopify font object, so `.fallback_families`
-   * renders empty — producing invalid CSS like:
-   *
-   *     ---font-stack-body: BasisGrotesquePro-Regular
-   *         ,
-   *         ;
-   *
-   * The trailing comma makes the entire `font-family` declaration invalid,
-   * browsers drop it, and body falls back to the user-agent default
-   * (Times serif on macOS / Safari, Chrome). Diagnosed 2026-05-18 via JS
-   * inspection: `getPropertyValue('---font-stack-body')` returned the
-   * literal string `"BasisGrotesquePro-Regular\n    ,"`. Custom @font-face
-   * declarations were never triggered to load because no element validly
-   * referenced them.
-   *
-   * Fix: re-declare the font-stack custom properties with explicit, valid
-   * fallback chains. Highest-specificity declaration in :root wins over
-   * the broken one in css-variables.liquid (both have specificity 0,0,1,0
-   * but later cascade wins). Both layers render in the same <head> but
-   * css-overrides comes after css-variables in layout/theme.liquid line
-   * 80-83, so this declaration cascades last.
-   * ============================================================
-   */
-  :root {
-    ---font-stack-body: "BasisGrotesquePro-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    ---font-stack-heading: "SelfModern", Georgia, "Times New Roman", serif;
-    ---font-stack-accent: "BasisGrotesquePro-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    ---font-stack-product-heading: "SelfModern", Georgia, "Times New Roman", serif;
-  }
-
-  /* ============================================================
    * HairMNL CSS overrides — Pipeline 8 port (M3)
    *
    * Ported 2026-05-17 from Pipeline 6's snippets/css-overrides.liquid.
    * Most rules carry over without selector changes — Judge.me / Klaviyo /
-   * LoyaltyLion / Nova GDPR / BOGOS / Reamaze / LimeSpot classes are all
+   * LoyaltyLion / Nova GDPR / BOGOS / Reamaze classes are all
    * vendor-managed and theme-independent.
    *
    * Selectors that target Pipeline 6's own DOM (.header__desktop,
@@ -223,23 +187,39 @@
     background: #f4f6f8;
   }
 
-  /* CLS fix 2026-04-29 — Judge.me medals wrapper starts as `.jdgm-hidden`
-     (display: none) in the initial HTML and gets revealed by Judge.me's
-     loader.js once badges hydrate. The reveal grows the wrapper from 0
-     to ~80px tall, pushing all subsequent in-flow content down → CLS.
+  /* CLS fix 2026-04-29 (updated 2026-05-18 hairmnl-theme-gso0) — Judge.me
+     medals wrapper starts as `.jdgm-hidden` (display: none) in the initial
+     HTML and gets revealed by Judge.me's loader.js once badges hydrate.
+     The reveal grows the wrapper from the reserved size to its rendered
+     height, pushing all in-flow content below it down → CLS.
 
      Real-shopper RUM showed /products/wella-professionals-koleston-
      perfect-ppd-free 49.1% poor CLS (n=116 events). Wella PDP image
      gallery is dimensioned correctly (width=1180 height=1180), so the
      remaining CLS source is the medals wrapper appearing post-load.
-     Same pattern likely affects all PDPs with Judge.me reviews snippet.
+     Same pattern affects EVERY page since the widget renders at the top
+     of sections/footer.liquid.
+
+     2026-05-18 gso0 update — measured actual rendered heights via Chrome
+     DevTools on https://www.hairmnl.com/ (jdgm-medals-wrapper has
+     flex-wrap behavior that varies dramatically by viewport width):
+       - viewport ≥ 768px: 133px (verified-wrapper + separator + 5 medals
+         all on one row)
+       - viewport <  768px: 411px (children wrap to 3 stacked rows on
+         mobile because verified-wrapper 200px + separator + medals 320px
+         won't fit in 412px viewport)
+     The previous 80px reservation was correct for 5-medals-in-a-row
+     desktop but undersized the mobile case by ~331px. PSI 2026-05-18
+     attributed 0.185 cumulative CLS to #shopify-section-footer shifts
+     from this widget — fully explained by the 80→411 reveal on mobile.
 
      Fix: while .jdgm-hidden is applied, override display to block but
      keep visibility: hidden so the element occupies its eventual height
-     without showing content. min-height: 80px reserves the typical
-     rendered height of 5 badges in a row. contain: layout prevents
-     residual size variance from cascading to siblings. When Judge.me
-     removes .jdgm-hidden, the badges become visible in the same space.
+     without showing content. Mobile-first min-height matches the wrapped
+     layout; desktop breakpoint drops to single-row height. contain: layout
+     prevents residual size variance from cascading to siblings. When
+     Judge.me removes .jdgm-hidden, the badges become visible in the same
+     reserved space — no shift.
 
      Caveat: if Judge.me's JS gates hydration on display: none → display:
      block transition, this override could break their logic. Loader.js
@@ -249,8 +229,13 @@
   .jdgm-medals-wrapper.jdgm-hidden {
     display: block !important;
     visibility: hidden !important;
-    min-height: 80px;
+    min-height: 411px;
     contain: layout;
+  }
+  @media (min-width: 768px) {
+    .jdgm-medals-wrapper.jdgm-hidden {
+      min-height: 134px;
+    }
   }
 
   /* CLS fix 2026-05-10 hairmnl-theme-z9y — Judge.me preview badge top-of-PDP shift.
@@ -290,10 +275,40 @@
      (80px = 60px thumb + 10px top margin + 5px bottom margin + 5px buffer).
      contain:layout prevents internal Flickity reflows from cascading.
      overflow:hidden prevents any overflow during Flickity's brief transition. */
-  .media__thumb__wrapper {
-    min-height: 80px;
-    contain: layout;
-    overflow: hidden;
+   .media__thumb__wrapper {
+     min-height: 80px;
+     contain: layout;
+     overflow: hidden;
+   }
+
+  /* CLS fix 2026-05-18 T27 — PDP Flickity thumb items inside media__thumb__wrapper:
+      The wrapper-level fix (T8 above) set min-height + contain:layout on the
+      wrapper, but CLS persists (0.205, box 542×73). Root cause: before Flickity
+      initializes, .media__thumb items are inline-block flow children that
+      define the wrapper's intrinsic height. When Flickity fires, it wraps them
+      in .flickity-slider (position:absolute) inside .flickity-viewport — the
+      thumbs are removed from flow and the wrapper height briefly collapses
+      before the viewport inherits from the parent. The wrapper contain:layout
+      already isolates, but the individual thumbs still shift from inline-block
+      flow to absolute-positioned Flickity cells.
+
+      Fix: stabilize each .media__thumb with explicit dimensions matching the
+      base theme.css values (width:60px, height:60px) and force them to remain
+      inline-block regardless of Flickity class mutations. Also set explicit
+      width/height on the child img and aspect-ratio:1 as a fallback, so the
+      img cannot collapse if it loads after Flickity restructures the DOM. */
+  [data-product-thumbs] .media__thumb {
+    display: inline-block;
+    width: 60px;
+    min-width: 60px;
+    height: 60px;
+    min-height: 60px;
+  }
+  [data-product-thumbs] .media__thumb img {
+    display: block;
+    width: 60px;
+    height: 60px;
+    aspect-ratio: 1;
   }
 
   /* CLS fix 2026-05-01 T9 — Header CLS:
@@ -617,13 +632,9 @@
      every page body including /collections/all — their position:fixed + contain:layout
      above is the main CLS fix for the collection page.
 
-     SECONDARY fix (REMOVED 2026-05-17 M6): <limespot> custom element rule was here.
-     LimeSpot is being replaced by Vertex AI per bd hairmnl-theme-oyw — snippets/
-     limespot.liquid + snippets/limespot-ghost-placeholder.liquid both deleted in
-     M6 DROP wave (commit 4303e70). The <limespot> element will no longer render,
-     making this CSS rule dead. Vertex AI handles its own layout via
-     snippets/vertex-recommendations.liquid + sections/vertex-recommendations.liquid
-     (no contain:layout needed because Vertex pre-declares card dimensions). */
+     Vertex AI handles rec-rail layout via snippets/vertex-recommendations.liquid
+     and sections/vertex-recommendations.liquid — no contain:layout needed
+     because Vertex pre-declares card dimensions. */
 
   /* A11y fix 9ct-1 — LoyaltyLion notification action button contrast.
      Lighthouse color-contrast audit flags .lion-notification__action-button
@@ -638,30 +649,194 @@
     border: 1px solid #1a1a1a !important;
   }
 
-  /* P4-visual-parity: logo opacity fix.
-     Pipeline 8 theme.css starts .logo__img at opacity:0 and restores it only
-     when the JS lazyload library adds the "lazyloaded" class. The header uses
-     native loading="lazy" (no data-src), so the JS library never fires and the
-     logo stays invisible. Force the color logo visible directly. */
-  .logo__img--color {
-    opacity: 1 !important;
+  /* P3.3 content-visibility:auto — ROLLED BACK 2026-05-18 evening (ujg6.17)
+     The 2026-05-18 evening PSI re-baseline showed `content-visibility: auto`
+     made things worse, not better, on PSI's lab measurement:
+       - Desktop home: .homepage-collection materialization shift score 0.518
+         (box 1335×1018) became the new top CLS source on the template.
+       - Mobile cart: .section-recent.recent__container materialization shift
+         score 1.048 (box 412×308) became the new top CLS source.
+     Lighthouse's measurement window scrolls below-fold sections into view to
+     compute LCP; each section materializes from contain-intrinsic-size
+     placeholder → real size during that scroll, which Lighthouse measures
+     as CLS. Real-user CrUX impact would likely be smaller (user materializes
+     each section after the initial CLS window closes), but PSI is the
+     cutover gate, so the optimization fails its acceptance threshold.
+
+     The render-skip-when-off-screen goal is now tracked by bd ujg6.18
+     (JS-driven lazy-render via Section Rendering API + IntersectionObserver),
+     which doesn't trigger PSI's CLS measurement the same way. */
+
+  /* ============================================================
+   * SATCB icon suppression on cart (2026-05-20 — 2i8b.36 followup)
+   * ------------------------------------------------------------
+   * SATCB (Smart Add to Cart Button) injects a shopping-cart
+   * glyphicon next to every cart-line-item image as a "quick add
+   * again" affordance. Their CSS rule for the ::before content of
+   * `.satcb_glyphicon-shopping-cart` is rendering as empty (""),
+   * so the icon shows as a hollow square placeholder. Even when
+   * rendered correctly, the icon is redundant on the cart drawer
+   * and cart page — the user is already inside the cart, so
+   * a quick-add prompt next to each line item is noise rather
+   * than a CTA.
+   * ============================================================ */
+  .cart__drawer .satcb_glyphicon,
+  .cart__items .satcb_glyphicon,
+  .cart__items__row .satcb_glyphicon,
+  body.template-cart .satcb_glyphicon {
+    display: none !important;
   }
 
-  /* P4-visual-parity: search predictive popdown — hide by default.
-     P8 theme.liquid renders the search--popdown div after the footer in document
-     flow with no default CSS. Theme.js reveals it on search icon click. */
-  .search--popdown {
-    display: none;
-  }
-  .search--popdown.is-visible,
-  .search--popdown.dirty {
-    display: block;
+  /* ============================================================
+   * BOGOS empty free-gifts container suppression (2026-05-20 — 2i8b.36 followup)
+   * ------------------------------------------------------------
+   * sections/cart.liquid renders <div id="freegifts-main-page-container"></div>
+   * and assets/custom-theme.css reserves min-height: 240px on it for CLS
+   * prevention (so BOGOS doesn't shift cart content when it injects content
+   * async). But when BOGOS has no active free-gift campaign, the container
+   * stays empty and the reserved 240px is a wasted white-space gap below
+   * "Your Cart". Hide when empty; BOGOS removes :empty when it injects so
+   * the rule deactivates and full height is restored.
+   * ============================================================ */
+  body.template-cart #freegifts-main-page-container:empty {
+    min-height: 0 !important;
+    display: none !important;
   }
 
-  /* P4-visual-parity: P6 footer.liquid always renders a footer-secondary bar
-     (copyright + secondary links) even when social/payment are disabled.
-     P8 subfooter handles copyright already — hide the duplicate. */
-  .footer-secondary-wrapper {
+  /* ── PDP Option 1 — Sticky gallery (Phase 1.5, 2026-05-13) ──
+     Per task-2-pdp-progression.md PR-1: removes the 500-800px white-space
+     void below the left-column thumbnails on long PDPs (Davines Purifying
+     Shampoo and equivalent long-description SKUs). The gallery sticks
+     to viewport while the right column scrolls, perceptually eliminating
+     the void. Sephora/Cult Beauty/Aritzia pattern.
+
+     Scope: desktop only (≥1024px). Mobile/tablet keep current behavior.
+     `align-self: flex-start` prevents the .grid flex parent from
+     stretching the sticky child to full container height (which would
+     defeat sticky).
+     Top offset hardcoded to 80px (header__desktop is 70px + breathing
+     room); promote to a JS-set --header-height later if announcement-bar
+     height starts varying. */
+  @media (min-width: 1024px) {
+    .product__media__wrapper {
+      position: sticky;
+      top: 80px;
+      align-self: flex-start;
+    }
+  }
+
+  /* ── PDP Option 2 — Sticky purchase bar (Phase 1.5, 2026-05-13) ──
+     Per task-2-pdp-progression.md PR-2: pinned mini-cart appears at
+     viewport bottom once user scrolls past the primary ATC. Keeps
+     purchase always-accessible on long PDPs. Glossier/Charlotte Tilbury/
+     Drunk Elephant/Mecca pattern.
+
+     Scope: desktop only (≥1024px). Mobile has its own sticky-ATC bar
+     (different markup); this one does NOT show below 1024px.
+     Hidden by default via translateY(100%); JS adds .is-visible to
+     slide it in once the IntersectionObserver fires.
+     Markup in snippets/product-sticky-bar.liquid, rendered from
+     sections/product.liquid. JS inline in the snippet (~30 lines). */
+  .vrec-product-sticky-bar {
     display: none;
+  }
+  @media (min-width: 1024px) {
+    .vrec-product-sticky-bar {
+      display: flex;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9000;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 24px;
+      background: #ffffff;
+      border-top: 1px solid var(--border, #e5e5e5);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+      transform: translateY(100%);
+      transition: transform 200ms ease-out;
+      font-family: inherit;
+    }
+    .vrec-product-sticky-bar.is-visible {
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vrec-product-sticky-bar {
+        transition: none;
+      }
+    }
+    .vrec-product-sticky-bar__thumb {
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      overflow: hidden;
+      background: var(--vrec-image-bg, #f3f0eb);
+    }
+    .vrec-product-sticky-bar__thumb img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .vrec-product-sticky-bar__info {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .vrec-product-sticky-bar__title {
+      font-size: 13px;
+      font-weight: 500;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .vrec-product-sticky-bar__meta {
+      font-size: 11px;
+      color: var(--text-light, #6b6b6b);
+      margin: 0;
+    }
+    .vrec-product-sticky-bar__price {
+      flex: 0 0 auto;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 16px 0 0;
+    }
+    .vrec-product-sticky-bar__cta {
+      flex: 0 0 auto;
+      min-height: 44px;
+      padding: 0 24px;
+      background: var(--vrec-cta-bg, #1a1a1a);
+      color: var(--vrec-cta-fg, #ffffff);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .vrec-product-sticky-bar__cta:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+
+  /* -- Judge.me review widget -- subdued text contrast fix 2026-05-21 hairmnl-theme-wlzx ---
+     P8 ---color-text-light = #c1c0c2 (1.81:1 on white), fails WCAG AA 4.5:1.
+     Judge.me meta-text (location, timestamp, product variant name, Helpful?
+     buttons) renders in low-contrast grays. Fix: #595959 = 7:1 on white.
+  --------------------------------------------------------------------------- */
+  .jdgm-rev__timestamp,
+  .jdgm-rev__location,
+  .jdgm-rev__prod-name,
+  .jdgm-helpful-btns,
+  .jdgm-helpful-btn,
+  .jdgm-helpful-btn span {
+    color: #595959 !important;
   }
 </style>
