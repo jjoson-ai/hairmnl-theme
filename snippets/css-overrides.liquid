@@ -827,14 +827,15 @@
 
 
   /* -- Judge.me review widget -- subdued text contrast fix 2026-05-21 hairmnl-theme-wlzx ---
-     Judge.me's Vue widget drives ALL light text (date, location, "Reply from X:",
-     "Helpful?") via a single CSS custom property: --jm-review-widget-lighter-text-color.
-     P8's ---color-text-light = #c1c0c2 (1.81:1 on white) bleeds into this variable,
-     failing WCAG AA 4.5:1. Override the variable at the widget root to #595959 (7:1).
-     Confirmed class: .jm-text + .jm-shop-reply__author both use color: var(--jm-review-widget-lighter-text-color).
+     Judge.me's Vue widget applies light text via inline style:
+       color: var(--jm-review-widget-lighter-text-color)
+     Judge.me redefines the variable on a scoped widget element, so overriding
+     it on an ancestor has no effect. Instead: attribute-select every element
+     carrying this variable in its inline style and override color with !important,
+     which beats inline styles in the cascade. Result: #595959 = 7:1 on white.
+     Affected: date, location, "Reply from HairMNL:", "Helpful?", vote counts.
   --------------------------------------------------------------------------- */
-  #judgeme_product_reviews,
-  .jm-review-widget {
-    --jm-review-widget-lighter-text-color: #595959;
+  [style*="--jm-review-widget-lighter-text-color"] {
+    color: #595959 !important;
   }
 </style>
