@@ -6844,6 +6844,24 @@ textarea {
 .uppercase .strong {
   font-weight: var(---font-weight-accent-bold);
 }
+/* ujg6.42-restore (a7kn 2026-05-21): h1..h6 element brand-typography group
+   stripped by purge. Without this, every <h1>..<h6> on the site (article card
+   titles, section headings, etc.) falls back to the body font instead of the
+   brand heading font. The .strong variant immediately below + the separate
+   { margin: 0 0 0.75em; line-height: 1.25 } rule already present in
+   theme-core.css are both downstream of this base rule. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(---font-stack-heading);
+  font-weight: var(---font-weight-heading);
+  font-style: var(---font-style-heading);
+  letter-spacing: var(---font-heading-space);
+  text-transform: var(---font-heading-caps);
+}
 h1 .strong,
 h1 strong,
 h1.strong,
@@ -6863,6 +6881,74 @@ h6 .strong,
 h6 strong,
 h6.strong {
   font-weight: var(---font-weight-heading-bold);
+}
+/* ujg6.42-restore (a7kn 2026-05-21): base + 480px fluid-type rules for .h1/.h2/.h3/.h5 utility classes
+   stripped by purge. Needed for blog list pages (.home__subtitle uses h-sized fonts),
+   blog category pages, and article H1 (uses class="h3"). The @media (min-width: 1400px)
+   variants already exist for .h1/.h3; we add .h2 + .h5 1400px variants too. */
+.h1,
+h1 {
+  font-size: calc(35.48363px * var(---font-adjust-heading));
+}
+@media (min-width: 480px) {
+  .h1,
+  h1 {
+    font-size: calc(
+      (35.48363px + (1241.55915vw - 5959.48393px) / 920) *
+        var(---font-adjust-heading)
+    );
+  }
+}
+.h2,
+h2 {
+  font-size: calc(30.07087px * var(---font-adjust-heading));
+}
+@media (min-width: 480px) {
+  .h2,
+  h2 {
+    font-size: calc(
+      (30.07087px + (919.07841vw - 4411.57636px) / 920) *
+        var(---font-adjust-heading)
+    );
+  }
+}
+@media (min-width: 1400px) {
+  .h2,
+  h2 {
+    font-size: calc(39.26166px * var(---font-adjust-heading));
+  }
+}
+.h3,
+h3 {
+  font-size: calc(25.48379px * var(---font-adjust-heading));
+}
+@media (min-width: 480px) {
+  .h3,
+  h3 {
+    font-size: calc(
+      (25.48379px + (669.78954vw - 3214.98981px) / 920) *
+        var(---font-adjust-heading)
+    );
+  }
+}
+.h5,
+h5 {
+  font-size: calc(18.30206px * var(---font-adjust-heading));
+}
+@media (min-width: 480px) {
+  .h5,
+  h5 {
+    font-size: calc(
+      (18.30206px + (331.96033vw - 1593.40956px) / 920) *
+        var(---font-adjust-heading)
+    );
+  }
+}
+@media (min-width: 1400px) {
+  .h5,
+  h5 {
+    font-size: calc(21.62167px * var(---font-adjust-heading));
+  }
 }
 @media (min-width: 1400px) {
 .h1,
@@ -9267,11 +9353,60 @@ html:not(.no-js) body:not(.focus-enabled) :focus {
   padding-top: 64px;
   padding-bottom: 64px;
 }
+/* ujg6.42-restore (a7kn 2026-05-21): .margin--medium and .margin--large utility
+   classes stripped by purge. These are THE section vertical-rhythm classes —
+   virtually every section (blog grid, newsletter, rich text, etc.) uses
+   class="margin--medium" for top/bottom padding. Without these rules,
+   sections collapse against each other with zero vertical gap, causing the
+   "newsletter heading rendered on top of article cards" overlap class of
+   visible bugs on blog/article/page templates. Restored to match the .margin--small
+   pattern that survived the purge: padding multiplied by 1/2/3 outer-units. */
 .margin--small {
   padding: var(--outer) 0;
 }
+.margin--medium {
+  padding: calc(var(--outer) * 2) 0;
+}
+.margin--large {
+  padding: calc(var(--outer) * 3) 0;
+}
 .margin--zero {
   padding: 0;
+}
+.text__standard {
+  color: var(--text);
+}
+/* ujg6.42-restore (a7kn 2026-05-21): BASE padding for every .homepage-* section
+   stripped by purge. This is the single biggest section-rhythm rule in the theme —
+   it's why section-blog (Product Spotlight, Hair Tutorials) had ZERO gap above
+   their subheads, and why section-newsletter (Sign up to our mailing list)
+   was overlapping the article grid above it. The 17 .neighbor--*+.neighbor--*
+   .homepage-* rules below this point are ALL OVERRIDES that subtract padding
+   when two sections of the same color sit next to each other — they're useless
+   without this base rule defining the default padding to subtract from. */
+.homepage-blog,
+.homepage-collection,
+.homepage-columns,
+.homepage-icons,
+.homepage-newsletter,
+.homepage-product {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+.homepage-collection-tabs,
+.homepage-page,
+.section-recent .recent__container__inner:not(.is-hidden),
+.section-related {
+  padding-top: 96px;
+  padding-bottom: 64px;
+}
+.homepage-collection-grid {
+  padding-top: 64px;
+  padding-bottom: 96px;
+}
+.homepage-logos {
+  padding-top: 32px;
+  padding-bottom: 22px;
 }
 .neighbor--black + .neighbor--black .frame,
 .neighbor--black + .neighbor--black .homepage-blog,
@@ -9354,6 +9489,46 @@ html:not(.no-js) body:not(.focus-enabled) :focus {
   .recent__container__inner:not(.is-hidden),
 .neighbor--white + .neighbor--white .section-related {
   padding-top: 0;
+}
+/* ujg6.42-restore (a7kn 2026-05-21): base .home__subtitle rule + decorative
+   underline pseudo-element stripped by purge. Used by section-blog,
+   section-blog-category, section-recent-products, related.liquid — i.e.
+   the heading on every blog list page ("Empowering Your Hair and Style",
+   "Tousled Online Magazine", "Hair Education" subhead). The .strong variant
+   that remained below is meaningless without this base rule. */
+.home__subtitle {
+  font-family: var(---font-stack-heading);
+  font-weight: var(---font-weight-heading);
+  font-style: var(---font-style-heading);
+  text-transform: var(---font-heading-caps);
+  letter-spacing: var(---font-heading-space);
+  font-size: calc(17.14426px * var(---font-adjust-heading));
+  color: var(--text);
+  text-align: center;
+  padding-bottom: var(--inner);
+  margin-bottom: var(--gutter);
+  position: relative;
+}
+.home__subtitle:after {
+  content: "";
+  margin: auto;
+  width: 30px;
+  height: 3px;
+  position: absolute;
+  bottom: 0;
+  background: var(--text-dark);
+  opacity: 0.2;
+  left: 0;
+  right: 0;
+}
+.align--middle-left .home__subtitle:after {
+  right: unset;
+}
+.align--middle-right .home__subtitle:after {
+  left: unset;
+}
+.palette--dark .home__subtitle:after {
+  background: #fff;
 }
 .home__subtitle,
 .home__subtitle.strong,

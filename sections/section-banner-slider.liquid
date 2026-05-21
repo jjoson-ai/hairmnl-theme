@@ -51,10 +51,29 @@
           imagesizes="100vw"
           type="image/webp">
   {%- endif -%}
+  {%- if first_block.settings.slide_image_desktop -%}
+    {%- assign _lcp_d = first_block.settings.slide_image_desktop -%}
+  {%- endif -%}
+  {%- comment -%}
+    d6se 2026-05-21: Reserve the swiper's intrinsic height via aspect-ratio so the
+    hero image can paint without waiting for Swiper JS (which initialises on
+    DOMContentLoaded — late on this theme due to heavy JS, ~970ms after FCP in lab).
+    Media-query gated: mobile uses the mobile image AR, desktop uses the desktop
+    image AR. Section-scoped class so multiple banner sliders don't collide.
+    Once Swiper inits it sets explicit inline pixel heights on slides; aspect-ratio
+    on the swiper container remains as a hint but is overridden by the resolved
+    flex layout. No post-init visual change when AR matches the image.
+  {%- endcomment -%}
+  {%- if _lcp_m or _lcp_d -%}
+    <style>
+      {%- if _lcp_m %}.banner-slider-{{ section.id }} { aspect-ratio: {{ _lcp_m.width }}/{{ _lcp_m.height }}; }{% endif %}
+      {%- if _lcp_d %}@media (min-width: 1009px) { .banner-slider-{{ section.id }} { aspect-ratio: {{ _lcp_d.width }}/{{ _lcp_d.height }}; } }{% endif %}
+    </style>
+  {%- endif -%}
 {%- endif -%}
 
 <div class="wrapper">
-  <div class="swiper" data-slide-delay="{{section.settings.slide_delay}}">
+  <div class="swiper banner-slider-{{ section.id }}" data-slide-delay="{{section.settings.slide_delay}}">
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       <!-- Slides -->
@@ -107,7 +126,7 @@
                 {% if _img_d %}<source type="image/webp" media="(min-width: 1009px)" srcset="{{ _img_d | image_url: width: 1400, format: 'webp' }}">{% endif %}
                 {% if _img_m %}<source type="image/webp" srcset="{{ _img_m | image_url: width: 390, format: 'webp' }} 390w, {{ _img_m | image_url: width: 552, format: 'webp' }} 552w, {{ _img_m | image_url: width: 780, format: 'webp' }} 780w" sizes="100vw">{% endif %}
                 <source media="(min-width: 1009px)" srcset="{{ _img_d | image_url: height: 788 }}">
-                <img class="banner-slide-img" src="{{ _img_m | image_url: height: 502 }}" alt="Banner Slide 1" width="{{ _img_d.width | default: _img_m.width | default: 1400 }}" height="{{ _img_d.height | default: _img_m.height | default: 788 }}" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
+                <img class="banner-slide-img" src="{{ _img_m | image_url: height: 502 }}" alt="Banner Slide 1" width="{{ _img_m.width | default: _img_d.width | default: 552 }}" height="{{ _img_m.height | default: _img_d.height | default: 502 }}" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
               </picture>
             </a>
           {%- else -%}
@@ -115,7 +134,7 @@
               {% if _img_d %}<source type="image/webp" media="(min-width: 1009px)" srcset="{{ _img_d | image_url: width: 1400, format: 'webp' }}">{% endif %}
               {% if _img_m %}<source type="image/webp" srcset="{{ _img_m | image_url: width: 390, format: 'webp' }} 390w, {{ _img_m | image_url: width: 552, format: 'webp' }} 552w, {{ _img_m | image_url: width: 780, format: 'webp' }} 780w" sizes="100vw">{% endif %}
               <source media="(min-width: 1009px)" srcset="{{ _img_d | image_url: height: 788 }}">
-              <img class="banner-slide-img" src="{{ _img_m | image_url: height: 502 }}" alt="Banner Slide 1" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
+              <img class="banner-slide-img" src="{{ _img_m | image_url: height: 502 }}" alt="Banner Slide 1" width="{{ _img_m.width | default: _img_d.width | default: 552 }}" height="{{ _img_m.height | default: _img_d.height | default: 502 }}" loading="{{ img_loading }}"{% if forloop.first %} fetchpriority="high"{% endif %}>
             </picture>
           {% endif %}
 
