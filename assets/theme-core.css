@@ -9509,6 +9509,126 @@ html:not(.no-js) body:not(.focus-enabled) :focus {
 .standard__cta.btn--long {
   margin-top: 1rem;
 }
+/* ujg6.42-restore: standard__ base rules — stripped by purge, needed for page.liquid / section-page.liquid */
+.standard__cta,
+.standard__heading,
+.standard__kicker,
+.standard__rte {
+  margin-bottom: var(--line);
+}
+.standard__heading:first-child {
+  margin-top: 0;
+}
+.standard__kicker {
+  font-family: var(---font-stack-accent);
+  font-weight: var(---font-weight-accent);
+  font-style: var(---font-style-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: calc(13.14426px * var(---font-adjust-accent));
+  color: var(--text-light);
+  margin: 0;
+}
+.standard__kicker,
+.standard__kicker.strong,
+.standard__kicker .strong {
+  font-weight: var(---font-weight-accent-bold);
+}
+.standard__rte p {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.standard__rte p a {
+  text-decoration: underline;
+}
+.standard__rte p a:hover {
+  text-decoration: none;
+}
+.standard__rte p + p {
+  margin-top: 0.75em;
+}
+.standard__rte ul {
+  list-style: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+.standard__rte.font--2 p,
+.standard__rte.font--2 td {
+  font-size: calc(13.14426px * var(---font-adjust-body));
+}
+@media (min-width: 480px) {
+.standard__rte.font--2 p,
+  .standard__rte.font--2 td {
+    font-size: calc(
+      (13.14426px + (138.2528vw - 663.61344px) / 920) * var(---font-adjust-body)
+    );
+  }
+}
+@media (min-width: 1400px) {
+.standard__rte.font--2 p,
+  .standard__rte.font--2 td {
+    font-size: calc(14.52678px * var(---font-adjust-body));
+  }
+}
+.standard__rte.font--4 p,
+.standard__rte.font--4 td {
+  font-size: calc(18.30206px * var(---font-adjust-body));
+}
+@media (min-width: 480px) {
+.standard__rte.font--4 p,
+  .standard__rte.font--4 td {
+    font-size: calc(
+      (18.30206px + (331.96033vw - 1593.40956px) / 920) *
+        var(---font-adjust-body)
+    );
+  }
+}
+@media (min-width: 1400px) {
+.standard__rte.font--4 p,
+  .standard__rte.font--4 td {
+    font-size: calc(21.62167px * var(---font-adjust-body));
+  }
+}
+.standard__rte.font--5 p,
+.standard__rte.font--5 td {
+  font-size: calc(21.59643px * var(---font-adjust-body));
+}
+@media (min-width: 480px) {
+.standard__rte.font--5 p,
+  .standard__rte.font--5 td {
+    font-size: calc(
+      (21.59643px + (478.19984vw - 2295.35926px) / 920) *
+        var(---font-adjust-body)
+    );
+  }
+}
+@media (min-width: 1400px) {
+.standard__rte.font--5 p,
+  .standard__rte.font--5 td {
+    font-size: calc(26.37843px * var(---font-adjust-body));
+  }
+}
+.standard__rte.font--6 p,
+.standard__rte.font--6 td {
+  font-size: calc(25.48379px * var(---font-adjust-body));
+}
+@media (min-width: 480px) {
+.standard__rte.font--6 p,
+  .standard__rte.font--6 td {
+    font-size: calc(
+      (25.48379px + (669.78954vw - 3214.98981px) / 920) *
+        var(---font-adjust-body)
+    );
+  }
+}
+@media (min-width: 1400px) {
+.standard__rte.font--6 p,
+  .standard__rte.font--6 td {
+    font-size: calc(32.18169px * var(---font-adjust-body));
+  }
+}
 .columns--2 {
   columns: 180px 2;
 }
@@ -9750,6 +9870,102 @@ body.default--dark {
 .pagination-custom .icon {
   width: 0.45em;
   height: 0.45em;
+}
+/* ujg6.42-restore: pagination-custom rules — stripped by purge, needed for blog.liquid / article.liquid */
+.pagination-custom {
+  display: inline-block;
+  padding-left: 0;
+  margin: 0 0 32px;
+  border-radius: var(--radius-sm);
+}
+.pagination-custom > li {
+  display: inline;
+}
+.pagination-custom > li:first-child > a,
+.pagination-custom > li:first-child > span {
+  margin-left: 0;
+  border-bottom-left-radius: var(--radius-sm);
+  border-top-left-radius: var(--radius-sm);
+}
+.pagination-custom > li:last-child > a,
+.pagination-custom > li:last-child > span {
+  border-top-right-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
+}
+.pagination-custom > li > a:focus,
+.pagination-custom > li > a:hover,
+.pagination-custom > li > span:focus,
+.pagination-custom > li > span:hover {
+  color: var(--text-dark);
+}
+.pagination-custom > .active > a,
+.pagination-custom > .active > a:focus,
+.pagination-custom > .active > a:hover,
+.pagination-custom > .active > span,
+.pagination-custom > .active > span:focus,
+.pagination-custom > .active > span:hover {
+  z-index: 2;
+  cursor: default;
+  color: var(--text-dark);
+  font-weight: var(---font-weight-body-bold);
+}
+.pagination-custom > .disabled > a,
+.pagination-custom > .disabled > a:focus,
+.pagination-custom > .disabled > a:hover,
+.pagination-custom > .disabled > span {
+  color: var(--border);
+  cursor: not-allowed;
+}
+.pagination-custom__arr > a,
+.pagination-custom__arr > span {
+  position: relative;
+  float: left;
+  padding: 10px 20px;
+  line-height: 1.42;
+  text-decoration: none;
+  border: 1px solid var(--border);
+}
+.pagination-custom__num > a,
+.pagination-custom__num > span {
+  position: relative;
+  float: left;
+  padding: 10px 20px;
+  line-height: 1.42;
+  text-decoration: none;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.pagination-custom__num.active span:after {
+  content: "";
+  width: 50%;
+  left: 25%;
+  position: absolute;
+  bottom: -1px;
+  height: 1px;
+  background: var(--text-dark);
+}
+.pagination-custom__spacer > span {
+  position: relative;
+  float: left;
+  padding: 10px;
+  line-height: 1.42;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.pagination-custom__num--dots > span {
+  padding: 10px 5px;
+}
+@media only screen and (max-width: 479px) {
+.pagination-custom__num--dots > span,
+  .pagination-custom__spacer > span {
+    padding: 10px 0;
+  }
+.pagination-custom__arr > a,
+  .pagination-custom__arr > span,
+  .pagination-custom__num > a,
+  .pagination-custom__num > span {
+    padding: 10px 15px;
+  }
 }
 .homepage-page hr {
   width: 75%;
@@ -14052,6 +14268,12 @@ body:not(.focus-enabled)
 @media only screen and (min-width: 990px) {
 .homepage-blog__btn {
     margin-top: 32px;
+  }
+}
+/* ujg6.42-restore: article__card__title — stripped by purge, needed for article-grid-item.liquid (blog listing) */
+@media only screen and (max-width: 767px) {
+.article__card__title {
+    padding: 0 16px;
   }
 }
 .template-article .blog__sidebar {
