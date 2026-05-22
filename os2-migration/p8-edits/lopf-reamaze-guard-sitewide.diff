@@ -1,0 +1,49 @@
+# P8 lopf — Reamaze defer-guard applied sitewide (2026-05-22)
+#
+# Diff applied to /tmp/p8-investigate/layout/theme.liquid and pushed to P8 dev
+# theme 141168312419. Matches the main-branch (P6 live) behavior post-570c83e.
+#
+# Worktree's HEAD layout/theme.liquid still tracks the P6 version (no Reamaze
+# guard at all). This patch is for the eventual Phase 4 Wave A M1 layout port
+# to ensure the guard lands sitewide, not gated to product+cart.
+#
+# Root cause investigation: bd hairmnl-theme-lopf
+# Measured improvement: collection mobile TBT 4136ms → 626ms (-85%)
+
+--- a/layout/theme.liquid	(P8 dev pre-fix state)
++++ b/layout/theme.liquid	(P8 dev post-fix state, lopf)
+@@ ~970,12 @@
+   {%- comment -%}
+-    ujg6.50 (2026-05-19): gate Reamaze defer-guard to product + cart.
+-    Reamaze is a live-chat/support tool — customers need it on product pages
+-    (pre-purchase questions) and cart (checkout support). On homepage, blog,
+-    collections, search the chat widget adds ~212 KB scripting with no
+-    conversion benefit. Guard still defers until interaction when active.
+-    KILL_SWITCH: remove the if/endif wrappers below.
++    Reamaze defer-guard applies sitewide (lopf, 2026-05-22).
++    Earlier ujg6.50 logic restricted the guard to product+cart, intending
++    to skip Reamaze on low-conversion templates. That backfired: without
++    the guard, Reamaze loads aggressively on collection/homepage and
++    contributes ~328ms scripting + 212KB. With the guard applied
++    sitewide, Reamaze stays inert until user interaction on EVERY
++    template, including the ones where it has "no conversion benefit"
++    (those are exactly the ones where no interaction happens, so the
++    cost stays at zero). Matches main branch behavior post-570c83e.
+   {%- endcomment -%}
+-  {%- if template contains 'product' or template == 'cart' -%}
+   {%- comment -%}
+     Reamaze defer-on-interaction guard (bd hw7 + meu, 2026-05-14).
+@@ ~1152,4 @@
+     setTimeout(function() { if (!disarmed) disarm('auto_60s'); }, AUTO_MS);
+   })();
+   </script>
+-  {%- endif -%}
+
+     <!-- Shopify app scripts =========================================================== -->
+@@ ~1161,4 @@
+     <link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
+     <noscript><link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}"></noscript>
+-    {%- if template contains 'product' or template == 'cart' -%}
+-      {% render 'reamaze-placeholder' %}
+-    {%- endif -%}
++    {% render 'reamaze-placeholder' %}
