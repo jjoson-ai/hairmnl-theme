@@ -433,3 +433,12 @@ Both are Pipeline 6 stock; Dawn replaces them with Dawn's own `global.js` and `v
 6. **Phase 6 — Port Vertex AI** as custom section + block
 7. **Phase 7 — Reinstall apps** via OS 2.0 app embeds (dropping all custom app snippets)
 8. **Phase 8 — Regression test** all CLS fixes, drawer behavior, and rec placements
+## Recent additions
+
+Per CLAUDE.md customization-freeze rule: every NEW Pipeline 6 customization added
+after 2026-05-02 must log here with file path, LoC, what it does, port difficulty,
+and why no-op alternatives weren't sufficient.
+
+| Date | bd | File | +LoC | What | Port difficulty | No-op alts considered |
+|---|---|---|---|---|---|---|
+| 2026-05-22 | oo57 | `sections/article.liquid` (lines ~282-311) | +27 | Moves LimeSpot `<limespot-container>` from end-of-body to before `#shopify-section-footer` on blog article pages. LimeSpot Personalizer admin's BlogArticle layout has empty `data-placement-sibling`, causing fallback append. | **Easy** — deletable on cutover if LimeSpot admin is properly configured during migration. The proper fix is the LimeSpot admin's Placement Sibling setting, which is theme-independent. | Option A (LimeSpot admin fix) was offered to the operator; they chose Option B (theme JS) for faster ship-from-session. The LimeSpot admin route remains the migration-target fix — this script becomes a no-op safe to delete once LimeSpot admin is set during cutover. |
