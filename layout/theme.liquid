@@ -787,6 +787,12 @@
         }, { capture: true });
         addEventListener('unhandledrejection', function (e) {
           var msg = e.reason && (e.reason.message || e.reason.toString()) || 'unknown rejection';
+          // wbh8 2026-05-22: suppress Shop Sheriff PWA service-worker update noise.
+          // main.js (2020-07-22) calls reg.update() with no .catch() — failing updates
+          // become unhandled rejections on iOS 7d eviction, incognito, in-app browsers.
+          // ~10,649 harmless events/7d; skip before they pollute the JS error dashboard.
+          if (/Cannot update a (null|nonexistent) service worker registration/i.test(msg) ||
+              /Failed to update a ServiceWorker for scope/i.test(msg)) return;
           var src = e.reason && e.reason.stack ? e.reason.stack.split('\n')[1] || '' : '';
           send('rejection', msg, src.trim());
         });
