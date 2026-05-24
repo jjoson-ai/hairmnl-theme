@@ -912,4 +912,25 @@
   .homepage-collection .product-grid-item {
     min-height: 380px;
   }
+
+  /* CLS fix 2026-05-24 hod — Cart page min-height reservations
+     vrec-slot--cart_above_checkout: Vertex FBT rail (2 rows of product cards)
+     template__cart__footer: checkout buttons + shipping + update actions             */
+  .vrec-slot--cart_above_checkout {
+    min-height: 280px;
+  }
+  @media (min-width: 768px) {
+    .vrec-slot--cart_above_checkout {
+      min-height: 320px;
+    }
+  }
+
+  .template__cart__footer {
+    min-height: 180px;
+  }
+  @media (min-width: 768px) {
+    .template__cart__footer {
+      min-height: 120px;
+    }
+  }
 </style>
