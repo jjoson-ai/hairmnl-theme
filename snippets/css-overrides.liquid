@@ -893,4 +893,16 @@
       cursor: not-allowed;
     }
   }
+
+  /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.
+     Prevents 0px→Npx growth CLS (17 events/7d on homepage desktop).
+     kt0-OK: min-height only, no containing-block properties. */
+  .vrec-slot--home_below_hero {
+    min-height: 380px;
+  }
+  @media (min-width: 768px) {
+    .vrec-slot--home_below_hero {
+      min-height: 420px;
+    }
+  }
 </style>

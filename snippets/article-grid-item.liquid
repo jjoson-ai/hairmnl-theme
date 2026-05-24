@@ -1,7 +1,7 @@
 {% comment %}
 * An article block that fills the container with an image with overlayed title
 {% render 'article-grid-item', article: article, aspect_ratio: 0.7, color: section.settings.color, overlay_color: section.settings.overlay_color %}{% endcomment %}
-<div class="article__card section--image {{ color | default: 'text--white' }}">
+<div class="article__card section--image {{ color | default: 'text--white' }}" style="aspect-ratio: {{ 1.0 | divided_by: aspect_ratio }};">
 
   <a
     href="{{ article.url }}"
