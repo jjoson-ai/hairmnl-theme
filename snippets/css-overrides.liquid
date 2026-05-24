@@ -957,4 +957,20 @@
     word-break: break-word;
     overflow-wrap: break-word;
   }
+
+  /* CLS fix 2026-05-24 anm5 — Pre-seed --menu-height fallback so .header__backfill
+     reserves space before the header section's inline <style> or JS measurement fire.
+     The header section at layout/theme.liquid:1329 sets :root { --menu-height: calc(80px); }
+     (or logo-based), and theme.js:152 overrides with measured value. This fallback
+     ensures the variable is NEVER undefined — the backfill never jumps from 0→actual.
+     Desktop: 80px (matches server-side hardcoded fallback). Mobile: 60px (typical
+     compact header height, exact value adjusted by JS measurement).                  */
+  :root {
+    --menu-height: 80px;
+  }
+  @media (max-width: 767px) {
+    :root {
+      --menu-height: 60px;
+    }
+  }
 </style>
