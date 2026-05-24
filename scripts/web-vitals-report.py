@@ -49,6 +49,10 @@ Usage:
   ./scripts/web-vitals-report.py --by device           # group by device
   ./scripts/web-vitals-report.py --by debug_target     # by attribution element
   ./scripts/web-vitals-report.py --rating poor --by page # only "poor" pages
+  ./scripts/web-vitals-report.py --metric CLS --by debug_target --page / --rating poor --device desktop --days 7
+                                                       # drill into what's shifting on the homepage (desktop, poor only)
+  ./scripts/web-vitals-report.py --metric CLS --by debug_target --page-contains /blogs/ --rating poor --device desktop
+                                                       # all blog pages combined → which selectors shift
   ./scripts/web-vitals-report.py --diagnose            # combined triage view
   ./scripts/web-vitals-report.py --errors              # JS error breakdown
   ./scripts/web-vitals-report.py --json                # JSON output for piping
@@ -130,6 +134,17 @@ def query_vitals(args) -> Dict[str, Dict[str, Dict[str, int]]]:
         flat.append(_eq("customEvent:metric_rating", args.rating))
     if args.device:
         flat.append(_eq("deviceCategory", args.device))
+    if args.page:
+        # Exact pagePath match. Use the value the user passes verbatim (URL path with no
+        # query string). For substring/regex, use `--page-contains` instead.
+        flat.append(_eq("pagePath", args.page))
+    if args.page_contains:
+        flat.append(Filter(
+            field_name="pagePath",
+            string_filter=Filter.StringFilter(
+                value=args.page_contains, match_type=Filter.StringFilter.MatchType.CONTAINS
+            ),
+        ))
 
     dim_name = DIMENSION_MAP.get(args.by, args.by)
 
@@ -250,6 +265,8 @@ def main():
     parser.add_argument("--by", default="page", choices=list(DIMENSION_MAP.keys()))
     parser.add_argument("--rating", default="", choices=["", "good", "needs-improvement", "poor"])
     parser.add_argument("--device", default="", choices=["", "desktop", "mobile", "tablet"], help="Filter by device category")
+    parser.add_argument("--page", default="", help="Filter to exact pagePath (e.g. '/' or '/cart'). Combine with --by debug_target to drill into what shifts on a specific page.")
+    parser.add_argument("--page-contains", default="", help="Filter to pagePath substring match (e.g. '/blogs/'). Use instead of --page when you want a section.")
     parser.add_argument("--days", type=int, default=7)
     parser.add_argument("--top", type=int, default=15)
     parser.add_argument("--errors", action="store_true", help="Show JS error breakdown")
