@@ -46,6 +46,60 @@
     window.dataLayer = window.dataLayer || [];
   }
 
+  var getSelector = function(el) {
+    try {
+      if (!el) return '';
+      if (el.nodeType !== 1) return '';
+      if (el.getRootNode && el.getRootNode() !== document) return '';
+
+      var goodId = function(id) {
+        if (!id) return false;
+        if (/\s/.test(id)) return false;
+        if (id.indexOf('gtm-') === 0) return false;
+        if (/^\d+$/.test(id)) return false;
+        if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return false;
+        return true;
+      };
+
+      var segment = function(node) {
+        var tag = node.tagName ? node.tagName.toLowerCase() : '';
+        if (!tag) return '';
+        if (node.classList && typeof node.classList.length === 'number' && node.classList.length > 0) {
+          for (var i = 0; i < node.classList.length; i++) {
+            var c = node.classList[i];
+            if (c.indexOf('_') === 0) continue;
+            if (c.indexOf('css-') === 0) continue;
+            if (c.indexOf('data-') === 0) continue;
+            if (/^[a-f0-9]{6,}$/i.test(c)) continue;
+            return tag + '.' + c;
+          }
+        }
+        return tag;
+      };
+
+      if (goodId(el.id)) return '#' + el.id;
+
+      var parts = [segment(el)];
+      var parent = el.parentElement;
+      var depth = 0;
+      while (parent && depth < 5) {
+        if (parent.tagName && parent.tagName.toLowerCase() === 'body') break;
+        if (goodId(parent.id)) {
+          parts.unshift('#' + parent.id);
+          break;
+        }
+        parts.unshift(segment(parent));
+        parent = parent.parentElement;
+        depth++;
+      }
+
+      var sel = parts.join(' > ');
+      return sel.length > 250 ? sel.substring(0, 250) : sel;
+    } catch (e) {
+      return '';
+    }
+  };
+
   function send(metric) {
     try {
       var params = {
@@ -61,7 +115,7 @@
       var attr = metric.attribution || {};
       if (attr.element) params.debug_target = attr.element;
       else if (attr.largestShiftTarget) params.debug_target = attr.largestShiftTarget;
-      else if (attr.interactionTargetElement) params.debug_target = attr.interactionTargetElement;
+      else if (attr.interactionTargetElement) params.debug_target = getSelector(attr.interactionTargetElement);
 
       if (window.dataLayer && window.dataLayer.push) {
         // GTM path — always prefer a flat dataLayer push so DLV variables
