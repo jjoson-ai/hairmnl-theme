@@ -67,22 +67,6 @@
             </div>
         </div>
 
-        {%- comment -%}
-          Phase 1b-γ.8 Slot 2: Cart page FBT — above checkout footer.
-          v1 ships with inline ADD-to-cart via native form submit (page
-          reloads after add — Shopify's default behavior). Restored per
-          team feedback that click-through-only made the slot feel
-          unfinished.
-        {%- endcomment -%}
-        {%- if cart.item_count > 0 -%}
-          {% render 'vertex-recommendations',
-              placement: 'cart_above_checkout',
-              cart: cart,
-              title: 'Recommended for You',
-              subtitle: 'Add to your cart in one tap.'
-          %}
-        {%- endif -%}
-
         <div class="template__cart__footer" data-cart-bottom>
 
           <div class="cart__footer__notes">
