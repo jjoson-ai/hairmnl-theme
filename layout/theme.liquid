@@ -1554,6 +1554,26 @@
       obs.observe(document.body, { childList: true, subtree: true });
     })();
   </script>
+
+  <script>
+    (function () {
+      var moved = false;
+      function tryMove() {
+        if (moved) return;
+        var lc = document.querySelector('limespot-container');
+        if (!lc || lc.parentElement !== document.body) return;
+        var footer = document.getElementById('shopify-section-footer');
+        if (!footer || !footer.parentElement) return;
+        footer.parentElement.insertBefore(lc, footer);
+        moved = true;
+      }
+      if (document.readyState !== 'loading') tryMove();
+      document.addEventListener('DOMContentLoaded', tryMove);
+      var observer = new MutationObserver(tryMove);
+      observer.observe(document.body, { childList: true });
+      setTimeout(function () { observer.disconnect(); }, 15000);
+    })();
+  </script>
   </body>
     {%- comment -%}
       ujg6.49 (2026-05-19): gate BOGOS freegifts-snippet-change to product

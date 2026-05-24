@@ -933,4 +933,17 @@
       min-height: 120px;
     }
   }
+
+  /* CLS fix 2026-05-24 lk9s — LimeSpot container min-height reservation
+     Prevents layout shift when LimeSpot injects recommendation boxes
+     before the footer. Typical container height: 300-350px.            */
+  limespot-container {
+    display: block;
+    min-height: 300px;
+  }
+  @media (min-width: 768px) {
+    limespot-container {
+      min-height: 350px;
+    }
+  }
 </style>
