@@ -905,4 +905,11 @@
       min-height: 420px;
     }
   }
+
+  /* CLS fix 2026-05-24 fxh9 — reserve product card height in homepage collection grid
+     Prevent js-grid height recalculation when cards have varying content heights
+     (different title lengths, badge combinations, price formatting).             */
+  .homepage-collection .product-grid-item {
+    min-height: 380px;
+  }
 </style>
