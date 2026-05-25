@@ -281,34 +281,22 @@
 {% render 'howto-schema', article: article %}
 
 {%- comment -%}
-  MIGRATION-DEBT (bd oo57, 2026-05-22): will need port to OS 2.0 article template.
-  Reason: LimeSpot Personalizer admin's BlogArticle layout has data-placement-sibling=""
-  (empty), causing the recommendation container to fall back to document.body append —
-  which puts it ~10px below the site footer. This script moves it before
-  #shopify-section-footer after LimeSpot injects. Tagged for OS 2.0 port; the proper
-  fix is in LimeSpot admin (Layouts → Blog Article → set Placement Sibling), which
-  would make this snippet a no-op safe to delete.
+  oo57 superseded 2026-05-25: LimeSpot recommendation sliders are now hidden
+  on article pages instead of relocated above the footer. Operator chose to
+  remove them entirely from blog articles rather than reposition.
+
+  Previous behaviour: 27-line MutationObserver that moved <limespot-container>
+  from end-of-body to before #shopify-section-footer. Replaced with CSS-only
+  hide — no JS, no DOM mutation, no observer.
+
+  MIGRATION-NEUTRAL: the CSS rule ports cleanly to OS 2.0. Full byte cleanup
+  (block LimeSpot scripts on /blogs/* entirely) is a separate task — track
+  via hvoo (LimeSpot uninstall) or a new defer-guard bd if uninstall is
+  deferred.
 {%- endcomment -%}
-<script>
-  (function () {
-    var moved = false;
-    function tryMove() {
-      if (moved) return;
-      var lc = document.querySelector('limespot-container');
-      if (!lc || lc.parentElement !== document.body) return;
-      var footer = document.getElementById('shopify-section-footer');
-      if (!footer || !footer.parentElement) return;
-      footer.parentElement.insertBefore(lc, footer);
-      moved = true;
-    }
-    if (document.readyState !== 'loading') tryMove();
-    document.addEventListener('DOMContentLoaded', tryMove);
-    var observer = new MutationObserver(tryMove);
-    observer.observe(document.body, { childList: true });
-    // Stop observing after LimeSpot has had ample time to inject.
-    setTimeout(function () { observer.disconnect(); }, 15000);
-  })();
-</script>
+<style>
+  body.template-article limespot-container { display: none !important; }
+</style>
 
 {% schema %}
   {
