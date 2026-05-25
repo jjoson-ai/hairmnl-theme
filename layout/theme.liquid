@@ -862,10 +862,10 @@
       })();
     </script>
 
-    {%- if request.path == '/cart' -%}
+    {%- if request.path == '/cart' or template contains 'product' -%}
     {%- comment -%}
       tyio.1 v2 (bd hairmnl-theme-njj1): Defer LoyaltyLion init on /cart until
-      first user interaction.
+      first user interaction. Extended to /products/* via za7u.2 (2026-05-25).
 
       v1 used document.createElement override (BROKEN — release() fired
       prematurely on synthetic page-load events, restoring _origCE before
@@ -920,6 +920,7 @@
       });
     })();
     </script>
+    {%- if request.path == '/cart' -%}
     {%- comment -%}
       tyio.2 (bd hairmnl-theme-knz5): Defer BOGOS free gifts init on /cart to
       requestIdleCallback. BOGOS loads two scripts (~416ms CPU) that make an
@@ -970,6 +971,7 @@
       }, { timeout: 3000 });
     })();
     </script>
+    {%- endif -%}
     {%- endif -%}
 
     {% include "loyaltylion" %}
