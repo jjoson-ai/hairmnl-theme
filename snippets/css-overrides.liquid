@@ -947,6 +947,13 @@
     }
   }
 
+  /* 3yud 2026-05-25: Hide LimeSpot recommendation container on /pages/* (template-page).
+     Same body-append CLS mechanism as article pages (oo57 hides on template-article).
+     The global min-height rule (lk9s above) cannot prevent the initial DOM-insertion
+     shift when limespot-container appears mid-scroll; a full display:none does.
+     Full byte cleanup pending hvoo (LimeSpot uninstall). */
+  body.template-page limespot-container { display: none !important; }
+
   /* 80ce 2026-05-24: search results banner (.note) has no top spacing — add gap below search form */
   .search__page__heading > .note {
     margin-top: 20px;
