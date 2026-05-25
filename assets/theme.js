@@ -3978,10 +3978,31 @@ if((typeof Shopify.getCart) === 'undefined'){
     const er = {
         onLoad() {
             Zo[this.id] = [];
-            this.container.querySelectorAll(Yo).forEach((t=>{
-                Zo[this.id].push(new tr(this.container,t))
+            const qwblSliders = Array.from(this.container.querySelectorAll(Yo));
+            if (!qwblSliders.length) return;
+            // qwbl 2026-05-25: defer Flickity init to IntersectionObserver so
+            // each slider initialises when it enters the viewport (+200px margin)
+            // rather than synchronously during section onLoad(). Removes the
+            // main-thread blocking that caused high input delay (INP >200ms) on
+            // collection pages with multiple section-double / section-collection-tabs
+            // slider instances (e.g. K18 branded page: 5 simultaneous inits).
+            // IO fires asynchronously after the current task, so the browser stays
+            // responsive to user input during page init.
+            if ("IntersectionObserver" in window) {
+                qwblSliders.forEach((qwblSlider) => {
+                    const qwblIO = new IntersectionObserver((entries) => {
+                        if (entries[0].isIntersecting) {
+                            qwblIO.disconnect();
+                            Zo[this.id].push(new tr(this.container, qwblSlider));
+                        }
+                    }, { rootMargin: "200px", threshold: 0 });
+                    qwblIO.observe(qwblSlider);
+                });
+            } else {
+                qwblSliders.forEach((t) => {
+                    Zo[this.id].push(new tr(this.container, t));
+                });
             }
-            ))
         },
         onUnload(t) {
             Zo[this.id].forEach((e=>{

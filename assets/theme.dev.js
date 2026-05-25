@@ -5831,10 +5831,28 @@
   const productSliderSection = {
     onLoad() {
       sections$9[this.id] = [];
-      const els = this.container.querySelectorAll(selectors$k.slider);
-      els.forEach((el) => {
-        sections$9[this.id].push(new Slider(this.container, el));
-      });
+      const sliders = Array.from(this.container.querySelectorAll(selectors$k.slider));
+      if (!sliders.length) return;
+      // qwbl 2026-05-25: defer Flickity init to IntersectionObserver so each
+      // slider initialises when it enters the viewport (+200px margin) rather
+      // than synchronously during section onLoad(). Removes the main-thread
+      // blocking that caused high input delay (INP >200ms) on collection pages
+      // with multiple section-double / section-collection-tabs slider instances.
+      if ('IntersectionObserver' in window) {
+        sliders.forEach((slider) => {
+          const io = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+              io.disconnect();
+              sections$9[this.id].push(new Slider(this.container, slider));
+            }
+          }, { rootMargin: '200px', threshold: 0 });
+          io.observe(slider);
+        });
+      } else {
+        sliders.forEach((slider) => {
+          sections$9[this.id].push(new Slider(this.container, slider));
+        });
+      }
     },
     onUnload(e) {
       sections$9[this.id].forEach((el) => {
