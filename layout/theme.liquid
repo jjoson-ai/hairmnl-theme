@@ -1017,6 +1017,11 @@
     <script>
     (function() {
       var PATTERNS = ['problogger.css', 'owl.carousel'];
+      // ujg6.61 2026-05-25: Inject template context so the guard knows whether
+      // Pro Blogger content can actually render on this page. article/blog/product
+      // templates render Pro Blogger output; all others get nothing from it.
+      var IS_BLOG_TEMPLATE = {% if template.name == 'article' or template.name == 'blog' or template.name == 'product' %}true{% else %}false{% endif %};
+
       var matches = function(href) {
         if (typeof href !== 'string') return false;
         for (var i = 0; i < PATTERNS.length; i++) {
@@ -1024,15 +1029,22 @@
         }
         return false;
       };
-      var deferCSS = function(el) {
-        if (el.tagName !== 'LINK') return;
+
+      // ujg6.61: On blog/article/product — defer (non-render-blocking async load).
+      // On all other templates — block entirely (media=not-all + remove from DOM)
+      // since Pro Blogger renders no content there.
+      var handleCSS = function(el) {
+        if (!el || el.nodeType !== 1) return;
+        if ((el.tagName || '').toUpperCase() !== 'LINK') return;
         if (el.rel !== 'stylesheet') return;
         if (!matches(el.href)) return;
-        el.media = 'print';
-        el.onload = function() {
-          this.media = 'all';
-          this.onload = null;
-        };
+        if (IS_BLOG_TEMPLATE) {
+          el.media = 'print';
+          el.onload = function() { this.media = 'all'; this.onload = null; };
+        } else {
+          el.media = 'not all';
+          if (el.parentNode) el.parentNode.removeChild(el);
+        }
       };
 
       // 1. createElement override — catches dynamic createElement('link')
@@ -1048,7 +1060,7 @@
             },
             set: function(v) {
               set.call(this, v);
-              deferCSS(this);
+              handleCSS(this);
             }
           });
         }
@@ -1056,14 +1068,21 @@
       };
 
       // 2. MutationObserver — catches parser-inserted <link> from content_for_header
+      // ujg6.61: Observe <head> only (links always go to head; documentElement was
+      // too broad and fired on every DOM mutation sitewide). Disconnect at DCL so
+      // the observer doesn't run indefinitely on pages with heavy DOM churn
+      // (collection filters, lazysizes, Flickity tab switches, etc.).
       var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(m) {
           m.addedNodes.forEach(function(node) {
-            if (node.tagName === 'LINK') deferCSS(node);
+            if (node.tagName === 'LINK') handleCSS(node);
           });
         });
       });
-      observer.observe(document.documentElement, { childList: true, subtree: true });
+      observer.observe(document.head, { childList: true });
+      document.addEventListener('DOMContentLoaded', function() {
+        observer.disconnect();
+      }, { once: true });
     })();
     </script>
 
