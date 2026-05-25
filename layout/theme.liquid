@@ -90,9 +90,14 @@
         - analytics.tiktok.com (TikTok Pixel, sitewide, 737 ms ping)
         - satcb.azureedge.net (SATCB widget, PDP+cart only, ~600 ms)
         - i.ytimg.com (YouTube thumbnail CDN, brand page facade only)
-        - searchanise-ef84.kxcdn.com (search page only — dns-prefetch,
-          NOT preconnect; preconnect here was a bug, contradicted by the
-          comment above and triggered a 5th-preconnect Lighthouse warning)
+        - searchanise-ef84.kxcdn.com (search page only — dns-prefetch
+          sitewide; upgraded to preconnect on /pages/search-results-page
+          specifically via page.handle check below. The 5th-preconnect
+          Lighthouse warning fired when this was sitewide; the search page
+          currently has 0 sitewide preconnects so the conditional preconnect
+          is safe — stays at 2 on search page, 0 on all other pages).
+          yblz 2026-05-25: also preconnects www.searchanise.com (init.js
+          origin) to reduce cold TCP+TLS cost on first filter interaction.
     {%- endcomment -%}
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://static.klaviyo.com">
@@ -102,7 +107,18 @@
     <link rel="dns-prefetch" href="https://analytics.tiktok.com">
     <link rel="dns-prefetch" href="https://satcb.azureedge.net">
     <link rel="dns-prefetch" href="https://i.ytimg.com">
-    <link rel="dns-prefetch" href="https://searchanise-ef84.kxcdn.com">
+    {%- comment -%}
+      yblz 2026-05-25: Searchanise CDN — preconnect on the search results page
+      (establishes TCP+TLS early for widget JS + XHR fetch requests, reducing
+      cold INP on first filter interaction by ~50-150ms); dns-prefetch elsewhere
+      (DNS-only, avoids burning a preconnect slot on non-search pages).
+    {%- endcomment -%}
+    {%- if page.handle == 'search-results-page' -%}
+      <link rel="preconnect" href="https://searchanise-ef84.kxcdn.com" crossorigin>
+      <link rel="preconnect" href="https://www.searchanise.com" crossorigin>
+    {%- else -%}
+      <link rel="dns-prefetch" href="https://searchanise-ef84.kxcdn.com">
+    {%- endif -%}
 
 
 
@@ -152,7 +168,14 @@
     {%- elsif template == 'cart' -%}
       <link rel="preload" href="{{ 'theme-cart.css' | asset_url }}" as="style">
       <link rel="preload" href="{{ 'custom-theme-cart.css' | asset_url }}" as="style">
-    {%- elsif template contains 'search' -%}
+    {%- elsif template contains 'search' or page.handle == 'search-results-page' -%}
+      {%- comment -%}
+        yblz 2026-05-25: extend to page.handle == 'search-results-page' so
+        theme-search.css + custom-theme-search.css load on the Searchanise
+        results page (/pages/search-results-page). The Liquid `template`
+        variable is 'page' on that route, so `template contains 'search'`
+        is false; the page.handle guard fills the gap.
+      {%- endcomment -%}
       <link rel="preload" href="{{ 'theme-search.css' | asset_url }}" as="style">
       <link rel="preload" href="{{ 'custom-theme-search.css' | asset_url }}" as="style">
     {%- endif -%}

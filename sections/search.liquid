@@ -133,7 +133,25 @@
                   {% endcomment %}
                   <div class="grid__item one-sixth">
                     <a href="{{ item.url }}" title="{{ item.title | escape }}">
-                      {{ item.featured_media.preview_image | img_url: 'medium' | img_tag: item.featured_media.alt }}
+                      {%- comment -%}
+                        yblz 2026-05-25: replaced deprecated img_url/img_tag
+                        chain with image_url + explicit <img> carrying intrinsic
+                        width/height attributes. img_tag emits no dimensions;
+                        without them the browser cannot reserve layout space,
+                        causing CLS as each image loads. height = original_height
+                        × 240 / original_width (proportional scale to 240px wide).
+                        First result is eager+high-priority (LCP candidate);
+                        subsequent results are lazy-loaded.
+                      {%- endcomment -%}
+                      {%- assign _simg = item.featured_media.preview_image -%}
+                      {%- assign _sh = _simg.height | times: 240 | divided_by: _simg.width -%}
+                      <img
+                        src="{{ _simg | image_url: width: 240 }}"
+                        width="240"
+                        height="{{ _sh }}"
+                        alt="{{ item.featured_media.alt | escape }}"
+                        {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                        style="width:100%;height:auto;">
                     </a>
                   </div>
 
@@ -141,7 +159,15 @@
                 {% elsif item.object_type == 'article' and item.image %}
                   <div class="grid__item one-sixth">
                     <a href="{{ item.url }}" title="{{ item.title | escape }}">
-                      {{ item | image_url: 'medium' | img_tag: item.title }}
+                      {%- assign _aimg = item.image -%}
+                      {%- assign _ah = _aimg.height | times: 240 | divided_by: _aimg.width -%}
+                      <img
+                        src="{{ _aimg | image_url: width: 240 }}"
+                        width="240"
+                        height="{{ _ah }}"
+                        alt="{{ item.title | escape }}"
+                        loading="lazy"
+                        style="width:100%;height:auto;">
                     </a>
                   </div>
 
