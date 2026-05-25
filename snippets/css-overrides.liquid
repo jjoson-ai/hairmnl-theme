@@ -954,6 +954,15 @@
      Full byte cleanup pending hvoo (LimeSpot uninstall). */
   body.template-page limespot-container { display: none !important; }
 
+  /* kqlx 2026-05-25: Narrow ticker will-change to transform-only.
+     theme.css:9358 has will-change: transform, padding, width — the extra
+     layout properties (padding, width) prevent GPU-compositor hit-testing,
+     forcing a main-thread layout reflow on every tap of the animating ticker
+     element (INP >200ms cold load, #6 attribution target). The @keyframes
+     animation only uses transform, so the narrower hint is correct and allows
+     the browser to resolve tap hits entirely on the compositor thread. */
+  .ticker--animated { will-change: transform !important; }
+
   /* 80ce 2026-05-24: search results banner (.note) has no top spacing — add gap below search form */
   .search__page__heading > .note {
     margin-top: 20px;
