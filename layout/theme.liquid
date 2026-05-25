@@ -1030,24 +1030,23 @@
         return false;
       };
 
-      // ujg6.61: On blog/article/product — defer (non-render-blocking async load).
-      // On all other templates — block entirely (media=not-all + remove from DOM)
-      // since Pro Blogger renders no content there.
+      // On non-blog templates: suppress Pro Blogger CSS entirely (media=not-all
+      // + remove from DOM). Pro Blogger injects into a Shopify app block div
+      // in <body>, not <head>, so body-injected CSS is already non-render-blocking
+      // on blog/article/product — no media=print deferral needed there.
       var handleCSS = function(el) {
         if (!el || el.nodeType !== 1) return;
         if ((el.tagName || '').toUpperCase() !== 'LINK') return;
-        if (el.rel !== 'stylesheet') return;
         if (!matches(el.href)) return;
-        if (IS_BLOG_TEMPLATE) {
-          el.media = 'print';
-          el.onload = function() { this.media = 'all'; this.onload = null; };
-        } else {
+        if (!IS_BLOG_TEMPLATE) {
+          el.disabled = true;
           el.media = 'not all';
           if (el.parentNode) el.parentNode.removeChild(el);
         }
       };
 
-      // 1. createElement override — catches dynamic createElement('link')
+      // 1. createElement override — catches dynamic createElement('link').
+      // Uses a Promise microtask so rel/media are set before we inspect them.
       var _createElement = document.createElement.bind(document);
       document.createElement = function(tag) {
         var el = _createElement.apply(document, arguments);
@@ -1060,28 +1059,44 @@
             },
             set: function(v) {
               set.call(this, v);
-              handleCSS(this);
+              var self = this;
+              Promise.resolve().then(function() { handleCSS(self); });
             }
           });
         }
         return el;
       };
 
-      // 2. MutationObserver — catches parser-inserted <link> from content_for_header
-      // ujg6.61: Observe <head> only (links always go to head; documentElement was
-      // too broad and fired on every DOM mutation sitewide). Disconnect at DCL so
-      // the observer doesn't run indefinitely on pages with heavy DOM churn
-      // (collection filters, lazysizes, Flickity tab switches, etc.).
+      // 2. MutationObserver — catches all link insertions during page parse.
+      // ujg6.61: Pro Blogger injects into a Shopify app block div in <body>,
+      // so we must watch documentElement+subtree (not just <head>). The key
+      // improvement vs the original guard: disconnect at DOMContentLoaded so
+      // the observer never runs during post-load DOM churn (filter toggles,
+      // lazysizes, Flickity). DCL sweep below is the safety net for any links
+      // inserted before the observer was ready.
       var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(m) {
           m.addedNodes.forEach(function(node) {
-            if (node.tagName === 'LINK') handleCSS(node);
+            if (node.nodeType === 1 && node.tagName === 'LINK') handleCSS(node);
           });
         });
       });
-      observer.observe(document.head, { childList: true });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+
       document.addEventListener('DOMContentLoaded', function() {
         observer.disconnect();
+        // DCL sweep: suppress any PB links already in DOM that predate the observer
+        // (e.g. innerHTML-injected links in app block divs).
+        if (!IS_BLOG_TEMPLATE) {
+          var links = document.querySelectorAll('link');
+          for (var i = 0; i < links.length; i++) {
+            if (matches(links[i].href) && links[i].media !== 'not all') {
+              links[i].disabled = true;
+              links[i].media = 'not all';
+              if (links[i].parentNode) links[i].parentNode.removeChild(links[i]);
+            }
+          }
+        }
       }, { once: true });
     })();
     </script>
