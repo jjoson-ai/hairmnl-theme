@@ -963,6 +963,17 @@
      the browser to resolve tap hits entirely on the compositor thread. */
   .ticker--animated { will-change: transform !important; }
 
+  /* yblz 2026-05-25: Reserve min-height on Searchanise results container so the
+     page does not collapse when Searchanise replaces its own skeleton
+     (#snize_skeleton_results, height:100vh inline) with actual results.
+     Without this, the skeleton removal creates a brief zero-height window that
+     shifts all content below the search results — the dominant CLS source on
+     /pages/search-results-page. Scoped to template-page to avoid affecting
+     any other #snize_results usage on other page types. */
+  body.template-page #snize_results {
+    min-height: 100vh;
+  }
+
   /* 80ce 2026-05-24: search results banner (.note) has no top spacing — add gap below search form */
   .search__page__heading > .note {
     margin-top: 20px;
