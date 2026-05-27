@@ -75,7 +75,15 @@
                     {% render 'icon-arrow-medium-right' %}
                 </button>
 
-                <div class="rte rte--column" data-accordion-body data-accordion-body-mobile id="accordion-{{ block.id }}-{{ forloop.index }}">{{ page.content }}</div>
+                {%- comment -%}
+                  l76r 2026-05-27: lazy-load all <img> in admin-edited rich text.
+                  Footer rich text is always below the fold — every image is safe to
+                  lazy-load. Two-pass: add loading=lazy to every <img, then remove the
+                  injected attr from any image that had an explicit loading attr already
+                  (preserves intentional loading=eager). Idempotent.
+                {%- endcomment -%}
+                {%- assign _l76r_content = page.content | replace: '<img ', '<img loading="lazy" ' | replace: '<img loading="lazy" loading=', '<img loading=' -%}
+                <div class="rte rte--column" data-accordion-body data-accordion-body-mobile id="accordion-{{ block.id }}-{{ forloop.index }}">{{ _l76r_content }}</div>
               </div>
             {% endif %}
 
@@ -89,7 +97,9 @@
                   {{ block.settings.title | escape }}
                   {% render 'icon-arrow-medium-right' %}
               </button>
-              <div class="rte rte--column" data-accordion-body data-accordion-body-mobile id="accordion-{{ block.id }}-{{ forloop.index }}">{{ block.settings.text }}</div>
+              {%- comment -%} l76r: lazy-load admin rich-text images (see notes above) {%- endcomment -%}
+              {%- assign _l76r_content = block.settings.text | replace: '<img ', '<img loading="lazy" ' | replace: '<img loading="lazy" loading=', '<img loading=' -%}
+              <div class="rte rte--column" data-accordion-body data-accordion-body-mobile id="accordion-{{ block.id }}-{{ forloop.index }}">{{ _l76r_content }}</div>
             </div>
 
           {% when 'newsletter' %}
@@ -103,8 +113,10 @@
                   {% render 'icon-arrow-medium-right' %}
               </button>
               <div class="rte rte--column" data-accordion-body data-accordion-body-mobile id="accordion-{{ block.id }}-{{ forloop.index }}">
-                {{ block.settings.richtext }}
-                
+                {%- comment -%} l76r: lazy-load admin rich-text images (see notes above) {%- endcomment -%}
+                {%- assign _l76r_content = block.settings.richtext | replace: '<img ', '<img loading="lazy" ' | replace: '<img loading="lazy" loading=', '<img loading=' -%}
+                {{ _l76r_content }}
+
                 {% render 'newsletter-form' unique: 'footer-newsletter' %}
               </div>
             </div>
