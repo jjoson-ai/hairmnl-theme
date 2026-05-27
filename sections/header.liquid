@@ -50,11 +50,17 @@
         href="{{ routes.root_url }}">
       {% if section.settings.logo != blank %}
         {%- assign img_url = section.settings.logo | image_url: width: 440 -%}
+        {%- comment -%}
+          fwar 2026-05-27: removed loading="lazy" — header logo is always
+          above-the-fold; lazy-loading deprioritized it and made it a possible
+          LCP candidate on text-first article pages (article LCP investigation
+          in bd hairmnl-theme-xttq).
+        {%- endcomment -%}
         <img src="{{ img_url }}"
           class="logo__img logo__img--color"
           width="{{ section.settings.logo.width }}"
           height="{{ section.settings.logo.height }}"
-          alt="{{ section.settings.logo.alt | default: shop.name | strip_html | escape }}" loading="lazy">
+          alt="{{ section.settings.logo.alt | default: shop.name | strip_html | escape }}">
       {% else %}
       {% liquid
         assign classes = ''
@@ -76,11 +82,12 @@
       {% endif %}
       {% if has_transparent_logo %}
         {%- assign img_url = section.settings.transparent_logo | image_url: width: 440 -%}
+        {%- comment -%} fwar: transparent logo also above-the-fold; never lazy {%- endcomment -%}
         <img src="{{ img_url }}"
               class="logo__img logo__img--transparent"
               width="{{ section.settings.transparent_logo.width }}"
               height="{{ section.settings.transparent_logo.height }}"
-              alt="{{ section.settings.transparent_logo.alt | default: shop.name | strip_html | escape }}" loading="lazy">
+              alt="{{ section.settings.transparent_logo.alt | default: shop.name | strip_html | escape }}">
       {% endif %}
 
       {% if section.settings.logo != blank %}

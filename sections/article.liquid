@@ -228,10 +228,19 @@
             {% assign current_article = article %}
             {% assign blog_grid = 'one-whole' %}
             <div class="grid">
+              {%- comment -%}
+                fwar 2026-05-27: pass is_first=true on the first iteration so
+                article-grid-item.liquid uses loading="eager" + fetchpriority="high"
+                on the lead sidebar thumbnail. On desktop this thumbnail is in
+                the initial viewport (top≈280px) — was previously loading="lazy"
+                which deprioritized it from being the LCP element. See bd xttq.
+              {%- endcomment -%}
               {% for article in blog.articles %}
                 {% unless article.handle == current_article.handle %}
                   <div class="grid__item {{ blog_grid }}">
-                    {% render 'article-grid-item', article: article, aspect_ratio: 0.7 %}
+                    {%- assign is_first_sidebar = false -%}
+                    {%- if counter == 0 -%}{%- assign is_first_sidebar = true -%}{%- endif -%}
+                    {% render 'article-grid-item', article: article, aspect_ratio: 0.7, is_first: is_first_sidebar %}
                   </div>
                   {% assign counter = counter | plus: 1 %}
                   {% if counter == article_limit %}
