@@ -1102,6 +1102,82 @@
     </script>
 
   {%- comment -%}
+    Pro Blogger owl-carousel defer guard (bd hairmnl-theme-88gw, 2026-05-27).
+    Article LCP investigation (bd xttq) found 2 Pro Blogger owl-carousel
+    instances rendered at top≈7194px on article pages — well below the fold
+    but initialized synchronously at page load via inline scripts in app
+    blocks. The init triggers ~250-500ms of TBT on mobile from owl.carousel.js
+    parse + jQuery DOM measurements on the carousel items.
+
+    Pro Blogger inline scripts dynamically load owl.carousel.min.js from
+    cdnjs, then call $.fn.owlCarousel() in the script's onload callback.
+    This guard intercepts the dynamically-added <script src="owl.carousel...">
+    via MutationObserver on document.head, then swaps its .onload to first
+    patch $.fn.owlCarousel (wrapping it with an IntersectionObserver gate)
+    BEFORE running Pro Blogger's original onload callback.
+
+    Result: carousels above-the-fold (or within 1.5 viewports) init
+    immediately as before. Carousels further down only init when the user
+    scrolls within 300px of them. No visual change; pure deferral of TBT.
+
+    Disconnects at DOMContentLoaded — Pro Blogger's dynamic scripts all
+    fire during initial parse; no need to keep the observer alive afterward.
+  {%- endcomment -%}
+    <script>
+    (function() {
+      function patchOwlCarousel() {
+        if (!window.jQuery || !jQuery.fn || !jQuery.fn.owlCarousel) return;
+        if (jQuery.fn.owlCarousel.__88gw) return;
+        var _orig = jQuery.fn.owlCarousel;
+        jQuery.fn.owlCarousel = function() {
+          var args = arguments;
+          return this.each(function() {
+            var el = this;
+            var $el = jQuery(el);
+            var rect = el.getBoundingClientRect();
+            // Above-the-fold or within 1.5 viewports: init immediately (no visual delay)
+            if (rect.top < window.innerHeight * 1.5) {
+              return _orig.apply($el, args);
+            }
+            if (!('IntersectionObserver' in window)) {
+              return _orig.apply($el, args);
+            }
+            var io = new IntersectionObserver(function(entries) {
+              if (entries[0].isIntersecting) {
+                io.disconnect();
+                _orig.apply($el, args);
+              }
+            }, { rootMargin: '300px' });
+            io.observe(el);
+          });
+        };
+        jQuery.fn.owlCarousel.__88gw = true;
+      }
+
+      // Intercept dynamically-added owl.carousel.min.js script tag — swap its
+      // onload to patch first, then call Pro Blogger's original onload.
+      var owlObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          m.addedNodes.forEach(function(node) {
+            if (node.tagName !== 'SCRIPT') return;
+            var src = node.src || '';
+            if (src.indexOf('owl.carousel') === -1) return;
+            var origOnload = node.onload;
+            node.onload = function() {
+              patchOwlCarousel();
+              if (origOnload) return origOnload.apply(this, arguments);
+            };
+          });
+        });
+      });
+      owlObserver.observe(document.head, { childList: true });
+      document.addEventListener('DOMContentLoaded', function() {
+        owlObserver.disconnect();
+      }, { once: true });
+    })();
+    </script>
+
+  {%- comment -%}
     Reamaze defer-on-interaction guard (bd hw7 + meu, 2026-05-14).
     Re-ported from Pipeline 6 commit d6efd9e onto P8 structure per bd fsaa.
     Intercepts cdn.reamaze.com scripts emitted by content_for_header,
