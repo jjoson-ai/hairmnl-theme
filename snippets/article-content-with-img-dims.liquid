@@ -160,31 +160,45 @@
 
   {%- comment -%} Build the rewritten <img ...> tag {%- endcomment -%}
   {%- assign _new_attrs = _img_attrs -%}
+  {%- assign _inject = '' -%}
+
+  {%- comment -%}
+    xlcm 2026-05-27: loading/fetchpriority/decoding injection moved OUTSIDE
+    the dim-detection conditional. Previously these only applied when the
+    src URL contained the _WIDTHxHEIGHT.ext pattern — admin-pasted images
+    without that pattern (e.g. plain Davines_This_Is_A_Blow_Dry_Primer.jpg)
+    were left with no loading attr at all (browser default = eager).
+    Article LCP investigation in bd xttq found 6 such images on the test
+    article wasting bandwidth in the LCP critical window.
+  {%- endcomment -%}
   {%- if _w != '' and _h != '' -%}
-    {%- assign _inject = 'width="' | append: _w | append: '" height="' | append: _h | append: '" ' -%}
-    {%- comment -%}
-      LCP priority for the FIRST in-body image (issue 7tq, 2026-05-10).
-      GA4 RUM attribution showed first body image is the LCP candidate on
-      42-45% of poor LCP events — the hero is already preloaded (9hw) but
-      its CSS fade-in delays paint, so the unanimated body image wins the
-      LCP race despite loading later. Inject fetchpriority=high + eager
-      on the first <img>, lazy on all subsequent <img> tags.
-    {%- endcomment -%}
-    {%- if forloop.first -%}
-      {%- unless _img_attrs contains 'fetchpriority=' -%}
-        {%- assign _inject = _inject | append: 'fetchpriority="high" ' -%}
-      {%- endunless -%}
-      {%- unless _img_attrs contains 'loading=' -%}
-        {%- assign _inject = _inject | append: 'loading="eager" ' -%}
-      {%- endunless -%}
-    {%- else -%}
-      {%- unless _img_attrs contains 'loading=' -%}
-        {%- assign _inject = _inject | append: 'loading="lazy" ' -%}
-      {%- endunless -%}
-    {%- endif -%}
-    {%- unless _img_attrs contains 'decoding=' -%}
-      {%- assign _inject = _inject | append: 'decoding="async" ' -%}
+    {%- assign _inject = _inject | append: 'width="' | append: _w | append: '" height="' | append: _h | append: '" ' -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    LCP priority for the FIRST in-body image (issue 7tq, 2026-05-10).
+    GA4 RUM attribution showed first body image is the LCP candidate on
+    42-45% of poor LCP events. Inject fetchpriority=high + eager on the
+    first <img>, lazy on all subsequent <img> tags. Now applies to ALL
+    article body images regardless of URL-encoded dim parseability.
+  {%- endcomment -%}
+  {%- if forloop.first -%}
+    {%- unless _img_attrs contains 'fetchpriority=' -%}
+      {%- assign _inject = _inject | append: 'fetchpriority="high" ' -%}
     {%- endunless -%}
+    {%- unless _img_attrs contains 'loading=' -%}
+      {%- assign _inject = _inject | append: 'loading="eager" ' -%}
+    {%- endunless -%}
+  {%- else -%}
+    {%- unless _img_attrs contains 'loading=' -%}
+      {%- assign _inject = _inject | append: 'loading="lazy" ' -%}
+    {%- endunless -%}
+  {%- endif -%}
+  {%- unless _img_attrs contains 'decoding=' -%}
+    {%- assign _inject = _inject | append: 'decoding="async" ' -%}
+  {%- endunless -%}
+
+  {%- if _inject != '' -%}
     {%- assign _new_attrs = _inject | append: _img_attrs -%}
   {%- endif -%}
 
