@@ -1352,6 +1352,151 @@
   })();
   </script>
 
+  {%- comment -%}
+    Octane AI defer-on-interaction guard (bd hairmnl-theme-euqu, 2026-05-27).
+
+    Surfaced during article LCP investigation (bd xttq): PSI showed
+    108 KB app.octaneai.com/<bot>/shopify.js loading on every pageload
+    + ~279ms main-thread parse + 3 follow-up XHRs (config + pop_ups).
+    Octane has no sitewide floating UI (unlike Reamaze) — it's a quiz
+    base SDK that activates only when a merchant-embedded quiz CTA
+    fires. So default behavior is: don't load it until the user
+    interacts in any way.
+
+    Pattern mirrors the Reamaze guard above (hw7): MutationObserver +
+    createElement override to intercept the dynamic <script> insertion,
+    queue it as javascript/blocked, then re-insert on disarm.
+
+    Triggers (any one):
+    1. Click on [data-octane-trigger] (hot path — also forces immediate
+       load and dispatches a quiz-start event if mode="open")
+    2. Any click after 5 seconds idle
+    3. Scroll past 50% of page height
+    4. Auto-disarm at 30 seconds (faster than Reamaze 60s — quiz is a
+       lighter engagement than chat and we want it ready for any scroll
+       interaction)
+
+    KILL_SWITCH for single-line rollback. GA4 telemetry on load path +
+    latency. Deferred scripts: ~108 KB + ~279ms parse saved per non-
+    interaction pageload.
+  {%- endcomment -%}
+  <script>
+  (function() {
+    var KILL_SWITCH = false;
+    if (KILL_SWITCH) return;
+
+    var BLOCKED = ['app.octaneai.com'];
+    var IDLE_MS = 5000;
+    var SCROLL_PCT = 0.5;
+    var AUTO_MS = 30000;
+
+    var disarmed = false;
+    var deferred = [];
+    var triggerAt = null;
+
+    function dl(name, payload) {
+      (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: name }, payload || {}));
+    }
+    function isBlocked(src) {
+      return src && BLOCKED.some(function(o) { return String(src).indexOf(o) !== -1; });
+    }
+
+    // MutationObserver — catches scripts injected via content_for_header
+    var mo = new MutationObserver(function(muts) {
+      if (disarmed) return;
+      muts.forEach(function(m) {
+        m.addedNodes.forEach(function(n) {
+          if (n.nodeName === 'SCRIPT' && isBlocked(n.src)) {
+            var origSrc = n.src;
+            n.type = 'javascript/blocked';
+            n.removeAttribute('src');
+            n.dataset.deferredSrc = origSrc;
+            deferred.push(origSrc);
+          }
+        });
+      });
+    });
+    mo.observe(document.documentElement, { childList: true, subtree: true });
+
+    // createElement override — belt-and-suspenders for dynamic script creation
+    var _ce = document.createElement.bind(document);
+    document.createElement = function(tag) {
+      var el = _ce.apply(document, arguments);
+      if (typeof tag === 'string' && tag.toLowerCase() === 'script') {
+        var setSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').set;
+        Object.defineProperty(el, 'src', {
+          configurable: true,
+          get: function() { return Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').get.call(this); },
+          set: function(v) {
+            if (!disarmed && isBlocked(v)) { deferred.push(String(v)); return; }
+            setSrc.call(this, v);
+          }
+        });
+      }
+      return el;
+    };
+
+    // Disarm — load all deferred Octane scripts
+    function disarm(path) {
+      if (disarmed) return;
+      disarmed = true;
+      triggerAt = Date.now();
+      dl('octane_load_path', { path: path });
+      mo.disconnect();
+      deferred.forEach(function(src, i) {
+        var s = _ce('script');
+        s.async = true;
+        if (i === 0) {
+          s.addEventListener('load', function() {
+            dl('octane_load_latency_ms', { ms: Date.now() - triggerAt });
+          });
+        }
+        s.src = src;
+        document.head.appendChild(s);
+      });
+    }
+
+    // ---- TRIGGERS ----
+
+    // 1. Click on [data-octane-trigger] (hot path)
+    document.addEventListener('click', function(e) {
+      var hot = e.target.closest && e.target.closest('[data-octane-trigger]');
+      if (hot) {
+        var mode = hot.getAttribute('data-octane-trigger') || 'warm';
+        if (mode === 'open') e.preventDefault();
+        disarm('hot_path_attribute');
+        if (mode === 'open') {
+          var t = setInterval(function() {
+            if (window.__OctaneAI && typeof window.__OctaneAI.show === 'function') {
+              try { window.__OctaneAI.show(); } catch(_) {}
+              clearInterval(t);
+            }
+          }, 100);
+          setTimeout(function() { clearInterval(t); }, 10000);
+        }
+      }
+    });
+
+    // 2. Any click after 5 seconds
+    setTimeout(function() {
+      if (disarmed) return;
+      var h = function() { disarm('any_click_after_5s'); document.removeEventListener('click', h, true); };
+      document.addEventListener('click', h, true);
+    }, IDLE_MS);
+
+    // 3. Scroll past 50% of page height
+    var sh = function() {
+      var y = window.scrollY || 0;
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      if (h > 0 && y / h >= SCROLL_PCT) { disarm('scroll_50'); window.removeEventListener('scroll', sh); }
+    };
+    window.addEventListener('scroll', sh, { passive: true });
+
+    // 4. Auto-disarm at 30 seconds
+    setTimeout(function() { if (!disarmed) disarm('auto_30s'); }, AUTO_MS);
+  })();
+  </script>
+
     <!-- Shopify app scripts =========================================================== -->
     {{ content_for_header }}
 
