@@ -23,6 +23,8 @@ import argparse
 import concurrent.futures
 import json
 import os
+import random
+import string
 import subprocess
 import sys
 import time
@@ -99,7 +101,16 @@ def cell_id(theme: str, strategy: str, template: str, run: int) -> str:
 def run_cell(theme: str, theme_qs: str, strategy: str, template: str, template_path: str,
              run: int, api_key: str, runs_total: int) -> dict[str, Any]:
     """One PSI invocation; persists raw + extracted metrics."""
-    url = f"https://www.hairmnl.com{template_path}{theme_qs}"
+    # Cache-bust: PSI caches lab results keyed on the exact URL. Without a
+    # unique per-call param, back-to-back identical URLs return the SAME
+    # cached measurement, silently collapsing n=3 to n=1. Three false
+    # "regressions" (bd qjwb collection-CLS, by2g PDP-desktop, bba24 cart-TBT)
+    # were all traced to this — each "n=3" was one stale measurement replayed.
+    # A random suffix forces a fresh lab run per call. Shopify ignores unknown
+    # query params, and PSI treats a different URL as a distinct test.
+    cb = "".join(random.choices(string.ascii_lowercase + string.digits, k=10))
+    sep = "&" if "?" in f"{template_path}{theme_qs}" else "?"
+    url = f"https://www.hairmnl.com{template_path}{theme_qs}{sep}_cb={cb}"
     cid = cell_id(theme, strategy, template, run)
     print(f"  [{cid}] start", flush=True)
     t0 = time.time()
