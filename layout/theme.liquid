@@ -1017,10 +1017,15 @@
     <script>
     (function() {
       var PATTERNS = ['problogger.css', 'owl.carousel'];
-      // ujg6.61 2026-05-25: Inject template context so the guard knows whether
-      // Pro Blogger content can actually render on this page. article/blog/product
-      // templates render Pro Blogger output; all others get nothing from it.
-      var IS_BLOG_TEMPLATE = {% if template.name == 'article' or template.name == 'blog' or template.name == 'product' %}true{% else %}false{% endif %};
+      // rzai 2026-05-28: DEFER (not block) Pro Blogger CSS on ALL templates.
+      // ujg6.61 blocked owl.carousel.min.css + problogger.css on non-blog
+      // templates assuming PB renders nothing there — FALSE. Collection pages
+      // with a PB "Related Articles" owl-carousel (e.g. /collections/managing-grays,
+      // /collections/all, /collections/kerastase-heat-protectors) DO emit PB CSS
+      // via content_for_header; stripping it collapsed the slider to a vertical
+      // stack (owl needs .owl-item{float:left} + .owl-carousel.owl-loaded{display:block}).
+      // Restoring the original 01vl.2 defer: media=print at insertion -> media=all
+      // onload. Non-render-blocking but still loads + applies everywhere.
 
       var matches = function(href) {
         if (typeof href !== 'string') return false;
@@ -1030,19 +1035,18 @@
         return false;
       };
 
-      // On non-blog templates: suppress Pro Blogger CSS entirely (media=not-all
-      // + remove from DOM). Pro Blogger injects into a Shopify app block div
-      // in <body>, not <head>, so body-injected CSS is already non-render-blocking
-      // on blog/article/product — no media=print deferral needed there.
+      // Defer at insertion: media=print keeps the sheet off the render-blocking
+      // critical path; onload swaps to media=all so it loads + applies. Only
+      // touch <link rel=stylesheet>; guard re-entry (already deferred). Same
+      // pattern this theme already uses for bold-brain-widget.css / aos.css.
       var handleCSS = function(el) {
         if (!el || el.nodeType !== 1) return;
         if ((el.tagName || '').toUpperCase() !== 'LINK') return;
+        if (el.rel !== 'stylesheet') return;
         if (!matches(el.href)) return;
-        if (!IS_BLOG_TEMPLATE) {
-          el.disabled = true;
-          el.media = 'not all';
-          if (el.parentNode) el.parentNode.removeChild(el);
-        }
+        if (el.media === 'print') return;
+        el.media = 'print';
+        el.onload = function() { this.media = 'all'; this.onload = null; };
       };
 
       // 1. createElement override — catches dynamic createElement('link').
@@ -1072,8 +1076,9 @@
       // so we must watch documentElement+subtree (not just <head>). The key
       // improvement vs the original guard: disconnect at DOMContentLoaded so
       // the observer never runs during post-load DOM churn (filter toggles,
-      // lazysizes, Flickity). DCL sweep below is the safety net for any links
-      // inserted before the observer was ready.
+      // lazysizes, Flickity). Deferral happens at insertion time only — a link
+      // that somehow slips past just loads render-blocking (degraded perf,
+      // still correct). We never defer post-load (would strand at media=print).
       var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(m) {
           m.addedNodes.forEach(function(node) {
@@ -1085,18 +1090,6 @@
 
       document.addEventListener('DOMContentLoaded', function() {
         observer.disconnect();
-        // DCL sweep: suppress any PB links already in DOM that predate the observer
-        // (e.g. innerHTML-injected links in app block divs).
-        if (!IS_BLOG_TEMPLATE) {
-          var links = document.querySelectorAll('link');
-          for (var i = 0; i < links.length; i++) {
-            if (matches(links[i].href) && links[i].media !== 'not all') {
-              links[i].disabled = true;
-              links[i].media = 'not all';
-              if (links[i].parentNode) links[i].parentNode.removeChild(links[i]);
-            }
-          }
-        }
       }, { once: true });
     })();
     </script>
