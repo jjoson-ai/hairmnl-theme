@@ -347,6 +347,30 @@
 <div class="header__backfill"
   data-header-backfill
   style="height: var(--menu-height);"></div>
+{%- comment -%}
+  8w0p 2026-05-29: eliminate the universal ~14px header CLS. The Liquid
+  --menu-height estimate (logo_height + 30) over-reserves the backfill (e.g.
+  84px) vs the real rendered header; theme.js E()/L() then re-measures
+  [data-header-height].clientHeight (e.g. 70px) and resets --menu-height
+  AFTER first paint, collapsing the backfill 14px and shifting all content
+  (#MainContent) up. Fix: set --menu-height to the real header height inline,
+  the moment the header parses (before #MainContent lays out), so theme.js's
+  later set is a no-op. Uses the SAME measurement as theme.js (clientHeight of
+  [data-header-height]) so the two values match exactly. Measuring the real
+  header can't under-reserve, so no header/content overlap risk; adapts to any
+  viewport/logo setting. CLS fix to existing bespoke header backfill (freeze-exempt).
+{%- endcomment -%}
+<script>
+  (function () {
+    try {
+      var h = document.querySelector('[data-header-height]');
+      if (h) {
+        var hh = h.clientHeight;
+        if (hh > 0) document.documentElement.style.setProperty('--menu-height', hh + 'px');
+      }
+    } catch (e) {}
+  })();
+</script>
 
 
 {%- comment smartseo_integration_begin_meta_data -%}
