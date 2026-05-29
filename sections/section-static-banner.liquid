@@ -1,4 +1,23 @@
 {%- assign banner_alt = section.settings.banner_alt | default: page.title | default: 'Banner' | escape -%}
+{%- comment -%}
+  8w0p 2026-05-29: reserve aspect-ratio space for the banner image. Previously
+  the <img>/<source> had NO width/height -> the banner expanded from 0 to its
+  full height when the image loaded, shoving the collection grid (and everything
+  below) down. This was the dominant desktop-CLS source on collection pages
+  (intermittent ~0.27 on cold loads). Desktop (1400x788) and mobile (552x502)
+  banners have different aspect ratios, so reservation is responsive: width/height
+  attrs on each <picture> child + a scoped CSS aspect-ratio media query (the
+  authoritative reservation; .static-banner-img already has width:100%;height:auto).
+  Ratios pulled from the actual uploaded image objects, with the schema-recommended
+  dims as fallback when an image is unset. Banner stays eager (no loading=lazy) —
+  it is an above-the-fold LCP candidate.
+{%- endcomment -%}
+{%- assign d_w = section.settings.banner_desktop.width | default: 1400 -%}
+{%- assign d_h = section.settings.banner_desktop.height | default: 788 -%}
+{%- assign m_w = section.settings.banner_mobile.width | default: 552 -%}
+{%- assign m_h = section.settings.banner_mobile.height | default: 502 -%}
+{%- assign d_ar = section.settings.banner_desktop.aspect_ratio | default: 1.777 -%}
+{%- assign m_ar = section.settings.banner_mobile.aspect_ratio | default: 1.099 -%}
 <div class="wrapper">
   <div class="static-banner-box">
     {%- comment -%}
@@ -8,14 +27,14 @@
     {% if section.settings.banner_url != blank %}
       <a href="{{section.settings.banner_url}}">
         <picture>
-          <source media="(min-width: 1009px)" srcset="{{ section.settings.banner_desktop | image_url: height: 788 }}">
-          <img class="static-banner-img" src="{{ section.settings.banner_mobile | image_url: height: 502 }}" alt="{{ banner_alt }}">
+          <source media="(min-width: 1009px)" srcset="{{ section.settings.banner_desktop | image_url: height: 788 }}" width="{{ d_w }}" height="{{ d_h }}">
+          <img class="static-banner-img" src="{{ section.settings.banner_mobile | image_url: height: 502 }}" alt="{{ banner_alt }}" width="{{ m_w }}" height="{{ m_h }}">
         </picture>
       </a>
     {% else %}
       <picture>
-        <source media="(min-width: 1009px)" srcset="{{ section.settings.banner_desktop | image_url: height: 788 }}">
-        <img class="static-banner-img" src="{{ section.settings.banner_mobile | image_url: height: 502 }}" alt="{{ banner_alt }}">
+        <source media="(min-width: 1009px)" srcset="{{ section.settings.banner_desktop | image_url: height: 788 }}" width="{{ d_w }}" height="{{ d_h }}">
+        <img class="static-banner-img" src="{{ section.settings.banner_mobile | image_url: height: 502 }}" alt="{{ banner_alt }}" width="{{ m_w }}" height="{{ m_h }}">
       </picture>
     {% endif %}
   </div>
@@ -31,6 +50,17 @@
     #shopify-section-{{ section.id }} .static-banner {
       padding-top: {{ section.settings.mobile_padding_top }}px;
       padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+  }
+
+  /* 8w0p: reserve banner aspect-ratio to prevent CLS on image load.
+     width:100%;height:auto already set on .static-banner-img in custom-theme-core.css. */
+  #shopify-section-{{ section.id }} .static-banner-img {
+    aspect-ratio: {{ m_ar }};
+  }
+  @media screen and (min-width: 1009px) {
+    #shopify-section-{{ section.id }} .static-banner-img {
+      aspect-ratio: {{ d_ar }};
     }
   }
 </style>
