@@ -400,6 +400,24 @@
     min-height: 36px;
   }
 
+  /* j9oj 2026-05-30 — mobile announcement-bar height correction.
+     T9 above reserved 36px, which is exactly right on DESKTOP (Playwright-
+     measured wrapper = 36px). But on MOBILE the bar renders 45px (font--3
+     line-height + .announcement__bar vertical padding around the 24px-capped
+     [data-ticker-frame]). The 9px gap meant the wrapper floored at 36px on
+     first paint, then grew to 45px as the bar laid out -> a 9px downward shove
+     of the entire page. GA4 RUM (post-x206) still attributed ~140 mobile
+     blog-article poor/needs-improvement CLS events to announcement__scale /
+     announcement__message — this gap is the cause. Reserve the real mobile
+     height. min-height (not height) is non-clipping and kt0-safe (no new
+     containing block). Tied to the current font--3 setting; re-measure if the
+     announcement text size changes. */
+  @media only screen and (max-width: 767px) {
+    .announcement__wrapper {
+      min-height: 45px;
+    }
+  }
+
   .points-box {
     contain: layout;
     overflow: hidden;
