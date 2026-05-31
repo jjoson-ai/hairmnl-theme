@@ -1237,6 +1237,8 @@ function switchTab(btn) {
 buildChartsForStrategy('mobile');
 </script>
 
+  __AI_REFERRALS__
+
 <script>
 // Tooltip tap-to-toggle for mobile
 (function() {
@@ -1921,6 +1923,52 @@ def build_chart_data(snapshots, max_points=30):
     return {"mobile": _extract("mobile"), "desktop": _extract("desktop")}
 
 
+def render_ai_referrals(ai: Optional[dict]) -> str:
+    """AI-assistant referral panel (ChatGPT/Perplexity/Claude/Gemini → sessions/
+    purchases/revenue, trailing 12mo). Reads snapshot['ai_referrals'] (query_ai_referrals).
+    Pure HTML/CSS (no Chart.js); degrades to a 'pending' note until first capture."""
+    head = ('<h2>AI-assistant referrals '
+            '<span class="h2-help">GA4 · purchases via ChatGPT / Perplexity / Claude / Gemini · '
+            'trailing 12 mo · floor estimate (referrer-less AI clicks land in Direct/Unassigned)</span></h2>')
+    if not ai or not ai.get("total") or ai["total"].get("sessions", 0) == 0:
+        return head + '<div class="card"><div class="empty">Pending first capture — populated on the next daily run.</div></div>'
+    tot = ai["total"]; eng = ai.get("by_engine", {}) or {}; bym = ai.get("by_month", {}) or {}
+    win = ai.get("window", {}) or {}
+    win_s = f'{win.get("start", "")[:7]} – {win.get("end", "")[:7]}' if win.get("start") else ""
+    erows = []
+    for name, v in sorted(eng.items(), key=lambda kv: (-kv[1].get("purchases", 0), -kv[1].get("sessions", 0))):
+        erows.append(f'<tr><td><strong>{name}</strong></td>'
+                     f'<td class="num">{v.get("sessions", 0):,}</td>'
+                     f'<td class="num">{v.get("purchases", 0)}</td>'
+                     f'<td class="num">₱{v.get("revenue", 0):,.0f}</td></tr>')
+    months = sorted(bym.keys())
+    maxp = max((bym[m].get("purchases", 0) for m in months), default=0) or 1
+    bars = []
+    for m in months:
+        p = bym[m].get("purchases", 0)
+        h = int(round(p / maxp * 56)) + 2
+        lbl = f'{m[4:6]}/{m[2:4]}'
+        bars.append(
+            f'<div style="display:flex;flex-direction:column;align-items:center;flex:1">'
+            f'<div style="font-size:10px;color:var(--text-muted);line-height:1">{p or ""}</div>'
+            f'<div style="width:62%;height:{h}px;background:var(--green);border-radius:2px 2px 0 0" '
+            f'title="{m}: {p} purchases"></div>'
+            f'<div style="font-size:9px;color:var(--text-muted);margin-top:3px">{lbl}</div></div>')
+    bars_html = f'<div style="display:flex;align-items:flex-end;gap:3px;height:88px;margin-top:6px">{"".join(bars)}</div>'
+    return (head + '<div class="card">'
+            f'<p style="margin:0 0 12px">Trailing 12 mo ({win_s}): '
+            f'<strong>{tot["purchases"]} purchases</strong> · <strong>₱{tot["revenue"]:,.0f}</strong> · '
+            f'{tot["sessions"]:,} sessions. ChatGPT dominates; this is a <em>floor</em> — many AI clicks arrive '
+            f'referrer-less and are counted as Direct/Unassigned. (Cross-checked vs Shopify referring_site; bd v33f.)</p>'
+            '<div class="table-scroll"><table><thead><tr><th>Engine</th><th class="num">Sessions</th>'
+            '<th class="num">Purchases</th><th class="num">Revenue</th></tr></thead><tbody>'
+            + "".join(erows) +
+            '</tbody></table></div>'
+            '<h4 style="margin:16px 0 0">Purchases by month</h4>'
+            + bars_html +
+            '</div>')
+
+
 def render_html(snapshots: list[dict]) -> str:
     if not snapshots:
         return "<html><body><h1>No snapshots yet — run the script first.</h1></body></html>"
@@ -1996,6 +2044,7 @@ def render_html(snapshots: list[dict]) -> str:
     html = html.replace("__BASELINE_TABLE__", render_baseline_table(psi_mobile))
     html = html.replace("__ORIGIN_WEIGHTS__", render_origin_weights(snapshots))
     html = html.replace("__CRUX_TRUTH__", render_crux_truth(snapshots))
+    html = html.replace("__AI_REFERRALS__", render_ai_referrals(latest.get("ai_referrals")))
     html = html.replace("__WOW_SCORECARD__", render_wow_scorecard(
         rum.get("metrics", {}),
         rum.get("wow_prev", {}),
