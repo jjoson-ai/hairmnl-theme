@@ -1930,7 +1930,7 @@ def render_ai_referrals(ai: Optional[dict]) -> str:
     Pure HTML/CSS (no Chart.js); degrades to a 'pending' note until first capture."""
     head = ('<h2>AI-assistant referrals '
             '<span class="h2-help">GA4 · purchases via ChatGPT / Perplexity / Claude / Gemini · '
-            'trailing 12 mo · floor estimate (referrer-less AI clicks land in Direct/Unassigned)</span></h2>')
+            'last 12 mo · current month = month-to-date · floor estimate (referrer-less AI clicks land in Direct/Unassigned)</span></h2>')
     if not ai or not ai.get("total") or ai["total"].get("sessions", 0) == 0:
         return head + '<div class="card"><div class="empty">Pending first capture — populated on the next daily run.</div></div>'
     tot = ai["total"]; eng = ai.get("by_engine", {}) or {}; bym = ai.get("by_month", {}) or {}
@@ -1944,20 +1944,25 @@ def render_ai_referrals(ai: Optional[dict]) -> str:
                      f'<td class="num">₱{v.get("revenue", 0):,.0f}</td></tr>')
     months = sorted(bym.keys())
     maxp = max((bym[m].get("purchases", 0) for m in months), default=0) or 1
+    cur_ym = (win.get("end", "")[:7] or "").replace("-", "")
     bars = []
     for m in months:
         p = bym[m].get("purchases", 0)
         h = int(round(p / maxp * 56)) + 2
-        lbl = f'{m[4:6]}/{m[2:4]}'
+        is_cur = (m == cur_ym)
+        lbl = f'{m[4:6]}/{m[2:4]}' + ("*" if is_cur else "")
+        bg = "var(--green);opacity:.45" if is_cur else "var(--green)"
+        ttl = f'{m}: {p} purchases' + (" (month-to-date)" if is_cur else "")
         bars.append(
             f'<div style="display:flex;flex-direction:column;align-items:center;flex:1">'
             f'<div style="font-size:10px;color:var(--text-muted);line-height:1">{p or ""}</div>'
-            f'<div style="width:62%;height:{h}px;background:var(--green);border-radius:2px 2px 0 0" '
-            f'title="{m}: {p} purchases"></div>'
+            f'<div style="width:62%;height:{h}px;background:{bg};border-radius:2px 2px 0 0" '
+            f'title="{ttl}"></div>'
             f'<div style="font-size:9px;color:var(--text-muted);margin-top:3px">{lbl}</div></div>')
-    bars_html = f'<div style="display:flex;align-items:flex-end;gap:3px;height:88px;margin-top:6px">{"".join(bars)}</div>'
+    bars_html = (f'<div style="display:flex;align-items:flex-end;gap:3px;height:88px;margin-top:6px">{"".join(bars)}</div>'
+                 '<div style="font-size:10px;color:var(--text-muted);margin-top:4px">* current month = month-to-date (partial)</div>')
     return (head + '<div class="card">'
-            f'<p style="margin:0 0 12px">Trailing 12 mo ({win_s}): '
+            f'<p style="margin:0 0 12px">Last 12 months ({win_s}, current month-to-date): '
             f'<strong>{tot["purchases"]} purchases</strong> · <strong>₱{tot["revenue"]:,.0f}</strong> · '
             f'{tot["sessions"]:,} sessions. ChatGPT dominates; this is a <em>floor</em> — many AI clicks arrive '
             f'referrer-less and are counted as Direct/Unassigned. (Cross-checked vs Shopify referring_site; bd v33f.)</p>'
@@ -2293,8 +2298,12 @@ def query_ai_referrals() -> dict:
 
     client, prop = get_ga4_client()
     first = date.today().replace(day=1)
-    start = first.replace(year=first.year - 1).isoformat()
-    end = (first - timedelta(days=1)).isoformat()
+    _y, _mo = first.year, first.month - 11  # rolling 12 buckets ending with current (MTD) month
+    while _mo <= 0:
+        _mo += 12
+        _y -= 1
+    start = date(_y, _mo, 1).isoformat()
+    end = date.today().isoformat()
     SF = Filter.StringFilter
     print(f"  AI-referrals: querying {start}..{end}...", flush=True)
     r = client.run_report(RunReportRequest(
@@ -2316,6 +2325,13 @@ def query_ai_referrals() -> dict:
         for bucket, key in ((by_month, ym), (by_engine, eng)):
             d = bucket.setdefault(key, {"sessions": 0, "purchases": 0, "revenue": 0.0})
             d["sessions"] += s; d["purchases"] += p; d["revenue"] += rv
+    # zero-fill all 12 month-buckets (incl the current MTD month) so the trend axis is complete
+    _zy, _zmo = int(start[:4]), int(start[5:7])
+    for _ in range(12):
+        by_month.setdefault(f"{_zy}{_zmo:02d}", {"sessions": 0, "purchases": 0, "revenue": 0.0})
+        _zmo += 1
+        if _zmo > 12:
+            _zmo = 1; _zy += 1
     for d in list(by_month.values()) + list(by_engine.values()):
         d["revenue"] = round(d["revenue"], 2)
     return {

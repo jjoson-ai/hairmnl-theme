@@ -23,11 +23,15 @@ from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import (RunReportRequest, DateRange, Dimension, Metric, Filter, FilterExpression)
 
 PROP = 'properties/248106289'
-# trailing 12 complete months ending end of last month
+# rolling 12 month-buckets ENDING with the current (partial / month-to-date) month
 today = datetime.date.today()
 first_this = today.replace(day=1)
-END = (first_this - datetime.timedelta(days=1)).isoformat()
-START = (first_this.replace(year=first_this.year - 1)).isoformat()
+_y, _mo = first_this.year, first_this.month - 11
+while _mo <= 0:
+    _mo += 12
+    _y -= 1
+START = datetime.date(_y, _mo, 1).isoformat()
+END = today.isoformat()
 # AI-assistant referrer hosts. NOTE: 'you.com' deliberately excluded — it false-matched
 # peekyou.com (a people-search site, not AI). Add engines here as they emerge.
 AI_RE = r'(?i).*(chatgpt\.com|openai\.com|perplexity\.ai|claude\.ai|copilot|gemini\.google|bard\.google).*'
