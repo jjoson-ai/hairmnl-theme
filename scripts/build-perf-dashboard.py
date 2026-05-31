@@ -654,6 +654,15 @@ def _merge_daily_snapshot(existing: Optional[dict], incoming: dict) -> dict:
             existing["ga4"] = ga4
             existing["_ga4_timestamp"] = incoming.get("timestamp", "")
 
+    ai_ref = incoming.get("ai_referrals")
+    if ai_ref:
+        if (
+            "ai_referrals" not in existing
+            or incoming.get("timestamp", "") >= existing.get("_ai_referrals_timestamp", "")
+        ):
+            existing["ai_referrals"] = ai_ref
+            existing["_ai_referrals_timestamp"] = incoming.get("timestamp", "")
+
     crux_in = incoming.get("crux") or {}
     if crux_in:
         crux_out = existing.setdefault("crux", {})
@@ -2212,6 +2221,61 @@ def post_alerts_to_slack(webhook_url: str, alerts: list) -> None:
 
 # ───────────────────────── Main ─────────────────────────
 
+def query_ai_referrals() -> dict:
+    """Pull AI-assistant referral sessions/purchases/revenue (trailing 12 complete
+    months) by month + engine. FLOOR estimate — no-referrer AI clicks land in
+    Direct/Unassigned. Companion ad-hoc tool: scripts/ai-referrals.py. bd v33f."""
+    from google.analytics.data_v1beta.types import (
+        DateRange, Dimension, Metric, RunReportRequest, FilterExpression, Filter,
+    )
+    from datetime import date, timedelta
+    # 'you.com' deliberately excluded — false-matched peekyou.com (not AI).
+    ai_re = r'(?i).*(chatgpt\.com|openai\.com|perplexity\.ai|claude\.ai|copilot|gemini\.google|bard\.google).*'
+
+    def _engine(s):
+        s = (s or "").lower()
+        if "chatgpt" in s or "openai" in s: return "ChatGPT"
+        if "perplexity" in s: return "Perplexity"
+        if "claude" in s: return "Claude"
+        if "copilot" in s: return "Copilot"
+        if "gemini" in s or "bard" in s: return "Gemini"
+        return "Other-AI"
+
+    client, prop = get_ga4_client()
+    first = date.today().replace(day=1)
+    start = first.replace(year=first.year - 1).isoformat()
+    end = (first - timedelta(days=1)).isoformat()
+    SF = Filter.StringFilter
+    print(f"  AI-referrals: querying {start}..{end}...", flush=True)
+    r = client.run_report(RunReportRequest(
+        property=prop, date_ranges=[DateRange(start_date=start, end_date=end)],
+        dimensions=[Dimension(name="yearMonth"), Dimension(name="sessionSource")],
+        metrics=[Metric(name="sessions"), Metric(name="ecommercePurchases"), Metric(name="purchaseRevenue")],
+        dimension_filter=FilterExpression(filter=Filter(
+            field_name="sessionSource",
+            string_filter=SF(match_type=SF.MatchType.FULL_REGEXP, value=ai_re))),
+        limit=100000))
+    by_month, by_engine = {}, {}
+    tot_s = tot_p = 0
+    tot_r = 0.0
+    for x in r.rows:
+        ym = x.dimension_values[0].value
+        eng = _engine(x.dimension_values[1].value)
+        s = int(float(x.metric_values[0].value)); p = int(float(x.metric_values[1].value)); rv = float(x.metric_values[2].value)
+        tot_s += s; tot_p += p; tot_r += rv
+        for bucket, key in ((by_month, ym), (by_engine, eng)):
+            d = bucket.setdefault(key, {"sessions": 0, "purchases": 0, "revenue": 0.0})
+            d["sessions"] += s; d["purchases"] += p; d["revenue"] += rv
+    for d in list(by_month.values()) + list(by_engine.values()):
+        d["revenue"] = round(d["revenue"], 2)
+    return {
+        "window": {"start": start, "end": end},
+        "total": {"sessions": tot_s, "purchases": tot_p, "revenue": round(tot_r, 2)},
+        "by_engine": by_engine,
+        "by_month": {k: by_month[k] for k in sorted(by_month)},
+    }
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--no-psi", action="store_true", help="skip PSI lab fetch")
@@ -2304,6 +2368,10 @@ def main():
             print(f"  GA4 total: {time.time()-t0:.1f}s")
         except Exception as e:
             print(f"  GA4 fetch failed: {e}", file=sys.stderr)
+        try:
+            snapshot["ai_referrals"] = query_ai_referrals()
+        except Exception as e:
+            print(f"  AI-referral fetch failed: {e}", file=sys.stderr)
 
     has_psi = bool(snapshot.get("psi", {}).get("mobile") or snapshot.get("psi", {}).get("desktop"))
     has_ga4 = bool(snapshot.get("ga4"))
