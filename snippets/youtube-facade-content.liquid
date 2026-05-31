@@ -1,0 +1,85 @@
+{%- comment -%}
+  youtube-facade-content.liquid                         bd hairmnl-theme-za7u.6
+
+  Post-processor for rich-text HTML (product.description, etc.) that converts
+  eager-loading pasted YouTube <iframe> embeds into the theme's existing
+  <lite-youtube> click-to-load facade (assets/lite-youtube.js).
+
+  WHY: PDP descriptions containing a pasted YouTube iframe eager-load ~1 MB of
+  YouTube on initial page load. loading="lazy" does NOT defer it — the iframe
+  sits high in the description (within the browser's lazy threshold) AND theme.js's
+  read-more truncate/resize pass re-inserts it via appendChild, forcing the load
+  regardless of the lazy attribute (verified by network trace 2026-05-31).
+  Replacing the <iframe> with <lite-youtube> (no iframe in the DOM until the
+  shopper clicks the poster) eliminates the eager load AND is immune to theme.js
+  re-insertion: a re-inserted <lite-youtube> just re-renders its poster image;
+  the YouTube embed only loads on click (#activate in assets/lite-youtube.js).
+
+  PARAMS:
+    content — the rich-text HTML to process (required)
+    alt     — optional alt-text prefix for the poster img (e.g. product.title)
+
+  CALLER CONTRACT: when this snippet's output contains '<lite-youtube', the
+  caller must load assets/lite-youtube.js once. The product sections emit the
+  standard guarded loader (the same window.__liteYoutubeLoaded pattern used by
+  snippets/media.liquid) when product_description_content contains '<lite-youtube'.
+
+  ALGORITHM (Liquid has no regex — split/append chains only, mirroring
+  article-content-with-img-dims.liquid):
+    1. Split content on '<iframe'. chunk[0] is everything before the first
+       iframe (passes through unchanged).
+    2. For each subsequent chunk, the opening tag's attributes run up to the
+       first '>'. If those attributes contain a youtube.com/embed/ (or
+       youtube-nocookie.com/embed/) src, it is a YouTube embed.
+    3. Extract the video id from .../embed/VIDEOID?... and emit a 16:9
+       padding-top container wrapping a <lite-youtube videoid="...">, then
+       append the tail (everything after this iframe's </iframe>).
+    4. Non-YouTube iframes (Vimeo, maps, etc.) are reconstructed unchanged.
+
+  LIMITATIONS:
+    - Only converts <iframe> embeds whose opening tag carries a youtube
+      /embed/ src. youtu.be share links / plain-text URLs are not iframes and
+      pass through (they never eager-load anyway).
+    - Assumes the YouTube iframe is well-formed with a closing </iframe>
+      (always true for Shopify rich-text-editor video embeds).
+
+  MIGRATION-DEBT: bespoke P6 post-processor; will need port to OS 2.0.
+  Reason: OS-2.0 has no built-in "pasted-iframe -> facade" hook, and the
+  lite-youtube facade itself is already tracked migration debt (epic za7u).
+  No-op alternatives (theme setting / app / merchandising) were considered per
+  the P6 freeze: the migration-clean option is to move videos into the product
+  MEDIA gallery (which already uses this facade), but that needs per-product
+  operator action; this snippet makes existing in-description videos performant
+  automatically. Port difficulty: easy (self-contained snippet + 1 wiring line).
+{%- endcomment -%}
+
+{%- assign _yt_content = content | default: '' -%}
+{%- assign _yt_chunks = _yt_content | split: '<iframe' -%}
+
+{%- if _yt_chunks.size > 1 -%}
+  {%- assign _yt_out = _yt_chunks | first -%}
+  {%- for _chunk in _yt_chunks offset: 1 -%}
+    {%- comment -%} opening tag attributes run from after '<iframe' up to the first '>' {%- endcomment -%}
+    {%- assign _open = _chunk | split: '>' | first -%}
+    {%- if _open contains 'youtube.com/embed/' or _open contains 'youtube-nocookie.com/embed/' -%}
+      {%- comment -%} pull VIDEOID out of .../embed/VIDEOID?params — cut at the first terminator {%- endcomment -%}
+      {%- assign _after_embed = _open | split: 'embed/' | last -%}
+      {%- assign _vid = _after_embed | split: '?' | first | split: '&' | first | split: '"' | first | split: "'" | first | split: ' ' | first | split: '/' | first | strip -%}
+      {%- comment -%} tail = content after this iframe's close (YouTube iframes are empty) {%- endcomment -%}
+      {%- assign _tail = _chunk | split: '</iframe>' | last -%}
+      {%- if _vid != blank -%}
+        {%- capture _facade -%}<div class="lyt-embed-container" style="position:relative;width:100%;max-width:560px;margin:1em auto;padding-top:56.25%;background:#000;"><lite-youtube videoid="{{ _vid }}" params="rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%;"><img class="lyt-poster" src="https://i.ytimg.com/vi/{{ _vid }}/hqdefault.jpg" alt="{{ alt | default: 'Product' | strip_html | escape }} video" loading="lazy" fetchpriority="low" width="480" height="360"></lite-youtube></div>{%- endcapture -%}
+        {%- assign _yt_out = _yt_out | append: _facade | append: _tail -%}
+      {%- else -%}
+        {%- comment -%} couldn't parse a video id — leave the original iframe intact {%- endcomment -%}
+        {%- assign _yt_out = _yt_out | append: '<iframe' | append: _chunk -%}
+      {%- endif -%}
+    {%- else -%}
+      {%- comment -%} non-YouTube iframe — reconstruct unchanged {%- endcomment -%}
+      {%- assign _yt_out = _yt_out | append: '<iframe' | append: _chunk -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {{- _yt_out -}}
+{%- else -%}
+  {{- _yt_content -}}
+{%- endif -%}

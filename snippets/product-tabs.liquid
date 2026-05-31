@@ -24,7 +24,7 @@
               {% if block.settings.read_more %}
                 {{ product_description_content }}
               {% else %}
-                {{ product.description | replace: '<iframe ', '<iframe loading="lazy" ' }}
+                {%- render 'youtube-facade-content', content: product.description, alt: product.title -%}
               {% endif %}
             </div>
           </div>
@@ -226,7 +226,7 @@
                 {% if block.settings.read_more %}
                   {{ product_description_content }}
                 {% else %}
-                  {{ product.description | replace: '<iframe ', '<iframe loading="lazy" ' }}
+                  {%- render 'youtube-facade-content', content: product.description, alt: product.title -%}
                 {% endif %}
               </div>
             </div>

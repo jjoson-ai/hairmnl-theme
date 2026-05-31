@@ -133,9 +133,24 @@
               </div>
             {% when 'description' %}
               <div class="product-description rte rte--column" {{ block.shopify_attributes }}>
-                {%- assign product_description_content = product.description | strip -%}
+                {%- comment -%} za7u.6: convert eager pasted YouTube iframes -> lite-youtube click-to-load facade BEFORE either branch consumes the content (read-more branch + tabs both read product_description_content). {%- endcomment -%}
+                {%- capture product_description_content -%}{%- render 'youtube-facade-content', content: product.description, alt: product.title -%}{%- endcapture -%}
+                {%- assign product_description_content = product_description_content | strip -%}
                 {%- assign truncate_string = 'products.general.read_more' | t -%}
                 {%- assign truncate_html = '<button type="button" class="p underline" data-truncated-button>' | append: truncate_string | append: '</button>' -%}
+
+                {%- comment -%} za7u.6: load the lite-youtube facade script once, only if a video was actually converted (mirrors the guarded loader in snippets/media.liquid). {%- endcomment -%}
+                {%- if product_description_content contains '<lite-youtube' -%}
+                  <script>
+                    if (!window.__liteYoutubeLoaded) {
+                      window.__liteYoutubeLoaded = true;
+                      var s = document.createElement('script');
+                      s.src = '{{ 'lite-youtube.js' | asset_url }}';
+                      s.defer = true;
+                      document.head.appendChild(s);
+                    }
+                  </script>
+                {%- endif -%}
 
                 {%- if block.settings.style == 'none' -%}
                   {% if block.settings.read_more %}
@@ -151,8 +166,8 @@
                       </div>
                     </div>
                   {% else %}
-                    {%- comment -%} Task 2b extension 2026-04-29 — same Liquid post-processor that ships explicit width/height onto blog body images, applied to product descriptions. PDP body images from Shopify rich-text editor have the same Shopify CDN _NNNxNNN.ext URL pattern. Eliminates per-image CLS at zero perf cost. {%- endcomment -%}
-                    {%- render 'article-content-with-img-dims', content: product.description -%}
+                    {%- comment -%} Task 2b extension 2026-04-29 — same Liquid post-processor that ships explicit width/height onto blog body images, applied to product descriptions. PDP body images from Shopify rich-text editor have the same Shopify CDN _NNNxNNN.ext URL pattern. Eliminates per-image CLS at zero perf cost. za7u.6: feed the youtube-facade-converted content (product_description_content) rather than raw product.description so the facade applies on this branch too. {%- endcomment -%}
+                    {%- render 'article-content-with-img-dims', content: product_description_content -%}
                   {% endif %}
                 {% else %}
                   <div class="tabs-wrapper">
