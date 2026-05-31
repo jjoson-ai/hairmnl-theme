@@ -1102,6 +1102,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   </h2>
   __WOW_SCORECARD__
 
+  <hr style="margin:32px 0 24px;border:0;border-top:2px solid var(--navy)">
+  __AI_REFERRALS__
+
   <footer>
     Data sources: PSI v5 API · CrUX HTTP API · GA4 Data API (property 248106289)<br>
     Refresh: <code>./scripts/build-perf-dashboard.py</code>
@@ -1236,8 +1239,6 @@ function switchTab(btn) {
 
 buildChartsForStrategy('mobile');
 </script>
-
-  __AI_REFERRALS__
 
 <script>
 // Tooltip tap-to-toggle for mobile
