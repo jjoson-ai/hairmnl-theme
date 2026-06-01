@@ -66,7 +66,6 @@ snippets/ufe-offer.liquid               2i8b      2026-09-30   [TAE] UFE Upsell 
 snippets/reamaze-placeholder.liquid     2i8b      2026-09-30   [TAE] Reamaze chat placeholder — app self-loads via TAE. Note: bd meu Reamaze defer guard lives in layout/theme.liquid directly, not this snippet.
 snippets/freegifts-snippet-change.liquid    2i8b  2026-09-30   [TAE] BOGOS/Secomapp Free Gifts — app self-loads via TAE.
 snippets/esf-rem-slash.liquid           2i8b      2026-09-30   [TAE] Easy Smart Filter rem/slash chip — app self-loads via TAE.
-snippets/code-customizer-header.liquid  2i8b      2026-09-30   [TAE] Code Customizer header injection point — app self-loads via TAE.
 
 # ----------------------------------------------------------------------------
 # [DYNAMIC] — referenced via {% render <variable> %} or content_for_*
