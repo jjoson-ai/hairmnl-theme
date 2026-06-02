@@ -239,7 +239,9 @@
   IntersectionObserver in the snippet handles show/hide.
   Per task-2-pdp-progression.md PR-2.
 {%- endcomment -%}
-{% render 'product-sticky-bar', product: product %}
+{%- comment -%} bsbi 2026-06-02: DEFERRED off live P6. The sticky ATC bar (a7av / 2i8b.37) is stream:b / P8-cutover-scoped; this shared-file render leaked to live via the za7u.6 push and errored ("Could not find asset" — the snippet + its hairmnl-common.js/css-overrides deps are not on the live theme). Gated off so it can't fire or re-leak on P6; the P8 cutover flips show_sticky_purchase_bar to true to ship it (render preserved here). {%- endcomment -%}
+{%- assign show_sticky_purchase_bar = false -%}
+{%- if show_sticky_purchase_bar -%}{% render 'product-sticky-bar', product: product %}{%- endif -%}
 
 <script data-product-json type="application/json">
   {{ product | json }}
