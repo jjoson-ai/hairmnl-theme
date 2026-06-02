@@ -1745,7 +1745,9 @@
   desktop; mobile/tablet hidden via CSS gate.
 {%- endcomment -%}
 {%- if collection.products.size > 0 -%}
-  {%- render 'product-sticky-bar', product: collection.products.first, is_collection: true -%}
+  {%- comment -%} ilep 2026-06-02: DEFERRED off live P6 (same as bsbi / product.liquid:242). The sticky ATC bar (a7av.8) is stream:b / P8-cutover-scoped; gated so it can't leak to live + error ("Could not find asset" — snippet not on the live theme). The P8 cutover flips show_sticky_purchase_bar to true. {%- endcomment -%}
+  {%- assign show_sticky_purchase_bar = false -%}
+  {%- if show_sticky_purchase_bar -%}{%- render 'product-sticky-bar', product: collection.products.first, is_collection: true -%}{%- endif -%}
 {%- endif -%}
 
 {% schema %}
