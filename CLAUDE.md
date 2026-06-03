@@ -152,43 +152,61 @@ so containment regressions on the new overlay get caught.
 
 ---
 
-## Deferring third-party scripts emitted by `content_for_header` (defer-guard pattern)
+## Deferring third-party scripts (two defer-guard families)
 
-`content_for_header` renders Shopify app embeds as **static** `<script src>` tags in the
-parsed HTML — they are NOT injected by JS, so a `document.createElement` override alone will
-NOT intercept them. The working technique (originated in the Reamaze defer-on-interaction
-epic, bd `meu`; re-ported to Pipeline 8 as bd `fsaa`/`hw7`):
+Two distinct interception strategies are in use, chosen by HOW the script reaches the DOM.
+Using the wrong one is exactly why the LoyaltyLion v1 guard broke (see Family B).
+
+### Family A — scripts emitted statically by `content_for_header` → MutationObserver + `KILL_SWITCH`
+
+`content_for_header` renders Shopify app embeds as **static** `<script src>` tags in the parsed
+HTML — they are NOT injected by JS, so a `document.createElement` override alone will NOT intercept
+them. Technique (originated in the Reamaze epic, bd `meu`; re-ported to P8 as `fsaa`/`hw7`):
 
 1. Register a **`MutationObserver` inline ABOVE `{{ content_for_header }}`**, watching
    `document.documentElement`, so it is live before the parser inserts the embed.
-2. On a matching node, swap `type="javascript/blocked"` and move `src` → `dataset.deferredSrc`
-   before the browser fetches/executes it.
-3. Keep a `document.createElement` override as defense-in-depth for genuinely dynamic injection.
+2. On a match, swap `type="javascript/blocked"` and move `src` → `dataset.deferredSrc` before fetch/exec.
+3. Keep a `document.createElement` override as defense-in-depth for dynamic injection.
 4. On an intent signal, replay the saved srcs as `<script async>` on `document.head`.
-5. `KILL_SWITCH = true` (per guard) + push `layout/theme.liquid` ⇒ ~60s rollback.
+5. Rollback: set that block's **`var KILL_SWITCH = true`** and push `layout/theme.liquid` (~60s).
 
-**This pattern now powers three guards in `layout/theme.liquid`** (line numbers approximate —
-`grep "var BLOCKED" layout/theme.liquid`):
-- LoyaltyLion — `BLOCKED = 'loyaltylion.net'` (~L908)
+Guards (line numbers approximate — `grep "var KILL_SWITCH" layout/theme.liquid`):
 - Reamaze — `BLOCKED = ['cdn.reamaze.com']` (~L1187; bd `hw7`/`fsaa`; pairs with `snippets/reamaze-placeholder.liquid`)
 - Octane AI — `BLOCKED = ['app.octaneai.com']` (~L1381)
 
-**kt0 cross-ref (see the CSS rule above):** any server-rendered placeholder bubble must use
-`position:fixed` ONLY — never `contain`/`transform`/`filter`, which create a containing block
-that breaks the real widget's fixed-position descendants (the 2026-05-12 `lki` regression).
+### Family B — scripts appended at runtime by an already-loaded loader → `Element.prototype` patch (NO `KILL_SWITCH`)
 
-**Audit + known follow-ups** (epic `meu` closeout audit, 2026-06-04 —
-`audit-reports/reamaze-defer-20260604.md` on branch `claude/kind-shaw-4100e5`; 0 Critical / 0 High):
-- `rxh7` (P2) — the `createElement` override is never restored; it redefines the `src` descriptor
-  on every script element and stays patched after disarm. **All three guards share this** — restore
-  the original after disarm (the MutationObserver is the primary mechanism). Also consent-gate the
-  GA4 `dataLayer` events and `removeEventListener` on disarm.
-- `a6kr` (P1) — pre-existing UNescaped article image-preload `href` (`_first_body_img_url`); verify
-  the same line exists in the P8 `theme.liquid` and apply `| escape` + a `javascript:`/`data:` scheme block.
+When a loader adds the script itself via `document.head.appendChild(scriptEl)` at runtime (not a
+static `content_for_header` tag), these guards patch **`Element.prototype.appendChild` + `insertBefore`**,
+stash the blocked node's `src`, and re-inject on first `click`/`touchstart`/`keydown` — which also
+restores the originals via `release()`. **There is NO `KILL_SWITCH`:** to roll one back, revert/remove
+its prototype-patch `<script>` block (or its Liquid `{% if %}` gate) — there is no flag to flip.
+- LoyaltyLion — `BLOCKED = 'loyaltylion.net'` (~L908; bd `njj1` / `tyio.1 v2`; `/cart` + `/products/*` only).
+  v1 used the `createElement` override and BROKE (release fired before the deferred queue filled) — hence v2's prototype patch.
+- BOGOS free-gifts — `BOGOS = 'bogos.io'` (~L962; bd `knz5`; chained on top of the LoyaltyLion patch).
 
-**Push-regression caution (see below):** the P6 canary was once silently overwritten by a
-main-sourced push. After any `layout/theme.liquid` push, confirm the guards survived by grepping the
-pushed theme for `var BLOCKED` (P8 expects 3; the current P6 live theme has 1, Reamaze only).
+### kt0 cross-ref (see the CSS rule above)
+
+Any server-rendered placeholder bubble must use `position:fixed` ONLY — never
+`contain`/`transform`/`filter`, which create a containing block that breaks the real widget's
+fixed-position descendants (the 2026-05-12 `lki` regression).
+
+### Audit + known follow-ups
+
+Epic `meu` closeout audit, 2026-06-04 (`audit-reports/reamaze-defer-20260604.md` on branch
+`claude/kind-shaw-4100e5`; 0 Critical / 0 High):
+- `rxh7` (P2) — the `document.createElement` override is never restored after disarm; it redefines the
+  `src` descriptor on every script element and stays patched. **Applies to Family A only (Reamaze,
+  Octane)** — restore the original after disarm. Also consent-gate the GA4 `dataLayer` events and
+  `removeEventListener` on disarm. (Family B already restores its prototype patches in `release()`.)
+- `a6kr` (P1) — pre-existing UNescaped article image-preload `href` (`_first_body_img_url`); verify the
+  same line exists in the P8 `theme.liquid` and apply `| escape` + a `javascript:`/`data:` scheme block.
+
+### Push-regression caution (see below)
+
+The P6 canary was once silently overwritten by a main-sourced push. After any `layout/theme.liquid`
+push, confirm the guards survived: `grep -c "var BLOCKED" layout/theme.liquid` → 3 (Reamaze, Octane,
+LoyaltyLion), plus a `var BOGOS` for BOGOS.
 
 ---
 
