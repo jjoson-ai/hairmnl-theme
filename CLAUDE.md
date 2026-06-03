@@ -72,6 +72,43 @@ so containment regressions on the new overlay get caught.
 
 ---
 
+## Deferring Shopify app-embed scripts (Reamaze defer guard — bd meu, 2026-05/06)
+
+`content_for_header` emits third-party app embeds as **static** `<script src>`
+tags in the parsed HTML — they are NOT injected by JS. So a `document.createElement`
+override alone will NOT intercept them (this was the first failed approach). To
+defer such a script you need a **`MutationObserver` registered inline ABOVE
+`{{ content_for_header }}`** so it is already watching `document.documentElement`
+before the parser inserts the embed; on a matching node it swaps
+`type="javascript/blocked"` and moves `src` → `dataset.deferredSrc` before the
+browser fetches/executes it. Keep the `createElement` override too, as
+defense-in-depth for any genuinely dynamic injection.
+
+Live implementation: `layout/theme.liquid` (guard IIFE ~L830) + the clickable
+`snippets/reamaze-placeholder.liquid`. The guard defers `cdn.reamaze.com`
+(~212 KB) until one of 6 intent signals (placeholder click | any click after 5s |
+scroll past 50% | desktop pointer within 100px of the bubble | `[data-reamaze-trigger]`
+click | auto-disarm at 60s), then replays the saved srcs as `<script async>` on
+`document.head`. GA4 telemetry via `window.dataLayer`: `reamaze_load_path`,
+`reamaze_load_latency_ms`, `reamaze_widget_open`, `reamaze_widget_message_sent`.
+
+**Rollback:** set `KILL_SWITCH = true` in the guard and push `layout/theme.liquid`
+to live (~30s push + ~30s edge invalidation).
+
+**kt0 interaction (cross-ref the CSS rule above):** the placeholder bubble uses
+`position:fixed` ONLY — never `contain`/`transform`/`filter`. Reamaze's own widget
+has fixed-position descendants; a containing block on the placeholder (or any
+overlay ancestor) breaks their positioning math (see the 2026-05-12 `lki` regression).
+
+**Gotcha — the `--only` push regression replays here too:** the Phase 4 canary on
+live was silently overwritten by an unrelated `theme push` sourced from `main`
+(2026-05-16). Any edit to this guard MUST be carried on `main` (it is, via PR #13)
+so a future full-tree or main-sourced push doesn't strip it. After *any*
+`layout/theme.liquid` push, verify the guard survived:
+`curl -s https://www.hairmnl.com/ | grep -c "BLOCKED = \['cdn.reamaze.com'\]"` → must be ≥1.
+
+---
+
 ## The push regression that triggered this guard (2026-04-26)
 
 `shopify theme push --only=<file>` uploads the **local working tree**
