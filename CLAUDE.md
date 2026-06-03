@@ -152,6 +152,46 @@ so containment regressions on the new overlay get caught.
 
 ---
 
+## Deferring third-party scripts emitted by `content_for_header` (defer-guard pattern)
+
+`content_for_header` renders Shopify app embeds as **static** `<script src>` tags in the
+parsed HTML — they are NOT injected by JS, so a `document.createElement` override alone will
+NOT intercept them. The working technique (originated in the Reamaze defer-on-interaction
+epic, bd `meu`; re-ported to Pipeline 8 as bd `fsaa`/`hw7`):
+
+1. Register a **`MutationObserver` inline ABOVE `{{ content_for_header }}`**, watching
+   `document.documentElement`, so it is live before the parser inserts the embed.
+2. On a matching node, swap `type="javascript/blocked"` and move `src` → `dataset.deferredSrc`
+   before the browser fetches/executes it.
+3. Keep a `document.createElement` override as defense-in-depth for genuinely dynamic injection.
+4. On an intent signal, replay the saved srcs as `<script async>` on `document.head`.
+5. `KILL_SWITCH = true` (per guard) + push `layout/theme.liquid` ⇒ ~60s rollback.
+
+**This pattern now powers three guards in `layout/theme.liquid`** (line numbers approximate —
+`grep "var BLOCKED" layout/theme.liquid`):
+- LoyaltyLion — `BLOCKED = 'loyaltylion.net'` (~L908)
+- Reamaze — `BLOCKED = ['cdn.reamaze.com']` (~L1187; bd `hw7`/`fsaa`; pairs with `snippets/reamaze-placeholder.liquid`)
+- Octane AI — `BLOCKED = ['app.octaneai.com']` (~L1381)
+
+**kt0 cross-ref (see the CSS rule above):** any server-rendered placeholder bubble must use
+`position:fixed` ONLY — never `contain`/`transform`/`filter`, which create a containing block
+that breaks the real widget's fixed-position descendants (the 2026-05-12 `lki` regression).
+
+**Audit + known follow-ups** (epic `meu` closeout audit, 2026-06-04 —
+`audit-reports/reamaze-defer-20260604.md` on branch `claude/kind-shaw-4100e5`; 0 Critical / 0 High):
+- `rxh7` (P2) — the `createElement` override is never restored; it redefines the `src` descriptor
+  on every script element and stays patched after disarm. **All three guards share this** — restore
+  the original after disarm (the MutationObserver is the primary mechanism). Also consent-gate the
+  GA4 `dataLayer` events and `removeEventListener` on disarm.
+- `a6kr` (P1) — pre-existing UNescaped article image-preload `href` (`_first_body_img_url`); verify
+  the same line exists in the P8 `theme.liquid` and apply `| escape` + a `javascript:`/`data:` scheme block.
+
+**Push-regression caution (see below):** the P6 canary was once silently overwritten by a
+main-sourced push. After any `layout/theme.liquid` push, confirm the guards survived by grepping the
+pushed theme for `var BLOCKED` (P8 expects 3; the current P6 live theme has 1, Reamaze only).
+
+---
+
 ## The push regression that triggered this guard (2026-04-26)
 
 `shopify theme push --only=<file>` uploads the **local working tree**
