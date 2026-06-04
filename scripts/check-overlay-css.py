@@ -209,6 +209,19 @@ def main(argv: list[str]) -> int:
         'assets/theme.scss.liquid',
         'assets/checkout.css',
         'assets/checkout.scss.liquid',
+        # ujg6.42 split the stock theme.css into per-template chunks. They carry
+        # the SAME stock Pipeline content (drawer/popup slide-in transforms on
+        # .drawer__content etc.) that theme.css does — not hand-authored overlay
+        # code — so they inherit theme.css's exclusion. (Without this the lint
+        # re-flags the stock transforms that were excluded while in theme.css.)
+        # custom-theme*.css are deliberately NOT excluded — those are HairMNL's
+        # own overrides, where a real kt0 regression would land.
+        'assets/theme-core.css',
+        'assets/theme-home.css',
+        'assets/theme-collection.css',
+        'assets/theme-product.css',
+        'assets/theme-cart.css',
+        'assets/theme-search.css',
     }
 
     if file_args:
