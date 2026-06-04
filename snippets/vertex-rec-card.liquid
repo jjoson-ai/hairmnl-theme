@@ -85,19 +85,16 @@
       {{ card_image }}
     </a>
     <div class="vrec-card__info">
-      {%- if product.vendor != blank -%}
-        <p class="vrec-card__vendor">
-          <a href="{{ product.url }}" class="vrec-card__vendor-link">{{ product.vendor }}</a>
-        </p>
-      {%- endif -%}
+      {%- comment -%} bd 2i8b.53 (V1): vendor removed to match the native product card. {%- endcomment -%}
       <p class="vrec-card__title">
         <a href="{{ product.url }}" class="vrec-card__title-link">{{ product.title | strip_html }}</a>
       </p>
-      {%- if product.metafields.reviews.rating.value != blank -%}
-        <div class="vrec-card__rating">
-          {%- render 'product-rating', product: product, show_rating_count: true -%}
-        </div>
-      {%- endif -%}
+      {%- comment -%} bd 2i8b.53 (V1): match the native product card's rating — use the Judge.me
+          preview badge (same source the Best Sellers cards use) instead of the reviews.rating
+          metafield, which is empty on these products (so no stars rendered). {%- endcomment -%}
+      <div class="vrec-card__rating vrec-card__rating--jdgm">
+        {%- render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product -%}
+      </div>
       <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
         <span class="vrec-card__price-current">{{ product.price | money }}</span>
         {%- if on_sale -%}
@@ -127,15 +124,14 @@
      data-vertex-product-id="{{ product.id }}">
     {{ card_image }}
     <div class="vrec-card__info">
-      {%- if product.vendor != blank -%}
-        <p class="vrec-card__vendor">{{ product.vendor }}</p>
-      {%- endif -%}
+      {%- comment -%} bd 2i8b.53 (V1): vendor removed to match the native product card. {%- endcomment -%}
       <p class="vrec-card__title">{{ product.title | strip_html }}</p>
-      {%- if product.metafields.reviews.rating.value != blank -%}
-        <div class="vrec-card__rating">
-          {%- render 'product-rating', product: product, show_rating_count: true -%}
-        </div>
-      {%- endif -%}
+      {%- comment -%} bd 2i8b.53 (V1): match the native product card's rating — use the Judge.me
+          preview badge (same source the Best Sellers cards use) instead of the reviews.rating
+          metafield, which is empty on these products (so no stars rendered). {%- endcomment -%}
+      <div class="vrec-card__rating vrec-card__rating--jdgm">
+        {%- render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product -%}
+      </div>
       <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
         <span class="vrec-card__price-current">{{ product.price | money }}</span>
         {%- if on_sale -%}
