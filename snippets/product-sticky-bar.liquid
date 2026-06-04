@@ -73,9 +73,11 @@
 
   <script>
     (function () {
-      // Desktop-only behavior — skip if viewport <1024 (mobile has its own bar)
-      if (window.matchMedia('(max-width: 1023px)').matches) return;
-
+      // bd a7av.9: previously desktop-only. The native bar now also runs on
+      // mobile (STKY mobile-bar parity) — the PDP-mode IntersectionObserver
+      // below shows it when the primary ATC scrolls out, on all viewports.
+      // Mobile presentation (bottom-fixed + safe-area, Reamaze coexistence) is
+      // handled in css-overrides.liquid's @media (max-width:1023px) block.
       var bar = document.getElementById('vrec-product-sticky-bar');
       if (!bar) return;
 
