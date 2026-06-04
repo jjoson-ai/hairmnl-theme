@@ -911,10 +911,22 @@
     Normal pageload: emit a lightweight placeholder that IntersectionObserver
     will replace with the real section content when it approaches the viewport.
     <noscript> fallback ensures crawlers and non-JS users see the content.
+
+    bd 2i8b.48: the lazy-url MUST use the current collection path, not "/".
+    Rendering this section in the homepage ("/") context has no `collection`
+    object, so the Section Rendering API returns a Liquid error instead of
+    products and the placeholder hydrates to nothing (blank page). request.path
+    preserves the collection context. On a non-live (preview/dev) theme, append
+    preview_theme_id so the fetch stays on THIS theme rather than falling back
+    to the published theme (whose section IDs differ → no match → blank).
   {%- endcomment -%}
+  {%- assign lazy_url = request.path | append: '?section_id=' | append: section.id -%}
+  {%- if theme.role != 'main' -%}
+    {%- assign lazy_url = lazy_url | append: '&preview_theme_id=' | append: theme.id -%}
+  {%- endif -%}
   <div
     data-lazy-render
-    data-lazy-url="/?section_id={{ section.id }}"
+    data-lazy-url="{{ lazy_url }}"
     data-section-id="{{ section.id }}"
     data-section-type="collection"
     style="min-height: 600px;">
