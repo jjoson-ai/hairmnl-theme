@@ -87,11 +87,21 @@
   {%- else -%}
     {%- comment -%}
       Normal pageload: emit a lightweight placeholder.
+
+      bd 2i8b.63: lazy-url uses request.path (this section reads the page's
+      `product` — see products-recently-viewed render — so it must hydrate in
+      the product/page context, not "/"). Append preview_theme_id on non-live
+      themes so the fetch stays on the previewed theme. (Same root cause as the
+      brand-collection fix, bd 2i8b.48.)
     {%- endcomment -%}
+    {%- assign lazy_url = request.path | append: '?section_id=' | append: section.id -%}
+    {%- if theme.role != 'main' -%}
+      {%- assign lazy_url = lazy_url | append: '&preview_theme_id=' | append: theme.id -%}
+    {%- endif -%}
     <div
       class="section-related js {{ section.settings.bg }}"
       data-lazy-render
-      data-lazy-url="/?section_id={{ section.id }}"
+      data-lazy-url="{{ lazy_url }}"
       data-section-id="{{ section.id }}"
       data-section-type="related"
       style="min-height: 400px;">
