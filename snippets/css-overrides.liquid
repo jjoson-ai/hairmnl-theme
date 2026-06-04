@@ -1042,6 +1042,25 @@
       max-width: none;
     }
   }
+
+  /* bd 2i8b.60 (T5): the cart-drawer remove (trash) link is the line-item grid's
+     first child with no grid-area, so it auto-placed into the image cell (isolated
+     far-left). Pull it out of the grid flow and pin it to the line-item's top-right
+     corner — the conventional position. Scoped to the drawer (reported context);
+     the cart page (.cart__template) is unchanged.
+     kt0-OK: position:relative/absolute are not containing-block-creating properties
+     in the kt0 sense; the row contains only this one intended absolute child. */
+  .cart__drawer .cart__items__row {
+    position: relative;
+  }
+  .cart__drawer .cart__items__remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    padding: 4px;
+    line-height: 1;
+  }
   @media (min-width: 768px) {
     .vrec-slot--home_below_hero {
       min-height: 420px;
