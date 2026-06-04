@@ -803,6 +803,29 @@
     }
   }
 
+  /* ── Collection nav sticky on mobile (bd 2i8b.52) ──
+     Pipeline 6 used the sticky-js library to pin .collection__nav (the
+     filter/sort bar) below the header on mobile. The Pipeline 8 port
+     (assets/hairmnl-collection.js §1) dropped the library in favour of
+     native position: sticky and sets the dynamic `top` offset
+     (= --menu-height, i.e. below the sticky header) — but the matching
+     CSS rule was never added, so on P8 the bar scrolled away / floated
+     instead of pinning. This restores the P6 behaviour natively.
+     Scope: ≤600px, matching the JS matchMedia breakpoint. The bar needs
+     an opaque background so the product grid doesn't show through while
+     pinned; z-index keeps it above the grid (it sits below the header via
+     the JS top offset, so it can't overlap the header).
+     kt0-OK: position:sticky is not a containing-block property and adds no
+     containment; no fixed/absolute descendants are trapped by this rule. */
+  @media only screen and (max-width: 600px) {
+    .collection__nav {
+      position: sticky;
+      top: 0; /* refined to header height by assets/hairmnl-collection.js */
+      z-index: 5;
+      background: var(--background, #ffffff);
+    }
+  }
+
   /* ── PDP Option 2 — Sticky purchase bar (Phase 1.5, 2026-05-13) ──
      Per task-2-pdp-progression.md PR-2: pinned mini-cart appears at
      viewport bottom once user scrolls past the primary ATC. Keeps
