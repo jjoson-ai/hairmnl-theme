@@ -1061,6 +1061,27 @@
     padding: 4px;
     line-height: 1;
   }
+
+  /* bd 2i8b.55 (V3): align the PDP "You may also like" (Vertex pdp_below_atc) rail to
+     the standard ~6-across width so it matches the Recently Viewed rail (also bumped to
+     6-across) and every other Vertex / home Best-Sellers slider. Overrides the
+     deliberately-wider 22% "headline" width set in the generated vertex-recommendations.css
+     (overridden here rather than hand-editing that file — fold into the mockup source
+     later). Higher specificity (.vrec-slot.vrec-slot--pdp_below_atc) so it wins regardless
+     of stylesheet order. REVERT this block if the operator wants "You may also like" kept
+     prominent at 4.5-across (then Recently Viewed won't match it exactly — Flickity is
+     integer-only). */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hairmnl-theme .vrec-slot.vrec-slot--pdp_below_atc .vrec-slot__rail {
+      grid-auto-columns: 23%;
+    }
+  }
+  @media (min-width: 1024px) {
+    .hairmnl-theme .vrec-slot.vrec-slot--pdp_below_atc .vrec-slot__rail {
+      grid-auto-columns: 15.5%;
+      gap: 16px;
+    }
+  }
   @media (min-width: 768px) {
     .vrec-slot--home_below_hero {
       min-height: 420px;

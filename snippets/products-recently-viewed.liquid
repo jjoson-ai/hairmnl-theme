@@ -6,6 +6,9 @@
 {%- assign limit = limit | default: 4 -%}
 
 <div class="recent__wrapper" id="RecentlyViewed-{{ section.id }}" data-recent-wrapper data-limit="{{ limit }}" data-minimum="{{ product_recently_minimum }}">
-  <div class="recent__content product-grid flickity-grid" id="recently-viewed-products-{{ section.id }}" style="display:none" data-slider data-grid-large="4" data-recently-viewed-products>
+  {%- comment -%} bd 2i8b.55 (V3): 4 → 6 cards across on desktop so the Recently Viewed
+      rail matches the Vertex rec rails (15.5% / ~6-across, same as the home Best Sellers
+      slider) instead of showing 4 wider cards. {%- endcomment -%}
+  <div class="recent__content product-grid flickity-grid" id="recently-viewed-products-{{ section.id }}" style="display:none" data-slider data-grid-large="6" data-recently-viewed-products>
   </div>
 </div>
