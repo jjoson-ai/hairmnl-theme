@@ -551,6 +551,72 @@
   })();
 
   // ============================================================
+  // 10) rec-card AJAX add-to-cart (bd a7av.10 / 2i8b.50 + 2i8b.51)
+  // ----------------------------------------------------------------
+  // Vertex rec cards on the cart page + cart drawer use a formless
+  // <button data-vrec-add data-variant-id> (snippets/vertex-rec-card.liquid)
+  // instead of a per-card {% form 'product' %} — a nested <form> is invalid
+  // inside the cart page form (sections/cart.liquid) and the drawer form
+  // (cart-drawer.liquid). This handler adds via /cart/add.js and REUSES the
+  // theme's existing flow (no parallel cart state): it re-dispatches the same
+  // events the stock form-submit onSuccess fires — theme:cart:popdown (caught
+  // + flagged by §7) then theme:cart:change (which §7 uses to open the drawer
+  // and the drawer's AJAX controller uses to reload its line items). The
+  // header count/price are read from the authoritative /cart.js.
+  // ============================================================
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-vrec-add]');
+    if (!btn) return;
+    e.preventDefault();
+    if (btn.getAttribute('aria-busy') === 'true') return;
+    var variantId = btn.getAttribute('data-variant-id');
+    if (!variantId) return;
+
+    btn.setAttribute('aria-busy', 'true');
+    btn.disabled = true;
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: 1 })
+    })
+      .then(function (r) {
+        if (!r.ok) {
+          return r.json().then(function (j) {
+            throw new Error((j && j.description) || ('add failed: ' + r.status));
+          });
+        }
+        return r.json();
+      })
+      .then(function () {
+        // Read the authoritative cart and update the header count/price.
+        return fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+          .then(function (r) { return r.json(); })
+          .then(function (cart) {
+            var countEl = document.querySelector('[data-header-cart-count]');
+            if (countEl) {
+              countEl.setAttribute('data-header-cart-count', cart.item_count);
+              countEl.textContent = '(' + cart.item_count + ')';
+            }
+            var priceEl = document.querySelector('[data-header-cart-price]');
+            if (priceEl) priceEl.setAttribute('data-header-cart-price', cart.total_price);
+            var fullEl = document.querySelector('[data-header-cart-full]');
+            if (fullEl) fullEl.setAttribute('data-header-cart-full', cart.item_count > 1);
+            // Hand off to the theme's own drawer flow (open + reload line items).
+            document.dispatchEvent(new CustomEvent('theme:cart:popdown', { bubbles: true }));
+            document.dispatchEvent(new CustomEvent('theme:cart:change', { bubbles: true }));
+          });
+      })
+      .catch(function (err) {
+        if (window.console && console.warn) console.warn('[vrec-add]', err && err.message ? err.message : err);
+      })
+      .then(function () {
+        btn.removeAttribute('aria-busy');
+        btn.disabled = false;
+      });
+  });
+
+  // ============================================================
   // DEFERRED — vendor-library-dependent scripts (Phase 5 visual QA)
   // ----------------------------------------------------------------
   // The following 4 P6 scripts depend on vendor libraries that P8's stock

@@ -4,14 +4,6 @@
       "type": "cart",
       "settings": {}
     },
-    "vertex_cart_recs": {
-      "type": "vertex-recommendations",
-      "settings": {
-        "placement": "cart_above_checkout",
-        "title": "Complete your order",
-        "subtitle": ""
-      }
-    },
     "recent_products": {
       "type": "section-recent-products",
       "settings": {
@@ -24,7 +16,6 @@
   },
   "order": [
     "main",
-    "vertex_cart_recs",
     "recent_products"
   ]
 }

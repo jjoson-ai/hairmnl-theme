@@ -67,6 +67,15 @@
             </div>
         </div>
 
+        {%- comment -%} bd 2i8b.51 / a7av.10: Vertex "Complete your order" recs render
+            here — after the line items, before the order summary (the placement is
+            literally named cart_above_checkout). Previously this was a standalone
+            section (vertex_cart_recs) that rendered AFTER the whole cart. The rec
+            cards use formless AJAX buttons (a7av.10) so they don't nest a <form>
+            inside this cart <form>. The standalone section is removed from
+            templates/cart.json to avoid a double render. {%- endcomment -%}
+        {% render 'vertex-recommendations', placement: 'cart_above_checkout', cart: cart, title: 'Complete your order' %}
+
         <div class="template__cart__footer" data-cart-bottom>
 
           <div class="cart__footer__notes">
