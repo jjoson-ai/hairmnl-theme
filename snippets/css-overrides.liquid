@@ -1030,6 +1030,18 @@
       padding-top: 18px;
     }
   }
+
+  /* bd 2i8b.58 (T3): mobile home hero banner — full-bleed. The banner-slider
+     sits in a .wrapper (side padding + max-width) which left visible side
+     margins on mobile. Edge-to-edge below 768px only (desktop keeps the
+     contained width). Class added to the wrapper in section-banner-slider.liquid. */
+  @media (max-width: 767px) {
+    .banner-slider-wrapper {
+      padding-left: 0;
+      padding-right: 0;
+      max-width: none;
+    }
+  }
   @media (min-width: 768px) {
     .vrec-slot--home_below_hero {
       min-height: 420px;
