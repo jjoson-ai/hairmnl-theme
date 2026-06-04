@@ -1006,6 +1006,30 @@
   .vrec-slot--home_below_hero {
     min-height: 380px;
   }
+
+  /* bd 2i8b.61 (T6): left-align product card text site-wide (4-Jun review).
+     The cards are centered via the collection_text_alignment=text-center theme
+     setting. Override just the product-card captions (NOT the global .text-center
+     utility, which centers headers etc.) so collection grids + sliders read
+     left-aligned. Native card uses .product__grid__info; branded uses .figcaption;
+     Vertex cards (.vrec-card__info) are already left. */
+  .hairmnl-theme .product__grid__info.text-center,
+  .product__grid__info.text-center,
+  .hairmnl-theme .figcaption.text-center,
+  .figcaption.text-center {
+    text-align: left;
+  }
+
+  /* bd 2i8b.57 (T2): collection title was sitting too tight under the sticky
+     header. Add breathing room above the (no-banner) collection title block. */
+  .collection-title {
+    padding-top: 28px;
+  }
+  @media (max-width: 767px) {
+    .collection-title {
+      padding-top: 18px;
+    }
+  }
   @media (min-width: 768px) {
     .vrec-slot--home_below_hero {
       min-height: 420px;

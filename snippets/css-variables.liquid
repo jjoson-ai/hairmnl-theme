@@ -433,7 +433,16 @@
   --FONT-BODY-LETTER-SPACING: normal;
 {% endif %}
 
+{%- comment -%} bd 2i8b.56 (T1): honor the custom heading font. The merchant set
+  use_custom_heading_font + custom_heading_font: "SelfModern" (the branded serif, @font-face
+  in custom-fonts.liquid + preloaded in theme.liquid), but this var was emitting only the
+  Shopify font_picker font (Questrial) — so titles fell back to Questrial site-wide. Prepend
+  the custom font so headings use SelfModern, with the Shopify font + fallbacks behind it. {%- endcomment -%}
+{%- if settings.use_custom_heading_font and settings.custom_heading_font != blank -%}
+--FONT-STACK-HEADING: "{{ settings.custom_heading_font }}", {{ heading_font.family }}, {{ heading_font.fallback_families }};
+{%- else -%}
 --FONT-STACK-HEADING: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+{%- endif -%}
 --FONT-STYLE-HEADING: {{ heading_font.style }};
 --FONT-WEIGHT-HEADING: {{ heading_font.weight | default: 400 }};
 --FONT-WEIGHT-HEADING-BOLD: {{ heading_font_bold.weight | default: 700 }};
