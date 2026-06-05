@@ -255,14 +255,22 @@
           "type": "text",
           "settings": {
             "title": "Is it sulfate-free and suitable for daily use?",
-            "content": "<p>Yes — it’s free of harsh sulfates (SLS/SLES) and parabens and is plant-based, so it’s gentle enough for regular washing.</p>"
+            "content": "<p>It’s free of harsh sulfates (SLS/SLES) and parabens and is plant-based — but it’s a targeted treatment shampoo, not a daily one, so it isn’t advised for daily use. The most frequent recommended use is every other day; see the usage guide below for the full schedule.</p>"
+          }
+        },
+        "q4": {
+          "type": "text",
+          "settings": {
+            "title": "How do I use the Davines Naturaltech Energizing Shampoo, and how often should I use it?",
+            "content": "<p>Gently massage about a tablespoon of the shampoo into damp hair, leave it on for 2 to 3 minutes, and rinse thoroughly. Repeat the application if necessary. For best results, alternate its use with the Davines Renewing Shampoo or Well-Being Shampoo.</p><p>Frequency of Use:</p><p>Intensive treatment: Use every other day for 1 month.</p><p>Maintenance treatment: Use twice a week for 2 months.</p>"
           }
         }
       },
       "block_order": [
         "q1",
         "q2",
-        "q3"
+        "q3",
+        "q4"
       ]
     }
   },
