@@ -262,7 +262,7 @@
           "type": "text",
           "settings": {
             "title": "How and how often should I use it?",
-            "content": "<p>In the shower — shampoo, but don’t condition.</p><p>Out of the shower — gently towel-dry until damp, then apply about 1 mL (a dime-sized amount) of K18 Mask. Add more only as needed; average use is around 2 mL (two dime-sized amounts), since it’s highly concentrated and you need far less than a traditional mask.</p><p>Emulsify the product on your hands before applying it on your hair (this step is very important!). After emulsifying, work it evenly through your hair from ends to roots, then wait four minutes for the K18PEPTIDE™ to reach the innermost layers. Don’t rinse it out — once the four minutes are up, style as usual (heat protectant or styling products are fine now).</p><p>How often: use it on every wash for the first four to six washes to rebuild strength, then switch to maintenance and use as needed.</p><p>Here’s a quick how-to-apply (emulsify) guide: <a href=\"https://www.youtube.com/shorts/ld-cllgIvnA\">watch the K18 application Short on YouTube</a>.</p>"
+            "content": "<p>In the shower — shampoo, but don’t condition.</p><p>Out of the shower — gently towel-dry until damp, then apply about 1 mL (a dime-sized amount) of K18 Mask. Add more only as needed; average use is around 2 mL (two dime-sized amounts), since it’s highly concentrated and you need far less than a traditional mask.</p><p>Emulsify the product on your hands before applying it on your hair (this step is very important!). After emulsifying, work it evenly through your hair from ends to roots, then wait four minutes for the K18PEPTIDE™ to reach the innermost layers. Don’t rinse it out — once the four minutes are up, style as usual (heat protectant or styling products are fine now).</p><p>How often: use it on every wash for the first four to six washes to rebuild strength, then switch to maintenance and use as needed.</p><p>Here’s a quick how-to-apply (emulsify) guide — watch the video just below.</p>"
           }
         }
       },
@@ -272,11 +272,19 @@
         "q3",
         "q4"
       ]
+    },
+    "faqvideo": {
+      "type": "section-html",
+      "settings": {
+        "html": "<p style=\"text-align:center;font-weight:600;margin:0 0 .6rem;\">How to Apply K18 (Emulsify)</p><div style=\"max-width:340px;margin:0 auto;\"><div style=\"position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:8px;\"><iframe src=\"https://www.youtube.com/embed/ld-cllgIvnA\" title=\"How to apply K18 Leave-In Molecular Repair Hair Mask\" loading=\"lazy\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;border:0;\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe></div></div>",
+        "full_width": false
+      }
     }
   },
   "order": [
     "main",
     "faq",
+    "faqvideo",
     "1678342261d4506769",
     "dea3397a-2bf3-4c6e-91e1-2d4b58b44556",
     "reviews",
