@@ -50,14 +50,14 @@
           "settings": {
             "read_more": true,
             "style": "accordions",
-            "title_1": "{{ product.metafields.hmnl.product_tab_benefits_title.value }}",
-            "raw_content_1": "<p>{{ product.metafields.hmnl.product_benefits_tab_description | metafield_tag }}</p>",
-            "title_2": "{{ product.metafields.hmnl.product_howto_tab_title.value }}",
-            "raw_content_2": "<p>{{ product.metafields.hmnl.product_how_to_use_tab_title | metafield_tag }}</p>",
-            "title_3": "{{ product.metafields.hmnl.product_ingredients_tab_title.value }}",
-            "raw_content_3": "<p>{{ product.metafields.hmnl.product_ingredients_tab_content | metafield_tag }}</p>",
-            "title_4": "{{ product.metafields.hmnl.product_tab_faq_title.value }}",
-            "raw_content_4": "<p>{{ product.metafields.hmnl.product_faqs_tab_description | metafield_tag }}</p>",
+            "title_1": "Benefits",
+            "raw_content_1": "<p><strong>The Original Bond Builder </strong><br/>The only patented system to noticeably repair extreme damage—turn dry, brittle hair into soft, shiny, and more resilient hair.</p><p><strong>Olaplex works to repair broken bonds.</strong><br/>Patented active chemistry works on a molecular level. <i>Bis-Aminopropyl Diglycol Dimaleate</i>, a single molecule, dramatically improves the hair strength, protects from within, and provides immediate results for all hair types.</p><p><strong>Repairs all types of hair damage.</strong></p><ol><li>Thermal factors: High levels of heat from curling irons, blow dryers, flat irons.</li><li>Chemical factors: Colors, perms, relaxers and keratin treatments.</li><li>Mechanical factors: Brushing, friction, tugging and pulling on wet hair.</li><li>Environmental factors: UV Damage from the sun, humidity, extreme hot/ cold weather conditions, pollution.</li></ol><p><strong>AWARDS</strong></p><ul><li>The Selfridges Beauty Awards 2020, <i>Hair Hero</i></li><li>Harper’s Bazaar 2020, Top 10 Hair Winners</li><li>Harper’s Bazaar 2019, Hair Awards</li><li>Marie Claire Hair Awards 2018, <i>Best Intensive Hair Mask</i></li><li>Vogue Beauty Awards 2017, <i>Best of Haircare and Hairstyling</i></li><li>Allure Beauty Breakthrough Awards 2014,<i> Conditioner for Treated Hair</i></li><li>Cult Beauty’s Hall of Fame, <i>Hair Treatment</i></li><li>PopSugar Beauty Awards, <i>Best Hair Hall of Famer</i></li><li>Best of Beauty, Global Beauty Award</li><li>Elite Daily, Best Products for Dry, Frizzy Hair, <i>The Best Treatment</i></li></ul><p><i>*When used as a two-part system in just one use.</i></p>",
+            "title_2": "How To Use",
+            "raw_content_2": "<ol><li>Apply a generous amount of <strong>Olaplex No.3</strong> from roots to ends on damp, towel dried hair.</li><li>Comb through once and leave on for a minimum of 10 minutes or more.</li><li>Rinse from hair, shampoo, and condition.</li><li>For best results, use the two-part system with <a href=\"https://www.hairmnl.com/products/olaplex-no-0-intensive-bond-building-treatment\"><u>N°.0 Intensive Bond Building Treatment</u></a> once a week or two to three times a week for damaged hair.</li></ol>",
+            "title_3": "Ingredients",
+            "raw_content_3": "<p><strong>Free of DEA, Aldehydes and Formaldehyde</strong></p><ul><li>PH Balanced: 3.5-5</li><li>Vegan</li><li>Cruelty Free</li><li>Gluten Free</li><li>Nut Free</li><li>Paraben Free</li><li>Phthalates Free</li><li>Phosphate Free</li><li>Sulfate Free</li></ul><p><strong>FULL INGREDIENTS</strong><br/>Water (Aqua/Eau), Bis-Aminopropyl Diglycol Dimaleate, Propylene Glycol, Cetearyl Alcohol, Behentrimonium Methosulfate, Phenoxyethanol, Cetyl Alcohol, Glycerin, Hydroxyethyl Ethylcellulose, Stearamidopropyl Dimethylamine, Quaternium-91, Sodium Benzoate, Cetrimonium Methosulfate, Cetrimonium Chloride, Fragrance (Parfum), Tetrasodium EDTA, Polyquaternium-37, Benzyl Benzoate, Etidronic Acid, Ascorbic Acid, Phytantriol, Tocopheryl Acetate, Aloe Barbadensis Leaf Juice, Panthenol, Simmondsia Chinensis (Jojoba) Seed Oil, Citric Acid, Potassium Sorbat</p>",
+            "title_4": "",
+            "raw_content_4": "",
             "title_5": "",
             "raw_content_5": ""
           }

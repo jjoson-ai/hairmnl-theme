@@ -50,14 +50,14 @@
           "settings": {
             "read_more": true,
             "style": "accordions",
-            "title_1": "{{ product.metafields.hmnl.product_tab_benefits_title.value }}",
-            "raw_content_1": "<p>{{ product.metafields.hmnl.product_benefits_tab_description | metafield_tag }}</p>",
-            "title_2": "{{ product.metafields.hmnl.product_howto_tab_title.value }}",
-            "raw_content_2": "<p>{{ product.metafields.hmnl.product_how_to_use_tab_title | metafield_tag }}</p>",
-            "title_3": "{{ product.metafields.hmnl.product_ingredients_tab_title.value }}",
-            "raw_content_3": "<p>{{ product.metafields.hmnl.product_ingredients_tab_content | metafield_tag }}</p>",
-            "title_4": "{{ product.metafields.hmnl.product_tab_faq_title.value }}",
-            "raw_content_4": "<p>{{ product.metafields.hmnl.product_faqs_tab_description | metafield_tag }}</p>",
+            "title_1": "Benefits",
+            "raw_content_1": "<p style=\"margin-left:0px;\">4-minute leave-in treatment to reverse hair damage</p><ul><li><strong>K18PEPTIDE™ </strong>is a biotech-developed peptide that mimics hair's structure to reverse damage by reconnecting polypeptide chains and disulfide bonds broken during bleaching, color and chemical services + heat.</li><li><strong>pH-optimized (5.0-6.0): </strong>Helps minimize cuticle swelling + put hair proteins in their most resilient state</li><li><strong>Cream format:</strong> Enables easy, lightweight application across all hair types, with detangling and softening benefits</li></ul><p>Vegan, color-safe, cruelty-free</p>",
+            "title_2": "How To Use",
+            "raw_content_2": "<ol><li><span style=\"background-color:rgb(255,255,255);\">Shampoo with </span><a href=\"https://www.hairmnl.com/products/k18-damage-shield-ph-protective-shampoo-250ml\"><span style=\"background-color:rgb(255,255,255);\">K18 Damage Shield PH Protective Shampoo</span></a><span style=\"background-color:rgb(255,255,255);\"> or </span><a href=\"https://www.hairmnl.com/products/k18-peptide-prep-detox-shampoo-250ml\"><span style=\"background-color:rgb(255,255,255);\">K18 Peptide Prep™ Detox Shampoo</span></a><span style=\"background-color:rgb(255,255,255);\">, do not condition. Towel-dry thoroughly</span></li><li><span style=\"background-color:rgb(255,255,255);\">Apply 3-9 pumps of </span><strong>K18 Leave-In Molecular Repair Mask</strong><span style=\"background-color:rgb(255,255,255);\"> based on your length and density, starting at the ends and working up towards the roots</span></li><li><span style=\"background-color:rgb(255,255,255);\">Let sit for 4 minutes. Do not rinse out.</span></li><li><span style=\"background-color:rgb(255,255,255);\">Comb, add product + style as usual. Use for consecutively for 4-6 washes post-salon service, then as needed</span></li></ol>",
+            "title_3": "Ingredients",
+            "raw_content_3": "Water (Aqua) (Eau), Alcohol Denat., Propylene Glycol, Cetearyl Alcohol, Dicaprylyl Ether, Cetyl Esters, Behentrimonium Chloride, Polysorbate 20,sh-Oligopeptide-78 (K18PEPTIDE™), Hydrolyzed Wheat Protein, Hydrolyzed Wheat Starch, Isopropyl Alcohol, Tocopherol, Phenoxyethanol, Potassium Sorbate, Citric Acid, Fragrance (Parfum), Geraniol, Linalool, Hexyl Cinnamal, Benzyl Alcohol.",
+            "title_4": "",
+            "raw_content_4": "",
             "title_5": "",
             "raw_content_5": ""
           }
@@ -262,7 +262,7 @@
           "type": "text",
           "settings": {
             "title": "How and how often should I use it?",
-            "content": "<p>In the shower — shampoo, but don’t condition.</p><p>Out of the shower — gently towel-dry until damp, then apply about 1 mL (a dime-sized amount) of K18 Mask. Add more only as needed; average use is around 2 mL (two dime-sized amounts), since it’s highly concentrated and you need far less than a traditional mask.</p><p>Emulsify the product on your hands before applying it on your hair (this step is very important!). After emulsifying, work it evenly through your hair from ends to roots, then wait four minutes for the K18PEPTIDE™ to reach the innermost layers. Don’t rinse it out — once the four minutes are up, style as usual (heat protectant or styling products are fine now).</p><p>How often: use it on every wash for the first four to six washes to rebuild strength, then switch to maintenance and use as needed.</p><p>Here’s a quick how-to-apply (emulsify) guide:</p><div style=\"max-width:320px;margin:1rem auto;\"><div style=\"position:relative;padding-bottom:177.78%;height:0;overflow:hidden;\"><iframe src=\"https://www.youtube.com/embed/ld-cllgIvnA\" title=\"How to apply K18 Leave-In Molecular Repair Hair Mask\" loading=\"lazy\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;border:0;\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe></div></div>"
+            "content": "<p>In the shower — shampoo, but don’t condition.</p><p>Out of the shower — gently towel-dry until damp, then apply about 1 mL (a dime-sized amount) of K18 Mask. Add more only as needed; average use is around 2 mL (two dime-sized amounts), since it’s highly concentrated and you need far less than a traditional mask.</p><p>Emulsify the product on your hands before applying it on your hair (this step is very important!). After emulsifying, work it evenly through your hair from ends to roots, then wait four minutes for the K18PEPTIDE™ to reach the innermost layers. Don’t rinse it out — once the four minutes are up, style as usual (heat protectant or styling products are fine now).</p><p>How often: use it on every wash for the first four to six washes to rebuild strength, then switch to maintenance and use as needed.</p><p>Here’s a quick how-to-apply (emulsify) guide: <a href=\"https://www.youtube.com/shorts/ld-cllgIvnA\">watch the K18 application Short on YouTube</a>.</p>"
           }
         }
       },

@@ -50,14 +50,14 @@
           "settings": {
             "read_more": true,
             "style": "accordions",
-            "title_1": "{{ product.metafields.hmnl.product_tab_benefits_title.value }}",
-            "raw_content_1": "<p>{{ product.metafields.hmnl.product_benefits_tab_description | metafield_tag }}</p>",
-            "title_2": "{{ product.metafields.hmnl.product_howto_tab_title.value }}",
-            "raw_content_2": "<p>{{ product.metafields.hmnl.product_how_to_use_tab_title | metafield_tag }}</p>",
-            "title_3": "{{ product.metafields.hmnl.product_ingredients_tab_title.value }}",
-            "raw_content_3": "<p>{{ product.metafields.hmnl.product_ingredients_tab_content | metafield_tag }}</p>",
-            "title_4": "{{ product.metafields.hmnl.product_tab_faq_title.value }}",
-            "raw_content_4": "<p>{{ product.metafields.hmnl.product_faqs_tab_description | metafield_tag }}</p>",
+            "title_1": "Benefits",
+            "raw_content_1": "<ul><li>Cosmetic intensive treatment against dandruff.</li><li>Quick resolution of flaking problems.</li><li>Antioxidant action.</li><li>Natural derived active ingredients.</li><li>Paraben and sulfate-free.</li></ul>",
+            "title_2": "How To Use",
+            "raw_content_2": "<p>Apply about a tablespoon to the scalp with damp hair and massage in, especially those areas most affected.</p><p>Leave on for a few minutes. Rinse off thoroughly.</p><p>Alternate with <a href=\"https://www.hairmnl.com/products/davines-renewing-shampoo\">Davines Renewing Shampoo</a> or <a href=\"https://www.hairmnl.com/products/davines-naturaltech-well-being-shampoo-for-all-kinds-of-hair\"><u>Well-Being Shampoo</u></a> for best results.</p><p><strong>FREQUENCY OF USE</strong></p><ul><li><i>Intensive treatment: </i>Twice a week for a maximum 3 weeks.</li><li><i>Maintenance treatment</i>: Once a week for 6 weeks. The maintenance treatment can be interrupted earlier than 6 weeks if the problem has been resolved.</li></ul>",
+            "title_3": "Ingredients",
+            "raw_content_3": "<p><strong>NATURAL ACTIVE INGREDIENTS</strong></p><ul><li><i>Dandelion phytoceuticals</i> - rich in polyphenols and sugar with anti-oxidant and anti-inflammatory action;</li><li><i>Essential oils</i> - Lavender, myrrh, and sage oils have an anti-inflammatory, antiseptic, and calming action.</li><li><i>Selenium disulphide</i> - an active pharmaceutical-grade substance used to treat dandruff</li></ul><p><strong>FULL INGREDIENTS</strong><br/>AQUA / WATER / EAU, COCAMIDOPROPYL BETAINE, PROPYLENE GLYCOL, SODIUM LAURYL GLUCOSE CARBOXYLATE, GLYCERIN, LAURYL GLUCOSIDE, SODIUM LAUROYL METHYL ISETHIONATE, ACRYLATES/C10-30 ALKYL ACRYLATE CROSSPOLYMER, SELENIUM SULFIDE, GLYCERYL OLEATE, TARAXACUM OFFICINALE ROOT EXTRACT / TARAXACUM OFFICINALE (DANDELION) ROOT EXTRACT, COCO-GLUCOSIDE, POLYSORBATE 20, SODIUM BENZOATE, CITRIC ACID, SODIUM CHLORIDE, TRISODIUM ETHYLENEDIAMINE DISUCCINATE, POTASSIUM SORBATE, 2-BROMO-2-NITROPROPANE-1,3-DIOL, LINALOOL, PARFUM / FRAGRANCE.</p>",
+            "title_4": "",
+            "raw_content_4": "",
             "title_5": "",
             "raw_content_5": ""
           }

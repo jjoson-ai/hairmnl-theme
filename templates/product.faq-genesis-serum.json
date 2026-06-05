@@ -50,14 +50,14 @@
           "settings": {
             "read_more": true,
             "style": "accordions",
-            "title_1": "{{ product.metafields.hmnl.product_tab_benefits_title.value }}",
-            "raw_content_1": "<p>{{ product.metafields.hmnl.product_benefits_tab_description | metafield_tag }}</p>",
-            "title_2": "{{ product.metafields.hmnl.product_howto_tab_title.value }}",
-            "raw_content_2": "<p>{{ product.metafields.hmnl.product_how_to_use_tab_title | metafield_tag }}</p>",
-            "title_3": "{{ product.metafields.hmnl.product_ingredients_tab_title.value }}",
-            "raw_content_3": "<p>{{ product.metafields.hmnl.product_ingredients_tab_content | metafield_tag }}</p>",
-            "title_4": "{{ product.metafields.hmnl.product_tab_faq_title.value }}",
-            "raw_content_4": "<p>{{ product.metafields.hmnl.product_faqs_tab_description | metafield_tag }}</p>",
+            "title_1": "Benefits",
+            "raw_content_1": "<ul><li>Re-anchor the fiber to the root.*</li><li>Helps control hair shedding.*</li><li>Significant anti hair-fall efficacy after 6 weeks of use.*</li><li>Significant soothing effect with decrease in total itchiness and discomfort after 3 weeks of use.**</li><li>Helps preserve the scalp natural protective barrier.***</li><li>Reinforces scalp.***</li><li>Helps improve barrier function of scalp.***</li></ul><p><i>*Clinical study, 99 people after 6 weeks of use (hair-loss).</i><br/><i>** Clinical study, 99 people after 3 weeks of use (soothing).</i><br/><i>***Clinical instrumental study.</i></p>",
+            "title_2": "How To Use",
+            "raw_content_2": "<p>Use once daily in the morning or before going to bed during a 6-week period.</p><ul><li>Apply 4 doses on dry or towel-dried scalp, section by section.</li><li>1 dose = 1 pipette until the mark.</li><li>Massage gently.</li><li>Do not rinse.</li><li>Style as desired.</li></ul><p><strong>Pro Tip: </strong>Use this fortifying anti-fall Serum once daily to minimize hair-fall and maximize beautiful hair.</p>",
+            "title_3": "Ingredients",
+            "raw_content_3": "<p><strong>Key Ingredients</strong><br/>A unique combination of potent anti hair-fall complex:</p><ul><li>Aminexil 1.5% helps hair to anchor more solidly into the scalp and prevents collagen from hardening around hair follicles.</li><li>Ginger Root is known for its ability to protect against daily external aggressor.</li><li>Caffeine contributes to improve scalp micro-circulation thanks to its stimulating properties.</li></ul><p><strong>Full Ingredients</strong><br/>Aqua / water / eau - Alcohol denat - Diaminopyrimidine oxide - Ammonium polyacryloyldimethyl taurate - Aminomethyl propanol - Citric acid - Peg-40 hydrogenated castor oil - Piroctone olamine - Caffeine - Arginine - Limonene - Niacinamide - Pyridoxine hcl - Linalool - Safflower glucoside - Benzyl salicylate - Coumarin - Citral - Benzyl alcohol - Xylitylglucoside - Citronellol - Benzyl benzoate - Anhydroxylitol - Xylitol - Zingiber officinale root extract / ginger root extract - Resveratrol - Tocopherol - Bht - Sodium citrate - Parfum / fragrance.</p>",
+            "title_4": "",
+            "raw_content_4": "",
             "title_5": "",
             "raw_content_5": ""
           }

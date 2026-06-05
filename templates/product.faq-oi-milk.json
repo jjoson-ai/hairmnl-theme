@@ -50,14 +50,14 @@
           "settings": {
             "read_more": true,
             "style": "accordions",
-            "title_1": "{{ product.metafields.hmnl.product_tab_benefits_title.value }}",
-            "raw_content_1": "<p>{{ product.metafields.hmnl.product_benefits_tab_description | metafield_tag }}</p>",
-            "title_2": "{{ product.metafields.hmnl.product_howto_tab_title.value }}",
-            "raw_content_2": "<p>{{ product.metafields.hmnl.product_how_to_use_tab_title | metafield_tag }}</p>",
-            "title_3": "{{ product.metafields.hmnl.product_ingredients_tab_title.value }}",
-            "raw_content_3": "<p>{{ product.metafields.hmnl.product_ingredients_tab_content | metafield_tag }}</p>",
-            "title_4": "{{ product.metafields.hmnl.product_tab_faq_title.value }}",
-            "raw_content_4": "<p>{{ product.metafields.hmnl.product_faqs_tab_description | metafield_tag }}</p>",
+            "title_1": "Benefits",
+            "raw_content_1": "<p>Lightweight OI All In One Milk is a multi-function leave-in spray treatment that softens, detangles, controls frizz and protects the hair from heat.</p><ul><li>Adds shine, softness and silkiness</li><li>Detangling and anti-frizz moisturizing effect</li><li>Antioxidant and heat protection</li><li>Facilitates combing of dry and wet hair</li><li>Gives body without weighing hair down</li><li>Facilitates blow drying</li><li>Provides a longer-lasting hairstyle</li><li>Persistent perfume</li></ul>",
+            "title_2": "How To Use",
+            "raw_content_2": "<ul><li>After using <a href=\"https://www.hairmnl.com/collections/davines-oi/products/davines-oi-shampoo-280-ml-absolute-beautifying-shampoo-with-roucou-oil\"><u>OI Shampoo</u></a>, towel dry and spray <strong>OI All in One Milk</strong> 10 to 15 times on roots and ends: do not rinse and continue with styling. Depending on the type of hair, increase or decrease the number of sprays.</li><li>In case of difficult hair, you can apply <strong>OI All in One Milk</strong> after <a href=\"https://www.hairmnl.com/collections/davines-oi/products/davines-oi-conditioner-250-ml-absolute-beautifying-conditioner-with-roucou-oil\"><u>OI Conditioner</u></a>.</li><li>For particularly dehydrated hair, apply <strong>OI All in One Milk</strong> to dry hair as a moisturizing finish, spraying the product directly on the palm of the hand and distributing evenly on the lengths and ends.</li></ul><p><strong>FREQUENCY OF USE: </strong>Suitable for <i>everyday use.</i></p>",
+            "title_3": "Ingredients",
+            "raw_content_3": "<p><strong>NATURAL ACTIVE INGREDIENTS:</strong><br/>Roucou oil - Also known as annatto, this plant is very rich in beta-carotene (100 times more than carrots) and ellagic acid, and has strong anti aging and strong anti-oxidant action. </p><p> </p><p><strong>FULL INGREDIENTS</strong><br/>AQUA / WATER / EAU, CETEARYL ALCOHOL, PANTHENOL, PARFUM / FRAGRANCE, BEHENTRIMONIUM CHLORIDE, BENZYL ALCOHOL, TOCOPHEROL, CETYL ALCOHOL, AMODIMETHICONE, CETRIMONIUM CHLORIDE, AMODIMETHICONE/SILSESQUIOXANE COPOLYMER, SODIUM BENZOATE, TRIDECETH-5, CITRIC ACID, GLYCERIN, TRIDECETH-12, CYCLOPENTASILOXANE, CITRONELLOL, GERANIOL, PHENOXYETHANOL, HELIANTHUS ANNUUS SEED OIL / HELIANTHUS ANNUUS (SUNFLOWER) SEED OIL, LINALOOL, ALPHA-ISOMETHYL IONONE, LIMONENE, BIXA ORELLANA SEED EXTRACT.</p><p>In line with Davines' mission of <i>sustainable beauty</i>, this is a <strong>Zero Impact</strong> (carbon-neutral) product, which means the carbon dioxide emissions generating by the creation of this product's packaging are offset by purchasing carbon credits that go to the creation and protection of forests in Italy, Costa Rica, and Madagascar.</p>",
+            "title_4": "",
+            "raw_content_4": "",
             "title_5": "",
             "raw_content_5": ""
           }
