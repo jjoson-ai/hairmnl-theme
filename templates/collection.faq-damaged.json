@@ -1,66 +1,26 @@
 {
   "sections": {
-    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
-      "type": "section-banner-slider",
-      "blocks": {
-        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
-          "type": "banner_slide",
-          "disabled": true,
-          "settings": {
-            "slide_image_url": ""
-          }
-        },
-        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
-          "type": "banner_slide",
-          "disabled": true,
-          "settings": {
-            "slide_image_url": ""
-          }
-        },
-        "762ed30d-6625-4574-b7e9-7b4209a4d936": {
-          "type": "banner_slide",
-          "disabled": true,
-          "settings": {
-            "slide_image_url": ""
-          }
-        }
-      },
-      "block_order": [
-        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
-        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1",
-        "762ed30d-6625-4574-b7e9-7b4209a4d936"
-      ],
-      "disabled": true,
-      "settings": {
-        "enable_section": true,
-        "section_margin_top": 20,
-        "section_margin_bottom": 20,
-        "slide_delay": 3000
-      }
-    },
-    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
+    "e34fb960-79fc-4e83-8d3d-a426e89da4da": {
       "type": "section-static-banner",
-      "disabled": true,
       "settings": {
         "section_margin_top": 20,
-        "section_margin_bottom": 20,
-        "banner_desktop": "shopify://shop_images/loreal-summer-sale-april-2025-tecniart-with-free-t_1.jpg",
-        "banner_mobile": "shopify://shop_images/loreal-summer-sale-april-2025-tecniart-with-free-t_2.jpg",
-        "banner_alt": "",
+        "section_margin_bottom": 10,
+        "banner_desktop": "shopify://shop_images/Damaged_Hair_Apr-May_2025_-_Banner_Desktop.png",
+        "banner_mobile": "shopify://shop_images/Damaged_Hair_Apr-May_2025_-_Banner_Mobile.png",
         "banner_url": "",
         "desktop_padding_top": 16,
         "desktop_padding_bottom": 16,
-        "mobile_padding_top": 20,
-        "mobile_padding_bottom": 20
+        "mobile_padding_top": 96,
+        "mobile_padding_bottom": 96
       }
     },
     "hero": {
       "type": "collection-hero",
       "settings": {
-        "text_align": "align--top-center",
+        "text_align": "align--middle-center",
         "show_title": true,
         "show_title_below": false,
-        "show_description": true,
+        "show_description": false,
         "show_description_below": false,
         "show_image": false,
         "bg_position": "center-center",
@@ -84,16 +44,94 @@
         "overlay_color": "#000000"
       }
     },
-    "27c9d18f-1828-4b29-b9f6-dd8157f950a1": {
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548": {
+      "type": "section-banner-slider",
+      "blocks": {
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        },
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-0",
+        "template--14240176308323__f6e88f7d-7fbe-4da5-99cf-48301e7a7548-166773134950546787-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_section": true,
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "slide_delay": 3000
+      }
+    },
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95": {
+      "type": "section-double",
+      "blocks": {
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "",
+            "text": "<p>The only patented system to noticeably repair extreme damage—turn dry, brittle hair into soft, shiny, and more resilient hair.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "",
+            "button_url": "",
+            "button_color": "btn--neutral",
+            "button_style": "caps--link",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        },
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1": {
+          "type": "image",
+          "settings": {
+            "bg_position": "center-center",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "link_text": "Shop Now",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-0",
+        "template--14409661677667__dc867794-2d97-4ec7-b92b-ab69aacbde95-16710231499f313e56-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "height": "use_screen_one_half",
+        "padding": false,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908": {
       "type": "section-richtext",
       "disabled": true,
       "settings": {
-        "kicker": "Introducing",
-        "title": "",
-        "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+        "kicker": "",
+        "title": "Professional Solutions for Damaged Hair",
+        "text": "",
         "text_size": 2,
         "text_columns": 1,
-        "align_text": "text-left",
+        "align_text": "text-center",
         "button_text": "",
         "button_url": "",
         "button_color": "btn--neutral",
@@ -104,37 +142,253 @@
         "bg": "palette--light bg--neutral"
       }
     },
-    "ae06cdf6-d685-464d-a42b-5ac67da6f3aa": {
-      "type": "section-featured-articles",
+    "7a270b7d-2599-42c7-ba52-5681e1d57193": {
+      "type": "section-collection-grid",
       "blocks": {
-        "template--14240176308323__ae06cdf6-d685-464d-a42b-5ac67da6f3aa-16753282058e1dd242-0": {
-          "type": "article_block",
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-0": {
+          "type": "featured_collection",
           "settings": {
-            "blog_category": "",
-            "blog_handle": ""
+            "collection": "for-moisture-dry-hair",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/for-moisture-dry-hair"
           }
         },
-        "5677df6f-5144-4a21-a78b-a2f30fc7ddf7": {
-          "type": "article_block",
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-1": {
+          "type": "featured_collection",
           "settings": {
-            "blog_category": "",
-            "blog_handle": ""
+            "collection": "damaged-hair-dry-and-stiff",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/damaged-hair-dry-and-stiff"
           }
         },
-        "66d3e23a-8b5f-4a78-8af7-3354253aa0d4": {
-          "type": "article_block",
+        "94b07b62-0251-4166-a21f-eb8ceb5fa000": {
+          "type": "featured_collection",
           "settings": {
-            "blog_category": "",
-            "blog_handle": ""
+            "collection": "damaged-hair-frizzy-prone-to-breakage",
+            "title": "",
+            "link_text": "",
+            "button_link": "shopify://collections/damaged-hair-frizzy-prone-to-breakage"
           }
         }
       },
       "block_order": [
-        "template--14240176308323__ae06cdf6-d685-464d-a42b-5ac67da6f3aa-16753282058e1dd242-0",
-        "5677df6f-5144-4a21-a78b-a2f30fc7ddf7",
-        "66d3e23a-8b5f-4a78-8af7-3354253aa0d4"
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-0",
+        "template--14411676745827__7a270b7d-2599-42c7-ba52-5681e1d57193-1671508463d6f2424e-1",
+        "94b07b62-0251-4166-a21f-eb8ceb5fa000"
       ],
+      "settings": {
+        "title": "",
+        "grid": 3,
+        "bg": "palette--light bg--neutral",
+        "text_color": "text--white",
+        "button_style": "btn--outline",
+        "button_color": "btn--white",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.9
+      }
+    },
+    "section_double_HBQK9d": {
+      "type": "section-double",
+      "blocks": {
+        "video_pdmkid": {
+          "type": "video",
+          "settings": {
+            "video_link_bg": "https://cdn.shopify.com/videos/c/o/v/b649055e670544fcaec5bd4a8596c416.mp4",
+            "object_position": "center-center",
+            "bg_position": "center-center",
+            "video_link": "",
+            "popup_text": "",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "text_bCHqDd": {
+          "type": "text",
+          "settings": {
+            "kicker": "",
+            "title": "Find Your Ultimate Hair Repair Solution",
+            "text": "<h4>Discover the best products to repair your damaged hair.</h4><p>Take our quiz to find the ideal treatment tailored to your hair's level of damage. Discover which damaged hair product is right for you and restore your hair's health and shine.</p>",
+            "text_size": 2,
+            "text_columns": 1,
+            "align_text": "text-left",
+            "button_text": "Take the Quiz",
+            "button_url": "shopify://pages/damaged-hair-quiz",
+            "button_color": "btn--black",
+            "button_style": "btn btn--long uppercase",
+            "text_color": "text--neutral",
+            "bg_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "video_pdmkid",
+        "text_bCHqDd"
+      ],
+      "settings": {
+        "height": "use_screen_full",
+        "padding": true,
+        "borders": false,
+        "wrapper": false
+      }
+    },
+    "a4815646-82f8-4e23-8aff-8d91b53a6dab": {
+      "type": "section-richtext",
       "disabled": true,
+      "settings": {
+        "kicker": "",
+        "title": "Find Your Ultimate Hair Repair Solution",
+        "text": "<h4>Discover the best products to repair your damaged hair.</h4><p>Take our quiz to find the ideal treatment tailored to your hair's level of damage. Discover which damaged hair product is right for you and restore your hair's health and shine.</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Take the Quiz",
+        "button_url": "shopify://pages/damaged-hair-quiz",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_richtext_VADGqy": {
+      "type": "section-richtext",
+      "settings": {
+        "kicker": "",
+        "title": "Need help deciding?",
+        "text": "<p>Feel free to send us a message for an online consultation</p>",
+        "text_size": 2,
+        "text_columns": 1,
+        "align_text": "text-center",
+        "button_text": "Chat Now",
+        "button_url": "https://m.me/hairmnl",
+        "button_color": "btn--neutral",
+        "button_style": "btn btn--long uppercase",
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "section_collection_tabs_YY43iz": {
+      "type": "section-collection-tabs",
+      "blocks": {
+        "collection_ktxARC": {
+          "type": "collection",
+          "settings": {
+            "collection": "davines-nounou",
+            "title": "Davines NOUNOU"
+          }
+        },
+        "collection_dXUYLR": {
+          "type": "collection",
+          "settings": {
+            "collection": "olaplex",
+            "title": "Olaplex"
+          }
+        },
+        "collection_JfB3Xn": {
+          "type": "collection",
+          "settings": {
+            "collection": "kerastase-premiere",
+            "title": "Kérastase Première"
+          }
+        },
+        "collection_LhcKXA": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "K18"
+          }
+        },
+        "collection_GpFyzX": {
+          "type": "collection",
+          "settings": {
+            "collection": "loreal-professionnel-serie-expert-absolut-repair-gold",
+            "title": "L'Oréal Pro Absolut Repair"
+          }
+        },
+        "collection_UPwbzd": {
+          "type": "collection",
+          "settings": {
+            "collection": "aveda-botanical-repair",
+            "title": "Aveda Botanical Repair"
+          }
+        }
+      },
+      "block_order": [
+        "collection_ktxARC",
+        "collection_dXUYLR",
+        "collection_JfB3Xn",
+        "collection_LhcKXA",
+        "collection_GpFyzX",
+        "collection_UPwbzd"
+      ],
+      "settings": {
+        "title": "Products for Damaged Hair",
+        "title_font_size": 28,
+        "grid": 4,
+        "limit": 6,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
+      "type": "cross-post-blogs",
+      "disabled": true,
+      "settings": {
+        "header_title": "Related Articles"
+      }
+    },
+    "0fb962d9-3fc0-4d86-9be9-c10b83007e08": {
+      "type": "section-featured-articles",
+      "blocks": {
+        "template--14413235290211__0fb962d9-3fc0-4d86-9be9-c10b83007e08-1675367436d4747a3e-0": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "comprehensive-guide-to-repairing-damaged-hair-with-hairmnls-top-products"
+          }
+        },
+        "46f5e15e-2c3a-4dc0-94da-0e666e60c919": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "discover-the-new-kerastase-premiere-line-now-available-at-hairmnl-in-the-philippines"
+          }
+        },
+        "0f0c8039-93a7-4eef-b523-f16933068b5f": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "unlock-the-secret-to-revitalized-hair-with-k-18-in-the-philippines"
+          }
+        },
+        "3c2383b7-185c-4a0e-a216-b0a27522ed28": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "product-spotlight",
+            "blog_handle": "exploring-l-oreal-professionnel-s-new-absolut-repair-molecular-line"
+          }
+        }
+      },
+      "block_order": [
+        "template--14413235290211__0fb962d9-3fc0-4d86-9be9-c10b83007e08-1675367436d4747a3e-0",
+        "46f5e15e-2c3a-4dc0-94da-0e666e60c919",
+        "0f0c8039-93a7-4eef-b523-f16933068b5f",
+        "3c2383b7-185c-4a0e-a216-b0a27522ed28"
+      ],
       "settings": {
         "title": "",
         "homepage_blog": "",
@@ -148,273 +402,90 @@
         "show_category": false,
         "category_alignment": "left",
         "title_alignment": "left",
-        "show_excerpt": false,
+        "show_excerpt": true,
         "excerpt_alignment": "left",
-        "show_readmore": false,
+        "show_readmore": true,
         "btn_readmore_alignment": "left"
       }
     },
-    "461da711-ba6d-42a0-b49f-850e66bdce74": {
-      "type": "section-double",
+    "section_featured_articles_cDdXDe": {
+      "type": "section-featured-articles",
       "blocks": {
-        "template--14240176308323__461da711-ba6d-42a0-b49f-850e66bdce74-167536837611d66cf7-0": {
-          "type": "text",
+        "article_block_xL8zqx": {
+          "type": "article_block",
           "settings": {
-            "kicker": "Image with text",
-            "title": "",
-            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
-            "text_size": 2,
-            "text_columns": 1,
-            "align_text": "text-left",
-            "button_text": "",
-            "button_url": "",
-            "button_color": "btn--neutral",
-            "button_style": "caps--link",
-            "text_color": "text--neutral",
-            "bg_color": "#ffffff"
+            "blog_category": "hair-education",
+            "blog_handle": "4-easy-ways-to-test-for-damaged-hair-at-home"
           }
         },
-        "cb1608dc-d7eb-4608-b94a-193296c72393": {
-          "type": "youtube",
+        "article_block_fXPXqx": {
+          "type": "article_block",
           "settings": {
-            "yt_video_id": ""
+            "blog_category": "hair-education",
+            "blog_handle": "bond-builders-are-hair-saviors-why-you-should-be-using-it-on-your-damaged-hair"
+          }
+        },
+        "article_block_C4RRjQ": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "dry-vs-damaged-understanding-your-hair-type"
+          }
+        },
+        "article_block_WttpVt": {
+          "type": "article_block",
+          "settings": {
+            "blog_category": "hair-education",
+            "blog_handle": "protein-treatments-are-a-must-for-damaged-hair-discover-its-benefits-here"
           }
         }
       },
       "block_order": [
-        "template--14240176308323__461da711-ba6d-42a0-b49f-850e66bdce74-167536837611d66cf7-0",
-        "cb1608dc-d7eb-4608-b94a-193296c72393"
+        "article_block_xL8zqx",
+        "article_block_fXPXqx",
+        "article_block_C4RRjQ",
+        "article_block_WttpVt"
       ],
-      "disabled": true,
       "settings": {
-        "height": "use_screen_one_half",
-        "padding": false,
-        "borders": false,
-        "wrapper": false
+        "title": "",
+        "homepage_blog": "",
+        "homepage_blog_count": 4,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": false,
+        "button_style": "btn--outline uppercase",
+        "show_category": false,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
       }
     },
-    "164244299150503795": {
+    "976940b0-2ec6-46a7-8388-9db1812a435f": {
       "type": "section-collection",
-      "disabled": true,
       "settings": {
         "title": "Special Offers for Damaged Hair",
-        "title_font_size": 28,
+        "title_font_size": 17,
         "collection": "special-offers-for-damaged-hair",
         "grid": 6,
         "rows": 1,
         "bg": "palette--light bg--neutral",
         "show_view_all": true,
-        "desktop_padding_top": 96,
-        "desktop_padding_bottom": 96,
-        "mobile_padding_top": 96,
-        "mobile_padding_bottom": 96
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 40
       }
     },
-    "main": {
-      "type": "collection",
-      "blocks": {
-        "ab4f9823-02d9-4934-ad2c-8fc93ce0b293": {
-          "type": "nav_links",
-          "disabled": true,
-          "settings": {
-            "collection_linklist": ""
-          }
-        },
-        "2332bcc5-c7e5-47c3-b269-35cee6a0e86c": {
-          "type": "filters",
-          "disabled": true,
-          "settings": {}
-        },
-        "870f76a8-df44-4133-81b4-c261d22c0757": {
-          "type": "nav_links",
-          "disabled": true,
-          "settings": {
-            "collection_linklist": "browse-by-hair-type"
-          }
-        },
-        "a54be99d-1a5f-4659-8eed-87f6abd55f6c": {
-          "type": "nav_links",
-          "disabled": true,
-          "settings": {
-            "collection_linklist": "browse-by-hair-condition"
-          }
-        },
-        "c2ffb21a-c273-4a08-909d-648c1398de59": {
-          "type": "nav_links",
-          "disabled": true,
-          "settings": {
-            "collection_linklist": "browse-by-desired-result"
-          }
-        },
-        "6ac911a5-ead2-4c4c-831d-e1c818fc6813": {
-          "type": "nav_links",
-          "disabled": true,
-          "settings": {
-            "collection_linklist": "browse-by-product-type"
-          }
-        },
-        "group_ACMJ4Y": {
-          "type": "group",
-          "settings": {
-            "title": "Brands",
-            "group_tags": "American Crew, Aveda, Aveda Men, BaByliss, BaByliss Pro, Bed Head by TIGI, Bed Head for Men by TIGI, Davines, Denman, Dyson, Gamma Piu, K18, Kérastase, Le Couleur, L'Oréal Professionnel, Olaplex, TUFT, Reuzel, Revlon Professional, Schwarzkopf Professional, TYMO, Wella Professionals"
-          }
-        },
-        "group_AQQCGN": {
-          "type": "group",
-          "settings": {
-            "title": "Product Type",
-            "group_tags": "Shampoo, Conditioner, Hair Mask, Hair Color, Hair Cream, Hair Oil, Heat Protector, Hair Tools, Styling, Spray, Bath and Body,Air Purifier"
-          }
-        },
-        "304269c5-c626-40b3-96f4-cd7b6feafb51": {
-          "type": "group",
-          "settings": {
-            "title": "Hair Type",
-            "group_tags": "Fine Hair,Thick Hair,Curly Hair,All Types of Hair"
-          }
-        },
-        "9de51308-e5cc-4445-9d72-b0b3f418fb48": {
-          "type": "group",
-          "settings": {
-            "title": "Hair Color",
-            "group_tags": "Ammonia-Free Permanent Hair Color,Permanent Hair Color,Semi-Permanent Color"
-          }
-        },
-        "7bad0925-8676-4890-abbb-c28bcee1245a": {
-          "type": "group",
-          "settings": {
-            "title": "Toning",
-            "group_tags": "Contains More Blue Pigments,Contains Purple Pigments"
-          }
-        },
-        "2b4847dc-9e75-4def-81e2-5eff0c21f326": {
-          "type": "group",
-          "settings": {
-            "title": "Formulation",
-            "group_tags": ""
-          }
-        },
-        "67b2e498-5353-464e-b61c-add608ec1841": {
-          "type": "group",
-          "settings": {
-            "title": "Ingredients",
-            "group_tags": "95% Natural Origin Ingredients,Cruelty-Free,Free of Harsh Sulfates (SLS and SLES),Free of Parabens,Free of PPD/PTD,Free of Pthalates,Free of Silicones,Plant-Based,Vegan"
-          }
-        },
-        "9e3067e2-2936-48e3-8f60-8a67658c0666": {
-          "type": "group",
-          "disabled": true,
-          "settings": {
-            "title": "Fragrance",
-            "group_tags": ""
-          }
-        },
-        "eb68f00d-af7c-4454-8c1b-955cdb2fbaf0": {
-          "type": "group",
-          "settings": {
-            "title": "Size",
-            "group_tags": "Travel,Value,Refill"
-          }
-        },
-        "358dc0c2-2f87-4124-b13a-73f45fe96be7": {
-          "type": "nav_links",
-          "disabled": true,
-          "settings": {
-            "collection_linklist": "brands"
-          }
-        },
-        "6c9eada6-445e-4068-b52c-f2a943f3921b": {
-          "type": "group",
-          "settings": {
-            "title": "Others",
-            "group_tags": "Brand Best Seller,HairMNL Best Seller,Special Offer,New Arrival,HairMNL Exclusive"
-          }
-        }
-      },
-      "block_order": [
-        "ab4f9823-02d9-4934-ad2c-8fc93ce0b293",
-        "2332bcc5-c7e5-47c3-b269-35cee6a0e86c",
-        "870f76a8-df44-4133-81b4-c261d22c0757",
-        "a54be99d-1a5f-4659-8eed-87f6abd55f6c",
-        "c2ffb21a-c273-4a08-909d-648c1398de59",
-        "6ac911a5-ead2-4c4c-831d-e1c818fc6813",
-        "group_ACMJ4Y",
-        "group_AQQCGN",
-        "304269c5-c626-40b3-96f4-cd7b6feafb51",
-        "9de51308-e5cc-4445-9d72-b0b3f418fb48",
-        "7bad0925-8676-4890-abbb-c28bcee1245a",
-        "2b4847dc-9e75-4def-81e2-5eff0c21f326",
-        "67b2e498-5353-464e-b61c-add608ec1841",
-        "9e3067e2-2936-48e3-8f60-8a67658c0666",
-        "eb68f00d-af7c-4454-8c1b-955cdb2fbaf0",
-        "358dc0c2-2f87-4124-b13a-73f45fe96be7",
-        "6c9eada6-445e-4068-b52c-f2a943f3921b"
-      ],
-      "settings": {
-        "grid_setting_large": 4,
-        "grid_setting_small": 2,
-        "product_limit": 36,
-        "enable_layout_toggle": true,
-        "collection_sorting": true,
-        "hide_sidebar": false
-      }
-    },
-    "e8de97cf-0e61-42c0-a782-fde9ed3d8a85": {
-      "type": "cross-post-blogs",
-      "disabled": true,
-      "settings": {
-        "header_title": "Related Articles"
-      }
-    },
-    "168692372735522490": {
-      "type": "apps",
-      "blocks": {
-        "017cc543-7259-46c1-a951-55eb92d5d3a0": {
-          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_collection_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
-          "settings": {
-            "blog_name": "hair-education",
-            "pb_related_posts_title": "Related Articles",
-            "pb_related_posts_title_style": "H5",
-            "pb_related_post_items": 6,
-            "pb_related_post_item_display": 5,
-            "slider_autoplay": "2",
-            "custom_class": "",
-            "pb_item_style": "1",
-            "image_display": "cover",
-            "pb_color_image_bg": "",
-            "pb_color_text_bg": "",
-            "pb_color_line": "",
-            "pb_extras": "",
-            "pb_related_post_length": 10,
-            "read_more": "",
-            "display_tags": "0",
-            "keyword": "",
-            "key_match_scoring": "no",
-            "pb_related_posts_matching": "2",
-            "pb_related_posts_tag_match": "10",
-            "pb_related_posts_title_match": "5"
-          }
-        }
-      },
-      "block_order": [
-        "017cc543-7259-46c1-a951-55eb92d5d3a0"
-      ],
-      "custom_css": [
-        ".related_product_articles_header {text-align: center;}"
-      ],
-      "settings": {
-        "width": "wrapper",
-        "height": "margin--medium",
-        "text_color": "text--neutral",
-        "bg": "palette--light bg--neutral"
-      }
-    },
-    "a887c88a-f0dd-46ac-b6db-055d3adfeab7": {
+    "355bbc90-defb-40a6-853a-f97808e5c84f": {
       "type": "section-recent-products",
       "settings": {
         "bg": "palette--light bg--neutral",
-        "product_recently_heading": "Recently Viewed",
+        "product_recently_heading": "Recently viewed",
         "product_recently_limit": 6,
         "product_recently_minimum": 1
       }
@@ -461,18 +532,22 @@
     }
   },
   "order": [
-    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
-    "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
+    "e34fb960-79fc-4e83-8d3d-a426e89da4da",
     "hero",
     "subcollections",
-    "27c9d18f-1828-4b29-b9f6-dd8157f950a1",
-    "ae06cdf6-d685-464d-a42b-5ac67da6f3aa",
-    "461da711-ba6d-42a0-b49f-850e66bdce74",
-    "164244299150503795",
-    "main",
-    "faq",
+    "f6e88f7d-7fbe-4da5-99cf-48301e7a7548",
+    "dc867794-2d97-4ec7-b92b-ab69aacbde95",
+    "33cd68d7-40f1-47b2-a68f-7d44f0b98908",
+    "7a270b7d-2599-42c7-ba52-5681e1d57193",
+    "section_double_HBQK9d",
+    "a4815646-82f8-4e23-8aff-8d91b53a6dab",
+    "section_richtext_VADGqy",
+    "section_collection_tabs_YY43iz",
     "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
-    "168692372735522490",
-    "a887c88a-f0dd-46ac-b6db-055d3adfeab7"
+    "0fb962d9-3fc0-4d86-9be9-c10b83007e08",
+    "section_featured_articles_cDdXDe",
+    "976940b0-2ec6-46a7-8388-9db1812a435f",
+    "355bbc90-defb-40a6-853a-f97808e5c84f",
+    "faq"
   ]
 }
