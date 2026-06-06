@@ -295,8 +295,15 @@ For higher-stakes pushes (layouts, snippets, anything in `layout/` or
 
 ## Known stash
 
-`stash@{0}` (as of 2026-04-26 — index re-verified after housekeeping
-2026-05-14) holds the April 26 prefix-strip + srcset work:
+The **April 26 prefix-strip + srcset work** is parked in a stash whose
+index DRIFTS as other stashes are pushed or dropped — always locate it
+by its message, never a fixed number:
+
+`git stash list | grep 'brand-prefix-strip + responsive srcset polish + limespot prefix strip'`
+
+(As of 2026-06-06 housekeeping it sits at `stash@{8}`; it was `stash@{0}`
+on 2026-04-26 and `stash@{12}` just before 4 auto-noise stashes were
+dropped — the index has drifted three times now.) It holds:
 
 - `snippets/css-overrides.liquid` (LimeSpot prefix-strip rules)
 - `snippets/product-grid-item.liquid` (responsive srcset polish)
@@ -308,9 +315,9 @@ For higher-stakes pushes (layouts, snippets, anything in `layout/` or
 three files are still parked — partial overlap with subsequent changes
 makes a clean apply risky. When picking from the stash later, prefer
 cherry-pick over `git stash pop`, and always diff against live before
-pushing. Verify the stash index with `git stash list` before referring
-to it by index (this file's reference can drift if other stashes are
-pushed on top of it).
+pushing. Always locate the stash by its message (see the top of this
+section), not a fixed index — the index drifts whenever other stashes
+are pushed or dropped.
 
 
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:ca08a54f -->
