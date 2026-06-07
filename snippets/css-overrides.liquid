@@ -833,9 +833,10 @@
      Drunk Elephant/Mecca pattern.
 
      Scope: desktop only (≥1024px). Mobile has its own sticky-ATC bar
-     (different markup); this one does NOT show below 1024px.
-     Hidden by default via translateY(100%); JS adds .is-visible to
-     slide it in once the IntersectionObserver fires.
+     (block below); this one does NOT show below 1024px.
+     bd a7av.11: pinned to the TOP (below the sticky header) per the web-team
+     ask. Hidden via translateY(calc(-100% - 80px)) above the viewport; JS adds
+     .is-visible to slide it DOWN once the IntersectionObserver fires.
      Markup in snippets/product-sticky-bar.liquid, rendered from
      sections/product.liquid. JS inline in the snippet (~30 lines). */
   .vrec-product-sticky-bar {
@@ -847,15 +848,21 @@
       position: fixed;
       left: 0;
       right: 0;
-      bottom: 0;
+      /* bd a7av.11: desktop bar moved from bottom:0 to the TOP, pinned just below
+         the ~70px sticky header (web-team "move to top" trial). Slides DOWN from
+         above the viewport. DEVICE-VERIFY the 70px offset on the draft — tune
+         70–100px if the header height differs (announcement bar / shrink-on-scroll).
+         Mobile keeps the bottom-fixed bar (the @max-width:1023px block below). */
+      top: 70px;
+      bottom: auto;
       z-index: 9000;
       align-items: center;
       gap: 16px;
       padding: 10px 24px;
       background: #ffffff;
-      border-top: 1px solid var(--border, #e5e5e5);
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
-      transform: translateY(100%);
+      border-bottom: 1px solid var(--border, #e5e5e5);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transform: translateY(calc(-100% - 80px));
       transition: transform 200ms ease-out;
       font-family: inherit;
     }
@@ -933,6 +940,31 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
+    /* bd a7av.11: in-bar variant <select> + qty input (STKY parity, desktop). */
+    .vrec-product-sticky-bar__variant {
+      flex: 0 1 auto;
+      max-width: 220px;
+      min-height: 44px;
+      margin: 0 8px 0 0;
+      padding: 0 8px;
+      border: 1px solid var(--border, #e5e5e5);
+      background: #ffffff;
+      font-family: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .vrec-product-sticky-bar__qty {
+      flex: 0 0 56px;
+      width: 56px;
+      min-height: 44px;
+      margin: 0 12px 0 0;
+      padding: 0 8px;
+      border: 1px solid var(--border, #e5e5e5);
+      background: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      text-align: center;
+    }
   }
 
   /* ── Mobile sticky ATC bar (bd a7av.9 — STKY mobile-bar parity) ──
@@ -995,6 +1027,24 @@
       border: 0; cursor: pointer; font-family: inherit;
     }
     .vrec-product-sticky-bar__cta:disabled { opacity: 0.5; cursor: not-allowed; }
+    /* bd a7av.11: in-bar variant <select> + qty (STKY parity, mobile-compact). */
+    .vrec-product-sticky-bar__variant {
+      flex: 0 1 auto; max-width: 110px; min-height: 44px;
+      margin: 0 6px 0 0; padding: 0 6px;
+      border: 1px solid var(--border, #e5e5e5); background: #ffffff;
+      font-family: inherit; font-size: 12px;
+    }
+    .vrec-product-sticky-bar__qty {
+      flex: 0 0 42px; width: 42px; min-height: 44px;
+      margin: 0 6px 0 0; padding: 0 4px;
+      border: 1px solid var(--border, #e5e5e5); background: #ffffff;
+      font-family: inherit; font-size: 13px; text-align: center;
+    }
+    /* On the smallest phones title + variant + qty + price + CTA overflow a single
+       row; drop qty (defaults to 1) below 380px to keep the bar one line. */
+    @media (max-width: 379px) {
+      .vrec-product-sticky-bar__qty { display: none; }
+    }
     @media (prefers-reduced-motion: reduce) {
       .vrec-product-sticky-bar { transition: none; }
     }

@@ -48,7 +48,11 @@
     {%- endif -%}
     <div class="vrec-product-sticky-bar__info">
       <p class="vrec-product-sticky-bar__title">{{ product.title | strip_html }}</p>
-      {%- if product.variants.size > 1 and first_variant -%}
+      {%- comment -%} bd a7av.11: the variant text-label is collection-mode only
+          (the collection bar's product is swapped in-place by JS, which writes this
+          label). In PDP mode the variant is chosen via the in-bar <select> below, so
+          the meta line shows the vendor instead. {%- endcomment -%}
+      {%- if is_collection_mode and product.variants.size > 1 and first_variant -%}
         <p class="vrec-product-sticky-bar__meta" data-vrec-sticky-variant>{{ first_variant.title }}</p>
       {%- elsif product.vendor != blank -%}
         <p class="vrec-product-sticky-bar__meta">{{ product.vendor }}</p>
@@ -56,8 +60,42 @@
     </div>
     <p class="vrec-product-sticky-bar__price" data-vrec-sticky-price>{{ first_variant.price | money }}</p>
     {%- form 'product', product, class: 'vrec-product-sticky-bar__form' -%}
-      <input type="hidden" name="id" value="{{ first_variant.id }}" data-vrec-sticky-id>
-      <input type="hidden" name="quantity" value="1">
+      {%- comment -%} bd a7av.11: PDP mode gets in-bar variant <select> + qty input
+          (STKY parity, decision 4). Collection mode keeps the simple hidden id +
+          qty=1 — the collection bar's product is swapped in-place by
+          assets/hairmnl-common.js on card-click, which rewrites only title/price/
+          thumb/id and can't rebuild a <select>, so collection mode stays a
+          single-variant quick-add. {%- endcomment -%}
+      {%- if is_collection_mode -%}
+        <input type="hidden" name="id" value="{{ first_variant.id }}" data-vrec-sticky-id>
+        <input type="hidden" name="quantity" value="1">
+      {%- else -%}
+        {%- if product.variants.size > 1 -%}
+          <select name="id"
+                  class="vrec-product-sticky-bar__variant"
+                  data-vrec-sticky-id
+                  data-vrec-sticky-variant-select
+                  aria-label="{{ 'products.product.variants' | t | default: 'Variant' }}">
+            {%- for v in product.variants -%}
+              <option value="{{ v.id }}"
+                      data-price="{{ v.price }}"
+                      data-available="{{ v.available }}"
+                      {% if v.id == first_variant.id %}selected{% endif %}
+                      {% unless v.available %}disabled{% endunless %}>{{ v.title }}{% unless v.available %} — {{ 'products.product.sold_out' | t | default: 'Sold out' }}{% endunless %}</option>
+            {%- endfor -%}
+          </select>
+        {%- else -%}
+          <input type="hidden" name="id" value="{{ first_variant.id }}" data-vrec-sticky-id>
+        {%- endif -%}
+        <input type="number"
+               name="quantity"
+               value="1"
+               min="1"
+               inputmode="numeric"
+               class="vrec-product-sticky-bar__qty"
+               data-vrec-sticky-qty
+               aria-label="{{ 'products.product.quantity' | t | default: 'Quantity' }}">
+      {%- endif -%}
       <button type="submit"
               name="add"
               class="vrec-product-sticky-bar__cta"
@@ -153,6 +191,25 @@
           btn.disabled = !variant.available;
         }
       });
+
+      // bd a7av.11: in-bar variant <select> (PDP parity with STKY). When the
+      // shopper changes the variant directly in the bar, update the visible price
+      // + CTA availability. The <select name="id"> posts the chosen variant
+      // natively on submit; this listener only keeps the display in sync.
+      var barSelect = bar.querySelector('[data-vrec-sticky-variant-select]');
+      if (barSelect) {
+        barSelect.addEventListener('change', function () {
+          var opt = barSelect.options[barSelect.selectedIndex];
+          if (!opt) return;
+          var priceEl = bar.querySelector('[data-vrec-sticky-price]');
+          var cents = parseInt(opt.getAttribute('data-price'), 10);
+          if (priceEl && !isNaN(cents)) {
+            priceEl.textContent = (cents / 100).toLocaleString('en-PH', { style: 'currency', currency: 'PHP' });
+          }
+          var btn = bar.querySelector('.vrec-product-sticky-bar__cta');
+          if (btn) btn.disabled = (opt.getAttribute('data-available') !== 'true');
+        });
+      }
     })();
   </script>
 {%- endif -%}
