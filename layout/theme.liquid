@@ -1496,6 +1496,10 @@
     <link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
     <noscript><link rel="stylesheet" href="{{ 'bold-brain-widget.css' | asset_url }}"></noscript>
     {% render 'reamaze-placeholder' %}
+    {%- comment -%} bd a7av.13: native Sticky Cart bubble (desktop, self-hides on /cart + empty cart).
+      MIGRATION-DEBT: on OS 2.0 port, move to the P8 layout or an app-embed block; reason = global
+      floating widget rendered from the P6 layout. {%- endcomment -%}
+    {% render 'sticky-cart-bubble' %}
     {%- comment -%}
       AOS animations CSS extracted 2026-04-27 from theme.css (37KB,
       8.4% of theme.css, 252 rules). Used on 125 JSON templates (blog,

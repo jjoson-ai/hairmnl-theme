@@ -1,0 +1,47 @@
+{%- comment -%}
+  bd a7av.13 — native Sticky Cart bubble (STKY replacement, web-team "keep").
+
+  Floating cart button, DESKTOP ONLY, bottom-right. Opens the cart drawer via the
+  theme's native data-drawer-toggle="drawer-cart" (same hook the header cart link
+  uses), so no custom open-JS is needed; the href is the progressive-enhancement
+  fallback. Hidden on the cart page (no point) and when the cart is empty (STKY
+  parity). Positioned ABOVE the Reamaze chat bubble (desktop bottom:80px/right:22px)
+  with a LOWER z-index so live chat stays tappable — kt0/Reamaze regression
+  history, bd lki (a fixed overlay hid live chat for ~10 days). CSS lives in
+  css-overrides.liquid §sticky-cart.
+
+  Count is server-rendered from cart.item_count and re-synced on theme:cart:change
+  (the canonical cart-mutation event the drawer + the [data-vrec-add] handler fire).
+{%- endcomment -%}
+{%- unless request.page_type == 'cart' -%}
+  <a href="{{ routes.cart_url }}"
+     class="sticky-cart-bubble{% if cart.item_count == 0 %} sticky-cart-bubble--empty{% endif %}"
+     data-drawer-toggle="drawer-cart"
+     data-sticky-cart
+     aria-label="{{ 'layout.cart.title' | t | default: 'Cart' }}">
+    <svg class="sticky-cart-bubble__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M6 6h15l-1.5 9h-12L6 6Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M6 6 5 3H2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="9" cy="20" r="1.4" fill="currentColor"/>
+      <circle cx="18" cy="20" r="1.4" fill="currentColor"/>
+    </svg>
+    <span class="sticky-cart-bubble__count" data-sticky-cart-count>{{ cart.item_count }}</span>
+  </a>
+  <script>
+    (function () {
+      var bubble = document.querySelector('[data-sticky-cart]');
+      if (!bubble) return;
+      var countEl = bubble.querySelector('[data-sticky-cart-count]');
+      function sync() {
+        fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+          .then(function (r) { return r.json(); })
+          .then(function (cart) {
+            if (countEl) countEl.textContent = cart.item_count;
+            bubble.classList.toggle('sticky-cart-bubble--empty', cart.item_count === 0);
+          })
+          .catch(function () { /* offline / blocked — keep last server-rendered count */ });
+      }
+      document.addEventListener('theme:cart:change', sync);
+    })();
+  </script>
+{%- endunless -%}

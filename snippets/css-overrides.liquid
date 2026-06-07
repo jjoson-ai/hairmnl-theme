@@ -1115,6 +1115,55 @@
     }
   }
 
+  /* ── Sticky Cart bubble (bd a7av.13 — native STKY replacement, desktop only) ──
+     Markup: snippets/sticky-cart-bubble.liquid, rendered once in layout/theme.liquid.
+     Desktop only (≥1024px). Stacked ABOVE the Reamaze chat bubble (desktop
+     bottom:80px/right:22px, z 9998) with a lower z-index so live chat stays
+     tappable — kt0/Reamaze regression history (bd lki). --empty / cart-page are
+     hidden (the snippet omits it on /cart; JS toggles --empty on cart change).
+     kt0-OK: position:fixed + an opacity-free static bubble; the count badge is
+     position:absolute relative to the fixed bubble (fixed is its containing
+     block). No transform/filter/contain — no fixed/absolute descendant trapped.
+     DEVICE-VERIFY on the draft: the bubble clears the Reamaze bubble (no overlap)
+     and the chat stays clickable; tune `bottom` if they touch. */
+  .sticky-cart-bubble { display: none; }
+  @media (min-width: 1024px) {
+    .sticky-cart-bubble {
+      display: flex;
+      position: fixed;
+      right: 22px;
+      bottom: 152px;
+      z-index: 8000;
+      width: 56px;
+      height: 56px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--vrec-cta-bg, #1a1a1a);
+      color: var(--vrec-cta-fg, #ffffff);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+      text-decoration: none;
+    }
+    .sticky-cart-bubble--empty { display: none; }
+    .sticky-cart-bubble__icon { display: block; }
+    .sticky-cart-bubble__count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border-radius: 10px;
+      background: #b85042;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 20px;
+      text-align: center;
+    }
+  }
+
   /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.
      Prevents 0px→Npx growth CLS (17 events/7d on homepage desktop).
      kt0-OK: min-height only, no containing-block properties. */
