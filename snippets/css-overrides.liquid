@@ -423,6 +423,22 @@
     overflow: hidden;
   }
 
+  /* CLS fix 2026-06-07 hairmnl-theme-wscl — reserve the LoyaltyLion points width.
+     The contain:layout above isolates the injection's CASCADE to the page, but
+     it does NOT stop the right header column from moving. .points-box is
+     display:flex with .points-label display:none, so the only flex item is
+     .points-approved — empty at load, filled async by DEFERRED LoyaltyLion with
+     the points balance. Empty→"1,234" widens the account navlink, which re-runs
+     the [data-takes-space] header column-balancer (theme.js) → the desktop
+     header right column shifts. GSC field CLS 0.11–0.18 on blogs+homepage
+     (327 URLs); lab-invisible because the lab bot never interacts to trigger
+     deferred LoyaltyLion. Reserving a min-width holds the number's footprint so
+     the fill can't resize the column. 6ch covers up to ~6-digit balances; the
+     overflow:hidden above clips any excess. kt0-safe (pure min-width). */
+  .points-box .points-approved {
+    min-width: 6ch;
+  }
+
   /* CLS fix 2026-05-13 hairmnl-theme-7i0 — Announcement bar ticker height lock.
      Custom JS Ticker class (theme.dev.js Bar constructor) removes
      ticker--unloaded after DOMContentLoaded. During that window, font FOUT
