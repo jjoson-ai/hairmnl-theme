@@ -204,6 +204,14 @@
     <pre><code>alias shopify='NODE_OPTIONS="--tls-max-v1.2" shopify'</code><button class="copy-btn">copy</button></pre>
     <p style="margin:8px 0 0">Without this, every <code>shopify theme push</code> / <code>shopify theme pull</code> fails with "Client network socket disconnected before secure TLS connection was established" after multiple retries.</p>
   </div>
+
+  <div class="card">
+    <h3 style="margin:0 0 6px">STKY app → native replacement: expect duplicate widgets until cutover <span class="pill info">FYI</span></h3>
+    <p style="margin:0 0 8px">The draft now ships a <strong>theme-native replacement</strong> for the STKY "Sticky Add To Cart" app (bd epic <code>a7av</code>): the PDP sticky bar (desktop pinned to the <em>top</em>, with in-bar variant + quantity), the collection-page Quick Buy hover button, and the desktop floating Sticky Cart bubble.</p>
+    <p style="margin:0 0 8px"><strong>STKY the app is still installed</strong>, so while you smoke-test the draft you will see <strong>two of each</strong> — STKY's widgets <em>and</em> the native ones (e.g. two cart bubbles in the bottom-right corner; the STKY quick-buy icon at the top-right of each product card <em>plus</em> the native "Add to cart" button that appears on hover). <strong>This is expected during parallel-run — it is NOT a bug.</strong> Don't file the duplicates as smoke failures.</p>
+    <p style="margin:0 0 8px"><strong>At cutover</strong> (bd <code>a7av.7</code>), disable the STKY app embed (theme editor → <em>App embeds</em> → toggle <strong>STKY ‑ Sticky Add To Cart</strong> off) and remove the legacy hardcoded <code>satcb.min.js</code> tag. The STKY widgets then disappear and only the native ones remain.</p>
+    <p style="margin:0"><strong>Optional — Skip to Checkout:</strong> the native sticky bar can send shoppers straight to checkout (STKY's "Skip to Checkout" option). It is <strong>off by default</strong>. To match whatever HairMNL had enabled in STKY, toggle it in <em>Theme settings → Cart → Sticky add to cart bar → "Skip to checkout from the sticky bar."</em></p>
+  </div>
 </section>
 
 <!-- ============================================================ -->
