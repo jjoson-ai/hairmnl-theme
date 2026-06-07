@@ -128,7 +128,7 @@ A grid item for products used in collection grid view
 
 
 <div class="product-grid-item {{ image_classes }}{% if tagged %} tagged{% endif %}" data-grid-item>
-  <div {{ auto_height }}>
+  <div class="product-grid-item__media" {{ auto_height }}>
     <a
       href="{{ product.url | within: collection }}"
       data-grid-link
@@ -260,6 +260,8 @@ A grid item for products used in collection grid view
       {%- comment -%} product-labels disabled 2026-04-27 pending team decision (bd spz). Renders duplicate sale label alongside .product__badge--custom. Snippet kept in /snippets/ for future re-enable. {%- endcomment -%}
       {%- comment -%} {% render 'product-labels', product: product %} {%- endcomment -%}
     </a>
+    {%- comment -%} bd a7av.12: collection Quick Buy overlay (snippet self-scopes to collection pages). {%- endcomment -%}
+    {% render 'quick-buy-button', product: product %}
   </div>
   <noscript>
     <a href="{{ product.url | within: collection }}">

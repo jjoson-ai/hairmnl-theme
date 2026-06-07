@@ -140,6 +140,7 @@ Sub-collection-only variables (set by stub, optional):
 {%- endcapture -%}
 
 <div class="grid__item {{ grid_offset }} {{ grid_width_small }} {{ grid_width_medium }} {{ grid_width_large }}{% if tagged %} tagged{% endif %} product-grid-item">
+  <div class="product-grid-item__media">
   <a href="{{ product.url | within: collection }}" class="grid__image">
     {%- comment -%}
       Responsive WebP srcset — <picture>+<source> pattern so modern browsers (~98%
@@ -181,6 +182,9 @@ Sub-collection-only variables (set by stub, optional):
     {%- comment -%} product-labels disabled 2026-04-27 pending team decision (bd spz). Snippet kept in /snippets/ for future re-enable. {%- endcomment -%}
     {%- comment -%} {% render 'product-labels', product: product %} {%- endcomment -%}
   </a>
+  {%- comment -%} bd a7av.12: collection Quick Buy overlay (snippet self-scopes to collection pages). {%- endcomment -%}
+  {% render 'quick-buy-button', product: product %}
+  </div>
 
   <div class="figcaption {{ settings.product_grid_style }} {{ settings.collection_text_alignment | default: 'text-center' }}">
     <a href="{{ product.url | within: collection | capitalize }}">

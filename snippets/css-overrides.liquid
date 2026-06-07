@@ -1050,6 +1050,71 @@
     }
   }
 
+  /* ── Collection Quick Buy (bd a7av.12 — native STKY replacement) ──
+     Hover-to-reveal "Add to Cart" overlaid on the lower edge of a product card
+     image. Markup: snippets/quick-buy-button.liquid, rendered inside
+     .product-grid-item__media (the image wrapper) in product-grid-item.liquid +
+     product-grid-item-branded.liquid. The snippet self-scopes to collection
+     pages (request.page_type == 'collection'), so the button never appears on
+     home/search/PDP sliders — fixing the STKY "shows on all pages" complaint.
+     kt0: .product-grid-item__media uses position:relative only; .quick-buy uses
+     position:absolute + an opacity transition (no transform/filter), so no
+     fixed/absolute descendant is trapped. Neither selector is in OVERLAY_PATTERNS. */
+  .product-grid-item__media {
+    position: relative;
+  }
+  .quick-buy {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 8px;
+  }
+  .quick-buy__btn {
+    display: block;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 12px;
+    background: var(--vrec-cta-bg, #1a1a1a);
+    color: var(--vrec-cta-fg, #ffffff);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .quick-buy__btn--soldout {
+    background: #9a9a9a;
+    cursor: not-allowed;
+  }
+  .quick-buy__btn[aria-busy="true"] {
+    opacity: 0.6;
+    cursor: progress;
+  }
+  /* Hover-capable devices: hide until the card is hovered (hover-to-reveal, the
+     web-team ask). Touch devices (no hover) keep the button always visible. */
+  @media (hover: hover) {
+    .quick-buy {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 150ms ease-out;
+    }
+    .product-grid-item:hover .quick-buy,
+    .quick-buy:focus-within {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .quick-buy { transition: none; }
+    }
+  }
+
   /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.
      Prevents 0px→Npx growth CLS (17 events/7d on homepage desktop).
      kt0-OK: min-height only, no containing-block properties. */

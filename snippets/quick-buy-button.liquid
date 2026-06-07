@@ -1,0 +1,44 @@
+{%- comment -%}
+  bd a7av.12 — Collection Quick Buy (native STKY replacement, web-team decision 2).
+
+  A hover-to-reveal "Add to Cart" button overlaid on the lower edge of a product
+  card image. SCOPED to collection pages only (request.page_type == 'collection')
+  — the STKY app showed quick-buy on every page; the web team asked for
+  collection-only.
+
+  - Single-variant + available → direct AJAX add via the shared [data-vrec-add]
+    handler (assets/hairmnl-common.js → /cart/add.js → opens the drawer).
+  - Multi-variant → "Choose options" linking to the PDP (adding an unspecified
+    variant from a grid card risks the wrong size/shade). If strict STKY parity
+    is preferred — direct-add the first variant for multi too — swap this branch.
+  - Sold out → inert label.
+
+  Hover-reveal is CSS (css-overrides.liquid §quick-buy): hidden on hover-capable
+  devices until card hover; always visible on touch devices.
+
+  Arg: product {Product} required.
+{%- endcomment -%}
+{%- if product != blank and request.page_type == 'collection' -%}
+  {%- assign qb_variant = product.first_available_variant | default: product.variants.first -%}
+  {%- if qb_variant -%}
+    <div class="quick-buy" data-quick-buy>
+      {%- if product.variants.size > 1 -%}
+        <a class="quick-buy__btn quick-buy__btn--options" href="{{ product.url | within: collection }}">
+          {{ 'products.product.choose_options' | t | default: 'Choose options' }}
+        </a>
+      {%- elsif qb_variant.available -%}
+        <button type="button"
+                class="quick-buy__btn"
+                data-vrec-add
+                data-variant-id="{{ qb_variant.id }}"
+                aria-label="{{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}: {{ product.title | strip_html | escape }}">
+          {{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}
+        </button>
+      {%- else -%}
+        <span class="quick-buy__btn quick-buy__btn--soldout" aria-disabled="true">
+          {{ 'products.product.sold_out' | t | default: 'Sold out' }}
+        </span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}
