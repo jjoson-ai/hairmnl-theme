@@ -581,19 +581,19 @@ When a task requires any of the above, surface to the coordinator — agents do 
 
 ## Stky Sticky Add-to-Cart replacement (planning, 2026-05-16)
 
-**Status:** Feasibility deck complete; engineering tickets created. Awaiting stakeholder approval on three asks before engineering phase begins.
+**Status:** Web-team review complete (2026-05-18) — all three deck decisions answered (see "Scope decisions" below). Native build IN PROGRESS on the P8 draft (141168312419): **a7av.11** sticky bar (desktop-top + in-bar variant/qty), **a7av.12** Quick Buy (kept — reversing the drop rec), **a7av.13** Sticky Cart (kept — reversing the drop rec), **a7av.14** docs. All built + pushed to draft; pending browser/device verification before the a7av.7 cutover.
 
 **Driver:** Replace the third-party **STKY ‑ Sticky Add To Cart Bar** Shopify app (by Codeinero, $6.99–$18.99/mo) with a theme-native implementation. Drivers:
 
-1. Recurring monthly cost — assumed Grow tier at $11.99/mo ≈ $144/year ≈ ₱8,300/year (verify in slide-8 ask #3).
+1. Recurring monthly cost — **confirmed $24.99/mo ≈ $300/year** (web-team billing screenshot, 2026-05-18; ~2× the deck's assumed Grow $11.99). Stky installed March 2023.
 2. Performance — eliminate ~600ms third-party Azure CDN latency (`satcb.azureedge.net`).
 3. Correctness — fix two pre-existing integration bugs that need cleanup regardless of whether we replace the app:
    - `layout/theme.liquid:969` hardcodes a `<script src=".../satcb.min.js?shop=creations-gdc.myshopify.com">` tag. The shop param is correct (`creations-gdc.myshopify.com` is HairMNL's primary myshopify subdomain), but Stky is ALSO loaded via the Shopify App Embed in `config/settings_data.json`. The hardcoded tag is the pre-App-Embed legacy path — Stky's script ends up loaded twice per page.
    - `layout/theme.liquid:78` documents `satcb.azureedge.net` as "Same-day store pickup widget" — wrong; it's the sticky add-to-cart bar. Comment hygiene.
 
-**Deck:** `docs/feasibility-replace-stky.pptx` (9 slides). Outlines: current state, the drift problem (slide 3), proposed architecture, 12-month cost / payback, scope decisions (Quick Buy is the stakeholder ask), timeline, three explicit asks.
+**Deck:** `docs/feasibility-replace-stky.pptx` (9 slides). Outlines: current state, the drift problem (slide 3), proposed architecture, 12-month cost / payback, scope decisions (Quick Buy is the stakeholder ask), timeline, three explicit asks. **Web-team comments received 2026-05-18** ("STKY Add to Cart - May 18.docx") — answered all three asks; decisions recorded in the "Scope decisions" table below. (Deck PPTX not regenerated — the decisions live here + in bd.)
 
-**bd epic:** `hairmnl-theme-a7av` — 7 children: `a7av.1` deck (CC, open) → `a7av.2` snippet (OC, blocked) → `a7av.3` JS (OC, blocked) → `a7av.4` CSS+kt0 (OC, blocked) → `a7av.5` Quick Buy [conditional, blocked] → `a7av.6` smoke test (CC, blocked) → `a7av.7` cutover (CC, blocked).
+**bd epic:** `hairmnl-theme-a7av` — original 7 children: `a7av.1` deck → `a7av.2`–`.4` snippet/JS/CSS → `a7av.5` Quick Buy [conditional] → `a7av.6` smoke → `a7av.7` cutover. **Expanded during build:** `a7av.8` collection-mode always-visible bar, `a7av.9` mobile sticky bar, `a7av.10` cart/drawer Vertex AJAX add. **Web-team review (2026-05-18):** `a7av.11` sticky-bar desktop-top + in-bar variant/qty, `a7av.12` Quick Buy (kept), `a7av.13` Sticky Cart (kept), `a7av.14` docs. `a7av.7` cutover remains the final blocked gate (production).
 
 ### Current Stky integration footprint (replaced at cutover)
 
@@ -617,26 +617,31 @@ When a task requires any of the above, surface to the coordinator — agents do 
 | `scripts/check-overlay-css.py` | modify | **Add `.sticky-atc-bar` to `OVERLAY_PATTERNS`** so kt0 lint catches future containment regressions on the new overlay |
 | `snippets/quick-buy-overlay.liquid` | conditional (T4) | Only if stakeholder approves recreating the collection-page Quick Buy feature |
 
-### Confirmed scope decisions (engineering-side; stakeholder asks open for §1 and §2)
+### Scope decisions (resolved by web-team review, 2026-05-18)
 
 | Decision | Choice | Notes |
 |---|---|---|
-| PDP sticky bar | Recreate | Core feature; ~150 LoC JS, brand-styled |
-| Collection-page Quick Buy | **Stakeholder ask** | Engineering recommends drop for v1 (simpler PDP funnel, fewer tickets) |
-| Cart drawer / slider | Drop | Theme already has its own cart drawer; Stky's version is unused or duplicative |
-| Countdown urgency timer | Drop | Aggressive UX, minimal proven lift, not visible in current site |
-| Floating cart icon | Drop | Theme header cart icon already serves this purpose |
-| Mobile breakpoint | Required | Sticky bar must coexist with `env(safe-area-inset-bottom)` and any fixed footer/nav |
+| PDP sticky bar | Recreate + **desktop-TOP + in-bar variant/qty** | Core feature. Web team (D1=OK): mobile bottom / desktop top; variant `<select>` + qty in the bar (app parity). bd a7av.11 (built). |
+| Collection-page Quick Buy | **Recreate** (web team: keep) | D2 — reverses the eng drop-for-v1 rec. Collection-pages-only + hover-to-reveal "Add to Cart". bd a7av.12 (built). |
+| Floating cart icon / Sticky Cart | **Recreate** (web team: keep) | Reverses the eng drop rec. Desktop-only floating bubble, opens the drawer, hides on /cart + when empty. bd a7av.13 (built). |
+| Cart drawer / slider | Drop ✓ | Web team confirmed "ok to remove". Theme has its own cart drawer. |
+| Countdown urgency timer | Drop ✓ | Not enabled in Stky admin; aggressive UX, minimal lift. |
+| Mobile breakpoint | Required | Sticky bar coexists with `env(safe-area-inset-bottom)` + the Reamaze bubble (kt0, bd lki). |
+
+**Other feature inventory (web team, 2026-05-18):** Upsell product thumbnail (Shopify) → remove ✓ · Blog "Related Products" slider → remove ✓ but **keep the Pro Blogger hover button** for now · Limespot cross-sell sliders → keep · Recently Viewed slider → keep.
+
+**Open follow-up (D2 nuance):** the Quick Buy multi-variant path currently routes to the PDP ("Choose options") to avoid wrong-variant adds; single-variant products add directly. If strict STKY parity (direct-add the first variant for multi too) is preferred, it's a one-branch swap in `snippets/quick-buy-button.liquid`.
 
 ### Cost reality check (also on deck slide 5)
 
 | Scenario | Monthly | Annual | 3-Year TCO |
 |---|---|---|---|
-| Stky Basic ($6.99) | $6.99 | $83.88 | ~$252 |
-| Stky Grow ($11.99, assumed) | $11.99 | $143.88 | ~$432 |
+| Stky — **actual** (confirmed 2026-05-18) | **$24.99** | **$299.88** | **~$900** |
 | Theme-native replacement | $0 | $0 | $0 |
 
-Engineering effort ~4–6h serial (1–2 calendar days). At Grow tier, payback in 4–8 weeks; pure savings after.
+(The deck assumed Grow $11.99/mo ≈ $144/yr; the web-team billing screenshot confirmed the actual plan at **$24.99/mo**, so the savings are ~2× the deck estimate.)
+
+Engineering effort ~1–2 calendar days (built). At the confirmed $24.99/mo, payback is immediate on cutover; ~$300/yr pure savings after.
 
 ### Out of scope for the theme repo
 
