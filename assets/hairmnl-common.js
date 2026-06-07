@@ -572,6 +572,10 @@
     var variantId = btn.getAttribute('data-variant-id');
     if (!variantId) return;
 
+    // bd a7av.15: fly-to-cart animation (STKY parity). Best-effort + reduced-motion
+    // aware; runs on click so it feels responsive while the add request is in flight.
+    try { flyToCart(btn); } catch (flyErr) {}
+
     btn.setAttribute('aria-busy', 'true');
     btn.disabled = true;
 
@@ -611,6 +615,91 @@
         if (window.console && console.warn) console.warn('[vrec-add]', err && err.message ? err.message : err);
       })
       .then(function () {
+        btn.removeAttribute('aria-busy');
+        btn.disabled = false;
+      });
+  });
+
+  // ============================================================
+  // bd a7av.15 — fly-to-cart animation (STKY "add to sticky cart" parity)
+  // ------------------------------------------------------------
+  // Clones the source product image and animates it to the sticky cart bubble
+  // ([data-sticky-cart]); falls back to the header cart when the bubble is hidden
+  // (mobile / empty cart / first add). Reduced-motion users skip it entirely.
+  // The clone is a transient position:fixed element with NO fixed/absolute
+  // descendants, so its transform creates no containing-block trap (kt0-OK).
+  // ============================================================
+  function flyToCart(btn) {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var target = document.querySelector('[data-sticky-cart]');
+    if (!target || !target.getBoundingClientRect().width) {
+      target = document.querySelector('[data-header-cart-count]') ||
+               document.querySelector('.navlink--cart, [data-drawer-toggle="drawer-cart"]');
+    }
+    if (!target) return;
+    var tRect = target.getBoundingClientRect();
+    if (!tRect.width) return;
+    var scope = btn.closest('.product-grid-item, [class*="grid-item"], [class*="card"], .vrec-card') || btn.parentElement;
+    var img = scope ? scope.querySelector('img') : null;
+    if (!img) return;
+    var sRect = img.getBoundingClientRect();
+    if (!sRect.width) return;
+    var clone = img.cloneNode(true);
+    clone.className = 'vrec-fly-clone';
+    clone.removeAttribute('loading');
+    clone.style.cssText = 'position:fixed;z-index:8500;margin:0;left:' + sRect.left + 'px;top:' + sRect.top +
+      'px;width:' + sRect.width + 'px;height:' + sRect.height + 'px;border-radius:6px;object-fit:cover;' +
+      'pointer-events:none;transition:transform 600ms cubic-bezier(.5,-0.3,.6,1),opacity 600ms ease-in;will-change:transform,opacity;';
+    document.body.appendChild(clone);
+    var dx = (tRect.left + tRect.width / 2) - (sRect.left + sRect.width / 2);
+    var dy = (tRect.top + tRect.height / 2) - (sRect.top + sRect.height / 2);
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        clone.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(0.15)';
+        clone.style.opacity = '0.2';
+      });
+    });
+    var cleaned = false;
+    function done() {
+      if (cleaned) return; cleaned = true;
+      if (clone.parentNode) clone.parentNode.removeChild(clone);
+      var bubble = document.querySelector('[data-sticky-cart]');
+      if (bubble) { bubble.classList.add('sticky-cart-bubble--bump'); setTimeout(function () { bubble.classList.remove('sticky-cart-bubble--bump'); }, 350); }
+    }
+    clone.addEventListener('transitionend', done);
+    setTimeout(done, 700);
+  }
+
+  // ============================================================
+  // bd a7av.15 — Skip to Checkout ([data-vrec-checkout], STKY parity)
+  // ------------------------------------------------------------
+  // The sticky bar's "Buy it now" button (when the theme setting
+  // settings.sticky_atc_skip_to_checkout is on) adds the selected variant + qty
+  // then redirects to /checkout. Reads the enclosing product form. The native
+  // form submit (add to cart) is the JS-off fallback.
+  // ============================================================
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-vrec-checkout]');
+    if (!btn) return;
+    e.preventDefault();
+    if (btn.getAttribute('aria-busy') === 'true') return;
+    var form = btn.closest('form');
+    var idEl = form ? form.querySelector('[name="id"]') : null;
+    var id = idEl ? idEl.value : btn.getAttribute('data-variant-id');
+    if (!id) return;
+    var qtyEl = form ? form.querySelector('[name="quantity"]') : null;
+    var qty = (qtyEl && parseInt(qtyEl.value, 10) > 0) ? parseInt(qtyEl.value, 10) : 1;
+    btn.setAttribute('aria-busy', 'true');
+    btn.disabled = true;
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ id: id, quantity: qty })
+    })
+      .then(function (r) { if (!r.ok) throw new Error('add failed: ' + r.status); return r.json(); })
+      .then(function () { window.location.href = '/checkout'; })
+      .catch(function (err) {
+        if (window.console && console.warn) console.warn('[vrec-checkout]', err && err.message ? err.message : err);
         btn.removeAttribute('aria-busy');
         btn.disabled = false;
       });

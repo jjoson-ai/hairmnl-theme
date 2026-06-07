@@ -96,12 +96,22 @@
                data-vrec-sticky-qty
                aria-label="{{ 'products.product.quantity' | t | default: 'Quantity' }}">
       {%- endif -%}
+      {%- comment -%} bd a7av.15: Skip to Checkout (STKY parity). When the theme
+          setting Cart → "Skip to checkout from the sticky bar" is on, the button
+          becomes "Buy it now" + data-vrec-checkout — a global handler in
+          hairmnl-common.js adds the selected variant+qty then redirects to
+          /checkout. The native submit (add to cart) is the JS-off fallback. {%- endcomment -%}
       <button type="submit"
               name="add"
               class="vrec-product-sticky-bar__cta"
+              {% if settings.sticky_atc_skip_to_checkout %}data-vrec-checkout{% endif %}
               {% unless first_variant.available %}disabled aria-disabled="true"{% endunless %}>
         {%- if first_variant.available -%}
-          {{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}
+          {%- if settings.sticky_atc_skip_to_checkout -%}
+            {{ 'products.product.buy_now' | t | default: 'Buy it now' }}
+          {%- else -%}
+            {{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}
+          {%- endif -%}
         {%- else -%}
           {{ 'products.product.sold_out' | t | default: 'Sold out' }}
         {%- endif -%}

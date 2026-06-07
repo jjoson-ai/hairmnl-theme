@@ -812,6 +812,17 @@
       },
       {
         "type": "header",
+        "content": "Sticky add to cart bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "sticky_atc_skip_to_checkout",
+        "label": "Skip to checkout from the sticky bar",
+        "info": "When on, the sticky add-to-cart bar's button becomes \"Buy it now\" and sends the shopper straight to checkout instead of adding to cart and staying. Mirrors the STKY app's Skip to Checkout option (bd a7av.15).",
+        "default": false
+      },
+      {
+        "type": "header",
         "content": "Free shipping message"
       },
       {
