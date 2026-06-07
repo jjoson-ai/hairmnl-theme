@@ -6,11 +6,10 @@
   — the STKY app showed quick-buy on every page; the web team asked for
   collection-only.
 
-  - Single-variant + available → direct AJAX add via the shared [data-vrec-add]
-    handler (assets/hairmnl-common.js → /cart/add.js → opens the drawer).
-  - Multi-variant → "Choose options" linking to the PDP (adding an unspecified
-    variant from a grid card risks the wrong size/shade). If strict STKY parity
-    is preferred — direct-add the first variant for multi too — swap this branch.
+  - Available (any product) → direct AJAX add of the first available variant via
+    the shared [data-vrec-add] handler (assets/hairmnl-common.js → /cart/add.js →
+    opens the drawer). Multi-variant products add the default variant too (strict
+    STKY parity, web-team follow-up 2026-05-18); the shopper adjusts in the drawer.
   - Sold out → inert label.
 
   Hover-reveal is CSS (css-overrides.liquid §quick-buy): hidden on hover-capable
@@ -22,11 +21,11 @@
   {%- assign qb_variant = product.first_available_variant | default: product.variants.first -%}
   {%- if qb_variant -%}
     <div class="quick-buy" data-quick-buy>
-      {%- if product.variants.size > 1 -%}
-        <a class="quick-buy__btn quick-buy__btn--options" href="{{ product.url | within: collection }}">
-          {{ 'products.product.choose_options' | t | default: 'Choose options' }}
-        </a>
-      {%- elsif qb_variant.available -%}
+      {%- comment -%} bd a7av.12 (web-team follow-up): direct-add the first available
+          variant for ALL products, including multi-variant — strict STKY parity
+          (STKY added the default variant from the grid). The shopper can adjust the
+          variant in the drawer/cart that opens after add. {%- endcomment -%}
+      {%- if qb_variant.available -%}
         <button type="button"
                 class="quick-buy__btn"
                 data-vrec-add
