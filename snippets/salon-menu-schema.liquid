@@ -1,0 +1,78 @@
+{%- comment -%}
+  salon-menu-schema.liquid  —  GEO structured data for the partner-salon service-menu pages.
+
+  Emits a HairSalon + OfferCatalog (priced services) + BreadcrumbList so AI engines (Google AI
+  Overviews, Copilot) and Google rich results can cite "<salon> price" — the high-intent query
+  these pages rank for (Azta #1.1, David's #7) but previously had ZERO schema for.
+
+  Gated by page.handle (partner-salon menu pages only). Prices are PHP, confirmed current by the
+  operator 2026-06 (source: the on-page service-menu). Each ranged service uses AggregateOffer
+  (lowPrice = "from"); fixed-price services use Offer.
+
+  bd hairmnl-theme-0kv3.1 (GEO Capitalize epic 0kv3).
+  {# MIGRATION-DEBT: bespoke P6 GEO schema. Port to OS-2.0 as a metaobject-driven section.
+     reason = Smart SEO does NOT emit Service/OfferCatalog for these custom pages; the existing
+     hairsalon-schema.liquid (own studios) is the precedent pattern. See os2-migration/customization-audit.md. #}
+{%- endcomment -%}
+
+{%- if template contains 'page' and page.handle == 'azta-urban-salon-service-menu' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HairSalon",
+  "@id": "{{ shop.url }}{{ page.url }}#azta-urban-salon",
+  "name": "Azta Urban Salon",
+  "url": "{{ shop.url }}{{ page.url }}",
+  "description": "Azta Urban Salon services and price menu, available through HairMNL. Haircut, hair color, rebonding, keratin and salon treatments, perms, styling, nails and bridal services across Azta's Metro Manila and key Philippine branches.",
+  "priceRange": "PHP 165 - 26500",
+  "currenciesAccepted": "PHP",
+  "paymentAccepted": "Cash, Credit Card, Debit Card, GCash",
+  "areaServed": { "@type": "Country", "name": "Philippines" },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Azta Urban Salon Service Menu",
+    "itemListElement": [
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "250", "highPrice": "650", "itemOffered": { "@type": "Service", "name": "Haircut (Ladies')", "category": "Haircut" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "220", "highPrice": "380", "itemOffered": { "@type": "Service", "name": "Haircut (Men's)", "category": "Haircut" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "250", "highPrice": "380", "itemOffered": { "@type": "Service", "name": "Shampoo & Blow-dry", "category": "Styling" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "350", "highPrice": "700", "itemOffered": { "@type": "Service", "name": "Blow-dry & Hair Iron", "category": "Styling" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "1400", "highPrice": "1800", "itemOffered": { "@type": "Service", "name": "Cornrows (7 rows)", "category": "Styling" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "900", "highPrice": "1650", "itemOffered": { "@type": "Service", "name": "Permanent Cold Wave (Perm)", "category": "Perms & Texture" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "3800", "highPrice": "5800", "itemOffered": { "@type": "Service", "name": "Digital Perm", "category": "Perms & Texture" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "900", "highPrice": "2500", "itemOffered": { "@type": "Service", "name": "Power Relaxing", "category": "Perms & Texture" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "1600", "highPrice": "3500", "itemOffered": { "@type": "Service", "name": "Power Rebonding", "category": "Perms & Texture" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "2500", "highPrice": "6000", "itemOffered": { "@type": "Service", "name": "Steambond (Pro-keratin smoothing)", "category": "Perms & Texture" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "4000", "highPrice": "8000", "itemOffered": { "@type": "Service", "name": "Chromabond", "category": "Perms & Texture" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "250", "highPrice": "400", "itemOffered": { "@type": "Service", "name": "Argan Hair Mask Treatment", "category": "Treatments" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "500", "highPrice": "900", "itemOffered": { "@type": "Service", "name": "Mineral Clay Treatment", "category": "Treatments" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "700", "highPrice": "1300", "itemOffered": { "@type": "Service", "name": "Nounou Pak Treatment by Davines", "category": "Treatments" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "200", "highPrice": "600", "itemOffered": { "@type": "Service", "name": "Bond Perfector Treatment (Olaplex / L'Oreal)", "category": "Treatments" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "1200", "highPrice": "2400", "itemOffered": { "@type": "Service", "name": "Power Mix Treatment by L'Oreal", "category": "Treatments" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "2000", "highPrice": "5500", "itemOffered": { "@type": "Service", "name": "Brazilian Keratin Treatment with Iron", "category": "Treatments" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "300", "highPrice": "500", "itemOffered": { "@type": "Service", "name": "L'Oreal Hair Spa", "category": "Treatments" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "800", "highPrice": "2800", "itemOffered": { "@type": "Service", "name": "Full Head Hair Color", "category": "Hair Color" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "1800", "highPrice": "3000", "itemOffered": { "@type": "Service", "name": "INOA Ammonia-free Color by L'Oreal", "category": "Hair Color" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "500", "highPrice": "2600", "itemOffered": { "@type": "Service", "name": "Highlights / Lowlights (Cap, Foil, Balayage)", "category": "Hair Color" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "4500", "highPrice": "9500", "itemOffered": { "@type": "Service", "name": "Funky / Fashion Color (Metallics, Brights, Pastels, Blondes)", "category": "Hair Color" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "1250", "highPrice": "9500", "itemOffered": { "@type": "Service", "name": "Ombre (Single-toned, Three-toned, Shadow Faux, Balayage Ombre, Dip Dye)", "category": "Hair Color" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "1700", "highPrice": "2900", "itemOffered": { "@type": "Service", "name": "Color Conditioning", "category": "Hair Color" } },
+      { "@type": "Offer", "price": "165", "priceCurrency": "PHP", "itemOffered": { "@type": "Service", "name": "Eyebrow Threading", "category": "Hair Removal" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "220", "highPrice": "450", "itemOffered": { "@type": "Service", "name": "Nail Spa & Foot Spa (Manicure / Pedicure)", "category": "Hands & Feet" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "1700", "highPrice": "3200", "itemOffered": { "@type": "Service", "name": "Hair & Make-up", "category": "Make-up" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "2500", "highPrice": "26500", "itemOffered": { "@type": "Service", "name": "Hair Extensions (Hair Talk Permanent / Keira Clip-on)", "category": "Hair Extensions" } },
+      { "@type": "AggregateOffer", "priceCurrency": "PHP", "lowPrice": "5000", "highPrice": "40000", "itemOffered": { "@type": "Service", "name": "Bridal Hair & Make-up (Weddings by Azta)", "category": "Weddings" } }
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ shop.url }}/" },
+    { "@type": "ListItem", "position": 2, "name": "Azta Urban Salon Service Menu", "item": "{{ shop.url }}{{ page.url }}" }
+  ]
+}
+</script>
+{%- endif -%}
