@@ -171,9 +171,10 @@
   Desktop only — display:none below 1024px via css-overrides.liquid.
 {%- endcomment -%}
 {%- if collection.products.size > 0 -%}
-  {%- comment -%} ilep 2026-06-02: DEFERRED off live P6 (same as bsbi / product.liquid:242). The sticky ATC bar (a7av.8) is stream:b / P8-cutover-scoped; gated so it can't leak to live + error ("Could not find asset" — snippet not on the live theme). The P8 cutover flips show_sticky_purchase_bar to true. {%- endcomment -%}
-  {%- assign show_sticky_purchase_bar = false -%}
-  {%- if show_sticky_purchase_bar -%}{%- render 'product-sticky-bar', product: collection.products.first, is_collection: true -%}{%- endif -%}
+  {%- comment -%} J10 S11 (bd a7av.17, 2026-06-10): collection-mode sticky bar REMOVED for good —
+      the web team wants the sticky ATC bar on PDPs only (it was following shoppers from
+      the PDP onto collection pages). Supersedes the a7av.8 collection mode and the ilep
+      "flip on at P8 cutover" plan. PDP mode (sections/product.liquid) is untouched. {%- endcomment -%}
 {%- endif -%}
 
 {% schema %}

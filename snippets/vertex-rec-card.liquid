@@ -2,17 +2,13 @@
   Vertex AI Recommendations — shared card partial.
   Used by every rec slot (PDP FBT, cart, home RFY, PDP similar, drawer).
 
-  Two layouts:
-  - Default vertical card: clickable <a> wrapping image + content. Used
-    on PDP, home, drawer placements. Card click → PDP.
-  - Cart compact card (placement == 'cart_above_checkout'): horizontal
-    image-left + content-right with an inline ADD button. Built around
-    a {% form 'product' %} so submit → /cart/add via native HTML form
-    (page reloads, Shopify default). No AJAX, no new JS.
+  One layout (June 10 web-team review): a vertical card — image top, info
+  below — matching the native product-grid cards, with the shared hover
+  Quick Buy overlaid on the image (snippets/quick-buy-button.liquid).
 
   Arguments:
     product   {Product}  required — the product to render
-    placement {String}   optional — passed through for slot-specific variants
+    placement {String}   optional — passed through for slot-specific CSS hooks
 {%- endcomment -%}
 
 {%- liquid
@@ -25,7 +21,6 @@
     assign sold_out = false
   endif
   assign img = product.featured_media.preview_image
-  assign first_variant = product.first_available_variant
 -%}
 
 {%- comment -%} Reusable image markup. {%- endcomment -%}
@@ -60,84 +55,47 @@
   </div>
 {%- endcapture -%}
 
-{%- if placement == 'cart_above_checkout' or placement == 'cart_drawer_below_items' -%}
-  {%- comment -%}
-    Cart + cart-drawer vertical card — same layout as the default (image-top,
-    info-bottom) but with an inline ADD-to-cart button below the price.
-    bd a7av.10 / 2i8b.50 / 2i8b.51: the button is a formless AJAX button
-    (was {% form 'product' %}). A per-card <form> nests illegally inside the
-    cart page <form> (sections/cart.liquid) and the cart drawer <form>
-    (cart-drawer.liquid) — browsers auto-close the outer form, breaking
-    cart update/checkout. The formless button adds via /cart/add.js and
-    reuses the theme's drawer flow (assets/hairmnl-common.js §10). This also
-    gives the cart DRAWER recs a working ATC button (2i8b.50 — previously the
-    drawer placement fell through to the no-CTA default card).
+{%- comment -%}
+  Unified vertical card for ALL placements — June 10 web-team review (deck
+  S13/S14/S16): the inline always-visible ADD TO CART (cart/drawer variant)
+  becomes the shared hover-reveal Quick Buy overlay (always visible on touch),
+  and the PDP/home default card gains the same overlay, matching the native
+  product-grid cards.
 
-    Outer element is a <div> (not <a>) because a <button> can't nest
-    inside an <a>; image + title + vendor each have their own <a> links
-    to the PDP. The button row uses margin-top:auto so all CTAs line up
-    at the same vertical position across cards of different heights.
-  {%- endcomment -%}
-  <div class="vrec-card vrec-card--with-cta{% if sold_out %} vrec-card--sold-out{% endif %}"
-       data-vertex-product-id="{{ product.id }}"
-       role="listitem">
+  Outer element is a <div> (not <a>) because the Quick Buy <button> can't nest
+  inside an <a>; image + title each carry their own links to the PDP. The
+  Quick Buy is a formless AJAX button (data-vrec-add → /cart/add.js, see
+  assets/hairmnl-common.js §10) so it stays legal inside the cart page form
+  (sections/cart.liquid) and the cart drawer form (a7av.10 / 2i8b.50 / .51).
+  .vrec-card__media is the position:relative anchor for the overlay
+  (css-overrides.liquid §quick-buy).
+{%- endcomment -%}
+<div class="vrec-card vrec-card--with-cta{% if sold_out %} vrec-card--sold-out{% endif %}"
+     data-vertex-product-id="{{ product.id }}"
+     role="listitem">
+  <div class="vrec-card__media">
     <a class="vrec-card__image-link" href="{{ product.url }}" aria-label="{{ product.title | strip_html | escape }}">
       {{ card_image }}
     </a>
-    <div class="vrec-card__info">
-      {%- comment -%} bd 2i8b.53 (V1): vendor removed to match the native product card. {%- endcomment -%}
-      <p class="vrec-card__title">
-        <a href="{{ product.url }}" class="vrec-card__title-link">{{ product.title | strip_html }}</a>
-      </p>
-      {%- comment -%} bd 2i8b.53 (V1): match the native product card's rating — use the Judge.me
-          preview badge (same source the Best Sellers cards use) instead of the reviews.rating
-          metafield, which is empty on these products (so no stars rendered). {%- endcomment -%}
-      <div class="vrec-card__rating vrec-card__rating--jdgm">
-        {%- render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product -%}
-      </div>
-      <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
-        <span class="vrec-card__price-current">{{ product.price | money }}</span>
-        {%- if on_sale -%}
-          <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
-        {%- endif -%}
-      </p>
-      <div class="vrec-card__cta-row">
-        {%- if first_variant and first_variant.available -%}
-          <button type="button"
-                  class="vrec-card__cta"
-                  data-vrec-add
-                  data-variant-id="{{ first_variant.id }}"
-                  aria-label="{{ 'products.general.upsell_add_to_cart' | t | default: 'Add to cart' }}: {{ product.title | strip_html | escape }}">
-            {{ 'products.general.upsell_add_to_cart' | t | default: 'Add to cart' }}
-          </button>
-        {%- else -%}
-          <span class="vrec-card__sold-out-label">{{ 'products.product.sold_out' | t }}</span>
-        {%- endif -%}
-      </div>
-    </div>
+    {%- comment -%} J10 S13/S14/S16: hover Quick Buy (self-handles sold-out). {%- endcomment -%}
+    {% render 'quick-buy-button', product: product %}
   </div>
-{%- else -%}
-  {%- comment -%} Default vertical card — whole card is the click target. {%- endcomment -%}
-  <a class="vrec-card{% if sold_out %} vrec-card--sold-out{% endif %}"
-     href="{{ product.url }}"
-     role="listitem"
-     data-vertex-product-id="{{ product.id }}">
-    {{ card_image }}
-    <div class="vrec-card__info">
-      {%- comment -%} bd 2i8b.53 (V1): vendor removed to match the native product card. {%- endcomment -%}
-      <p class="vrec-card__title">{{ product.title | strip_html }}</p>
-      {%- comment -%} bd 2i8b.53 (V1): match the native product card's rating — use the Judge.me
-          preview badge (same source the Best Sellers cards use) instead of the reviews.rating
-          metafield, which is empty on these products (so no stars rendered). {%- endcomment -%}
-      <div class="vrec-card__rating vrec-card__rating--jdgm">
-        {%- render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product -%}
-      </div>
-      <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
-        <span class="vrec-card__price-current">{{ product.price | money }}</span>
-        {%- if on_sale -%}
-          <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
-        {%- endif -%}
-      </p>
+  <div class="vrec-card__info">
+    {%- comment -%} bd 2i8b.53 (V1): vendor removed to match the native product card. {%- endcomment -%}
+    <p class="vrec-card__title">
+      <a href="{{ product.url }}" class="vrec-card__title-link">{{ product.title | strip_html }}</a>
+    </p>
+    {%- comment -%} bd 2i8b.53 (V1): match the native product card's rating — use the Judge.me
+        preview badge (same source the Best Sellers cards use) instead of the reviews.rating
+        metafield, which is empty on these products (so no stars rendered). {%- endcomment -%}
+    <div class="vrec-card__rating vrec-card__rating--jdgm">
+      {%- render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product -%}
     </div>
-  </a>
-{%- endif -%}
+    <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
+      <span class="vrec-card__price-current">{{ product.price | money }}</span>
+      {%- if on_sale -%}
+        <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
+      {%- endif -%}
+    </p>
+  </div>
+</div>

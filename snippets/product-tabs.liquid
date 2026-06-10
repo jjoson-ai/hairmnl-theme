@@ -48,6 +48,36 @@
     {%- assign _content = 'raw_content_' | append: forloop.index -%}
     {%- assign _content = block.settings[_content] -%}
 
+    {%- comment -%} bd 2i8b.69 (J10 S24): when the block settings are EMPTY (the P8
+        template — Shopify sanitizes/drops these settings on CLI push, so they can't
+        be configured from code), fall back to the canonical hmnl product metafields
+        that the live P6 template binds via these same settings. Keys verified live
+        on the draft via the mf-probe template (2026-06-10); note the legacy naming
+        quirk: the field named product_how_to_use_tab_title HOLDS the how-to CONTENT.
+        No-op whenever the merchant has configured the settings (P6-safe). {%- endcomment -%}
+    {%- if _title == blank and _content == blank -%}
+      {%- assign _mf_t = '' -%}
+      {%- assign _mf_c = '' -%}
+      {%- case forloop.index -%}
+        {%- when 1 -%}
+          {%- assign _mf_t = product.metafields.hmnl.product_tab_benefits_title.value -%}
+          {%- assign _mf_c = product.metafields.hmnl.product_benefits_tab_description.value -%}
+        {%- when 2 -%}
+          {%- assign _mf_t = product.metafields.hmnl.product_howto_tab_title.value -%}
+          {%- assign _mf_c = product.metafields.hmnl.product_how_to_use_tab_title.value -%}
+        {%- when 3 -%}
+          {%- assign _mf_t = product.metafields.hmnl.product_ingredients_tab_title.value -%}
+          {%- assign _mf_c = product.metafields.hmnl.product_ingredients_tab_content.value -%}
+        {%- when 4 -%}
+          {%- assign _mf_t = product.metafields.hmnl.product_tab_faq_title.value -%}
+          {%- assign _mf_c = product.metafields.hmnl.product_faqs_tab_description.value -%}
+      {%- endcase -%}
+      {%- if _mf_t != blank and _mf_c != blank -%}
+        {%- assign _title = _mf_t -%}
+        {%- assign _content = _mf_c -%}
+      {%- endif -%}
+    {%- endif -%}
+
       {%- if _title != '' and _content != '' -%}
         {%- assign _mf_resolved = false -%}
         {%- assign _resolved_content = _content -%}{%- comment -%} default — covers plain-HTML content and metafield-blank fallback {%- endcomment -%}
@@ -140,6 +170,32 @@
 
       {%- assign _content = 'raw_content_' | append: forloop.index -%}
       {%- assign _content = block.settings[_content] -%}
+
+      {%- comment -%} bd 2i8b.69 (J10 S24): blank-settings → hmnl metafield fallback.
+          Same wiring as the tabs branch above — see that comment for rationale
+          (incl. the legacy product_how_to_use_tab_title-holds-content quirk). {%- endcomment -%}
+      {%- if _title == blank and _content == blank -%}
+        {%- assign _mf_t = '' -%}
+        {%- assign _mf_c = '' -%}
+        {%- case forloop.index -%}
+          {%- when 1 -%}
+            {%- assign _mf_t = product.metafields.hmnl.product_tab_benefits_title.value -%}
+            {%- assign _mf_c = product.metafields.hmnl.product_benefits_tab_description.value -%}
+          {%- when 2 -%}
+            {%- assign _mf_t = product.metafields.hmnl.product_howto_tab_title.value -%}
+            {%- assign _mf_c = product.metafields.hmnl.product_how_to_use_tab_title.value -%}
+          {%- when 3 -%}
+            {%- assign _mf_t = product.metafields.hmnl.product_ingredients_tab_title.value -%}
+            {%- assign _mf_c = product.metafields.hmnl.product_ingredients_tab_content.value -%}
+          {%- when 4 -%}
+            {%- assign _mf_t = product.metafields.hmnl.product_tab_faq_title.value -%}
+            {%- assign _mf_c = product.metafields.hmnl.product_faqs_tab_description.value -%}
+        {%- endcase -%}
+        {%- if _mf_t != blank and _mf_c != blank -%}
+          {%- assign _title = _mf_t -%}
+          {%- assign _content = _mf_c -%}
+        {%- endif -%}
+      {%- endif -%}
 
         {% assign block_id = block.id | append: '-' | append: forloop.index %}
 

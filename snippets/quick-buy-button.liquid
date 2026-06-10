@@ -2,9 +2,10 @@
   bd a7av.12 — Collection Quick Buy (native STKY replacement, web-team decision 2).
 
   A hover-to-reveal "Add to Cart" button overlaid on the lower edge of a product
-  card image. SCOPED to collection pages only (request.page_type == 'collection')
-  — the STKY app showed quick-buy on every page; the web team asked for
-  collection-only.
+  card image. Renders on ALL product-card surfaces — June 10 web-team review
+  (deck S13/S21/S22) asked for Quick Buy on the home page, Recently Viewed and
+  the PDP rec rails too, superseding the earlier collection-pages-only scoping
+  (which was removed here).
 
   - Available (any product) → direct AJAX add of the first available variant via
     the shared [data-vrec-add] handler (assets/hairmnl-common.js → /cart/add.js →
@@ -17,7 +18,7 @@
 
   Arg: product {Product} required.
 {%- endcomment -%}
-{%- if product != blank and request.page_type == 'collection' -%}
+{%- if product != blank -%}
   {%- assign qb_variant = product.first_available_variant | default: product.variants.first -%}
   {%- if qb_variant -%}
     <div class="quick-buy" data-quick-buy>

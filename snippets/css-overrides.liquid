@@ -874,7 +874,11 @@
       z-index: 9000;
       align-items: center;
       gap: 16px;
-      padding: 10px 24px;
+      /* J10 S10 (bd a7av.16): contain the bar's content to the page content grid —
+         the .wrapper is max-width:1180px centered with var(--outer) inner padding;
+         mirror that as side padding so the bar's text/CTA line up with the header
+         content instead of hugging the viewport edges. Background stays full-bleed. */
+      padding: 10px max(var(--outer, 24px), calc((100vw - 1180px) / 2 + var(--outer, 24px)));
       background: #ffffff;
       border-bottom: 1px solid var(--border, #e5e5e5);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
@@ -1037,7 +1041,11 @@
       transform: translateY(0);
     }
     .vrec-product-sticky-bar__thumb { display: none; } /* save width on small screens */
-    .vrec-product-sticky-bar__info { flex: 1 1 auto; min-width: 0; overflow: hidden; }
+    /* J10 S12 (bd a7av.18): product title/vendor removed from the MOBILE bar — it
+       peeked out as a truncated sliver (esp. single-variant products, e.g. "K…").
+       Mobile bar = price + variant select (if any) + qty + CTA. Desktop keeps the title. */
+    .vrec-product-sticky-bar__info { display: none; }
+    .vrec-product-sticky-bar__price { margin-right: auto; } /* price left, controls right */
     .vrec-product-sticky-bar__title {
       font-size: 13px; font-weight: 500; margin: 0;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
@@ -1135,6 +1143,7 @@
       transition: opacity 150ms ease-out;
     }
     .product-grid-item:hover .quick-buy,
+    .vrec-card:hover .quick-buy, /* J10 S13/S14/S16: Vertex rec cards share the overlay */
     .quick-buy:focus-within {
       opacity: 1;
       pointer-events: auto;
@@ -1207,6 +1216,88 @@
     100% { transform: scale(1); }
   }
 
+  /* ── J10 S20 (bd 2i8b.67): mobile Filter/Sort alignment ──
+     The stock `.collection__filters__toggle, .popout--navbar .popout__toggle`
+     block (padding, height:100%, flex centering, right border, accent typography)
+     was DROPPED by the ujg6.42 per-template CSS split — confirmed via live CSSOM
+     enumeration on the draft (rule absent from every loaded sheet). Desktop
+     happened to align anyway; on mobile the unstyled Sort popout wrapped below
+     the Filter button (web-team deck S20). Restoring the stock declarations puts
+     both controls back on one equal-height row inside the 3.3em collection nav. */
+  .collection__filters__toggle,
+  .popout--navbar .popout__toggle {
+    padding: 0 20px;
+    height: 100%;
+    color: var(--text-light);
+    border-radius: 0;
+    font-family: var(---font-stack-accent);
+    font-weight: var(---font-weight-accent-bold);
+    font-style: var(---font-style-accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: calc(10px * var(---font-adjust-accent));
+    border: none;
+    border-right: 1px solid var(--border);
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+  @media only screen and (max-width: 479px) {
+    .collection__filters__toggle,
+    .popout--navbar .popout__toggle {
+      padding: 0 15px;
+    }
+  }
+
+  /* ── J10 (2026-06-10) Vertex rec-card unification — web-team deck S13–S18 ──
+     vertex-rec-card.liquid is now ONE vertical card for all placements with the
+     shared hover Quick Buy overlaid on the image (bd 2i8b.64 / 2i8b.65).
+     vertex-recommendations.css is generated — override here, don't hand-edit. */
+  /* Anchor for the .quick-buy absolute overlay (kt0-OK: position:relative only). */
+  .hairmnl-theme .vrec-card__media {
+    position: relative;
+  }
+  /* S13/S15/S17: FULL product titles — kill the 2-line clamp (and the drawer's
+     1-line clamp) so titles wrap completely like the native grid cards.
+     .vrec-card is doubled into the selector for (0,3,0)/(0,4,0) specificity:
+     the generated vertex-recommendations.css <link> loads AFTER this inline
+     snippet in document order, so an equal-specificity tie would lose (same
+     ordering trap the V3 override documented). */
+  .hairmnl-theme .vrec-card .vrec-card__title {
+    display: block;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: unset;
+    white-space: normal;
+  }
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-card .vrec-card__title {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+  .hairmnl-theme .vrec-card__title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+  /* Drawer cards are narrow — compact Quick Buy button so it fits. */
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy { padding: 6px; }
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__btn {
+    min-height: 34px;
+    line-height: 34px;
+    font-size: 10px;
+    padding: 0 8px;
+  }
+  /* S18 (bd 2i8b.65): the cart-page slider was left with its nav hidden by a stale
+     "stacked vertical" rule in the generated CSS — it has been a horizontal rail
+     since the B4 fix. Re-enable the see-more arrows on desktop (mobile keeps the
+     global touch-swipe behavior). */
+  @media (min-width: 1024px) {
+    /* .vrec-slot doubled in for (0,4,0) — must out-rank the stock display:none
+       (0,3,0) since the generated stylesheet loads after this snippet. */
+    .hairmnl-theme .vrec-slot.vrec-slot--cart_above_checkout .vrec-slot__nav {
+      display: flex;
+    }
+  }
+
   /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.
      Prevents 0px→Npx growth CLS (17 events/7d on homepage desktop).
      kt0-OK: min-height only, no containing-block properties. */
@@ -1243,10 +1334,19 @@
      margins on mobile. Edge-to-edge below 768px only (desktop keeps the
      contained width). Class added to the wrapper in section-banner-slider.liquid. */
   @media (max-width: 767px) {
-    .banner-slider-wrapper {
-      padding-left: 0;
-      padding-right: 0;
+    /* J10 S23 (bd 2i8b.68): hardened — web team reported gaps persisting. Live CSSOM
+       test (2026-06-10) proved these declarations DO produce full-bleed (wrapper +
+       swiper hit the viewport edges; no other element adds side padding), so the
+       report was almost certainly a stale/cached preview. Bumped to .wrapper.* so a
+       same-specificity cascade hiccup on any device can't beat it, zeroed the auto
+       margins, and pinned the swiper width. Re-verify on a fresh preview link. */
+    .wrapper.banner-slider-wrapper {
+      padding: 0;
       max-width: none;
+      margin: 0;
+    }
+    .banner-slider-wrapper .swiper {
+      width: 100%;
     }
   }
 
@@ -1260,13 +1360,24 @@
   .cart__drawer .cart__items__row {
     position: relative;
   }
+  /* J10 S19 (bd 2i8b.66): web-team follow-up on T5 — the icon at the row's true
+     top-right corner (0/0) sat flush against the edge and above the title line.
+     Inset it to the row's padding box (var(--gutter)) so the bin's top aligns
+     with the product title's top and it sits in from the right edge, nearer the
+     title. padding extends the tap target down-left without moving the glyph. */
   .cart__drawer .cart__items__remove {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: var(--gutter, 16px);
+    right: var(--gutter, 16px);
     z-index: 1;
-    padding: 4px;
+    padding: 0 0 6px 6px;
     line-height: 1;
+  }
+  /* Clear the inset icon — the stock 25px right-padding was sized for a
+     flush-right icon; the inset one needs more clearance so long titles
+     don't run underneath it. */
+  .cart__drawer .cart__items__title {
+    padding-right: 44px;
   }
 
   /* bd 2i8b.55 (V3): align the PDP "You may also like" (Vertex pdp_below_atc) rail to
