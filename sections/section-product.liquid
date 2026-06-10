@@ -71,7 +71,18 @@
             <div class="product__slides">
           {% endif %}
             {% for media in product.media %}
-              {% render 'media', media: media, section: section, is_first: forloop.first %}
+              {%- comment -%}
+                bd zlwx (2026-06-10): the gallery opens on the SELECTED variant's
+                featured media, which can sit deeper in DOM order than media[0] —
+                if it stays lazy it becomes the LCP at 22-24s on mobile (observed
+                3/3 PSI runs). Eager-load it alongside the DOM-first media
+                (max 2 eager images per gallery).
+              {%- endcomment -%}
+              {%- assign eager_media = forloop.first -%}
+              {%- if media.id == product.selected_or_first_available_variant.featured_media.id -%}
+                {%- assign eager_media = true -%}
+              {%- endif -%}
+              {% render 'media', media: media, section: section, is_first: eager_media %}
             {% endfor %}
           </div>
         {% else %}

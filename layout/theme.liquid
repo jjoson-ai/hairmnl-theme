@@ -34,7 +34,8 @@
     {% render 'canonical' %}
     {% render 'hairsalon-schema' %}
     {% render 'salon-menu-schema' %}
-    {%- if article.handle == '15-top-sulfate-free-shampoos-in-the-philippines' -%}
+    {%- comment -%} article.handle is BLOG-QUALIFIED ("<blog>/<slug>") — a bare-slug gate never matches (bd 0kv3.3 gate regression, fixed 2026-06-10) {%- endcomment -%}
+    {%- if article.handle == 'product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines' -%}
     {%- assign u = shop.url -%}
     <script type="application/ld+json">
     {
