@@ -64,25 +64,32 @@
 
         {% if product.media.size > 0 %}
           {% if product.media.size > 1 %}
+            {%- comment -%}
+              bd y79d (2026-06-10): render the SELECTED variant's featured media FIRST.
+              Pre-init CSS hides every slide except :first-child, and Flickity inits at
+              index 0 then jumps to the featured media only when theme.js executes
+              (~20s on a throttled mobile CPU) — that late jump re-emitted the LCP at
+              19-21s. Featured-first makes the correct image paint pre-JS (LCP ~= FCP)
+              and the init jump a no-op. Slide selection in theme.js is data-media-id
+              based (theme:image:change), so DOM order is safe for thumbs + variant
+              sync. Supersedes the zlwx two-eager approach: the lead media alone is eager.
+            {%- endcomment -%}
+            {%- assign lead_media = product.selected_or_first_available_variant.featured_media | default: product.media[0] -%}
             <div data-product-slideshow
-              class="product__slides flickity-lock-height" 
-              style="--default-ratio: {{ 1 | divided_by: product.media[0].aspect_ratio | times: 100 | at_most: 100 }}%">
+              class="product__slides flickity-lock-height"
+              style="--default-ratio: {{ 1 | divided_by: lead_media.aspect_ratio | times: 100 | at_most: 100 }}%">
           {% else %}
             <div class="product__slides">
           {% endif %}
+            {%- if lead_media == blank -%}
+              {%- comment -%} single-media branch skips the slideshow div where lead_media is assigned {%- endcomment -%}
+              {%- assign lead_media = product.selected_or_first_available_variant.featured_media | default: product.media[0] -%}
+            {%- endif -%}
+            {% render 'media', media: lead_media, section: section, is_first: true %}
             {% for media in product.media %}
-              {%- comment -%}
-                bd zlwx (2026-06-10): the gallery opens on the SELECTED variant's
-                featured media, which can sit deeper in DOM order than media[0] —
-                if it stays lazy it becomes the LCP at 22-24s on mobile (observed
-                3/3 PSI runs). Eager-load it alongside the DOM-first media
-                (max 2 eager images per gallery).
-              {%- endcomment -%}
-              {%- assign eager_media = forloop.first -%}
-              {%- if media.id == product.selected_or_first_available_variant.featured_media.id -%}
-                {%- assign eager_media = true -%}
-              {%- endif -%}
-              {% render 'media', media: media, section: section, is_first: eager_media %}
+              {%- unless media.id == lead_media.id -%}
+                {% render 'media', media: media, section: section, is_first: false %}
+              {%- endunless -%}
             {% endfor %}
           </div>
         {% else %}
