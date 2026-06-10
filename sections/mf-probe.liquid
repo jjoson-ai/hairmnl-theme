@@ -1,0 +1,26 @@
+{%- comment -%}
+  TEMPORARY diagnostic (bd 2i8b.69, J10 S24): enumerates a product's hmnl/custom
+  metafield keys via the Section Rendering API so the PDP tab wiring uses the
+  REAL keys (anti-fabrication). Fetch on a PDP:
+    /products/<handle>?sections=mf-probe
+  Draft theme only — neutralize or remove after 2i8b.69 closes.
+{%- endcomment -%}
+<div id="mf-probe">
+{%- assign mf_probe_enabled = false -%}{%- comment -%} bd 2i8b.69 done 2026-06-10 — flip to true to re-arm the probe {%- endcomment -%}
+{%- if mf_probe_enabled and product != blank -%}
+HANDLE={{ product.handle }}
+[hmnl]
+{%- for f in product.metafields.hmnl %}
+{{ f[0] }} :: {{ f[1].value | strip_html | strip_newlines | truncate: 70 }}
+{%- endfor %}
+[custom]
+{%- for f in product.metafields.custom %}
+{{ f[0] }} :: {{ f[1].value | strip_html | strip_newlines | truncate: 70 }}
+{%- endfor %}
+{%- else -%}
+PROBE OFF
+{%- endif -%}
+</div>
+{% schema %}
+{ "name": "MF Probe temp", "settings": [] }
+{% endschema %}

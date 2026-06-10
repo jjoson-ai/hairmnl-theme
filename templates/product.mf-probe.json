@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "mf-probe",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
