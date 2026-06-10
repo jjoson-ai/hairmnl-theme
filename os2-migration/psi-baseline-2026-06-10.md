@@ -47,3 +47,8 @@ Re-aggregated from the 60 raw cell JSONs (the run completed all cells but was ki
 4. **P8-dev stable** - still beats P6 on most cells; the P8 cart-desktop weakness (38) persists (documented cold-start TBT storm), P8-only so low urgency.
 
 Methodology: re-aggregated from /tmp/psi-baseline/*.json (60 cells = 2 themes x 2 strategies x 5 templates x 3 runs, n=3 median) after the run was killed before writing its own summary; compared to psi-baseline-2026-06-08.summary.json.
+
+## 2026-06-10 live re-test addendum (post-zlwx fix)
+- Eager fix VERIFIED SERVING (PSI sees the element eager). Lab LCP pdp-mobile: 22-24s -> 18.8-20.9s (n=3).
+- Residual root cause #2 identified: Flickity gallery init late re-paint re-emits the LCP candidate ~20s (phases sum only ~3.8s). Desktop unaffected (early init); P8's pipeline 7.0-7.5s. Successor bd: hairmnl-theme-y79d.
+- 0kv3.3 ItemList gate regression found+fixed during the smoke (article.handle is blog-qualified).
