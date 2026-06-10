@@ -52,3 +52,13 @@ Methodology: re-aggregated from /tmp/psi-baseline/*.json (60 cells = 2 themes x 
 - Eager fix VERIFIED SERVING (PSI sees the element eager). Lab LCP pdp-mobile: 22-24s -> 18.8-20.9s (n=3).
 - Residual root cause #2 identified: Flickity gallery init late re-paint re-emits the LCP candidate ~20s (phases sum only ~3.8s). Desktop unaffected (early init); P8's pipeline 7.0-7.5s. Successor bd: hairmnl-theme-y79d.
 - 0kv3.3 ItemList gate regression found+fixed during the smoke (article.handle is blog-qualified).
+
+## wwni resolution (2026-06-10) — cart lab LCP annotated as artifact
+GA4 RUM field check (/cart LCP, 28d): overall 79.2% good (above the 75% target); mobile 69.2% (slightly under).
+By element: the BOGOS glider IS a real-but-small field factor — when it wins LCP (19/211 mobile sessions) only
+31.6% good / 26.3% poor — but its text is app-injected (deferred extension scripts), so no legitimate theme-side
+early paint exists (hardcoding promo copy = merchandising drift risk, rejected). The 30-37s LAB number is an
+empty-cart artifact (annotated in psi-baseline-matrix.py). Real fix path = replacing/configuring the app (roadmap
+ur0: custom buy-X-get-Y, also saves $420/yr) — field data strengthens that case. Top mobile cart LCP target
+(cart line-item rows, 67.3% good) tracks the shared P6 render-start latency program, not a lazy-image bug
+(cart thumbs are eager 90x90).

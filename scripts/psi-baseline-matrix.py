@@ -42,6 +42,11 @@ TEMPLATES = [
     ("home", "/"),
     ("collection", "/collections/best-sellers"),
     ("pdp", "/products/kerastase-genesis-anti-hair-fall-fortifying-serum"),
+    # KNOWN LAB ARTIFACT (bd wwni, 2026-06-10): on a lab-EMPTY cart the LCP element is the
+    # BOGOS/Secomapp promo glider (#sca-promotion-glider p.content-promotion-message), an
+    # app-injected ticker that paints ~30-37s mobile / 6-7s desktop on BOTH themes. Real
+    # carts have line items as LCP; GA4 field /cart LCP = 79.2% good overall (mobile 69.2%).
+    # Do NOT treat huge cart-cell LCP as a theme regression. Real fix path = app-level (bd ur0).
     ("cart", "/cart"),
     # 2026-05-18 late: /collections/loreal-professionnel returns 200 but
     # pageType=index (serves homepage content as collection — broken handle).
