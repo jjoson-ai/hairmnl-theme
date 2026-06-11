@@ -1,43 +1,62 @@
 {%- comment -%}
-  bd a7av.12 — Collection Quick Buy (native STKY replacement, web-team decision 2).
+  bd a7av.12 / a7av.24 — Quick Buy (native STKY replacement).
 
-  A hover-to-reveal "Add to Cart" button overlaid on the lower edge of a product
-  card image. Renders on ALL product-card surfaces — June 10 web-team review
-  (deck S13/S21/S22) asked for Quick Buy on the home page, Recently Viewed and
-  the PDP rec rails too, superseding the earlier collection-pages-only scoping
-  (which was removed here).
+  J11 S13 redesign (web-team, 2026-06-11): the overlay ADD TO CART bar is replaced
+  by the STKY-style round cart+plus icon at the UPPER-RIGHT of the product image
+  (bg #E4E5E6 @ 50%, always visible — no hover gating).
+  - Single-variant: tapping the icon adds via the shared [data-vrec-add] AJAX
+    handler (assets/hairmnl-common.js → /cart/add.js → opens the drawer).
+  - Multi-variant: tapping opens a variant-selector popover (variant + price
+    rows); tapping a row adds that variant. Popover JS in hairmnl-common.js
+    ([data-qb-toggle], click-outside closes).
+  - Sold out: no icon (the card already communicates sold-out state).
 
-  - Available (any product) → direct AJAX add of the first available variant via
-    the shared [data-vrec-add] handler (assets/hairmnl-common.js → /cart/add.js →
-    opens the drawer). Multi-variant products add the default variant too (strict
-    STKY parity, web-team follow-up 2026-05-18); the shopper adjusts in the drawer.
-  - Sold out → inert label.
-
-  Hover-reveal is CSS (css-overrides.liquid §quick-buy): hidden on hover-capable
-  devices until card hover; always visible on touch devices.
+  Renders on ALL product-card surfaces (grids + every rec rail) — June 10/11
+  web-team direction. Anchored by a position:relative wrapper in the card
+  (.product-grid-item__media / .vrec-card__media); CSS in css-overrides.liquid.
 
   Arg: product {Product} required.
 {%- endcomment -%}
 {%- if product != blank -%}
-  {%- assign qb_variant = product.first_available_variant | default: product.variants.first -%}
-  {%- if qb_variant -%}
+  {%- assign qb_variant = product.first_available_variant -%}
+  {%- if qb_variant and product.available -%}
+    {%- capture qb_icon_svg -%}
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+        <path d="M4.5 5.5h12l-1.2 7h-9L4.5 5.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M4.5 5.5 3.7 3H1.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="7.4" cy="16.6" r="1.2" fill="currentColor"/>
+        <circle cx="14.2" cy="16.6" r="1.2" fill="currentColor"/>
+        <path d="M19 14v6M16 17h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+    {%- endcapture -%}
     <div class="quick-buy" data-quick-buy>
-      {%- comment -%} bd a7av.12 (web-team follow-up): direct-add the first available
-          variant for ALL products, including multi-variant — strict STKY parity
-          (STKY added the default variant from the grid). The shopper can adjust the
-          variant in the drawer/cart that opens after add. {%- endcomment -%}
-      {%- if qb_variant.available -%}
+      {%- if product.variants.size > 1 -%}
         <button type="button"
-                class="quick-buy__btn"
+                class="quick-buy__icon"
+                data-qb-toggle
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-label="{{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}: {{ product.title | strip_html | escape }}">
+          {{ qb_icon_svg }}
+        </button>
+        <div class="quick-buy__popover" data-qb-popover>
+          {%- for v in product.variants -%}
+            <button type="button"
+                    class="quick-buy__option"
+                    {% if v.available %}data-vrec-add data-variant-id="{{ v.id }}"{% else %}disabled aria-disabled="true"{% endif %}>
+              <span class="quick-buy__option-title">{{ v.title }}</span>
+              <span class="quick-buy__option-price">{% if v.available %}{{ v.price | money }}{% else %}{{ 'products.product.sold_out' | t | default: 'Sold out' }}{% endif %}</span>
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <button type="button"
+                class="quick-buy__icon"
                 data-vrec-add
                 data-variant-id="{{ qb_variant.id }}"
                 aria-label="{{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}: {{ product.title | strip_html | escape }}">
-          {{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}
+          {{ qb_icon_svg }}
         </button>
-      {%- else -%}
-        <span class="quick-buy__btn quick-buy__btn--soldout" aria-disabled="true">
-          {{ 'products.product.sold_out' | t | default: 'Sold out' }}
-        </span>
       {%- endif -%}
     </div>
   {%- endif -%}

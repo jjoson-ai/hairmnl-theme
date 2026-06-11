@@ -617,6 +617,13 @@
       .then(function () {
         btn.removeAttribute('aria-busy');
         btn.disabled = false;
+        // J11 S13: if this add came from a Quick Buy variant popover, close it.
+        var pop = btn.closest && btn.closest('[data-qb-popover]');
+        if (pop) {
+          pop.classList.remove('is-open');
+          var t = pop.parentElement && pop.parentElement.querySelector('[data-qb-toggle]');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        }
       });
   });
 
@@ -703,6 +710,42 @@
         btn.removeAttribute('aria-busy');
         btn.disabled = false;
       });
+  });
+
+  // ============================================================
+  // J11 S13 (bd a7av.24) — Quick Buy variant popover
+  // ------------------------------------------------------------
+  // Multi-variant Quick Buy icons ([data-qb-toggle]) open a small variant
+  // selector ([data-qb-popover]); each row is a [data-vrec-add] button handled
+  // by §10 above. One popover open at a time; click-outside or a successful
+  // add closes it.
+  // ============================================================
+  function closeQbPopovers(except) {
+    document.querySelectorAll('[data-qb-popover].is-open').forEach(function (p) {
+      if (p === except) return;
+      p.classList.remove('is-open');
+      var t = p.parentElement && p.parentElement.querySelector('[data-qb-toggle]');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var toggle = e.target.closest && e.target.closest('[data-qb-toggle]');
+    if (toggle) {
+      e.preventDefault();
+      e.stopPropagation();
+      var pop = toggle.parentElement.querySelector('[data-qb-popover]');
+      if (!pop) return;
+      var opening = !pop.classList.contains('is-open');
+      closeQbPopovers(opening ? pop : null);
+      pop.classList.toggle('is-open', opening);
+      toggle.setAttribute('aria-expanded', opening ? 'true' : 'false');
+      return;
+    }
+    // Click anywhere outside an open popover closes it (clicks on a variant row
+    // are inside the popover — §10 handles the add; we close it there too).
+    if (!(e.target.closest && e.target.closest('[data-qb-popover]'))) {
+      closeQbPopovers(null);
+    }
   });
 
   // ============================================================

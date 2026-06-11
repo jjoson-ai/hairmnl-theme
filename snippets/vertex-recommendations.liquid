@@ -133,15 +133,47 @@
      precompute (type: "json", not list.product_reference). entry.url
      is nil; we resolve via all_products[entry.handle].
 {%- endcomment -%}
+{%- comment -%}
+  J11 S22 (bd 2i8b.76, web-team 2026-06-11): render-time exclusion guard.
+  Recommendations must never show:
+  - out-of-stock products (available == false — observed sold-out recs live),
+  - freebies / promo SKUs (observed: "» FREE ... (100% off)" at ₱0 in the
+    drawer rail) — detected by zero price, a leading "»", or "% off" in the
+    title (plain "Free"/"-Free" words like "Sulfate-Free" do NOT match),
+  - Backbar / salon-professional SKUs — vendor contains "Backbar" or tagged
+    "bb exclusive" / "hm salon professional" (convention verified live via
+    /products/<handle>.js on a Backbar product).
+  This is the safety net at render time; the same exclusions belong upstream
+  in the hairmnl-vertex precompute so metafields stop carrying these SKUs.
+{%- endcomment -%}
+{%- assign vx_excluded_handles = shop.metafields.vertex.excluded_handles.value -%}
 {%- capture rail_html -%}
   {%- for entry in rec_products limit: 8 -%}
+    {%- assign rec_p = nil -%}
     {%- if entry.url -%}
-      {%- render 'vertex-rec-card', product: entry, placement: placement -%}
+      {%- assign rec_p = entry -%}
     {%- else -%}
       {%- assign resolved = all_products[entry.handle] -%}
       {%- if resolved and resolved.handle != blank -%}
-        {%- render 'vertex-rec-card', product: resolved, placement: placement -%}
+        {%- assign rec_p = resolved -%}
       {%- endif -%}
+    {%- endif -%}
+    {%- if rec_p -%}
+      {%- assign rec_skip = false -%}
+      {%- unless rec_p.available -%}{%- assign rec_skip = true -%}{%- endunless -%}
+      {%- if rec_p.price == 0 -%}{%- assign rec_skip = true -%}{%- endif -%}
+      {%- assign rec_title_head = rec_p.title | strip | slice: 0, 1 -%}
+      {%- if rec_title_head == '»' or rec_p.title contains '% off' or rec_p.title contains '% OFF' -%}{%- assign rec_skip = true -%}{%- endif -%}
+      {%- if rec_p.vendor contains 'Backbar' or rec_p.vendor contains 'backbar' -%}{%- assign rec_skip = true -%}{%- endif -%}
+      {%- if rec_p.tags contains 'bb exclusive' or rec_p.tags contains 'hm salon professional' -%}{%- assign rec_skip = true -%}{%- endif -%}
+      {%- comment -%} Layer 3 of the engine's exclude system (precompute/exclude_lookup.py):
+          the operator-managed Google-Sheet exclude list, mirrored to
+          shop.metafields.vertex.excluded_handles every 15 min. This consult was
+          designed-in but never wired into the theme widget until J11 S22. {%- endcomment -%}
+      {%- if vx_excluded_handles and vx_excluded_handles contains rec_p.handle -%}{%- assign rec_skip = true -%}{%- endif -%}
+      {%- unless rec_skip -%}
+        {%- render 'vertex-rec-card', product: rec_p, placement: placement -%}
+      {%- endunless -%}
     {%- endif -%}
   {%- endfor -%}
 {%- endcapture -%}

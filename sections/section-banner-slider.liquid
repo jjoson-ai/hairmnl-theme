@@ -72,6 +72,28 @@
   {%- endif -%}
 {%- endif -%}
 
+{%- comment -%}
+  J11 S21 (bd 2i8b.75, 2026-06-11): full-bleed banner on mobile — confirmed by
+  the web team on BOTH the P8 preview and the LIVE P6 site, so the fix ships in
+  the section itself (shared by both themes) rather than css-overrides (whose
+  P8 state must not reach live). `.banner-slider .wrapper` is (0,2,0) — beats
+  the stock `.wrapper` padding regardless of stylesheet order, and needs no
+  helper class. Inline <style> may repeat if the section renders twice on a
+  page; the CSS is idempotent.
+{%- endcomment -%}
+<style>
+  @media (max-width: 767px) {
+    .banner-slider .wrapper {
+      padding-left: 0;
+      padding-right: 0;
+      max-width: none;
+      margin: 0;
+    }
+    .banner-slider .swiper {
+      width: 100%;
+    }
+  }
+</style>
 <div class="wrapper banner-slider-wrapper">
   <div class="swiper banner-slider-{{ section.id }}" data-slide-delay="{{section.settings.slide_delay}}">
     <!-- Additional required wrapper -->

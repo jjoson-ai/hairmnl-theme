@@ -48,15 +48,12 @@
     {%- endif -%}
     <div class="vrec-product-sticky-bar__info">
       <p class="vrec-product-sticky-bar__title">{{ product.title | strip_html }}</p>
-      {%- comment -%} bd a7av.11: the variant text-label is collection-mode only
-          (the collection bar's product is swapped in-place by JS, which writes this
-          label). In PDP mode the variant is chosen via the in-bar <select> below, so
-          the meta line shows the vendor instead. {%- endcomment -%}
-      {%- if is_collection_mode and product.variants.size > 1 and first_variant -%}
-        <p class="vrec-product-sticky-bar__meta" data-vrec-sticky-variant>{{ first_variant.title }}</p>
-      {%- elsif product.vendor != blank -%}
-        <p class="vrec-product-sticky-bar__meta">{{ product.vendor }}</p>
-      {%- endif -%}
+      {%- comment -%} J11 S11 (bd a7av.22): the meta line is now the Judge.me star
+          rating + review count (was the vendor — web-team ask). Same badge source
+          as the product cards. Collection mode was removed in a7av.17. {%- endcomment -%}
+      <div class="vrec-product-sticky-bar__meta vrec-product-sticky-bar__rating">
+        {%- render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product -%}
+      </div>
     </div>
     <p class="vrec-product-sticky-bar__price" data-vrec-sticky-price>{{ first_variant.price | money }}</p>
     {%- form 'product', product, class: 'vrec-product-sticky-bar__form' -%}
@@ -218,6 +215,53 @@
           }
           var btn = bar.querySelector('.vrec-product-sticky-bar__cta');
           if (btn) btn.disabled = (opt.getAttribute('data-available') !== 'true');
+        });
+      }
+
+      // J11 S9 (bd a7av.20, P1): the bar's native form submit navigated the shopper
+      // off the PDP (Shopify's add-form redirect). Intercept and add via AJAX —
+      // same flow as the [data-vrec-add] handler in hairmnl-common.js §10: POST
+      // /cart/add.js, refresh the header count from /cart.js, then hand off to the
+      // theme's drawer (theme:cart:popdown + theme:cart:change). The native submit
+      // remains the JS-off fallback. Skip-to-checkout (data-vrec-checkout) keeps
+      // its own click handler — when the setting is on, this submit path is skipped.
+      var barForm = bar.querySelector('form');
+      if (barForm) {
+        barForm.addEventListener('submit', function (e) {
+          var cta = barForm.querySelector('.vrec-product-sticky-bar__cta');
+          if (cta && cta.hasAttribute('data-vrec-checkout')) return; // buy-now flow owns this click
+          e.preventDefault();
+          if (cta && cta.getAttribute('aria-busy') === 'true') return;
+          var idEl = barForm.querySelector('[name="id"]');
+          var qtyEl = barForm.querySelector('[name="quantity"]');
+          var qty = (qtyEl && parseInt(qtyEl.value, 10) > 0) ? parseInt(qtyEl.value, 10) : 1;
+          if (!idEl || !idEl.value) return;
+          if (cta) { cta.setAttribute('aria-busy', 'true'); cta.disabled = true; }
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ id: idEl.value, quantity: qty })
+          })
+            .then(function (r) { if (!r.ok) throw new Error('add failed: ' + r.status); return r.json(); })
+            .then(function () {
+              return fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+                .then(function (r) { return r.json(); })
+                .then(function (cart) {
+                  var countEl = document.querySelector('[data-header-cart-count]');
+                  if (countEl) {
+                    countEl.setAttribute('data-header-cart-count', cart.item_count);
+                    countEl.textContent = '(' + cart.item_count + ')';
+                  }
+                  document.dispatchEvent(new CustomEvent('theme:cart:popdown', { bubbles: true }));
+                  document.dispatchEvent(new CustomEvent('theme:cart:change', { bubbles: true }));
+                });
+            })
+            .catch(function (err) {
+              if (window.console && console.warn) console.warn('[sticky-bar-add]', err && err.message ? err.message : err);
+            })
+            .then(function () {
+              if (cta) { cta.removeAttribute('aria-busy'); cta.disabled = false; }
+            });
         });
       }
     })();

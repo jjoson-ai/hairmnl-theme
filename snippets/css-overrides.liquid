@@ -998,6 +998,16 @@
     }
   }
 
+  /* J11 S12 (bd a7av.23): hide the sticky bar (desktop top bar + mobile bottom
+     bar) while the cart drawer is open — it covered the drawer's cart items on
+     desktop and the CHECK OUT button on mobile. The theme marks the open drawer
+     with .drawer--visible (theme.dev.js:1954). :has() is ~98% supported here;
+     non-supporting browsers just keep the bar (cosmetic overlap only).
+     kt0-OK: display:none — containment is moot. */
+  body:has(.cart__drawer.drawer--visible) .vrec-product-sticky-bar {
+    display: none !important;
+  }
+
   /* ── Mobile sticky ATC bar (bd a7av.9 — STKY mobile-bar parity) ──
      The native sticky bar was desktop-only (rules above are gated to
      min-width:1024px). STKY provided a mobile sticky ATC bar; this restores
@@ -1045,7 +1055,8 @@
        peeked out as a truncated sliver (esp. single-variant products, e.g. "K…").
        Mobile bar = price + variant select (if any) + qty + CTA. Desktop keeps the title. */
     .vrec-product-sticky-bar__info { display: none; }
-    .vrec-product-sticky-bar__price { margin-right: auto; } /* price left, controls right */
+    /* J11 S10 (bd a7av.21): no auto-margin here — the CTA's flex-grow (below)
+       absorbs the free space so ADD TO CART fills the bar per the team's mock. */
     .vrec-product-sticky-bar__title {
       font-size: 13px; font-weight: 500; margin: 0;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
@@ -1056,7 +1067,9 @@
     }
     .vrec-product-sticky-bar__price { flex: 0 0 auto; font-size: 14px; font-weight: 600; margin: 0 8px 0 0; }
     .vrec-product-sticky-bar__cta {
-      flex: 0 0 auto; min-height: 44px; padding: 0 16px;
+      /* J11 S10 (bd a7av.21): extend ADD TO CART to fill the remaining bar width
+         (price + qty stay compact on the left, per the team's mock). */
+      flex: 1 1 auto; min-height: 44px; padding: 0 16px;
       background: var(--vrec-cta-bg, #1a1a1a); color: var(--vrec-cta-fg, #ffffff);
       font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
       border: 0; cursor: pointer; font-family: inherit;
@@ -1087,71 +1100,79 @@
     }
   }
 
-  /* ── Collection Quick Buy (bd a7av.12 — native STKY replacement) ──
-     Hover-to-reveal "Add to Cart" overlaid on the lower edge of a product card
-     image. Markup: snippets/quick-buy-button.liquid, rendered inside
-     .product-grid-item__media (the image wrapper) in product-grid-item.liquid +
-     product-grid-item-branded.liquid. The snippet self-scopes to collection
-     pages (request.page_type == 'collection'), so the button never appears on
-     home/search/PDP sliders — fixing the STKY "shows on all pages" complaint.
-     kt0: .product-grid-item__media uses position:relative only; .quick-buy uses
-     position:absolute + an opacity transition (no transform/filter), so no
-     fixed/absolute descendant is trapped. Neither selector is in OVERLAY_PATTERNS. */
+  /* ── Quick Buy icon (bd a7av.12 → a7av.24 J11 redesign — STKY parity) ──
+     The overlay ADD TO CART bar is replaced by the STKY-style round cart+plus
+     icon at the UPPER-RIGHT of the product image (web-team spec: #E4E5E6 at
+     50% opacity), ALWAYS visible — no hover gating. Multi-variant products
+     open a variant-selector popover. Markup: snippets/quick-buy-button.liquid,
+     rendered inside the card's position:relative media wrapper
+     (.product-grid-item__media / .vrec-card__media). Popover JS in
+     assets/hairmnl-common.js.
+     kt0: position:relative/absolute only — no transform/filter/contain; no
+     fixed/absolute descendant trapped. Selectors not in OVERLAY_PATTERNS. */
   .product-grid-item__media {
     position: relative;
   }
   .quick-buy {
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2;
-    padding: 8px;
+    top: 8px;
+    right: 8px;
+    z-index: 3;
   }
-  .quick-buy__btn {
+  .quick-buy__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(228, 229, 230, 0.5); /* #E4E5E6 @ 50% — web-team spec */
+    color: #1a1a1a;
+    cursor: pointer;
+    padding: 0;
+  }
+  .quick-buy__icon svg {
+    width: 19px;
+    height: 19px;
     display: block;
+  }
+  .quick-buy__icon:hover { background: rgba(228, 229, 230, 0.85); }
+  .quick-buy__icon[aria-busy="true"] { opacity: 0.5; cursor: progress; }
+  .quick-buy__popover {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    min-width: 180px;
+    max-width: 230px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+    border-radius: 4px;
+    padding: 4px;
+    z-index: 6;
+    text-align: left;
+  }
+  .quick-buy__popover.is-open { display: block; }
+  .quick-buy__option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
     width: 100%;
-    min-height: 40px;
-    padding: 0 12px;
-    background: var(--vrec-cta-bg, #1a1a1a);
-    color: var(--vrec-cta-fg, #ffffff);
-    font-family: inherit;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    line-height: 40px;
-    text-align: center;
-    text-decoration: none;
+    padding: 9px 10px;
+    background: none;
     border: 0;
     cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    color: #1a1a1a;
+    text-align: left;
   }
-  .quick-buy__btn--soldout {
-    background: #9a9a9a;
-    cursor: not-allowed;
-  }
-  .quick-buy__btn[aria-busy="true"] {
-    opacity: 0.6;
-    cursor: progress;
-  }
-  /* Hover-capable devices: hide until the card is hovered (hover-to-reveal, the
-     web-team ask). Touch devices (no hover) keep the button always visible. */
-  @media (hover: hover) {
-    .quick-buy {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 150ms ease-out;
-    }
-    .product-grid-item:hover .quick-buy,
-    .vrec-card:hover .quick-buy, /* J10 S13/S14/S16: Vertex rec cards share the overlay */
-    .quick-buy:focus-within {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .quick-buy { transition: none; }
-    }
-  }
+  .quick-buy__option:hover { background: #f5f5f5; }
+  .quick-buy__option[disabled] { opacity: 0.45; cursor: not-allowed; }
+  .quick-buy__option-price { white-space: nowrap; color: #6b6b6b; }
 
   /* ── Sticky Cart bubble (bd a7av.13 — native STKY replacement, desktop only) ──
      Markup: snippets/sticky-cart-bubble.liquid, rendered once in layout/theme.liquid.
@@ -1278,14 +1299,10 @@
     color: inherit;
     text-decoration: none;
   }
-  /* Drawer cards are narrow — compact Quick Buy button so it fits. */
-  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy { padding: 6px; }
-  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__btn {
-    min-height: 34px;
-    line-height: 34px;
-    font-size: 10px;
-    padding: 0 8px;
-  }
+  /* Drawer cards are narrow — slightly smaller Quick Buy icon (J11 S13). */
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy { top: 6px; right: 6px; }
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__icon { width: 30px; height: 30px; }
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__icon svg { width: 16px; height: 16px; }
   /* S18 (bd 2i8b.65): the cart-page slider was left with its nav hidden by a stale
      "stacked vertical" rule in the generated CSS — it has been a horizontal rail
      since the B4 fix. Re-enable the see-more arrows on desktop (mobile keeps the
@@ -1295,6 +1312,59 @@
        (0,3,0) since the generated stylesheet loads after this snippet. */
     .hairmnl-theme .vrec-slot.vrec-slot--cart_above_checkout .vrec-slot__nav {
       display: flex;
+    }
+  }
+
+  /* ── J11 (2026-06-11) slider + cart polish — web-team deck S14–S17 ──
+     Selectors double the .vrec-slot class for (0,4,0) specificity: the generated
+     vertex-recommendations.css <link> loads after this inline snippet, so
+     equal-specificity ties would lose (same ordering trap as J10). */
+  /* S14 (bd 2i8b.70): no see-more arrows in the MOBILE drawer slider (the
+     generated CSS kept drawer nav at all viewports; team now wants touch-swipe
+     only on mobile). Desktop drawer keeps its arrows. */
+  @media (max-width: 1023px) {
+    .hairmnl-theme .vrec-slot.vrec-slot--cart_drawer_below_items .vrec-slot__nav {
+      display: none;
+    }
+  }
+  /* S17 (bd 2i8b.73): desktop drawer slider was too compact — show 4 full
+     products per view. */
+  @media (min-width: 1024px) {
+    .hairmnl-theme .vrec-slot.vrec-slot--cart_drawer_below_items .vrec-slot__rail {
+      grid-auto-columns: 23.5%;
+    }
+  }
+  /* S16 (bd 2i8b.72): page-level rec sliders touched the screen edges on
+     mobile — add the theme's outer side margins. Drawer/cart slots excluded
+     (their containers already pad). */
+  @media (max-width: 767px) {
+    .hairmnl-theme .vrec-slot.vrec-slot--home_below_hero,
+    .hairmnl-theme .vrec-slot.vrec-slot--pdp_below_atc,
+    .hairmnl-theme .vrec-slot.vrec-slot--pdp_below_description {
+      padding-left: var(--outer, 16px);
+      padding-right: var(--outer, 16px);
+    }
+  }
+  /* S15 (bd 2i8b.71): cart PAGE mobile — the remove (bin) icon auto-placed into
+     the grid's image column and landed isolated bottom-left. Mirror the drawer
+     treatment: pin to the line item's top-right at the gutter inset, top aligned
+     with the title. Scoped ≤767px — the desktop cart grid (min-width:768px) has
+     its own grid-area'd text "Remove" link and hides the bin icon.
+     kt0-OK: position relative/absolute only; one intended absolute child. */
+  @media (max-width: 767px) {
+    .cart__template .cart__items__row {
+      position: relative;
+    }
+    .cart__template .cart__items__remove {
+      position: absolute;
+      top: var(--gutter, 16px);
+      right: var(--gutter, 16px);
+      z-index: 1;
+      padding: 0 0 6px 6px;
+      line-height: 1;
+    }
+    .cart__template .cart__items__title {
+      padding-right: 44px;
     }
   }
 

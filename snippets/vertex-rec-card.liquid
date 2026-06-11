@@ -1,101 +1,26 @@
 {%- comment -%}
   Vertex AI Recommendations — shared card partial.
-  Used by every rec slot (PDP FBT, cart, home RFY, PDP similar, drawer).
 
-  One layout (June 10 web-team review): a vertical card — image top, info
-  below — matching the native product-grid cards, with the shared hover
-  Quick Buy overlaid on the image (snippets/quick-buy-button.liquid).
+  J11 S19/S20 (bd 2i8b.72, web-team 2026-06-11): the bespoke vrec card is gone.
+  Every rec slot now renders the THEME-NATIVE product card (product-grid-item)
+  inside a thin .vrec-card--standard wrapper — the generated CSS already strips
+  the wrapper's container styles for exactly this pattern, so the native card's
+  typography, star badge, price weight, Quick Buy icon and spacing drive the
+  visual. This is the definitive fix for the recurring "rec cards don't match
+  the other sliders" feedback (J10 S13, J11 S19/S20): one card template
+  everywhere = parity by construction.
+
+  The wrapper keeps:
+  - .vrec-card                → rail sizing (grid-auto-columns) + nav step width
+  - data-vertex-product-id    → Vertex analytics hooks
+  - role="listitem"           → the rail's role="list"
 
   Arguments:
     product   {Product}  required — the product to render
-    placement {String}   optional — passed through for slot-specific CSS hooks
+    placement {String}   optional — unused here; kept for callsite stability
 {%- endcomment -%}
-
-{%- liquid
-  assign on_sale = false
-  if product.compare_at_price > product.price
-    assign on_sale = true
-  endif
-  assign sold_out = true
-  if product.available
-    assign sold_out = false
-  endif
-  assign img = product.featured_media.preview_image
--%}
-
-{%- comment -%} Reusable image markup. {%- endcomment -%}
-{%- capture card_image -%}
-  <div class="vrec-card__image">
-    {%- if img -%}
-      <picture>
-        <source type="image/webp"
-                srcset="{% if img.width > 360 %}{{ img | image_url: width: 360, format: 'webp' }} 360w,{% endif %}
-                        {% if img.width > 540 %}{{ img | image_url: width: 540, format: 'webp' }} 540w,{% endif %}
-                        {% if img.width > 720 %}{{ img | image_url: width: 720, format: 'webp' }} 720w{% endif %}"
-                sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 42vw">
-        <img
-          src="{{ img | image_url: width: 540 }}"
-          srcset="{% if img.width > 360 %}{{ img | image_url: width: 360 }} 360w,{% endif %}
-                  {% if img.width > 540 %}{{ img | image_url: width: 540 }} 540w,{% endif %}
-                  {% if img.width > 720 %}{{ img | image_url: width: 720 }} 720w{% endif %}"
-          sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 42vw"
-          width="{{ img.width }}"
-          height="{{ img.height }}"
-          loading="lazy"
-          alt="{{ img.alt | default: product.title | strip_html | escape }}">
-      </picture>
-    {%- else -%}
-      <div class="vrec-card__image-placeholder" aria-hidden="true"></div>
-    {%- endif -%}
-    {%- if sold_out -%}
-      <span class="vrec-card__badge vrec-card__badge--sold">{{ 'products.product.sold_out' | t }}</span>
-    {%- elsif on_sale -%}
-      <span class="vrec-card__badge vrec-card__badge--sale">{{ 'products.product.sale' | t }}</span>
-    {%- endif -%}
-  </div>
-{%- endcapture -%}
-
-{%- comment -%}
-  Unified vertical card for ALL placements — June 10 web-team review (deck
-  S13/S14/S16): the inline always-visible ADD TO CART (cart/drawer variant)
-  becomes the shared hover-reveal Quick Buy overlay (always visible on touch),
-  and the PDP/home default card gains the same overlay, matching the native
-  product-grid cards.
-
-  Outer element is a <div> (not <a>) because the Quick Buy <button> can't nest
-  inside an <a>; image + title each carry their own links to the PDP. The
-  Quick Buy is a formless AJAX button (data-vrec-add → /cart/add.js, see
-  assets/hairmnl-common.js §10) so it stays legal inside the cart page form
-  (sections/cart.liquid) and the cart drawer form (a7av.10 / 2i8b.50 / .51).
-  .vrec-card__media is the position:relative anchor for the overlay
-  (css-overrides.liquid §quick-buy).
-{%- endcomment -%}
-<div class="vrec-card vrec-card--with-cta{% if sold_out %} vrec-card--sold-out{% endif %}"
+<div class="vrec-card vrec-card--standard{% unless product.available %} vrec-card--sold-out{% endunless %}"
      data-vertex-product-id="{{ product.id }}"
      role="listitem">
-  <div class="vrec-card__media">
-    <a class="vrec-card__image-link" href="{{ product.url }}" aria-label="{{ product.title | strip_html | escape }}">
-      {{ card_image }}
-    </a>
-    {%- comment -%} J10 S13/S14/S16: hover Quick Buy (self-handles sold-out). {%- endcomment -%}
-    {% render 'quick-buy-button', product: product %}
-  </div>
-  <div class="vrec-card__info">
-    {%- comment -%} bd 2i8b.53 (V1): vendor removed to match the native product card. {%- endcomment -%}
-    <p class="vrec-card__title">
-      <a href="{{ product.url }}" class="vrec-card__title-link">{{ product.title | strip_html }}</a>
-    </p>
-    {%- comment -%} bd 2i8b.53 (V1): match the native product card's rating — use the Judge.me
-        preview badge (same source the Best Sellers cards use) instead of the reviews.rating
-        metafield, which is empty on these products (so no stars rendered). {%- endcomment -%}
-    <div class="vrec-card__rating vrec-card__rating--jdgm">
-      {%- render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product -%}
-    </div>
-    <p class="vrec-card__price{% if on_sale %} vrec-card__price--sale{% endif %}">
-      <span class="vrec-card__price-current">{{ product.price | money }}</span>
-      {%- if on_sale -%}
-        <span class="vrec-card__price-compare">{{ product.compare_at_price | money }}</span>
-      {%- endif -%}
-    </p>
-  </div>
+  {% render 'product-grid-item', product: product %}
 </div>
