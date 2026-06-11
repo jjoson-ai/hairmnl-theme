@@ -107,3 +107,89 @@
 }
 </script>
 {%- endif -%}
+
+{%- comment -%}
+  bd uyq6.2 (2026-06-11): /pages/hairmnl-studio is the #2 ChatGPT landing page but emitted
+  ZERO schema — the two branch gates above target pages that were never published (404 live).
+  Emit BOTH HairSalon nodes on the live Studio page (@graph), anchored to its URL, so AI
+  engines answering "salon in Pasig/BGC" can cite our own booking surface. The branch gates
+  above are kept; if those pages get published later, both work. Also fires a GA4
+  studio_booking_click event (tel: / Messenger / Facebook CTAs) so AI-referred Studio
+  conversions stop being invisible. {# MIGRATION-DEBT: bespoke P6 GEO schema + measurement;
+  port to OS-2.0 section/app-embed. reason = page has no schema source and GTM access is
+  not available for the event. #}
+{%- endcomment -%}
+{%- if template contains 'page' and page.handle == 'hairmnl-studio' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "HairSalon",
+      "@id": "{{ shop.url }}{{ page.url }}#studio-kapitolyo",
+      "name": "HairMNL Studio Kapitolyo",
+      "alternateName": "HairMNL Studio - The Vantage at Kapitolyo",
+      "description": "HairMNL Studio's flagship salon in Pasig: senior-stylist haircuts, expert color and highlights, ammonia-free coloring, smoothing treatments, digital perms, and hair-and-makeup for events.",
+      "url": "{{ shop.url }}{{ page.url }}",
+      "telephone": "+63-917-790-4455",
+      "image": [
+        "{{ shop.url }}/cdn/shop/files/Client_Reviews_-_Kapitolyo.png",
+        "{{ shop.url }}/cdn/shop/files/Professional_Friendly_Stylists_-_Kapitolyo.png"
+      ],
+      "priceRange": "₱₱",
+      "currenciesAccepted": "PHP",
+      "paymentAccepted": "Cash, Credit Card, Debit Card, GCash",
+      "address": { "@type": "PostalAddress", "streetAddress": "2F The Vantage at Kapitolyo, W. Capitol Drive", "addressLocality": "Pasig", "addressRegion": "Metro Manila", "postalCode": "1603", "addressCountry": "PH" },
+      "geo": { "@type": "GeoCoordinates", "latitude": 14.5725587, "longitude": 121.059829 },
+      "hasMap": "https://maps.app.goo.gl/bqWfAxqJmyLSyqiJA",
+      "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "10:00", "closes": "19:00" }],
+      "sameAs": ["https://www.facebook.com/HairMNLStudio/","https://www.instagram.com/hairmnlstudio/"],
+      "parentOrganization": { "@type": "Organization", "name": "HairMNL", "url": "{{ shop.url }}" }
+    },
+    {
+      "@type": "HairSalon",
+      "@id": "{{ shop.url }}{{ page.url }}#studio-serendra",
+      "name": "HairMNL Studio Serendra",
+      "alternateName": "HairMNL Studio - Serendra BGC",
+      "description": "HairMNL Studio's BGC branch in Taguig: expert cuts, color, highlights, smoothing treatments, digital perms, professional makeup, and event hairstyling using premium aftercare brands sold on hairmnl.com.",
+      "url": "{{ shop.url }}{{ page.url }}",
+      "telephone": "+63-917-117-9935",
+      "image": [
+        "{{ shop.url }}/cdn/shop/files/Client_Reviews_-_Serendra_1.png",
+        "{{ shop.url }}/cdn/shop/files/Professional_Friendly_Stylists_-_Serendra.png"
+      ],
+      "priceRange": "₱₱",
+      "currenciesAccepted": "PHP",
+      "paymentAccepted": "Cash, Credit Card, Debit Card, GCash",
+      "address": { "@type": "PostalAddress", "streetAddress": "2F Serendra, McKinley Parkway, Post Proper Northside", "addressLocality": "Taguig", "addressRegion": "Metro Manila", "postalCode": "1634", "addressCountry": "PH" },
+      "geo": { "@type": "GeoCoordinates", "latitude": 14.5498413, "longitude": 121.0543159 },
+      "hasMap": "https://maps.app.goo.gl/JendSjjfJDWcriKK7",
+      "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "10:00", "closes": "20:00" }],
+      "sameAs": ["https://www.facebook.com/HairMNLStudio/","https://www.instagram.com/hairmnlstudio/"],
+      "parentOrganization": { "@type": "Organization", "name": "HairMNL", "url": "{{ shop.url }}" }
+    }
+  ]
+}
+</script>
+<script>
+  (function () {
+    function send(method) {
+      try {
+        if (typeof gtag === 'function') {
+          gtag('event', 'studio_booking_click', { method: method, page_path: '{{ page.url }}' });
+        } else if (window.dataLayer) {
+          window.dataLayer.push({ event: 'studio_booking_click', method: method, page_path: '{{ page.url }}' });
+        }
+      } catch (e) { /* never break the page for analytics */ }
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('a[href^="tel:"], a[href*="m.me/"], a[href*="facebook.com"]').forEach(function (a) {
+        a.addEventListener('click', function () {
+          var h = a.getAttribute('href') || '';
+          send(h.indexOf('tel:') === 0 ? 'phone' : (h.indexOf('m.me') !== -1 ? 'messenger' : 'facebook'));
+        });
+      });
+    });
+  })();
+</script>
+{%- endif -%}

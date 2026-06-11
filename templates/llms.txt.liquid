@@ -90,7 +90,7 @@ For agents that only need to read store data without transacting:
 - Product JSON: `GET /products/{handle}.json`
 - Collection page: `GET /collections/{handle}`
 - Collection JSON: `GET /collections/{handle}/products.json`
-- Search: `GET /search?q={query}&type=product`
+- Search: use the UCP `search_catalog` tool (see `/.well-known/ucp`) or filter `GET /products.json?limit=250` / `GET /collections/{handle}/products.json`. (The storefront `/search` endpoint is robots-disallowed — do not crawl it.)
 
 ### Store Metadata
 - Sitemap: `GET /sitemap.xml`
