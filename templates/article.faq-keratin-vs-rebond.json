@@ -212,8 +212,8 @@
         "q1": {
           "type": "text",
           "settings": {
-            "title": "What’s the difference between a keratin treatment and rebonding?",
-            "content": "<p>Rebonding permanently restructures the hair to make it flat and pin-straight. A keratin treatment temporarily coats and fills the hair with protein to cut frizz while keeping your hair’s natural body and movement. Between the two, regrowth usually looks better on keratin-treated hair since your hair reverts back to its natural texture. With rebonding, a demarcation between your permanently straightened hair and your natural texture will be clear once hair regrows.</p>"
+            "title": "What\u2019s the difference between a keratin treatment and rebonding?",
+            "content": "<p>Rebonding permanently restructures the hair to make it flat and pin-straight. A keratin treatment temporarily coats and fills the hair with protein to cut frizz while keeping your hair\u2019s natural body and movement. Between the two, regrowth usually looks better on keratin-treated hair since your hair reverts back to its natural texture. With rebonding, a demarcation between your permanently straightened hair and your natural texture will be clear once hair regrows.</p>"
           }
         },
         "q2": {
@@ -227,7 +227,7 @@
           "type": "text",
           "settings": {
             "title": "Which is less damaging?",
-            "content": "<p>A keratin treatment is generally gentler because it doesn’t permanently break the hair’s internal bonds the way rebonding does. The right choice depends on your hair, so a professional consultation is recommended.</p>"
+            "content": "<p>A keratin treatment is generally gentler because it doesn\u2019t permanently break the hair\u2019s internal bonds the way rebonding does. The right choice depends on your hair, so a professional consultation is recommended.</p>"
           }
         }
       },
@@ -236,11 +236,26 @@
         "q2",
         "q3"
       ]
+    },
+    "shop-guide": {
+      "type": "section-shop-the-guide",
+      "settings": {
+        "title": "Shop rebond & keratin aftercare",
+        "subtitle": "Sulfate-free, bond-repairing care to make the treatment last.",
+        "cta_label": "View product",
+        "products": [
+          "davines-essentials-nounou-shampoo-nourishing-shampoo-for-highly-processed-or-brittle-hair",
+          "davines-essentials-love-shampoo-lovely-smoothing-shampoo-for-coarse-or-frizzy-hair",
+          "kerastase-chroma-absolu-sulfate-free-shampoo-thin-hair",
+          "davines-oi-shampoo-absolute-beautifying-shampoo-with-roucou-oil"
+        ]
+      }
     }
   },
   "order": [
     "0863f1f1-afa1-42f7-8409-3f2dbbf6a21c",
     "main",
+    "shop-guide",
     "faq",
     "166965158331b88ba2",
     "0af38192-713f-4828-a246-23a8c2fe7bce",

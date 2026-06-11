@@ -82,3 +82,29 @@ out = os.path.join(os.path.dirname(__file__), '..', 'dashboard', 'data', 'ai-ref
 with open(out, 'w', newline='') as f:
     w = csv.writer(f); w.writerow(['yearMonth','source','engine','sessions','purchases','revenue']); w.writerows(rows)
 print(f"\nsaved: {os.path.normpath(out)}")
+
+
+# bd uyq6.3 (2026-06-11): also emit a self-contained dashboard page from the same data.
+_tr = ""
+for ym in months:
+    _sub = [r for r in rows if r[0] == ym]
+    _s, _p, _rv = sum(r[3] for r in _sub), sum(r[4] for r in _sub), sum(r[5] for r in _sub)
+    _share = 100 * _p / tot.get(ym, 0) if tot.get(ym) else 0
+    _tr += (f"<tr><td style='padding:5px 8px'>{ym[:4]}-{ym[4:]}</td><td style='text-align:right'>{_s}</td>"
+            f"<td style='text-align:right'>{_p}</td><td style='text-align:right'>{_rv:,.0f}</td>"
+            f"<td style='text-align:right'>{_share:.2f}%</td></tr>")
+_el = "".join(f"<li><b>{e}</b>: {v[1]} purchases / {v[0]:,} sessions / PHP {v[2]:,.0f}</li>"
+              for e, v in sorted(eng.items(), key=lambda x: -x[1][1]))
+_html = f"""<!doctype html><meta charset='utf-8'><title>HairMNL - AI referrals</title>
+<body style='font-family:-apple-system,Segoe UI,sans-serif;max-width:760px;margin:32px auto;color:#1c1b18'>
+<h1 style='font-size:22px'>AI-assistant referrals &rarr; HairMNL <span style='color:#6b6b6b;font-weight:400'>(floor estimate)</span></h1>
+<p style='color:#6b6b6b'>Window: {START} &rarr; {END}. GA4 via scripts/ai-referrals.py (bd v33f, monthly). Many AI clicks arrive referrer-less and land in Direct &mdash; treat as a floor. 12-mo: {ts:,} sessions / {tp} purchases / PHP {trv:,.0f}.</p>
+<table style='border-collapse:collapse;width:100%'>
+<tr style='background:#6a7a5c;color:#faf6f0;text-align:left'><th style='padding:6px 8px'>month</th><th style='text-align:right'>sessions</th><th style='text-align:right'>purchases</th><th style='text-align:right'>revenue (PHP)</th><th style='text-align:right'>% all purch</th></tr>
+{_tr}</table>
+<h2 style='font-size:16px;margin-top:20px'>By engine (12 mo)</h2><ul>{_el}</ul>
+<p style='color:#6b6b6b;font-size:12px'>Generated {END} &middot; csv: data/ai-referrals-monthly.csv &middot; bd uyq6.3</p></body>"""
+_outh = os.path.join(os.path.dirname(__file__), "..", "dashboard", "ai-referrals.html")
+with open(_outh, "w") as _f:
+    _f.write(_html)
+print("saved:", os.path.normpath(_outh))

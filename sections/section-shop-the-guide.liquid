@@ -1,0 +1,82 @@
+{%- comment -%}
+  section-shop-the-guide.liquid — "Shop the products in this guide" cards for AI-cited articles.
+  bd uyq6.4 (2026-06-11): Perplexity/Copilot/ChatGPT cite our blog guides and land readers there,
+  but 85-100% of those sessions never reach a PDP (GA4 funnel 11/1/1/0 vs ChatGPT's 684/92/126/15).
+  This section gives cited guides a product path: simple link cards (image/title/price/CTA),
+  ZERO JS, fixed image dimensions (CLS-safe), native lazy (below-fold).
+  DRAFT-ONLY until the one-shot web-team approval (visible front-end component).
+  {# MIGRATION-DEBT: bespoke P6 section; OS-2.0 port = straight copy (stock section pattern).
+     reason = articles need a product-card module; no stock equivalent in Pipeline 6. #}
+{%- endcomment -%}
+
+{%- if section.settings.products.count > 0 -%}
+<div class="shop-guide wrapper" id="shop-the-guide">
+  <h2 class="shop-guide__title">{{ section.settings.title | escape }}</h2>
+  {%- if section.settings.subtitle != blank -%}
+    <p class="shop-guide__subtitle">{{ section.settings.subtitle | escape }}</p>
+  {%- endif -%}
+  <div class="shop-guide__grid">
+    {%- for product in section.settings.products -%}
+      <a class="shop-guide__card" href="{{ product.url }}">
+        {%- assign img = product.featured_media.preview_image -%}
+        {%- if img -%}
+          <img class="shop-guide__img"
+               src="{{ img | image_url: width: 360 }}"
+               srcset="{{ img | image_url: width: 360 }} 360w, {{ img | image_url: width: 540 }} 540w"
+               sizes="(min-width: 768px) 200px, 42vw"
+               alt="{{ product.title | escape }}"
+               loading="lazy" width="360" height="{{ 360 | divided_by: img.aspect_ratio | ceil }}">
+        {%- endif -%}
+        <span class="shop-guide__name">{{ product.title | escape }}</span>
+        <span class="shop-guide__price">
+          {%- if product.compare_at_price > product.price -%}
+            <s>{{ product.compare_at_price | money }}</s>&nbsp;
+          {%- endif -%}
+          {{ product.price | money }}
+          {%- unless product.available %} · Sold out{% endunless -%}
+        </span>
+        <span class="shop-guide__cta">{{ section.settings.cta_label | default: 'View product' | escape }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+<style>
+  .shop-guide { margin: 32px auto; }
+  .shop-guide__title { font-size: 22px; margin: 0 0 4px; }
+  .shop-guide__subtitle { margin: 0 0 16px; color: var(--text-light, #6b6b6b); font-size: 14px; }
+  .shop-guide__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+  .shop-guide__card { display: flex; flex-direction: column; text-decoration: none; color: inherit; border: 1px solid var(--border, #e5e0d8); border-radius: 8px; padding: 12px; background: var(--bg, #fff); }
+  .shop-guide__img { width: 100%; height: auto; border-radius: 4px; margin-bottom: 8px; }
+  .shop-guide__name { font-size: 13px; line-height: 1.35; margin-bottom: 6px; }
+  .shop-guide__price { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .shop-guide__cta { margin-top: auto; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--primary, #1c1b18); text-decoration: underline; }
+</style>
+
+{%- comment -%} ItemList schema for the visible cards (content-matching; agents/feeds parse it) {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": {{ section.settings.title | json }},
+  "numberOfItems": {{ section.settings.products.count }},
+  "itemListElement": [
+    {%- for product in section.settings.products -%}
+    { "@type": "ListItem", "position": {{ forloop.index }}, "item": { "@type": "Product", "name": {{ product.title | json }}, "url": "{{ shop.url }}{{ product.url }}" } }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Shop the guide",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Shop the products in this guide" },
+    { "type": "text", "id": "subtitle", "label": "Subheading" },
+    { "type": "text", "id": "cta_label", "label": "Card CTA label", "default": "View product" },
+    { "type": "product_list", "id": "products", "label": "Products", "limit": 8 }
+  ],
+  "presets": [{ "name": "Shop the guide" }]
+}
+{% endschema %}
