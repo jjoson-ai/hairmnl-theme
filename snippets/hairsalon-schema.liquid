@@ -114,10 +114,13 @@
   Emit BOTH HairSalon nodes on the live Studio page (@graph), anchored to its URL, so AI
   engines answering "salon in Pasig/BGC" can cite our own booking surface. The branch gates
   above are kept; if those pages get published later, both work. Also fires a GA4
-  studio_booking_click event (tel: / Messenger / Facebook CTAs) so AI-referred Studio
-  conversions stop being invisible. {# MIGRATION-DEBT: bespoke P6 GEO schema + measurement;
-  port to OS-2.0 section/app-embed. reason = page has no schema source and GTM access is
-  not available for the event. #}
+  studio_booking_click event (tel / Messenger / Facebook / Timely-booking CTAs) so AI-referred
+  Studio conversions stop being invisible. bd uyq6.2 (2026-06-16): each node now carries a
+  ReserveAction pointing AI engines at the live Timely booking funnel (the studio.hairmnl.com
+  vanity is an http-only Namecheap forward -> https://bookings.gettimely.com/hairmnlstudio/book,
+  so schema targets the stable https canonical directly). {# MIGRATION-DEBT: bespoke P6 GEO
+  schema + measurement; port to OS-2.0 section/app-embed. reason = page has no schema source and
+  GTM access is not available for the event. #}
 {%- endcomment -%}
 {%- if template contains 'page' and page.handle == 'hairmnl-studio' -%}
 <script type="application/ld+json">
@@ -144,7 +147,13 @@
       "hasMap": "https://maps.app.goo.gl/bqWfAxqJmyLSyqiJA",
       "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "10:00", "closes": "19:00" }],
       "sameAs": ["https://www.facebook.com/HairMNLStudio/","https://www.instagram.com/hairmnlstudio/"],
-      "parentOrganization": { "@type": "Organization", "name": "HairMNL", "url": "{{ shop.url }}" }
+      "parentOrganization": { "@type": "Organization", "name": "HairMNL", "url": "{{ shop.url }}" },
+      "potentialAction": {
+        "@type": "ReserveAction",
+        "name": "Book an appointment at HairMNL Studio Kapitolyo",
+        "target": { "@type": "EntryPoint", "urlTemplate": "https://bookings.gettimely.com/hairmnlstudio/book", "inLanguage": "en-PH", "actionPlatform": ["https://schema.org/DesktopWebPlatform","https://schema.org/MobileWebPlatform"] },
+        "result": { "@type": "Reservation", "name": "HairMNL Studio appointment" }
+      }
     },
     {
       "@type": "HairSalon",
@@ -166,7 +175,13 @@
       "hasMap": "https://maps.app.goo.gl/JendSjjfJDWcriKK7",
       "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "10:00", "closes": "20:00" }],
       "sameAs": ["https://www.facebook.com/HairMNLStudio/","https://www.instagram.com/hairmnlstudio/"],
-      "parentOrganization": { "@type": "Organization", "name": "HairMNL", "url": "{{ shop.url }}" }
+      "parentOrganization": { "@type": "Organization", "name": "HairMNL", "url": "{{ shop.url }}" },
+      "potentialAction": {
+        "@type": "ReserveAction",
+        "name": "Book an appointment at HairMNL Studio Serendra",
+        "target": { "@type": "EntryPoint", "urlTemplate": "https://bookings.gettimely.com/hairmnlstudio/book", "inLanguage": "en-PH", "actionPlatform": ["https://schema.org/DesktopWebPlatform","https://schema.org/MobileWebPlatform"] },
+        "result": { "@type": "Reservation", "name": "HairMNL Studio appointment" }
+      }
     }
   ]
 }
@@ -183,10 +198,14 @@
       } catch (e) { /* never break the page for analytics */ }
     }
     document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('a[href^="tel:"], a[href*="m.me/"], a[href*="facebook.com"]').forEach(function (a) {
+      document.querySelectorAll('a[href^="tel:"], a[href*="m.me/"], a[href*="facebook.com"], a[href*="gettimely.com"], a[href*="studio.hairmnl.com"]').forEach(function (a) {
         a.addEventListener('click', function () {
           var h = a.getAttribute('href') || '';
-          send(h.indexOf('tel:') === 0 ? 'phone' : (h.indexOf('m.me') !== -1 ? 'messenger' : 'facebook'));
+          var method = 'facebook';
+          if (h.indexOf('tel:') === 0) { method = 'phone'; }
+          else if (h.indexOf('gettimely.com') !== -1 || h.indexOf('studio.hairmnl.com') !== -1) { method = 'timely_booking'; }
+          else if (h.indexOf('m.me') !== -1) { method = 'messenger'; }
+          send(method);
         });
       });
     });
