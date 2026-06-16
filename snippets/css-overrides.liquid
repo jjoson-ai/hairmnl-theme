@@ -1081,10 +1081,15 @@
     .vrec-product-sticky-bar__form { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; margin: 0 !important; }
     /* bd a7av.11: in-bar variant <select> + qty (STKY parity, mobile-compact). */
     .vrec-product-sticky-bar__variant {
-      flex: 0 1 auto; max-width: 110px; min-height: 44px;
+      /* J17 S12 (bd a7av.28): min-width:0 lets the <select> shrink BELOW a long
+         variant name ("FREE Absolut Rep") instead of pushing the flex:1 CTA past
+         the screen edge and clipping it. Tighter max-width too. The select yields
+         space first; ADD TO CART always renders in full. */
+      flex: 0 1 auto; min-width: 0; max-width: 92px; min-height: 44px;
       margin: 0 6px 0 0; padding: 0 6px;
       border: 1px solid var(--border, #e5e5e5); background: #ffffff;
       font-family: inherit; font-size: 12px;
+      text-overflow: ellipsis;
     }
     .vrec-product-sticky-bar__qty {
       flex: 0 0 42px; width: 42px; min-height: 44px;
@@ -1125,18 +1130,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;  /* J16 S13: bumped 34→40 (team: "too small") */
-    height: 40px;
+    width: 34px;  /* J17 S9/S10/S11: reverted 40→34 (1st version; J16 enlargement overshot) */
+    height: 34px;
     border-radius: 50%;
     border: 0;
     background: rgba(228, 229, 230, 0.5); /* #E4E5E6 @ 50% — web-team J11 spec (kept) */
-    color: #111111; /* J16 S13: solid near-black glyph (team: "faded") */
+    color: #1a1a1a;
     cursor: pointer;
     padding: 0;
   }
   .quick-buy__icon svg {
-    width: 24px;  /* J16 S13: bumped 19→24 */
-    height: 24px;
+    width: 19px;  /* J17: reverted 24→19 (1st version) */
+    height: 19px;
     display: block;
   }
   .quick-buy__icon:hover { background: rgba(228, 229, 230, 0.85); }
@@ -1303,8 +1308,11 @@
   }
   /* Drawer cards are narrow — slightly smaller Quick Buy icon (J11 S13). */
   .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy { top: 6px; right: 6px; }
-  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__icon { width: 36px; height: 36px; } /* J16 S13: 30→36 */
-  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__icon svg { width: 21px; height: 21px; } /* J16 S13: 16→21 */
+  /* J17 S11 (bd a7av.27): drawer — keep the original 30px circle ("was okay") but
+     give the vector a touch more size (19px, up from the original 16 that read
+     "too small") so it fills the circle better and stays centred. */
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__icon { width: 30px; height: 30px; }
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__icon svg { width: 19px; height: 19px; }
   /* S18 (bd 2i8b.65): the cart-page slider was left with its nav hidden by a stale
      "stacked vertical" rule in the generated CSS — it has been a horizontal rail
      since the B4 fix. Re-enable the see-more arrows on desktop (mobile keeps the
@@ -1368,6 +1376,27 @@
     .cart__template .cart__items__title {
       padding-right: 44px;
     }
+  }
+
+  /* ── J17 S13/S14 (bd 2i8b.79): Vertex rec-card alignment ──
+     The store's product cards use the "scale" image mode, so each card's image
+     box height is computed PER-PRODUCT (inline padding-top on .lazy-image + an
+     inline auto-height style on the media wrapper). In the rec rails that makes
+     every card a different height, so titles/prices don't line up (web-team
+     S13/S14). Force a UNIFORM image box on rec-rail cards so all images are the
+     same height (→ titles start on the same line) and reserve title height so the
+     prices align. Scoped to .vrec-card--standard so the main collection grid is
+     untouched. !important is required to beat the per-product inline styles. */
+  .hairmnl-theme .vrec-card--standard .product-grid-item__media {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .hairmnl-theme .vrec-card--standard .lazy-image {
+    padding-top: 125% !important; /* fixed 4:5 box — suits the portrait bottle shots */
+  }
+  .hairmnl-theme .vrec-card--standard .product__grid__title {
+    min-height: 2.4em; /* reserve ~2 lines so prices line up across cards (titles still show in full) */
   }
 
   /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.

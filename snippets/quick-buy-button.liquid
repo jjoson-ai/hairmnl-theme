@@ -20,15 +20,18 @@
 {%- if product != blank -%}
   {%- assign qb_variant = product.first_available_variant -%}
   {%- if qb_variant and product.available -%}
-    {%- comment -%} J16 S13 (bd a7av.26): bolder + larger cart-plus glyph — the team
-        found the previous thin/small vector "faded". stroke-width 2, solid currentColor;
-        the #E4E5E6@50% circle bg stays per the J11 spec (sizing bumped in css-overrides). {%- endcomment -%}
+    {%- comment -%} J17 S9/S10/S11 (bd a7av.27): reverted to the J11 "1st version" glyph
+        the team asked to follow — the J16 bolder/larger redesign overshot (too big on
+        home/cart, off-centre in the drawer). This glyph is balanced within the 24×24
+        viewBox (centres in the circle). Sizing reverted in css-overrides; the drawer
+        keeps its original circle but a slightly larger vector. {%- endcomment -%}
     {%- capture qb_icon_svg -%}
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-        <path d="M1.6 3.4h2.3l1.95 9.5a1.5 1.5 0 0 0 1.47 1.2h6.7a1.5 1.5 0 0 0 1.46-1.15L17 6.7H5.1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="8.2" cy="19.1" r="1.55" fill="currentColor"/>
-        <circle cx="14.7" cy="19.1" r="1.55" fill="currentColor"/>
-        <path d="M19.6 2.9v5.2M17 5.5h5.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M4.5 5.5h12l-1.2 7h-9L4.5 5.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M4.5 5.5 3.7 3H1.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="7.4" cy="16.6" r="1.2" fill="currentColor"/>
+        <circle cx="14.2" cy="16.6" r="1.2" fill="currentColor"/>
+        <path d="M19 14v6M16 17h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
       </svg>
     {%- endcapture -%}
     <div class="quick-buy" data-quick-buy>
