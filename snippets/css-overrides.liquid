@@ -1068,8 +1068,10 @@
     .vrec-product-sticky-bar__price { flex: 0 0 auto; font-size: 14px; font-weight: 600; margin: 0 8px 0 0; }
     .vrec-product-sticky-bar__cta {
       /* J11 S10 (bd a7av.21): extend ADD TO CART to fill the remaining bar width
-         (price + qty stay compact on the left, per the team's mock). */
-      flex: 1 1 auto; min-height: 44px; padding: 0 16px;
+         (price + qty stay compact on the left, per the team's mock).
+         J16 S12 (bd a7av.25): + right margin so the button clears the screen edge
+         (the bar's 12px padding alone read as touching). */
+      flex: 1 1 auto; min-height: 44px; padding: 0 16px; margin-right: 8px;
       background: var(--vrec-cta-bg, #1a1a1a); color: var(--vrec-cta-fg, #ffffff);
       font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
       border: 0; cursor: pointer; font-family: inherit;
@@ -1123,18 +1125,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
+    width: 40px;  /* J16 S13: bumped 34→40 (team: "too small") */
+    height: 40px;
     border-radius: 50%;
     border: 0;
-    background: rgba(228, 229, 230, 0.5); /* #E4E5E6 @ 50% — web-team spec */
-    color: #1a1a1a;
+    background: rgba(228, 229, 230, 0.5); /* #E4E5E6 @ 50% — web-team J11 spec (kept) */
+    color: #111111; /* J16 S13: solid near-black glyph (team: "faded") */
     cursor: pointer;
     padding: 0;
   }
   .quick-buy__icon svg {
-    width: 19px;
-    height: 19px;
+    width: 24px;  /* J16 S13: bumped 19→24 */
+    height: 24px;
     display: block;
   }
   .quick-buy__icon:hover { background: rgba(228, 229, 230, 0.85); }
@@ -1301,8 +1303,8 @@
   }
   /* Drawer cards are narrow — slightly smaller Quick Buy icon (J11 S13). */
   .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy { top: 6px; right: 6px; }
-  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__icon { width: 30px; height: 30px; }
-  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__icon svg { width: 16px; height: 16px; }
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__icon { width: 36px; height: 36px; } /* J16 S13: 30→36 */
+  .hairmnl-theme .vrec-slot--cart_drawer_below_items .quick-buy__icon svg { width: 21px; height: 21px; } /* J16 S13: 16→21 */
   /* S18 (bd 2i8b.65): the cart-page slider was left with its nav hidden by a stale
      "stacked vertical" rule in the generated CSS — it has been a horizontal rail
      since the B4 fix. Re-enable the see-more arrows on desktop (mobile keeps the

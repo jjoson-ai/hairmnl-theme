@@ -92,6 +92,21 @@
     .banner-slider .swiper {
       width: 100%;
     }
+    /* J16 S14 (bd 2i8b.78): belt-and-suspenders for the recurring "still gapped"
+       report. The wrapper rule above already makes the banner full-bleed (proven:
+       applying it jumps the wrapper to viewport width, and the image fills its
+       slide). This block additionally forces the slide's content chain to fill,
+       eliminating any mobile-only flex-shrink edge case where the centred <a>/
+       <picture> could sit narrower than the slide. Strictly improves toward
+       full-bleed — never regresses (an already-filling image stays filling). */
+    .banner-slider .swiper-slide {
+      display: block;
+    }
+    .banner-slider .swiper-slide > a,
+    .banner-slider .swiper-slide picture {
+      display: block;
+      width: 100%;
+    }
   }
 </style>
 <div class="wrapper banner-slider-wrapper">

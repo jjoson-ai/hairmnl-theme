@@ -147,6 +147,19 @@
   in the hairmnl-vertex precompute so metafields stop carrying these SKUs.
 {%- endcomment -%}
 {%- assign vx_excluded_handles = shop.metafields.vertex.excluded_handles.value -%}
+{%- comment -%}
+  J16 S10/S11 (bd 2i8b.77, web-team 2026-06-16): never recommend a product that's
+  already in the cart (FBT recs are anchored on the first cart item, so the item
+  itself + its cart-mates surfaced in the drawer/cart rails). Build a delimited
+  set of cart line-item handles; the loop skips any rec whose handle is in it.
+  Render-time only — the precompute engine can't know the live cart.
+{%- endcomment -%}
+{%- assign vx_cart_handles = '' -%}
+{%- if cart and cart.item_count > 0 -%}
+  {%- for li in cart.items -%}
+    {%- assign vx_cart_handles = vx_cart_handles | append: '|' | append: li.product.handle | append: '|' -%}
+  {%- endfor -%}
+{%- endif -%}
 {%- capture rail_html -%}
   {%- for entry in rec_products limit: 8 -%}
     {%- assign rec_p = nil -%}
@@ -171,6 +184,11 @@
           shop.metafields.vertex.excluded_handles every 15 min. This consult was
           designed-in but never wired into the theme widget until J11 S22. {%- endcomment -%}
       {%- if vx_excluded_handles and vx_excluded_handles contains rec_p.handle -%}{%- assign rec_skip = true -%}{%- endif -%}
+      {%- comment -%} J16 S10/S11: skip products already in the cart. {%- endcomment -%}
+      {%- if vx_cart_handles != '' -%}
+        {%- capture rec_cart_needle -%}|{{ rec_p.handle }}|{%- endcapture -%}
+        {%- if vx_cart_handles contains rec_cart_needle -%}{%- assign rec_skip = true -%}{%- endif -%}
+      {%- endif -%}
       {%- unless rec_skip -%}
         {%- render 'vertex-rec-card', product: rec_p, placement: placement -%}
       {%- endunless -%}
