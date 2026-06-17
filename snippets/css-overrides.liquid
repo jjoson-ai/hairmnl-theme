@@ -1143,6 +1143,8 @@
     width: 19px;  /* J17: reverted 24→19 (1st version) */
     height: 19px;
     display: block;
+    pointer-events: none; /* J18 (a7av.30): taps land on the button, never an inner <path>,
+                             so closest('[data-qb-toggle]') is bulletproof on touch devices */
   }
   .quick-buy__icon:hover { background: rgba(228, 229, 230, 0.85); }
   .quick-buy__icon[aria-busy="true"] { opacity: 0.5; cursor: progress; }
