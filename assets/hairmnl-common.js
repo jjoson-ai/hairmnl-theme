@@ -568,6 +568,8 @@
     var btn = e.target.closest && e.target.closest('[data-vrec-add]');
     if (!btn) return;
     e.preventDefault();
+    e.stopPropagation(); // J18b (a7av.30): capture-phase + stop so STKY's leftover ScriptTag
+                         // click handler on a parent can't navigate to the PDP first (preview only)
     if (btn.getAttribute('aria-busy') === 'true') return;
     var variantId = btn.getAttribute('data-variant-id');
     if (!variantId) return;
@@ -625,7 +627,7 @@
           if (t) t.setAttribute('aria-expanded', 'false');
         }
       });
-  });
+  }, true);
 
   // ============================================================
   // bd a7av.15 — fly-to-cart animation (STKY "add to sticky cart" parity)
@@ -733,6 +735,8 @@
     if (toggle) {
       e.preventDefault();
       e.stopPropagation();
+      e.stopImmediatePropagation(); // J18b (a7av.30): capture-phase + stop so STKY's leftover
+                                    // ScriptTag handler can't navigate to the PDP first (preview)
       var pop = toggle.parentElement.querySelector('[data-qb-popover]');
       if (!pop) return;
       var opening = !pop.classList.contains('is-open');
@@ -746,7 +750,7 @@
     if (!(e.target.closest && e.target.closest('[data-qb-popover]'))) {
       closeQbPopovers(null);
     }
-  });
+  }, true);
 
   // ============================================================
   // DEFERRED — vendor-library-dependent scripts (Phase 5 visual QA)
