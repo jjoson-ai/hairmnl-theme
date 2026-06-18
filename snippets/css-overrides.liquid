@@ -1148,6 +1148,28 @@
   }
   .quick-buy__icon:hover { background: rgba(228, 229, 230, 0.85); }
   .quick-buy__icon[aria-busy="true"] { opacity: 0.5; cursor: progress; }
+
+  /* ── J19 (bd 2i8b.80): PDP button recolour — web-team deck 2026-06-17 — P8 ONLY ──
+     {# MIGRATION-DEBT: bespoke P6 colour override; port at OS-2.0 migration as a
+        button colour-scheme setting. Difficulty: EASY (colour rules only). A theme
+        SETTING no-op was not enough — --color-primary / --text-dark are GLOBAL, but
+        the team wants ONLY the PDP add-to-cart + the selected variant pill recoloured,
+        not every primary button / dark chip sitewide. #}
+     The .btn fill is background-color:var(--btn-bg) (base) / var(--btn-bg-hover)
+     (hover); .btn--primary sets --btn-bg to the terracotta --color-primary. */
+  .btn--add-to-cart {
+    --btn-bg: #322E34 !important;        /* dark, per deck */
+    --btn-bg-hover: #45414a !important;  /* a hair lighter so hover still reads */
+    background-color: #322E34 !important;
+  }
+  .btn--add-to-cart:hover { background-color: #45414a !important; }
+  /* Selected variant pill → #CAD1D3 (was the dark var(--text-dark) chip). White text
+     would be unreadable on light grey, so the selected label gets dark text. */
+  .radio__fieldset .radio__button input:checked ~ label {
+    background-color: #CAD1D3 !important;
+    border-color: #CAD1D3 !important;
+    color: var(--text-dark) !important;
+  }
   .quick-buy__popover {
     display: none;
     position: absolute;
