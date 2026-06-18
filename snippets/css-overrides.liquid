@@ -1065,27 +1065,32 @@
       font-size: 11px; color: var(--text-light, #6b6b6b); margin: 0;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    .vrec-product-sticky-bar__price { flex: 0 0 auto; font-size: 14px; font-weight: 600; margin: 0 8px 0 0; }
+    /* J20 (a7av.31): hidden on mobile — the CTA already shows the price ("ADD TO
+       CART • ₱X"), so the standalone price was redundant AND ate row width, helping
+       the bar wrap to two rows on Android Chrome. Hiding it keeps the bar one line. */
+    .vrec-product-sticky-bar__price { display: none; }
     .vrec-product-sticky-bar__cta {
       /* J11 S10 (bd a7av.21): extend ADD TO CART to fill the remaining bar width
          (price + qty stay compact on the left, per the team's mock).
          J16 S12 (bd a7av.25): + right margin so the button clears the screen edge
          (the bar's 12px padding alone read as touching). */
-      flex: 1 1 auto; min-height: 44px; padding: 0 16px; margin-right: 8px;
+      flex: 1 1 auto; min-width: 0; min-height: 44px; padding: 0 16px; margin-right: 8px;
       background: var(--vrec-cta-bg, #1a1a1a); color: var(--vrec-cta-fg, #ffffff);
       font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
       border: 0; cursor: pointer; font-family: inherit;
     }
     .vrec-product-sticky-bar__cta:disabled { opacity: 0.5; cursor: not-allowed; }
     /* bd a7av.11: form = flex row so variant + qty + CTA don't stack vertically. */
-    .vrec-product-sticky-bar__form { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; margin: 0 !important; }
+    /* J20 (a7av.31): form FILLS the bar on one no-wrap row (was flex:0 0 auto, which
+       let the form size to content and wrap the CTA below the select on Android Chrome). */
+    .vrec-product-sticky-bar__form { display: flex; flex-wrap: nowrap; align-items: center; gap: 6px; flex: 1 1 auto; min-width: 0; margin: 0 !important; }
     /* bd a7av.11: in-bar variant <select> + qty (STKY parity, mobile-compact). */
     .vrec-product-sticky-bar__variant {
-      /* J17 S12 (bd a7av.28): min-width:0 lets the <select> shrink BELOW a long
-         variant name ("FREE Absolut Rep") instead of pushing the flex:1 CTA past
-         the screen edge and clipping it. Tighter max-width too. The select yields
-         space first; ADD TO CART always renders in full. */
-      flex: 0 1 auto; min-width: 0; max-width: 92px; min-height: 44px;
+      /* J20 (a7av.31): PIN the select to a fixed 84px (was max-width:92px, which
+         Android Chrome ignored — the select ballooned full-width and wrapped the CTA
+         to a 2nd row). Fixed flex-basis + width + !important forces a narrow select
+         cross-browser; long variant names ellipsis (full list shows on tap). */
+      flex: 0 0 84px !important; width: 84px !important; max-width: 84px !important; min-width: 0; min-height: 44px;
       margin: 0 6px 0 0; padding: 0 6px;
       border: 1px solid var(--border, #e5e5e5); background: #ffffff;
       font-family: inherit; font-size: 12px;
