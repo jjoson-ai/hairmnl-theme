@@ -259,6 +259,12 @@
 {%- endcomment -%}
 {%- comment -%} bsbi 2026-06-02: DEFERRED off live P6. The sticky ATC bar (a7av / 2i8b.37) is stream:b / P8-cutover-scoped; this shared-file render leaked to live via the za7u.6 push and errored ("Could not find asset" — the snippet + its hairmnl-common.js/css-overrides deps are not on the live theme). Gated off so it can't fire or re-leak on P6; the P8 cutover flips show_sticky_purchase_bar to true to ship it (render preserved here). {%- endcomment -%}
 {%- assign show_sticky_purchase_bar = false -%}
+{%- comment -%} a7av 2026-06-19: enable ONLY on the P8 themes (their deps — the snippet +
+   hairmnl-common.js + css-overrides — exist there) so the bar can be tested now and ships
+   automatically at cutover (the P8 draft keeps id 141168312419 when published). Stays FALSE
+   on live P6 (131664707683) and anywhere else, so it can never re-leak / "Could not find
+   asset" on a theme without the deps. theme.id is the safe gate. {%- endcomment -%}
+{%- if theme.id == 141168312419 or theme.id == 141655801955 -%}{%- assign show_sticky_purchase_bar = true -%}{%- endif -%}
 {%- if show_sticky_purchase_bar -%}{% render 'product-sticky-bar', product: product %}{%- endif -%}
 
 <script data-product-json type="application/json">
