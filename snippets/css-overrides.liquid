@@ -1129,9 +1129,20 @@
     position: absolute;
     top: 8px;
     right: 8px;
-    z-index: 3;
+    /* J21 (a7av.30): was z-index:3, which lost to .product-grid-item__slide
+       ([data-grid-slide], position:absolute inset:0 z-index:5) — that invisible
+       full-card overlay lives INSIDE the product <a> (not a stacking context), so
+       its z-index:5 resolved against this z-index:3 and painted OVER the icon. Real
+       finger taps therefore hit the slide → its ancestor <a href=product.url> → PDP
+       (synthetic clicks bypass hit-testing, which is why they worked). Lift above the
+       slide so the icon's 34px footprint wins the tap; the slide still covers the rest
+       of the card, so tapping elsewhere on the image still opens the PDP. kt0-OK:
+       z-index only, no transform/filter/contain. */
+    z-index: 7;
   }
   .quick-buy__icon {
+    position: relative; /* J21: participate in stacking so z-index applies */
+    z-index: 7;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1187,7 +1198,7 @@
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
     border-radius: 4px;
     padding: 4px;
-    z-index: 6;
+    z-index: 8; /* J21: above the lifted .quick-buy (7) + the slide (5) so the popover never sits under the icon */
     text-align: left;
   }
   .quick-buy__popover.is-open { display: block; }
