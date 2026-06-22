@@ -623,7 +623,9 @@
         var pop = btn.closest && btn.closest('[data-qb-popover]');
         if (pop) {
           pop.classList.remove('is-open');
-          var t = pop.parentElement && pop.parentElement.querySelector('[data-qb-toggle]');
+          var qbHome = pop._qbHome || pop.parentElement; // J24: capture before reset restores it
+          resetQbPopover(pop);                           // clear fixed styles + move back to its card
+          var t = qbHome && qbHome.querySelector('[data-qb-toggle]');
           if (t) t.setAttribute('aria-expanded', 'false');
         }
       });
@@ -722,11 +724,51 @@
   // by §10 above. One popover open at a time; click-outside or a successful
   // add closes it.
   // ============================================================
+  // J24 (a7av.33): the popover was clipped wherever a card lives in an
+  // overflow scroll-rail (cart-drawer "Complete Your Cart", PDP/home sliders) —
+  // the leftmost card lost its variant names off the left edge (even short ones
+  // like "100ml"). Product cards/grids establish containing blocks (transform/
+  // contain), so a plain position:fixed lands relative to the CARD, not the
+  // viewport (measured ~1050px offset). Fix: on open, PORTAL the popover to
+  // <body> (escapes every transformed/contained/overflow ancestor) and
+  // position:fixed it at the toggle's viewport rect, clamped on-screen + flipped
+  // up if no room below. On close, restore it to its card so re-opens + the
+  // delegated [data-vrec-add] add-handler keep working.
+  function positionQbPopover(toggle, pop) {
+    if (pop.parentNode !== document.body) {
+      if (!pop._qbHome) pop._qbHome = pop.parentNode;   // remember its card
+      document.body.appendChild(pop);
+    }
+    pop.style.position = 'fixed';
+    pop.style.zIndex = '2147483000';                    // above the cart drawer / chat / sliders
+    var r = toggle.getBoundingClientRect();
+    var pw = pop.offsetWidth, ph = pop.offsetHeight;
+    var vw = document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
+    var gap = 6, m = 8;
+    var left = r.right - pw;                             // right-align to the toggle, like CSS right:0
+    if (left < m) left = m;
+    if (left + pw > vw - m) left = Math.max(m, vw - m - pw);
+    var top = r.bottom + gap;                            // open below…
+    if (top + ph > vh - m) {                             // …flip above if it would run off-screen
+      var up = r.top - ph - gap;
+      top = (up >= m) ? up : Math.max(m, vh - m - ph);
+    }
+    pop.style.left = Math.round(left) + 'px';
+    pop.style.top = Math.round(top) + 'px';
+    pop.style.right = 'auto';
+    pop.style.bottom = 'auto';
+  }
+  function resetQbPopover(pop) {
+    pop.style.position = pop.style.left = pop.style.top = pop.style.right = pop.style.bottom = pop.style.zIndex = '';
+    if (pop._qbHome && pop.parentNode === document.body) pop._qbHome.appendChild(pop);
+  }
   function closeQbPopovers(except) {
     document.querySelectorAll('[data-qb-popover].is-open').forEach(function (p) {
       if (p === except) return;
       p.classList.remove('is-open');
-      var t = p.parentElement && p.parentElement.querySelector('[data-qb-toggle]');
+      var home = p._qbHome || p.parentElement;           // capture before reset moves it back
+      resetQbPopover(p);
+      var t = home && home.querySelector('[data-qb-toggle]');
       if (t) t.setAttribute('aria-expanded', 'false');
     });
   }
@@ -743,6 +785,7 @@
       closeQbPopovers(opening ? pop : null);
       pop.classList.toggle('is-open', opening);
       toggle.setAttribute('aria-expanded', opening ? 'true' : 'false');
+      if (opening) positionQbPopover(toggle, pop); else resetQbPopover(pop);
       return;
     }
     // Click anywhere outside an open popover closes it (clicks on a variant row
@@ -751,6 +794,14 @@
       closeQbPopovers(null);
     }
   }, true);
+  // J24: a fixed-positioned popover doesn't track its toggle on scroll, so close
+  // any open popover on scroll/resize (incl. horizontal rail scroll) — it never
+  // floats detached. Capture phase so rail scroll containers are caught too.
+  ['scroll', 'resize'].forEach(function (ev) {
+    window.addEventListener(ev, function () {
+      if (document.querySelector('[data-qb-popover].is-open')) closeQbPopovers(null);
+    }, true);
+  });
 
   // ============================================================
   // DEFERRED — vendor-library-dependent scripts (Phase 5 visual QA)
