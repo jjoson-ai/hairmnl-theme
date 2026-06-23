@@ -741,16 +741,24 @@
     }
     pop.style.position = 'fixed';
     pop.style.zIndex = '2147483000';                    // above the cart drawer / chat / sliders
-    var r = toggle.getBoundingClientRect();
-    var pw = pop.offsetWidth, ph = pop.offsetHeight;
+    // J25 (a7av.32): box width = the product card's width (STKY parity) so long
+    // variant names wrap to fit instead of being cut; align the box to the card.
+    var card = toggle.closest('.product-grid-item, .vrec-card, [class*="grid-item"], [class*="card"]');
+    var tr = toggle.getBoundingClientRect();
+    var cr = card ? card.getBoundingClientRect() : tr;
     var vw = document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
     var gap = 6, m = 8;
-    var left = r.right - pw;                             // right-align to the toggle, like CSS right:0
+    var w = Math.min(cr.width, vw - 2 * m);
+    pop.style.minWidth = '0';
+    pop.style.maxWidth = 'none';
+    pop.style.width = Math.round(w) + 'px';              // set width BEFORE measuring height (names wrap)
+    var ph = pop.offsetHeight;
+    var left = cr.left;                                  // align to the card's left edge
+    if (left + w > vw - m) left = vw - m - w;
     if (left < m) left = m;
-    if (left + pw > vw - m) left = Math.max(m, vw - m - pw);
-    var top = r.bottom + gap;                            // open below…
+    var top = tr.bottom + gap;                           // open below the icon…
     if (top + ph > vh - m) {                             // …flip above if it would run off-screen
-      var up = r.top - ph - gap;
+      var up = tr.top - ph - gap;
       top = (up >= m) ? up : Math.max(m, vh - m - ph);
     }
     pop.style.left = Math.round(left) + 'px';
@@ -759,7 +767,7 @@
     pop.style.bottom = 'auto';
   }
   function resetQbPopover(pop) {
-    pop.style.position = pop.style.left = pop.style.top = pop.style.right = pop.style.bottom = pop.style.zIndex = '';
+    pop.style.position = pop.style.left = pop.style.top = pop.style.right = pop.style.bottom = pop.style.zIndex = pop.style.width = pop.style.minWidth = pop.style.maxWidth = '';
     if (pop._qbHome && pop.parentNode === document.body) pop._qbHome.appendChild(pop);
   }
   function closeQbPopovers(except) {
@@ -794,13 +802,30 @@
       closeQbPopovers(null);
     }
   }, true);
-  // J24: a fixed-positioned popover doesn't track its toggle on scroll, so close
-  // any open popover on scroll/resize (incl. horizontal rail scroll) — it never
-  // floats detached. Capture phase so rail scroll containers are caught too.
+  // J25 (a7av.33): a fixed popover doesn't track its toggle on scroll/resize.
+  // REPOSITION it to follow the toggle rather than auto-closing — J24 closed on
+  // every scroll/resize, but on iOS the address bar shows/hides on the slightest
+  // scroll (and on tap) and fires `resize`, which closed the picker "on its own".
+  // Only close if the toggle has actually scrolled out of the viewport. rAF-throttled.
+  var qbReflowPending = false;
+  function reflowOpenQbPopover() {
+    if (qbReflowPending) return;
+    qbReflowPending = true;
+    requestAnimationFrame(function () {
+      qbReflowPending = false;
+      var pop = document.querySelector('[data-qb-popover].is-open');
+      if (!pop) return;
+      var home = pop._qbHome || pop.parentElement;
+      var toggle = home && home.querySelector('[data-qb-toggle]');
+      if (!toggle) return;
+      var r = toggle.getBoundingClientRect();
+      var vh = document.documentElement.clientHeight;
+      if (r.bottom <= 0 || r.top >= vh) { closeQbPopovers(null); return; } // toggle scrolled away
+      positionQbPopover(toggle, pop);
+    });
+  }
   ['scroll', 'resize'].forEach(function (ev) {
-    window.addEventListener(ev, function () {
-      if (document.querySelector('[data-qb-popover].is-open')) closeQbPopovers(null);
-    }, true);
+    window.addEventListener(ev, reflowOpenQbPopover, true);
   });
 
   // ============================================================
