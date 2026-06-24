@@ -1504,6 +1504,26 @@
      The J25 2-line clamp is removed — the uniform image box already makes titles
      START at the same height, and clamping was cutting the full names the team wants
      (matches their "correct alignment" reference, Best-for-Travel slider). */
+  /* J26 (web-team June 24, "2nd card is lower than the 1st"): on the rails the
+     .product__badge computes position:STATIC — its parent is STKY's
+     `.lazy-image.satcb_quick_buy_container`, where the badge drops into the flow and
+     renders INLINE below the image, pushing the card's title DOWN so cards misalign.
+     Force the grid's top-left absolute overlay back on the rails (the .lazy-image box
+     is the position:relative anchor) so the badge sits OVER the image, OUT of flow →
+     titles start at the same height across cards. !important beats the STKY reset;
+     harmless after cutover (STKY uninstalled → the theme's own
+     .product__badge{position:absolute} takes over). */
+  .hairmnl-theme .vrec-card--standard .product__badge,
+  .hairmnl-theme .recent__content .product__badge,
+  .hairmnl-theme .swiper.collection .product__badge,
+  .hairmnl-theme .collection-grid__box .product__badge,
+  .hairmnl-theme .flickity-grid[data-slider] .product__badge,
+  .hairmnl-theme .homepage-collection .js-grid .product__badge {
+    position: absolute !important;
+    top: 8px !important;
+    left: 8px !important;
+    z-index: 400;
+  }
 
   /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.
      Prevents 0px→Npx growth CLS (17 events/7d on homepage desktop).
