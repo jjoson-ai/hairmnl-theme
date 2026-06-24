@@ -1209,7 +1209,7 @@
   .quick-buy__option {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start; /* J26: top-align so the price sits beside the title's FIRST line when the title wraps */
     gap: 10px;
     width: 100%;
     padding: 9px 10px;
@@ -1220,6 +1220,10 @@
     font-size: 12px;
     color: #1a1a1a;
     text-align: left;
+    /* J26 (a7av.32): theme.css ~6299 sets `button { white-space:nowrap }`; this
+       <button> would pass nowrap down to its spans (white-space INHERITS), defeating
+       the J25 wrap. Reset it here so children can wrap. The price re-asserts nowrap. */
+    white-space: normal;
   }
   .quick-buy__option:hover { background: #f5f5f5; }
   .quick-buy__option[disabled] { opacity: 0.45; cursor: not-allowed; }
@@ -1233,6 +1237,7 @@
     flex: 1 1 auto;
     min-width: 0;
     line-height: 1.3;
+    white-space: normal; /* J26: authoritative reset of the inherited button nowrap so the title actually wraps */
     word-break: break-word;
     overflow-wrap: anywhere;
   }
@@ -1445,41 +1450,60 @@
      same height (→ titles start on the same line) and reserve title height so the
      prices align. Scoped to .vrec-card--standard so the main collection grid is
      untouched. !important is required to beat the per-product inline styles. */
-  .hairmnl-theme .vrec-card--standard .product-grid-item__media {
+  /* ── Rec-rail / product-SLIDER card normalization (J25 + J26 web-team) ──
+     product_grid_image='scale' sizes each product-grid-item's image box PER-PRODUCT
+     (inline width + padding-top) and the <img> has inline object-fit:cover
+     (product-grid-item.liquid:194/230). Fine on the collection grid (stable ratios)
+     but in PRODUCT SLIDERS every card ends up a different size + cropped/zoomed.
+     Force a UNIFORM 4:5 white box + object-fit:contain so every product shows in full
+     at one size; titles run FULL length (J26: team wants the whole title; "aligned"
+     = titles START on the same line, which the uniform box delivers).
+     SURFACES (J26 broadened past the original Vertex + Recently-Viewed scope):
+       .vrec-card--standard          Vertex rails (PDP Complete-Your-Routine, cart drawer, cart page)
+       .recent__content              Recently Viewed (Flickity; theme.js injects product-grid-item)
+       .swiper.collection            home section-collection-slider Swiper (>6) + branded collection sliders
+       .collection-grid__box         home section-collection-slider <=6 grid fallback
+       .flickity-grid[data-slider]   home tabbed sliders + PDP Related products
+       .homepage-collection .js-grid  home section-collection featured grids (Best Sellers, For Thinning Hair, …)
+     CRITICAL: .homepage-collection .js-grid is PARENT-scoped — bare .js-grid is ALSO
+     the collection PAGE grid (sections/collection.liquid), which the team says is fine. */
+  .hairmnl-theme .vrec-card--standard .product-grid-item__media,
+  .hairmnl-theme .recent__content .product-grid-item__media,
+  .hairmnl-theme .swiper.collection .product-grid-item__media,
+  .hairmnl-theme .collection-grid__box .product-grid-item__media,
+  .hairmnl-theme .flickity-grid[data-slider] .product-grid-item__media,
+  .hairmnl-theme .homepage-collection .js-grid .product-grid-item__media {
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
   }
   .hairmnl-theme .vrec-card--standard .lazy-image,
-  .hairmnl-theme .recent__content .lazy-image {
-    padding-top: 125% !important; /* fixed 4:5 box — suits the portrait bottle shots */
-    background: #fff !important;   /* J25: white box so object-fit:contain letterbox blends with white product shots */
+  .hairmnl-theme .recent__content .lazy-image,
+  .hairmnl-theme .swiper.collection .lazy-image,
+  .hairmnl-theme .collection-grid__box .lazy-image,
+  .hairmnl-theme .flickity-grid[data-slider] .lazy-image,
+  .hairmnl-theme .homepage-collection .js-grid .lazy-image {
+    padding-top: 125% !important; /* uniform 4:5 box */
+    background: #fff !important;   /* white box so the object-fit:contain letterbox blends */
   }
-  /* J25 (web-team June 23): the box height is uniform (above), but the product
-     <img> uses inline object-fit:cover (product-grid-item.liquid:194/230), which
-     CROPS/zooms each product to fill — non-4:5 products (Kérastase Genesis vs
-     Davines) looked "zoomed and cropped" + different sizes across the rail. contain
-     shows every product in full at a consistent scale, no crop. !important beats
-     the inline object-fit:cover. Scoped to the rec rails: Vertex (.vrec-card--standard)
-     + Recently Viewed (.recent__content, JS-injects product-grid-item cards per
-     theme.js); the main collection grid is untouched. */
   .hairmnl-theme .vrec-card--standard .lazy-image img,
   .hairmnl-theme .vrec-card--standard .collection__image__top,
   .hairmnl-theme .recent__content .lazy-image img,
-  .hairmnl-theme .recent__content .collection__image__top {
-    object-fit: contain !important;
+  .hairmnl-theme .recent__content .collection__image__top,
+  .hairmnl-theme .swiper.collection .lazy-image img,
+  .hairmnl-theme .swiper.collection .collection__image__top,
+  .hairmnl-theme .collection-grid__box .lazy-image img,
+  .hairmnl-theme .collection-grid__box .collection__image__top,
+  .hairmnl-theme .flickity-grid[data-slider] .lazy-image img,
+  .hairmnl-theme .flickity-grid[data-slider] .collection__image__top,
+  .hairmnl-theme .homepage-collection .js-grid .lazy-image img,
+  .hairmnl-theme .homepage-collection .js-grid .collection__image__top {
+    object-fit: contain !important; /* full product, no crop/zoom — beats the inline object-fit:cover */
   }
-  /* J25: clamp the rec-card title to 2 lines so titles AND prices line up across
-     cards in the rail (web-team "titles not on the same row"); min-height reserves
-     the 2 lines so single-line titles still align. */
-  .hairmnl-theme .vrec-card--standard .product__grid__title,
-  .hairmnl-theme .recent__content .product__grid__title {
-    min-height: 2.4em;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+  /* J26: FULL titles in the rails (web-team June 24: "should show full title").
+     The J25 2-line clamp is removed — the uniform image box already makes titles
+     START at the same height, and clamping was cutting the full names the team wants
+     (matches their "correct alignment" reference, Best-for-Travel slider). */
 
   /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.
      Prevents 0px→Npx growth CLS (17 events/7d on homepage desktop).

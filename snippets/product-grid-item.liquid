@@ -45,7 +45,7 @@ A grid item for products used in collection grid view
     for tag in product.tags
       if tag contains "_badge_"
         assign custom_badge = true
-        assign custom_badge_content = tag | remove: '_badge_' | replace: '_', ' '
+        assign custom_badge_content = tag | remove_first: '_badge_' | replace: '_', ' ' | strip
         break
       endif
     endfor
