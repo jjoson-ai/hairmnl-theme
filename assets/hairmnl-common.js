@@ -739,10 +739,21 @@
       if (!pop._qbHome) pop._qbHome = pop.parentNode;   // remember its card
       document.body.appendChild(pop);
     }
-    pop.style.position = 'fixed';
-    pop.style.zIndex = '2147483000';                    // above the cart drawer / chat / sliders
-    // J25 (a7av.32): box width = the product card's width (STKY parity) so long
-    // variant names wrap to fit instead of being cut; align the box to the card.
+    // J27 (web-team June 25, deck 29/30/31 + iOS videos): the picker must SCROLL
+    // WITH its card (not "float"), sit BEHIND the sticky header/search/filter and
+    // any signup popup, stay open through scroll, and only close on outside-tap /
+    // page-switch / add. On page-scroll surfaces (home/PDP/collection) use
+    // position:ABSOLUTE in DOCUMENT space (so it scrolls with the page) at z-index
+    // 100 — below header/search (5000-6000), filter (bumped to 200), and popups
+    // (9995-9999), yet above the in-flow cards. Inside the CART DRAWER (a fixed
+    // overlay whose content scrolls internally) keep position:FIXED + reposition on
+    // scroll (the team says it already "works ok" there) above the drawer (20050).
+    var inDrawer = !!toggle.closest('.cart__drawer, .drawer__content, .drawer');
+    pop._qbFixed = inDrawer;
+    pop.style.position = inDrawer ? 'fixed' : 'absolute';
+    pop.style.zIndex = inDrawer ? '20100' : '100';
+    // box width = the product card's width (STKY parity, J25) so long variant names
+    // wrap to fit; align the box to the card's left.
     var card = toggle.closest('.product-grid-item, .vrec-card, [class*="grid-item"], [class*="card"]');
     var tr = toggle.getBoundingClientRect();
     var cr = card ? card.getBoundingClientRect() : tr;
@@ -753,21 +764,32 @@
     pop.style.maxWidth = 'none';
     pop.style.width = Math.round(w) + 'px';              // set width BEFORE measuring height (names wrap)
     var ph = pop.offsetHeight;
-    var left = cr.left;                                  // align to the card's left edge
-    if (left + w > vw - m) left = vw - m - w;
-    if (left < m) left = m;
-    var top = tr.bottom + gap;                           // open below the icon…
-    if (top + ph > vh - m) {                             // …flip above if it would run off-screen
+    var vLeft = cr.left;                                 // viewport-space, card-left aligned
+    if (vLeft + w > vw - m) vLeft = vw - m - w;
+    if (vLeft < m) vLeft = m;
+    var vTop = tr.bottom + gap;                          // open below the icon…
+    if (vTop + ph > vh - m) {                            // …flip above if no room below
       var up = tr.top - ph - gap;
-      top = (up >= m) ? up : Math.max(m, vh - m - ph);
+      vTop = (up >= m) ? up : Math.max(m, vh - m - ph);
     }
-    pop.style.left = Math.round(left) + 'px';
-    pop.style.top = Math.round(top) + 'px';
+    if (inDrawer) {                                      // fixed → viewport coords
+      pop.style.left = Math.round(vLeft) + 'px';
+      pop.style.top = Math.round(vTop) + 'px';
+    } else {                                             // absolute → DOCUMENT coords so it scrolls with the page
+      var sx = window.pageXOffset || document.documentElement.scrollLeft || 0;
+      var sy = window.pageYOffset || document.documentElement.scrollTop || 0;
+      pop.style.left = Math.round(vLeft + sx) + 'px';
+      pop.style.top = Math.round(vTop + sy) + 'px';
+    }
     pop.style.right = 'auto';
     pop.style.bottom = 'auto';
+    pop.style.visibility = '';
+    // remember the rec rail (if any) so horizontal slider scroll HIDES (not closes) it
+    pop._qbRail = toggle.closest('.vrec-slot__rail, .swiper.collection, .flickity-grid[data-slider], [data-slider]');
   }
   function resetQbPopover(pop) {
-    pop.style.position = pop.style.left = pop.style.top = pop.style.right = pop.style.bottom = pop.style.zIndex = pop.style.width = pop.style.minWidth = pop.style.maxWidth = '';
+    pop.style.position = pop.style.left = pop.style.top = pop.style.right = pop.style.bottom = pop.style.zIndex = pop.style.width = pop.style.minWidth = pop.style.maxWidth = pop.style.visibility = '';
+    pop._qbRail = null; pop._qbFixed = false;
     if (pop._qbHome && pop.parentNode === document.body) pop._qbHome.appendChild(pop);
   }
   function closeQbPopovers(except) {
@@ -802,26 +824,33 @@
       closeQbPopovers(null);
     }
   }, true);
-  // J25 (a7av.33): a fixed popover doesn't track its toggle on scroll/resize.
-  // REPOSITION it to follow the toggle rather than auto-closing — J24 closed on
-  // every scroll/resize, but on iOS the address bar shows/hides on the slightest
-  // scroll (and on tap) and fires `resize`, which closed the picker "on its own".
-  // Only close if the toggle has actually scrolled out of the viewport. rAF-throttled.
-  var qbReflowPending = false;
-  function reflowOpenQbPopover() {
+  // J27 (web-team June 25): the popover stays OPEN through scrolling — it closes ONLY
+  // on outside-tap (handler above), page-switch, or add-to-cart. It NEVER closes on
+  // scroll (J24/J25 did, which iOS read as "disappearing"/"floating").
+  //   • page-scroll surfaces: position:absolute in document space already tracks the
+  //     page on vertical scroll — no reposition needed.
+  //   • RESIZE (orientation / iOS address-bar): re-anchor the document coords.
+  //   • CART DRAWER (fixed): reposition to follow the toggle on the drawer's internal scroll.
+  //   • horizontal REC-RAIL scroll: HIDE (keep open) when the toggle leaves the rail's
+  //     visible width; it re-appears when the card scrolls back. rAF-throttled.
+  var qbReflowPending = false, qbWantResize = false;
+  function reflowOpenQbPopover(e) {
+    if (e && e.type === 'resize') qbWantResize = true;
     if (qbReflowPending) return;
     qbReflowPending = true;
     requestAnimationFrame(function () {
       qbReflowPending = false;
+      var isResize = qbWantResize; qbWantResize = false;
       var pop = document.querySelector('[data-qb-popover].is-open');
       if (!pop) return;
       var home = pop._qbHome || pop.parentElement;
       var toggle = home && home.querySelector('[data-qb-toggle]');
       if (!toggle) return;
-      var r = toggle.getBoundingClientRect();
-      var vh = document.documentElement.clientHeight;
-      if (r.bottom <= 0 || r.top >= vh) { closeQbPopovers(null); return; } // toggle scrolled away
-      positionQbPopover(toggle, pop);
+      if (isResize || pop._qbFixed) positionQbPopover(toggle, pop); // re-anchor on resize; follow toggle in the fixed drawer
+      if (pop._qbRail) {                                            // hide (keep open) on horizontal rail scroll-off
+        var tr = toggle.getBoundingClientRect(), rr = pop._qbRail.getBoundingClientRect();
+        pop.style.visibility = (tr.right <= rr.left + 1 || tr.left >= rr.right - 1) ? 'hidden' : '';
+      }
     });
   }
   ['scroll', 'resize'].forEach(function (ev) {

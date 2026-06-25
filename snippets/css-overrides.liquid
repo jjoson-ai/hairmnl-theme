@@ -837,7 +837,9 @@
     .collection__nav {
       position: sticky;
       top: 0; /* refined to header height by assets/hairmnl-collection.js */
-      z-index: 5;
+      z-index: 200; /* J27: above the Quick Buy popover (z-index 100, portaled to body) so the
+                       sticky filter/sort bar covers it on scroll (web-team "behind the filter bar");
+                       still below the header (5000). Was 5. */
       background: var(--background, #ffffff);
     }
   }
