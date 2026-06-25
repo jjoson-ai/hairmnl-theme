@@ -1526,6 +1526,22 @@
     left: 8px !important;
     z-index: 400;
   }
+  /* J27 (web-team June 25, deck 26/27): on the VERTEX AI rails (PDP "Complete Your
+     Routine", cart drawer "Complete Your Cart") the .product__badge loses its grey-
+     pill styling — background, padding and text-transform compute to transparent / 0
+     / none, so it renders as bare lowercase "free gifts" instead of the grey "FREE
+     GIFTS" pill the non-Vertex sliders show. Force the pill look back, scoped to
+     .vrec-card--standard so the already-correct non-Vertex sliders are untouched.
+     Tokens mirror the theme's .product__badge (var ---color-badge etc.). */
+  .hairmnl-theme .vrec-card--standard .product__badge {
+    background: var(---color-badge, #e0e1e0) !important;
+    color: var(---color-badge-text, #322e34) !important;
+    padding: 5px 10px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    line-height: normal !important;
+    width: auto !important;
+  }
 
   /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.
      Prevents 0px→Npx growth CLS (17 events/7d on homepage desktop).
