@@ -1542,6 +1542,31 @@
     line-height: normal !important;
     width: auto !important;
   }
+  /* J28 (root cause of the J27 symptom above): the base .product__badge rule
+     (theme.css:12157) only made it into the HOME/COLLECTION/SEARCH per-template
+     CSS chunks — the ujg6.42 Chrome-Coverage split never saw a badge on the
+     product/cart templates, so theme-product.css + theme-cart.css ship WITHOUT it.
+     Any badge rendered there (PDP "Complete Your Routine" + Recently Viewed +
+     Related products, cart "Complete Your Order") had NO styling at all.
+     Fill the gap by mirroring the base rule here (css-overrides renders inline on
+     EVERY template, after the chunks) — identical declarations are a no-op where
+     the chunk already applies, and give product/cart the missing pill. Vars come
+     from css-variables.liquid (global); fallbacks guard regardless. */
+  .product__badge {
+    font-family: var(---font-stack-accent, inherit);
+    font-weight: var(---font-weight-accent-bold, 600);
+    font-style: var(---font-style-accent, normal);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: calc(12px * var(---font-adjust-accent, 1));
+    position: absolute;
+    left: calc(var(--inner, 16px) / 2);
+    top: calc(var(--inner, 16px) / 2);
+    padding: 5px 10px;
+    background: var(---color-badge, #e0e1e0);
+    color: var(---color-badge-text, #322e34);
+    z-index: 400;
+  }
 
   /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.
      Prevents 0px→Npx growth CLS (17 events/7d on homepage desktop).
