@@ -21,13 +21,9 @@
     <head>
     <meta charset="utf-8">
     <style>{%- render 'critical-css' -%}</style>
-    {%- comment -%}
-      Deferred 2026-04-27 — was render-blocking 150 ms per Lighthouse PSI.
-      bss-hide-variant.css is BSS-app CSS; only needed once cart/PDP UI hydrates.
-      media=print swap loads at low priority, then promotes to all on load.
-    {%- endcomment -%}
-    <link rel="stylesheet" href="{{ 'bss-hide-variant.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="{{ 'bss-hide-variant.css' | asset_url }}"></noscript>
+    {%- comment -%} bss-hide-variant.css links REMOVED (bd ujg6.57, phase4 audit):
+       the asset was deleted with the BSS B2B uninstall (2026-06-10); the links 404'd
+       sitewide on every pageview from repo state. {%- endcomment -%}
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="{{ settings.color_secondary }}">
@@ -150,7 +146,6 @@
         - sdk-static.loyaltylion.net (LoyaltyLion SDK, cart+PDP, ~500 ms)
         - tracking.aws.judge.me (Judge.me tracking, PDP/collection, 800 ms)
         - analytics.tiktok.com (TikTok Pixel, sitewide, 737 ms ping)
-        - satcb.azureedge.net (SATCB widget, PDP+cart only, ~600 ms)
         - i.ytimg.com (YouTube thumbnail CDN, brand page facade only)
         - searchanise-ef84.kxcdn.com (search page only — dns-prefetch
           sitewide; upgraded to preconnect on /pages/search-results-page
@@ -167,7 +162,6 @@
     <link rel="dns-prefetch" href="https://sdk-static.loyaltylion.net">
     <link rel="dns-prefetch" href="https://tracking.aws.judge.me">
     <link rel="dns-prefetch" href="https://analytics.tiktok.com">
-    <link rel="dns-prefetch" href="https://satcb.azureedge.net">
     <link rel="dns-prefetch" href="https://i.ytimg.com">
     {%- comment -%}
       yblz 2026-05-25: Searchanise CDN — preconnect on the search results page
@@ -436,8 +430,28 @@
           {%- endif -%}
         {%- endif -%}
       {%- endif -%}
-      {%- if _first_body_img_url and _first_body_img_url != '' and _first_body_img_url contains '/' -%}
-        <link rel="preload" as="image" href="{{ _first_body_img_url }}" fetchpriority="high">
+      {%- comment -%} a6kr (phase4 audit / reamaze-defer epic-audit): the URL is
+         string-scraped from article body HTML — attacker-controllable via the
+         rich-text editor or imported content. Scheme-block to https://,
+         protocol-relative, or same-origin paths ONLY (kills javascript:/data:
+         vectors), and | escape the emission (kills attribute breakout). A URL
+         that fails the check just skips the preload — never a broken page. {%- endcomment -%}
+      {%- assign _fbiu_ok = false -%}
+      {%- if _first_body_img_url != '' -%}
+        {%- if _first_body_img_url contains '//' -%}
+          {%- assign _fbiu_p8 = _first_body_img_url | slice: 0, 8 | downcase -%}
+          {%- assign _fbiu_p2 = _first_body_img_url | slice: 0, 2 -%}
+          {%- if _fbiu_p8 == 'https://' or _fbiu_p2 == '//' -%}{%- assign _fbiu_ok = true -%}{%- endif -%}
+        {%- else -%}
+          {%- comment -%} reject "/\host" — browsers normalize the backslash to
+             protocol-relative "//host" (verifier finding); require a clean "/path" {%- endcomment -%}
+          {%- assign _fbiu_p1 = _first_body_img_url | slice: 0, 1 -%}
+          {%- assign _fbiu_c2 = _first_body_img_url | slice: 1, 1 -%}
+          {%- if _fbiu_p1 == '/' and _fbiu_c2 != '\' -%}{%- assign _fbiu_ok = true -%}{%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+      {%- if _fbiu_ok -%}
+        <link rel="preload" as="image" href="{{ _first_body_img_url | escape }}" fetchpriority="high">
       {%- endif -%}
     {%- endif -%}
 
@@ -1861,9 +1875,10 @@
         }
   </style>
 
-  {% if template contains 'product' or template == 'cart' %}
-  <script src="https://satcb.azureedge.net/Scripts/satcb.min.js?shop=creations-gdc.myshopify.com" async="async" defer="defer"></script>
-  {% endif %}
+  {%- comment -%} STKY hardcoded loader REMOVED (bd a7av.7, phase4 audit): the
+     satcb.min.js script tag is gone from the theme side. STKY still renders via
+     its app-level ScriptTag until the app is uninstalled at cutover — this removal
+     just ensures the theme carries no STKY dependency after that. {%- endcomment -%}
 
   {%- comment -%}
     A11y fix 9ct-3 — cc-dismiss label-content-name-mismatch.
