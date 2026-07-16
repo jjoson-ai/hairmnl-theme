@@ -9,7 +9,21 @@
 }
 :root {
   --swiper-theme-color: #007aff;
+  /* lxo9 (2026-05-21): base for secondary heading size — replaces 3x hardcoded 17.14426px */
+  ---font-size-secondary-base: 17.14426px;
 }
+/* i4vy (2026-05-21): h2 wraps footer accordion buttons for heading semantics.
+   Reset all heading styles so the <button> child drives the visual appearance. */
+.footer__block .footer__title__heading {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  display: block;
+}
+
 .swiper {
   margin-left: auto;
   margin-right: auto;
@@ -676,7 +690,7 @@ button.swiper-pagination-bullet {
   font-style: var(---font-style-heading);
   text-transform: var(---font-heading-caps);
   letter-spacing: var(---font-heading-space);
-  font-size: calc(17.14426px * var(---font-adjust-heading));
+  font-size: calc(var(---font-size-secondary-base) * var(---font-adjust-heading));
   color: var(--text);
   text-align: center;
   padding-bottom: var(--inner);
@@ -689,7 +703,7 @@ button.swiper-pagination-bullet {
   font-style: var(---font-style-product-heading);
   text-transform: var(---font-product-heading-caps);
   letter-spacing: var(---font-product-heading-space);
-  font-size: calc(17.14426px * var(---font-adjust-product-heading));
+  /* 2i8b.43 (2026-05-21): removed 17.14px cap; h1 now uses P8 fluid scale (~35-47px). P8-only. */
 }
 .spr-header-title,
 .related_articles_header h5,
@@ -726,7 +740,7 @@ button.swiper-pagination-bullet {
 .pb-text-title-header,
 .cross-post-blogs .article-title {
   font-family: var(---font-stack-body);
-  font-size: calc(17.14426px * var(---font-adjust-body));
+  font-size: calc(var(---font-size-secondary-base) * var(---font-adjust-body));
 }
 .pb-text-excerpt {
   display: none;
@@ -2744,4 +2758,3 @@ body.template-index .jdgm-prev-badge {
 body.template-cart #freegifts-main-page-container {
   min-height: 240px;
 }
-
