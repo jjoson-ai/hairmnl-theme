@@ -1,0 +1,129 @@
+{%- comment -%}
+  Kérastase collection enhancements — rendered into the bespoke P8 collection sections via a
+  single `{% render 'kerastase-collection-extras' %}` line placed just before each section's
+  {% schema %}. Two independent parts:
+
+  1. Submenu accordion (ALWAYS runs): progressively enhances the dated `.collection-nav.kerastase-menu`
+     left rail into a clean, modern collapsible accordion — groups the links under their
+     "Shop by …" headers, removes the colored bars, opens the active group by default. Pure
+     CSS + a tiny idempotent script; scoped to the `kerastase-menu` class so other brands are
+     untouched. Standalone links (Best Sellers / All Products / Home) render as plain links.
+
+  2. Contract-metafield extras (guarded): related-articles internal links + FAQ accordion with
+     FAQPage JSON-LD, from custom.related_articles + custom.faq. No-ops when unpopulated.
+
+  Source of truth: docs/collection-content/theme-scaffold/snippets/ in the seo-platform repo.
+{%- endcomment -%}
+
+{%- comment -%} ── 1. Submenu accordion (modern redesign) ── {%- endcomment -%}
+<style>
+  .collection-filters .collection-nav--heading.kerastase-menu{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#9a8f86;margin:0 0 1.1rem;font-weight:600;}
+  ul.collection-nav.kerastase-menu{list-style:none;padding:0;margin:0;border-top:1px solid #ece4de;}
+  ul.collection-nav.kerastase-menu li{list-style:none;border:0!important;margin:0;padding:0;background:none!important;}
+  ul.collection-nav.kerastase-menu li::before{display:none!important;content:none!important;}
+  .collection-nav.kerastase-menu .k-acc-head{cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:.95rem .1rem;border-bottom:1px solid #ece4de;}
+  .collection-nav.kerastase-menu .k-acc-head a{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:#1a1a1a;text-decoration:none;pointer-events:none;}
+  .collection-nav.kerastase-menu .k-acc-head::after{content:"";width:8px;height:8px;border-right:1.5px solid #b0a59b;border-bottom:1.5px solid #b0a59b;transform:rotate(45deg);transition:transform .25s;margin-right:5px;flex:0 0 auto;}
+  .collection-nav.kerastase-menu .k-acc-head.open::after{transform:rotate(-135deg);}
+  .collection-nav.kerastase-menu .k-acc-body{overflow:hidden;max-height:0;transition:max-height .3s ease;}
+  .collection-nav.kerastase-menu .k-acc-body li a{display:block;padding:.5rem 0 .5rem .9rem;font-size:.9rem;line-height:1.3;color:#5a5a5a;text-decoration:none;border-left:2px solid transparent;transition:color .15s,border-color .15s;}
+  .collection-nav.kerastase-menu .k-acc-body li a:hover{color:#1a1a1a;border-left-color:#1a1a1a;}
+  .collection-nav.kerastase-menu .k-acc-body li a.k-acc-active{color:#1a1a1a;border-left-color:#1a1a1a;font-weight:600;}
+  .collection-nav.kerastase-menu .k-acc-body>li:first-child a{padding-top:.75rem;}
+  .collection-nav.kerastase-menu .k-acc-body>li:last-child a{padding-bottom:1rem;}
+  .collection-nav.kerastase-menu li.k-acc-solo{display:block;border-bottom:1px solid #ece4de;}
+  .collection-nav.kerastase-menu li.k-acc-solo a{display:block;padding:.95rem .1rem;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:#1a1a1a;text-decoration:none;}
+  .collection-nav.kerastase-menu li.k-acc-solo a:hover{color:#7a6f66;}
+  /* Grid de-stagger — uneven card heights (reviews / "From PHP") leave gaps in the
+     float-based 4-up brand grid. Clear each row-start + top-align so rows line up. */
+  .grid.normalised-product-name-height>.grid__item{vertical-align:top;}
+  @media (min-width:1024px){.grid.normalised-product-name-height>.grid__item:nth-child(4n+1){clear:both;}}
+  @media (min-width:768px) and (max-width:1023px){.grid.normalised-product-name-height>.grid__item:nth-child(2n+1){clear:both;}}
+</style>
+<script>
+  (function(){
+    var ul=document.querySelector('ul.collection-nav.kerastase-menu');
+    if(!ul||ul.dataset.kAcc)return; ul.dataset.kAcc='1';
+    [].slice.call(ul.children).forEach(function(c){ if(c.tagName==='DIV'&&/json not allowed/.test(c.textContent||''))c.remove(); });
+    var cur=location.pathname.split('/').filter(Boolean).pop();
+    var heads=[].slice.call(ul.children).filter(function(c){return c.classList&&c.classList.contains('collection-nav--group-head');});
+    heads.forEach(function(head,i){
+      var body=document.createElement('div'); body.className='k-acc-body';
+      var n=head.nextElementSibling;
+      while(n&&!(n.classList&&n.classList.contains('collection-nav--group-head'))){ var nx=n.nextElementSibling; body.appendChild(n); n=nx; }
+      if(!body.children.length){ head.classList.add('k-acc-solo'); return; }
+      head.classList.add('k-acc-head');
+      head.insertAdjacentElement('afterend',body);
+      var act=body.querySelector('a[href$="/'+cur+'"]'); if(act)act.classList.add('k-acc-active');
+      var toggle=function(o){ head.classList.toggle('open',o); body.style.maxHeight=o?body.scrollHeight+'px':'0'; };
+      head.addEventListener('click',function(e){ e.preventDefault(); toggle(!head.classList.contains('open')); });
+      toggle(!!act||i===0);
+    });
+  })();
+</script>
+
+{%- comment -%} ── 2. Contract-metafield extras (guarded) ── {%- endcomment -%}
+{%- assign k_articles = collection.metafields.custom.related_articles.value -%}
+{%- assign k_faq = collection.metafields.custom.faq.value -%}
+{%- assign k_collections = collection.metafields.custom.related_collections.value -%}
+{%- if k_articles != blank or k_faq != blank or k_collections != blank -%}
+<style>
+  .k-extras{max-width:1100px;margin:2.5rem auto;padding:0 1.5rem;}
+  .k-extras h2{font-size:1.5rem;margin:0 0 1rem;}
+  .k-related__list{list-style:none;display:flex;flex-wrap:wrap;gap:.75rem;padding:0;margin:0 0 2.5rem;}
+  .k-related__list a{display:inline-block;padding:.5rem .9rem;border:1px solid #e0d6cf;border-radius:999px;text-decoration:none;font-size:.9rem;}
+  .k-faq__item{border-bottom:1px solid #ece4de;padding:.85rem 0;}
+  .k-faq__item summary{cursor:pointer;font-weight:600;list-style:none;}
+  .k-faq__item summary::-webkit-details-marker{display:none;}
+  .k-faq__item summary::after{content:"+";float:right;}
+  .k-faq__item[open] summary::after{content:"\2013";}
+  .k-faq__a{padding-top:.6rem;color:#4a4a4a;}
+</style>
+
+{%- if k_collections != blank -%}
+<section class="k-extras k-related k-xcoll">
+  <h2>Explore the Kérastase range</h2>
+  <ul role="list" class="k-related__list">
+    {%- for url in k_collections -%}
+      {%- assign cslug = url | split: '/' | last | remove: 'kerastase-' | replace: '-', ' ' -%}
+      <li><a href="{{ url }}">{{ cslug | capitalize | default: 'Kérastase' }}</a></li>
+    {%- endfor -%}
+  </ul>
+</section>
+{%- endif -%}
+
+{%- if k_articles != blank -%}
+<section class="k-extras k-related">
+  <h2>Read more</h2>
+  <ul role="list" class="k-related__list">
+    {%- for url in k_articles -%}
+      {%- assign slug = url | split: '/' | last | replace: '-', ' ' -%}
+      <li><a href="{{ url }}">{{ slug | capitalize }}</a></li>
+    {%- endfor -%}
+  </ul>
+</section>
+{%- endif -%}
+
+{%- if k_faq != blank and k_faq.size > 0 -%}
+<section class="k-extras k-faq">
+  <h2>Frequently asked questions</h2>
+  {%- for item in k_faq -%}
+    <details class="k-faq__item">
+      <summary>{{ item.question }}</summary>
+      <div class="k-faq__a rte">{{ item.answer }}</div>
+    </details>
+  {%- endfor -%}
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for item in k_faq -%}
+    {"@type":"Question","name":{{ item.question | json }},"acceptedAnswer":{"@type":"Answer","text":{{ item.answer | strip_html | json }}}}{%- unless forloop.last %},{% endunless -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+{%- endif -%}

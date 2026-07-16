@@ -159,6 +159,14 @@
   {% endfor %}
 </div>
 
+{%- comment -%}
+  BUY IT WITH upsell DISABLED (bd 2i8b.40, repo-aligned by the 2i8b.86 parity
+  reconciliation): the web team asked for the Shopify upsell to be removed from
+  the cart in favor of the Vertex "Complete Your Cart/Order" rails. The Working
+  Demo theme had this removed out-of-tree (ledgered in 2i8b.38); the repo copy
+  was still active — any push of this file would have silently resurrected it.
+  Block kept for reference:
+
 {%- if pair_products_index != '' -%}
   {%- assign pair_products_index = pair_products_index | split: ',' -%}
   {%- assign cart_products = cart_products | prepend: ',' -%}
@@ -166,7 +174,7 @@
   {%- for index in pair_products_index -%}
     {%- assign arr_index = index | plus: 0 -%}
     {%- assign upsell_product = cart.items[arr_index].product.metafields.theme.upsell.value -%}
-    
+
     {%- if cart_products contains upsell_product.id or upsell_product.available == false -%}
       {%- continue -%}
     {%- endif -%}
@@ -175,4 +183,5 @@
 
     {%- break -%}
   {%- endfor -%}
-{%- endif -%}  
+{%- endif -%}
+{%- endcomment -%}

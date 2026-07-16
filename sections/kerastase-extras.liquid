@@ -1,0 +1,11 @@
+{%- comment -%}
+  Thin section wrapper around the kerastase-collection-extras snippet (FAQ + FAQPage JSON-LD +
+  related-articles). For multi-section OS 2.0 collection templates (e.g. collection.krglossabsolu,
+  collection.krpremiere), add this section to the END of the template's `order` so the metafield
+  content renders at the bottom of the page — rather than editing a shared bespoke section.
+  Guarded by the snippet, so it no-ops on collections without the contract metafields.
+{%- endcomment -%}
+{% render 'kerastase-collection-extras' %}
+{% schema %}
+{ "name": "Kérastase extras", "tag": "section", "settings": [] }
+{% endschema %}

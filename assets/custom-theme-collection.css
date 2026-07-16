@@ -127,3 +127,50 @@
   gap: 4px;
   pointer-events: none;
 }
+
+/* ============================================================
+   Kérastase brand-collection sections — modern layout (consolidated 2026-06-05)
+   CSS Grid + flex replace the theme's float/inline-block grids; content images
+   sized correctly. Supersedes all earlier de-stagger band-aids (v1/v2/v5/v6).
+   ============================================================ */
+.grid.normalised-product-name-height,
+[data-section-type="collection"] .grid--uniform {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  gap: 2.5rem 1.5rem; align-items: start;
+}
+.grid[class~="3x3_grid_tile"],
+.grid[class~="2x3_grid_tile"],
+.grid[class~="3x1_box_right_content"] {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 2rem 1.75rem; align-items: start;
+}
+.grid.normalised-product-name-height > .grid__item,
+[data-section-type="collection"] .grid--uniform > .grid__item,
+.grid[class~="3x3_grid_tile"] > .grid__item,
+.grid[class~="2x3_grid_tile"] > .grid__item,
+.grid[class~="3x1_box_right_content"] > .grid__item {
+  width: auto !important; max-width: none !important; float: none !important;
+  margin: 0 !important; clear: none !important; left: auto !important; right: auto !important;
+}
+.grid.custom-section {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 1.5rem clamp(1.5rem, 4vw, 3.5rem);
+}
+.grid.custom-section > .grid__item {
+  float: none !important; margin: 0 !important; width: auto !important; flex: 1 1 clamp(280px, 42%, 520px);
+}
+.grid.custom-section > .grid__item img,
+.grid[class~="3x3_grid_tile"] .grid__item img,
+.grid[class~="2x3_grid_tile"] .grid__item img,
+.grid[class~="3x1_box_right_content"] .grid__item img { width: 100%; height: auto; display: block; }
+.collection-text--body.grid__item {
+  width: 100% !important; max-width: 820px; left: 0 !important; float: none !important;
+  margin-left: auto !important; margin-right: auto !important; text-align: center;
+}
+.template-collection .page_header__title,
+.template-collection .collection__heading__text { padding-top: 1.5rem; }
+@media (max-width: 768px) {
+  .template-collection .page_header__title,
+  .template-collection .collection__heading__text { padding-top: 1rem; }
+}
+/* === end Kérastase modern layout === */
