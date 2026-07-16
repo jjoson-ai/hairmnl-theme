@@ -1567,6 +1567,42 @@
     color: var(---color-badge-text, #322e34);
     z-index: 400;
   }
+  /* J29 (web-team June 29, "last minor fix on the size"): the badge was a FIXED
+     12px / ~95px pill on every screen — small on the wide-desktop rail cards
+     (Vertex "too small"), and swallowing half a narrow mobile card ("fix badge
+     size"). Scale it WITH the card instead: container-query units against the
+     card's image box (.lazy-image — the badge's own positioning parent), clamped.
+     Desktop rail card ~216px → 14px font (a step up); mobile card ~170px → 11px
+     (a step down); Recently Viewed follows automatically (their reference for
+     "badge size/box margin"). Scoped to the SLIDER surfaces only — the approved
+     collection grid keeps the stock fixed size.
+     container-type:inline-size makes .lazy-image a query container; its only
+     abs-positioned children (product img, badge, STKY leftovers) already anchor
+     to it, and the open Quick Buy popover portals to <body> — no containing-block
+     trap (kt0-reviewed). Old browsers drop the clamp(cqw) declarations and keep
+     the 12px base above. */
+  .hairmnl-theme .vrec-card--standard .lazy-image,
+  .hairmnl-theme .recent__content .lazy-image,
+  .hairmnl-theme .swiper.collection .lazy-image,
+  .hairmnl-theme .collection-grid__box .lazy-image,
+  .hairmnl-theme .flickity-grid[data-slider] .lazy-image,
+  .hairmnl-theme .homepage-collection .js-grid .lazy-image {
+    container-type: inline-size;
+  }
+  .hairmnl-theme .vrec-card--standard .product__badge,
+  .hairmnl-theme .recent__content .product__badge,
+  .hairmnl-theme .swiper.collection .product__badge,
+  .hairmnl-theme .collection-grid__box .product__badge,
+  .hairmnl-theme .flickity-grid[data-slider] .product__badge,
+  .hairmnl-theme .homepage-collection .js-grid .product__badge {
+    font-size: clamp(10px, 6.5cqw, 14px);
+    padding: clamp(4px, 2.2cqw, 6px) clamp(7px, 4.4cqw, 11px);
+    letter-spacing: 0.5px;
+    max-width: calc(100% - 16px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.
      Prevents 0px→Npx growth CLS (17 events/7d on homepage desktop).
