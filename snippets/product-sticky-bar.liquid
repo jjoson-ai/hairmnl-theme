@@ -252,8 +252,11 @@
                     countEl.setAttribute('data-header-cart-count', cart.item_count);
                     countEl.textContent = '(' + cart.item_count + ')';
                   }
-                  document.dispatchEvent(new CustomEvent('theme:cart:popdown', { bubbles: true }));
-                  document.dispatchEvent(new CustomEvent('theme:cart:change', { bubbles: true }));
+                  // J30 (bd 2i8b.83): theme.js listeners read e.detail.cart —
+                  // dispatching without detail threw TypeErrors and left the
+                  // drawer/header stale. Pass the fresh /cart.js response.
+                  document.dispatchEvent(new CustomEvent('theme:cart:popdown', { bubbles: true, detail: { cart: cart } }));
+                  document.dispatchEvent(new CustomEvent('theme:cart:change', { bubbles: true, detail: { cart: cart } }));
                 });
             })
             .catch(function (err) {

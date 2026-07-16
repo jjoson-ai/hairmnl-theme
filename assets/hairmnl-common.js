@@ -299,7 +299,15 @@
       pendingOpen = false;
       var drawer = document.querySelector('[data-drawer="drawer-cart"]');
       if (!drawer) return;
-      drawer.dispatchEvent(new CustomEvent('theme:drawer:open', { bubbles: false }));
+      // J30 (bd 2i8b.83): defer the open one tick. This listener registers BEFORE
+      // theme.js's drawer controller registers its own theme:cart:change listener,
+      // so opening synchronously painted the drawer before the controller had
+      // marked itself stale with the fresh cart (stale first paint on 2nd+ adds).
+      // One tick later every listener on this event has run and loadHTML()
+      // renders the fresh cart.
+      setTimeout(function () {
+        drawer.dispatchEvent(new CustomEvent('theme:drawer:open', { bubbles: false }));
+      }, 0);
     }, false);
   })();
 
@@ -609,8 +617,13 @@
             var fullEl = document.querySelector('[data-header-cart-full]');
             if (fullEl) fullEl.setAttribute('data-header-cart-full', cart.item_count > 1);
             // Hand off to the theme's own drawer flow (open + reload line items).
-            document.dispatchEvent(new CustomEvent('theme:cart:popdown', { bubbles: true }));
-            document.dispatchEvent(new CustomEvent('theme:cart:change', { bubbles: true }));
+            // J30 (bd 2i8b.83): theme.js listeners read e.detail.cart (drawer
+            // controller theme.js:2696, header count/price :1711, free-shipping
+            // :1111) — dispatching without detail threw TypeErrors on every add
+            // and left the drawer empty/stale. The fresh /cart.js response is in
+            // scope; pass it.
+            document.dispatchEvent(new CustomEvent('theme:cart:popdown', { bubbles: true, detail: { cart: cart } }));
+            document.dispatchEvent(new CustomEvent('theme:cart:change', { bubbles: true, detail: { cart: cart } }));
           });
       })
       .catch(function (err) {
