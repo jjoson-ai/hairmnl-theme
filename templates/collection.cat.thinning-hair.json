@@ -270,7 +270,7 @@
       "settings": {
         "title": "Davines NaturalTech Energizing",
         "title_font_size": 17,
-        "collection": "davines-energizing-collection",
+        "collection": "davines-naturaltech-energizing",
         "grid": 6,
         "rows": 1,
         "bg": "palette--light bg--neutral",

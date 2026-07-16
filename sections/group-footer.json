@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer",
@@ -17,7 +26,6 @@
           "settings": {
             "title": "Contact Us",
             "text": "<p><strong>Customer Support:</strong></p><ul><li>Chat: <a href=\"https://m.me/hairmnl\" target=\"_blank\" title=\"HairMNL Messenger Contact Us\">m.me/hairmnl</a>.</li><li>Phone: <a href=\"tel:+639177904455\" target=\"_blank\" title=\"tel:+639177904455\">+63 917 790 4455</a></li><li>Email: hello@hairmnl.com</li></ul><p><strong>Partnerships &amp; Careers</strong></p><ul><li><strong>Collabs:</strong> For partnerships and collaborations, <a href=\"https://www.hairmnl.com\" target=\"_blank\">sign up here</a>.</li><li><strong>Jobs:</strong> Email <a href=\"mailto:hairmnl.recruitment@gmail.com\" target=\"_blank\">hairmnl.recruitment@gmail.com</a> for job applications.</li></ul><p><strong>Address: </strong><br/>HairMNL Studio<br/><a href=\"https://goo.gl/maps/y4ph9TitwDBVGNjR9\" target=\"_blank\" title=\"HairMNL Studio Address\">2F The Vantage at Kapitolyo, <br/>West Capitol Dr. cor. United St.,  Pasig City</a></p>",
-            "text_size": 4,
             "accordion_default": ""
           }
         },
@@ -25,20 +33,13 @@
           "type": "linklist",
           "settings": {
             "linklist": "about-us",
-            "title": "",
             "accordion_default": ""
           }
         },
         "newsletter": {
           "type": "newsletter",
           "settings": {
-            "show_image": false,
-            "newsletter_enable": true,
-            "recaptcha_enabled": false,
-            "kicker": "Newsletter",
-            "heading": "",
             "richtext": "<p><strong>Join the HairMNL Community</strong></p><p>Get expert hair tips and exclusive promos delivered to your inbox.</p>",
-            "text_size": 4,
             "accordion_default": ""
           }
         }
@@ -50,13 +51,8 @@
         "newsletter"
       ],
       "settings": {
-        "menu_position": "left",
-        "logo_max_limit": 120,
-        "width": "wrapper--full",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "footer_social_enable": false,
-        "footer_payment_enable": false
+        "footer_payment_enable": false,
+        "footer_social_enable": false
       }
     },
     "subfooter": {

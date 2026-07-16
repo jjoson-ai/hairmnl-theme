@@ -1,20 +1,23 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "brand-collection",
-      "settings": {
-        "brand_featured_image": "shopify://shop_images/Kerastase_Genesis_SIS_Banner_820x460_6cfcaa71-c2c1-4bef-9ef5-feebd1d69644.jpg",
-        "grid_setting_large": 4,
-        "grid_setting_medium": 2,
-        "grid_setting_small": 2,
-        "collection_custom_nav_list": "kerastase-menu",
-        "collection_sorting": false
-      },
       "blocks": {
         "krgenesis-fw_text_with_media-1": {
           "type": "fw_text_with_media",
+          "disabled": true,
           "settings": {
             "fw_text_with_media_section_title": "Never Be Afraid of Falling",
+            "fw_text_with_media_copy": "",
             "fw_text_with_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Omqzuoa_coE?si=K2nYj_z32qxoZYoo\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen=\"\"></iframe>"
           }
         },
@@ -29,18 +32,22 @@
           "type": "4x3_grid_tile",
           "settings": {
             "product_image_1": "shopify://shop_images/Genesis_Thin_1-Bathe.png",
+            "product_image_1_alt": "",
             "description_1": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Shampoo for Thin Hair 250ml</b><br><br>\nAnti hair-fall fortifying shampoo for weakened hair, prone to falling due to breakage",
             "link_url_1": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-shampoo-for-thin-hair-250ml",
             "link_label_1": "Shop Shampoo",
             "product_image_2": "shopify://shop_images/Genesis_Thin_2-Treat.png",
+            "product_image_2_alt": "",
             "description_2": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Conditioner 200ml</b><br><br>\nAnti Hair-fall Fortifying conditioner for weakened hair, prone to falling due to breakage",
             "link_url_2": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-conditioner-200ml",
             "link_label_2": "Shop Conditioner",
             "product_image_3": "shopify://shop_images/Genesis_3-Activate.png",
+            "product_image_3_alt": "",
             "description_3": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Serum 90ml</b><br><br>\nDaily anti hair-fall fortifying serum for weakened hair, prone to falling from the root",
             "link_url_3": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-serum-90ml",
             "link_label_3": "Shop Serum",
             "product_image_4": "shopify://shop_images/Genesis_4-Texturize.png",
+            "product_image_4_alt": "",
             "description_4": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Blow-dry Fluid 150ml</b><br><br>\nAnti hair-fall fortifying blow-dry fluid for weakened hair, prone to falling due to breakage",
             "link_url_4": "https://www.hairmnl.com/collections/kerastase-genesis/products/kerastase-genesis-anti-hair-fall-fortifying-blow-dry-fluid-150ml",
             "link_label_4": "Shop Primer"
@@ -57,18 +64,22 @@
           "type": "4x3_grid_tile",
           "settings": {
             "product_image_1": "shopify://shop_images/Genesis_Thick_1-Bathe.png",
+            "product_image_1_alt": "",
             "description_1": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Shampoo for Thick Hair 250ml</b><br><br>\nAnti hair-fall fortifying shampoo for weakened hair, prone to falling due to breakage",
             "link_url_1": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-shampoo-for-thick-hair-250ml",
             "link_label_1": "Shop Shampoo",
             "product_image_2": "shopify://shop_images/Genesis_Thick_2-Treat.png",
+            "product_image_2_alt": "",
             "description_2": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Mask 200ml</b><br><br>\nAnti hair-fall intense fortifying masque for weakened hair, prone to falling due to breakage",
             "link_url_2": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-mask-200ml",
             "link_label_2": "Shop Mask",
             "product_image_3": "shopify://shop_images/Genesis_3-Activate.png",
+            "product_image_3_alt": "",
             "description_3": "<b> Kérastase Genesis Anti Hair-Fall Fortifying Serum 90ml</b><br><br>\nDaily anti hair-fall fortifying serum for weakened hair, prone to falling from the root",
             "link_url_3": "https://www.hairmnl.com/products/kerastase-genesis-anti-hair-fall-fortifying-serum-90ml",
             "link_label_3": "Shop Serum",
             "product_image_4": "shopify://shop_images/Genesis_4-Texturize.png",
+            "product_image_4_alt": "",
             "description_4": "<b>Kérastase Genesis Anti Hair-Fall Fortifying Blow-dry Fluid 150ml</b><br><br>\nAnti hair-fall fortifying blow-dry fluid for weakened hair, prone to falling due to breakage",
             "link_url_4": "https://www.hairmnl.com/collections/kerastase-genesis/products/kerastase-genesis-anti-hair-fall-fortifying-blow-dry-fluid-150ml",
             "link_label_4": "Shop Primer"
@@ -77,7 +88,7 @@
         "krgenesis-right_media_with_text-1": {
           "type": "right_media_with_text",
           "settings": {
-            "right_media_with_text_section_title": "<a href>Create Your Anti-Hair Fall Routine with Kérastase Genesis</a>",
+            "right_media_with_text_section_title": "Create Your Anti-Hair Fall Routine with Kérastase Genesis",
             "right_media_with_text_media_html": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/RU7-nmJ-7cI\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"></iframe>",
             "right_media_with_text_copy": "Don't let hair fall woes hold you back. Never be afraid of falling hair with this routine recommended by Del De Leon, our Kérastase Senior Educator."
           }
@@ -85,7 +96,8 @@
         "krgenesis-best_sellers-1": {
           "type": "best_sellers",
           "settings": {
-            "best_sellers_collection_section_title": "<a name=\"bundles\">Shop the Range</a>",
+            "best_sellers_collection_section_title": "Shop the Range",
+            "best_sellers_collection_section_description": "",
             "best_sellers_collection": "kerastase-genesis"
           }
         },
@@ -94,6 +106,7 @@
           "settings": {
             "right_image_with_text_section_title": "<a href=\"https://www.hairmnl.com/blogs/product-spotlight/how-can-you-stop-your-hair-from-falling-out\">How Can You Stop Your Hair from Falling Out?</a>",
             "right_image_with_text_image": "shopify://shop_images/unnamed_31_1800x_466b1362-11b0-413f-bfa6-e35baa6a703e.webp",
+            "right_image_with_text_image_alt": "",
             "right_image_with_text_copy": "Hair fall and breakage are part of everyday life. Here’s everything you need to know about how to help stop hair falling out due to breakage, with a targeted hair care range designed to meet your needs.<br><br>\n<p><a href=\"https://www.hairmnl.com/blogs/product-spotlight/how-can-you-stop-your-hair-from-falling-out\">Learn More</a></p>"
           }
         },
@@ -102,6 +115,7 @@
           "settings": {
             "left_image_with_text_section_title": "Never Be Afraid of Falling",
             "left_image_with_text_image": "shopify://shop_images/Mobile_Banner_-_Genesis_Main_KV_Visual_1800x_fc9dcec0-c3c4-49fd-88bb-2ee5a89bb734.webp",
+            "left_image_with_text_image_alt": "",
             "left_image_with_text_copy": "Genesis is the first range to treat both kinds of hair-fall - at the root and from fiber breakage, for all women, in all lifestyles, with all degree of hair fall. A collection of 7 products supercharged with the most potent complex to answer to hair-fall needs: Aminexil, Edelweiss native cells, Ginger roots.<br><br>\n<p><a href=\"https://www.hairmnl.com/blogs/product-spotlight/never-be-afraid-of-falling-with-the-new-genesis-by-kerastase\">Learn More</a></p>"
           }
         }
@@ -116,7 +130,60 @@
         "krgenesis-best_sellers-1",
         "krgenesis-right_image_with_text-1",
         "krgenesis-left_image_with_text-1"
-      ]
+      ],
+      "settings": {
+        "brand_name": "Brand",
+        "brand_primary_color": "#000000",
+        "brand_accent_color": "#c19a6b",
+        "brand_description_html": "",
+        "brand_page_header_title": "",
+        "brand_page_header_subtitle": "",
+        "brand_featured_image": "shopify://shop_images/Kerastase_Genesis_SIS_Banner_820x460_6cfcaa71-c2c1-4bef-9ef5-feebd1d69644.jpg",
+        "brand_featured_image_link": "",
+        "brand_featured_text": "Sample introduction text to the brand",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "initial_grid_count": 12,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_standard_nav": false,
+        "collection_type_nav": false,
+        "collection_vendor_nav": false,
+        "collection_tag_nav": false,
+        "featured_collection_section_description": "",
+        "featured_collection_1": "",
+        "featured_collection_1_subtitle": "",
+        "featured_collection_2": "",
+        "featured_collection_2_subtitle": "",
+        "featured_collection_3": "",
+        "featured_collection_3_subtitle": "",
+        "discover_collection_section_description": "",
+        "discover_collection_1": "",
+        "discover_collection_1_subtitle": "",
+        "discover_collection_2": "",
+        "discover_collection_2_subtitle": "",
+        "discover_collection_3": "",
+        "discover_collection_3_subtitle": "",
+        "discover_collection_4": "",
+        "discover_collection_4_subtitle": "",
+        "discover_collection_5": "",
+        "discover_collection_5_subtitle": "",
+        "discover_collection_6": "",
+        "discover_collection_6_subtitle": "",
+        "discover_collection_7": "",
+        "discover_collection_7_subtitle": "",
+        "discover_collection_8": "",
+        "discover_collection_8_subtitle": "",
+        "discover_collection_9": "",
+        "discover_collection_9_subtitle": "",
+        "discover_collection_10": "",
+        "discover_collection_10_subtitle": "",
+        "collection_sorting": false,
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "text_color": "homepage--white",
+        "parallax": false
+      }
     }
   },
   "order": [

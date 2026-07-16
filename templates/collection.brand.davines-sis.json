@@ -65,7 +65,7 @@
           "settings": {
             "slide_image_desktop": "shopify://shop_images/HairMNL_Davines_Heart_of_Glass_Desktop_3d3f59f7-da3f-44e1-a611-d16fd8dc9e20.jpg",
             "slide_image_mobile": "shopify://shop_images/HairMNL_Davines_Heart_of_Glass_Mobile_21c676c5-081a-44a7-942d-39110ffbf0c0.jpg",
-            "slide_image_url": "shopify://collections/davines-heart-of-glass-for-blonde-hair"
+            "slide_image_url": "shopify://collections/davines-heart-of-glass"
           }
         },
         "template--14409599254627__dbcce546-61a8-449d-8ee8-d83e3b7b80fd-16709968404e7ce54d-0": {
@@ -173,7 +173,7 @@
         "collection_RbaJkj": {
           "type": "collection",
           "settings": {
-            "collection": "davines-energizing-collection",
+            "collection": "davines-naturaltech-energizing",
             "title": "Davines Energizing for Thinning Hair"
           }
         },
@@ -305,28 +305,28 @@
         "collection_epLK6q": {
           "type": "collection",
           "settings": {
-            "collection": "davines-essential-haircare-melu",
+            "collection": "davines-melu",
             "title": "Davines MELU for Long or Damaged Hair"
           }
         },
         "collection_73UEw4": {
           "type": "collection",
           "settings": {
-            "collection": "davines-essential-haircare-volu",
+            "collection": "davines-volu",
             "title": "Davines VOLU for Fine or Limp Hair"
           }
         },
         "collection_7k7RJW": {
           "type": "collection",
           "settings": {
-            "collection": "davinessolu",
+            "collection": "davines-solu",
             "title": "Davines SOLU for Clarifying"
           }
         },
         "collection_VkDtWy": {
           "type": "collection",
           "settings": {
-            "collection": "davinesdede",
+            "collection": "davines-dede",
             "title": "Davines DEDE for Fine Hair"
           }
         }
@@ -417,7 +417,7 @@
       "settings": {
         "title": "Davines Heart of Glass for Blonde Hair",
         "title_font_size": 28,
-        "collection": "davines-heart-of-glass-for-blonde-hair",
+        "collection": "davines-heart-of-glass",
         "grid": 4,
         "rows": 1,
         "bg": "palette--light bg--neutral",
@@ -585,10 +585,10 @@
         "0711b26b-9181-4b23-9883-cf0d98f0c66e": {
           "type": "featured_collection",
           "settings": {
-            "collection": "davines-heart-of-glass-for-blonde-hair",
+            "collection": "davines-heart-of-glass",
             "title": "",
             "link_text": "",
-            "button_link": "shopify://collections/davines-heart-of-glass-for-blonde-hair"
+            "button_link": "shopify://collections/davines-heart-of-glass"
           }
         },
         "0e49e692-e8bc-49f5-936c-81f416674cc8": {

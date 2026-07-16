@@ -134,7 +134,7 @@
             "title": "",
             "text": "<p>A pre-shampoo treatment that removes calcium and repairs damaged hair, especially from hard water. </p>",
             "button_label": "Shop pre-shampoo",
-            "button_link": "shopify://products/kerastase-premiere-decalcifying-damage-repair-pre-shampoo-treatment-250ml",
+            "button_link": "shopify://products/kerastase-premiere-decalcifying-damage-repair-pre-shampoo-treatment",
             "enable_video": false,
             "video_link": ""
           }
@@ -147,7 +147,7 @@
             "title": "",
             "text": "<p>A sulfate-free shampoo that decalcifies and repairs over-processed or damaged hair.</p>",
             "button_label": "Shop Shampoo",
-            "button_link": "shopify://products/kerastase-premiere-decalcifying-damage-repair-shampoo-250ml",
+            "button_link": "shopify://products/kerastase-premiere-decalcifying-damage-repair-shampoo",
             "enable_video": false,
             "video_link": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
           }
@@ -417,6 +417,10 @@
         "text_color": "text--neutral",
         "bg": "palette--light bg--neutral"
       }
+    },
+    "kerastase-extras": {
+      "type": "kerastase-extras",
+      "settings": {}
     }
   },
   "order": [
@@ -433,6 +437,7 @@
     "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
     "386dcc4e-dd29-4949-aaa3-f6d01f814235",
     "8b484beb-0bb5-43e5-a90b-220aa5414373",
+    "kerastase-extras",
     "164244339393e3ebe3",
     "17213213179dbb929d"
   ]

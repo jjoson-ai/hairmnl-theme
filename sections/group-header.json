@@ -16,9 +16,8 @@
       "blocks": {
         "announce_text": {
           "type": "text",
-          "disabled": true,
           "settings": {
-            "text": "<p><strong>Make an announcement</strong> | More info</p>",
+            "text": "<p><strong>Same-Day Store Pick Up</strong> in NCR | <a href=\"https://www.hairmnl.com/pages/delivery-information\" target=\"_blank\" title=\"https://www.hairmnl.com/pages/delivery-information\">See Delivery Options & Payment Methods</a> ►</p>",
             "target_url_enabled": false,
             "target_url": "",
             "target_referrer_enabled": false,
@@ -48,9 +47,7 @@
       "settings": {
         "text_size": 3,
         "layout": "slider",
-        "speed": 5,
-        "padding_top": 4,
-        "padding_bottom": 4
+        "speed": 5
       }
     },
     "header": {
@@ -58,26 +55,11 @@
       "blocks": {
         "collection_K6cFA8": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "position": "2",
             "collection": "",
-            "limit": 4,
-            "wide_element": false,
-            "display": "all"
-          }
-        },
-        "header-block-toolbar": {
-          "type": "toolbar",
-          "disabled": true,
-          "settings": {
-            "announcement_text": "<p>This is announcement <em><strong>richtext</strong></em> from an announcement block</p>",
-            "secondary_linklist": "",
-            "show_menu_desktop": true,
-            "show_menu_mobile": true,
-            "show_locale_desktop": true,
-            "show_locale_mobile": true,
-            "show_currency_desktop": true,
-            "show_currency_mobile": true
+            "limit": 4
           }
         },
         "header-block-image-1": {
@@ -85,17 +67,9 @@
           "disabled": true,
           "settings": {
             "position": "1",
-            "wh_ratio": 2,
-            "wide_element": false,
-            "overlay_opacity": 0,
-            "overlay_color": "#000000",
             "title": "Pinned to item 1",
-            "title_color": "text--neutral",
-            "button_style": "is-on-image",
             "link_text": "Shop All",
-            "link": "shopify://collections/all",
-            "button_color": "btn--neutral",
-            "display": "all"
+            "link": "shopify://collections/all"
           }
         },
         "header-block-image-2": {
@@ -103,17 +77,9 @@
           "disabled": true,
           "settings": {
             "position": "2",
-            "wh_ratio": 0.8,
-            "wide_element": false,
-            "overlay_opacity": 0,
-            "overlay_color": "#000000",
             "title": "Pinned to item 2",
-            "title_color": "text--neutral",
-            "button_style": "is-below-image",
             "link_text": "Shop All",
-            "link": "shopify://collections/all",
-            "button_color": "btn--neutral",
-            "display": "all"
+            "link": "shopify://collections/all"
           }
         },
         "header-block-image-3": {
@@ -121,23 +87,14 @@
           "disabled": true,
           "settings": {
             "position": "2",
-            "wh_ratio": 0.8,
-            "wide_element": false,
-            "overlay_opacity": 0,
-            "overlay_color": "#000000",
             "title": "Pinned to item 2",
-            "title_color": "text--neutral",
-            "button_style": "is-below-image",
             "link_text": "Shop All",
-            "link": "shopify://collections/all",
-            "button_color": "btn--neutral",
-            "display": "all"
+            "link": "shopify://collections/all"
           }
         }
       },
       "block_order": [
         "collection_K6cFA8",
-        "header-block-toolbar",
         "header-block-image-1",
         "header-block-image-2",
         "header-block-image-3"
@@ -146,26 +103,19 @@
         "header_style": "split",
         "logo": "shopify://shop_images/HairMNL_Horizontal_Black_ac08dc06-cfce-4e32-8b6e-6a6c3842b3bd.png",
         "logo_max_limit": 230,
-        "logo_padding": 15,
-        "logo_text_size": 5,
         "main_menu_linklist": "header-menu-v2",
-        "mobile_menu_linklist": "",
         "full_width": false,
         "underline_current": true,
         "enable_search": true,
         "enable_account": true,
         "use_icons": true,
-        "icons_type": "modern",
-        "cart_icon": "bag",
         "header_sticky": "directional",
         "transparent_home": false,
         "transparent_collection": false,
         "transparent_blog": false,
         "transparent_article": false,
         "transparent_page": false,
-        "transparent_text_color": "#ffffff",
-        "show_collection_images": true,
-        "collection_wh_ratio": 2.5
+        "transparent_text_color": "#ffffff"
       }
     }
   },

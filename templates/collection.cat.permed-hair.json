@@ -185,14 +185,13 @@
       "type": "apps",
       "blocks": {
         "7048490a-d29f-4e85-a3f2-823127feecb3": {
-          "type": "shopify://apps/pro-blogger/blocks/pb_collection_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_collection_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
           "settings": {
             "blog_name": "hair-education",
             "pb_related_posts_title": "Related Articles",
             "pb_related_posts_title_style": "H5",
             "pb_related_post_items": 6,
             "pb_related_post_item_display": 5,
-            "pb_related_post_length": 15,
             "slider_autoplay": "2",
             "custom_class": "",
             "pb_item_style": "1",
@@ -200,6 +199,7 @@
             "pb_color_image_bg": "",
             "pb_color_text_bg": "",
             "pb_color_line": "",
+            "pb_related_post_length": 15,
             "pb_related_posts_matching": "2",
             "pb_related_posts_tag_match": "10",
             "pb_related_posts_title_match": "5"

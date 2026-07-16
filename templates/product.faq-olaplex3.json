@@ -65,7 +65,7 @@
         "79bf9d68-4ddc-4e34-8e9f-614789ba8c78": {
           "type": "upsell",
           "settings": {
-            "product": "{{ product.metafields.theme.upsell.value }}"
+            "product": ""
           }
         },
         "pickup": {
@@ -81,7 +81,7 @@
         "721cb103-06be-44b4-868b-755f68e382a3": {
           "type": "upsell_list",
           "settings": {
-            "product_list": "{{ product.metafields.theme.upsell_list.value }}"
+            "product_list": []
           }
         }
       },

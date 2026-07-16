@@ -39,7 +39,7 @@
     "use_custom_accent_font": true,
     "custom_accent_font": "BasisGrotesquePro-Regular",
     "type_base_font": "questrial_n4",
-    "type_body_size": 100,
+    "type_body_size": 110,
     "use_custom_base_font": true,
     "custom_base_font": "BasisGrotesquePro-Regular",
     "product_type_heading_font": "questrial_n4",
@@ -49,7 +49,7 @@
     "animations_scroll_enable": true,
     "animations_hover_enable": false,
     "parallax_enable": false,
-    "collection_text_alignment": "text-center",
+    "collection_text_alignment": "text-left",
     "product_grid_style": "under",
     "image_hover_enable": false,
     "product_grid_image": "scale",
@@ -84,7 +84,6 @@
     "btn_hover_border_color": "#cad1d3",
     "btn_hover_text_color": "#322e34",
     "btn_hover_bg_color": "#cad1d3",
-    "homepage_hero_mobile_image": "shopify://shop_images/2026-may-jun-e-comm-site-banners_mobile.jpg",
     "checkout_logo_image": "shopify://shop_images/HairMNL_Horizontal_Black_a25787c1-1e00-4090-9316-c81afb361748.png",
     "checkout_logo_size": "large",
     "checkout_heading_font": "Lato",
@@ -203,7 +202,7 @@
           "enable_search": true,
           "enable_account": true,
           "use_icons": true,
-          "header_sticky": "directional",
+          "header_sticky": "sticky",
           "rewards_url": "shopify://pages/rewards",
           "rewards_text": "Rewards",
           "transparent_home": false,
@@ -465,7 +464,6 @@
           "c946f8f3-eabf-471c-aa2e-bb560c95201f"
         ],
         "settings": {
-          "brand_logo": "shopify://shop_images/lorealprofessionnelparis_logo.png",
           "page_header_title": "",
           "page_header_subtitle": "",
           "brand_featured_image": "shopify://shop_images/loreal-pro-april-2026-always-on-sis.jpg",
@@ -710,10 +708,6 @@
           "text_color": "homepage--white",
           "parallax": false
         }
-      },
-      "bss-b2b-wholesaler-form-1959": {
-        "type": "bss-b2b-wholesaler-form-1959",
-        "settings": {}
       },
       "collection-blondabsolu": {
         "type": "collection-blondabsolu",
@@ -3570,11 +3564,6 @@
           "greeting_message": "👋 Hi, message us with any questions. We're happy to help!"
         }
       },
-      "12198985164985445843": {
-        "type": "shopify://apps/nova-eu-cookie-bar-gdpr/blocks/app-embed/6667ecbd-70cf-4527-84a9-e6037e6ca706",
-        "disabled": false,
-        "settings": {}
-      },
       "4976129024724438625": {
         "type": "shopify://apps/smartseo/blocks/brokenLinkDetection/7b0a6064-ca2e-4392-9a1d-8c43c942357b",
         "disabled": false,
@@ -3621,9 +3610,27 @@
           "enabled_on_page": "all"
         }
       },
-      "12643349056429947648": {
-        "type": "shopify://apps/stky-sticky-add-to-cart/blocks/satcb/2d1e1d5d-e947-4201-9a4f-8b73ff50f821",
+      "7594718713064568544": {
+        "type": "shopify://apps/octane-ai-advanced-quiz-maker/blocks/octaneai_fullscreen/db2513a5-c9b0-40fd-9058-42c28e6e6502",
         "disabled": false,
+        "settings": {
+          "octane_id": "",
+          "textarea_input": ""
+        }
+      },
+      "17550530943902319648": {
+        "type": "shopify://apps/appikon-back-in-stock/blocks/subscribe_it_helper/eb949c69-b3e6-4216-a322-1cd63915d46d",
+        "disabled": false,
+        "settings": {}
+      },
+      "12198985164985445843": {
+        "type": "shopify://apps/nova-gdpr-cookie-consent/blocks/app-embed/6667ecbd-70cf-4527-84a9-e6037e6ca706",
+        "disabled": true,
+        "settings": {}
+      },
+      "12643349056429947648": {
+        "type": "shopify://apps/stky-add-to-cart/blocks/satcb/2d1e1d5d-e947-4201-9a4f-8b73ff50f821",
+        "disabled": true,
         "settings": {}
       }
     }
@@ -4016,7 +4023,9 @@
   "platform_customizations": {
     "custom_css": [
       "element.style {}",
-      ".blog__article header {margin-bottom: 20px;}"
+      ".blog__article header {margin-bottom: 20px;}",
+      " /* Stack Judge.me rating below product title on cards */.product__grid__title__wrapper {display: flex !important; flex-direction: column !important; align-items: flex-start !important;}",
+      ".product__grid__title__wrapper .jdgm-widget {width: 100% !important; text-align: left !important;}"
     ]
   }
 }

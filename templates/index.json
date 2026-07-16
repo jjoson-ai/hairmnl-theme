@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "7df3b2d9-888e-438d-93d9-21f18e246690": {
@@ -137,6 +146,15 @@
       "type": "search",
       "settings": {
         "show_filters": true
+      }
+    },
+    "vertex_home_recs": {
+      "type": "vertex-recommendations",
+      "settings": {
+        "placement": "home_below_hero",
+        "title": "Recommended for You",
+        "subtitle": "",
+        "rationale": ""
       }
     },
     "164442519884b6f73e": {
@@ -426,14 +444,6 @@
         "product_recently_limit": 6,
         "product_recently_minimum": 1
       }
-    },
-    "vertex_home_recs_v2": {
-      "type": "vertex-recommendations",
-      "settings": {
-        "placement": "home_below_hero",
-        "title": "Recommended for you",
-        "subtitle": ""
-      }
     }
   },
   "order": [
@@ -442,7 +452,7 @@
     "8e66ad54-68f1-48bf-b688-5be1f7650268",
     "e0961ca3-7855-47ed-9a02-e46ede5033c7",
     "2070a358-5e4d-4784-8b58-016e8eb567a2",
-    "vertex_home_recs_v2",
+    "vertex_home_recs",
     "164442519884b6f73e",
     "eecfa066-3eb9-4223-bd0c-f26f57e4d864",
     "section_collection_LXHdRf",

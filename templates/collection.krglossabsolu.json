@@ -433,6 +433,10 @@
         "text_color": "text--neutral",
         "bg": "palette--light bg--neutral"
       }
+    },
+    "kerastase-extras": {
+      "type": "kerastase-extras",
+      "settings": {}
     }
   },
   "order": [
@@ -450,6 +454,7 @@
     "e8de97cf-0e61-42c0-a782-fde9ed3d8a85",
     "386dcc4e-dd29-4949-aaa3-f6d01f814235",
     "8b484beb-0bb5-43e5-a90b-220aa5414373",
+    "kerastase-extras",
     "164244339393e3ebe3",
     "17213213179dbb929d"
   ]

@@ -1,21 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "brand-collection",
-      "settings": {
-        "brand_featured_image": "shopify://shop_images/Resistance_SIS_017cb3b6-0d4d-4274-a020-969a9cb79335.png",
-        "grid_setting_large": 4,
-        "grid_setting_medium": 2,
-        "grid_setting_small": 2,
-        "collection_custom_nav_list": "kerastase-menu",
-        "collection_sorting": false
-      },
       "blocks": {
         "resistance-new_arrivals-1": {
           "type": "new_arrivals",
           "settings": {
             "new_arrivals_collection_section_title": "Best Sellers",
-            "new_arrivals_collection": "kerastase-resistance-collection"
+            "new_arrivals_collection": "kerastase-resistance"
           }
         },
         "resistance-section_header-1": {
@@ -161,7 +162,15 @@
         "resistance-left_image_with_text-1",
         "resistance-right_image_with_text-1",
         "resistance-left_image_with_text-2"
-      ]
+      ],
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/Resistance_SIS_017cb3b6-0d4d-4274-a020-969a9cb79335.png",
+        "grid_setting_large": 4,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "collection_sorting": false
+      }
     }
   },
   "order": [

@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -32,11 +41,15 @@
         },
         "bogos_mix_match": {
           "type": "shopify://apps/bogos-io-free-gift/blocks/mix-match-view/0432bba6-720a-4e95-be5a-b868386f7aa6",
-          "settings": {}
+          "settings": {
+            "product": ""
+          }
         },
         "bogos_bundle": {
           "type": "shopify://apps/bogos-io-free-gift/blocks/bundle-view/0432bba6-720a-4e95-be5a-b868386f7aa6",
-          "settings": {}
+          "settings": {
+            "product": ""
+          }
         },
         "description": {
           "type": "description",
@@ -50,19 +63,9 @@
             "title_3": "",
             "raw_content_3": "",
             "title_4": "",
-            "raw_content_4": ""
-          }
-        },
-        "upsell": {
-          "type": "upsell",
-          "settings": {
-            "product": ""
-          }
-        },
-        "upsell_list": {
-          "type": "upsell_list",
-          "settings": {
-            "product_list": []
+            "raw_content_4": "",
+            "title_5": "",
+            "raw_content_5": ""
           }
         }
       },
@@ -73,9 +76,7 @@
         "judgeme_review_snippet",
         "bogos_mix_match",
         "bogos_bundle",
-        "description",
-        "upsell",
-        "upsell_list"
+        "description"
       ],
       "settings": {
         "image_width": "half",
@@ -90,8 +91,9 @@
       "type": "vertex-recommendations",
       "settings": {
         "placement": "pdp_below_atc",
-        "title": "You may also like",
-        "subtitle": ""
+        "title": "Complete Your Routine",
+        "subtitle": "",
+        "rationale": ""
       }
     },
     "judgeme_reviews_widget": {
@@ -99,7 +101,12 @@
       "blocks": {
         "review_widget": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
         }
       },
       "block_order": [
@@ -110,6 +117,15 @@
         "height": "margin--medium",
         "text_color": "text--neutral",
         "bg": "palette--light bg--neutral"
+      }
+    },
+    "vertex_pdp_similar": {
+      "type": "vertex-recommendations",
+      "settings": {
+        "placement": "pdp_below_description",
+        "title": "You May Also Like",
+        "subtitle": "",
+        "rationale": ""
       }
     },
     "recent_products": {
@@ -126,6 +142,7 @@
     "main",
     "vertex_pdp_recs",
     "judgeme_reviews_widget",
+    "vertex_pdp_similar",
     "recent_products"
   ]
 }

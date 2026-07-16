@@ -188,7 +188,7 @@
       "type": "apps",
       "blocks": {
         "dba815fe-b4e5-416c-a2ae-3f4fea597e5c": {
-          "type": "shopify://apps/pro-blogger/blocks/pb_collection_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_collection_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
           "settings": {
             "blog_name": "hair-education",
             "pb_related_posts_title": "Related Articles",

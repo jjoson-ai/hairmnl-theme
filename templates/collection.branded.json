@@ -1,49 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "brand-collection",
-      "settings": {
-        "brand_featured_image": "shopify://shop_images/kerastase-april-2026-always-on-storewide-sis.jpg",
-        "brand_featured_image_link": "https://www.hairmnl.com/collections/kerastase-special-offers",
-        "grid_setting_large": 3,
-        "grid_setting_medium": 2,
-        "grid_setting_small": 2,
-        "collection_custom_nav_list": "kerastase-menu",
-        "featured_collection_1": "kerastase-gloss-absolu",
-        "featured_collection_1_subtitle": "Anti-Frizz & Glossier Hair",
-        "featured_collection_2": "kerastase-genesis",
-        "featured_collection_2_subtitle": "Anti-Hairfall",
-        "featured_collection_3": "kerastase-elixir-ultime",
-        "featured_collection_3_subtitle": "Exceptional Hair Oils for Ultimate Shine",
-        "discover_collection_1_subtitle": "Natural and Lightweight",
-        "discover_collection_2": "kerastase-blond-absolu",
-        "discover_collection_2_subtitle": "Bleach Neutralizing & Nourishing",
-        "discover_collection_3": "kerastase-chroma-absolu",
-        "discover_collection_3_subtitle": "Restoring Color Care",
-        "discover_collection_4": "kerastase-chronologiste",
-        "discover_collection_4_subtitle": "Hair and Scalp Regeneration Treatment",
-        "discover_collection_5": "kerastase-curl-manifesto",
-        "discover_collection_5_subtitle": "Curl Enhancing Care",
-        "discover_collection_6": "kerastase-densifique",
-        "discover_collection_6_subtitle": "Hair Density",
-        "discover_collection_7": "kerastase-discipline",
-        "discover_collection_7_subtitle": "Discipline and Anti-Frizz",
-        "discover_collection_8": "kerastase-elixir-ultime",
-        "discover_collection_8_subtitle": "Exceptional Hair Oils for Ultimate Shine",
-        "discover_collection_9": "kerastase-genesis",
-        "discover_collection_9_subtitle": "Anti-Hairfall",
-        "discover_collection_10": "kerastase-nutritive",
-        "discover_collection_10_subtitle": "Nourishment and Hydration",
-        "discover_collection_11": "kerastase-premiere",
-        "discover_collection_11_subtitle": "Dual Action Repair",
-        "discover_collection_12": "kerastase-resistance-collection",
-        "discover_collection_12_subtitle": "Strength and Repair",
-        "discover_collection_13": "kerastase-specifique",
-        "discover_collection_13_subtitle": "Scalp Care",
-        "discover_collection_14": "kerastase-symbiose",
-        "discover_collection_14_subtitle": "Anti-Dandruff",
-        "collection_sorting": false
-      },
       "blocks": {
         "branded-new_arrivals-1": {
           "type": "new_arrivals",
@@ -89,7 +56,41 @@
         "branded-best_sellers-2",
         "branded-right_media_with_text-1",
         "branded-fw_text_with_media-1"
-      ]
+      ],
+      "settings": {
+        "brand_featured_image": "shopify://shop_images/kerastase-april-2026-always-on-storewide-sis.jpg",
+        "brand_featured_image_link": "https://www.hairmnl.com/collections/kerastase-special-offers",
+        "grid_setting_large": 3,
+        "grid_setting_medium": 2,
+        "grid_setting_small": 2,
+        "collection_custom_nav_list": "kerastase-menu",
+        "featured_collection_1": "kerastase-gloss-absolu",
+        "featured_collection_1_subtitle": "Anti-Frizz & Glossier Hair",
+        "featured_collection_2": "kerastase-genesis",
+        "featured_collection_2_subtitle": "Anti-Hairfall",
+        "featured_collection_3": "kerastase-elixir-ultime",
+        "featured_collection_3_subtitle": "Exceptional Hair Oils for Ultimate Shine",
+        "discover_collection_1_subtitle": "Natural and Lightweight",
+        "discover_collection_2": "kerastase-blond-absolu",
+        "discover_collection_2_subtitle": "Bleach Neutralizing & Nourishing",
+        "discover_collection_3": "kerastase-chroma-absolu",
+        "discover_collection_3_subtitle": "Restoring Color Care",
+        "discover_collection_4": "kerastase-chronologiste",
+        "discover_collection_4_subtitle": "Hair and Scalp Regeneration Treatment",
+        "discover_collection_5": "kerastase-curl-manifesto",
+        "discover_collection_5_subtitle": "Curl Enhancing Care",
+        "discover_collection_6": "kerastase-densifique",
+        "discover_collection_6_subtitle": "Hair Density",
+        "discover_collection_7": "kerastase-discipline",
+        "discover_collection_7_subtitle": "Discipline and Anti-Frizz",
+        "discover_collection_8": "kerastase-elixir-ultime",
+        "discover_collection_8_subtitle": "Exceptional Hair Oils for Ultimate Shine",
+        "discover_collection_9": "kerastase-genesis",
+        "discover_collection_9_subtitle": "Anti-Hairfall",
+        "discover_collection_10": "kerastase-nutritive",
+        "discover_collection_10_subtitle": "Nourishment and Hydration",
+        "collection_sorting": false
+      }
     }
   },
   "order": [
