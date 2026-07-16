@@ -522,21 +522,37 @@
 
 /* ================ HairMNL custom additions (M2 port from Pipeline 6) ================ */
 /*
-  Pipeline 6 had a 4th font slot for product type headings (settings.product_type_heading_font).
-  Pipeline 8 doesn't ship this slot. To keep our custom CSS in assets/custom-theme.css
-  rendering correctly without a per-rule rewrite, alias the product-heading-* tokens
-  to the heading-font equivalents already emitted above. If the 4th font is later added back
-  via P8 settings_schema.json, override the aliases below.
+  Pipeline 6's 4th font slot for product type headings (settings.product_type_heading_font).
+  J30 (bd 2i8b.85) CORRECTED the original M2 note here: P8 DOES ship this slot — the
+  settings survive in settings_schema.json (product_type_heading_font / _size /
+  product_use_custom_heading_font / product_custom_heading_font), so the block below
+  emits REAL --TYPE-*-PRODUCT-HEADING tokens from them, exactly as P6 did. (The M2
+  aliases previously here pointed at --TYPE-*-HEADING names that were never defined.)
 
   Also: a handful of P6 var refs use the triple-hyphen-lowercase convention that surviving
-  custom CSS (snippets/css-overrides.liquid line 414, assets/custom-theme.css product cards)
-  still references. We emit those as aliases here. Eventually these can be globally renamed
-  in a separate compat-removal ticket.
+  custom CSS still references; those bridge aliases are emitted further below. Eventually
+  these can be globally renamed in a separate compat-removal ticket.
 */
---TYPE-STACK-PRODUCT-HEADING: var(--TYPE-STACK-HEADING);
---TYPE-STYLE-PRODUCT-HEADING: var(--TYPE-STYLE-HEADING);
---TYPE-ADJUST-PRODUCT-HEADING: var(--TYPE-ADJUST-HEADING);
---TYPE-WEIGHT-PRODUCT-HEADING: var(--TYPE-WEIGHT-HEADING);
+{%- liquid
+  # J30 (bd 2i8b.85, phase4 audit H3): the four aliases below pointed at
+  # --TYPE-*-HEADING names that are defined NOWHERE (the tokens actually emitted
+  # above are --FONT-*-HEADING), so every consumer went invalid-at-computed-value
+  # and the PDP product title lost its P6 typography (SelfModern serif @ 125%),
+  # falling back to body sans at body size. Contrary to the header comment above,
+  # P8 DOES still ship the P6 product-heading settings (settings_schema.json:426-447;
+  # live values: questrial_n4 picker + custom "SelfModern" + 125%), so emit REAL
+  # tokens from them exactly as P6 did. SelfModern's @font-face already loads for
+  # the main heading stack (--FONT-STACK-HEADING above), so no new font load.
+  assign product_heading_font = settings.product_type_heading_font | default: heading_font
+-%}
+{% if settings.product_use_custom_heading_font and settings.product_custom_heading_font != blank %}
+--TYPE-STACK-PRODUCT-HEADING: "{{ settings.product_custom_heading_font }}", {{ product_heading_font.fallback_families }};
+{%- else %}
+--TYPE-STACK-PRODUCT-HEADING: {{ product_heading_font.family }}, {{ product_heading_font.fallback_families }};
+{% endif %}
+--TYPE-STYLE-PRODUCT-HEADING: {{ product_heading_font.style | default: 'normal' }};
+--TYPE-ADJUST-PRODUCT-HEADING: {{ settings.product_type_heading_size | default: 100 | divided_by: 100.0 }};
+--TYPE-WEIGHT-PRODUCT-HEADING: {{ product_heading_font.weight | default: 400 }};
 {% if settings.product_font_title_capitalize %}
   --FONT-PRODUCT-HEADING-TRANSFORM: uppercase;
   --FONT-PRODUCT-HEADING-LETTER-SPACING: {{ settings.font_uppercase_spacing | default: 50 | divided_by: 1000.0 | append: 'em' }};
@@ -572,7 +588,11 @@
 ---font-product-heading-caps: var(--FONT-PRODUCT-HEADING-TRANSFORM);
 ---font-product-heading-space: var(--FONT-PRODUCT-HEADING-LETTER-SPACING);
 ---font-adjust-product-heading: var(--TYPE-ADJUST-PRODUCT-HEADING);
----font-weight-accent-bold: var(--TYPE-WEIGHT-ACCENT);
+/* J30 (bd 2i8b.84, phase4 audit H2): was var(--TYPE-WEIGHT-ACCENT) — a token defined
+   NOWHERE — so 90+ fallback-less font-weight declarations (BUY IT NOW, footer accordion
+   titles, Filter/Sort toggles, search results) went invalid-at-computed-value and lost
+   their bold weight vs P6. The real token is --FONT-WEIGHT-ACCENT-BOLD (defined above). */
+---font-weight-accent-bold: var(--FONT-WEIGHT-ACCENT-BOLD);
 
 /* Body/heading/accent typography
  *
@@ -597,7 +617,7 @@
 ---font-style-body: var(--FONT-STYLE-BODY);
 ---font-style-heading: var(--FONT-STYLE-HEADING);
 ---font-style-accent: var(--FONT-STYLE-ACCENT);
----font-style-product-heading: var(--FONT-STYLE-HEADING);
+---font-style-product-heading: var(--TYPE-STYLE-PRODUCT-HEADING); /* J30: was --FONT-STYLE-HEADING; point at the real product-heading token now that it exists */
 ---font-weight-body: var(--FONT-WEIGHT-BODY);
 ---font-weight-body-bold: var(--FONT-WEIGHT-BODY-BOLD);
 ---font-weight-heading: var(--FONT-WEIGHT-HEADING);
