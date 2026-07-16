@@ -26,14 +26,20 @@
 
     var mql = window.matchMedia('(max-width: 600px)');
     var setStickyTop = function () {
+      // J31 (bd 2i8b.89): publish the offset as a CSS custom property on the
+      // ROOT element instead of an inline style on .collection__nav — the
+      // facet-AJAX innerHTML swap destroys the nav node (and its inline top),
+      // which left the replacement bar at top:0 under the sticky header after
+      // any filter/sort interaction. css-overrides' .collection__nav rule now
+      // reads top: var(--collection-nav-top, 0px), which survives DOM swaps.
       if (!mql.matches) {
-        collectionNav.style.removeProperty('top');
+        document.documentElement.style.removeProperty('--collection-nav-top');
         return;
       }
       var rawMenu = document.documentElement.style.getPropertyValue('--menu-height');
       var menuHeight = parseFloat(rawMenu);
       var top = (!Number.isNaN(menuHeight) && menuHeight > 0) ? Math.round(menuHeight) - 1 : 0;
-      collectionNav.style.top = top + 'px';
+      document.documentElement.style.setProperty('--collection-nav-top', top + 'px');
     };
 
     setStickyTop();
@@ -109,7 +115,15 @@
             return r.text();
           })
           .then(function (html) {
-            sectionEl.innerHTML = html;
+            // J31 (bd 2i8b.89): the Section Rendering API response is wrapped in
+            // its own #shopify-section-<id> div — injecting it raw nested one
+            // duplicate-id wrapper per filter interaction (aria-busy on the wrong
+            // node). Unwrap via DOMParser and inject only the inner content,
+            // matching theme.js's own loadForm pattern. Raw fallback if the
+            // wrapper isn't found (response shape change).
+            var srDoc = new DOMParser().parseFromString(html, 'text/html');
+            var srInner = srDoc.getElementById(sectionEl.id);
+            sectionEl.innerHTML = srInner ? srInner.innerHTML : html;
             sectionEl.removeAttribute('aria-busy');
 
             // Trigger P8's section onLoad lifecycle so the (now-new) filter
@@ -147,6 +161,16 @@
     // V1 popstate: full reload. Acceptable concession; saves the complexity
     // of snapshotting facet HTML on every change. Browsers cache the previous
     // page anyway, so back-button is usually instant from bfcache.
+    // J31 (bd 2i8b.89): stamp the INITIAL history entry too — it had state
+    // null forever, so pressing Back from a filtered view to the unfiltered
+    // URL (the most common back-navigation) skipped the reload and left the
+    // filtered grid rendered under the unfiltered URL.
+    if (!history.state || !history.state.facetState) {
+      history.replaceState(
+        { facetState: window.location.pathname + window.location.search },
+        '', window.location.href
+      );
+    }
     window.addEventListener('popstate', function (e) {
       if (e.state && e.state.facetState) window.location.reload();
     });

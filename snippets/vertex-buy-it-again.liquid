@@ -1,78 +1,63 @@
 {%- comment -%}
-  Vertex Buy-it-again — "Time to restock" homepage slot for logged-in
-  returning customers.
+  Vertex Buy-it-again — "Time to restock" slot for logged-in returning customers.
 
-  Reads `customer.metafields.vertex.repurchase` (JSON array of Shopify
-  legacy product IDs, top 6 by Vertex predict score).
+  Reads `customer.metafields.vertex.repurchase_handles` (JSON array of product
+  handles, top-N by Vertex predict score, written by the hairmnl-vertex
+  precompute Cloud Function — NOT YET SCHEDULED as of 2026-07; this slot is
+  dormant until the job runs).
 
-  Renders nothing when:
-    • customer is anonymous (customer is nil)
-    • metafield missing (customer brand new, or precompute hasn't run yet)
-    • metafield is empty array
-    • all referenced products are unavailable / deleted
+  J31 rewrite (bd 2i8b.95, phase4 closeout audit): the original bespoke
+  .vertex-buy-it-again__* cards bypassed vertex-rec-card (so none of the
+  J25–J29 rail styling applied) and filtered only on p.available — missing the
+  freebie/salon/exclude-list/in-cart guards the flagship rail carries, on the
+  surface MOST likely to contain freebies (purchase history). Now renders the
+  shared guard (snippets/vertex-rec-skip.liquid) + the unified card
+  (vertex-rec-card) inside standard .vrec-slot rail markup, so all rail
+  styling, badges and Quick Buy behavior apply automatically.
 
-  Per-customer replenishment recs based on the buy-it-again model —
-  net-new revenue surface for the homepage logged-in path.
+  Renders nothing when: anonymous customer, metafield missing/empty, or every
+  candidate is skipped by the guard.
 
-  Usage in PARENT template (homepage section, account page, etc.):
+  Usage in a parent template/section:
     {% if customer %}
       {% render 'vertex-buy-it-again',
           title: 'Time to restock',
           subtitle: 'Based on your purchase history' %}
     {% endif %}
-
-  Both `title` and `subtitle` are optional with sensible defaults.
 {%- endcomment -%}
 
 {%- if customer -%}
-  {%- assign rec_ids = customer.metafields.vertex.repurchase.value -%}
-  {%- if rec_ids and rec_ids.size > 0 -%}
+  {%- assign bia_handles = customer.metafields.vertex.repurchase_handles.value -%}
+  {%- if bia_handles and bia_handles.size > 0 -%}
 
-    {%- comment -%}
-      Resolve product IDs to product objects. all_products[] takes a
-      handle, not a legacy ID, so we need the products by_id list. In
-      Shopify Liquid, this is exposed via `products[<handle>]` only —
-      to lookup by legacy ID we use `all_products` with the handle from
-      a metafield-keyed-by-handle index. Simpler: iterate the rec_ids
-      list and use a where filter against the product collection.
+    {%- capture bia_rail -%}
+      {%- for bia_handle in bia_handles limit: 8 -%}
+        {%- assign bia_p = all_products[bia_handle] -%}
+        {%- if bia_p and bia_p.handle != blank -%}
+          {%- capture bia_skip -%}{%- render 'vertex-rec-skip', product: bia_p, cart: cart -%}{%- endcapture -%}
+          {%- unless bia_skip contains 'skip' -%}
+            {%- render 'vertex-rec-card', product: bia_p, placement: 'buy_it_again' -%}
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
 
-      For now we resolve via products[] keyed by handle metafield. The
-      precompute Cloud Function writes legacy product IDs; we look them
-      up via a parallel `customer.metafields.vertex.repurchase_handles`
-      metafield that the same precompute function writes (TODO: add
-      handles to the precompute write).
-    {%- endcomment -%}
-    {%- assign rec_handles = customer.metafields.vertex.repurchase_handles.value -%}
-
-    {%- assign resolved_products = '' -%}
-    {%- assign first = true -%}
-    {%- if rec_handles and rec_handles.size > 0 -%}
-      <section class="vertex-buy-it-again">
-        <header class="vertex-buy-it-again__header">
-          <h2 class="vertex-buy-it-again__title">{{ title | default: 'Time to restock' }}</h2>
-          <p class="vertex-buy-it-again__subtitle">{{ subtitle | default: 'Based on your purchase history' }}</p>
+    {%- assign bia_trimmed = bia_rail | strip -%}
+    {%- if bia_trimmed != '' -%}
+      <section
+        class="vrec-slot vrec-slot--buy_it_again"
+        data-vertex-placement="buy_it_again"
+        aria-labelledby="vrec-title-buy_it_again"
+      >
+        <header class="vrec-slot__header">
+          <h2 id="vrec-title-buy_it_again"
+              class="h2--body section-header__title vrec-slot__title">{{ title | default: 'Time to restock' }}</h2>
+          <p class="vrec-slot__subtitle">{{ subtitle | default: 'Based on your purchase history' }}</p>
         </header>
-
-        <div class="vertex-buy-it-again__grid">
-          {%- for handle in rec_handles -%}
-            {%- assign p = all_products[handle] -%}
-            {%- if p and p.available -%}
-              <a class="vertex-buy-it-again__card" href="{{ p.url }}">
-                {%- if p.featured_image -%}
-                  <img
-                    class="vertex-buy-it-again__img"
-                    src="{{ p.featured_image | image_url: width: 240 }}"
-                    alt="{{ p.title | escape }}"
-                    loading="lazy"
-                    width="120" height="120"
-                  >
-                {%- endif -%}
-                <div class="vertex-buy-it-again__card-vendor">{{ p.vendor }}</div>
-                <div class="vertex-buy-it-again__card-title">{{ p.title | truncate: 60 }}</div>
-                <div class="vertex-buy-it-again__card-price">{{ p.price | money }}</div>
-              </a>
-            {%- endif -%}
-          {%- endfor -%}
+        <div class="vrec-slot__nav-wrap">
+          <div class="vrec-slot__rail" role="list">
+            {{ bia_rail }}
+          </div>
         </div>
       </section>
     {%- endif -%}

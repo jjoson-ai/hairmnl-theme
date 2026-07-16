@@ -1,4 +1,13 @@
 #!/usr/bin/env python3
+# ============================================================================
+# WARNING (J31, bd 2i8b.90 — phase4 closeout audit): this emitter splits by
+# Coverage hits PER RULE, so it can emit a selector's base + 480px-fluid tiers
+# into a template chunk WITHOUT the matching >=1400px cap tier (Coverage was
+# collected at sub-1400px viewports). That shipped as unbounded heading growth
+# on >=1400px screens (fixed by a cap-mirror in css-overrides.liquid). IF YOU
+# RE-RUN THIS SCRIPT: emit ALL media tiers of a selector whenever ANY tier is
+# emitted, or re-verify the css-overrides mirrors still cover the gaps.
+# ============================================================================
 """Wave B — CSS split emitter (ujg6.42.2 / ujg6.42.5 --strict).
 
 Reads docs/ujg6.42-buckets.json (the Wave A real-Coverage output), the

@@ -823,6 +823,15 @@
       e.stopImmediatePropagation(); // J18b (a7av.30): capture-phase + stop so STKY's leftover
                                     // ScriptTag handler can't navigate to the PDP first (preview)
       var pop = toggle.parentElement.querySelector('[data-qb-popover]');
+      if (!pop) {
+        // J31 (bd 2i8b.91): when OPEN, the popover is portaled to <body> (J24),
+        // so the parentElement lookup misses it and re-tapping the toggle icon
+        // was a swallowed no-op (stopImmediatePropagation already ran, so the
+        // close branch below was dead code and aria-expanded stuck at true).
+        // Fall back to the open portaled popover that belongs to THIS toggle.
+        var portaled = document.querySelector('body > [data-qb-popover].is-open');
+        if (portaled && portaled._qbHome === toggle.parentElement) pop = portaled;
+      }
       if (!pop) return;
       var opening = !pop.classList.contains('is-open');
       closeQbPopovers(opening ? pop : null);
@@ -868,6 +877,33 @@
   }
   ['scroll', 'resize'].forEach(function (ev) {
     window.addEventListener(ev, reflowOpenQbPopover, true);
+  });
+
+  // ============================================================
+  // J31 (bd 2i8b.92) — brand-collection mobile filter toggle
+  // ------------------------------------------------------------
+  // Brand-collection sections render #toggleFilters/#collectionFilters inside
+  // LAZY-hydrated content, but shop.js.liquid caches those jQuery selections at
+  // document-ready (empty on brand pages) — the mobile filter button was
+  // deterministically dead on all 31 brand templates. Bind at hydration time
+  // via §8's section:lazy-rendered event (previously dispatched with zero
+  // listeners). Scoped to lazy sections only, so eager pages where shop.js DID
+  // bind are untouched (no double-toggle); idempotent via a data marker.
+  // ============================================================
+  document.addEventListener('section:lazy-rendered', function (e) {
+    var root = e.target;
+    if (!root || !root.querySelector) return;
+    var btn = root.querySelector('#toggleFilters');
+    var filters = root.querySelector('#collectionFilters');
+    if (!btn || !filters || btn.getAttribute('data-hmnl-filters-bound')) return;
+    btn.setAttribute('data-hmnl-filters-bound', '1');
+    // Mirror shop.js's enquire behavior: filters start hidden on small screens.
+    if (window.matchMedia('(max-width: 768px)').matches) filters.style.display = 'none';
+    btn.addEventListener('click', function () {
+      btn.classList.toggle('is-active');
+      var hidden = getComputedStyle(filters).display === 'none';
+      filters.style.display = hidden ? 'block' : 'none';
+    });
   });
 
   // ============================================================

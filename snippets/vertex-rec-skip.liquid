@@ -1,0 +1,40 @@
+{%- comment -%}
+  Shared Vertex rec exclusion guard (bd 2i8b.95, phase4 closeout audit).
+
+  Outputs the literal text "skip" when `product` must NOT be recommended;
+  outputs nothing otherwise. Usage:
+
+    {%- capture rec_skip -%}{%- render 'vertex-rec-skip', product: p, cart: cart -%}{%- endcapture -%}
+    {%- unless rec_skip contains 'skip' -%}
+      {%- render 'vertex-rec-card', product: p, placement: placement -%}
+    {%- endunless -%}
+
+  Exclusions (mirrors snippets/vertex-recommendations.liquid, J11 S22 + J16 S10/S11):
+    - unavailable products
+    - freebies / promo SKUs: zero price, leading "»", or "% off"/"% OFF" in title
+    - Backbar / salon-professional: vendor contains "Backbar", or tagged
+      "bb exclusive" / "hm salon professional"
+    - operator exclude list (shop.metafields.vertex.excluded_handles, 15-min sync)
+    - already in the cart (pass `cart` for surfaces where that matters)
+
+  NOTE: snippets/vertex-recommendations.liquid still carries its own inline copy
+  of this logic (device-verified for cutover; converting it to render this
+  snippet is a pure refactor deferred to post-cutover). KEEP THE TWO IN SYNC.
+{%- endcomment -%}
+{%- assign vrs_skip = false -%}
+{%- unless product and product.available -%}{%- assign vrs_skip = true -%}{%- endunless -%}
+{%- unless vrs_skip -%}
+  {%- if product.price == 0 -%}{%- assign vrs_skip = true -%}{%- endif -%}
+  {%- assign vrs_head = product.title | strip | slice: 0, 1 -%}
+  {%- if vrs_head == '»' or product.title contains '% off' or product.title contains '% OFF' -%}{%- assign vrs_skip = true -%}{%- endif -%}
+  {%- if product.vendor contains 'Backbar' or product.vendor contains 'backbar' -%}{%- assign vrs_skip = true -%}{%- endif -%}
+  {%- if product.tags contains 'bb exclusive' or product.tags contains 'hm salon professional' -%}{%- assign vrs_skip = true -%}{%- endif -%}
+  {%- assign vrs_excluded = shop.metafields.vertex.excluded_handles.value -%}
+  {%- if vrs_excluded and vrs_excluded contains product.handle -%}{%- assign vrs_skip = true -%}{%- endif -%}
+  {%- if cart and cart.item_count > 0 -%}
+    {%- for vrs_li in cart.items -%}
+      {%- if vrs_li.product.handle == product.handle -%}{%- assign vrs_skip = true -%}{%- break -%}{%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endunless -%}
+{%- if vrs_skip -%}skip{%- endif -%}

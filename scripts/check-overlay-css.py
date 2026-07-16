@@ -53,6 +53,13 @@ OVERLAY_PATTERNS = re.compile(
       | site[-_]?header             # site-header (sticky variant)
       | navigation                   # .navigation (broad — most are overlay parents on mobile)
       | \[id\^=                     # [id^="..."] starts-with attribute (catches 7fz pattern)
+      # J31 (bd 2i8b.96): overlays the P8 epic itself created — the Quick Buy
+      # popover already demonstrated the containing-block trap class in-epic (J24).
+      | qb[-_]?popover              # [data-qb-popover], .quick-buy__popover
+      | quick-buy__popover
+      | vrec-product-sticky-bar     # PDP sticky ATC bar (position:fixed)
+      | sticky-cart-bubble          # desktop floating cart (position:fixed)
+      | vrec-fly-clone              # fly-to-cart transient clone (position:fixed)
     )""",
     re.IGNORECASE | re.VERBOSE,
 )
@@ -66,11 +73,20 @@ FORBIDDEN_PROPS = re.compile(
     (?:^|\s|;|\{)\s*
     (?:
         contain\s*:\s*(?:layout|paint|strict|content)\b
-      | transform\s*:\s*(?!none\b)[^;}\n]+
-      | filter\s*:\s*(?!none\b)[^;}\n]+
-      | backdrop-filter\s*:\s*(?!none\b)[^;}\n]+
-      | perspective\s*:\s*(?!none\b)[^;}\n]+
+      # J31 (bd 2i8b.96): lookaheads moved BEFORE \s* — the old `\s*(?!none\b)`
+      # form let the regex engine backtrack \s* to zero and match the leading
+      # space as part of the value, silently defeating the none/normal
+      # exclusions (latent in the original transform/filter/perspective lines).
+      | transform\s*:(?!\s*none\b)[^;}\n]+
+      | filter\s*:(?!\s*none\b)[^;}\n]+
+      | backdrop-filter\s*:(?!\s*none\b)[^;}\n]+
+      | perspective\s*:(?!\s*none\b)[^;}\n]+
       | will-change\s*:\s*[^;}\n]*\b(?:transform|filter|perspective)\b
+      # J31 (bd 2i8b.96): container queries create layout/style containment —
+      # same containing-block trap as contain:layout (J29 introduced the repo's
+      # first, verified-safe, use on non-overlay .lazy-image selectors).
+      | container-type\s*:(?!\s*normal\b)[^;}\n]+
+      | container\s*:(?!\s*(?:none|normal)\b)[^;}\n]+
     )
     """,
     re.IGNORECASE | re.VERBOSE | re.MULTILINE,
@@ -153,6 +169,26 @@ def is_at_rule(selector: str) -> bool:
     return s.startswith('@')
 
 
+def iter_rules(text: str, base_offset: int = 0):
+    """Yield (selector, body, abs_offset) for every rule, DESCENDING into
+    @media/@supports blocks.
+
+    J31 (bd 2i8b.96): find_rule_blocks yields TOP-LEVEL blocks only — the whole
+    at-rule body used to be attributed to the '@media ...' header (which never
+    matches OVERLAY_PATTERNS), so every media-nested rule was silently invisible
+    to this lint. Both prior kt0 production incidents happened to be top-level
+    rules, which is why the blind spot survived. @keyframes bodies are still
+    skipped (frame selectors like 0%/100% are not element selectors)."""
+    for selector, body, off in find_rule_blocks(text):
+        s = selector.strip().lstrip(';').lstrip()
+        if s.startswith('@'):
+            low = s.lower()
+            if low.startswith('@media') or low.startswith('@supports'):
+                yield from iter_rules(body, base_offset + off)
+            continue
+        yield selector, body, base_offset + off
+
+
 def line_of(text: str, offset: int) -> int:
     return text.count('\n', 0, offset) + 1
 
@@ -165,12 +201,7 @@ def scan_file(path: Path, list_mode: bool = False) -> list[dict]:
         print(f"warn: could not read {path}: {e}", file=sys.stderr)
         return findings
 
-    for selector, body, body_start in find_rule_blocks(text):
-        if is_at_rule(selector):
-            continue
-        # An @-rule body contains nested rules — those are already handled
-        # by the iterator (it yields each inner block separately). But if
-        # the outer @-rule had a selector-like prelude, skip it.
+    for selector, body, body_start in iter_rules(text):
         if not OVERLAY_PATTERNS.search(selector):
             continue
         if not FORBIDDEN_PROPS.search(body):

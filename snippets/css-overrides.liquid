@@ -836,7 +836,10 @@
   @media only screen and (max-width: 600px) {
     .collection__nav {
       position: sticky;
-      top: 0; /* refined to header height by assets/hairmnl-collection.js */
+      top: var(--collection-nav-top, 0px); /* J31 (2i8b.89): the offset is published
+         as a root-level custom property by hairmnl-collection.js — an inline style
+         on this node died with every facet-AJAX innerHTML swap, dropping the bar
+         to top:0 under the header after any filter/sort interaction. */
       z-index: 200; /* J27: above the Quick Buy popover (z-index 100, portaled to body) so the
                        sticky filter/sort bar covers it on scroll (web-team "behind the filter bar");
                        still below the header (5000). Was 5. */
@@ -884,12 +887,12 @@
       background: #ffffff;
       border-bottom: 1px solid var(--border, #e5e5e5);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-      transform: translateY(calc(-100% - 80px));
+      transform: translateY(calc(-100% - 80px)); /* kt0-OK: transform is the bar's OWN slide animation (overlay itself, not an ancestor); no fixed/absolute descendants — the QB popover portals to <body> when open */
       transition: transform 200ms ease-out;
       font-family: inherit;
     }
     .vrec-product-sticky-bar.is-visible {
-      transform: translateY(0);
+      transform: translateY(0); /* kt0-OK: bar's own slide-in (see base rule) */
     }
     /*
      * a7av.8 — collection-mode bar is always-visible (no scroll trigger).
@@ -898,7 +901,7 @@
      * uninstalled without losing the UX on collection + brand pages.
      */
     .vrec-product-sticky-bar--always-visible {
-      transform: translateY(0);
+      transform: translateY(0); /* kt0-OK: bar's own slide-in (see base rule) */
     }
     @media (prefers-reduced-motion: reduce) {
       .vrec-product-sticky-bar {
@@ -1044,13 +1047,13 @@
       background: #ffffff;
       border-top: 1px solid var(--border, #e5e5e5);
       box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
-      transform: translateY(100%);
+      transform: translateY(100%); /* kt0-OK: transform is the bar's OWN slide animation (overlay itself, not an ancestor); no fixed/absolute descendants — the QB popover portals to <body> when open */
       transition: transform 200ms ease-out;
       font-family: inherit;
     }
     .vrec-product-sticky-bar.is-visible,
     .vrec-product-sticky-bar--always-visible {
-      transform: translateY(0);
+      transform: translateY(0); /* kt0-OK: bar's own slide-in (see base rule) */
     }
     .vrec-product-sticky-bar__thumb { display: none; } /* save width on small screens */
     /* J10 S12 (bd a7av.18): product title/vendor removed from the MOBILE bar — it
@@ -1602,6 +1605,60 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  /* ── J31 (bd 2i8b.90, phase4 audit): more ujg6.42 chunk-gap mirrors ──
+     Rules that landed in only SOME per-template CSS chunks (Coverage-split
+     artifacts, same class as the J28 badge gap). Mirrored here — this snippet
+     renders inline on EVERY template after the chunks, so identical
+     declarations are a no-op where a chunk already carries them and fill the
+     gap on product/cart/search templates. Sources: theme-home.css:608,
+     theme-collection.css:915-991, custom-theme-home.css:182. */
+  .on-sale {
+    color: var(--primary);
+  }
+  .price-per-unit {
+    opacity: 0.75;
+  }
+  .grid__swatch__placeholder {
+    margin: 0;
+    padding: 0;
+  }
+  .text-center .grid__swatch__container {
+    justify-content: center;
+  }
+  .text-left .grid__swatch__container .swatch__button label {
+    margin: 0 10px 0 0;
+  }
+  /* home section-collection-slider <=6-product grid fallback — the grid layout
+     lived only in custom-theme-home.css, so brand/category templates with <=6
+     products (collection.brand-dyson, collection.cat.backbar-sizes) rendered
+     full-width stacked cards instead of the centered grid. */
+  .collection-slider .collection-grid__box {
+    display: grid;
+    grid-template-columns: repeat(var(--productsCount), 175px);
+    justify-content: center;
+    gap: 30px;
+  }
+  /* J31 (2i8b.90b): the home/collection/product/cart chunks re-emit the h1-h3/h5
+     base + 480px-fluid heading rules WITHOUT theme-core's 1400px caps, and being
+     later in load order they won the tie — headings (incl. the PDP h1) grew
+     UNBOUNDED on >=1400px viewports (~+15% at 1920px, +33% at 2560px) and were
+     inconsistent with search pages. Re-assert core's exact cap values here (this
+     snippet renders after every chunk). Values verbatim from theme-core.css. */
+  @media (min-width: 1400px) {
+    .h1, h1 { font-size: calc(47.89922px * var(---font-adjust-heading)); }
+    .h2, h2 { font-size: calc(39.26166px * var(---font-adjust-heading)); }
+    .h3, h3 { font-size: calc(32.18169px * var(---font-adjust-heading)); }
+    .h5, h5 { font-size: calc(21.62167px * var(---font-adjust-heading)); }
+  }
+  /* J31 (2i8b.90c): theme-search.css re-emits the early select-caret rule on
+     .popout__toggle AFTER core's reset, so sort/filter popouts on search pages
+     regained the caret + 28px padding, inconsistent with every other template.
+     Re-assert core's final state (mirror of theme-core's reset). */
+  .popout__toggle {
+    padding: 9px 16px;
+    background-image: none;
   }
 
   /* c48t 2026-05-24: Reserve height for Vertex home_below_hero slot before API resolves.

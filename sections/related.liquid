@@ -9,10 +9,15 @@
 
 {% if has_related_products or has_recently_products %}
 
-  {%- if request.design_mode or request.page_type == null -%}
+  {%- if true -%}
     {%- comment -%}
-      Theme Editor preview OR Section Rendering API request (?section_id=...):
-      render the full section normally.
+      J31 (bd 2i8b.93): lazy-render DISABLED — always render full content (the
+      2i8b.35 pattern). The lazy path dispatched 'section:lazy-rendered' into a
+      page where theme.js's section registry only initializes at DOMContentLoaded
+      (its shopify:section:load re-init is designMode-gated), so the hydrated
+      related-products section NEVER populated on the storefront — a permanent
+      ~400px empty band on product.kr-product. The placeholder branch below is
+      kept for reference but is now unreachable.
     {%- endcomment -%}
   <div class="section-related js {{ section.settings.bg }}" data-section-id="{{ section.id }}" data-section-type="related">
     <div class="wrapper">

@@ -548,7 +548,10 @@
       <noscript><link rel="stylesheet" href="{{ 'theme-cart.css' | asset_url }}"></noscript>
       <link rel="stylesheet" href="{{ 'custom-theme-cart.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
       <noscript><link rel="stylesheet" href="{{ 'custom-theme-cart.css' | asset_url }}"></noscript>
-    {%- elsif template contains 'search' -%}
+    {%- elsif template contains 'search' or page.handle == 'search-results-page' -%}
+      {%- comment -%} J31 (bd 2i8b.94): page.handle clause mirrored from the preload
+         block above (yblz) — the Searchanise page (/pages/search-results-page,
+         template 'page') preloaded these chunks but never APPLIED them. {%- endcomment -%}
       <link rel="stylesheet" href="{{ 'theme-search.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
       <noscript><link rel="stylesheet" href="{{ 'theme-search.css' | asset_url }}"></noscript>
       <link rel="stylesheet" href="{{ 'custom-theme-search.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
