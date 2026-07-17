@@ -1606,6 +1606,28 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  /* J33 (web-team July 17, Jessica: "non-Vertex badges still slightly bigger and
+     more obvious on mobile"): J29's cqw sizing ties the badge to CARD width, but
+     the sliders' card widths INVERT across breakpoints — on desktop the Vertex
+     rail cards (~179px) are wider than the Best Sellers grid cards (~159px) so
+     Vertex badges read bigger (approved); on mobile the 2-col grids (~175px cards)
+     are wider than the Vertex peek-rail (~150px cards), so the NON-Vertex badges
+     come out ~1.4px bigger. Card-proportional sizing can't be uniform when the
+     layouts flip. On phones we want UNIFORM, not proportional — pin a fixed size
+     across every slider below the mobile breakpoint. Desktop keeps the approved
+     cqw sizing above; the ellipsis/max-width clip still applies (not overridden). */
+  @media only screen and (max-width: 767px) {
+    .hairmnl-theme .vrec-card--standard .product__badge,
+    .hairmnl-theme .recent__content .product__badge,
+    .hairmnl-theme .swiper.collection .product__badge,
+    .hairmnl-theme .collection-grid__box .product__badge,
+    .hairmnl-theme .flickity-grid[data-slider] .product__badge,
+    .hairmnl-theme .homepage-collection .js-grid .product__badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      letter-spacing: 0.4px;
+    }
+  }
 
   /* ── J31 (bd 2i8b.90, phase4 audit): more ujg6.42 chunk-gap mirrors ──
      Rules that landed in only SOME per-template CSS chunks (Coverage-split
