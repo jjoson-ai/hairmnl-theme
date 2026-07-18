@@ -8,7 +8,7 @@
   | placement                | data source                                         |
   |--------------------------|-----------------------------------------------------|
   | pdp_below_atc            | product.metafields.vertex.recs                      |
-  | pdp_below_description    | product.metafields.vertex.similar                   |
+  | pdp_below_description    | product.metafields.vertex.recs (TAIL, offset 8 — bd 67d) |
   | cart_above_checkout      | cart.items[0].vertex.cart_recs → .recs fallback     |
   | home_below_hero          | customer.vertex.recommended_for_you → shop.trending |
   | cart_drawer_below_items  | cart.items[0].vertex.recs (v1 fallback)             |
@@ -45,6 +45,8 @@
 
   assign rec_products = ''
   assign rec_source   = 'placeholder'
+  assign rec_offset   = 0
+  assign rec_limit    = 8
 
   case placement
     when 'pdp_below_atc'
@@ -54,9 +56,21 @@
       endif
 
     when 'pdp_below_description'
-      if product and product.metafields.vertex.similar
-        assign rec_products = product.metafields.vertex.similar.value
-        assign rec_source   = 'metafield'
+      comment
+        bd 67d (2026-07-18 audit): this placement read product.metafields.vertex.similar,
+        which NO precompute writer ever writes (the similar model has no serving path),
+        so it ALWAYS fell through to the sample:4 random-products fallback below — a prime
+        PDP surface showing pseudo-random items on every product page. Re-point at the
+        REAL FBT recs and show the TAIL (ranks 9-12) so it never duplicates the "Complete
+        Your Routine" rail above (which renders the top 8). Products with <9 recs render
+        nothing here and the section self-suppresses (empty rail_html check below) rather
+        than showing random. Also lets us skip the $80-160 similar-model tune (bd 6hu).
+      endcomment
+      if product and product.metafields.vertex.recs
+        assign rec_products = product.metafields.vertex.recs.value
+        assign rec_offset   = 8
+        assign rec_limit    = 4
+        assign rec_source   = 'metafield_recs_tail'
       endif
 
     when 'cart_above_checkout'
@@ -161,7 +175,7 @@
   {%- endfor -%}
 {%- endif -%}
 {%- capture rail_html -%}
-  {%- for entry in rec_products limit: 8 -%}
+  {%- for entry in rec_products limit: rec_limit offset: rec_offset -%}
     {%- assign rec_p = nil -%}
     {%- if entry.url -%}
       {%- assign rec_p = entry -%}
