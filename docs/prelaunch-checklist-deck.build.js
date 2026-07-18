@@ -104,7 +104,7 @@ s.addTable(rows, { x: 0.5, y: 1.5, w: 12.33, colW: [0.6, 9.6, 2.13], border: { t
 s.addShape(pres.shapes.RECTANGLE, { x: 0.5, y: 6.25, w: 12.33, h: 0.62, fill: { color: "EAF3EE" }, line: { color: GREEN, width: 0.75 } });
 s.addText([
   { text: "Instant rollback, any time: ", options: { bold: true, color: GREEN } },
-  { text: "the current live theme stays in the admin — publishing it back reverses the launch in one click. Nothing is destructive until the old apps are uninstalled (step 4-5), and even those only affect their own widgets.", options: { color: "30373E" } },
+  { text: "the current live theme stays in the admin — publishing it back reverses the launch in one click. Nothing is destructive until the old apps are uninstalled (steps 5-6), and even those only affect their own widgets.", options: { color: "30373E" } },
 ], { x: 0.72, y: 6.3, w: 11.9, h: 0.52, fontFace: BF, fontSize: 11.5, valign: "middle", margin: 0 });
 footer(s, 4);
 
