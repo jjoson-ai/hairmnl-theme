@@ -72,16 +72,17 @@ footer(s, 2);
 // ============ 3 — ADMIN STEPS ============
 s = pres.addSlide();
 s.background = { color: WHITE };
-header(s, "Step 2 · Admin (before launch day)", "Four small admin items");
+header(s, "Step 2 · Admin (before launch day)", "Five small admin items");
 rows = [
   [hcell("Task"), hcell("Where"), hcell("Notes")],
   [box("Add the Davines hero banner"), tc("Theme editor → Pipeline 8 Working Demo → /collections/davines"), tc("The branded \"Heart of Glass\" banner from the current site isn't configured on the new theme yet — content task, no code.")],
   [box("App-embeds side-by-side check"), tc("Theme editor → App embeds panel: current live theme vs Working Demo"), tc("10-minute insurance: every embed that's ON for live (Klaviyo, Judge.me, Reamaze, LoyaltyLion…) must be ON for the Demo, so nothing silently dies at launch.")],
   [box("Sign out other Shopify sessions"), tc("Admin → Settings → Users → your account"), tc("Security housekeeping from the audit — one stored login session should be rotated.")],
   [box("Back-in-Stock switchover decision"), tc("Appikon → Klaviyo-native"), tc("The Klaviyo replacement is built; confirm the subscriber-list import (or accept the gap) so Appikon can be uninstalled at launch. Can also follow a few days after.")],
+  [box("Recommendation engine — Google Cloud sign-in"), tc("Terminal (1-minute browser sign-in when prompted)"), tc("Lets us deploy the updated recommendation filters and run a fresh build, so launch-day sliders carry only in-stock, non-freebie products from the very first visit.")],
 ];
 s.addTable(rows, { x: 0.5, y: 1.5, w: 12.33, colW: [3.4, 4.2, 4.73], border: { type: "solid", pt: 0.5, color: "D7DBE0" }, autoPage: false,
-  rowH: [0.3, 0.85, 0.95, 0.7, 0.95], margin: [3, 6, 3, 6] });
+  rowH: [0.3, 0.8, 0.9, 0.62, 0.9, 0.9], margin: [3, 6, 3, 6] });
 footer(s, 3);
 
 // ============ 4 — LAUNCH DAY ============
@@ -90,15 +91,16 @@ s.background = { color: WHITE };
 header(s, "Step 3 · Launch day", "The sequence — about an hour end to end");
 rows = [
   [hcell("#"), hcell("Action"), hcell("Who")],
-  [tc("1", { bold: true, align: "center" }), tc("Final content sync — snapshot the Demo's latest settings/content into version control (one command)"), tc("Jonathan + Claude")],
-  [tc("2", { bold: true, align: "center" }), tc("PUBLISH \"Pipeline 8 Working Demo\" (Admin → Themes → Publish)", { bold: true }), tc("Jonathan")],
-  [tc("3", { bold: true, align: "center" }), tc("Theme editor → App embeds → toggle the STKY sticky-bar embed OFF"), tc("Jonathan")],
-  [tc("4", { bold: true, align: "center" }), tc("Uninstall the STKY app + cancel its subscription (the theme's own sticky bar takes over)"), tc("Jonathan")],
-  [tc("5", { bold: true, align: "center" }), tc("Uninstall LimeSpot (recommendations are fully Vertex now — this also removes ~25 stale requests per page)"), tc("Jonathan")],
-  [tc("6", { bold: true, align: "center" }), tc("15-minute live smoke test: home · product page · collection · cart · quick-buy add (drawer opens WITH the item, count updates, no errors) · sticky buy bar appears on scroll · badges · chat bubble · reach checkout", { bold: true }), tc("Everyone")],
+  [tc("1", { bold: true, align: "center" }), tc("Recommendation engine: deploy updated filters + fresh build, verify sliders carry clean products (launch-eve, backend)"), tc("Claude")],
+  [tc("2", { bold: true, align: "center" }), tc("Final content sync — snapshot the Demo's latest settings/content into version control (one command)"), tc("Jonathan + Claude")],
+  [tc("3", { bold: true, align: "center" }), tc("PUBLISH \"Pipeline 8 Working Demo\" (Admin → Themes → Publish)", { bold: true }), tc("Jonathan")],
+  [tc("4", { bold: true, align: "center" }), tc("Theme editor → App embeds → toggle the STKY sticky-bar embed OFF"), tc("Jonathan")],
+  [tc("5", { bold: true, align: "center" }), tc("Uninstall the STKY app + cancel its subscription (the theme's own sticky bar takes over)"), tc("Jonathan")],
+  [tc("6", { bold: true, align: "center" }), tc("Uninstall LimeSpot (recommendations are fully in-house now — also removes ~25 stale requests per page)"), tc("Jonathan")],
+  [tc("7", { bold: true, align: "center" }), tc("15-minute live smoke test: home · product page · collection · cart · quick-buy add (drawer opens WITH the item, count updates, no errors) · sticky buy bar on scroll · badges · recommendation sliders show in-stock products only · chat bubble · reach checkout", { bold: true }), tc("Everyone")],
 ];
 s.addTable(rows, { x: 0.5, y: 1.5, w: 12.33, colW: [0.6, 9.6, 2.13], border: { type: "solid", pt: 0.5, color: "D7DBE0" }, autoPage: false,
-  rowH: [0.3, 0.6, 0.5, 0.5, 0.55, 0.7, 1.05], margin: [3, 6, 3, 6] });
+  rowH: [0.28, 0.55, 0.5, 0.45, 0.45, 0.5, 0.55, 1.0], margin: [3, 6, 3, 6] });
 s.addShape(pres.shapes.RECTANGLE, { x: 0.5, y: 6.25, w: 12.33, h: 0.62, fill: { color: "EAF3EE" }, line: { color: GREEN, width: 0.75 } });
 s.addText([
   { text: "Instant rollback, any time: ", options: { bold: true, color: GREEN } },
