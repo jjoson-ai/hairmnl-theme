@@ -1,0 +1,151 @@
+{%- comment -%}
+  MIGRATION-DEBT: bd 62z. Bespoke Pipeline 6 telemetry for the custom Vertex
+  rec engine — no Shopify app or theme setting covers first-party attribution
+  for a self-built recommendation system, so this can't be a no-op. Port to
+  OS 2.0: copy as-is (plain DOM + fetch/sendBeacon, zero P6-specific coupling)
+  plus the two render-call sites (layout/theme.liquid, once) and the shop
+  metafields (vertex.seo_platform_base/slug). Easy port. See
+  os2-migration/customization-audit.md.
+
+  Vertex rec widget instrumentation — fires impression + click events to the
+  seo-platform dashboard's /vertex/events endpoint.
+
+  Render this snippet once per page (it self-guards against double init).
+  It auto-discovers any `[data-vertex-widget-id]` element on the page and:
+    - fires ONE `vertex-rec-impression` event per widget (deferred via
+      requestIdleCallback, so zero TBT impact)
+    - adds a delegated click listener that fires `vertex-rec-click` on
+      any product link inside a widget
+
+  Each production widget snippet should set, on its outer `<section>`:
+    data-vertex-widget-id="pdp-fbt|cart-routine|homepage-trending|collection-trending"
+    data-vertex-placement="pdp|cart|homepage|collection"
+    data-vertex-anchor-product-id="<id>"   (PDP only)
+    data-vertex-products="id1,id2,..."     (the rec IDs shown)
+
+  Config: SEO_PLATFORM_BASE + SEO_PLATFORM_SLUG should match the values in
+  the Custom Pixel.
+{%- endcomment -%}
+
+<script>
+(function () {
+  if (window.__vertexRecsInstrumented) return;
+  window.__vertexRecsInstrumented = true;
+
+  var SEO_BASE = "{{ shop.metafields.vertex.seo_platform_base.value | default: '' }}";
+  var SLUG     = "{{ shop.metafields.vertex.seo_platform_slug.value | default: '' }}";
+  if (!SEO_BASE || !SLUG) return;
+  // bd 62z (2026-07-18/19): NO /api prefix. Confirmed against seo-platform's
+  // actual FastAPI route registration (api/app/routes/vertex.py:92,
+  // router = APIRouter(prefix="/businesses/{slug}/vertex"), included with no
+  // app-level prefix) and against the live Custom Pixel's own endpoint
+  // construction (event-pixel/vertex-custom-pixel.js:120), which explicitly
+  // documents the /api prefix was REMOVED after the 2026-05-19 Railway
+  // migration to hit FastAPI directly. This snippet had never been deployed,
+  // so the stale pre-migration /api/... path was never caught. Live-verified:
+  // POST to the corrected URL with this exact payload shape returns 204.
+  var ENDPOINT = SEO_BASE.replace(/\/+$/, "") + "/businesses/" + SLUG + "/vertex/events";
+
+  function getVisitorId() {
+    var m = (document.cookie || "").match(/(?:^|;\s*)_shopify_y=([^;]+)/);
+    if (m) return decodeURIComponent(m[1]);
+    var s = window.localStorage && localStorage.getItem("__vertex_vid");
+    if (s) return s;
+    var n = "anon-" + Math.random().toString(36).slice(2) + "-" + Date.now();
+    try { localStorage.setItem("__vertex_vid", n); } catch (_) {}
+    return n;
+  }
+
+  function nowIso() { return new Date().toISOString(); }
+
+  function send(events) {
+    if (!events.length) return;
+    try {
+      var body = JSON.stringify({ events: events });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "application/json" }));
+        return;
+      }
+      fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: body, keepalive: true, mode: "no-cors",
+      }).catch(function () {});
+    } catch (_) {}
+  }
+
+  function fireImpressions() {
+    var widgets = document.querySelectorAll("[data-vertex-widget-id]");
+    if (!widgets.length) return;
+    var visitorId = getVisitorId();
+    var events = [];
+    var ts = nowIso();
+    for (var i = 0; i < widgets.length; i++) {
+      var el = widgets[i];
+      var widgetId = el.getAttribute("data-vertex-widget-id");
+      var placement = el.getAttribute("data-vertex-placement") || null;
+      var anchor = el.getAttribute("data-vertex-anchor-product-id") || null;
+      var products = (el.getAttribute("data-vertex-products") || "")
+        .split(",").map(function (s) { return s.trim(); }).filter(Boolean);
+      // Emit one impression event per product so per-product analytics work
+      for (var j = 0; j < products.length; j++) {
+        events.push({
+          event_type: "vertex-rec-impression",
+          visitor_id: visitorId,
+          occurred_at: ts,
+          product_id: products[j],
+          widget_id: widgetId,
+          placement: placement,
+          anchor_product_id: anchor,
+          metadata: { position: j },
+        });
+      }
+    }
+    send(events);
+  }
+
+  function attachClickHandler() {
+    document.addEventListener("click", function (e) {
+      var link = e.target && e.target.closest && e.target.closest("a[href]");
+      if (!link) return;
+      var widget = link.closest("[data-vertex-widget-id]");
+      if (!widget) return;
+      var widgetId = widget.getAttribute("data-vertex-widget-id");
+      var placement = widget.getAttribute("data-vertex-placement") || null;
+      var anchor = widget.getAttribute("data-vertex-anchor-product-id") || null;
+      // Try to extract product ID from the link's href (/products/<handle>) or
+      // a data attribute we added to the card.
+      var productId = link.getAttribute("data-vertex-product-id");
+      if (!productId) {
+        var m = (link.getAttribute("href") || "").match(/\/products\/([^/?#]+)/);
+        productId = m ? m[1] : null; // handle, not legacy ID — that's fine for matching
+      }
+      send([{
+        event_type: "vertex-rec-click",
+        visitor_id: getVisitorId(),
+        occurred_at: nowIso(),
+        product_id: productId,
+        widget_id: widgetId,
+        placement: placement,
+        anchor_product_id: anchor,
+        metadata: {},
+      }]);
+    }, true);
+  }
+
+  function init() {
+    attachClickHandler();
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(fireImpressions, { timeout: 2000 });
+    } else {
+      setTimeout(fireImpressions, 0);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>

@@ -47,6 +47,8 @@
   assign rec_source   = 'placeholder'
   assign rec_offset   = 0
   assign rec_limit    = 8
+  assign rec_ids_csv  = ''
+  assign rec_widget_id = placement
 
   case placement
     when 'pdp_below_atc'
@@ -108,6 +110,27 @@
         assign rec_products = product.metafields.vertex.recs.value
         assign rec_source   = 'metafield'
       endif
+  endcase
+
+  comment
+    bd 62z (2026-07-19): widget-id vocabulary the instrumentation snippet
+    (snippets/vertex-recs-instrumentation.liquid) groups analytics by —
+    independent of `placement` naming so the seo-platform dashboard's widget
+    labels stay stable even if a placement string is renamed. rec_widget_id
+    defaults to `placement` (set above) for any future/unmapped placement so
+    events are never silently unlabeled.
+  endcomment
+  case placement
+    when 'pdp_below_atc'
+      assign rec_widget_id = 'pdp-fbt'
+    when 'pdp_below_description'
+      assign rec_widget_id = 'pdp-similar'
+    when 'cart_above_checkout'
+      assign rec_widget_id = 'cart-routine'
+    when 'home_below_hero'
+      assign rec_widget_id = 'homepage-trending'
+    when 'cart_drawer_below_items'
+      assign rec_widget_id = 'cart-drawer'
   endcase
 
   comment
@@ -205,6 +228,9 @@
       {%- endif -%}
       {%- unless rec_skip -%}
         {%- render 'vertex-rec-card', product: rec_p, placement: placement -%}
+        {%- comment -%} bd 62z: accumulate only the IDs actually rendered (post-filter),
+           so data-vertex-products matches what the shopper really sees. {%- endcomment -%}
+        {%- assign rec_ids_csv = rec_ids_csv | append: rec_p.id | append: ',' -%}
       {%- endunless -%}
     {%- endif -%}
   {%- endfor -%}
@@ -224,6 +250,9 @@
   data-vertex-anchor="{% if product %}{{ product.id }}{% endif %}"
   data-vertex-product-id="{% if product %}{{ product.id }}{% endif %}"
   data-vertex-source="{{ rec_source }}"
+  data-vertex-widget-id="{{ rec_widget_id }}"
+  data-vertex-anchor-product-id="{% if product %}{{ product.id }}{% endif %}"
+  data-vertex-products="{{ rec_ids_csv | split: ',' | join: ',' }}"
   aria-labelledby="vrec-title-{{ placement }}"
 >
   <header class="vrec-slot__header">

@@ -1935,6 +1935,17 @@
       setTimeout(function () { observer.disconnect(); }, 15000);
     })();
   </script>
+  {%- comment -%}
+    MIGRATION-DEBT: bd 62z (2026-07-19). Fires the Vertex rec-rail attribution
+    events (impression + click) to the seo-platform ROI dashboard — closes the
+    loop that the P8 cutover's Day-14 LimeSpot-uninstall decision needs. Renders
+    once, unconditionally; the snippet self-guards (window.__vertexRecsInstrumented)
+    and no-ops entirely if the two shop metafields below are unset. See
+    os2-migration/customization-audit.md "Recent additions" for the full
+    no-op-alternatives review. Port to OS 2.0: same snippet + render call,
+    zero P6-specific coupling (plain DOM + fetch/sendBeacon).
+  {%- endcomment -%}
+  {%- render 'vertex-recs-instrumentation' -%}
   </body>
     {%- comment -%}
       ujg6.49 (2026-05-19): gate BOGOS freegifts-snippet-change to product
