@@ -212,37 +212,13 @@
         "q1": {
           "type": "text",
           "settings": {
-            "title": "How do I protect rebonded hair in the summer?",
-            "content": "<p>Shield it from UV, sweat, humidity, and chlorine — wear a hat or use UV-protective products, rinse after swimming or heavy sweating, and keep hair moisturized to prevent dryness and reversion.<\/p>"
-          }
-        },
-        "q2": {
-          "type": "text",
-          "settings": {
-            "title": "Can humidity ruin rebonded hair?",
-            "content": "<p>High humidity and scalp sweat can trigger reversion (the return of frizz and waves) and dryness, so consistent protective care is key to keeping that sleek, straight finish.<\/p>"
-          }
-        },
-        "q3": {
-          "type": "text",
-          "settings": {
-            "title": "What should I avoid with rebonded hair in summer?",
-            "content": "<p>Avoid unprotected sun exposure, chlorinated pools without rinsing, and skipping conditioning — these lead to snapping, severe dryness, and faster reversion.<\/p>"
-          }
-        },
-        "q4": {
-          "type": "text",
-          "settings": {
             "title": "How much does rebonding cost?",
             "content": "<p>Rebonding at HairMNL Studio starts at ₱5,000. Pricing varies depending on your hair's length, thickness, and condition. During your consultation, our stylists will recommend the best approach and provide a personalized quote.<\/p>"
           }
         }
       },
       "block_order": [
-        "q1",
-        "q2",
-        "q3",
-        "q4"
+        "q1"
       ]
     }
   },
