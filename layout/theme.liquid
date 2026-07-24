@@ -33,26 +33,23 @@
     {%- comment -%} article.handle is BLOG-QUALIFIED ("<blog>/<slug>") — a bare-slug gate never matches (bd 0kv3.3 gate regression, fixed 2026-06-10) {%- endcomment -%}
     {%- if article.handle == 'product-spotlight/15-top-sulfate-free-shampoos-in-the-philippines' -%}
     {%- assign u = shop.url -%}
+    {%- comment -%} Dynamic ItemList from custom.related_products (live prices/ratings; avoids the all_products budget; GSC product-snippet fix 2026-07-22, bd seo-platform-jwst) {%- endcomment -%}
+    {%- assign stg_pos = 0 -%}
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
       "name": "Best Sulfate-Free Shampoos in the Philippines",
       "url": "{{ u }}{{ article.url }}",
-      "numberOfItems": 11,
       "itemListOrder": "https://schema.org/ItemListUnordered",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "item": { "@type": "Product", "name": "Davines Purifying Shampoo", "url": "{{ u }}/products/davines-naturaltech-purifying-shampoo-for-scalp-with-oily-or-dry-dandruff" } },
-        { "@type": "ListItem", "position": 2, "item": { "@type": "Product", "name": "Davines Energizing Shampoo", "url": "{{ u }}/products/davines-naturaltech-energizing-shampoo-for-scalp-with-fragile-thinning-hair" } },
-        { "@type": "ListItem", "position": 3, "item": { "@type": "Product", "name": "Davines OI Absolute Beautifying Shampoo", "url": "{{ u }}/products/davines-oi-shampoo-absolute-beautifying-shampoo-with-roucou-oil" } },
-        { "@type": "ListItem", "position": 4, "item": { "@type": "Product", "name": "Davines Well-Being Shampoo", "url": "{{ u }}/products/davines-naturaltech-well-being-shampoo-for-all-kinds-of-hair" } },
-        { "@type": "ListItem", "position": 5, "item": { "@type": "Product", "name": "Davines NOUNOU Nourishing Shampoo", "url": "{{ u }}/products/davines-essentials-nounou-shampoo-nourishing-shampoo-for-highly-processed-or-brittle-hair" } },
-        { "@type": "ListItem", "position": 6, "item": { "@type": "Product", "name": "Davines LOVE Smoothing Shampoo", "url": "{{ u }}/products/davines-essentials-love-shampoo-lovely-smoothing-shampoo-for-coarse-or-frizzy-hair" } },
-        { "@type": "ListItem", "position": 7, "item": { "@type": "Product", "name": "Davines Renewing Shampoo", "url": "{{ u }}/products/davines-renewing-shampoo" } },
-        { "@type": "ListItem", "position": 8, "item": { "@type": "Product", "name": "Davines LOVE Curl Enhancing Shampoo", "url": "{{ u }}/products/davines-essentials-love-curl-enhancing-shampoo-lovely-curl-enhancing-shampoo-for-wavy-or-curly-hair" } },
-        { "@type": "ListItem", "position": 9, "item": { "@type": "Product", "name": "Davines VOLU Volume Enhancing Shampoo", "url": "{{ u }}/products/davines-essentials-volu-shampoo-volume-enhancing-shampoo-for-fine-or-limp-hair" } },
-        { "@type": "ListItem", "position": 10, "item": { "@type": "Product", "name": "Kerastase Chroma Absolu Sulfate-Free Shampoo", "url": "{{ u }}/products/kerastase-chroma-absolu-sulfate-free-shampoo-thin-hair" } },
-        { "@type": "ListItem", "position": 11, "item": { "@type": "Product", "name": "Davines Calming Shampoo", "url": "{{ u }}/products/davines-naturaltech-calming-shampoo-for-sensitive-scalp" } }
+        {%- for stg_p in article.metafields.custom.related_products.value -%}
+        {%- if stg_p.title != blank -%}
+        {%- assign stg_pos = stg_pos | plus: 1 -%}
+        {%- if stg_pos > 1 -%},{%- endif -%}
+        { "@type": "ListItem", "position": {{ stg_pos }}, "item": { "@type": "Product", "name": {{ stg_p.title | json }}, "url": "{{ u }}{{ stg_p.url }}", "offers": { "@type": "Offer", "price": "{{ stg_p.price | money_without_currency | remove: ',' }}", "priceCurrency": "{{ cart.currency.iso_code }}", "availability": "{% if stg_p.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}", "url": "{{ u }}{{ stg_p.url }}" }{% if stg_p.metafields.reviews.rating_count != blank and stg_p.metafields.reviews.rating_count.value > 0 and stg_p.metafields.reviews.rating != blank %}, "aggregateRating": { "@type": "AggregateRating", "ratingValue": {{ stg_p.metafields.reviews.rating.value.rating | round: 2 }}, "reviewCount": {{ stg_p.metafields.reviews.rating_count }} }{% endif %} } }
+        {%- endif -%}
+        {%- endfor -%}
       ]
     }
     </script>
