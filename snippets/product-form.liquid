@@ -254,7 +254,7 @@
         {% assign button_text =  'products.product.sold_out' | t %}
       {% endunless %}
 
-      <div class="product__submit__buttons">
+      <div class="product__submit__buttons{% unless current_variant.available %} product__submit__buttons--notify{% endunless %}">
         <button
           type="submit"
           name="add"
@@ -279,6 +279,26 @@
           <span class="btn-state-complete">&nbsp;</span>
         </button>
 
+        {%- comment -%}
+          MIGRATION-DEBT: bd hairmnl-theme-g1n.4 (2026-07-24). BIS notify
+          trigger — Appikon replacement (epic g1n). CSS hides the disabled
+          Add-to-Cart via .product__submit__buttons--notify; JS in
+          notify-when-available.js toggles both on theme:variant:change.
+          Port to OS 2.0 together with the product form. Audit row in
+          os2-migration/customization-audit.md "Recent additions".
+        {%- endcomment -%}
+        <button
+          type="button"
+          class="btn btn--full btn--primary uppercase btn--notify"
+          data-notify-trigger
+          data-variant-id="{{ current_variant.id }}"
+          data-product-title="{{ product.title | escape }}"
+          data-variant-title="{{ current_variant.title | escape }}"
+          data-sku="{{ current_variant.sku | escape }}"
+          {% if current_variant.available %}hidden{% endif %}>
+          {{ 'products.product.notify_when_available' | t }}
+        </button>
+
         {% if buybutton_setting %}
           <div id="dynamic-checkout-cart" class="product__submit__quick">
             {{ form | payment_button }}
@@ -288,5 +308,25 @@
       </div>
     </div>
   {% endform %}
+
+  {%- comment -%}
+    MIGRATION-DEBT: bd hairmnl-theme-g1n.4 (2026-07-24). BIS sticky
+    right-edge tab (PDP-only by living in this snippet). JS portals it to
+    <body> on init — Pipeline sections animate with AOS transforms, which
+    would trap the fixed tab (kt0 containing-block rule). Rotation is done
+    with writing-mode, NOT transform, for the same reason.
+  {%- endcomment -%}
+  <button
+    type="button"
+    class="notify-tab"
+    data-notify-tab
+    data-notify-trigger
+    data-variant-id="{{ current_variant.id }}"
+    data-product-title="{{ product.title | escape }}"
+    data-variant-title="{{ current_variant.title | escape }}"
+    data-sku="{{ current_variant.sku | escape }}"
+    {% if current_variant.available %}hidden{% endif %}>
+    {{ 'products.product.notify_when_available' | t }}
+  </button>
 
 </div>

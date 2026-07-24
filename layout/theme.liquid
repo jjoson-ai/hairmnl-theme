@@ -1943,6 +1943,22 @@
     zero P6-specific coupling (plain DOM + fetch/sendBeacon).
   {%- endcomment -%}
   {%- render 'vertex-recs-instrumentation' -%}
+  {%- comment -%}
+    MIGRATION-DEBT: bd hairmnl-theme-g1n.5 (2026-07-24). Back-in-Stock
+    modal + driver JS — Klaviyo-native Appikon replacement (epic g1n).
+    PDP-gated so non-product pages pay zero cost. The JS resolves the
+    Klaviyo company_id at runtime from the existing app-embed script tag
+    (meta name="klaviyo-company-id" overrides). Newsletter list signup
+    activates once a meta name="klaviyo-newsletter-list-id" tag is added
+    here (g1n.2/g1n.7 fills the real id — anti-fabrication placeholder
+    policy, do NOT invent one). Port to OS 2.0: copy this block + both
+    asset files + the modal snippet. Audit row in
+    os2-migration/customization-audit.md "Recent additions".
+  {%- endcomment -%}
+  {%- if template contains 'product' -%}
+    {%- render 'notify-when-available-modal' -%}
+    <script src="{{ 'notify-when-available.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
   </body>
     {%- comment -%}
       ujg6.49 (2026-05-19): gate BOGOS freegifts-snippet-change to product

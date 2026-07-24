@@ -1885,4 +1885,107 @@
       --menu-height: 60px;
     }
   }
+
+  /* g1n.4/g1n.5 2026-07-24 — Back-in-Stock notify UI (Appikon replacement).
+     kt0 discipline: NO transform/contain/filter on .notify-tab or any
+     notify-modal selector. Tab rotation uses writing-mode instead of
+     transform; the tab is portaled to <body> by notify-when-available.js
+     so no AOS-transformed section ancestor can trap its position:fixed. */
+
+  /* Inline trigger swaps with the disabled Add-to-Cart via wrapper class */
+  .btn--notify[hidden],
+  .notify-tab[hidden] {
+    display: none !important;
+  }
+  .product__submit__buttons--notify .btn--add-to-cart {
+    display: none;
+  }
+
+  /* Sticky right-edge tab (fixed; rotated via writing-mode, kt0-safe) */
+  .notify-tab {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    z-index: 5; /* below cart drawer / modals (Stky's old overlay used 6) */
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    padding: 16px 10px;
+    background: #2d2d2d;
+    color: #ffffff;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: 4px 0 0 4px;
+    cursor: pointer;
+  }
+  .notify-tab:hover,
+  .notify-tab:focus {
+    background: #000000;
+    color: #ffffff;
+  }
+  @media (max-width: 767px) {
+    .notify-tab {
+      font-size: 11px;
+      padding: 12px 8px;
+    }
+  }
+
+  /* Modal form fields */
+  .notify-modal__form .notify-modal__field {
+    margin-bottom: 16px;
+  }
+  .notify-modal__label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .notify-modal__input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+  }
+  .notify-modal__phone-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .notify-modal__phone-prefix {
+    flex: 0 0 auto;
+    font-weight: 600;
+  }
+  .notify-modal__phone-hint {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #757575;
+  }
+  .notify-modal__checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .notify-modal__error {
+    margin: 0 0 12px;
+    padding: 10px 12px;
+    background: #fdecea;
+    color: #b3261e;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  .notify-modal__submit.is-busy {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .notify-modal__product-title {
+    margin: 4px 0 16px;
+    color: #757575;
+  }
+  /* Email-only MVP: hide the single-option channel fieldset entirely.
+     :has() is supported by all 2026 evergreen browsers; without it the
+     fieldset shows one pre-checked Email radio — harmless degradation. */
+  .notify-modal__channels:not(:has([data-notify-channel="sms"])) {
+    display: none;
+  }
 </style>

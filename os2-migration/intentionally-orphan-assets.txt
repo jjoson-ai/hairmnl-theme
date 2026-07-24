@@ -46,6 +46,7 @@ assets/bold-upsell-custom.css           2i8b      2026-09-30   [TAE] Bold Upsell
 
 assets/theme.dev.css                    (none)    2026-12-31   [DEV-ONLY] Unminified theme.css for local debugging. Production loads theme.css. Keep on disk for the dev workflow.
 assets/theme.dev.js                     (none)    2026-12-31   [DEV-ONLY] Unminified theme.js for local debugging. Production loads theme.js.
+assets/notify-when-available.dev.js     g1n.5     2026-12-31   [DEV-ONLY] Canonical readable source for notify-when-available.js (BIS modal driver). Production loads the minified mirror; regenerate with the npx esbuild command in the file header.
 
 # ----------------------------------------------------------------------------
 # [INVESTIGATE] — unclear status; needs follow-up

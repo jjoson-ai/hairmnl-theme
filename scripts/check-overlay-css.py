@@ -60,6 +60,9 @@ OVERLAY_PATTERNS = re.compile(
       | vrec-product-sticky-bar     # PDP sticky ATC bar (position:fixed)
       | sticky-cart-bubble          # desktop floating cart (position:fixed)
       | vrec-fly-clone              # fly-to-cart transient clone (position:fixed)
+      | notify[-_]?tab              # BIS sticky tab, position:fixed (g1n.6)
+      | notify[-_]?modal            # BIS notify modal + fields (g1n.6)
+      | notify[-_]?when[-_]?available  # BIS modal id/asset selectors (g1n.6)
     )""",
     re.IGNORECASE | re.VERBOSE,
 )
