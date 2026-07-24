@@ -173,6 +173,19 @@
       <link rel="dns-prefetch" href="https://searchanise-ef84.kxcdn.com">
     {%- endif -%}
 
+    {%- comment -%}
+      BIS (bd g1n.2, 2026-07-25): Klaviyo identifiers for
+      assets/notify-when-available.js. Both values verified live against
+      the Klaviyo API via seo-platform's stored integration — NOT invented:
+        company-id  JAws9h = account "HairMNL.com" public API key
+        list-id     L4EFW9 = "HairMNL.com Newsletter" (footer signup list)
+      The JS also self-derives company-id from the Klaviyo app-embed script
+      tag; this meta is the deterministic override. The list-id meta
+      activates the modal's newsletter-consent checkbox path.
+    {%- endcomment -%}
+    <meta name="klaviyo-company-id" content="JAws9h">
+    <meta name="klaviyo-newsletter-list-id" content="L4EFW9">
+
 
 
     {%- comment -%}
