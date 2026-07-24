@@ -553,7 +553,7 @@ When a task requires any of the above, surface to the coordinator — agents do 
 
 ### Constraints surfaced during planning
 
-- **SMS to Philippines is not supported by Klaviyo's native SMS.** Stakeholder deck slide 5–6 presents three paths: Skip SMS / Semaphore (PH-local, ~₱0.50/SMS) / Twilio (~$0.05/SMS). Engineering branches post-decision.
+- **SMS to Philippines is not supported by Klaviyo's native SMS.** Stakeholder deck slide 5–6 presented three paths: Skip SMS / Semaphore (PH-local, ~₱0.50/SMS) / Twilio (~$0.05/SMS). **DECIDED 2026-07-24: Option A — email-only MVP** (stakeholder build approval defaulted to the deck's engineering recommendation). The modal already gates SMS UI behind `settings.bis_sms_enabled` (left undefined ⇒ email-only); T11 SMS-bridge ticket (`g1n.10`) closed won't-do. SMS becomes a v2 add-on if leadership asks: define the setting + revive the bridge spec.
 - **"Notify oldest 5 first when restock < 5" is best-effort, not strict FIFO.** Klaviyo flows are event-driven and rate-throttled, not waitlist-ordered. Acceptable for HairMNL volume; documented in deck as a known limitation.
 - **Phone input is PH-only** (hardcoded `+63` prefix, no country picker). Deviation from brief; revisit if international growth becomes a near-term goal.
 - **Sticky tab visibility:** PDPs only, sold-out variant only. JS+CSS load only on product pages.
