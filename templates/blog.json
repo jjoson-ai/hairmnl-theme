@@ -22,6 +22,22 @@
         "underline_current": true
       }
     },
+    "section_static_banner_wdMV9f": {
+      "type": "section-static-banner",
+      "name": "Static Banner",
+      "settings": {
+        "section_margin_top": 20,
+        "section_margin_bottom": 20,
+        "banner_desktop": "shopify://shop_images/tousled-online-magazine-desktop.jpg",
+        "banner_mobile": "shopify://shop_images/tousled-online-magazine.jpg",
+        "banner_alt": "Tousled Online Magazine at HairMNL",
+        "banner_url": "",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
     "1642402147c9edb11a": {
       "type": "section-slideshow",
       "blocks": {
@@ -152,6 +168,7 @@
         "675adfab-456c-4ccb-8497-59c09946e057",
         "4be9c022-1630-4ccf-855c-84b732d21d72"
       ],
+      "disabled": true,
       "settings": {
         "autoplay": true,
         "autoplay_speed": 8,
@@ -313,6 +330,27 @@
         "btn_readmore_alignment": "left"
       }
     },
+    "section_blog_wNUNpf": {
+      "type": "section-blog",
+      "settings": {
+        "title": "Salon Services",
+        "homepage_blog": "salon-services",
+        "homepage_blog_count": 3,
+        "bg": "palette--light bg--neutral",
+        "color": "text--white",
+        "overlay_color": "#000000",
+        "aspect_ratio": 0.7,
+        "show_view_all": true,
+        "button_style": "btn--outline uppercase",
+        "show_category": true,
+        "category_alignment": "left",
+        "title_alignment": "left",
+        "show_excerpt": true,
+        "excerpt_alignment": "left",
+        "show_readmore": true,
+        "btn_readmore_alignment": "left"
+      }
+    },
     "1642404400c39cc4fd": {
       "type": "section-blog",
       "settings": {
@@ -366,6 +404,7 @@
   },
   "order": [
     "60123d8a-fe32-4887-b1e6-46b3cdfee4c9",
+    "section_static_banner_wdMV9f",
     "1642402147c9edb11a",
     "main",
     "8daa8f18-3056-41cb-90cb-cc822377ae06",
@@ -373,6 +412,7 @@
     "647e4a15-dfb6-4c93-a3ea-83718b72e568",
     "1642404307079525bb",
     "16424027496893cfb6",
+    "section_blog_wNUNpf",
     "1642402476da77bfa1",
     "1642404400c39cc4fd",
     "74303a5e-a390-49c9-9c06-b72ee73f7c74",

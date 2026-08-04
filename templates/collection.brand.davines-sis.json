@@ -53,10 +53,9 @@
         },
         "9e4d4243-4c2e-4520-94cf-0c79588ee661": {
           "type": "banner_slide",
-          "disabled": true,
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/dav-promos-feb-2026-site-banners-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/dav-promos-feb-2026-site-banners-mobile.jpg",
+            "slide_image_desktop": "shopify://shop_images/davines-july-2026-always-on-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/davines-july-2026-always-on-mobile.jpg",
             "slide_image_url": "shopify://collections/davines-featured-products"
           }
         },
@@ -498,6 +497,7 @@
         "section_margin_bottom": 10,
         "banner_desktop": "shopify://shop_images/davines-june23-always-on_desktop-1400x500.jpg",
         "banner_mobile": "shopify://shop_images/davines-june23-always-on_mobile-552x502.jpg",
+        "banner_alt": "",
         "banner_url": "shopify://collections/davines-featured-products",
         "desktop_padding_top": 16,
         "desktop_padding_bottom": 16,

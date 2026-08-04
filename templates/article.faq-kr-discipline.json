@@ -1,0 +1,197 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "0863f1f1-afa1-42f7-8409-3f2dbbf6a21c": {
+      "type": "tousled-header",
+      "settings": {
+        "tousled_menu_linklist": "tousled-v2",
+        "tousled_logo_max_limit": 100,
+        "tousled_logo_max_limit_menu": 100,
+        "header_bg": "#e7d8c3",
+        "underline": "#333333",
+        "underline_current": false
+      }
+    },
+    "main": {
+      "type": "article",
+      "custom_css": [],
+      "settings": {
+        "title_alignment": "center",
+        "blog_show_meta": true,
+        "author_alignment": "center",
+        "content_alignment": "left",
+        "tags": false,
+        "social": false,
+        "blog_show_featured_image": false,
+        "image_height": "use_screen_three_quarters",
+        "bg_position": "center-center",
+        "sidebar_tags": false,
+        "recent": true
+      }
+    },
+    "faq": {
+      "type": "section-faq",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      },
+      "blocks": {
+        "q1": {
+          "type": "text",
+          "settings": {
+            "title": "What's the difference between Oléo-Relax and Fluidealiste?",
+            "content": "<p>Oléo-Relax uses a richer Morpho-Huiles Complex (Shorea butter and coconut oil) for thick, coarse, or voluminous frizzy hair. Fluidealiste uses a lighter Morpho-Keratine Complex for fine-to-normal hair that needs smoothing without added weight — and its shampoo is sulfate-free. In short: Oléo-Relax for heavy-hair frizz, Fluidealiste for light-hair frizz. Both belong to the Kérastase Discipline range, and both address humidity-driven frizz — for different textures.</p>"
+          }
+        },
+        "q2": {
+          "type": "text",
+          "settings": {
+            "title": "What replaced Kérastase Oléo-Relax?",
+            "content": "<p>Nothing has replaced the line — the <a href=\"https://www.hairmnl.com/products/kerastase-discipline-bain-oleo-relax-250ml\" title=\"Shop Kérastase Discipline Oléo-Relax Shampoo 250ml at HairMNL\" rel=\"noopener\" target=\"_blank\">Oléo-Relax Shampoo</a> and the <a href=\"https://www.hairmnl.com/products/kerastase-discipline-oleo-relax-serum\" title=\"Shop Kérastase Discipline Oléo-Relax Hair Oil at HairMNL\" rel=\"noopener\" target=\"_blank\">Oléo-Relax Hair Oil</a> remain the core of the Oléo-Relax line. What did change is that certain individual formats have been discontinued in some markets over the years, which is likely the product you have in mind. For what is currently stocked in the Philippines, check the live <a href=\"https://www.hairmnl.com/collections/kerastase-discipline\" title=\"Shop Kérastase Discipline at HairMNL\" rel=\"noopener\" target=\"_blank\">Kérastase Discipline collection</a> at HairMNL.</p>"
+          }
+        },
+        "q3": {
+          "type": "text",
+          "settings": {
+            "title": "Is Kérastase Discipline good for rebonded hair in the Philippines?",
+            "content": "<p>Yes. Both sub-lines suit chemically straightened or rebonded hair — Oléo-Relax if the hair is also thick or coarse, Fluidealiste if it is finer and prone to static; its sulfate-free shampoo is a gentle match for treated hair. Both are compatible with color-treated hair. Begin once the standard post-rebond waiting period has passed, then maintain with the matched shampoo and mask.</p>"
+          }
+        },
+        "q4": {
+          "type": "text",
+          "settings": {
+            "title": "Can I use the Oléo-Relax Hair Oil on fine hair?",
+            "content": "<p>You can — the <a href=\"https://www.hairmnl.com/products/kerastase-discipline-oleo-relax-serum\" title=\"Shop Kérastase Discipline Oléo-Relax Hair Oil at HairMNL\" rel=\"noopener\" target=\"_blank\">Oléo-Relax Hair Oil</a> is the lightest product in the range and works across both sub-lines. On very fine hair, use a few drops through mid-lengths and ends only, never the roots. If your hair is fine and frizzy, the elegant combination is the Fluidealiste system with a small amount of the hair oil on humid days.</p>"
+          }
+        },
+        "q5": {
+          "type": "text",
+          "settings": {
+            "title": "Where can I buy Kérastase Discipline in the Philippines?",
+            "content": "<p>HairMNL is an authorized Kérastase retailer. The full Discipline range is at the <a href=\"https://www.hairmnl.com/collections/kerastase-discipline\" title=\"Shop Kérastase Discipline at HairMNL\" rel=\"noopener\" target=\"_blank\">Kérastase Discipline collection</a>, with Metro Manila delivery and nationwide shipping, plus the Serendra and Kapitolyo stores.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ]
+    },
+    "schema-faq": {
+      "type": "section-html",
+      "settings": {
+        "html": "<script type=\"application/ld+json\">[{\"@context\": \"https://schema.org\", \"@type\": \"Article\", \"headline\": \"Kérastase Discipline Oléo-Relax vs Fluidealiste: Which One Is Right for Your Hair?\", \"description\": \"Confused between Kérastase Discipline Oléo-Relax and Fluidealiste? This guide breaks down both frizz lines by hair type, with honest picks.\", \"url\": \"https://www.hairmnl.com/blogs/product-spotlight/kerastase-discipline-oleo-relax-vs-fluidealiste\", \"author\": {\"@type\": \"Organization\", \"name\": \"HairMNL\"}, \"publisher\": {\"@type\": \"Organization\", \"name\": \"HairMNL\", \"url\": \"https://www.hairmnl.com\"}, \"mainEntityOfPage\": {\"@type\": \"WebPage\", \"@id\": \"https://www.hairmnl.com/blogs/product-spotlight/kerastase-discipline-oleo-relax-vs-fluidealiste\"}}]</script>",
+        "full_width": true,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "166965158331b88ba2": {
+      "type": "apps",
+      "blocks": {
+        "94d08438-4484-498f-b5a7-fe63a131c52b": {
+          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_post_related_products/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "settings": {
+            "pb_related_products_title": "Related Products",
+            "pb_related_products_title_style": "H5",
+            "pb_related_product_items": 12,
+            "pb_related_product_item_display": 6,
+            "slider_autoplay": "2",
+            "custom_class": "",
+            "pb_mid_display": false,
+            "pb_mid_display_para": 4,
+            "pb_item_style": "1",
+            "pb_color_image_bg": "",
+            "pb_color_text_bg": "",
+            "pb_color_line": "",
+            "pb_out_of_stock": true,
+            "pb_related_products_matching": "3",
+            "pb_related_products_tag_match": "10",
+            "pb_related_products_title_match": "5",
+            "pb_related_products_adv_match": "3",
+            "pb_show_product": "reviews, price",
+            "pb_product_reviews": "JudgeMe",
+            "pb_product_sale": false,
+            "pb_product_sale_color": "#ea0606",
+            "pb_product_buy_button": "2",
+            "pb_product_buy_action": "0",
+            "pb_product_buy_button_text": "Buy Now",
+            "related_metafield": "{{ article.metafields.custom.related_products.value }}"
+          }
+        },
+        "7cb62b8e-a295-4935-aed1-f9417b1ef443": {
+          "type": "shopify://apps/lfs-pro-blogger/blocks/pb_post_related_posts/edf01a04-3374-4cc5-afca-2e583da0c869",
+          "settings": {
+            "pb_related_posts_title": "Related Articles",
+            "pb_related_posts_title_style": "H5",
+            "pb_related_post_items": 6,
+            "pb_related_post_item_display": 5,
+            "slider_autoplay": "2",
+            "pb_all_blog_link": true,
+            "pb_all_blog_link_text": "View All",
+            "custom_class": "",
+            "pb_item_style": "1",
+            "image_display": "cover",
+            "pb_color_image_bg": "",
+            "pb_color_text_bg": "",
+            "pb_color_line": "",
+            "pb_extras": "",
+            "pb_related_post_length": 10,
+            "read_more": "",
+            "display_tags": "0",
+            "keyword": "",
+            "key_match_scoring": "no",
+            "pb_related_posts_matching": "3",
+            "pb_related_posts_tag_match": "5",
+            "pb_related_posts_title_match": "1",
+            "pb_related_posts_author_match": "0"
+          }
+        }
+      },
+      "block_order": [
+        "94d08438-4484-498f-b5a7-fe63a131c52b",
+        "7cb62b8e-a295-4935-aed1-f9417b1ef443"
+      ],
+      "settings": {
+        "width": "wrapper",
+        "height": "margin--small",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "0af38192-713f-4828-a246-23a8c2fe7bce": {
+      "type": "section-newsletter",
+      "settings": {
+        "title": "Sign up to our mailing list!",
+        "richtext": "<p>Be part of our hair community.<br/>Get regular pro tips, trends, exclusives, and more.</p>",
+        "bg": "palette--light bg--neutral"
+      }
+    }
+  },
+  "order": [
+    "0863f1f1-afa1-42f7-8409-3f2dbbf6a21c",
+    "main",
+    "faq",
+    "schema-faq",
+    "166965158331b88ba2",
+    "0af38192-713f-4828-a246-23a8c2fe7bce"
+  ]
+}

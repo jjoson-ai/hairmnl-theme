@@ -42,62 +42,28 @@
     "bf5bce93-41d9-414e-a2f3-f290746193de": {
       "type": "section-banner-slider",
       "blocks": {
-        "77aa7083-281d-45f3-a867-1ce75d61fc36": {
-          "type": "banner_slide",
-          "disabled": true,
-          "settings": {
-            "slide_image_desktop": "shopify://shop_images/HairMNL_11.11_2025_Banner_desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/HairMNL_11.11_2025_Banner_mobile.jpg",
-            "slide_image_url": "shopify://collections/special-offers"
-          }
-        },
         "template--14408752300131__bf5bce93-41d9-414e-a2f3-f290746193de-167660726930e754aa-0": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/2026-mar-apr-e-comm-site-banners-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/2026-mar-apr-e-comm-site-banners-mobile.jpg",
-            "slide_image_url": "shopify://collections/best-sellers"
+            "slide_image_desktop": "shopify://shop_images/less-stress-for-your-scalp-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/less-stress-for-your-scalp-mobile.jpg",
+            "slide_image_url": "shopify://pages/scalp-quiz"
+          }
+        },
+        "77aa7083-281d-45f3-a867-1ce75d61fc36": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/Category_Highlight_Scalp_Care_Jul-Aug_2026_-_Site_Banners_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/Category_Highlight_Scalp_Care_Jul-Aug_2026_-_Site_Banners.jpg",
+            "slide_image_url": "shopify://collections/special-offers-on-scalp-care"
           }
         },
         "4709f459-5429-4463-b13b-3502da09ae55": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/2026-mar-apr-salon-site-banners-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/2026-mar-apr-salon-site-banners-mobile.jpg",
+            "slide_image_desktop": "shopify://shop_images/hairmnl-studio-low-maintenance-looks-to-try-july-2.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-studio-low-maintenance-looks-to-try-july-2_1.jpg",
             "slide_image_url": "shopify://pages/hairmnl-studio"
-          }
-        },
-        "banner_slide_nCh3H7": {
-          "type": "banner_slide",
-          "disabled": true,
-          "settings": {
-            "slide_image_desktop": "shopify://shop_images/davines-alchemic-free-alchemic-conditioner-teal-de_1.jpg",
-            "slide_image_mobile": "shopify://shop_images/davines-alchemic-free-alchemic-conditioner-teal-de.jpg",
-            "slide_image_url": "shopify://collections/davines"
-          }
-        },
-        "d1fcb86c-8fba-4d04-888c-e8cef316562e": {
-          "type": "banner_slide",
-          "settings": {
-            "slide_image_desktop": "shopify://shop_images/kerastase-april-2026-always-on-discipline-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/kerastase-april-2026-always-on-discipline-mobile.jpg",
-            "slide_image_url": "shopify://collections/kerastase-special-offers"
-          }
-        },
-        "576661ca-64ef-4a82-8c80-0eee2de4e3fb": {
-          "type": "banner_slide",
-          "settings": {
-            "slide_image_desktop": "shopify://shop_images/loreal-pro-april-2026-always-on-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/loreal-pro-april-2026-always-on-mobile.jpg",
-            "slide_image_url": "shopify://collections/loreal-professionnel-special-offers"
-          }
-        },
-        "2decd952-c9d9-4c72-a2e7-aa44de5580f2": {
-          "type": "banner_slide",
-          "settings": {
-            "slide_image_desktop": "shopify://shop_images/schwarz-osis-oct-2025-promo-banner-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/schwarz-osis-oct-2025-promo-banner-mobile.jpg",
-            "slide_image_url": "shopify://collections/schwarzkopf-professional"
           }
         },
         "template--14408752300131__bf5bce93-41d9-414e-a2f3-f290746193de-167660726930e754aa-1": {
@@ -116,6 +82,33 @@
             "slide_image_url": "shopify://collections/reuzel"
           }
         },
+        "d1fcb86c-8fba-4d04-888c-e8cef316562e": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/loreal-july-2026-always-on-storewide-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/loreal-july-2026-always-on-storewide-mobile.jpg",
+            "slide_image_url": "shopify://collections/loreal-professionnel-special-offers"
+          }
+        },
+        "banner_slide_nCh3H7": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/davines-alchemic-free-alchemic-conditioner-teal-de_1.jpg",
+            "slide_image_mobile": "shopify://shop_images/davines-alchemic-free-alchemic-conditioner-teal-de.jpg",
+            "slide_image_url": "shopify://collections/davines"
+          }
+        },
+        "576661ca-64ef-4a82-8c80-0eee2de4e3fb": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/loreal-pro-april-2026-always-on-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/loreal-pro-april-2026-always-on-mobile.jpg",
+            "slide_image_url": "shopify://collections/loreal-professionnel-special-offers"
+          }
+        },
         "fca395a1-fd43-485f-a554-7b85b090f032": {
           "type": "banner_slide",
           "disabled": true,
@@ -127,15 +120,14 @@
         }
       },
       "block_order": [
-        "77aa7083-281d-45f3-a867-1ce75d61fc36",
         "template--14408752300131__bf5bce93-41d9-414e-a2f3-f290746193de-167660726930e754aa-0",
+        "77aa7083-281d-45f3-a867-1ce75d61fc36",
         "4709f459-5429-4463-b13b-3502da09ae55",
-        "banner_slide_nCh3H7",
-        "d1fcb86c-8fba-4d04-888c-e8cef316562e",
-        "576661ca-64ef-4a82-8c80-0eee2de4e3fb",
-        "2decd952-c9d9-4c72-a2e7-aa44de5580f2",
         "template--14408752300131__bf5bce93-41d9-414e-a2f3-f290746193de-167660726930e754aa-1",
         "b00a3842-9d29-419e-96fe-04ab6f288f70",
+        "d1fcb86c-8fba-4d04-888c-e8cef316562e",
+        "banner_slide_nCh3H7",
+        "576661ca-64ef-4a82-8c80-0eee2de4e3fb",
         "fca395a1-fd43-485f-a554-7b85b090f032"
       ],
       "settings": {
@@ -152,6 +144,7 @@
         "section_margin_top": 20,
         "section_margin_bottom": 20,
         "banner_desktop": "shopify://shop_images/woman-applying-lipstick_ddd70f1b-f5da-4cba-adbe-66ab7afa3b4b.jpg",
+        "banner_alt": "",
         "banner_url": "",
         "desktop_padding_top": 16,
         "desktop_padding_bottom": 16,
@@ -202,6 +195,22 @@
         "btn_readmore_alignment": "left"
       }
     },
+    "a1784762-f0ae-4cd7-805c-9f1a68984b4b": {
+      "type": "section-collection",
+      "settings": {
+        "title": "Special Offers for Scalp Care & Dandruff",
+        "title_font_size": 28,
+        "collection": "special-offers-on-scalp-care",
+        "grid": 6,
+        "rows": 1,
+        "bg": "palette--light bg--neutral",
+        "show_view_all": true,
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 32,
+        "mobile_padding_bottom": 20
+      }
+    },
     "bcc92192-68de-4c9e-82ee-eca23731cb34": {
       "type": "section-collection",
       "settings": {
@@ -240,22 +249,6 @@
         "title": "Special Offers for Thinning Hair",
         "title_font_size": 28,
         "collection": "special-offers-for-thinning-hair",
-        "grid": 6,
-        "rows": 1,
-        "bg": "palette--light bg--neutral",
-        "show_view_all": true,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40,
-        "mobile_padding_top": 32,
-        "mobile_padding_bottom": 20
-      }
-    },
-    "a1784762-f0ae-4cd7-805c-9f1a68984b4b": {
-      "type": "section-collection",
-      "settings": {
-        "title": "Special Offers for Scalp Care & Dandruff",
-        "title_font_size": 28,
-        "collection": "special-offers-on-scalp-care",
         "grid": 6,
         "rows": 1,
         "bg": "palette--light bg--neutral",
@@ -470,10 +463,10 @@
     "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782",
     "c14d087f-82c3-4800-9273-bc14e208c059",
     "2eb52cb5-4825-4da6-97cc-47009c8bfc17",
-    "bcc92192-68de-4c9e-82ee-eca23731cb34",
-    "c6a707c1-45fb-4e7d-926b-f8eafe1bbf83",
-    "9e993b5b-8239-43dd-8f11-151d4040098b",
     "a1784762-f0ae-4cd7-805c-9f1a68984b4b",
+    "9e993b5b-8239-43dd-8f11-151d4040098b",
+    "c6a707c1-45fb-4e7d-926b-f8eafe1bbf83",
+    "bcc92192-68de-4c9e-82ee-eca23731cb34",
     "129aba60-d570-45ad-9042-fc497c45e997",
     "1642442735c9bd4274",
     "8a4050da-763c-4f56-abb6-0b639f4ab130",

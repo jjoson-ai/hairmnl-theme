@@ -14,68 +14,68 @@
       "blocks": {
         "0515aa43-b504-430e-92e8-635c59df7ad1": {
           "type": "banner_slide",
-          "disabled": true,
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/HairMNL_11.11_2025_Banner_desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/HairMNL_11.11_2025_Banner_mobile.jpg",
-            "slide_image_url": "shopify://collections/special-offers"
-          }
-        },
-        "2ce9123d-62d7-4f6d-b029-f969c0353bb6": {
-          "type": "banner_slide",
-          "settings": {
-            "slide_image_desktop": "shopify://shop_images/2026-may-jun-e-comm-site-banners_desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/2026-may-jun-e-comm-site-banners_mobile.jpg",
-            "slide_image_url": "shopify://collections/special-offers"
+            "slide_image_desktop": "shopify://shop_images/less-stress-for-your-scalp-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/less-stress-for-your-scalp-mobile.jpg",
+            "slide_image_url": "shopify://pages/scalp-quiz"
           }
         },
         "banner_slide_F4jBPQ": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/2026-may-jun-salon-site-banners_desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/2026-may-jun-salon-site-banners_mobile.jpg",
+            "slide_image_desktop": "shopify://shop_images/hairmnl-studio-low-maintenance-looks-to-try-july-2.jpg",
+            "slide_image_mobile": "shopify://shop_images/hairmnl-studio-low-maintenance-looks-to-try-july-2_1.jpg",
             "slide_image_url": "shopify://pages/hairmnl-studio"
+          }
+        },
+        "2ce9123d-62d7-4f6d-b029-f969c0353bb6": {
+          "type": "banner_slide",
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/Category_Highlight_Scalp_Care_Jul-Aug_2026_-_Site_Banners_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/Category_Highlight_Scalp_Care_Jul-Aug_2026_-_Site_Banners.jpg",
+            "slide_image_url": "shopify://collections/products-for-dandruff-control"
           }
         },
         "c11b7560-5383-48f5-ae42-ebbf2739fd11": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/k18-brand-spotlight-mar-apr-2026-site-banners-1.jpg",
-            "slide_image_mobile": "shopify://shop_images/k18-brand-spotlight-mar-apr-2026-site-banners.jpg",
-            "slide_image_url": "shopify://collections/k18"
-          }
-        },
-        "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-1": {
-          "type": "banner_slide",
-          "disabled": true,
-          "settings": {
-            "slide_image_desktop": "shopify://shop_images/dav-promos-feb-2026-site-banners-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/dav-promos-feb-2026-site-banners-mobile.jpg",
-            "slide_image_url": "shopify://collections/davines"
+            "slide_image_desktop": "shopify://shop_images/schwarzkopf-root-activating-promo-2026-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/schwarzkopf-root-activating-promo-2026-mobile.jpg",
+            "slide_image_url": "shopify://collections/schwarzkopf-professional"
           }
         },
         "37610dcd-b373-4d89-a3e5-cae6fda04ac5": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/kerastase-may-2026-always-on-min-spend-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/kerastase-may-2026-always-on-min-spend-mobile.jpg",
+            "slide_image_desktop": "shopify://shop_images/Brand_Spotlight_Schwarkopf_Pro_Jul-Aug_2026_-_Site_Banners_1.jpg",
+            "slide_image_mobile": "shopify://shop_images/Brand_Spotlight_Schwarkopf_Pro_Jul-Aug_2026_-_Site_Banners.jpg",
             "slide_image_url": "shopify://collections/kerastase"
           }
         },
-        "ef834652-e573-46ca-a607-d78f3767abf2": {
+        "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-1": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/loreal-pro-may-2026-always-on-bestsellers-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/loreal-pro-may-2026-always-on-bestsellers-mobile.jpg",
-            "slide_image_url": "shopify://collections/lorealprofessionnel"
+            "slide_image_desktop": "shopify://shop_images/davines-july-2026-always-on-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/davines-july-2026-always-on-mobile.jpg",
+            "slide_image_url": "shopify://collections/davines"
           }
         },
         "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-0": {
           "type": "banner_slide",
+          "disabled": true,
           "settings": {
             "slide_image_desktop": "shopify://shop_images/tymo-always-on-march-2026-banner-desktop.jpg",
             "slide_image_mobile": "shopify://shop_images/tymo-always-on-march-2026-banner-mobile.jpg",
             "slide_image_url": "shopify://collections/tymo"
+          }
+        },
+        "ef834652-e573-46ca-a607-d78f3767abf2": {
+          "type": "banner_slide",
+          "disabled": true,
+          "settings": {
+            "slide_image_desktop": "shopify://shop_images/loreal-pro-may-2026-always-on-bestsellers-desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/loreal-pro-may-2026-always-on-bestsellers-mobile.jpg",
+            "slide_image_url": "shopify://collections/lorealprofessionnel"
           }
         },
         "d59c3d24-41df-4162-8fe6-fa7083e41145": {
@@ -90,13 +90,13 @@
       },
       "block_order": [
         "0515aa43-b504-430e-92e8-635c59df7ad1",
-        "2ce9123d-62d7-4f6d-b029-f969c0353bb6",
         "banner_slide_F4jBPQ",
+        "2ce9123d-62d7-4f6d-b029-f969c0353bb6",
         "c11b7560-5383-48f5-ae42-ebbf2739fd11",
-        "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-1",
         "37610dcd-b373-4d89-a3e5-cae6fda04ac5",
-        "ef834652-e573-46ca-a607-d78f3767abf2",
+        "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-1",
         "template--14240176341091__7df3b2d9-888e-438d-93d9-21f18e246690-167660726930e754aa-0",
+        "ef834652-e573-46ca-a607-d78f3767abf2",
         "d59c3d24-41df-4162-8fe6-fa7083e41145"
       ],
       "settings": {
@@ -184,6 +184,7 @@
     },
     "section_collection_LXHdRf": {
       "type": "section-collection",
+      "disabled": true,
       "settings": {
         "title": "Summer Essentials",
         "title_font_size": 17,
@@ -456,12 +457,12 @@
     "164442519884b6f73e",
     "eecfa066-3eb9-4223-bd0c-f26f57e4d864",
     "section_collection_LXHdRf",
-    "8105fa81-0286-4d5a-8863-0eb87d091990",
+    "1644430036836806c8",
     "4ce3958d-4cdd-49cc-83f6-1ef249b02aeb",
+    "f650d949-f28d-4f9e-af69-b3cb5ba20a81",
+    "8105fa81-0286-4d5a-8863-0eb87d091990",
     "section_collection_slider_GMJGeX",
     "423c024f-47f9-478a-b44b-df4a12bdfeac",
-    "f650d949-f28d-4f9e-af69-b3cb5ba20a81",
-    "1644430036836806c8",
     "1a66d5df-0dee-438a-8d45-55e42322dd1a",
     "section_collection_slider_CXyzri",
     "f12293c1-d565-48ee-b63f-1b5de7c907f5",

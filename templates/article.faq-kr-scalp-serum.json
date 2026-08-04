@@ -27,7 +27,7 @@
         "title_alignment": "center",
         "blog_show_meta": true,
         "author_alignment": "center",
-        "content_alignment": "center",
+        "content_alignment": "left",
         "tags": false,
         "social": false,
         "blog_show_featured_image": false,

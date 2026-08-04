@@ -16,6 +16,7 @@
           "type": "new_arrivals",
           "settings": {
             "new_arrivals_collection_section_title": "New Arrivals",
+            "new_arrivals_collection_section_description": "",
             "new_arrivals_collection": "kerastase-new-arrivals"
           }
         },
@@ -23,6 +24,7 @@
           "type": "best_sellers",
           "settings": {
             "best_sellers_collection_section_title": "Best Sellers",
+            "best_sellers_collection_section_description": "",
             "best_sellers_collection": "kerastase-best-sellers"
           }
         },
@@ -30,6 +32,7 @@
           "type": "best_sellers",
           "settings": {
             "best_sellers_collection_section_title": "Kérastase Rituals and Programs",
+            "best_sellers_collection_section_description": "",
             "best_sellers_collection": "kerastase-rituals-and-programs"
           }
         },
@@ -58,18 +61,32 @@
         "branded-fw_text_with_media-1"
       ],
       "settings": {
-        "brand_featured_image": "shopify://shop_images/kerastase-april-2026-always-on-storewide-sis.jpg",
+        "brand_name": "Brand",
+        "brand_primary_color": "#000000",
+        "brand_accent_color": "#c19a6b",
+        "brand_description_html": "",
+        "brand_page_header_title": "",
+        "brand_page_header_subtitle": "",
         "brand_featured_image_link": "https://www.hairmnl.com/collections/kerastase-special-offers",
+        "brand_featured_text": "Sample introduction text to the brand",
         "grid_setting_large": 3,
         "grid_setting_medium": 2,
         "grid_setting_small": 2,
+        "initial_grid_count": 12,
         "collection_custom_nav_list": "kerastase-menu",
+        "collection_standard_nav": false,
+        "collection_type_nav": false,
+        "collection_vendor_nav": false,
+        "collection_tag_nav": false,
+        "featured_collection_section_description": "",
         "featured_collection_1": "kerastase-gloss-absolu",
         "featured_collection_1_subtitle": "Anti-Frizz & Glossier Hair",
         "featured_collection_2": "kerastase-genesis",
         "featured_collection_2_subtitle": "Anti-Hairfall",
         "featured_collection_3": "kerastase-elixir-ultime",
         "featured_collection_3_subtitle": "Exceptional Hair Oils for Ultimate Shine",
+        "discover_collection_section_description": "",
+        "discover_collection_1": "",
         "discover_collection_1_subtitle": "Natural and Lightweight",
         "discover_collection_2": "kerastase-blond-absolu",
         "discover_collection_2_subtitle": "Bleach Neutralizing & Nourishing",
@@ -89,7 +106,11 @@
         "discover_collection_9_subtitle": "Anti-Hairfall",
         "discover_collection_10": "kerastase-nutritive",
         "discover_collection_10_subtitle": "Nourishment and Hydration",
-        "collection_sorting": false
+        "collection_sorting": false,
+        "image_height": "use_screen_one_third",
+        "overlay_opacity": 20,
+        "text_color": "homepage--white",
+        "parallax": false
       }
     }
   },

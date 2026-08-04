@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "e0af10cd-65ae-4ecb-abe0-fcf6cb23e782": {
@@ -8,6 +17,7 @@
         "section_margin_bottom": 10,
         "banner_desktop": "shopify://shop_images/scalp-care-jan-feb-2025-dandruff-banner-desktop.jpg",
         "banner_mobile": "shopify://shop_images/scalp-care-jan-feb-2025-dandruff-banner.jpg",
+        "banner_alt": "",
         "banner_url": "",
         "desktop_padding_top": 16,
         "desktop_padding_bottom": 16,
@@ -35,8 +45,8 @@
         "e3c7ace8-bbee-4818-bfa0-5507212ad9ff": {
           "type": "banner_slide",
           "settings": {
-            "slide_image_desktop": "shopify://shop_images/scalp-care-jan-feb-2025-dandruff-banner-desktop.jpg",
-            "slide_image_mobile": "shopify://shop_images/Storytelling_Dandruff_Dec_2023_-_Mobile_Banner.png",
+            "slide_image_desktop": "shopify://shop_images/Category_Highlight_Scalp_Care_Jul-Aug_2026_-_Site_Banners_desktop.jpg",
+            "slide_image_mobile": "shopify://shop_images/Category_Highlight_Scalp_Care_Jul-Aug_2026_-_Site_Banners.jpg",
             "slide_image_url": "https://www.hairmnl.com/pages/effective-dandruff-solution-davines"
           }
         },
@@ -414,15 +424,6 @@
     },
     "faq": {
       "type": "section-faq",
-      "settings": {
-        "title": "Frequently Asked Questions",
-        "align_text": "text-left",
-        "text_size": 1,
-        "height": "margin--medium",
-        "width": "wrapper--narrow",
-        "text_color": "text--neutral",
-        "bg": "palette--light bg--neutral"
-      },
       "blocks": {
         "q1": {
           "type": "text",
@@ -450,7 +451,16 @@
         "q1",
         "q2",
         "q3"
-      ]
+      ],
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
+        "bg": "palette--light bg--neutral"
+      }
     }
   },
   "order": [
