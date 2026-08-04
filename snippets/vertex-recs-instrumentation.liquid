@@ -58,17 +58,47 @@
 
   function nowIso() { return new Date().toISOString(); }
 
+  // bd 62z fix (2026-08-05): content-type is DELIBERATELY text/plain, not
+  // application/json — do not "correct" it back.
+  //
+  // application/json makes this a CORS non-simple request, so the browser
+  // fires an OPTIONS preflight first. seo-platform's API sets
+  // allow_origins=[settings.app_url] (the dashboard origin only), so the
+  // preflight from hairmnl.com returns 400 with no
+  // access-control-allow-origin — and the real POST is never sent. Because
+  // sendBeacon returns true on *queueing*, this failed 100% SILENTLY: every
+  // rec impression/click was dropped from the moment this snippet shipped
+  // (2026-07-19) until this fix. Verified live: OPTIONS from
+  // https://www.hairmnl.com -> 400, no ACAO header.
+  //
+  // text/plain is one of the three CORS-safelisted request content types,
+  // which makes this a *simple* request: no preflight, browser sends it,
+  // server receives it. The response is opaque to us, which is fine —
+  // sendBeacon is fire-and-forget and never reads it.
+  //
+  // Safe server-side because the endpoint parses the RAW BODY and ignores
+  // Content-Type entirely: api/app/routes/vertex.py does
+  // `VertexEventBatchIn.model_validate_json(await request.body())`.
+  // Verified live: POST with Content-Type: text/plain -> 204.
+  //
+  // The original 62z "verification" missed this because it interception-
+  // tested sendBeacon (proving the CALL was made) and separately curled the
+  // endpoint (curl is not subject to CORS) — never the actual browser->server
+  // hop. Verify transport changes with a real browser request, not a curl.
   function send(events) {
     if (!events.length) return;
     try {
       var body = JSON.stringify({ events: events });
       if (navigator.sendBeacon) {
-        navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "application/json" }));
+        navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "text/plain" }));
         return;
       }
+      // Same reasoning for the fallback: in mode:"no-cors" only safelisted
+      // request headers survive, so an application/json Content-Type would
+      // be stripped or reject the request.
       fetch(ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain" },
         body: body, keepalive: true, mode: "no-cors",
       }).catch(function () {});
     } catch (_) {}
