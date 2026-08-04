@@ -240,29 +240,29 @@
         "q1": {
           "type": "text",
           "settings": {
-            "title": "What does the Kérastase Genesis serum do?",
-            "content": "<p>It’s a daily leave-in scalp serum for weakened hair that’s prone to falling from breakage. Powered by Aminexil, Edelweiss Native Cells, and Ginger Root, it strengthens hair, helps re-anchor the follicle, and reduces hair-fall.</p>"
+            "title": "What does the K\u00e9rastase Genesis serum do?",
+            "content": "<p>It\u2019s a daily leave-in scalp serum for weakened hair that\u2019s prone to falling from breakage. Powered by Aminexil, Edelweiss Native Cells, and Ginger Root, it strengthens hair, helps re-anchor the follicle, and reduces hair-fall.</p>"
           }
         },
         "q2": {
           "type": "text",
           "settings": {
             "title": "Does it treat hair fall at the root or from breakage?",
-            "content": "<p>Both — and Genesis splits the work across the range: the Serum targets hair-fall at the root, while the shampoo and conditioner help guard against fibre breakage. Tackling both causes together is what sets the range apart.</p>"
+            "content": "<p>Both \u2014 and Genesis splits the work across the range: the Serum targets hair-fall at the root, while the shampoo and conditioner help guard against fibre breakage. Tackling both causes together is what sets the range apart.</p>"
           }
         },
         "q3": {
           "type": "text",
           "settings": {
             "title": "How and when do I apply it?",
-            "content": "<p>Apply the jelly-textured serum directly to a clean scalp daily and massage in. It’s a leave-in (no rinsing), and the gel-like texture stays put without dripping.</p>"
+            "content": "<p>Apply the jelly-textured serum directly to a clean scalp daily and massage in. It\u2019s a leave-in (no rinsing), and the gel-like texture stays put without dripping.</p>"
           }
         },
         "q4": {
           "type": "text",
           "settings": {
             "title": "Will it regrow hair on bald spots?",
-            "content": "<p>No. It’s a fortifying, anti-hair-fall serum that strengthens and protects the hair you have and supports a healthier scalp environment — it isn’t a regrowth treatment for areas where hair is already gone.</p>"
+            "content": "<p>No.\u00a0It\u2019s a fortifying, anti-hair-fall serum that strengthens and protects the hair you have and supports a healthier scalp environment \u2014 it isn\u2019t a regrowth treatment for areas where hair is already gone.</p>"
           }
         }
       },
@@ -272,10 +272,29 @@
         "q3",
         "q4"
       ]
+    },
+    "vertex_pdp_recs": {
+      "type": "vertex-recommendations",
+      "settings": {
+        "placement": "pdp_below_atc",
+        "title": "Complete Your Routine",
+        "subtitle": "",
+        "rationale": ""
+      }
+    },
+    "vertex_pdp_similar": {
+      "type": "vertex-recommendations",
+      "settings": {
+        "placement": "pdp_below_description",
+        "title": "You May Also Like",
+        "subtitle": "",
+        "rationale": ""
+      }
     }
   },
   "order": [
     "main",
+    "vertex_pdp_recs",
     "faq",
     "1678342261d4506769",
     "dea3397a-2bf3-4c6e-91e1-2d4b58b44556",
@@ -283,6 +302,7 @@
     "1676140253843cda8a",
     "related",
     "164447037586b39747",
-    "1676916647a7e1c786"
+    "1676916647a7e1c786",
+    "vertex_pdp_similar"
   ]
 }
