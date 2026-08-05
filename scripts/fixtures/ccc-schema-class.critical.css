@@ -1,0 +1,5 @@
+/* The ancestor that supplies the containing block is `.collection-slider`, which Shopify puts on
+   the generated #shopify-section wrapper from the section's schema "class" — invisible to a markup
+   walker. Without schema-class resolution the deferred rule below looks unsatisfiable and this real
+   bug goes unreported. */
+.swiper-button-next{position:absolute;top:50%}

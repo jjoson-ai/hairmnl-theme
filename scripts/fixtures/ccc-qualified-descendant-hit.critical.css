@@ -1,0 +1,5 @@
+/* Reduction of swiper-button-next/swiper-container. The only deferred rule naming
+   `.swiper-container` is `.cross-post-blogs .swiper-container`, and this markup has no
+   `.cross-post-blogs` ancestor — so the container is unpositioned BEFORE and AFTER the deferred
+   sheets land. No delta means no shift. */
+.swiper-button-next{position:absolute;top:50%}

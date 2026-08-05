@@ -36,6 +36,12 @@ meant to stay near-zero-noise:
     but SOME ancestor is positioned by a DEFERRED sheet, the containing block does not exist
     at first paint => flag.
 
+    Selectors are matched with their QUALIFIERS, not by rightmost class token (bd gmrm):
+    `.text-link.uppercase` does not position a bare `.uppercase`, `.collection-slider .wrapper`
+    does not position every `.wrapper`, and `.grid__item[class*="push-"]` does not position a plain
+    grid__item. The section schema's `class` is resolved through {% render %} edges so the
+    cross-file ancestry Shopify injects on #shopify-section is visible too.
+
     Pseudo-element rules (::before/::after) are chained through their ORIGINATING element, which
     is where their box is laid out — `.x:after{position:absolute}` is safe whenever `.x` itself is
     positioned by critical CSS.
@@ -203,6 +209,77 @@ def positioning_classes(selector: str) -> set[str]:
     return {c for c, is_pseudo in classes_in_selector_scoped(selector) if not is_pseudo}
 
 
+
+# Functional pseudo-classes whose ARGUMENTS must not be read as requirements.
+# `.rte:not(.rte--column)` would otherwise parse as "requires class rte--column" — the exact
+# inverse of what it means. Stripping :is()/:where()/:has() too is merely permissive.
+FUNCTIONAL_PSEUDO_RE = re.compile(r":[a-zA-Z-]+\([^()]*\)")
+CLASS_ATTR_RE = re.compile(r"""\[\s*class\s*[*^$~|]?=\s*["']([^"']+)["']\s*\]""", re.I)
+COMBINATOR_SPLIT_RE = re.compile(r"\s*[>+~]\s*|\s+")
+
+
+def parse_position_rules(selector: str, source: str) -> list[dict]:
+    """Break a selector into per-target-class REQUIREMENTS.
+
+    The lint's original sin was reducing `.collection-slider .wrapper` to the bare token `wrapper`
+    and concluding that every .wrapper in the theme has a containing block. Six of the eleven false
+    positives in the 3q2e triage came from exactly that — `.text-link.uppercase`,
+    `.grid__item[class*="push-"]` and `.cross-post-blogs .swiper-container` were all read as bare
+    class tokens. Every target now carries what else must hold for the rule to match:
+
+      own        other classes required on the SAME element      .text-link.uppercase
+      ancestors  classes required on some ANCESTOR               .collection-slider .wrapper
+      subs       [class*="..."] fragments required                .grid__item[class*="push-"]
+    """
+    out: list[dict] = []
+    for part in selector.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        compounds = [c for c in COMBINATOR_SPLIT_RE.split(part) if c]
+        if not compounds:
+            continue
+        target = compounds[-1]
+        is_pseudo = bool(PSEUDO_ELEMENT_RE.search(target))   # before stripping functional pseudos
+        subs = CLASS_ATTR_RE.findall(target)
+        own_all = set(re.findall(r"\.([A-Za-z_][\w-]*)", FUNCTIONAL_PSEUDO_RE.sub("", target)))
+        anc: set[str] = set()
+        for comp in compounds[:-1]:
+            anc |= set(re.findall(r"\.([A-Za-z_][\w-]*)", FUNCTIONAL_PSEUDO_RE.sub("", comp)))
+        for t in own_all:
+            out.append({"target": t, "own": own_all - {t}, "ancestors": anc, "subs": subs,
+                        "pseudo": is_pseudo, "selector": selector.strip(), "source": source})
+    return out
+
+
+def rule_matches(req: dict, frame: set, outer: set) -> bool:
+    """Does this positioning rule match an element with classes `frame` under ancestors `outer`?
+
+    Sibling combinators (+ ~) are folded into `outer`, which is permissive — it can only suppress a
+    finding, never invent one.
+    """
+    if not req["own"] <= frame:
+        return False
+    if not req["ancestors"] <= outer:
+        return False
+    return all(any(sub in k for k in frame) for sub in req["subs"])
+
+
+def nearest_positioned(chain: list, rules_by_class: dict):
+    """Walk ancestors innermost -> outermost; return (class, req) of the first one a positioning
+    rule genuinely matches, else (None, None)."""
+    for i in range(len(chain) - 1, -1, -1):
+        frame = chain[i]
+        outer: set = set()
+        for f in chain[:i]:
+            outer |= f
+        for c in sorted(frame):
+            for req in rules_by_class.get(c, ()):
+                if rule_matches(req, frame, outer):
+                    return c, req
+    return None, None
+
+
 def decl_map(body: str) -> dict[str, str]:
     """property -> value (last wins), lowercased property."""
     out: dict[str, str] = {}
@@ -232,21 +309,25 @@ TAG_RE = re.compile(r"<(/?)([a-zA-Z][\w-]*)([^>]*?)(/?)>", re.DOTALL)
 CLASS_RE = re.compile(r"""class\s*=\s*("([^"]*)"|'([^']*)')""", re.IGNORECASE)
 
 
-def ancestor_map(markup: str) -> dict[str, list[set[str]]]:
-    """class token -> LIST of ancestor-class sets, one entry per occurrence in this file.
+def ancestor_map(markup: str) -> dict[str, list[tuple[list, set]]]:
+    """class token -> LIST of (ancestor_chain, own_frame), one entry per occurrence in this file.
 
-    A tag-stack walker. Cross-file nesting is invisible (a snippet's root is a child of
-    whatever rendered it), which is a known blind spot — but the bugs this targets have all
-    been same-file, because the wrapper and its positioned parent live in one section.
+    `ancestor_chain` is ordered OUTERMOST -> innermost and excludes the element itself; `own_frame`
+    is the element's own class set. Both are needed now that rules carry requirements: `own` is
+    evaluated against the element's own frame (`.text-link.uppercase`) and `ancestors` against the
+    frames outside it (`.collection-slider .wrapper`).
+
+    A tag-stack walker. Cross-file nesting is invisible here and is supplied separately by
+    build_outer_context().
 
     PER-OCCURRENCE, NOT UNIONED — this distinction is the whole point. `.hero__content__wrapper`
     appears both inside `.article__card.section--image` (which critical CSS positions, so it is
     fine) and inside `.brick__block` (which only the deferred sheet positions — the dh8x bug).
     Unioning the two contexts let the safe one mask the broken one, and an early version of this
-    lint consequently failed to reproduce dh8x. Every occurrence is now judged on its own.
+    lint consequently failed to reproduce dh8x. Every occurrence is judged on its own.
     """
-    out: dict[str, list[set[str]]] = {}
-    stack: list[set[str]] = []
+    out: dict[str, list[tuple[list, set]]] = {}
+    stack: list[set] = []
     for m in TAG_RE.finditer(strip_liquid(markup)):
         closing, tag, attrs, selfclose = m.group(1), m.group(2).lower(), m.group(3), m.group(4)
         if closing:
@@ -257,14 +338,64 @@ def ancestor_map(markup: str) -> dict[str, list[set[str]]]:
         raw = (cm.group(2) or cm.group(3) or "") if cm else ""
         cls = {c for c in raw.split() if re.fullmatch(r"[A-Za-z_][\w-]*", c)}
         if cls:
-            inherited: set[str] = set()
-            for frame in stack:
-                inherited |= frame
+            chain = [set(f) for f in stack]
             for c in cls:
-                out.setdefault(c, []).append(inherited)
+                out.setdefault(c, []).append((chain, set(cls)))
         if tag not in VOID_TAGS and not selfclose:
             stack.append(cls)
     return out
+
+
+SCHEMA_BLOCK_RE = re.compile(r"\{%-?\s*schema\s*-?%\}(.*?)\{%-?\s*endschema\s*-?%\}", re.DOTALL)
+SCHEMA_CLASS_RE = re.compile(r'"class"\s*:\s*"([^"]+)"')
+RENDER_RE = re.compile(r"\{%-?\s*(?:render|include)\s+(?:'([^']+)'|\"([^\"]+)\")")
+
+
+def build_outer_context(texts: dict[str, str]) -> dict[str, set]:
+    """rel-path -> class tokens contributed by ancestors that live OUTSIDE the file.
+
+    Two sources the tag walker cannot see:
+      1. Shopify wraps each section in <div id="shopify-section-..." class="shopify-section {the
+         schema's "class"}">. That wrapper is an ancestor of everything in the file.
+      2. A snippet is nested inside whichever section renders it.
+
+    This matters for correctness in BOTH directions. Without it `.collection-slider .wrapper` looks
+    unsatisfiable inside snippets/collection-slider.liquid, and the REAL swiper-button-*/wrapper
+    finding (fixed under 3q2e) would come back as a false positive. With it,
+    sections/collection-branded.liquid — which copies the same markup but declares no schema class —
+    correctly does NOT get the containing block.
+
+    A snippet inherits the UNION of the schema classes of every section that can reach it. That is
+    permissive by construction: it can suppress a finding for a caller that does not carry the
+    class, never invent one.
+    """
+    own: dict[str, set] = {}
+    renders: dict[str, set] = {}
+    for rel, text in texts.items():
+        tokens: set = set()
+        m = SCHEMA_BLOCK_RE.search(text)
+        if m:
+            for cm in SCHEMA_CLASS_RE.finditer(m.group(1)):
+                tokens |= {t for t in cm.group(1).split()
+                           if re.fullmatch(r"[A-Za-z_][\w-]*", t)}
+        own[rel] = tokens
+        renders[rel] = {a or b for a, b in RENDER_RE.findall(text)}
+
+    by_name = {Path(rel).stem: rel for rel in texts if rel.startswith("snippets/")}
+    ctx: dict[str, set] = {rel: set(own.get(rel, ())) for rel in texts}
+    for rel, tokens in own.items():
+        if not tokens:
+            continue
+        seen: set = set()
+        stack = list(renders.get(rel, ()))
+        while stack:                                  # transitive: section -> snippet -> snippet
+            target = by_name.get(stack.pop())
+            if not target or target in seen:
+                continue
+            seen.add(target)
+            ctx[target] |= tokens
+            stack.extend(renders.get(target, ()))
+    return ctx
 
 
 # ---------------------------------------------------------------------------- allowlist
@@ -296,7 +427,7 @@ def scan(verbose: bool = False):
     crit_rules = list(iter_rules(critical_css))
 
     crit_abs: dict[str, tuple[str, bool]] = {}   # class -> (selector, from_pseudo_element)
-    crit_positioned: set[str] = set()
+    crit_pos_rules: dict[str, list] = {}         # class -> positioning rules WITH requirements
     crit_font_size: set[str] = set()
     crit_font_family: set[str] = set()
     crit_font_shorthand: set[str] = set()
@@ -308,7 +439,9 @@ def scan(verbose: bool = False):
         acked = ACK_TOKEN in body or ACK_TOKEN in selector
         pos = decls.get("position", "")
         if pos in POSITIONED_VALUES:
-            crit_positioned |= positioning_classes(selector)
+            for req in parse_position_rules(selector, CRITICAL.name):
+                if not req["pseudo"]:      # a pseudo box is positioned, not its originating element
+                    crit_pos_rules.setdefault(req["target"], []).append(req)
         if pos == "absolute" and not acked:
             for c, is_pseudo in classes_in_selector_scoped(selector):
                 prev = crit_abs.get(c)
@@ -329,32 +462,37 @@ def scan(verbose: bool = False):
                     for c in cls:
                         font_unit_hits.append((c, prop, val, selector.strip()))
 
-    # deferred sheets: which classes get positioned there
-    deferred_positioned: dict[str, str] = {}
+    # deferred sheets: which classes get positioned there, and under what conditions
+    deferred_pos_rules: dict[str, list] = {}
     for pattern in DEFERRED_GLOBS:
         for path in sorted((REPO / "assets").glob(pattern)):
             if ".dev." in path.name:
                 continue
             for selector, body in iter_rules(path.read_text(encoding="utf-8", errors="replace")):
                 if decl_map(body).get("position", "") in POSITIONED_VALUES:
-                    for c in positioning_classes(selector):
-                        deferred_positioned.setdefault(c, path.name)
+                    for req in parse_position_rules(selector, path.name):
+                        if not req["pseudo"]:
+                            deferred_pos_rules.setdefault(req["target"], []).append(req)
 
-    # ancestor chains from markup
-    ancestors: dict[str, list[tuple[str, set[str]]]] = {}
+    # ancestor chains from markup, plus the cross-file context the walker cannot see
+    texts: dict[str, str] = {}
     for d in MARKUP_DIRS:
         for path in sorted((REPO / d).rglob("*.liquid")):
-            rel = str(path.relative_to(REPO))
-            for cls, occurrences in ancestor_map(
-                path.read_text(encoding="utf-8", errors="replace")
-            ).items():
-                ancestors.setdefault(cls, []).extend((rel, anc) for anc in occurrences)
+            texts[str(path.relative_to(REPO))] = path.read_text(encoding="utf-8", errors="replace")
+    outer_ctx = build_outer_context(texts)
+    ancestors: dict[str, list[tuple[str, list, set]]] = {}
+    for rel, text in texts.items():
+        for cls, occurrences in ancestor_map(text).items():
+            ancestors.setdefault(cls, []).extend(
+                (rel, chain, own) for chain, own in occurrences)
 
     if verbose:
         print(f"  critical rules parsed      : {len(crit_rules)}")
         print(f"  critical position:absolute : {len(crit_abs)}")
-        print(f"  critical positioned classes: {len(crit_positioned)}")
-        print(f"  deferred positioned classes: {len(deferred_positioned)}")
+        print(f"  critical positioned classes: {len(crit_pos_rules)}")
+        print(f"  deferred positioned classes: {len(deferred_pos_rules)}")
+        print(f"  files with outer context   : "
+              f"{sum(1 for v in outer_ctx.values() if v)}")
         print(f"  classes with ancestry      : {len(ancestors)}")
 
     allow = load_allowlist()
@@ -363,25 +501,27 @@ def scan(verbose: bool = False):
     # RULE 1 — orphaned absolute positioning
     seen_pairs: set[tuple[str, str]] = set()
     for cls, (selector, from_pseudo) in sorted(crit_abs.items()):
-        for rel, anc in ancestors.get(cls, []):
-            # A pseudo-element is contained by its OWN originating element, so that element joins
-            # the containing-block chain. Without this, `.x:after{position:absolute}` next to
-            # `.x{position:relative}` reports a bug that cannot happen.
-            chain = anc | ({cls} if from_pseudo else set())
-            if not chain:
+        for rel, chain, own in ancestors.get(cls, []):
+            # Outermost frame = classes contributed from outside the file (section schema class,
+            # and the schema class of whatever section renders this snippet). A pseudo-element is
+            # laid out inside its OWN originating element, so that element joins the chain too —
+            # without it, `.x:after{position:absolute}` next to `.x{position:relative}` would be
+            # reported as a bug that cannot happen.
+            eff_chain = [set(outer_ctx.get(rel, ()))] + chain + ([own] if from_pseudo else [])
+            if not any(eff_chain):
                 continue                               # no observed ancestry; can't judge
-            if chain & crit_positioned:
+            if nearest_positioned(eff_chain, crit_pos_rules)[0]:
                 continue                               # containing block exists at first paint
-            late = sorted(a for a in chain if a in deferred_positioned)
+            late, req = nearest_positioned(eff_chain, deferred_pos_rules)
             if not late:
                 continue
             # Key on the PAIR, not the class. `.hero__content__wrapper` is broken under
             # `.brick__block` (dh8x) but fine elsewhere — a bare-class allowlist entry for one
             # occurrence would silently un-guard the other.
-            if (cls, late[0]) in seen_pairs:
+            if (cls, late) in seen_pairs:
                 continue
-            seen_pairs.add((cls, late[0]))
-            if cls in allow or f"{cls}/{late[0]}" in allow:
+            seen_pairs.add((cls, late))
+            if cls in allow or f"{cls}/{late}" in allow:
                 continue
             findings.append({
                 "rule": "orphaned-absolute",
@@ -389,11 +529,11 @@ def scan(verbose: bool = False):
                 "selector": selector,
                 "where": rel,
                 "detail": (f"position:absolute in critical CSS, but at this occurrence its "
-                           f"containing block comes from .{late[0]} {{position:…}} which ships "
-                           f"only in {deferred_positioned[late[0]]} (deferred)"),
-                "fix": (f"add a matching position rule for .{late[0]} to critical-css.liquid "
+                           f"containing block comes from `{req['selector'][:70]}` which ships "
+                           f"only in {req['source']} (deferred)"),
+                "fix": (f"add a matching position rule for .{late} to critical-css.liquid "
                         f"(mirror the deferred declaration exactly so final rendering is unchanged)"),
-                "key": f"{cls}/{late[0]}",
+                "key": f"{cls}/{late}",
             })
 
     # RULE 2 — font-relative sizing without a font in critical CSS
@@ -449,6 +589,18 @@ def selftest() -> int:
          "a ::after is contained by its own originating element — must NOT be reported"),
         ("ccc-pseudo-element-orphan", True,
          "...but a ::after whose base element is unpositioned IS genuinely orphaned"),
+        ("ccc-qualified-compound", False,
+         "bd gmrm: `.text-link.uppercase` must not position a plain `.uppercase` element"),
+        ("ccc-qualified-descendant", False,
+         "bd gmrm: `.cross-post-blogs .swiper-container` must not match without that ancestor"),
+        ("ccc-qualified-descendant-hit", True,
+         "...but the same rule MUST fire once the qualifying ancestor is present"),
+        ("ccc-qualified-attribute", False,
+         'bd gmrm: `.grid__item[class*="push-"]` must not match a plain grid__item'),
+        ("ccc-schema-class", True,
+         "bd gmrm: the containing block comes from the section schema `class`, unseen by the walker"),
+        ("ccc-schema-class-fixed", False,
+         "...and is silent once that ancestor is positioned by critical CSS"),
     ]
     failures = 0
     print("critical-css coverage selftest (bd hairmnl-theme-958r.6)")
@@ -478,7 +630,8 @@ def selftest() -> int:
 
 def scan_fixture(critical_css: str, deferred_css: str, markup: str):
     """Same logic as scan(), over in-memory strings. Kept in step with scan() by selftest."""
-    crit_abs, crit_positioned = {}, set()
+    crit_abs: dict[str, tuple[str, bool]] = {}
+    crit_pos_rules: dict[str, list] = {}
     crit_font_size, crit_font_family, crit_font_shorthand = set(), set(), set()
     font_unit_hits = []
     for selector, body in iter_rules(critical_css):
@@ -486,7 +639,9 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
         acked = ACK_TOKEN in body or ACK_TOKEN in selector
         pos = decls.get("position", "")
         if pos in POSITIONED_VALUES:
-            crit_positioned |= positioning_classes(selector)
+            for req in parse_position_rules(selector, "critical"):
+                if not req["pseudo"]:
+                    crit_pos_rules.setdefault(req["target"], []).append(req)
         if pos == "absolute" and not acked:
             for c, is_pseudo in classes_in_selector_scoped(selector):
                 prev = crit_abs.get(c)
@@ -504,17 +659,24 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
                 if val and re.search(r"\d\s*(" + "|".join(ELEMENT_FONT_UNITS) + r")\b", val):
                     for c in cls:
                         font_unit_hits.append((c, prop, val, selector.strip()))
-    deferred_positioned = {}
+    deferred_pos_rules: dict[str, list] = {}
     for selector, body in iter_rules(deferred_css):
         if decl_map(body).get("position", "") in POSITIONED_VALUES:
-            for c in positioning_classes(selector):
-                deferred_positioned.setdefault(c, "deferred.css")
+            for req in parse_position_rules(selector, "deferred.css"):
+                if not req["pseudo"]:
+                    deferred_pos_rules.setdefault(req["target"], []).append(req)
+    outer = build_outer_context({"fixture.liquid": markup}).get("fixture.liquid", set())
     ancestors = ancestor_map(markup)
     out = []
     for cls, (selector, from_pseudo) in sorted(crit_abs.items()):
-        for anc in ancestors.get(cls, []):
-            chain = anc | ({cls} if from_pseudo else set())
-            if chain and not (chain & crit_positioned) and any(a in deferred_positioned for a in chain):
+        for chain, own in ancestors.get(cls, []):
+            eff = [set(outer)] + chain + ([own] if from_pseudo else [])
+            if not any(eff):
+                continue
+            if nearest_positioned(eff, crit_pos_rules)[0]:
+                continue
+            late, _ = nearest_positioned(eff, deferred_pos_rules)
+            if late:
                 out.append({"rule": "orphaned-absolute", "cls": cls, "selector": selector})
                 break
     for cls, prop, val, selector in sorted(set(font_unit_hits)):

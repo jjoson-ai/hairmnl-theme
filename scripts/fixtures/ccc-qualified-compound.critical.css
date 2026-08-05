@@ -1,0 +1,4 @@
+/* Reduction of the btn-state-complete/uppercase false positive.
+   The deferred sheet positions `.text-link.uppercase`, NOT `.uppercase`. The button carries no
+   `text-link` class, so its containing block never changes and there is nothing to report. */
+.btn-state-complete{visibility:hidden;position:absolute;top:50%;left:50%}

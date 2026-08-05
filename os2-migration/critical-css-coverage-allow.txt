@@ -27,21 +27,21 @@
 # Each is byte-equal to the single unconditional `position:relative` its deferred sheet already
 # declares, so it can only remove first-paint shift — it cannot change settled rendering.
 #
-# KNOWN BLIND SPOT introduced by the third mirror: the lint reduces a selector to its rightmost
-# class token, so `.collection-slider .wrapper` registers as "all .wrapper elements are positioned
-# by critical CSS". That is why swiper-button-*/grid__item and search__predictive__clear/wrapper
-# no longer appear here — they are suppressed by over-attribution, not by a fix. All three were
-# judged FALSE_POSITIVE anyway (see the 3q2e notes), so no real coverage was lost today, but
-# `.wrapper` is a blind spot until the selector-qualification fix lands. Tracked separately.
+# BLIND SPOT CLOSED 2026-08-05 (bd gmrm). The lint used to reduce a selector to its rightmost class
+# token, so `.collection-slider .wrapper` read as "every .wrapper is positioned". That both invented
+# false positives and hid real ones. RULE 1 now carries each rule's requirements (`own` classes,
+# `ancestor` classes, `[class*=]` fragments) and resolves the section-schema `class` through
+# {% render %} edges, so cross-file ancestry is visible. Five rows were deleted from this file
+# because the lint simply no longer reports them:
+#   btn-state-complete/uppercase, btn-state-loading/uppercase   (.text-link.uppercase never matches)
+#   swiper-button-{next,prev}/swiper-container,
+#   swiper-pagination/swiper-container                          (.cross-post-blogs qualifier absent)
+# swiper-button-*/grid__item likewise no longer fires (`[class*="push-"]` does not match), and
+# image-overlay/cart__empty correctly REAPPEARED — it had been masked by the old over-attribution.
 # ===============================================================================================
 
 # --- FALSE POSITIVE: the lint reduces a qualified selector to its rightmost class token, so it
 # --- believes an ancestor is positioned when the qualifier never actually matches this markup.
-btn-state-complete/uppercase        3q2e   FALSE POSITIVE. The only deferred rule positioning an `uppercase` token is the COMPOUND `.text-link.uppercase{position:relative}` (theme-core.css:7990); the add-to-cart button has no `text-link` class, so nothing positions it before OR after the deferred sheets — zero delta. Independently harmless: critical CSS sets visibility:hidden AND opacity:0, and the re-show `.has-success .btn-state-complete` is deferred + JS-gated.
-btn-state-loading/uppercase         3q2e   FALSE POSITIVE. Same element and root cause as btn-state-complete/uppercase: `.text-link.uppercase` never matches this button. Also visibility:hidden + opacity:0 in critical CSS; re-show `.loading .btn-state-loading` is deferred + JS-gated.
-swiper-button-next/swiper-container 3q2e   FALSE POSITIVE. No generic `.swiper-container{position:...}` exists anywhere; the only match is `.cross-post-blogs .swiper-container` (custom-theme-core.css:1118) and this markup has no `.cross-post-blogs` ancestor. The ancestor is unpositioned in BOTH states, so nothing changes at deferred-sheet time. (Separate steady-state defect filed under 3q2e: this section still uses the Swiper v5 `.swiper-container` name while the theme ships v6 CSS keyed on `.swiper`.)
-swiper-button-prev/swiper-container 3q2e   FALSE POSITIVE. Identical to the next-button entry above — `.cross-post-blogs .swiper-container` does not apply to `.custom-banner.swiper-container`.
-swiper-pagination/swiper-container  3q2e   FALSE POSITIVE, three independent reasons: (1) the same qualifier failure as the buttons; (2) critical CSS gives `.swiper-pagination` position:absolute with NO offsets, so it stays at its static position and the containing block is irrelevant to its placement; (3) the div is empty in the server-rendered HTML — Swiper injects bullets at runtime — and it has no background, border or content in critical CSS.
 image-overlay/homepage-slideshow    3q2e   FALSE POSITIVE. The overlay that actually ships (section-slideshow.liquid:57) is a child of `.slideshow__slide … section--image`, and critical CSS declares `.section--image{position:relative}` — it already has its containing block. The lint only names `.homepage-slideshow` because of a SECOND occurrence at :102 inside `{% if section.blocks.size == 0 %}`, the theme-editor onboarding placeholder, which is unreachable: all 18 section-slideshow instances have 3-6 blocks and are disabled:true.
 
 # --- SAFE: the element genuinely has no containing block at first paint, but it cannot shift
