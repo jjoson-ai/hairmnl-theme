@@ -1,0 +1,3 @@
+/* Reduction of the real wscl defect: 1ch was the UA serif at 16px until theme-core.css
+   landed, then Questrial at 12px — the reservation shrank ~8px on every cold load. */
+.navtext{min-width:6ch;display:inline-block}

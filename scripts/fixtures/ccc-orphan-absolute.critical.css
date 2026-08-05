@@ -1,0 +1,5 @@
+/* Reduction of the real dh8x defect (2026-08-05, CLS 2.011 on brand mobile).
+   critical-css.liquid inlined the absolutely-positioned wrapper but NOT the rule that
+   positions its parent, so at first paint it had no containing block. */
+.hero__content__wrapper{position:absolute;top:0;left:0;width:100%;height:100%;display:flex}
+.section--image{position:relative;overflow:hidden}

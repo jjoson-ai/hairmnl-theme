@@ -1,0 +1,48 @@
+# critical-CSS coverage allowlist — scripts/check-critical-css-coverage.py
+#
+# Format (whitespace-separated; reason runs to end of line):
+#   <key>   <bd-id>   <reason>
+#
+# Keys are SCOPED, not per-class:
+#   hero__content__wrapper/brick__block   rule 1 — this class under this late-positioned ancestor
+#   navtext/min-width                     rule 2 — this class's declaration of this property
+# A bare class token works as a deliberate BLANKET entry, but prefer the scoped form. The same
+# class is routinely broken in one context and fine in another — `.hero__content__wrapper` is the
+# dh8x bug under `.brick__block` and perfectly safe under `.section--image` — so a blanket entry
+# would silently un-guard the broken context.
+#
+# Prefer an inline `/* ccc-OK: why */` comment in the rule body when the rule itself is the right
+# place to record the judgement. Use this file for bulk/baseline entries.
+#
+# -----------------------------------------------------------------------------------------------
+# BASELINE, 2026-08-05 (bd 958r.6). These PRE-DATE the lint. They are the same structural class as
+# dh8x — an absolutely-positioned element whose nearest positioned ancestor is styled only by a
+# deferred sheet — but they have NOT been individually vetted for above-the-fold impact, and some
+# are likely harmless because the element never appears in the first viewport.
+#
+# They are baselined so CI can gate NEW occurrences from today forward, which is the point of the
+# guard. Triage is tracked separately. Do NOT read an entry here as "safe" — read it as "known,
+# not yet judged".
+# -----------------------------------------------------------------------------------------------
+collection__nav/height                         958r.6   [BASELINE font-relative-sizing]. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+icon/height                                    958r.6   [BASELINE font-relative-sizing]. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+icon/width                                     958r.6   [BASELINE font-relative-sizing]. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+btn-state-complete/uppercase                   958r.6   [BASELINE orphaned-absolute] seen in snippets/product-form.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+btn-state-loading/uppercase                    958r.6   [BASELINE orphaned-absolute] seen in snippets/product-form.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+hero__content__wrapper/double__block           958r.6   [BASELINE orphaned-absolute] seen in sections/section-map.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+home__subtitle/cross-post-blogs                958r.6   [BASELINE orphaned-absolute] seen in sections/cross-post-blogs.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+home__subtitle/wrapper                         958r.6   [BASELINE orphaned-absolute] seen in sections/list-collections.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+image-overlay/cart__empty                      958r.6   [BASELINE orphaned-absolute] seen in snippets/cart-empty.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+image-overlay/homepage-slideshow               958r.6   [BASELINE orphaned-absolute] seen in sections/section-slideshow.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+item--loadbar/cart__items__row                 958r.6   [BASELINE orphaned-absolute] seen in snippets/cart-line-items.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+search__predictive__clear/wrapper              958r.6   [BASELINE orphaned-absolute] seen in snippets/search-predictive.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+swiper-button-next/cross-post-blogs            958r.6   [BASELINE orphaned-absolute] seen in sections/cross-post-blogs.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+swiper-button-next/grid__item                  958r.6   [BASELINE orphaned-absolute] seen in sections/collection-branded.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+swiper-button-next/swiper-container            958r.6   [BASELINE orphaned-absolute] seen in sections/judgeme_AllReviewsPage_Slider.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+swiper-button-next/wrapper                     958r.6   [BASELINE orphaned-absolute] seen in snippets/collection-slider.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+swiper-button-prev/cross-post-blogs            958r.6   [BASELINE orphaned-absolute] seen in sections/cross-post-blogs.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+swiper-button-prev/grid__item                  958r.6   [BASELINE orphaned-absolute] seen in sections/collection-branded.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+swiper-button-prev/swiper-container            958r.6   [BASELINE orphaned-absolute] seen in sections/judgeme_AllReviewsPage_Slider.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+swiper-button-prev/wrapper                     958r.6   [BASELINE orphaned-absolute] seen in snippets/collection-slider.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+swiper-pagination/swiper-container             958r.6   [BASELINE orphaned-absolute] seen in sections/judgeme_AllReviewsPage_Slider.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.
+tabs__arrow/tabs__head                         958r.6   [BASELINE orphaned-absolute] seen in snippets/product-tabs.liquid. Pre-existing at lint introduction; not yet vetted for above-fold impact.

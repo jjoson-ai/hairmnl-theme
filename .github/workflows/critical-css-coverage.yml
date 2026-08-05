@@ -1,0 +1,59 @@
+# critical-CSS coverage lint — prevent the first-paint bug class that produced THREE
+# separate live CLS regressions in one week (2026-08-05):
+#   dh8x    — .hero__content__wrapper absolute in critical CSS, its containing block
+#             (.brick__block{position:relative}) only in the deferred theme-collection.css
+#             => full-viewport shift scoring exactly 1.0000
+#   wscl    — min-width:6ch reserved against a font that only the deferred sheet defines
+#   nahn.4  — above-fold blog alignment/font-scale rules living only in deferred sheets
+# See:
+#   - scripts/check-critical-css-coverage.py (full rule docs + mechanism writeups)
+#   - os2-migration/cwv-audit-2026-08-05.md section T6
+#   - bd hairmnl-theme-958r.6
+name: critical-CSS coverage
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'snippets/critical-css.liquid'
+      - 'layout/**.liquid'
+      - 'sections/**.liquid'
+      - 'snippets/**.liquid'
+      - 'assets/theme*.css'
+      - 'assets/custom-theme*.css'
+      - 'os2-migration/critical-css-coverage-allow.txt'
+      - 'scripts/check-critical-css-coverage.py'
+      - '.github/workflows/critical-css-coverage.yml'
+  pull_request:
+    paths:
+      - 'snippets/critical-css.liquid'
+      - 'layout/**.liquid'
+      - 'sections/**.liquid'
+      - 'snippets/**.liquid'
+      - 'assets/theme*.css'
+      - 'assets/custom-theme*.css'
+      - 'os2-migration/critical-css-coverage-allow.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Prove both rules still fire on the real historical defects — and still stay
+      # quiet on the shipped fixes — before trusting the verdict on the theme below.
+      # Fixtures live in scripts/fixtures/, outside the scanned theme directories.
+      - name: Lint selftest
+        run: python3 scripts/check-critical-css-coverage.py --selftest
+
+      - name: Run critical-CSS coverage lint
+        run: python3 scripts/check-critical-css-coverage.py

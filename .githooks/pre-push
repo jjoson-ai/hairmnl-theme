@@ -32,6 +32,21 @@ if [ -x "$REPO/scripts/check-snippet-wiring.py" ]; then
     fi
 fi
 
+# 2) critical-CSS coverage lint (bd 958r.6) — catches first-paint geometry that depends on a
+#    DEFERRED stylesheet. This is the class that produced three live CLS bugs on 2026-08-05
+#    (dh8x / wscl / nahn.4). Mirrored locally as well as in CI because snippets/critical-css.liquid
+#    ships straight to the LIVE theme — catching it here beats catching it after customers do.
+if [ -x "$REPO/scripts/check-critical-css-coverage.py" ]; then
+    echo "→ Running scripts/check-critical-css-coverage.py …" >&2
+    if ! python3 "$REPO/scripts/check-critical-css-coverage.py" >&2; then
+        echo "" >&2
+        echo "✗ Pre-push: critical-CSS coverage lint failed." >&2
+        echo "  A rule first paint needs lives only in a deferred sheet — this is the" >&2
+        echo "  dh8x/wscl CLS class. See the docstring in the script for the mechanism." >&2
+        exit 1
+    fi
+fi
+
 # Add additional checks here as the contract grows.
 # Examples for future:
 #   - scripts/check-overlay-css.py  (already runs in CI; could mirror locally)
