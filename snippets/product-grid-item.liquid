@@ -178,14 +178,14 @@ A grid item for products used in collection grid view
                           {% if _img.width > 540 %}{{ _img | image_url: width: 540, format: 'webp' }} 540w,{% endif %}
                           {% if _img.width > 720 %}{{ _img | image_url: width: 720, format: 'webp' }} 720w,{% endif %}
                           {% if _img.width > 1080 %}{{ _img | image_url: width: 1080, format: 'webp' }} 1080w,{% endif %}"
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw">
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, calc(50vw - 24px)">
           <img
             class="collection__image__top"
             srcset="{% if _img.width > 360 %}{{ _img | image_url: width: 360 }} 360w,{% endif %}
                     {% if _img.width > 540 %}{{ _img | image_url: width: 540 }} 540w,{% endif %}
                     {% if _img.width > 720 %}{{ _img | image_url: width: 720 }} 720w,{% endif %}
                     {% if _img.width > 1080 %}{{ _img | image_url: width: 1080 }} 1080w,{% endif %}"
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, calc(50vw - 24px)"
             src="{{ _img | image_url: width: 540 }}"
             width="{{ _img.width }}"
             height="{{ _img.height }}"
@@ -215,14 +215,14 @@ A grid item for products used in collection grid view
                           {% if _img.width > 540 %}{{ _img | image_url: width: 540, format: 'webp' }} 540w,{% endif %}
                           {% if _img.width > 720 %}{{ _img | image_url: width: 720, format: 'webp' }} 720w,{% endif %}
                           {% if _img.width > 1080 %}{{ _img | image_url: width: 1080, format: 'webp' }} 1080w,{% endif %}"
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw">
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, calc(50vw - 24px)">
           <img
             class="collection__image__top"
             srcset="{% if _img.width > 360 %}{{ _img | image_url: width: 360 }} 360w,{% endif %}
                     {% if _img.width > 540 %}{{ _img | image_url: width: 540 }} 540w,{% endif %}
                     {% if _img.width > 720 %}{{ _img | image_url: width: 720 }} 720w,{% endif %}
                     {% if _img.width > 1080 %}{{ _img | image_url: width: 1080 }} 1080w,{% endif %}"
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, calc(50vw - 24px)"
             src="{{ _img | image_url: width: 540 }}"
             width="{{ _img.width }}"
             height="{{ _img.height }}"
@@ -247,7 +247,7 @@ A grid item for products used in collection grid view
                     {% if _img2.width > 540 %}{{ _img2 | image_url: width: 540 }} 540w,{% endif %}
                     {% if _img2.width > 720 %}{{ _img2 | image_url: width: 720 }} 720w,{% endif %}
                     {% if _img2.width > 1080 %}{{ _img2 | image_url: width: 1080 }} 1080w,{% endif %}"
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, calc(50vw - 24px)"
             src="{{ _img2 | image_url: width: 540 }}"
             width="{{ _img2.width }}"
             height="{{ _img2.height }}"

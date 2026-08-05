@@ -156,7 +156,7 @@ Sub-collection-only variables (set by stub, optional):
                       {{ _img | image_url: width: 540, format: 'webp' }} 540w,
                       {{ _img | image_url: width: 720, format: 'webp' }} 720w,
                       {{ _img | image_url: width: 1080, format: 'webp' }} 1080w"
-              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw">
+              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, calc(50vw - 24px)">
       <img
         src="{{ _img.src | image_url: width: 540 }}"
         srcset="{{ _img.src | image_url: width: 180 }} 180w,
@@ -164,7 +164,7 @@ Sub-collection-only variables (set by stub, optional):
                 {{ _img.src | image_url: width: 540 }} 540w,
                 {{ _img.src | image_url: width: 720 }} 720w,
                 {{ _img.src | image_url: width: 1080 }} 1080w"
-        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, calc(50vw - 24px)"
         width="{{ _img.width }}"
         height="{{ _img.height }}"
         {% if forloop.first %}

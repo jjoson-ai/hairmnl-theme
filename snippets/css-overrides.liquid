@@ -489,7 +489,12 @@
      but global — contain:layout is safe on either breakpoint.
 
      2026-05-11 HOTFIX — REMOVED .header__wrapper from this selector.
-     The cart-drawer ({% render 'cart-drawer' %} at sections/header.liquid:334)
+     The cart-drawer (rendered at sections/header.liquid:334)
+     [NOTE 2026-08-05: the literal Liquid render tag used to appear here inside this
+      comment. Liquid does NOT respect CSS comments, so it was actually EXECUTING and
+      injecting the whole cart-drawer markup into this <style> block on every page
+      (~5KB/page, and a latent sitewide CSS break if that markup ever emitted "*/").
+      Never write Liquid delimiters inside this file, not even in a comment.]
      is rendered AFTER `</header>` (line 330) but INSIDE `.header__wrapper`
      (closes at line 338). `contain: layout` establishes a containing block
      for fixed/absolute descendants per CSS Containment spec — that trapped
