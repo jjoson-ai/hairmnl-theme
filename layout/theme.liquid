@@ -1768,16 +1768,31 @@
     {% comment %} 2026-05-09: Subscribe It uninstalled (issue ijh) — removed subscribe-it-helper include (~54 KB / 178 lines deleted). {% endcomment %}
     <!-- Klaviyo Signup Script ============================================================== -->  
     <script>
-      window.addEventListener("klaviyoForms", function(e) { 
-        if (e.detail.type == 'open' || e.detail.type == 'embedOpen') {
-          gtag('event', 'form_open', 'Klaviyo form', e.detail.formId);
-        }
-        if (e.detail.type == 'submit') {
-          gtag('event', 'form_submit', 'Klaviyo form', e.detail.formId);
-        }
-        if (e.detail.type == 'close') {
-          gtag('event', 'form_close', 'Klaviyo form', e.detail.formId);
-        }
+      /* bd 958r.1 (2026-08-06) — these three calls used the legacy Universal Analytics
+         positional signature: gtag('event', 'form_open', 'Klaviyo form', e.detail.formId).
+         GA4's gtag takes gtag('event', '<name>', { <params> }) — the third argument must be an
+         OBJECT and there is no fourth argument (confirmed against
+         developers.google.com/analytics/devguides/collection/ga4/event-parameters).
+         So the events did fire, but 'Klaviyo form' and the form id were both discarded: GA4
+         recorded that *a* form opened with no way to tell WHICH one. Now passed as real
+         parameters. Note form_id / form_source must be registered as custom dimensions in the
+         GA4 admin before they surface in reports — the data collects either way.
+
+         Also added the typeof-guard + try/catch already used by snippets/hairsalon-schema.liquid.
+         window.gtag is present today (GT-5R3FN5JG registers it on the main page), but this
+         listener must never throw inside a Klaviyo callback if the tag ever fails to load. */
+      window.addEventListener("klaviyoForms", function(e) {
+        var map = { open: 'form_open', embedOpen: 'form_open', submit: 'form_submit', close: 'form_close' };
+        var name = map[e.detail && e.detail.type];
+        if (!name) { return; }
+        var params = { form_source: 'Klaviyo', form_id: (e.detail.formId || '(unknown)') };
+        try {
+          if (typeof gtag === 'function') {
+            gtag('event', name, params);
+          } else if (window.dataLayer) {
+            window.dataLayer.push(Object.assign({ event: name }, params));
+          }
+        } catch (err) { /* never break the page for analytics */ }
       });
     </script>
     <!-- End of Klaviyo Signup ============================================================== -->
