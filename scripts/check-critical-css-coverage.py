@@ -87,6 +87,16 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 CRITICAL = REPO / "snippets" / "critical-css.liquid"
+# Every stylesheet that is INLINE in <head> and therefore applies at first paint. Modelling only
+# critical-css.liquid was a precision bug (found triaging bd 66t7): snippets/css-overrides.liquid is
+# ~98KB rendered unconditionally at layout/theme.liquid:626 — verified Liquid nesting depth 0, inside
+# <head> — and it positions selectors that critical-css.liquid does not. It also sits AFTER the
+# deferred <link>s in source order, so at equal specificity it wins the settled cascade too. Ignoring
+# it made the lint report elements as "static at first paint" when they were already positioned.
+FIRST_PAINT_SHEETS = (
+    CRITICAL,
+    REPO / "snippets" / "css-overrides.liquid",
+)
 ALLOWLIST = REPO / "os2-migration" / "critical-css-coverage-allow.txt"
 ACK_TOKEN = "ccc-OK"
 
@@ -309,8 +319,26 @@ TAG_RE = re.compile(r"<(/?)([a-zA-Z][\w-]*)([^>]*?)(/?)>", re.DOTALL)
 CLASS_RE = re.compile(r"""class\s*=\s*("([^"]*)"|'([^']*)')""", re.IGNORECASE)
 
 
-def ancestor_map(markup: str) -> dict[str, list[tuple[list, set]]]:
-    """class token -> LIST of (ancestor_chain, own_frame), one entry per occurrence in this file.
+INLINE_HIDDEN_RE = re.compile(
+    r"""style\s*=\s*("[^"]*"|'[^']*')""", re.IGNORECASE)
+
+
+def _inline_hidden(attrs: str) -> bool:
+    """True if the element carries an inline style that suppresses painting.
+
+    snippets/cart-line-items.liquid:7 is the motivating case — `<div class="item--loadbar"
+    style="display: none;">`. No stylesheet declares display for .item--loadbar, so the inline rule
+    wins at first paint and the element cannot shift. RULE 3 would otherwise report it.
+    """
+    m = INLINE_HIDDEN_RE.search(attrs or "")
+    if not m:
+        return False
+    v = m.group(1)[1:-1].lower().replace(" ", "")
+    return "display:none" in v or "visibility:hidden" in v or "opacity:0" in v
+
+
+def ancestor_map(markup: str) -> dict[str, list[tuple[list, set, bool]]]:
+    """class token -> LIST of (ancestor_chain, own_frame, inline_hidden) per occurrence.
 
     `ancestor_chain` is ordered OUTERMOST -> innermost and excludes the element itself; `own_frame`
     is the element's own class set. Both are needed now that rules carry requirements: `own` is
@@ -326,7 +354,7 @@ def ancestor_map(markup: str) -> dict[str, list[tuple[list, set]]]:
     Unioning the two contexts let the safe one mask the broken one, and an early version of this
     lint consequently failed to reproduce dh8x. Every occurrence is judged on its own.
     """
-    out: dict[str, list[tuple[list, set]]] = {}
+    out: dict[str, list[tuple[list, set, bool]]] = {}
     stack: list[set] = []
     for m in TAG_RE.finditer(strip_liquid(markup)):
         closing, tag, attrs, selfclose = m.group(1), m.group(2).lower(), m.group(3), m.group(4)
@@ -339,8 +367,9 @@ def ancestor_map(markup: str) -> dict[str, list[tuple[list, set]]]:
         cls = {c for c in raw.split() if re.fullmatch(r"[A-Za-z_][\w-]*", c)}
         if cls:
             chain = [set(f) for f in stack]
+            hidden = _inline_hidden(attrs)
             for c in cls:
-                out.setdefault(c, []).append((chain, set(cls)))
+                out.setdefault(c, []).append((chain, set(cls), hidden))
         if tag not in VOID_TAGS and not selfclose:
             stack.append(cls)
     return out
@@ -423,11 +452,14 @@ def scan(verbose: bool = False):
         print(f"ERROR: {CRITICAL} not found", file=sys.stderr)
         return [], {}
 
-    critical_css = CRITICAL.read_text(encoding="utf-8", errors="replace")
-    crit_rules = list(iter_rules(critical_css))
+    crit_rules: list[tuple[str, str]] = []
+    for sheet in FIRST_PAINT_SHEETS:
+        if sheet.is_file():
+            crit_rules.extend(iter_rules(sheet.read_text(encoding="utf-8", errors="replace")))
 
     crit_abs: dict[str, tuple[str, bool]] = {}   # class -> (selector, from_pseudo_element)
     crit_pos_rules: dict[str, list] = {}         # class -> positioning rules WITH requirements
+    crit_hidden_rules: dict[str, list] = {}      # class -> rules that suppress painting (RULE 3)
     crit_font_size: set[str] = set()
     crit_font_family: set[str] = set()
     crit_font_shorthand: set[str] = set()
@@ -447,6 +479,10 @@ def scan(verbose: bool = False):
                 prev = crit_abs.get(c)
                 if prev is None or (prev[1] and not is_pseudo):
                     crit_abs[c] = (selector.strip(), is_pseudo)
+        if (decls.get("display") == "none" or decls.get("visibility") == "hidden"
+                or decls.get("opacity", "").strip() in ("0", "0.0", ".0")):
+            for req in parse_position_rules(selector, CRITICAL.name):
+                crit_hidden_rules.setdefault(req["target"], []).append(req)
         if "font-size" in decls:
             crit_font_size |= cls
         if "font-family" in decls:
@@ -464,6 +500,7 @@ def scan(verbose: bool = False):
 
     # deferred sheets: which classes get positioned there, and under what conditions
     deferred_pos_rules: dict[str, list] = {}
+    deferred_oof_rules: dict[str, list] = {}      # deferred sheet makes it absolute/fixed (RULE 3)
     for pattern in DEFERRED_GLOBS:
         for path in sorted((REPO / "assets").glob(pattern)):
             if ".dev." in path.name:
@@ -473,6 +510,12 @@ def scan(verbose: bool = False):
                     for req in parse_position_rules(selector, path.name):
                         if not req["pseudo"]:
                             deferred_pos_rules.setdefault(req["target"], []).append(req)
+                # RULE 3 input: only absolute/fixed take an element OUT OF FLOW. A static ->
+                # relative change keeps the element's space reserved, so it cannot reflow siblings.
+                if decl_map(body).get("position", "") in ("absolute", "fixed"):
+                    for req in parse_position_rules(selector, path.name):
+                        if not req["pseudo"]:
+                            deferred_oof_rules.setdefault(req["target"], []).append(req)
 
     # ancestor chains from markup, plus the cross-file context the walker cannot see
     texts: dict[str, str] = {}
@@ -480,11 +523,11 @@ def scan(verbose: bool = False):
         for path in sorted((REPO / d).rglob("*.liquid")):
             texts[str(path.relative_to(REPO))] = path.read_text(encoding="utf-8", errors="replace")
     outer_ctx = build_outer_context(texts)
-    ancestors: dict[str, list[tuple[str, list, set]]] = {}
+    ancestors: dict[str, list[tuple[str, list, set, bool]]] = {}
     for rel, text in texts.items():
         for cls, occurrences in ancestor_map(text).items():
             ancestors.setdefault(cls, []).extend(
-                (rel, chain, own) for chain, own in occurrences)
+                (rel, chain, own, hid) for chain, own, hid in occurrences)
 
     if verbose:
         print(f"  critical rules parsed      : {len(crit_rules)}")
@@ -501,7 +544,7 @@ def scan(verbose: bool = False):
     # RULE 1 — orphaned absolute positioning
     seen_pairs: set[tuple[str, str]] = set()
     for cls, (selector, from_pseudo) in sorted(crit_abs.items()):
-        for rel, chain, own in ancestors.get(cls, []):
+        for rel, chain, own, _hidden in ancestors.get(cls, []):
             # Outermost frame = classes contributed from outside the file (section schema class,
             # and the schema class of whatever section renders this snippet). A pseudo-element is
             # laid out inside its OWN originating element, so that element joins the chain too —
@@ -534,6 +577,58 @@ def scan(verbose: bool = False):
                 "fix": (f"add a matching position rule for .{late} to critical-css.liquid "
                         f"(mirror the deferred declaration exactly so final rendering is unchanged)"),
                 "key": f"{cls}/{late}",
+            })
+
+    # RULE 3 — element taken OUT OF FLOW only by a deferred sheet (bd 66t7)
+    #
+    # The inverse of RULE 1, and it reflows more of the page. Critical CSS leaves the element
+    # STATIC, so at first paint it is IN FLOW and occupies layout space. When the deferred sheet
+    # makes it absolute/fixed it pops out of flow and everything below it jumps up — surrounding
+    # content moves, not just the element.
+    seen_oof: set[str] = set()
+    for cls in sorted(deferred_oof_rules):
+        for rel, chain, own, inline_hidden in ancestors.get(cls, []):
+            if inline_hidden:
+                continue                               # inline style suppresses painting
+            outer = set(outer_ctx.get(rel, ()))
+            full = [outer] + chain + [own]
+            # Does the deferred out-of-flow rule actually match THIS occurrence?
+            anc_union = set(outer)
+            for f in chain:
+                anc_union |= f
+            oof = next((r for r in deferred_oof_rules[cls]
+                        if rule_matches(r, own, anc_union)), None)
+            if oof is None:
+                continue
+            # Critical CSS already gives it a position -> no in-flow/out-of-flow delta.
+            if any(rule_matches(r, own, anc_union) for r in crit_pos_rules.get(cls, ())):
+                continue
+            # Cannot paint at first paint -> cannot contribute a shift. Checked on the element and
+            # on every ancestor, since a hidden ancestor hides the subtree.
+            if any(rule_matches(r, own, anc_union) for r in crit_hidden_rules.get(cls, ())):
+                continue
+            if any(any(rule_matches(r, frame, set().union(*full[:i]) if i else set())
+                       for a in frame for r in crit_hidden_rules.get(a, ()))
+                   for i, frame in enumerate(full)):
+                continue
+            if cls in seen_oof:
+                continue
+            seen_oof.add(cls)
+            if cls in allow or f"{cls}/out-of-flow" in allow:
+                continue
+            findings.append({
+                "rule": "late-out-of-flow",
+                "cls": cls,
+                "selector": oof["selector"],
+                "where": rel,
+                "detail": (f"critical CSS leaves this STATIC, but `{oof['selector'][:60]}` in "
+                           f"{oof['source']} (deferred) makes it position:absolute/fixed — so it "
+                           f"occupies layout space at first paint and everything below it jumps "
+                           f"up when the sheet lands"),
+                "fix": (f"mirror the position declaration for .{cls} into critical-css.liquid "
+                        f"(position alone is enough — it keeps the element out of flow from the "
+                        f"first paint, which is what stops surrounding content reflowing)"),
+                "key": f"{cls}/out-of-flow",
             })
 
     # RULE 2 — font-relative sizing without a font in critical CSS
@@ -601,6 +696,14 @@ def selftest() -> int:
          "bd gmrm: the containing block comes from the section schema `class`, unseen by the walker"),
         ("ccc-schema-class-fixed", False,
          "...and is silent once that ancestor is positioned by critical CSS"),
+        ("ccc-late-out-of-flow", True,
+         "bd 66t7 RULE 3: static in critical, absolute only in the deferred sheet"),
+        ("ccc-late-out-of-flow-fixed", False,
+         "...silent once the position is mirrored into critical CSS"),
+        ("ccc-late-out-of-flow-hidden", False,
+         "RULE 3 exemption: critical CSS hides it, so it cannot paint or shift"),
+        ("ccc-late-out-of-flow-inline", False,
+         "RULE 3 exemption: inline style=display:none wins at first paint (.item--loadbar)"),
     ]
     failures = 0
     print("critical-css coverage selftest (bd hairmnl-theme-958r.6)")
@@ -632,6 +735,7 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
     """Same logic as scan(), over in-memory strings. Kept in step with scan() by selftest."""
     crit_abs: dict[str, tuple[str, bool]] = {}
     crit_pos_rules: dict[str, list] = {}
+    crit_hidden_rules: dict[str, list] = {}
     crit_font_size, crit_font_family, crit_font_shorthand = set(), set(), set()
     font_unit_hits = []
     for selector, body in iter_rules(critical_css):
@@ -647,6 +751,14 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
                 prev = crit_abs.get(c)
                 if prev is None or (prev[1] and not is_pseudo):
                     crit_abs[c] = (selector.strip(), is_pseudo)
+        if (decls.get("display") == "none" or decls.get("visibility") == "hidden"
+                or decls.get("opacity", "").strip() in ("0", "0.0", ".0")):
+            for req in parse_position_rules(selector, CRITICAL.name):
+                crit_hidden_rules.setdefault(req["target"], []).append(req)
+        if (decls.get("display") == "none" or decls.get("visibility") == "hidden"
+                or decls.get("opacity", "").strip() in ("0", "0.0", ".0")):
+            for req in parse_position_rules(selector, "critical"):
+                crit_hidden_rules.setdefault(req["target"], []).append(req)
         if "font-size" in decls:
             crit_font_size |= cls
         if "font-family" in decls:
@@ -660,16 +772,22 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
                     for c in cls:
                         font_unit_hits.append((c, prop, val, selector.strip()))
     deferred_pos_rules: dict[str, list] = {}
+    deferred_oof_rules: dict[str, list] = {}
     for selector, body in iter_rules(deferred_css):
-        if decl_map(body).get("position", "") in POSITIONED_VALUES:
+        pos = decl_map(body).get("position", "")
+        if pos in POSITIONED_VALUES:
             for req in parse_position_rules(selector, "deferred.css"):
                 if not req["pseudo"]:
                     deferred_pos_rules.setdefault(req["target"], []).append(req)
+        if pos in ("absolute", "fixed"):
+            for req in parse_position_rules(selector, "deferred.css"):
+                if not req["pseudo"]:
+                    deferred_oof_rules.setdefault(req["target"], []).append(req)
     outer = build_outer_context({"fixture.liquid": markup}).get("fixture.liquid", set())
     ancestors = ancestor_map(markup)
     out = []
     for cls, (selector, from_pseudo) in sorted(crit_abs.items()):
-        for chain, own in ancestors.get(cls, []):
+        for chain, own, _hid in ancestors.get(cls, []):
             eff = [set(outer)] + chain + ([own] if from_pseudo else [])
             if not any(eff):
                 continue
@@ -679,6 +797,22 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
             if late:
                 out.append({"rule": "orphaned-absolute", "cls": cls, "selector": selector})
                 break
+    for cls in sorted(deferred_oof_rules):
+        for chain, own, inline_hidden in ancestors.get(cls, []):
+            if inline_hidden:
+                continue
+            anc_union = set(outer)
+            for f in chain:
+                anc_union |= f
+            if not any(rule_matches(r, own, anc_union) for r in deferred_oof_rules[cls]):
+                continue
+            if any(rule_matches(r, own, anc_union) for r in crit_pos_rules.get(cls, ())):
+                continue
+            if any(rule_matches(r, own, anc_union) for r in crit_hidden_rules.get(cls, ())):
+                continue
+            out.append({"rule": "late-out-of-flow", "cls": cls,
+                        "selector": deferred_oof_rules[cls][0]["selector"]})
+            break
     for cls, prop, val, selector in sorted(set(font_unit_hits)):
         has_size = cls in crit_font_size or cls in crit_font_shorthand
         has_family = cls in crit_font_family or cls in crit_font_shorthand

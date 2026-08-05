@@ -1,0 +1,5 @@
+/* bd 66t7. Critical CSS leaves .product__badge STATIC, so at first paint it is IN FLOW and
+   occupies layout space in the card. The deferred sheet then makes it absolute, it pops out of
+   flow, and everything below it jumps up. This reflows SURROUNDING content — worse than RULE 1,
+   which usually only moves the element itself. */
+.product__badge{background:var(--primary);color:#fff;padding:2px 6px}

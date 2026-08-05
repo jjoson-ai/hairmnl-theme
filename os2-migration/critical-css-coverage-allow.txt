@@ -56,3 +56,58 @@ icon/height                         3q2e   SAFE (medium confidence). `.icon{heig
 # --- rows stay so the lint exits 0; they are no longer outstanding work.
 collection__nav/height              dwdv   FIXED via the body font mirror (/*dwdv*/ in critical-css.liquid), not outstanding. `height:3.3em` on a bordered, server-rendered nav that is above the fold on every collection page; critical CSS omits the body font-size AND font-family, so first paint is UA serif at 16px (3.3em = 52.8px) and settles to 13.14426px (43.4px) — a ~9.4px reflow. All three deferred blocks were mirrored verbatim (unconditional + @media 480px vw-interpolated + @media 1400px); mirroring only the unconditional block would have changed rendering at every viewport >=480px. Body-scoped, so `input,select,textarea{font-size:16px}` survives as the iOS zoom-on-focus guard. Verified on an unpublished duplicate of live: theme-core.css follows the inline block in document order with byte-identical values, so settled rendering is unchanged; both tiny.content.min.css and theme-core.css are deferred, so the inline rule is the ONLY body font rule at first paint. .collection__nav 52.8px -> 43.4px reflow removed.
 icon/width                          dwdv   FIXED at the root by the same body font mirror; the em basis is now correct at first paint. The `.cart__remove__icon` residual on /cart (2.86px) is resolved with it. Two residuals remain by design and are NOT reachable from body: the `.popout__toggle` sort icon and the mobile search button are each pinned by their own 12px accent rules (1.33px each). One larger case is conditional on catalogue data and is filed separately: `.media__thumb .icon` is position:absolute + 20x20 ONLY in the deferred sheet, so on a PDP whose product has video/3D media the icon starts as an in-flow 1em box overflowing the 60x60 thumb.
+
+# ===============================================================================================
+# RULE 3 (late-out-of-flow) BASELINE, TRIAGED 2026-08-06 under bd 66t7. 21 findings judged, each
+# NEEDS_FIX and each sub-high-confidence call re-derived by a second analyst told to refute the
+# first. Outcome: 3 NEEDS_FIX (all fixed below), 12 SAFE, 6 FALSE_POSITIVE. No row is un-vetted.
+#
+# FIXED, so absent from this file:
+#   /*66t7*/.micromodal-slide{display:none}.micromodal-slide.is-open{display:block}
+#                                             <- modal__overlay + modal__close. Mirroring the HIDING
+#                                                rule is cheaper and safer than mirroring each
+#                                                child's position: a display:none modal generates no
+#                                                boxes at all. The .is-open twin is mirrored too so a
+#                                                modal cannot be stuck hidden if JS beats the sheet.
+#   .video-autoplay-wrapper{position:absolute;top:0;height:100%;width:100%}
+#
+# NOTE ON RULE 3 vs RULE 1: their safety tests are OPPOSITE. A RULE 1 element with no containing
+# block teleports into the first viewport, so "below the fold" is NOT a defence. A RULE 3 element
+# sits at its natural in-flow position, so "it and everything below it are below the fold" IS a
+# valid defence. Several rows rely on that.
+#
+# THREE MODEL GAPS the triage exposed, all worth knowing before trusting a RULE 3 verdict:
+#   1. FIXED in this change — the lint modelled only critical-css.liquid as first-paint CSS and
+#      ignored snippets/css-overrides.liquid (~98KB, inline in <head> at layout/theme.liquid:626,
+#      Liquid nesting depth 0). That alone produced the product__badge and cart__items__remove
+#      false positives. Both sheets are now parsed.
+#   2. NOT fixed — the lint assumes every template uses layout/theme.liquid. templates/password.json
+#      declares "layout": "password", and layout/password.liquid loads theme.css as a RENDER-BLOCKING
+#      link with no critical-css inline and no media=print swap, so the whole deferred-CSS bug class
+#      cannot occur there.
+#   3. NOT fixed — the lint treats every deferred sheet as loading on every template. Several are
+#      Liquid-gated (theme-search.css at layout/theme.liquid:565, theme-cart.css at :556), so a
+#      "deferred" rule may simply never apply on the template where the markup lives.
+#   4. NOT fixed — build_outer_context propagates a section's SCHEMA class across {% render %}
+#      edges, but not markup-level ancestor classes. So a snippet whose containing block is supplied
+#      by a wrapper in its calling section looks unpositioned. See cart__items__remove below.
+# ===============================================================================================
+
+background-size-cover/out-of-flow   66t7   FALSE POSITIVE. Both occurrences are <img> tags carrying an INLINE style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover" (sections/section-map.liquid:58 and :66). An inline style outranks any class rule, so they are out of flow from the first paint — there is no transition. (The lint reads inline styles only for display/visibility/opacity, not position.)
+cart__items__remove/out-of-flow     66t7   FALSE POSITIVE, model gap #1. snippets/css-overrides.liquid positions it at first paint; it is inline in <head>, not deferred. Now that the lint parses that sheet the RULE 1 twin below is the accurate report for this element.
+collection__image__bottom/out-of-flow 66t7 SAFE. Occupies ZERO layout space even while static: its only child is the hover <img>, and critical CSS already gives `.lazy-image img{position:absolute}` — so the div computes to height 0 and collapsing it moves nothing. Independently, it is gated `{% if double_img %}` which needs settings.image_hover_enable, currently false. The zero-height argument survives a merchant flipping that setting.
+custom-prev-next-button/out-of-flow 66t7   SAFE on two independent grounds. All 18 section-slideshow instances in templates/ are disabled:true (re-verified, not taken on trust). And even if one were re-enabled the element is an empty div with no critical-CSS box, so it reserves nothing to collapse.
+drawer__underlay/out-of-flow        66t7   SAFE. The reported site, sections/api-pickup-availability.liquid, has NO {% schema %} and no template reference — it is fetched only at runtime through the Section Rendering API (assets/theme.js:4823), so it is not part of any initial page load.
+drawer__underlay__blur/out-of-flow  66t7   SAFE. An empty <span> with nothing declared for it in first-paint CSS, so the subtree collapses to a zero-height line box; its background only applies in the .drawer--visible state, so it paints nothing on a cold load.
+drawer__underlay__fill/out-of-flow  66t7   SAFE. Same deferred rule, same markup shape and same reasoning as drawer__underlay__blur.
+gallery__icon/out-of-flow           66t7   SAFE by the below-the-fold exemption, which is valid for RULE 3 (see the note above). Critical CSS has zero occurrences of gallery__icon, so it really is an in-flow inline box at first paint — but on every template that renders it, it and everything beneath it sit outside the first viewport.
+helper-note/out-of-flow             66t7   SAFE. Behind a Liquid condition that is false in production: the only live callsite is sections/collection.liquid:105, inside the {% for %}...{% else %} EMPTY branch and additionally gated on collection.handle == 'all'. The 16 bespoke collection-* sections that also include it have zero template references.
+hidden-label/out-of-flow            66t7   FALSE POSITIVE, model gap #2. templates/password.json declares "layout": "password", and layout/password.liquid loads theme.css as a render-blocking <link> — it never inlines critical-css.liquid and never uses the media=print swap. The deferred-CSS bug class cannot occur on that layout at all.
+image__hero__pane/out-of-flow       66t7   SAFE. Zero layout space at first paint: critical CSS contains no occurrence of image__hero, so the pane has no width/height/padding/border/background of its own, and collapsing a zero-size box moves nothing.
+popout-list/out-of-flow             66t7   SAFE (medium confidence). The refutation pass overturned an initial NEEDS_FIX: the claimed ~200px jump on collection.branded-subcollection rested on a misread of sections/brand-collection.liquid:100, where `{%- if request.design_mode or request.page_type == null -%}` takes the ELSE branch on a real pageload.
+product-labels/out-of-flow          66t7   FALSE POSITIVE. Every {% render 'product-labels' %} callsite in the repo is commented out (product-grid-item.liquid:261, product-grid-item-branded.liquid:183, section-product.liquid:63), disabled 2026-04-27 under bd spz. WARNING for bd spz: if those renders are ever uncommented this becomes a REAL finding — the label stack would add a line box inside a.lazy-image and push the title/price down. Re-enabling must include `.product-labels{position:absolute;top:8px;left:8px}` in critical CSS.
+range__dot/out-of-flow              66t7   SAFE, model gap #3. `.range__dot{position:absolute}` ships only in assets/theme-search.css, which layout/theme.liquid:565 loads only on search templates — so on collection pages, where the filter sidebar also renders, there is no static-to-absolute transition at all.
+range__line/out-of-flow             66t7   SAFE. Same widget, same sheet, same template gate as range__dot; and on the search template the ancestor .collection__filters__inner is opacity:0 at first paint.
+spinner-wrapper/out-of-flow         66t7   FALSE POSITIVE. Dead code: sections/collection-branded.liquid has zero template references and no presets block (bd nlr8 recorded the same). The deferred rule is also the DESCENDANT selector `.collection-slider .spinner-wrapper`, and that section carries no such schema class.
+tousled-logo/out-of-flow            66t7   SAFE, doubly. The <img> is gated `{% if tousled_logo != blank %}`, and its ancestor .sliderule__wrapper is a slide-out menu that is not open at first paint.
+cart__items__remove/cart__items__row 66t7   FALSE POSITIVE, model gap #4 (cross-file markup ancestry). snippets/css-overrides.liquid is internally consistent: everywhere it makes the button absolute it ALSO positions the row, in the same media context — `.cart__template .cart__items__remove{position:absolute}` is paired with `.cart__template .cart__items__row{position:relative}` inside @media (max-width:767px), and `.cart__drawer .cart__items__remove` is paired with `.cart__drawer .cart__items__row` unconditionally. There is no orphaned occurrence. The lint reports it only because `.cart__template` / `.cart__drawer` sit on wrappers in sections/cart.liquid and snippets/cart-drawer.liquid — one {% render %} above snippets/cart-line-items.liquid — and only schema classes cross that boundary today. Do NOT "fix" by mirroring `.cart__items__row{position:relative}` unconditionally into critical CSS: that would position the row on desktop /cart where css-overrides deliberately does not, changing settled rendering.

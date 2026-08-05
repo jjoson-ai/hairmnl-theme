@@ -1,0 +1,3 @@
+/* Exemption path: critical CSS hides it, so it generates no visible box at first paint and cannot
+   contribute a shift even though the deferred sheet takes it out of flow. */
+.drawer__underlay{background:rgba(0,0,0,.4);display:none}
