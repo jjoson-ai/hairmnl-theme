@@ -1,5 +1,13 @@
 # PSI matrix — P8-LIVE launch day (2026-08-05) vs 07-16 pull and 06-10 baseline
 
+> ⚠️ **SUPERSEDED IN PART — see `psi-baseline-2026-08-05-rerun.md` (clean re-run).**
+> This matrix was measured while the `hairmnl.com` registration had lapsed and DNS was migrating to
+> Namecheap parking (bd `wzt4`). The ~50% cell failures recorded below as "origin strain from the
+> crawler flood" were actually that DNS transition. **The mobile LCP step-change claimed in this file
+> does NOT reproduce on a clean re-run** (mobile LCP comes back at 9–26s, the P6 band). The desktop
+> improvements and the CLS findings DO hold and were reconfirmed.
+
+
 **Context:** P8 (theme `141168312419`) published to live **2026-08-05 00:28 MNL** (a7av.7). This is the first
 matrix where the bare URL = Pipeline 8. Run ~17h post-launch.
 
