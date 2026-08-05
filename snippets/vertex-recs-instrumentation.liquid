@@ -143,12 +143,31 @@
       var widgetId = widget.getAttribute("data-vertex-widget-id");
       var placement = widget.getAttribute("data-vertex-placement") || null;
       var anchor = widget.getAttribute("data-vertex-anchor-product-id") || null;
-      // Try to extract product ID from the link's href (/products/<handle>) or
-      // a data attribute we added to the card.
-      var productId = link.getAttribute("data-vertex-product-id");
+      // Product id resolution (2026-08-05 fix): the id attribute lives on the
+      // CARD WRAPPER (<div class="vrec-card" data-vertex-product-id="...">,
+      // see vertex-rec-card.liquid) — NOT on the <a>, which product-grid-item
+      // renders without it. The original code read it off the link only, so
+      // it ALWAYS fell through to href-parsing and reported the product
+      // HANDLE — while impressions report numeric IDs from
+      // data-vertex-products. Result: the dashboard's per-product table
+      // bifurcated (impression rows keyed by numeric id with 0 clicks; click
+      // rows keyed by handle with 0 impressions) and per-product CTR was
+      // unmeasurable. Walk up to the nearest carrier of the attribute so
+      // clicks report the SAME numeric id as impressions. Href-parsing stays
+      // as a last-resort fallback (its handle is still better than null, and
+      // handles >80 chars get truncated by the server column anyway — one
+      // more reason numeric ids are the right key).
+      // Scope to .vrec-card specifically: the widget <section> ALSO carries
+      // data-vertex-product-id (the ANCHOR product's id) — a bare
+      // closest("[data-vertex-product-id]") on a non-card link (heading,
+      // view-all) would walk past the card level and mis-attribute the
+      // click to the anchor product.
+      var idCarrier = link.closest(".vrec-card[data-vertex-product-id]");
+      var productId = (idCarrier && idCarrier.getAttribute("data-vertex-product-id")) ||
+                      link.getAttribute("data-vertex-product-id");
       if (!productId) {
         var m = (link.getAttribute("href") || "").match(/\/products\/([^/?#]+)/);
-        productId = m ? m[1] : null; // handle, not legacy ID — that's fine for matching
+        productId = m ? m[1] : null;
       }
       send([{
         event_type: "vertex-rec-click",
