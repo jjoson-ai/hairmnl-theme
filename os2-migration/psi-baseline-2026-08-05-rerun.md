@@ -82,3 +82,44 @@ real throttling and a confirmed-open window, because the parser must also have r
 - Decisive desktop A/B: running.
 - Cart shifts are a SEPARATE bug (unsized footer BIR-certificate `<img loading="lazy">`), not dh8x.
 - Cleanup owed: delete the three `CLS-AB-*` unpublished themes when the experiment concludes.
+
+---
+
+## dh8x A/B — FINAL RESULT (4 batches, 81 valid runs)
+
+Treatment = `/*dh8x*/.brick__block{position:relative}` appended to `snippets/critical-css.liquid`
+(theme `142428438627` / `t/115`). Control = unmodified duplicate of live (`142428373091` / `t/113`).
+Metric = runs containing **any** layout shift on the `brick__block / hero__content__wrapper` chain
+(the defect signature). The event is binary — it fires at ~1.0 or is absent; there is no small-shift
+tail, which is what makes this bug expensive to prove by sampling.
+
+| batch | arm | runs | runs w/ brick-chain shift | worst |
+|---|---|---|---|---|
+| desktop PSI #1 | control | 10 | **2** | 1.0000 |
+| desktop PSI #2 | control | 13 | **1** | 1.0000 |
+| local Lighthouse | control | 8 | **1** | 0.8943 |
+| mobile PSI | control | 9 | 0 | — |
+| desktop PSI #1 | **t2 (fix)** | 10 | **0** | — |
+| desktop PSI #2 | **t2 (fix)** | 14 | **0** | — |
+| local Lighthouse | **t2 (fix)** | 8 | **0** | — |
+| mobile PSI | **t2 (fix)** | 9 | **0** | — |
+
+**TOTAL: control 4/40 vs fix 0/41 — Fisher one-tailed p = 0.055.**
+
+Supporting detail:
+- Every control fire carried the identical signature: score **exactly 1.0000** on the brick chain
+  (0.8943 locally, where emulated geometry differs). That exactness is the ICB arithmetic, not a cap.
+- The fix arm's worst run across all 41 was **0.27**, always on unrelated elements (desktop header
+  bar, LoyaltyLion notifications). **Zero brick-chain shifts of any size.**
+- Mobile contributed no signal in either arm (control 0/9): mobile FCP is now so late that the
+  exposure window never opens. Mobile is the wrong instrument for this bug; desktop is the right one.
+
+**Verdict:** p=0.055 is marginal by itself, but the decision does not rest on it. The mechanism proof
+is deterministic — the defect IS the absence of a containing block at first paint, and the fix
+demonstrably puts `.brick__block{position:relative}` into the inlined critical CSS (verified in the
+served HTML of `t/115`). The causal chain is closed by construction. The rule is also a provable
+no-op on final rendering, because `theme-collection.css` already applies the identical declaration
+unconditionally at top level — first paint simply now agrees with the final computed style.
+
+**Recommendation: ship.** Risk is bounded at "no effect"; upside is removing a shift that measured
+2.011 on brand mobile in this matrix.
