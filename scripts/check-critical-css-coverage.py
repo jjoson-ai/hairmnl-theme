@@ -36,6 +36,10 @@ meant to stay near-zero-noise:
     but SOME ancestor is positioned by a DEFERRED sheet, the containing block does not exist
     at first paint => flag.
 
+    Pseudo-element rules (::before/::after) are chained through their ORIGINATING element, which
+    is where their box is laid out — `.x:after{position:absolute}` is safe whenever `.x` itself is
+    positioned by critical CSS.
+
   RULE 2 — FONT-RELATIVE SIZING WITHOUT A FONT (the wscl shape)
     For every critical-CSS sizing declaration (width/height/min-/max-) whose value uses a
     font-relative unit that depends on the ELEMENT's own font (`ch`, `em`, `ex`), require that
@@ -163,6 +167,42 @@ def classes_in_selector(selector: str) -> set[str]:
     return out
 
 
+# Pseudo-ELEMENTS only. Pseudo-CLASSES (:hover, :focus, :not(...)) still target the element
+# itself and change nothing about containing blocks, so they must NOT match here.
+PSEUDO_ELEMENT_RE = re.compile(
+    r"::[a-zA-Z-]+"
+    r"|:(?:before|after|first-line|first-letter|marker|placeholder|selection|backdrop)\b",
+    re.IGNORECASE)
+
+
+def classes_in_selector_scoped(selector: str) -> list[tuple[str, bool]]:
+    """(class, targets_a_pseudo_element) per rightmost compound of each comma-separated part.
+
+    A ::before/::after box is laid out INSIDE its originating element, so its containing block is
+    that element whenever the element is itself positioned. `.home__subtitle:after{position:absolute}`
+    is therefore perfectly safe next to `.home__subtitle{position:relative}` — and reporting it was a
+    false positive in the first version of this lint, which stripped `:after` and attributed the
+    pseudo's `position:absolute` to the class.
+    """
+    out: list[tuple[str, bool]] = []
+    for part in selector.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        last = re.split(r"\s+|>|\+|~", part)[-1]
+        is_pseudo = bool(PSEUDO_ELEMENT_RE.search(last))
+        for c in re.findall(r"\.([A-Za-z_][\w-]*)", last):
+            out.append((c, is_pseudo))
+    return out
+
+
+def positioning_classes(selector: str) -> set[str]:
+    """Classes that a `position:` declaration on this selector actually makes into a containing
+    block — i.e. excluding pseudo-element rules, which position the pseudo box, not the element.
+    """
+    return {c for c, is_pseudo in classes_in_selector_scoped(selector) if not is_pseudo}
+
+
 def decl_map(body: str) -> dict[str, str]:
     """property -> value (last wins), lowercased property."""
     out: dict[str, str] = {}
@@ -255,7 +295,7 @@ def scan(verbose: bool = False):
     critical_css = CRITICAL.read_text(encoding="utf-8", errors="replace")
     crit_rules = list(iter_rules(critical_css))
 
-    crit_abs: dict[str, str] = {}        # class -> selector that made it absolute
+    crit_abs: dict[str, tuple[str, bool]] = {}   # class -> (selector, from_pseudo_element)
     crit_positioned: set[str] = set()
     crit_font_size: set[str] = set()
     crit_font_family: set[str] = set()
@@ -268,10 +308,12 @@ def scan(verbose: bool = False):
         acked = ACK_TOKEN in body or ACK_TOKEN in selector
         pos = decls.get("position", "")
         if pos in POSITIONED_VALUES:
-            crit_positioned |= cls
+            crit_positioned |= positioning_classes(selector)
         if pos == "absolute" and not acked:
-            for c in cls:
-                crit_abs.setdefault(c, selector.strip())
+            for c, is_pseudo in classes_in_selector_scoped(selector):
+                prev = crit_abs.get(c)
+                if prev is None or (prev[1] and not is_pseudo):
+                    crit_abs[c] = (selector.strip(), is_pseudo)
         if "font-size" in decls:
             crit_font_size |= cls
         if "font-family" in decls:
@@ -295,7 +337,7 @@ def scan(verbose: bool = False):
                 continue
             for selector, body in iter_rules(path.read_text(encoding="utf-8", errors="replace")):
                 if decl_map(body).get("position", "") in POSITIONED_VALUES:
-                    for c in classes_in_selector(selector):
+                    for c in positioning_classes(selector):
                         deferred_positioned.setdefault(c, path.name)
 
     # ancestor chains from markup
@@ -320,13 +362,17 @@ def scan(verbose: bool = False):
 
     # RULE 1 — orphaned absolute positioning
     seen_pairs: set[tuple[str, str]] = set()
-    for cls, selector in sorted(crit_abs.items()):
+    for cls, (selector, from_pseudo) in sorted(crit_abs.items()):
         for rel, anc in ancestors.get(cls, []):
-            if not anc:
+            # A pseudo-element is contained by its OWN originating element, so that element joins
+            # the containing-block chain. Without this, `.x:after{position:absolute}` next to
+            # `.x{position:relative}` reports a bug that cannot happen.
+            chain = anc | ({cls} if from_pseudo else set())
+            if not chain:
                 continue                               # no observed ancestry; can't judge
-            if anc & crit_positioned:
+            if chain & crit_positioned:
                 continue                               # containing block exists at first paint
-            late = sorted(a for a in anc if a in deferred_positioned)
+            late = sorted(a for a in chain if a in deferred_positioned)
             if not late:
                 continue
             # Key on the PAIR, not the class. `.hero__content__wrapper` is broken under
@@ -399,6 +445,10 @@ def selftest() -> int:
          "wscl: min-width in ch with no font-size/font-family in critical CSS"),
         ("ccc-font-relative-fixed", False,
          "same reservation expressed in px"),
+        ("ccc-pseudo-element", False,
+         "a ::after is contained by its own originating element — must NOT be reported"),
+        ("ccc-pseudo-element-orphan", True,
+         "...but a ::after whose base element is unpositioned IS genuinely orphaned"),
     ]
     failures = 0
     print("critical-css coverage selftest (bd hairmnl-theme-958r.6)")
@@ -436,10 +486,12 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
         acked = ACK_TOKEN in body or ACK_TOKEN in selector
         pos = decls.get("position", "")
         if pos in POSITIONED_VALUES:
-            crit_positioned |= cls
+            crit_positioned |= positioning_classes(selector)
         if pos == "absolute" and not acked:
-            for c in cls:
-                crit_abs.setdefault(c, selector.strip())
+            for c, is_pseudo in classes_in_selector_scoped(selector):
+                prev = crit_abs.get(c)
+                if prev is None or (prev[1] and not is_pseudo):
+                    crit_abs[c] = (selector.strip(), is_pseudo)
         if "font-size" in decls:
             crit_font_size |= cls
         if "font-family" in decls:
@@ -455,13 +507,14 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
     deferred_positioned = {}
     for selector, body in iter_rules(deferred_css):
         if decl_map(body).get("position", "") in POSITIONED_VALUES:
-            for c in classes_in_selector(selector):
+            for c in positioning_classes(selector):
                 deferred_positioned.setdefault(c, "deferred.css")
     ancestors = ancestor_map(markup)
     out = []
-    for cls, selector in sorted(crit_abs.items()):
+    for cls, (selector, from_pseudo) in sorted(crit_abs.items()):
         for anc in ancestors.get(cls, []):
-            if anc and not (anc & crit_positioned) and any(a in deferred_positioned for a in anc):
+            chain = anc | ({cls} if from_pseudo else set())
+            if chain and not (chain & crit_positioned) and any(a in deferred_positioned for a in chain):
                 out.append({"rule": "orphaned-absolute", "cls": cls, "selector": selector})
                 break
     for cls, prop, val, selector in sorted(set(font_unit_hits)):
