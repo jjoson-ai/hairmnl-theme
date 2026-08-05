@@ -31,8 +31,11 @@
           modal opens. Same effective behavior as lazysizes was providing,
           without needing the lazysizes.js dependency.
         {%- endcomment -%}
+        {%- comment -%} image_url needs NAMED params; 'master' is the deprecated img_url syntax
+            and returned a bare relative path that 404s. See image-fill.liquid. {%- endcomment -%}
+        {%- assign zoom_w = image.width | at_most: 5760 -%}
         <img class="zoom__img"
-          src="{{ image | image_url: 'master' }}"
+          src="{{ image | image_url: width: zoom_w }}"
           loading="lazy"
           alt="{{ image.alt | strip_html | escape }}"/>
       </div>

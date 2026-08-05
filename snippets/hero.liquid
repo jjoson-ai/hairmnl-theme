@@ -85,9 +85,12 @@
                   {% if image.width > 1400 %}{{ image | image_url: width: 1400 }} 1400w,{% endif %}
                   {% if image.width > 1800 %}{{ image | image_url: width: 1800 }} 1800w,{% endif %}
                   {% if image.width > 2400 %}{{ image | image_url: width: 2400 }} 2400w,{% endif %}
-                  {{ image | image_url: 'master' }} {{ image.width }}w"
+                  {%- comment -%} image_url needs NAMED params; 'master' is the deprecated img_url
+                      syntax and returned a bare relative path that 404s. See image-fill.liquid. {%- endcomment -%}
+                  {%- assign full_w = image.width | at_most: 5760 -%}
+                  {{ image | image_url: width: full_w }} {{ full_w }}w"
           sizes="100vw"
-          src="{{ image | image_url: 'master' }}"
+          src="{{ image | image_url: width: full_w }}"
           width="{{ image.width }}"
           height="{{ image.height }}"
           loading="{{ img_loading }}"

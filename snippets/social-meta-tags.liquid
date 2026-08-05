@@ -12,12 +12,23 @@
   {%- assign og_type = 'product' -%}
   {%- if product.media.size > 0 -%}
     {%- capture og_image_tags -%}
+      {%- comment -%}
+        image_url takes NAMED width:/height: params. The old `image_url: 'master'` was the
+        deprecated img_url syntax; with image_url it returns a bare relative path, so the
+        `https:` prefix produced a broken URL (e.g. "https:products/Foo.jpg") on every PDP.
+        Cap at 1200 (og best practice, and what twitter:image already uses); Shopify never
+        upscales, so at_most keeps the declared dimensions truthful.
+      {%- endcomment -%}
       {%- for media in product.media limit: 3 -%}
         {% assign image = media.preview_image %}
-        <meta property="og:image" content="https:{{ image | image_url: 'master' }}">
-        <meta property="og:image:secure_url" content="https:{{ image | image_url: 'master' }}">
-        <meta property="og:image:height" content="{{ image.height }}">
-        <meta property="og:image:width" content="{{ image.width }}">
+        {%- if image and image.width > 0 -%}
+          {%- assign og_w = image.width | at_most: 1200 -%}
+          {%- assign og_h = image.height | times: og_w | divided_by: image.width -%}
+          <meta property="og:image" content="https:{{ image | image_url: width: og_w }}">
+          <meta property="og:image:secure_url" content="https:{{ image | image_url: width: og_w }}">
+          <meta property="og:image:height" content="{{ og_h }}">
+          <meta property="og:image:width" content="{{ og_w }}">
+        {%- endif -%}
       {%- endfor -%}
     {%- endcapture -%}
     {%- capture twitter_image_tag -%}
@@ -32,10 +43,15 @@
   {%- assign article_og_image = article.image | default: page_image -%}
   {%- if article_og_image -%}
     {%- capture og_image_tags -%}
-      <meta property="og:image" content="https:{{ article_og_image | image_url: 'master' }}">
-      <meta property="og:image:secure_url" content="https:{{ article_og_image | image_url: 'master' }}">
-      <meta property="og:image:height" content="{{ article_og_image.height }}">
-      <meta property="og:image:width" content="{{ article_og_image.width }}">
+      {%- comment -%} Same image_url/'master' defect as the product branch above. {%- endcomment -%}
+      {%- if article_og_image.width > 0 -%}
+        {%- assign og_w = article_og_image.width | at_most: 1200 -%}
+        {%- assign og_h = article_og_image.height | times: og_w | divided_by: article_og_image.width -%}
+        <meta property="og:image" content="https:{{ article_og_image | image_url: width: og_w }}">
+        <meta property="og:image:secure_url" content="https:{{ article_og_image | image_url: width: og_w }}">
+        <meta property="og:image:height" content="{{ og_h }}">
+        <meta property="og:image:width" content="{{ og_w }}">
+      {%- endif -%}
     {%- endcapture -%}
     {%- capture twitter_image_tag -%}
       <meta name="twitter:image" content="https:{{ article_og_image | image_url: width: 1200 }}">
@@ -48,40 +64,40 @@
   {%- assign og_description = shop.description | default: shop.name -%}
   {%- if settings.logo -%}
     {%- capture og_image_tags -%}
-      <meta property="og:image" content="{{ settings.logo | image_url: width: 1200 }}">
-      <meta property="og:image:secure_url" content="{{ settings.logo | image_url: width: 1200 }}">
+      <meta property="og:image" content="{{ settings.logo | image_url: width: 1200 | prepend: 'https:' }}">
+      <meta property="og:image:secure_url" content="{{ settings.logo | image_url: width: 1200 | prepend: 'https:' }}">
     {%- endcapture -%}
     {%- capture twitter_image_tag -%}
-      <meta name="twitter:image" content="{{ settings.logo | image_url: width: 1200 }}">
+      <meta name="twitter:image" content="{{ settings.logo | image_url: width: 1200 | prepend: 'https:' }}">
     {%- endcapture -%}
   {%- endif -%}
 
 {%- elsif template.name == 'page' -%}
   {%- if page.handle contains 'studio' -%}
     {%- capture og_image_tags -%}
-      <meta property="og:image" content="{{ 'hmnl-studio-share-img.jpg' | asset_url }}">
-      <meta property="og:image:secure_url" content="{{ 'hmnl-studio-share-img.jpg' | asset_url }}">
+      <meta property="og:image" content="{{ 'hmnl-studio-share-img.jpg' | asset_url | prepend: 'https:' }}">
+      <meta property="og:image:secure_url" content="{{ 'hmnl-studio-share-img.jpg' | asset_url | prepend: 'https:' }}">
     {%- endcapture -%}
     {%- capture twitter_image_tag -%}
-      <meta name="twitter:image" content="{{ 'hmnl-studio-share-img.jpg' | asset_url }}">
+      <meta name="twitter:image" content="{{ 'hmnl-studio-share-img.jpg' | asset_url | prepend: 'https:' }}">
     {%- endcapture -%}
   {%- elsif page_image -%}
     {%- capture og_image_tags -%}
-      <meta property="og:image" content="{{ page_image | image_url: width: 1200 }}">
-      <meta property="og:image:secure_url" content="{{ page_image | image_url: width: 1200 }}">
+      <meta property="og:image" content="{{ page_image | image_url: width: 1200 | prepend: 'https:' }}">
+      <meta property="og:image:secure_url" content="{{ page_image | image_url: width: 1200 | prepend: 'https:' }}">
     {%- endcapture -%}
     {%- capture twitter_image_tag -%}
-      <meta name="twitter:image" content="{{ page_image | image_url: width: 1200 }}">
+      <meta name="twitter:image" content="{{ page_image | image_url: width: 1200 | prepend: 'https:' }}">
     {%- endcapture -%}
   {%- endif -%}
 
 {%- elsif page_image -%}
   {%- capture og_image_tags -%}
-    <meta property="og:image" content="{{ page_image | image_url: width: 1200 }}">
-    <meta property="og:image:secure_url" content="{{ page_image | image_url: width: 1200 }}">
+    <meta property="og:image" content="{{ page_image | image_url: width: 1200 | prepend: 'https:' }}">
+    <meta property="og:image:secure_url" content="{{ page_image | image_url: width: 1200 | prepend: 'https:' }}">
   {%- endcapture -%}
   {%- capture twitter_image_tag -%}
-    <meta name="twitter:image" content="{{ page_image | image_url: width: 1200 }}">
+    <meta name="twitter:image" content="{{ page_image | image_url: width: 1200 | prepend: 'https:' }}">
   {%- endcapture -%}
 {%- endif -%}
 

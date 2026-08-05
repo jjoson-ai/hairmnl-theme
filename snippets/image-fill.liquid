@@ -103,6 +103,15 @@
       + fetchpriority + style + alt all remain on <img> per HTML spec
       — those don't go on <source>.
     {%- endcomment -%}
+    {%- comment -%}
+      `image_url: 'master'` is the DEPRECATED img_url syntax. image_url takes NAMED params, so
+      that call returned a bare relative path ("articles/Foo.jpg"), which resolves against the
+      current page URL and 404s — breaking the <img> src fallback and the largest srcset
+      candidate on every image-fill render (observed live on collection-page article cards).
+      full_w reproduces the original 'master' intent (native size); at_most: 5760 respects
+      image_url's documented maximum so an oversized upload can't raise a Liquid error.
+    {%- endcomment -%}
+    {%- assign full_w = image.width | at_most: 5760 -%}
     <picture>
       <source type="image/webp"
               srcset="{% if image.width > 360 %}{{ image | image_url: width: 360, format: 'webp' }} 360w,{% endif %}
@@ -116,9 +125,9 @@
                 {% if image.width > 720 %}{{ image | image_url: width: 720 }} 720w,{% endif %}
                 {% if image.width > 1080 %}{{ image | image_url: width: 1080 }} 1080w,{% endif %}
                 {% if image.width > 1600 %}{{ image | image_url: width: 1600 }} 1600w,{% endif %}
-                {{ image | image_url: 'master' }} {{ image.width }}w"
+                {{ image | image_url: width: full_w }} {{ full_w }}w"
         sizes="{{ sizes }}"
-        src="{{ image | image_url: 'master' }}"
+        src="{{ image | image_url: width: full_w }}"
         width="{{ image.width }}"
         height="{{ image.height }}"
         loading="{{ loading }}"
