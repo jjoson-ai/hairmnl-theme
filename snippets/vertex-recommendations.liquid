@@ -48,6 +48,7 @@
   assign rec_offset   = 0
   assign rec_limit    = 8
   assign rec_ids_csv  = ''
+  assign rec_handles_csv = ''
   assign rec_widget_id = placement
 
   case placement
@@ -231,6 +232,18 @@
         {%- comment -%} bd 62z: accumulate only the IDs actually rendered (post-filter),
            so data-vertex-products matches what the shopper really sees. {%- endcomment -%}
         {%- assign rec_ids_csv = rec_ids_csv | append: rec_p.id | append: ',' -%}
+        {%- comment -%}
+          2026-08-05 (bd q9z6 item 4): emit the HANDLE in lockstep with the id.
+          The numeric id remains the join key (stable across product renames); the
+          handle rides alongside purely so the dashboard can DISPLAY something a
+          human can read instead of "1422928904291". rec_p is already in hand here,
+          so this costs nothing — no Shopify API call, no catalog table, no extra
+          token scope, which is exactly what had blocked the readable-names work.
+          Positionally aligned with rec_ids_csv: index N of one matches index N of
+          the other, because both are appended inside this same `unless rec_skip`
+          branch — a filtered-out product is absent from BOTH, so alignment holds.
+        {%- endcomment -%}
+        {%- assign rec_handles_csv = rec_handles_csv | append: rec_p.handle | append: ',' -%}
       {%- endunless -%}
     {%- endif -%}
   {%- endfor -%}
@@ -253,6 +266,7 @@
   data-vertex-widget-id="{{ rec_widget_id }}"
   data-vertex-anchor-product-id="{% if product %}{{ product.id }}{% endif %}"
   data-vertex-products="{{ rec_ids_csv | split: ',' | join: ',' }}"
+  data-vertex-handles="{{ rec_handles_csv | split: ',' | join: ',' }}"
   aria-labelledby="vrec-title-{{ placement }}"
 >
   <header class="vrec-slot__header">

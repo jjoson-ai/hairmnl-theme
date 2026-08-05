@@ -117,8 +117,19 @@
       var anchor = el.getAttribute("data-vertex-anchor-product-id") || null;
       var products = (el.getAttribute("data-vertex-products") || "")
         .split(",").map(function (s) { return s.trim(); }).filter(Boolean);
+      // 2026-08-05 (bd q9z6 item 4): handles ride alongside ids, positionally
+      // aligned (vertex-recommendations.liquid appends to both CSVs in the same
+      // post-filter branch). product_id stays the numeric join key; the handle is
+      // carried in metadata so the dashboard has a human-readable label without
+      // needing a product catalog or a Shopify API call. Guarded by index because
+      // an older cached page may render data-vertex-products WITHOUT the new
+      // data-vertex-handles attribute — in that case handle is simply omitted.
+      var handles = (el.getAttribute("data-vertex-handles") || "")
+        .split(",").map(function (s) { return s.trim(); }).filter(Boolean);
       // Emit one impression event per product so per-product analytics work
       for (var j = 0; j < products.length; j++) {
+        var meta = { position: j };
+        if (handles[j]) meta.handle = handles[j];
         events.push({
           event_type: "vertex-rec-impression",
           visitor_id: visitorId,
@@ -127,7 +138,7 @@
           widget_id: widgetId,
           placement: placement,
           anchor_product_id: anchor,
-          metadata: { position: j },
+          metadata: meta,
         });
       }
     }
@@ -165,9 +176,15 @@
       var idCarrier = link.closest(".vrec-card[data-vertex-product-id]");
       var productId = (idCarrier && idCarrier.getAttribute("data-vertex-product-id")) ||
                       link.getAttribute("data-vertex-product-id");
+      // The href always carries the handle — capture it regardless of whether
+      // productId resolved, so clicks carry the same metadata.handle that
+      // impressions now do (bd q9z6 item 4). This is also what lets the
+      // dashboard reconcile the LEGACY handle-keyed click rows (logged before
+      // the 2026-08-05 identifier fix) against numeric impression rows.
+      var hrefMatch = (link.getAttribute("href") || "").match(/\/products\/([^/?#]+)/);
+      var clickHandle = hrefMatch ? hrefMatch[1] : null;
       if (!productId) {
-        var m = (link.getAttribute("href") || "").match(/\/products\/([^/?#]+)/);
-        productId = m ? m[1] : null;
+        productId = clickHandle;
       }
       send([{
         event_type: "vertex-rec-click",
@@ -177,7 +194,7 @@
         widget_id: widgetId,
         placement: placement,
         anchor_product_id: anchor,
-        metadata: {},
+        metadata: clickHandle ? { handle: clickHandle } : {},
       }]);
     }, true);
   }
