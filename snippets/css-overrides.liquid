@@ -493,8 +493,15 @@
      [NOTE 2026-08-05: the literal Liquid render tag used to appear here inside this
       comment. Liquid does NOT respect CSS comments, so it was actually EXECUTING and
       injecting the whole cart-drawer markup into this <style> block on every page
-      (~5KB/page, and a latent sitewide CSS break if that markup ever emitted "*/").
-      Never write Liquid delimiters inside this file, not even in a comment.]
+      (~5KB/page, and a latent sitewide CSS break if that markup ever emitted a
+      CSS comment-terminator sequence).
+      Never write Liquid delimiters inside this file, not even in a comment.
+      Never write a literal comment-terminator sequence inside a comment either:
+      the first one ENDS the comment, so the prose after it is parsed as CSS and
+      the parser drops the rest of the stylesheet. Writing that sequence here on
+      2026-08-05 killed 74KB / 76% of this file on live — every rule after this
+      point (quick-buy, product-sticky-bar, sticky-cart-bubble, ...) silently
+      stopped applying. Describe the sequence in words; never type it.]
      is rendered AFTER `</header>` (line 330) but INSIDE `.header__wrapper`
      (closes at line 338). `contain: layout` establishes a containing block
      for fixed/absolute descendants per CSS Containment spec — that trapped
