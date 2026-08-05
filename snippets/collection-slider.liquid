@@ -3,7 +3,17 @@
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       <!-- Slides -->
-      {% for product in products limit: products.size %}
+      {%- comment -%}
+        bd 958r.3 — was `limit: products.size`, i.e. no limit: every product in the collection
+        was rendered into the HTML up front (Shopify caps collection.products at 50). This is
+        the path the homepage's six Collection Slider sections actually take (the section's
+        grid branch only runs when a collection has <=6 products), so it produced ~300
+        server-rendered product cards on the homepage. product_limit is passed by the caller;
+        default: products.size preserves the old behaviour if the snippet is ever rendered
+        without it.
+      {%- endcomment -%}
+      {%- assign slider_limit = product_limit | default: products.size -%}
+      {% for product in products limit: slider_limit %}
         <div class="swiper-slide">
           {% render 'product-grid-item', product: product %}
         </div>

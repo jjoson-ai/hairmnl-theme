@@ -2,7 +2,31 @@
 {% assign collection_title = featured_products_collection.title %}
 {% assign featured_products = featured_products_collection.products %}
 
-{%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
+{%- comment -%}
+  bd 958r.3 — this line used to read:
+      assign product_limit = section.settings.grid | times: section.settings.rows
+  copied from sections/section-collection.liquid, but this section's schema defines neither
+  `grid` nor `rows`, so product_limit evaluated to nil — AND the product loop below never
+  applied it at all. The slider therefore rendered the WHOLE collection (Shopify caps
+  collection.products at 50). Six of these sections on the homepage = 300 server-rendered
+  product cards, ~8,680 element tags = 69% of the homepage DOM, which is the direct driver of
+  the Style & Layout (1995ms) and Rendering (1255ms) main-thread buckets.
+  Now driven by a real, editor-tunable setting and actually applied to the loop.
+
+  MEASURED 2026-08-05 on the homepage, 50 -> 16 products per slider:
+    HTML transfer      190.1KB -> 163.0KB per pageview  (-27KB)
+    HTML uncompressed  2,244KB -> 1,386KB               (-859KB parse cost)
+    DOM elements       11,877  -> 6,638                 (-44%)
+    Desktop A/B (interleaved, n=8/arm): median score 61.0 -> 59.5, median LCP
+    1.27s -> 1.60s, CLS 0.006 -> 0.011. All within run-to-run noise: NO
+    demonstrated desktop performance gain. Desktop is bottlenecked on
+    third-party JS (~9.75s main-thread across templates), not on DOM size.
+  => DEFAULT IS 50, i.e. historical behaviour is preserved. Lower it per-section
+     in the theme editor if you want the bandwidth/parse saving for low-end
+     mobile; do NOT expect a PSI score change. Merchandising trade-off: fewer
+     products browsable in the carousel.
+{%- endcomment -%}
+{%- assign product_limit = section.settings.products_to_show | default: 50 -%}
 
 {% if section.settings.is_custom_title_font %}
   {%- assign title_font = section.settings.custom_title_font -%}
@@ -48,14 +72,14 @@
         }
       </style>
     <div class="collection-grid__box">
-      {% for product in featured_products %}
+      {% for product in featured_products limit: product_limit %}
         <div class="collection-grid__item">
           {% render 'product-grid-item', product: product %}
         </div>
       {% endfor %}
     </div>
   {% else %}
-    {% render 'collection-slider' products: featured_products %}
+    {% render 'collection-slider' products: featured_products, product_limit: product_limit %}
   {%- endif -%}
 
   {%- if featured_products.size > 6 -%}
@@ -87,6 +111,15 @@
       "type": "collection",
       "id": "featured_collection",
       "label": "Select Collection"
+    }, {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 50,
+      "step": 2,
+      "label": "Products to show",
+      "info": "Products rendered into the HTML up front. Lower = smaller DOM/HTML. See the comment at the top of this file and bd 958r.3 for measured trade-offs.",
+      "default": 50
     }
   ],
   "presets": [
