@@ -433,10 +433,27 @@
      header right column shifts. GSC field CLS 0.11–0.18 on blogs+homepage
      (327 URLs); lab-invisible because the lab bot never interacts to trigger
      deferred LoyaltyLion. Reserving a min-width holds the number's footprint so
-     the fill can't resize the column. 6ch covers up to ~6-digit balances; the
-     overflow:hidden above clips any excess. kt0-safe (pure min-width). */
+     the fill can't resize the column. Covers up to ~5-digit balances incl. the
+     thousands comma (e.g. 1,234 = 34.0px); the overflow:hidden above clips any
+     excess. kt0-safe (pure min-width — no containing block is created).
+
+     2026-08-05 hardening (dh8x lens, post-P8-cutover CLS sweep). The value was
+     6ch, which is FONT-RELATIVE and therefore itself unstable across the
+     inline/deferred CSS boundary — the same defect class as dh8x. Detail:
+     snippets/critical-css.liquid ships .navtext with NO font-family and NO
+     font-size, and declares no body font-family either. Both the body font and
+     .navtext's accent font + 12px size live ONLY in the DEFERRED
+     assets/theme-core.css (L10383; loaded media=print at layout/theme.liquid
+     ~L537). So at first paint 1ch was the UA default serif at 16px (0.5em =
+     8px) -> 6ch = 48px; once theme-core.css applied it became Questrial at
+     12px (measured digit advance 0.55em = 6.6px, tabular) -> 6ch = 39.6px.
+     The reservation itself therefore shrank ~8px inside the header right
+     column on every cold load. 40px pins that same settled width with no font
+     dependency; clipping behaviour is unchanged from 6ch. Trade-off: this no
+     longer self-adjusts, so if the accent font or the type scale changes,
+     re-measure as 6 x (digit advance in em) x font-size. */
   .points-box .points-approved {
-    min-width: 6ch;
+    min-width: 40px;
   }
 
   /* CLS fix 2026-05-13 hairmnl-theme-7i0 — Announcement bar ticker height lock.

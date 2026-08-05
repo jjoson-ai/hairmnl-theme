@@ -106,11 +106,20 @@ def get_client_and_property():
     return BetaAnalyticsDataClient(), f"properties/{pid}"
 
 
-def _and(*filters: Filter) -> FilterExpression:
+def _wrap(f) -> FilterExpression:
+    """Accept either a raw Filter or an already-built FilterExpression."""
+    return f if isinstance(f, FilterExpression) else FilterExpression(filter=f)
+
+
+def _not(f) -> FilterExpression:
+    return FilterExpression(not_expression=_wrap(f))
+
+
+def _and(*filters) -> FilterExpression:
     if len(filters) == 1:
-        return FilterExpression(filter=filters[0])
+        return _wrap(filters[0])
     return FilterExpression(and_group=FilterExpressionList(
-        expressions=[FilterExpression(filter=f) for f in filters]))
+        expressions=[_wrap(f) for f in filters]))
 
 
 def _in(field: str, values: List[str]) -> Filter:
@@ -134,6 +143,13 @@ def query_vitals(args) -> Dict[str, Dict[str, Dict[str, int]]]:
         flat.append(_eq("customEvent:metric_rating", args.rating))
     if args.device:
         flat.append(_eq("deviceCategory", args.device))
+    if not args.include_bots:
+        # bd 8ile: a single crawler (Chrome / Macintosh / Singapore) reporting
+        # screenResolution 1366x1366 produced 397,543 events on 2026-08-04 =
+        # 42% of the entire property that day and 98.8% of desktop LCP. A
+        # square screen resolution is not a real monitor. Excluded by default;
+        # pass --include-bots to see the raw, poisoned numbers.
+        flat.append(_not(_eq("screenResolution", "1366x1366")))
     if args.page:
         # Exact pagePath match. Use the value the user passes verbatim (URL path with no
         # query string). For substring/regex, use `--page-contains` instead.
@@ -184,7 +200,15 @@ def query_errors(args):
             Dimension(name="customEvent:error_type"),
         ],
         metrics=[Metric(name="eventCount")],
-        dimension_filter=FilterExpression(filter=_eq("eventName", "js_error")),
+        # bd 8ile: the crawler emitted 361,090 js_error events over 3 days
+        # (~8 per pageview, mostly web-pixels importScripts NetworkError and
+        # 401 dynamic-import). Excluded by default, same as query_vitals().
+        dimension_filter=(
+            FilterExpression(filter=_eq("eventName", "js_error"))
+            if getattr(args, "include_bots", False)
+            else _and(_eq("eventName", "js_error"),
+                      _not(_eq("screenResolution", "1366x1366")))
+        ),
         order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
         limit=args.top,
     )
@@ -265,6 +289,7 @@ def main():
     parser.add_argument("--by", default="page", choices=list(DIMENSION_MAP.keys()))
     parser.add_argument("--rating", default="", choices=["", "good", "needs-improvement", "poor"])
     parser.add_argument("--device", default="", choices=["", "desktop", "mobile", "tablet"], help="Filter by device category")
+    parser.add_argument("--include-bots", action="store_true", help="bd 8ile: by default the 1366x1366 crawler fingerprint (the 2026-08-03/04 faceted-URL flood) is excluded from all queries. Pass this to see raw, unfiltered numbers.")
     parser.add_argument("--page", default="", help="Filter to exact pagePath (e.g. '/' or '/cart'). Combine with --by debug_target to drill into what shifts on a specific page.")
     parser.add_argument("--page-contains", default="", help="Filter to pagePath substring match (e.g. '/blogs/'). Use instead of --page when you want a section.")
     parser.add_argument("--days", type=int, default=7)
