@@ -1,3 +1,24 @@
+{%- comment -%}
+  bd nlr8 (2026-08-05) — DORMANT SECTION with a KNOWN POSITIONING DEFECT if wired up.
+
+  Reachability: referenced by ZERO template JSON / .liquid files. Live /pages/reviews contains none
+  of this markup (`swiper-container`, `custom-banner`, `brand-banner-slider` all count 0). BUT this
+  section DOES ship a `presets` block, so it is one theme-editor click from being live — unlike its
+  sibling in sections/collection-branded.liquid.
+
+  THE DEFECT: the markup below uses the Swiper v5 container class `.swiper-container`, while this
+  theme ships Swiper v6+ CSS keyed on `.swiper` (critical-css.liquid has
+  `.swiper{position:relative;overflow:hidden;...}`). The only `.swiper-container` position rule in
+  the theme is `.cross-post-blogs .swiper-container` (assets/custom-theme-core.css:1118), which does
+  not match here. So the container is never positioned and
+  `.swiper-button-*{position:absolute;top:50%}` resolves against the INITIAL CONTAINING BLOCK —
+  arrows at 50% of the viewport, permanently.
+
+  CAUTION on the obvious one-token fix: adding `swiper` to the container class also pulls in
+  `.swiper{width:100%;height:100%}` from critical CSS, which can collapse the container when the
+  parent has no height. That is why this was NOT auto-fixed — verify visually on a duplicate theme
+  before shipping any change here.
+{%- endcomment -%}
 {% if page.handle  == 'reviews' %}
  <div class="custom-banner swiper-container" style="text-align: center !important; margin-top: 20px !important;">
               <!-- Additional required wrapper -->

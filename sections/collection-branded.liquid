@@ -1,3 +1,23 @@
+{%- comment -%}
+  bd nlr8 (2026-08-05) — DORMANT SECTION, and it has a KNOWN POSITIONING DEFECT if wired up.
+
+  Reachability: referenced by ZERO template JSON / .liquid files, and it ships no `presets` block,
+  so it cannot be added from the theme editor either. Nothing on the storefront renders it today —
+  verified against live markup (`navigator-box` count 0 on branded collection pages).
+
+  THE DEFECT, if you ever wire it up: this file copies the collection-slider markup — a
+  `.navigator-box` holding `.swiper-button-next` / `.swiper-button-prev` (see ~L571 and ~L710) —
+  but its {% schema %} has NO `"class": "collection-slider"` key. The rule that makes that pattern
+  work is `.collection-slider .wrapper{position:relative}` (assets/custom-theme-core.css:2242,
+  mirrored into critical-css.liquid under bd 3q2e). Without the schema class it never matches, and
+  `.swiper-button-*{position:absolute;top:50%}` resolves against the INITIAL CONTAINING BLOCK — the
+  arrows sit at 50% of the VIEWPORT, not of the slider, permanently. `.navigator-box` has no CSS
+  rule anywhere in the repo, so it supplies nothing either.
+
+  Do NOT "fix" this by adding `.navigator-box{position:relative}` globally — the seven working
+  homepage sliders position their arrows against `.collection-slider .wrapper`, and giving
+  `.navigator-box` a containing block would move those instead. Scope any fix to this section.
+{%- endcomment -%}
 <!-- /sections/collection-branded.liquid -->
 
 {%- assign grid_offset = '' -%}
