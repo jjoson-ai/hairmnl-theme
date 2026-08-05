@@ -35,5 +35,13 @@ jobs:
         with:
           python-version: '3.11'
 
+      # Prove the comment-integrity check still fires — and still stays quiet on
+      # legal constructs — before trusting its verdict on the theme. A lint
+      # nobody tests is a lint that silently stops working. Fixtures live in
+      # scripts/fixtures/, outside the scanned theme directories, so the two
+      # intentionally-broken ones don't fail the repo-wide run below.
+      - name: Lint selftest (bd hairmnl-theme-w1n6)
+        run: python3 scripts/check-overlay-css.py --selftest
+
       - name: Run kt0 CSS lint
         run: python3 scripts/check-overlay-css.py

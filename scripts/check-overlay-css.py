@@ -22,9 +22,23 @@ How it works:
   Each match exits non-zero unless the body contains the literal token
   `/* kt0-OK */` acknowledging human review.
 
+SECOND CHECK — comment integrity (bd hairmnl-theme-w1n6, added 2026-08-05):
+  A CSS comment ends at the FIRST terminator sequence. If one is typed inside
+  a comment, the comment closes early, the following prose parses as CSS, the
+  parser derails, and every rule after that point silently stops applying.
+  This is invisible to source review — the CSS text looks perfectly correct.
+  Three layered signals, none needing a third-party parser:
+    1. a terminator sequence wrapped in quotes (the literal 2026-08-05 defect)
+    2. prose reaching selector position after parser-accurate comment stripping
+       (the general case — catches an unquoted terminator too)
+    3. a markup-injecting Liquid tag inside a CSS comment (Liquid does not
+       respect CSS comments and renders anyway — the 6279005 sibling bug)
+  Both 2026-08-05 defects are reproduced as fixtures and asserted by --selftest.
+
 Usage:
   python3 scripts/check-overlay-css.py             # scan repo, exit 1 on violations
   python3 scripts/check-overlay-css.py --list      # show every match (informational)
+  python3 scripts/check-overlay-css.py --selftest  # assert the lint itself still works
   python3 scripts/check-overlay-css.py path/to/file.liquid
 
 Add new overlay selectors to OVERLAY_PATTERNS as the storefront grows.
@@ -103,6 +117,240 @@ acknowledges that a human/AI has reviewed the kt0-rule implications. Use:
 or with a justification:
     /* kt0-OK: display:none means containment is moot */
 """
+
+
+# ---------------------------------------------------------------------------
+# Comment-integrity check (bd hairmnl-theme-w1n6)
+#
+# 2026-08-05: a comment in snippets/css-overrides.liquid quoted the CSS
+# comment-terminator sequence as an example. A CSS comment ends at the FIRST
+# terminator, so the comment closed early, the remaining prose was parsed as
+# CSS, the parser derailed, and 180 of 206 rules (74KB, 76%) silently stopped
+# applying on live. Four customer-visible symptoms followed: the quick-buy icon
+# collapsed, the quick-buy popover leaked variant titles onto every product
+# card, the PDP sticky add-to-cart bar lost position:fixed, and the cart bubble
+# rendered inline at the top-left.
+#
+# Source review cannot catch this — the CSS text is present and reads
+# correctly. It is only visible by asking what a parser actually ACCEPTED.
+# Same failure family as the bug fixed hours earlier the same day (Liquid
+# executing inside a CSS comment): css-overrides.liquid is inlined into a
+# <style> block, so anything that corrupts comment structure is sitewide.
+#
+# Two layered signals, both offset-preserving so line numbers stay exact:
+#   1. a terminator sequence WRAPPED in quotes  -> the literal 2026-08-05 shape
+#   2. prose reaching selector position after parser-accurate comment stripping
+#      -> the general case, catches an unquoted terminator too
+# ---------------------------------------------------------------------------
+
+STYLE_BLOCK_RE = re.compile(r'<style[^>]*>(.*?)</style>', re.DOTALL | re.IGNORECASE)
+LIQUID_TAG_RE = re.compile(r'\{%.*?%\}|\{\{.*?\}\}', re.DOTALL)
+
+# Liquid comment BLOCKS must be blanked before <style> extraction, not merely
+# have their tags stripped. Several sections discuss the markup in prose —
+# sections/section-banner-slider.liquid:82 contains the literal text "<style>"
+# inside a {%- comment -%}. Left in place, that opening tag pairs with the real
+# closing tag further down and drags English prose into the CSS region, which
+# is a false positive of exactly the kind this lint exists to avoid raising.
+# Liquid comments emit nothing, so they can never contribute CSS.
+LIQUID_COMMENT_RE = re.compile(
+    r'\{%-?\s*comment\s*-?%\}.*?\{%-?\s*endcomment\s*-?%\}',
+    re.DOTALL | re.IGNORECASE,
+)
+
+# Liquid tags that INJECT MARKUP. These are the ones that must never appear
+# inside a CSS comment (see _liquid_in_comments). Assignment/control-flow tags
+# and `{{ }}` outputs are excluded on purpose — commenting out a declaration
+# that interpolates a setting is a normal, harmless pattern.
+LIQUID_INJECT_RE = re.compile(r'\{%-?\s*(?:render|include|section)\s[^%]*?-?%\}', re.IGNORECASE)
+
+# Four or more consecutive bare alphabetic words separated by plain spaces.
+# A real selector essentially always carries . # [ ] : > + ~ or a hyphen.
+# NOTE: at-rule preludes DO legitimately read as prose — `@media only screen
+# and (min-width: 499px)` is exactly four bare words — so _prose_reason only
+# inspects the text BEFORE any `@`. Verified against every CSS-bearing file
+# in the repo (7 stylesheets tripped the first version of this rule).
+PROSE_RUN_RE = re.compile(r'(?:\b[A-Za-z]{2,}\b[ \t]+){3,}\b[A-Za-z]{2,}\b')
+
+
+def _blank_like(s: str) -> str:
+    """Same-length blank string, newlines preserved so line numbers survive."""
+    return ''.join('\n' if c == '\n' else ' ' for c in s)
+
+
+def css_regions(path: Path, text: str) -> list[tuple[int, int]]:
+    """Spans of `text` that are CSS.
+
+    .css/.scss  -> the whole file.
+    .liquid     -> only inside <style> blocks (css-overrides.liquid has 5, and
+                   ~20 section files carry Liquid-templated <style> blocks).
+    """
+    if path.suffix.lower() in ('.css', '.scss'):
+        return [(0, len(text))]
+    return [(m.start(1), m.end(1)) for m in STYLE_BLOCK_RE.finditer(text)]
+
+
+def _blank_outside(text: str, regions: list[tuple[int, int]]) -> str:
+    """Blank everything outside the CSS regions, preserving offsets exactly."""
+    out = list(_blank_like(text))
+    for start, end in regions:
+        out[start:end] = list(text[start:end])
+    return ''.join(out)
+
+
+def _liquid_in_comments(css_only: str) -> list[tuple[int, str]]:
+    """Markup-injecting Liquid tags sitting inside a CSS comment.
+
+    Liquid does not respect CSS comments — it renders regardless. On
+    2026-08-05 a `{% render 'cart-drawer' %}` left inside a comment in
+    css-overrides.liquid executed on every page, injecting the whole
+    cart-drawer markup into the inlined <style> block (~5KB/page, fixed in
+    6279005). Scoped deliberately to render/include/section: those inject
+    markup and are never harmless here, whereas `/* color: {{ x }} */` is a
+    normal way to comment a declaration out and must not be flagged.
+
+    Must run BEFORE Liquid tags are blanked, or there is nothing left to see.
+    """
+    hits: list[tuple[int, str]] = []
+    i, n = 0, len(css_only)
+    while i < n:
+        if css_only.startswith('/*', i):
+            close = css_only.find('*/', i + 2)
+            end = (close + 2) if close >= 0 else n
+            for m in LIQUID_INJECT_RE.finditer(css_only, i, end):
+                hits.append((m.start(), ' '.join(m.group(0).split())[:60]))
+            i = end
+            continue
+        i += 1
+    return hits
+
+
+def strip_comments_like_a_parser(masked: str) -> tuple[str, list[int]]:
+    """Blank each comment by jumping to the FIRST terminator, as a parser does.
+
+    Returns (stripped_text, quoted_terminator_offsets). The quoted offsets are
+    terminators wrapped in quotes (`"*/"`) — an author quoting the sequence as
+    an example, which is exactly what happened on 2026-08-05.
+    """
+    out = list(masked)
+    quoted: list[int] = []
+    i, n = 0, len(masked)
+    while i < n:
+        if masked.startswith('/*', i):
+            close = masked.find('*/', i + 2)
+            end = (close + 2) if close >= 0 else n
+            if close >= 0:
+                prev_ch = masked[close - 1] if close > 0 else ''
+                next_ch = masked[close + 2] if close + 2 < n else ''
+                # Require BOTH sides quoted. A comment merely ending after a
+                # quote (`/* say "hi" */`) is legitimate and must not trip.
+                if prev_ch in '"\'' and next_ch in '"\'':
+                    quoted.append(close)
+            for k in range(i, end):
+                if out[k] != '\n':
+                    out[k] = ' '
+            i = end
+            continue
+        i += 1
+    return ''.join(out), quoted
+
+
+def _prose_reason(segment: str) -> str | None:
+    """Why this selector-position text cannot be a selector.
+
+    Only the text before any `@` is inspected: at-rule preludes such as
+    `@media only screen and (max-width: 500px)` are four bare words and would
+    otherwise trip every stylesheet in the repo. A genuine leak still shows,
+    because the prose sits BEFORE the at-rule that follows it.
+    """
+    head = segment.split('@', 1)[0]
+    if '`' in head:
+        return "backtick — not valid in a CSS selector"
+    m = PROSE_RUN_RE.search(head)
+    if m:
+        return f"English prose — {m.group(0).strip()[:60]!r}"
+    return None
+
+
+def scan_file_comments(path: Path) -> list[dict]:
+    """Findings for premature comment termination in `path`."""
+    try:
+        text = path.read_text(encoding='utf-8', errors='replace')
+    except Exception as e:
+        print(f"warn: could not read {path}: {e}", file=sys.stderr)
+        return []
+
+    # Blank Liquid comment blocks FIRST (offset-preserving), so a `<style>`
+    # mentioned inside one cannot open a bogus CSS region.
+    text_nc = LIQUID_COMMENT_RE.sub(lambda m: _blank_like(m.group(0)), text)
+
+    regions = css_regions(path, text_nc)
+    if not regions:
+        return []
+
+    # CSS regions only, with Liquid still intact — the Liquid-in-comment check
+    # has to see the tags before they are blanked for brace scanning.
+    css_only = _blank_outside(text_nc, regions)
+    injections = _liquid_in_comments(css_only)
+
+    masked = LIQUID_TAG_RE.sub(lambda m: _blank_like(m.group(0)), css_only)
+    stripped, quoted_offsets = strip_comments_like_a_parser(masked)
+
+    total_rules = stripped.count('{')
+    findings: list[dict] = []
+
+    for off, tag in injections:
+        findings.append({
+            'path': str(path),
+            'line': line_of(text, off),
+            'kind': 'liquid-in-comment',
+            'detail': f'{tag} sits inside a CSS comment — Liquid does not respect CSS '
+                      'comments and will render this into the <style> block',
+            'rules_lost': 0,
+            'total_rules': total_rules,
+        })
+
+    for off in quoted_offsets:
+        findings.append({
+            'path': str(path),
+            'line': line_of(text, off),
+            'kind': 'quoted-terminator',
+            'detail': 'a CSS comment terminator appears wrapped in quotes, so the '
+                      'comment ends HERE and the prose after it is parsed as CSS',
+            'rules_lost': max(0, stripped.count('{', off)),
+            'total_rules': total_rules,
+        })
+
+    # Prose in selector position: the span between the previous {, } or ; and
+    # the next {. Checked at every nesting depth, so a leak inside a media
+    # query is caught too.
+    seg_start = 0
+    for m in re.finditer(r'[{};]', stripped):
+        if m.group(0) == '{':
+            segment = stripped[seg_start:m.start()]
+            reason = _prose_reason(segment)
+            if reason:
+                lead = len(segment) - len(segment.lstrip())
+                findings.append({
+                    'path': str(path),
+                    'line': line_of(text, seg_start + lead),
+                    'kind': 'prose-in-selector',
+                    'detail': reason,
+                    'excerpt': ' '.join(segment.split())[:110],
+                    'rules_lost': max(0, stripped.count('{', seg_start)),
+                    'total_rules': total_rules,
+                })
+        seg_start = m.end()
+
+    # Collapse only the LEAK findings to the first one per file: everything
+    # downstream of a derailed parser is a consequence of it, and listing 200
+    # lines of fallout buries the cause. Liquid-in-comment findings are
+    # independent of each other, so every one is reported.
+    leaks = [f for f in findings if f['kind'] != 'liquid-in-comment']
+    others = [f for f in findings if f['kind'] == 'liquid-in-comment']
+    if leaks:
+        leaks = [min(leaks, key=lambda f: f['line'])]
+    return sorted(others + leaks, key=lambda f: f['line'])
 
 
 def find_rule_blocks(text: str):
@@ -229,7 +477,48 @@ def scan_file(path: Path, list_mode: bool = False) -> list[dict]:
     return findings
 
 
+def selftest() -> int:
+    """Prove the comment-integrity check both fires and stays quiet.
+
+    Fixtures live in scripts/fixtures/ (outside the scanned theme dirs) so the
+    two intentionally-broken ones don't fail the repo-wide run. A lint nobody
+    tests is a lint that quietly stops working — this is wired into CI.
+    """
+    fx = Path(__file__).parent / 'fixtures'
+    cases = [
+        ('comment-leak-quoted.liquid', True,
+         'the literal 2026-08-05 defect (terminator quoted as an example)'),
+        ('comment-leak-unquoted.liquid', True,
+         'unquoted terminator mid-sentence — caught by the prose signal alone'),
+        ('liquid-in-comment.liquid', True,
+         'sibling bug 6279005 — a render tag inside a CSS comment still executes'),
+        ('comment-clean.liquid', False,
+         'legal constructs that must NOT false-positive'),
+    ]
+    failures = 0
+    print("comment-integrity selftest (bd hairmnl-theme-w1n6)")
+    for name, should_flag, why in cases:
+        path = fx / name
+        if not path.is_file():
+            print(f"  MISSING  {name} — fixture not found")
+            failures += 1
+            continue
+        found = scan_file_comments(path)
+        ok = bool(found) == should_flag
+        want = 'flag' if should_flag else 'stay quiet'
+        got = f"flagged at line {found[0]['line']} ({found[0]['kind']}, "\
+              f"{found[0]['rules_lost']}/{found[0]['total_rules']} rules lost)" if found else 'quiet'
+        print(f"  {'PASS' if ok else 'FAIL'}  {name}: expected {want}, got {got}")
+        print(f"        {why}")
+        if not ok:
+            failures += 1
+    print(f"\n{'selftest OK' if not failures else f'selftest FAILED ({failures})'}")
+    return 1 if failures else 0
+
+
 def main(argv: list[str]) -> int:
+    if '--selftest' in argv:
+        return selftest()
     list_mode = '--list' in argv
     file_args = [a for a in argv[1:] if not a.startswith('--')]
 
@@ -276,11 +565,34 @@ def main(argv: list[str]) -> int:
         ]
 
     all_findings = []
+    comment_findings = []
     for p in sorted(paths):
         all_findings.extend(scan_file(p, list_mode=list_mode))
+        comment_findings.extend(scan_file_comments(p))
 
     violations = [f for f in all_findings if not f['acked']]
     acked = [f for f in all_findings if f['acked']]
+
+    if comment_findings:
+        print(f"FAIL: {len(comment_findings)} premature CSS comment termination(s)")
+        print("  A CSS comment ends at the FIRST terminator sequence. Everything after")
+        print("  it parses as CSS, the parser derails, and the REST OF THE STYLESHEET")
+        print("  silently stops applying — with no error anywhere.")
+        print("  Reference: bd hairmnl-theme-w1n6 (2026-08-05, 180/206 rules lost on live)")
+        print()
+        for f in comment_findings:
+            print(f"  {f['path']}:{f['line']}  [{f['kind']}]")
+            print(f"    {f['detail']}")
+            if f.get('excerpt'):
+                print(f"    reached selector position: {f['excerpt']}")
+            if f['kind'] != 'liquid-in-comment':
+                pct = round(100 * f['rules_lost'] / f['total_rules']) if f['total_rules'] else 0
+                print(f"    RULES DROPPED FROM HERE: {f['rules_lost']} of {f['total_rules']} ({pct}%)")
+            print()
+        print("  Fix: describe the terminator sequence in words; never type it inside")
+        print("  a comment. Same for Liquid delimiters — Liquid does not respect CSS")
+        print("  comments and will execute inside one.")
+        print()
 
     if list_mode and acked:
         print(f"== {len(acked)} acknowledged kt0 use(s) (kt0-OK) ==")
@@ -300,6 +612,9 @@ def main(argv: list[str]) -> int:
         print(f"If intentional, add a comment containing the token  kt0-OK  inside the rule body. Examples:")
         print(f"    /* kt0-OK */")
         print(f"    /* kt0-OK: display:none means containment is moot */")
+        return 1
+
+    if comment_findings:
         return 1
 
     print(f"OK: scanned {len(paths)} files, no kt0 violations" + (f" ({len(acked)} acked)" if acked else ""))

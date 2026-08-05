@@ -1,0 +1,23 @@
+{%- comment -%}
+  FIXTURE — must FAIL the comment-integrity lint.
+
+  Reproduces the sibling bug fixed in 6279005 the same day: a Liquid render
+  tag left inside a CSS comment. Liquid does not respect CSS comments, so it
+  executed on every page and injected the entire cart-drawer markup into the
+  inlined <style> block. Commenting it out did nothing.
+{%- endcomment -%}
+<style>
+  /* 2026-05-11 HOTFIX — removed .header__wrapper from this selector.
+     The cart drawer {% render 'cart-drawer' %} is rendered after the header
+     but inside the wrapper, so containment trapped its fixed positioning. */
+  header.theme__header {
+    contain: layout;
+  }
+
+  /* Harmless by contrast: an interpolated declaration commented out,
+     which must NOT be flagged.
+     color: {{ settings.accent_color }}; */
+  .points-box {
+    min-height: 40px;
+  }
+</style>

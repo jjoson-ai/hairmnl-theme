@@ -1,0 +1,25 @@
+{%- comment -%}
+  FIXTURE — must FAIL the comment-integrity lint.
+
+  The general case: a comment terminator typed mid-sentence WITHOUT quotes,
+  so the quoted-terminator signal does not fire. Only the second signal —
+  prose reaching selector position after parser-accurate comment stripping —
+  catches this one. It exists to prove the two signals are genuinely layered
+  and that the check is not just string-matching the 2026-08-05 shape.
+{%- endcomment -%}
+<style>
+  .points-box {
+    min-height: 40px;
+  }
+
+  /* Explaining the terminator: writing */ ends a comment early and the
+     remaining words here are handed straight to the CSS parser. */
+  .product__pickup {
+    min-height: 64px;
+  }
+
+  .sticky-cart-bubble {
+    position: fixed;
+    right: 22px;
+  }
+</style>

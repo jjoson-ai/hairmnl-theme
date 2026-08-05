@@ -1,0 +1,35 @@
+{%- comment -%}
+  FIXTURE — must FAIL the comment-integrity lint.
+
+  Reproduces the 2026-08-05 live defect (bd hairmnl-theme-w1n6) verbatim in
+  shape: a comment quotes the CSS comment-terminator sequence as an example.
+  The comment therefore ends at that quoted sequence, and the explanatory
+  prose after it is parsed as CSS. On live this dropped 180 of 206 rules.
+
+  Do not "fix" this file — failing is the point. It lives under scripts/
+  so the repo-wide scan (layout/snippets/sections/templates/assets) skips it.
+{%- endcomment -%}
+<style>
+  .header__desktop {
+    height: 70px;
+  }
+
+  /* Some earlier note about the cart drawer.
+     The drawer is rendered after the header element but inside the wrapper,
+     so contain:layout would trap its fixed positioning (~5KB/page, and a
+     latent sitewide CSS break if that markup ever emitted "*/").
+     Never write Liquid delimiters inside this file, not even in a comment.
+     Everything from the quoted sequence onward is parsed as CSS. */
+  header.theme__header {
+    contain: layout;
+  }
+
+  .quick-buy__popover {
+    display: none;
+  }
+
+  .vrec-product-sticky-bar {
+    position: fixed;
+    bottom: 0;
+  }
+</style>

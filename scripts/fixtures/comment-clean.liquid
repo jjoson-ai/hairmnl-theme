@@ -1,0 +1,64 @@
+{%- comment -%}
+  FIXTURE — must PASS the comment-integrity lint.
+
+  Deliberately packed with constructs that a naive implementation would
+  false-positive on. Every one of these is legal and must stay quiet:
+    - a comment whose body is long English prose (comments are stripped, so
+      prose inside one never reaches selector position)
+    - a comment containing backticks (same reason)
+    - a comment that legitimately ends immediately after a quote character
+    - Liquid tags inside the <style> block, including braces
+    - @media / @supports headers, which contain words and parentheses
+    - long multi-class selectors and attribute selectors
+
+  A false positive here blocks CI on correct code, so this fixture is the
+  guard on the guard.
+{%- endcomment -%}
+<style>
+  /* A perfectly ordinary comment with several English words in a row,
+     explaining why this rule exists and what it protects against.
+     It even references `.header__wrapper` and `contain: layout` in
+     backticks, which is fine — this text is stripped before parsing. */
+  .header__desktop {
+    height: 70px;
+  }
+
+  /* A comment ending right after a quoted word like "this" */
+  .footer__title {
+    background: transparent;
+  }
+
+  {%- if settings.enable_sticky_header %}
+  .header--sticky {
+    position: sticky;
+    top: 0;
+  }
+  {%- endif %}
+
+  @media only screen and (max-width: 767px) {
+    .announcement__wrapper [data-ticker-frame] {
+      height: 24px;
+      overflow: hidden;
+    }
+  }
+
+  @supports not (display: grid) {
+    .product-grid-item {
+      float: left;
+    }
+  }
+
+  .quick-buy__popover,
+  .quick-buy__option-title[data-variant-id] {
+    display: none;
+  }
+
+  .vrec-product-sticky-bar {
+    position: fixed;
+    transform: translateY(100%);
+  }
+
+  .vrec-product-sticky-bar.is-visible {
+    transform: translateY(0);
+  }
+</style>
