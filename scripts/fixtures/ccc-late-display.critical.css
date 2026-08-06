@@ -1,0 +1,3 @@
+/* bd cuzo RULE 4, the fj5m shape: first paint gives this no display, so the block PAINTS and then
+   VANISHES when the deferred sheet lands, collapsing its space and pulling everything below up. */
+.promo-banner{background:var(--primary);padding:12px;color:#fff}

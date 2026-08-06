@@ -290,6 +290,34 @@ def nearest_positioned(chain: list, rules_by_class: dict):
     return None, None
 
 
+SIZE_PROPS_R4 = ("height", "min-height")
+PX_THRESHOLD_R4 = 60          # below this a late height cannot move much; keeps the rule quiet
+
+
+def r4_size_is_material(prop: str, value: str) -> str | None:
+    """Return a short reason if this height declaration is worth guarding, else None.
+
+    Height is declared far more often than position, so RULE 4 has to be choosier than RULE 3 or it
+    drowns the signal. Two shapes qualify:
+      - viewport-relative (vh, %, or a calc() containing vh) — these reserve nothing until the sheet
+        lands and then jump by a fraction of the screen. bd fj5m's
+        `.cart__empty{height:calc(50vh - var(--header-height))}` is the motivating case: 32px -> 344px.
+      - a plain pixel height of at least PX_THRESHOLD_R4. bd agt7's `.cart__circle{height:160px}`
+        would have been missed by a vh-only rule, and it was a real 139px shift.
+    """
+    v = value.strip().lower()
+    if v in ("auto", "inherit", "initial", "unset", "0", "0px", "100%"):
+        return None
+    if "vh" in v:
+        return "viewport-relative"
+    if v.endswith("%"):
+        return "percentage"
+    m = re.fullmatch(r"(\d+(?:\.\d+)?)px", v)
+    if m and float(m.group(1)) >= PX_THRESHOLD_R4:
+        return f"{m.group(1)}px"
+    return None
+
+
 def decl_map(body: str) -> dict[str, str]:
     """property -> value (last wins), lowercased property."""
     out: dict[str, str] = {}
@@ -536,6 +564,7 @@ def scan(verbose: bool = False):
     crit_abs: dict[str, tuple[str, bool]] = {}   # class -> (selector, from_pseudo_element)
     crit_pos_rules: dict[str, list] = {}         # class -> positioning rules WITH requirements
     crit_hidden_rules: dict[str, list] = {}      # class -> rules that suppress painting (RULE 3)
+    crit_size_rules: dict[str, dict] = {}        # class -> {prop: [reqs]} declared at first paint (RULE 4)
     crit_font_size: set[str] = set()
     crit_font_family: set[str] = set()
     crit_font_shorthand: set[str] = set()
@@ -559,6 +588,13 @@ def scan(verbose: bool = False):
                 or decls.get("opacity", "").strip() in ("0", "0.0", ".0")):
             for req in parse_position_rules(selector, CRITICAL.name):
                 crit_hidden_rules.setdefault(req["target"], []).append(req)
+        # RULE 4 input: which size/display properties DO exist at first paint, and under what
+        # requirements. A deferred rule is only a problem if first paint says nothing for that
+        # property on a selector that actually matches the same element.
+        for _p in ("display",) + SIZE_PROPS_R4:
+            if _p in decls:
+                for req in parse_position_rules(selector, "first-paint"):
+                    crit_size_rules.setdefault(req["target"], {}).setdefault(_p, []).append(req)
         if "font-size" in decls:
             crit_font_size |= cls
         if "font-family" in decls:
@@ -577,6 +613,7 @@ def scan(verbose: bool = False):
     # deferred sheets: which classes get positioned there, and under what conditions
     deferred_pos_rules: dict[str, list] = {}
     deferred_oof_rules: dict[str, list] = {}      # deferred sheet makes it absolute/fixed (RULE 3)
+    deferred_size_rules: dict[str, list] = {}     # deferred-only display:none / big height (RULE 4)
     for pattern in DEFERRED_GLOBS:
         for path in sorted((REPO / "assets").glob(pattern)):
             if ".dev." in path.name:
@@ -592,6 +629,20 @@ def scan(verbose: bool = False):
                     for req in parse_position_rules(selector, path.name):
                         if not req["pseudo"]:
                             deferred_oof_rules.setdefault(req["target"], []).append(req)
+                # RULE 4 input (bd cuzo)
+                _d = decl_map(body)
+                if _d.get("display") == "none":
+                    for req in parse_position_rules(selector, path.name):
+                        if not req["pseudo"]:
+                            deferred_size_rules.setdefault(req["target"], []).append(
+                                dict(req, prop="display", value="none", why="paints then vanishes"))
+                for _p in SIZE_PROPS_R4:
+                    _why = r4_size_is_material(_p, _d.get(_p, "")) if _p in _d else None
+                    if _why:
+                        for req in parse_position_rules(selector, path.name):
+                            if not req["pseudo"]:
+                                deferred_size_rules.setdefault(req["target"], []).append(
+                                    dict(req, prop=_p, value=_d[_p], why=_why))
 
     # ancestor chains from markup, plus the cross-file context the walker cannot see
     texts: dict[str, str] = {}
@@ -714,6 +765,79 @@ def scan(verbose: bool = False):
                 "key": f"{cls}/out-of-flow",
             })
 
+    # RULE 4 — size or display that exists ONLY in a deferred sheet (bd cuzo)
+    #
+    # The variant that produced bd fj5m and bd agt7, and that RULES 1-3 are all blind to. Two shapes:
+    #   display:none arriving late  -> the element PAINTS a full block and then vanishes, collapsing
+    #                                  its space. fj5m: `.cart__template .cart--hidden{display:none}`
+    #                                  lives in the deferred cart-page.css, so BOTH cart states
+    #                                  rendered at first paint and 352px disappeared.
+    #   a height arriving late      -> nothing is reserved, then the box jumps. fj5m: .cart__empty
+    #                                  32px -> 344px. agt7: .cart__circle auto -> 160x160.
+    seen_r4: set[str] = set()
+    for cls in sorted(deferred_size_rules):
+        if cls in seen_r4:
+            continue
+        for rel, chain, own, inline_hidden in ancestors.get(cls, []):
+            if cls in seen_r4:
+                break
+            if inline_hidden:
+                continue
+            for outer in outer_ctx.get(rel, [set()]) if isinstance(outer_ctx.get(rel), list) else [set(outer_ctx.get(rel, ()))]:
+                anc_union: set = set(outer)
+                for f in chain:
+                    anc_union |= f
+                supp_union: set = set(suppress_ctx.get(rel, ()))
+                for f in chain:
+                    supp_union |= f
+                hit = next((r for r in deferred_size_rules[cls]
+                            if rule_matches(r, own, anc_union)), None)
+                if hit is None:
+                    continue
+                # Does ANY first-paint sheet declare the same property for a matching selector?
+                if any(rule_matches(r, own, supp_union)
+                       for r in crit_size_rules.get(cls, {}).get(hit["prop"], ())):
+                    continue
+                # Cannot paint at first paint -> cannot shift.
+                if any(rule_matches(r, own, anc_union) for r in crit_hidden_rules.get(cls, ())):
+                    continue
+                # The hidden-ancestor exemption must use the NARROW (schema-only) context, not the
+                # cross-file union. cart-empty.liquid is rendered both from the visible /cart page
+                # and from inside the hidden cart drawer; the union says "hidden" and would suppress
+                # a real finding — it did exactly that to agt7's .cart__circle while I was building
+                # this. Over-broad is safe for "is it positioned"; it is NOT safe for "is it hidden".
+                full = [set(outer)] + chain + [own]
+                hidden_anc = False
+                for i, frame in enumerate(full):
+                    outer_i: set = set()
+                    for f in full[:i]:
+                        outer_i |= f
+                    for a in frame:
+                        if any(rule_matches(r, frame, outer_i) for r in crit_hidden_rules.get(a, ())):
+                            hidden_anc = True
+                            break
+                    if hidden_anc:
+                        break
+                if hidden_anc:
+                    continue
+                seen_r4.add(cls)
+                if cls in allow or f"{cls}/{hit['prop']}-late" in allow:
+                    break
+                findings.append({
+                    "rule": "late-size-or-display",
+                    "cls": cls,
+                    "selector": hit["selector"],
+                    "where": rel,
+                    "detail": (f"`{hit['selector'][:56]}` in {hit['source']} (deferred) sets "
+                               f"{hit['prop']}:{hit['value']} ({hit['why']}), and no first-paint "
+                               f"sheet declares {hit['prop']} for this element — so it is unsized "
+                               f"(or visible) until that sheet lands, then jumps"),
+                    "fix": (f"mirror `{hit['prop']}:{hit['value']}` for .{cls} into "
+                            f"critical-css.liquid, byte-equal to the deferred declaration"),
+                    "key": f"{cls}/{hit['prop']}-late",
+                })
+                break
+
     # RULE 2 — font-relative sizing without a font in critical CSS
     for cls, prop, val, selector in sorted(set(font_unit_hits)):
         if cls in allow or f"{cls}/{prop}" in allow:
@@ -787,6 +911,14 @@ def selftest() -> int:
          "RULE 3 exemption: critical CSS hides it, so it cannot paint or shift"),
         ("ccc-late-out-of-flow-inline", False,
          "RULE 3 exemption: inline style=display:none wins at first paint (.item--loadbar)"),
+        ("ccc-late-display", True,
+         "bd cuzo RULE 4: deferred display:none — the block paints, then vanishes (the fj5m shape)"),
+        ("ccc-late-display-fixed", False,
+         "...silent once the display is mirrored into critical CSS"),
+        ("ccc-late-height", True,
+         "bd cuzo RULE 4: a viewport-relative height that only the deferred sheet supplies"),
+        ("ccc-late-height-fixed", False,
+         "...silent once the height is mirrored"),
     ]
     failures = 0
     print("critical-css coverage selftest (bd hairmnl-theme-958r.6)")
@@ -819,6 +951,7 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
     crit_abs: dict[str, tuple[str, bool]] = {}
     crit_pos_rules: dict[str, list] = {}
     crit_hidden_rules: dict[str, list] = {}
+    crit_size_rules: dict[str, dict] = {}
     crit_font_size, crit_font_family, crit_font_shorthand = set(), set(), set()
     font_unit_hits = []
     for selector, body in iter_rules(critical_css):
@@ -842,6 +975,10 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
                 or decls.get("opacity", "").strip() in ("0", "0.0", ".0")):
             for req in parse_position_rules(selector, "critical"):
                 crit_hidden_rules.setdefault(req["target"], []).append(req)
+        for _p in ("display",) + SIZE_PROPS_R4:
+            if _p in decls:
+                for req in parse_position_rules(selector, "first-paint"):
+                    crit_size_rules.setdefault(req["target"], {}).setdefault(_p, []).append(req)
         if "font-size" in decls:
             crit_font_size |= cls
         if "font-family" in decls:
@@ -856,6 +993,7 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
                         font_unit_hits.append((c, prop, val, selector.strip()))
     deferred_pos_rules: dict[str, list] = {}
     deferred_oof_rules: dict[str, list] = {}
+    deferred_size_rules: dict[str, list] = {}
     for selector, body in iter_rules(deferred_css):
         pos = decl_map(body).get("position", "")
         if pos in POSITIONED_VALUES:
@@ -866,6 +1004,19 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
             for req in parse_position_rules(selector, "deferred.css"):
                 if not req["pseudo"]:
                     deferred_oof_rules.setdefault(req["target"], []).append(req)
+        _d = decl_map(body)
+        if _d.get("display") == "none":
+            for req in parse_position_rules(selector, "deferred.css"):
+                if not req["pseudo"]:
+                    deferred_size_rules.setdefault(req["target"], []).append(
+                        dict(req, prop="display", value="none", why="paints then vanishes"))
+        for _p in SIZE_PROPS_R4:
+            _why = r4_size_is_material(_p, _d.get(_p, "")) if _p in _d else None
+            if _why:
+                for req in parse_position_rules(selector, "deferred.css"):
+                    if not req["pseudo"]:
+                        deferred_size_rules.setdefault(req["target"], []).append(
+                            dict(req, prop=_p, value=_d[_p], why=_why))
     outer = build_outer_context({"fixture.liquid": markup}).get("fixture.liquid", set())
     ancestors = ancestor_map(markup)
     out = []
@@ -896,6 +1047,24 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
                 continue
             out.append({"rule": "late-out-of-flow", "cls": cls,
                         "selector": deferred_oof_rules[cls][0]["selector"]})
+            break
+    for cls in sorted(deferred_size_rules):
+        for chain, own, inline_hidden in ancestors.get(cls, []):
+            if inline_hidden:
+                continue
+            anc_union = set(outer)
+            for f in chain:
+                anc_union |= f
+            hit = next((r for r in deferred_size_rules[cls]
+                        if rule_matches(r, own, anc_union)), None)
+            if hit is None:
+                continue
+            if any(rule_matches(r, own, anc_union)
+                   for r in crit_size_rules.get(cls, {}).get(hit["prop"], ())):
+                continue
+            if any(rule_matches(r, own, anc_union) for r in crit_hidden_rules.get(cls, ())):
+                continue
+            out.append({"rule": "late-size-or-display", "cls": cls, "selector": hit["selector"]})
             break
     for cls, prop, val, selector in sorted(set(font_unit_hits)):
         has_size = cls in crit_font_size or cls in crit_font_shorthand

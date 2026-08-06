@@ -1,0 +1,3 @@
+/* bd cuzo RULE 4, the agt7/fj5m height shape: nothing reserves the box at first paint, so it is
+   auto-height and then jumps when the deferred sheet supplies a real height. */
+.hero-slot{background:#eee}
