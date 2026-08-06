@@ -46,9 +46,6 @@ image-overlay/homepage-slideshow    3q2e   FALSE POSITIVE. The overlay that actu
 
 # --- SAFE: the element genuinely has no containing block at first paint, but it cannot shift
 # --- because it paints nothing.
-image-overlay/cart__empty           3q2e   SAFE. The chain .wrapper -> .cart__empty really is unpositioned at first paint, but the element paints nothing: critical CSS never DEFINES `--bg` (19 var(--bg) reads, zero definitions, no @property), so `background-color:var(--bg)` is invalid-at-computed-value-time and falls back to transparent; the div is server-rendered empty with no border, shadow, image or content-bearing pseudo. FRAGILE, not broken: if anyone later adds a `:root{--bg:...}` block to critical-css.liquid this becomes an opaque full-viewport rectangle at z-index 2. The cheap hardening is `.cart__empty{position:relative}` — byte-consistent with theme-core.css:14654 and rendering-neutral.
-item--loadbar/cart__items__row      3q2e   SAFE. Server-rendered with an inline `style="display: none;"` (cart-line-items.liquid:7), and NO stylesheet anywhere declares `display` for `.item--loadbar`, so the inline rule wins at first paint and neither the bar nor its background-carrying `:before` generates a box. A display:none element cannot shift.
-tabs__arrow/tabs__head              3q2e   SAFE. Every `.tabs__arrow` in the theme ships with the `is-hidden` class, and critical CSS carries `.is-hidden{visibility:hidden;max-height:0;overflow:hidden;opacity:0}` unconditionally with nothing re-asserting visibility or opacity. The lint is structurally right that `.tabs__head` is uncovered (the critical build kept only the `.tabs-wrapper` half of the deferred `.tabs-wrapper,.tabs__head` selector list) — but an invisible element contributes no shift. Optional belt-and-braces mirror `.tabs__head{position:relative}` is byte-safe if ever wanted.
 icon/height                         3q2e   SAFE (medium confidence). `.icon{height:1em}` is byte-identical to its deferred rule — only the inherited em basis moves (html 16px -> body 13.14426px) because critical CSS omits the body font-size. Every first-viewport `.icon` site is either px-pinned in critical CSS byte-identically (`.navlink .icon`, `.header__mobile__* .icon`, `.media__zoom__icon svg`) or sits in a critically height-pinned box (`.tousled-header__wrapper .mobile-menu-box{height:45px}`), leaving <=3px residuals. Do NOT "fix" by adding font-size to `.icon`: `.share__link .icon{1.2em}`, `.pagination-custom .icon{.45em}` and `.announcement__bar--icon .icon{1.1em}` all resolve against the inherited context, so pinning it would permanently change live rendering.
 
 # --- FIXED under bd dwdv by mirroring the body font cascade, but STILL REPORTED: RULE 2 keys on
@@ -94,7 +91,6 @@ icon/width                          dwdv   FIXED at the root by the same body fo
 # ===============================================================================================
 
 background-size-cover/out-of-flow   66t7   FALSE POSITIVE. Both occurrences are <img> tags carrying an INLINE style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover" (sections/section-map.liquid:58 and :66). An inline style outranks any class rule, so they are out of flow from the first paint — there is no transition. (The lint reads inline styles only for display/visibility/opacity, not position.)
-cart__items__remove/out-of-flow     66t7   FALSE POSITIVE, model gap #1. snippets/css-overrides.liquid positions it at first paint; it is inline in <head>, not deferred. Now that the lint parses that sheet the RULE 1 twin below is the accurate report for this element.
 collection__image__bottom/out-of-flow 66t7 SAFE. Occupies ZERO layout space even while static: its only child is the hover <img>, and critical CSS already gives `.lazy-image img{position:absolute}` — so the div computes to height 0 and collapsing it moves nothing. Independently, it is gated `{% if double_img %}` which needs settings.image_hover_enable, currently false. The zero-height argument survives a merchant flipping that setting.
 custom-prev-next-button/out-of-flow 66t7   SAFE on two independent grounds. All 18 section-slideshow instances in templates/ are disabled:true (re-verified, not taken on trust). And even if one were re-enabled the element is an empty div with no critical-CSS box, so it reserves nothing to collapse.
 drawer__underlay/out-of-flow        66t7   SAFE. The reported site, sections/api-pickup-availability.liquid, has NO {% schema %} and no template reference — it is fetched only at runtime through the Section Rendering API (assets/theme.js:4823), so it is not part of any initial page load.
@@ -110,4 +106,22 @@ range__dot/out-of-flow              66t7   SAFE, model gap #3. `.range__dot{posi
 range__line/out-of-flow             66t7   SAFE. Same widget, same sheet, same template gate as range__dot; and on the search template the ancestor .collection__filters__inner is opacity:0 at first paint.
 spinner-wrapper/out-of-flow         66t7   FALSE POSITIVE. Dead code: sections/collection-branded.liquid has zero template references and no presets block (bd nlr8 recorded the same). The deferred rule is also the DESCENDANT selector `.collection-slider .spinner-wrapper`, and that section carries no such schema class.
 tousled-logo/out-of-flow            66t7   SAFE, doubly. The <img> is gated `{% if tousled_logo != blank %}`, and its ancestor .sliderule__wrapper is a slide-out menu that is not open at first paint.
-cart__items__remove/cart__items__row 66t7   FALSE POSITIVE, model gap #4 (cross-file markup ancestry). snippets/css-overrides.liquid is internally consistent: everywhere it makes the button absolute it ALSO positions the row, in the same media context — `.cart__template .cart__items__remove{position:absolute}` is paired with `.cart__template .cart__items__row{position:relative}` inside @media (max-width:767px), and `.cart__drawer .cart__items__remove` is paired with `.cart__drawer .cart__items__row` unconditionally. There is no orphaned occurrence. The lint reports it only because `.cart__template` / `.cart__drawer` sit on wrappers in sections/cart.liquid and snippets/cart-drawer.liquid — one {% render %} above snippets/cart-line-items.liquid — and only schema classes cross that boundary today. Do NOT "fix" by mirroring `.cart__items__row{position:relative}` unconditionally into critical CSS: that would position the row on desktop /cart where css-overrides deliberately does not, changing settled rendering.
+
+# ===============================================================================================
+# CROSS-FILE SUPPRESSION ADDED 2026-08-06 (bd nf3j). A snippet sits inside whatever markup encloses
+# its render callsite, so a containing block can come from a wrapper in the CALLING file:
+# css-overrides positions `.cart__template .cart__items__row`, but `.cart__template` is on a wrapper
+# in sections/cart.liquid, one render above snippets/cart-line-items.liquid.
+#
+# That context is used for SUPPRESSION ONLY, never detection, and the asymmetry is deliberate. The
+# union across callers is a fiction: snippets/icon-bin.liquid is rendered both from the footer and
+# from inside .cart__items__remove, so a merged set satisfies `.footer__title .icon{position:absolute}`
+# from one caller while offering `.cart__items__remove` as the late ancestor from another - an
+# ancestry that never co-occurs on a real page. Feeding it to the detection side invented three
+# findings when tried, so detection stays on the schema-class context, which is deterministic (one
+# class per section). Being over-broad on the suppression side can only remove a finding, never
+# invent one. Per-caller contexts were also tried and made things worse, not better.
+#
+# Model gap #4 in the header above is now CLOSED. Rows deleted because the lint stopped reporting
+# them: image-overlay/cart__empty, item--loadbar/cart__items__row, tabs__arrow/tabs__head, cart__items__remove/out-of-flow, cart__items__remove/cart__items__row
+# ===============================================================================================

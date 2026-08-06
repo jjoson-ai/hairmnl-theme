@@ -380,6 +380,47 @@ SCHEMA_CLASS_RE = re.compile(r'"class"\s*:\s*"([^"]+)"')
 RENDER_RE = re.compile(r"\{%-?\s*(?:render|include)\s+(?:'([^']+)'|\"([^\"]+)\")")
 
 
+RENDER_TAG_RE = re.compile(
+    r"\{%-?\s*(?:render|include)\s+(?:'([^']+)'|\"([^\"]+)\")[^%]*%\}")
+
+
+def render_wrappers(markup: str) -> list[tuple[str, set]]:
+    """(snippet_name, classes of the elements physically enclosing the {% render %} tag).
+
+    bd nf3j. A snippet sits inside whatever markup surrounds its callsite, so a containing block can
+    be supplied by a wrapper in the CALLING file — e.g. css-overrides positions
+    `.cart__template .cart__items__row`, but `.cart__template` is on a wrapper in sections/cart.liquid,
+    one render above snippets/cart-line-items.liquid.
+    """
+    src = re.sub(r"\{%-?\s*comment\s*-?%\}.*?\{%-?\s*endcomment\s*-?%\}", " ",
+                 markup, flags=re.DOTALL | re.IGNORECASE)
+    src = re.sub(r"<!--.*?-->", " ", src, flags=re.DOTALL)
+    src = re.sub(r"\{\{.*?\}\}", " ", src, flags=re.DOTALL)
+    out: list[tuple[str, set]] = []
+    stack: list[set] = []
+    combined = re.compile(TAG_RE.pattern + "|" + RENDER_TAG_RE.pattern, re.DOTALL)
+    for m in combined.finditer(src):
+        if m.group(1) is not None or m.group(2) is not None:
+            closing, tag, attrs, selfclose = m.group(1), (m.group(2) or "").lower(), m.group(3), m.group(4)
+            if closing:
+                if stack:
+                    stack.pop()
+                continue
+            cm = CLASS_RE.search(attrs or "")
+            raw = (cm.group(2) or cm.group(3) or "") if cm else ""
+            cls = {c for c in raw.split() if re.fullmatch(r"[A-Za-z_][\w-]*", c)}
+            if tag not in VOID_TAGS and not selfclose:
+                stack.append(cls)
+        else:
+            name = m.group(5) or m.group(6)
+            if name:
+                enclosing: set = set()
+                for f in stack:
+                    enclosing |= f
+                out.append((name, enclosing))
+    return out
+
+
 def build_outer_context(texts: dict[str, str]) -> dict[str, set]:
     """rel-path -> class tokens contributed by ancestors that live OUTSIDE the file.
 
@@ -425,6 +466,41 @@ def build_outer_context(texts: dict[str, str]) -> dict[str, set]:
             ctx[target] |= tokens
             stack.extend(renders.get(target, ()))
     return ctx
+
+
+def build_suppression_context(texts: dict[str, str], schema_ctx: dict[str, set]) -> dict[str, set]:
+    """rel-path -> classes that MAY be assumed present on some ancestor, for suppression ONLY.
+
+    bd nf3j. This is the union of every caller's enclosing wrapper classes, and a union across
+    callers is a fiction: snippets/icon-bin.liquid is rendered both from the footer and from inside
+    .cart__items__remove, so a merged set would satisfy `.footer__title .icon{position:absolute}`
+    from one caller while offering `.cart__items__remove` as the late ancestor from another — an
+    ancestry that never co-occurs on a real page. Feeding that to the DETECTION side invented three
+    findings when it was tried.
+
+    So this map is used only to answer "is the containing block already provided at first paint?".
+    Being over-broad there can only SUPPRESS a finding, never invent one. Detection continues to use
+    the schema-class context, which is deterministic — one class per section, and a snippet rendered
+    by that section really is inside it.
+    """
+    by_name = {Path(rel).stem: rel for rel in texts if rel.startswith("snippets/")}
+    out: dict[str, set] = {rel: set(schema_ctx.get(rel, ())) for rel in texts}
+    edges = {rel: render_wrappers(text) for rel, text in texts.items()}
+    for _ in range(6):                       # fixpoint; render chains here are 2-3 deep
+        changed = False
+        for rel in list(texts):
+            carry = out.get(rel, set())
+            for name, wrappers in edges.get(rel, ()):
+                target = by_name.get(name)
+                if not target:
+                    continue
+                add = carry | wrappers
+                if not add <= out[target]:
+                    out[target] |= add
+                    changed = True
+        if not changed:
+            break
+    return out
 
 
 # ---------------------------------------------------------------------------- allowlist
@@ -523,6 +599,7 @@ def scan(verbose: bool = False):
         for path in sorted((REPO / d).rglob("*.liquid")):
             texts[str(path.relative_to(REPO))] = path.read_text(encoding="utf-8", errors="replace")
     outer_ctx = build_outer_context(texts)
+    suppress_ctx = build_suppression_context(texts, outer_ctx)
     ancestors: dict[str, list[tuple[str, list, set, bool]]] = {}
     for rel, text in texts.items():
         for cls, occurrences in ancestor_map(text).items():
@@ -553,7 +630,10 @@ def scan(verbose: bool = False):
             eff_chain = [set(outer_ctx.get(rel, ()))] + chain + ([own] if from_pseudo else [])
             if not any(eff_chain):
                 continue                               # no observed ancestry; can't judge
-            if nearest_positioned(eff_chain, crit_pos_rules)[0]:
+            # Suppression may assume the broader cross-file context (bd nf3j) — being over-broad
+            # here only ever removes a finding. Detection below stays on the schema-only context.
+            supp_chain = [set(suppress_ctx.get(rel, ()))] + chain + ([own] if from_pseudo else [])
+            if nearest_positioned(supp_chain, crit_pos_rules)[0]:
                 continue                               # containing block exists at first paint
             late, req = nearest_positioned(eff_chain, deferred_pos_rules)
             if not late:
@@ -596,12 +676,15 @@ def scan(verbose: bool = False):
             anc_union = set(outer)
             for f in chain:
                 anc_union |= f
+            supp_union = set(suppress_ctx.get(rel, ()))
+            for f in chain:
+                supp_union |= f
             oof = next((r for r in deferred_oof_rules[cls]
                         if rule_matches(r, own, anc_union)), None)
             if oof is None:
                 continue
             # Critical CSS already gives it a position -> no in-flow/out-of-flow delta.
-            if any(rule_matches(r, own, anc_union) for r in crit_pos_rules.get(cls, ())):
+            if any(rule_matches(r, own, supp_union) for r in crit_pos_rules.get(cls, ())):
                 continue
             # Cannot paint at first paint -> cannot contribute a shift. Checked on the element and
             # on every ancestor, since a hidden ancestor hides the subtree.
@@ -804,9 +887,10 @@ def scan_fixture(critical_css: str, deferred_css: str, markup: str):
             anc_union = set(outer)
             for f in chain:
                 anc_union |= f
+            supp_union = anc_union   # fixtures are single-file: no cross-file context
             if not any(rule_matches(r, own, anc_union) for r in deferred_oof_rules[cls]):
                 continue
-            if any(rule_matches(r, own, anc_union) for r in crit_pos_rules.get(cls, ())):
+            if any(rule_matches(r, own, supp_union) for r in crit_pos_rules.get(cls, ())):
                 continue
             if any(rule_matches(r, own, anc_union) for r in crit_hidden_rules.get(cls, ())):
                 continue
