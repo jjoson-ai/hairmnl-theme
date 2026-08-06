@@ -2017,4 +2017,27 @@
   .notify-modal__channels:not(:has([data-notify-channel="sms"])) {
     display: none;
   }
+
+/* bd fj5m (2026-08-06) — the persistent cart-CLS floor, ~0.054 desktop / ~0.042 mobile on EVERY
+   PSI run. Lighthouse attributed it to the footer BIR certificate <img loading="lazy"> with cause
+   "Media element lacking an explicit size", and it is not that the image is unsized — it is that
+   the reservation above is the WRONG SHAPE.
+
+   `.rte img:not([width]):not([height]) { aspect-ratio: auto 16 / 9 }` uses the `auto` keyword,
+   which means "prefer the element's natural ratio ONCE KNOWN, otherwise 16/9". The BIR SVG is
+   width="300" height="300", i.e. square. So the box is reserved at 16:9 before the lazy image
+   loads and snaps to 1:1 after. Measured live: 235x132 -> 235x235, a +103px growth in the footer.
+
+   Fixing it by dropping `auto` is NOT an option — that would lock every editor image to 16:9 and
+   letterbox them. Instead, reserve this one at its true ratio. Rendering is unchanged (it settles
+   at 235x235 either way); only the pre-load reservation becomes correct, so nothing moves.
+   Specificity (0,4,1) beats the (0,3,1) rule above, so source order does not matter.
+
+   INTERIM. The durable fix is width="300" height="300" on the <img> itself, but that markup is
+   theme-editor rich-text content and is not in the repo — filed as an operator action. Any other
+   non-16:9 editor image will shift the same way until it carries explicit dimensions. */
+.rte img[src*="BIR_Certificate"]:not([width]):not([height]) {
+  aspect-ratio: 1 / 1;
+}
+
 </style>
