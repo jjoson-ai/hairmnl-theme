@@ -54,8 +54,22 @@
   }
 
   /* 8w0p: reserve banner aspect-ratio to prevent CLS on image load.
-     width:100%;height:auto already set on .static-banner-img in custom-theme-core.css. */
+
+     nahn 2026-08-06 — the original note here read "width:100%;height:auto already set on
+     .static-banner-img in custom-theme-core.css", and that assumption is what broke this
+     reservation. custom-theme-core.css is DEFERRED (media=print + onload swap), so at first paint
+     the aspect-ratio below had no width to work against: the img fell back to its width attribute
+     (m_w) instead of filling the wrapper, and the section resized when the sheet landed. Measured
+     on live /pages/rewards at 1280x900: the static-banner section is 108px taller at first paint
+     (img itself 101px), at y=106 — the very top of the page, so everything below moved.
+
+     Declaring width/height here makes the reservation self-sufficient rather than dependent on a
+     deferred sheet. Byte-equal to the custom-theme-core.css rule, so settled rendering is
+     unchanged; that rule still wins later in the cascade at equal specificity. */
   #shopify-section-{{ section.id }} .static-banner-img {
+    display: block;
+    width: 100%;
+    height: auto;
     aspect-ratio: {{ m_ar }};
   }
   @media screen and (min-width: 1009px) {
