@@ -1265,8 +1265,23 @@
     Intercepts cdn.reamaze.com scripts emitted by content_for_header,
     defers them until user interaction. Six triggers, KILL_SWITCH for
     single-line rollback, GA4 telemetry on load path + latency.
-    Deferred scripts: ~212 KB / ~255ms scripting saved per non-interaction
-    pageload.
+    MEASURED CORRECTION, 2026-08-06 (bd f1aj) — the old claim here was
+    "~212 KB / ~255ms scripting saved per non-interaction pageload". The KB
+    half is WRONG and has always been wrong. A MutationObserver cannot stop
+    the DOWNLOAD of a statically-parsed <script src>: the preload scanner has
+    already started the fetch before the observer callback runs, and removing
+    the src attribute does not cancel an in-flight request. Measured on live:
+    reamaze-loader.js is fetched at 687ms (259ms) with the guard still armed
+    and the tag still type="javascript/blocked" — i.e. downloaded and then
+    never executed. On disarm the replay is fetched again at 30584ms but takes
+    1ms, so it is a cache hit, not a second download.
+
+    So what this guard actually buys is: EXECUTION deferred (the ~255ms of
+    parse/compile/run is real and is the point), bandwidth unchanged, plus one
+    extra cache-hit request. Net positive — keep it — but do not repeat the
+    KB claim. Family B guards (Element.prototype patch, see LoyaltyLion/BOGOS
+    above) DO prevent the fetch, because they intercept the node before it
+    ever enters the DOM.
   {%- endcomment -%}
   <script>
   (function() {
@@ -1459,8 +1474,11 @@
        interaction)
 
     KILL_SWITCH for single-line rollback. GA4 telemetry on load path +
-    latency. Deferred scripts: ~108 KB + ~279ms parse saved per non-
-    interaction pageload.
+    latency. Defers ~279ms of parse/execute per non-interaction pageload.
+
+    NOT ~108 KB — see the measured correction on the Reamaze guard above
+    (bd f1aj). Family A defers EXECUTION only; the preload scanner downloads
+    the script regardless, so bandwidth is unchanged.
   {%- endcomment -%}
   <script>
   (function() {

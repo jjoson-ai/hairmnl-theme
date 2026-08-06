@@ -157,6 +157,29 @@ so containment regressions on the new overlay get caught.
 Two distinct interception strategies are in use, chosen by HOW the script reaches the DOM.
 Using the wrong one is exactly why the LoyaltyLion v1 guard broke (see Family B).
 
+### What each family actually buys (measured 2026-08-06, bd f1aj — read before choosing)
+
+| | stops the DOWNLOAD? | stops EXECUTION? | side effect |
+|---|---|---|---|
+| **Family A** (MutationObserver) | **NO** | yes | one extra cache-hit request on disarm |
+| **Family B** (`Element.prototype` patch) | **yes** | yes | none |
+
+Family A cannot prevent the fetch of a **statically parsed** `<script src>`: the browser's preload
+scanner starts the request before the observer callback runs, and removing the `src` attribute does
+not cancel an in-flight request. Measured on live: `reamaze-loader.js` is fetched at 687ms (259ms)
+while the guard is still armed and the tag is still `type="javascript/blocked"` — downloaded, then
+never executed. The replay on disarm takes 1ms, i.e. a cache hit rather than a second download.
+
+So a Family A guard defers **main-thread work only**; bandwidth is unchanged. That is still worth
+having (script evaluation is the expensive part), but do NOT claim KB savings for it — two guard
+comments did, and both were wrong. Family B is strictly better where it applies, because it
+intercepts the node before it enters the DOM, so no fetch ever starts.
+
+**Corollary for app-extension scripts.** A theme app extension emits a static tag you do not
+control, so Family A is the only option and its ceiling is "defer execution". If the real goal is
+removing the bytes, the only honest levers are uninstalling the app embed or getting the vendor to
+load lazily — not a theme-side guard.
+
 ### Family A — scripts emitted statically by `content_for_header` → MutationObserver + `KILL_SWITCH`
 
 `content_for_header` renders Shopify app embeds as **static** `<script src>` tags in the parsed
