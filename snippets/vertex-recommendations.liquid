@@ -284,16 +284,21 @@
   </header>
 
   <div class="vrec-slot__nav-wrap">
+    {%- comment -%}
+      2026-08-06: buttons are intentionally EMPTY — the chevron renders from
+      CSS (::after, swiper-icons font) to match the native theme sliders.
+      Keep the aria-labels; they are the accessible name.
+    {%- endcomment -%}
     <button type="button"
             class="vrec-slot__nav vrec-slot__nav--prev"
             aria-label="Scroll recommendations left"
-            disabled>&lsaquo;</button>
+            disabled></button>
     <div class="vrec-slot__rail" role="list">
       {{ rail_html }}
     </div>
     <button type="button"
             class="vrec-slot__nav vrec-slot__nav--next"
-            aria-label="Scroll recommendations right">&rsaquo;</button>
+            aria-label="Scroll recommendations right"></button>
   </div>
 </section>
 
@@ -330,6 +335,28 @@
       var atEnd = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 1;
       prev.toggleAttribute('disabled', atStart);
       next.toggleAttribute('disabled', atEnd);
+      // 2026-08-06: rail fits without scrolling -> nothing to navigate, hide
+      // both arrows (mirrors Swiper's button-lock on the native sliders).
+      slot.classList.toggle('vrec-slot--nav-lock',
+        rail.scrollWidth <= rail.clientWidth + 2);
+    }
+    // 2026-08-06 (team feedback): anchor the arrows to the vertical center of
+    // the product IMAGE, not the full card — top:50% of the card landed the
+    // arrow down by the product title. The .lazy-image wrapper reserves its
+    // aspect-ratio before the image loads, so its height is trustworthy at
+    // layout time. Falls back to the CSS default (28%) when unmeasurable.
+    var wrap = slot.querySelector('.vrec-slot__nav-wrap');
+    function positionNav() {
+      if (!wrap) return;
+      var img = rail.querySelector('.vrec-card .lazy-image') ||
+                rail.querySelector('.vrec-card img');
+      if (!img) return;
+      var ir = img.getBoundingClientRect();
+      var wr = wrap.getBoundingClientRect();
+      if (ir.height > 0) {
+        wrap.style.setProperty('--vrec-nav-top',
+          Math.round(ir.top - wr.top + ir.height / 2) + 'px');
+      }
     }
     prev.addEventListener('click', function () {
       rail.scrollBy({ left: -step(), behavior: 'smooth' });
@@ -338,8 +365,9 @@
       rail.scrollBy({ left: step(), behavior: 'smooth' });
     });
     rail.addEventListener('scroll', syncDisabled, { passive: true });
-    window.addEventListener('resize', syncDisabled);
+    window.addEventListener('resize', function () { syncDisabled(); positionNav(); });
     syncDisabled();
+    positionNav();
   })();
 </script>
 

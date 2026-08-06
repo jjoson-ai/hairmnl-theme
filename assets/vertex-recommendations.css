@@ -661,34 +661,69 @@
  */
 .hairmnl-theme .vrec-slot__nav-wrap {
   position: relative;
+  /* 2026-08-06 (team feedback, Jessica): side gutters so the arrows live
+     BESIDE the rail instead of overlapping the first/last product image.
+     Desktop only — the media block below hides nav on touch anyway. */
+  padding: 0 30px;
 }
+/* 2026-08-06 rework (team feedback, Jessica): copy the native theme slider
+   arrows (home page collection sliders = Swiper). Bare chevron glyph from the
+   swiper-icons font embedded in custom-theme-core.css (loads sitewide), no
+   circle, color #0c0c0c and 30px size to match --swiper-navigation-color /
+   --swiper-navigation-size on the native sliders. Disabled state is VISIBLE
+   at opacity .35 (was opacity 0) — light at the edge, dark when there are
+   more products, same as native. */
 .hairmnl-theme .vrec-slot__nav {
   position: absolute;
-  top: 50%;
+  /* Vertical anchor = center of the product IMAGE, not the full card (which
+     put the arrow down by the title). The rail init script measures the
+     first card image and sets the custom property; 28% is the measured
+     fallback for the standard card proportions. */
+  top: var(--vrec-nav-top, 28%);
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 1px solid var(--vrec-rule);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  /* Hit target is deliberately larger than the visible glyph — the whole
+     face must click. */
+  width: 34px;
+  height: 64px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  color: var(--vrec-text);
-  z-index: 3;
-  transition: opacity 150ms ease, background 150ms ease;
+  color: #0c0c0c;
+  /* Above the card's invisible full-card slide overlay (z-index 5). At the
+     old z-index 3 that overlay sat on top of most of the button face, which
+     is why the arrows were hard to click. */
+  z-index: 10;
+  transition: opacity 150ms ease;
 }
-.hairmnl-theme .vrec-slot__nav:hover { background: #fafafa; }
-.hairmnl-theme .vrec-slot__nav:active { background: #f0f0f0; }
+.hairmnl-theme .vrec-slot__nav::after {
+  font-family: swiper-icons;
+  font-size: 30px;
+  line-height: 1;
+  text-transform: none !important;
+  letter-spacing: 0;
+  font-variant: initial;
+}
+.hairmnl-theme .vrec-slot__nav--prev::after { content: "prev"; }
+.hairmnl-theme .vrec-slot__nav--next::after { content: "next"; }
+.hairmnl-theme .vrec-slot__nav:hover { background: transparent; opacity: 0.7; }
+.hairmnl-theme .vrec-slot__nav:active { background: transparent; opacity: 0.6; }
 .hairmnl-theme .vrec-slot__nav[disabled] {
-  opacity: 0;
+  opacity: 0.35;
+  cursor: auto;
   pointer-events: none;
 }
-.hairmnl-theme .vrec-slot__nav--prev { left: -8px; }
-.hairmnl-theme .vrec-slot__nav--next { right: -8px; }
+.hairmnl-theme .vrec-slot__nav--prev { left: -4px; }
+.hairmnl-theme .vrec-slot__nav--next { right: -4px; }
+/* Rail fits without scrolling: no navigation to offer, hide both arrows
+   (mirrors Swiper's button-lock behaviour on the native sliders). The init
+   script toggles this class. */
+.hairmnl-theme .vrec-slot--nav-lock .vrec-slot__nav { display: none; }
 
 /* Hide nav on touch viewports — swipe is the primary affordance.
    Exception: the drawer placement (handled below) keeps its nav at all
@@ -704,12 +739,32 @@
 /*
  * Drawer slider nav — show in the drawer too (team requested).
  * Override the mobile-hide rule above + shrink to fit narrow drawer width.
+ *
+ * 2026-08-06: the drawer KEEPS the original white-circle look and its
+ * hide-at-edge behaviour — the chevron rework (Jessica) scoped PDP + cart
+ * page desktop only, and in the narrow drawer a bare chevron would sit on
+ * top of product images with no backdrop. Everything the reworked base
+ * style no longer provides is re-stated here.
  */
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav-wrap {
+  padding: 0;
+}
 .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav {
   display: flex;
+  top: 50%;
   width: 32px;
   height: 32px;
-  font-size: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid var(--vrec-rule);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  color: var(--vrec-text);
 }
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav::after {
+  font-size: 14px;
+}
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav:hover { background: #fafafa; opacity: 1; }
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav:active { background: #f0f0f0; opacity: 1; }
+.hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav[disabled] { opacity: 0; }
 .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav--prev { left: 4px; }
 .hairmnl-theme .vrec-slot--cart_drawer_below_items .vrec-slot__nav--next { right: 4px; }
