@@ -1298,7 +1298,21 @@
     var deferred = [];
     var triggerAt = null;
 
+    // rxh7 (bd item B): consent gate. This storefront has no Google Consent Mode
+    // and no window.consentState; the only consent source of truth is Shopify's
+    // Customer Privacy API, which the theme's own cookie modal already uses
+    // (assets/theme.js ~L7085). FAIL-OPEN by design: if the API has not loaded we
+    // push exactly as before, so perf telemetry is never silently lost. We only
+    // suppress when the API is present AND says analytics processing is refused.
+    function analyticsAllowed() {
+      try {
+        var cp = window.Shopify && window.Shopify.customerPrivacy;
+        if (!cp || typeof cp.analyticsProcessingAllowed !== 'function') return true;
+        return cp.analyticsProcessingAllowed() !== false;
+      } catch (_) { return true; }
+    }
     function dl(name, payload) {
+      if (!analyticsAllowed()) return;
       (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: name }, payload || {}));
     }
     function isBlocked(src) {
@@ -1323,10 +1337,14 @@
     mo.observe(document.documentElement, { childList: true, subtree: true });
 
     // createElement override — belt-and-suspenders for dynamic script creation
-    var _ce = document.createElement.bind(document);
-    document.createElement = function(tag) {
+    // rxh7 (bd item A): keep a handle on the previous createElement AND on our own
+    // override, so disarm() can put the original back; and stop redefining the src
+    // descriptor once disarmed (the !disarmed test on the outer if).
+    var _cePrev = document.createElement;
+    var _ce = _cePrev.bind(document);
+    var _ceOverride = function(tag) {
       var el = _ce.apply(document, arguments);
-      if (typeof tag === 'string' && tag.toLowerCase() === 'script') {
+      if (!disarmed && typeof tag === 'string' && tag.toLowerCase() === 'script') {
         var setSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').set;
         Object.defineProperty(el, 'src', {
           configurable: true,
@@ -1339,6 +1357,7 @@
       }
       return el;
     };
+    document.createElement = _ceOverride;
 
     // Engagement tracking — after Reamaze SDK loads
     function setupEngagementTracking() {
@@ -1365,6 +1384,18 @@
       triggerAt = Date.now();
       dl('reamaze_load_path', { path: path });
       mo.disconnect();
+      // rxh7 (bd item A): restore the previous createElement, but ONLY if ours is
+      // still the top of the chain. The Octane guard below chains its own override
+      // on top of this one, so the identity check keeps the unwind strictly LIFO —
+      // we can never delete a guard that is still armed. If the check fails we stay
+      // installed but inert (the !disarmed test above means we no longer touch any
+      // element we create).
+      if (document.createElement === _ceOverride) { document.createElement = _cePrev; }
+      // rxh7 (bd item C): drop the trigger listeners so nothing can preventDefault()
+      // after disarm. hh is only assigned on hover-capable pointers, hence the typeof.
+      document.removeEventListener('click', phClick);
+      window.removeEventListener('scroll', sh);
+      if (typeof hh === 'function') { document.removeEventListener('mousemove', hh); }
       var ph = document.getElementById('reamaze-defer-placeholder');
       if (ph) ph.hidden = true;
       deferred.forEach(function(src, i) {
@@ -1396,7 +1427,11 @@
     // ---- TRIGGERS ----
 
     // 1. Placeholder click
-    document.addEventListener('click', function(e) {
+    // rxh7 (bd item C): named so disarm() can removeEventListener it, and gated on
+    // !disarmed so a late click can never preventDefault() a real navigation after
+    // the live Reamaze widget has taken over the placeholder's position.
+    function phClick(e) {
+      if (disarmed) return;
       var ph = e.target.closest && e.target.closest('#reamaze-defer-placeholder');
       if (ph) { e.preventDefault(); disarm('placeholder_click'); return; }
       var hot = e.target.closest && e.target.closest('[data-reamaze-trigger]');
@@ -1414,7 +1449,12 @@
           setTimeout(function() { clearInterval(t); }, 10000);
         }
       }
-    });
+    }
+    /* rxh7: patch 4 turned the anonymous listener into a hoisted declaration so disarm() can
+       removeEventListener it — which means the call that used to register it inline is gone and
+       has to be made explicitly here. The banked patch set omitted both this and the `});` -> `}`
+       closer, so it did not parse. */
+    document.addEventListener('click', phClick);
 
     // 2. Any click after 5 seconds
     setTimeout(function() {
@@ -1519,10 +1559,14 @@
     mo.observe(document.documentElement, { childList: true, subtree: true });
 
     // createElement override — belt-and-suspenders for dynamic script creation
-    var _ce = document.createElement.bind(document);
-    document.createElement = function(tag) {
+    // rxh7 (bd item A): same hardening as the Reamaze guard above — keep handles on
+    // the previous createElement and on our own override so disarm() can restore,
+    // and stop redefining the src descriptor once disarmed.
+    var _cePrev = document.createElement;
+    var _ce = _cePrev.bind(document);
+    var _ceOverride = function(tag) {
       var el = _ce.apply(document, arguments);
-      if (typeof tag === 'string' && tag.toLowerCase() === 'script') {
+      if (!disarmed && typeof tag === 'string' && tag.toLowerCase() === 'script') {
         var setSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').set;
         Object.defineProperty(el, 'src', {
           configurable: true,
@@ -1535,6 +1579,7 @@
       }
       return el;
     };
+    document.createElement = _ceOverride;
 
     // Disarm — load all deferred Octane scripts
     function disarm(path) {
@@ -1543,6 +1588,11 @@
       triggerAt = Date.now();
       dl('octane_load_path', { path: path });
       mo.disconnect();
+      // rxh7 (bd item A): LIFO-safe restore, see the Reamaze guard above. This
+      // override is installed last, so the identity check normally passes and hands
+      // createElement back to the Reamaze guard's override.
+      if (document.createElement === _ceOverride) { document.createElement = _cePrev; }
+      window.removeEventListener('scroll', sh);
       deferred.forEach(function(src, i) {
         var s = _ce('script');
         s.async = true;
