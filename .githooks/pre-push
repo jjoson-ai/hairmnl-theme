@@ -47,6 +47,21 @@ if [ -x "$REPO/scripts/check-critical-css-coverage.py" ]; then
     fi
 fi
 
+# 3) css-overrides build sync (bd 958r.7) — snippets/css-overrides.liquid is GENERATED from
+#    os2-migration/css-overrides.source.liquid. If someone edits the generated file directly, or
+#    edits the source without rebuilding, the shipped CSS silently stops matching the documented
+#    source. This is the guard against that.
+if [ -x "$REPO/scripts/build-css-overrides.py" ]; then
+    echo "→ Running scripts/build-css-overrides.py --check …" >&2
+    if ! python3 "$REPO/scripts/build-css-overrides.py" --check >&2; then
+        echo "" >&2
+        echo "✗ Pre-push: css-overrides is out of sync with its source." >&2
+        echo "  Edit os2-migration/css-overrides.source.liquid, then run:" >&2
+        echo "    python3 scripts/build-css-overrides.py" >&2
+        exit 1
+    fi
+fi
+
 # Add additional checks here as the contract grows.
 # Examples for future:
 #   - scripts/check-overlay-css.py  (already runs in CI; could mirror locally)

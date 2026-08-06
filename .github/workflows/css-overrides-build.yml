@@ -1,0 +1,39 @@
+# css-overrides build sync — bd hairmnl-theme-958r.7
+#
+# snippets/css-overrides.liquid is inlined into <head> on EVERY page and is GENERATED from
+# os2-migration/css-overrides.source.liquid (96.9 KB -> 29.2 KB raw, 32.0 KB -> 8.3 KB gzipped).
+# The source keeps the documentation and the 18 kt0-OK acknowledgements; the build strips everything
+# else. If the two drift, the shipped CSS stops matching the reviewed source — this job prevents it.
+name: css-overrides build sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'os2-migration/css-overrides.source.liquid'
+      - 'snippets/css-overrides.liquid'
+      - 'scripts/build-css-overrides.py'
+      - '.github/workflows/css-overrides-build.yml'
+  pull_request:
+    paths:
+      - 'os2-migration/css-overrides.source.liquid'
+      - 'snippets/css-overrides.liquid'
+      - 'scripts/build-css-overrides.py'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      # --check rebuilds from source and refuses to pass unless the committed artifact matches.
+      # The build itself aborts if the minified output is not rule-for-rule equivalent to the source.
+      - name: Verify css-overrides is in sync with its source
+        run: python3 scripts/build-css-overrides.py --check
