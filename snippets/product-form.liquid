@@ -51,7 +51,17 @@
 
 <div class="product__form__outer {{ buybutton_class }}" {{ block.shopify_attributes }}>
   {%- assign product_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id -%}
-  {% form 'product', product, id: product_form_id, data-product-form: '', data-product-handle: product.handle %}
+  {%- comment -%}
+    g1n follow-up 2026-08-06 (team spec): server-render the sold-out form
+    state so a PDP landed on an unavailable variant swaps gift-wrap + quantity
+    for the SOLD OUT pill with no flash. notify-when-available.js keeps the
+    class in sync on theme:variant:change.
+  {%- endcomment -%}
+  {%- assign bis_form_class = '' -%}
+  {%- unless current_variant.available -%}
+    {%- assign bis_form_class = 'product-form--soldout' -%}
+  {%- endunless -%}
+  {% form 'product', product, id: product_form_id, class: bis_form_class, data-product-form: '', data-product-handle: product.handle %}
 
     {% comment %} The input with name="id" submits to cart {% endcomment %} 
     <input type="hidden" name="id" value="{{ current_variant.id }}">
@@ -107,7 +117,26 @@
 
                   {%- else -%}
                     {% comment %} radio button {% endcomment %}
-                    <span class="radio__button">
+                    {%- comment -%}
+                      g1n follow-up 2026-08-06 (team spec): strike through +
+                      grey out a value whose variant is sold out. Only safe on
+                      single-option products, where a value maps to exactly one
+                      variant; with multiple options a value's availability
+                      depends on the other selections, so no static verdict
+                      exists and the chip is left alone.
+                    {%- endcomment -%}
+                    {%- assign value_soldout = false -%}
+                    {%- if product.options.size == 1 -%}
+                      {%- for bis_v in product.variants -%}
+                        {%- if bis_v.option1 == value -%}
+                          {%- unless bis_v.available -%}
+                            {%- assign value_soldout = true -%}
+                          {%- endunless -%}
+                          {%- break -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+                    <span class="radio__button{% if value_soldout %} radio__button--soldout{% endif %}">
                       <input
                         type="radio"
                         name="options[{{ option.name | escape_once }}]"
@@ -241,6 +270,16 @@
 
       </div>
     {%- endif -%}
+
+    {%- comment -%}
+      g1n follow-up 2026-08-06 (team spec): SOLD OUT pill. Sits exactly where
+      the quantity selector renders (below the variants, above the free-gift
+      widget) and swaps with gift-wrap + quantity via .product-form--soldout —
+      CSS in css-overrides does the show/hide, so this renders unconditionally.
+    {%- endcomment -%}
+    <div class="product__soldout-label" data-soldout-label aria-live="polite">
+      {{ 'products.product.sold_out' | t }}
+    </div>
 
     <div class="product__submit" data-buttons-wrapper data-add-action-wrapper>
 

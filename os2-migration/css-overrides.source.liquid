@@ -2041,6 +2041,145 @@
     display: none;
   }
 
+  /* 2026-08-06 team feedback (Jessica) — BIS opt-in + confirmation restyle
+     and the sold-out product-form state. kt0 discipline unchanged: no
+     transform/contain/filter on any notify-modal or notify-tab selector
+     (the checkbox checkmark is an SVG background, not a rotated pseudo). */
+
+  /* Headline family: site sans (Pipeline's triple-dash var), per spec. */
+  #notify-when-available-modal .notify-modal__title {
+    font-family: var(---font-stack-body, 'Helvetica Neue', Helvetica, Arial, sans-serif);
+  }
+  .notify-modal__subtitle {
+    margin: 10px 0 2px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #444444;
+  }
+
+  /* Email field: light fill, quiet border, black border on focus. The black
+     border IS the focus indicator, so the default outline goes — contrast
+     #000 on #FAFAFA far exceeds the 3:1 non-text requirement.
+     ID-scoped: verified on the draft preview that a bare class selector
+     loses bg/border to the theme's own input styling. */
+  #notify-when-available-modal .notify-modal__input {
+    background: #FAFAFA;
+    border: 1px solid #E0E0E0;
+    border-radius: 0;
+  }
+  #notify-when-available-modal .notify-modal__input:focus {
+    border-color: #000000;
+    outline: none;
+  }
+
+  /* Checkbox: white square + thin grey border unchecked; solid black with a
+     white SVG checkmark when checked (mirrors the black CTA). Scoped to the
+     modal so no other checkbox on the site changes. */
+  .notify-modal__checkbox-label input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin: 1px 0 0;
+    background: #ffffff;
+    border: 1px solid #CCCCCC;
+    border-radius: 0;
+    cursor: pointer;
+  }
+  .notify-modal__checkbox-label input[type="checkbox"]:checked {
+    background-color: #000000;
+    border-color: #000000;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5.5 4.5 9 11 1.5' fill='none' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px 10px;
+  }
+  .notify-modal__checkbox-label input[type="checkbox"]:focus-visible {
+    outline: 2px solid #000000;
+    outline-offset: 2px;
+  }
+
+  /* CTA: solid black, sharp corners, bold all-caps. Extra ancestor beats the
+     theme's .btn--primary regardless of stylesheet order. */
+  .notify-modal__form .notify-modal__submit {
+    background: #000000;
+    border: 1px solid #000000;
+    border-radius: 0;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 14px 28px;
+  }
+  .notify-modal__form .notify-modal__submit:hover,
+  .notify-modal__form .notify-modal__submit:focus {
+    background: #222222;
+    border-color: #222222;
+    color: #ffffff;
+  }
+
+  /* Confirmation state: own headline (same sans) + body with the product
+     name in <strong> (built by notify-when-available.js). */
+  .notify-modal__success-title {
+    margin-bottom: 12px;
+  }
+  .notify-modal__success-body {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333333;
+  }
+  .notify-modal__success-body strong {
+    font-weight: 700;
+  }
+
+  /* Sold-out product-form state (server-rendered class, kept in sync by
+     notify-when-available.js on theme:variant:change). Swaps the gift-wrap
+     app block + quantity selector for the SOLD OUT pill, in place. */
+  .product__soldout-label {
+    display: none;
+    background: #E0E1E0;
+    color: #665A44;
+    border-radius: 6px;
+    padding: 14px 32px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .product-form--soldout .product__soldout-label {
+    display: inline-block;
+    margin: 4px 0 16px;
+  }
+  .product-form--soldout [data-quantity-selector] {
+    display: none;
+  }
+  /* LDT Gift Wrap app block ("Is this a gift?") — targeted by the stable
+     app-block id fragment; the random prefix/suffix vary per install.
+     Draft-preview verification showed the block renders OUTSIDE the product
+     form, so a descendant selector can't reach it — :has() on body bridges
+     the gap with no JS timing flash. The only page that renders this block
+     is the PDP, whose sole product form is the one carrying the class. */
+  .product-form--soldout [id*="ldt_gift_wrap_product_gift_option"],
+  body:has(form[data-product-form].product-form--soldout) [id*="ldt_gift_wrap_product_gift_option"] {
+    display: none;
+  }
+
+  /* Sold-out variant chip: grey fill + strikethrough in the label colour,
+     selected or not (single-option products; class set by product-form).
+     The inner span selectors are needed — the theme colours the label's
+     child span with higher specificity (verified: #706D71 leaked through). */
+  .radio__button--soldout label,
+  .radio__button--soldout label span,
+  .radio__button--soldout input:checked + label,
+  .radio__button--soldout input:checked + label span {
+    background: #E0E1E0;
+    border-color: #E0E1E0;
+    color: #665A44;
+    text-decoration: line-through;
+    text-decoration-color: #665A44;
+  }
+
 /* bd fj5m (2026-08-06) — the persistent cart-CLS floor, ~0.054 desktop / ~0.042 mobile on EVERY
    PSI run. Lighthouse attributed it to the footer BIR certificate <img loading="lazy"> with cause
    "Media element lacking an explicit size", and it is not that the image is unsized — it is that

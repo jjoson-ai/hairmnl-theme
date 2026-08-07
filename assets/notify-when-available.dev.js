@@ -33,7 +33,10 @@
   var API_REVISION = '2024-10-15';
   var API_BASE = 'https://a.klaviyo.com';
   var MODAL_ID = 'notify-when-available-modal';
-  var CLOSE_DELAY_MS = 2000;
+  // 2026-08-06: 2000 -> 6000. The confirmation is now a full sentence with
+  // the product name (team copy spec), not a one-liner; 2s closed it before
+  // it could be read.
+  var CLOSE_DELAY_MS = 6000;
   var PH_LOCAL_PATTERN = /^9\d{9}$/;
 
   var state = {
@@ -109,9 +112,36 @@
     }
   }
 
+  // 2026-08-06 copy spec: the confirmation body is a sentence with the
+  // product name in <strong>. The Liquid template carries %PRODUCT% as the
+  // slot; split-and-append rather than innerHTML so the (store-controlled,
+  // but principle) title is inserted as a text node. Rebuilt on every
+  // success — the modal is reused across variants/products.
+  function buildSuccessBody() {
+    var body = modalEl().querySelector('[data-notify-success-body]');
+    if (!body) return;
+    var template = body.getAttribute('data-template') || '';
+    var name = state.productTitle || 'this item';
+    if (state.variantTitle && state.variantTitle !== 'Default Title') {
+      name += ' — ' + state.variantTitle;
+    }
+    var parts = template.split('%PRODUCT%');
+    body.textContent = '';
+    body.appendChild(document.createTextNode(parts[0] || ''));
+    var strong = document.createElement('strong');
+    strong.textContent = name;
+    body.appendChild(strong);
+    body.appendChild(document.createTextNode(parts[1] || ''));
+  }
+
   function showSuccess() {
     var modal = modalEl();
     modal.querySelector('[data-notify-form]').hidden = true;
+    // The success state brings its own headline — hide the opt-in head
+    // (title + subtitle + product line) so they don't stack.
+    var head = modal.querySelector('[data-notify-head]');
+    if (head) head.hidden = true;
+    buildSuccessBody();
     var ok = modal.querySelector('[data-notify-success]');
     ok.hidden = false;
     fireFormsEvent('submit');
@@ -124,6 +154,8 @@
     var modal = modalEl();
     var form = modal.querySelector('[data-notify-form]');
     form.hidden = false;
+    var head = modal.querySelector('[data-notify-head]');
+    if (head) head.hidden = false;
     modal.querySelector('[data-notify-success]').hidden = true;
     setError(null);
     setBusy(false);
@@ -294,6 +326,13 @@
     var wrappers = document.querySelectorAll('.product__submit__buttons');
     for (var j = 0; j < wrappers.length; j++) {
       wrappers[j].classList.toggle('product__submit__buttons--notify', soldOut);
+    }
+    // 2026-08-06 sold-out form state (team spec): the class drives CSS that
+    // swaps the gift-wrap block + quantity selector for the SOLD OUT pill.
+    // Same document-wide scope as the wrapper toggle above.
+    var forms = document.querySelectorAll('form[data-product-form]');
+    for (var k = 0; k < forms.length; k++) {
+      forms[k].classList.toggle('product-form--soldout', soldOut);
     }
   }
 

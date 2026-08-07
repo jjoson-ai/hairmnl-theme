@@ -23,16 +23,26 @@
       aria-modal="true"
       aria-labelledby="notify-modal-title">
       <div class="modal__content">
-        <h2 id="notify-modal-title" class="modal__title">
-          {{ 'products.product.notify_when_available_title' | t }}
-        </h2>
+        {%- comment -%}
+          2026-08-06 team feedback (Jessica): opt-in copy rework. The head
+          wrapper exists so JS can hide title+subtitle+product line together
+          when the success state (its own headline + body) takes over.
+        {%- endcomment -%}
+        <div data-notify-head>
+          <h2 id="notify-modal-title" class="modal__title notify-modal__title">
+            {{ 'products.product.notify_when_available_title' | t }}
+          </h2>
 
-        <p class="notify-modal__product-title" data-notify-product-title>
-          {%- comment -%}
-            Populated by JS from data-notify-product-title on trigger.
-            Falls back to product title via Liquid if available.
-          {%- endcomment -%}
-        </p>
+          <p class="notify-modal__subtitle">
+            {{ 'products.product.notify_when_available_subtitle' | t }}
+          </p>
+
+          <p class="notify-modal__product-title" data-notify-product-title>
+            {%- comment -%}
+              Populated by JS from data-notify-product-title on trigger.
+            {%- endcomment -%}
+          </p>
+        </div>
 
         <form class="notify-modal__form" data-notify-form novalidate>
           {%- comment -%}
@@ -131,15 +141,24 @@
             type="submit"
             class="btn btn--primary notify-modal__submit"
             data-notify-submit>
-            {{ 'products.product.submit' | t }}
+            {{ 'products.product.notify_submit' | t }}
           </button>
         </form>
 
         {%- comment -%}
-          Success state — hidden initially, shown by JS after successful subscription.
+          Success state — hidden initially, shown by JS after successful
+          subscription (which also hides [data-notify-head] so this headline
+          replaces the opt-in one). The body template carries a %PRODUCT%
+          placeholder; JS splits on it and inserts the product name as a
+          <strong> node (no innerHTML), per the 2026-08-06 copy spec.
         {%- endcomment -%}
         <div class="notify-modal__success" hidden data-notify-success>
-          <p>{{ 'products.product.notify_success_message' | t }}</p>
+          <h2 class="modal__title notify-modal__title notify-modal__success-title">
+            {{ 'products.product.notify_success_title' | t }}
+          </h2>
+          <p class="notify-modal__success-body"
+             data-notify-success-body
+             data-template="{{ 'products.product.notify_success_body' | t: product: '%PRODUCT%' }}"></p>
         </div>
       </div>
     </div>
