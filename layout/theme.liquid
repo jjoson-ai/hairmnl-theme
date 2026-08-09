@@ -19,6 +19,25 @@
   {%- assign title_override = false -%}
   {%- assign default_description = false -%}
     <head>
+{%- comment -%}
+  RESTORED 2026-08-09 (bd: P8-port regression). The live P6 theme carried this
+  exact GTM bootstrap as the first element of <head> (verbatim from theme
+  131664707683 layout/theme.liquid L22-28); the P8 port dropped it, so from
+  cutover (Aug 4 16:00Z) every web-GTM consumer was dark: CWV RUM events
+  (LCP/CLS/INP collapsed ~2,000/day to ~7-78/day, the residue being stale-
+  cached P6 pages), hairmnl_js_error, conversion linker, Klaviyo form
+  listener. GA4 sessions/purchases kept flowing via the Shopify/Stape pixels,
+  which is what made the outage partial and easy to miss. The theme-side
+  web-vitals-reporter was verified emitting dataLayer pushes on live P8 —
+  nothing consumed them. Container: GTM-M4NKSBD (web, V143-era).
+{%- endcomment -%}
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M4NKSBD');</script>
+<!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <style>{%- render 'critical-css' -%}</style>
     {%- comment -%} bss-hide-variant.css links REMOVED (bd ujg6.57, phase4 audit):
@@ -1763,7 +1782,11 @@
 </head>
 
   <body id="{{ page_title | handle }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {{ settings.default_background }}{% if customer %} customer-logged-in{% endif %} hairmnl-theme">
-  
+<!-- Google Tag Manager (noscript) — restored 2026-08-09 with the head bootstrap above -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M4NKSBD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
     <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}
     </a>
 
