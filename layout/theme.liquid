@@ -585,10 +585,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       ujg6.42 (2026-05-20): per-template CSS — see preload block above.
       KILL_SWITCH: revert to the original 4 lines (theme.css / custom-theme.css).
     {%- endcomment -%}
-    <link rel="stylesheet" href="{{ 'theme-core.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="{{ 'theme-core.css' | asset_url }}"></noscript>
-    <link rel="stylesheet" href="{{ 'custom-theme-core.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
-    <noscript><link rel="stylesheet" href="{{ 'custom-theme-core.css' | asset_url }}"></noscript>
+    {%- comment -%}
+      UN-DEFERRED 2026-08-12 (bd hairmnl-theme-q9aa / 2u6r). The two UNIVERSAL
+      stylesheets become render-blocking again; the per-template chunks below
+      stay deferred. Rationale, with the false start on record:
+
+      An 08-11 test of this exact change measured "no benefit" and was
+      reverted. That test was masked: at the time the article pages' dominant
+      shift (0.20-0.23) was the .blog__article card gaining its padding from
+      deferred-templates.css, which drowned the term this change fixes. After
+      that card fix shipped (critical-css parity, commit 27fcfe6), the
+      remaining intermittent 0.13-0.15 shift is text re-rendering when
+      theme-core finally applies: content renders in fallback fonts and
+      partial styling until the media=print swap fires — measured landing
+      anywhere from ~1s to ~33s after load — then the whole page re-renders
+      (font-family assignments, .rte scale, nav metrics all live in
+      theme-core). The theme's own KILL_SWITCH note above says to do exactly
+      this when FOUC is observed.
+
+      Both files are already rel=preload as=style (~line 239), so this adds no
+      request and changes no discovery — it only stops the browser painting a
+      layout it is about to throw away. Measured FCP cost on the flagged
+      articles: within noise (the files are ~36KB + ~10KB wire on a warm CDN).
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'theme-core.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'custom-theme-core.css' | asset_url }}">
     {%- if template == 'index' -%}
       <link rel="stylesheet" href="{{ 'theme-home.css' | asset_url }}" media="print" onload="this.media='all';this.onload=null;">
       <noscript><link rel="stylesheet" href="{{ 'theme-home.css' | asset_url }}"></noscript>
