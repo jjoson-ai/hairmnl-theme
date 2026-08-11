@@ -383,6 +383,7 @@
       "notify_submit": "Send me an update",
       "notify_success_title": "You're on the list! 💌",
       "notify_success_body": "Thank you for your interest! We'll send an email straight to your inbox the moment {{ product }} is back on our shelves.",
+      "notify_continue_shopping": "Continue Shopping",
       "notify_success_message": "You're on the list — we'll email you as soon as it's back in stock.",
       "close": "Close",
       "pre_order": "Pre-order",

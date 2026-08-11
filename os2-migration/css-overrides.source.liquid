@@ -2079,9 +2079,14 @@
      transform/contain/filter on any notify-modal or notify-tab selector
      (the checkbox checkmark is an SVG background, not a rotated pseudo). */
 
-  /* Headline family: site sans (Pipeline's triple-dash var), per spec. */
+  /* Headline family — 2026-08-12 team spec (g1n.12) reverses the 08-06 sans
+     choice: both modal headlines (opt-in + confirmation share the class) now
+     use the site's heading serif, matching product H1s exactly (measured on
+     live: SelfModern, weight 400, letter-spacing normal). */
   #notify-when-available-modal .notify-modal__title {
-    font-family: var(---font-stack-body, 'Helvetica Neue', Helvetica, Arial, sans-serif);
+    font-family: var(---font-stack-header, SelfModern, serif);
+    font-weight: 400;
+    letter-spacing: normal;
   }
   .notify-modal__subtitle {
     margin: 10px 0 2px;
@@ -2133,11 +2138,15 @@
     outline-offset: 2px;
   }
 
-  /* CTA: solid black, sharp corners, bold all-caps. Extra ancestor beats the
-     theme's .btn--primary regardless of stylesheet order. */
+  /* CTA — 2026-08-12 team spec (g1n.12): black -> the exact PDP notify-button
+     colour for interaction continuity. #AC604F / hover #853A2A are the
+     measured values of --btn-bg / --btn-bg-hover on .btn--notify (draft
+     preview, 2026-08-12); hardcoded because the modal renders outside the
+     product section's CSS-variable scope. If the theme's button palette
+     changes, update BOTH hexes from the same measurement. */
   .notify-modal__form .notify-modal__submit {
-    background: #000000;
-    border: 1px solid #000000;
+    background: #AC604F;
+    border: 1px solid #AC604F;
     border-radius: 0;
     color: #ffffff;
     font-weight: 700;
@@ -2147,8 +2156,8 @@
   }
   .notify-modal__form .notify-modal__submit:hover,
   .notify-modal__form .notify-modal__submit:focus {
-    background: #222222;
-    border-color: #222222;
+    background: #853A2A;
+    border-color: #853A2A;
     color: #ffffff;
   }
 
@@ -2164,6 +2173,28 @@
   }
   .notify-modal__success-body strong {
     font-weight: 700;
+  }
+  /* Secondary action — 2026-08-12 team spec (g1n.12): CONTINUE SHOPPING
+     closes the modal (data-micromodal-close, no JS). Brand-brown outline
+     (#665A44 per spec, matches the Sold Out label) with hover inversion. */
+  .notify-modal__success .notify-modal__continue {
+    display: inline-block;
+    margin-top: 20px;
+    background: transparent;
+    border: 1px solid #665A44;
+    border-radius: 0;
+    color: #665A44;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 13px 28px;
+    cursor: pointer;
+  }
+  .notify-modal__success .notify-modal__continue:hover,
+  .notify-modal__success .notify-modal__continue:focus {
+    background: #665A44;
+    color: #ffffff;
   }
 
   /* Sold-out product-form state (server-rendered class, kept in sync by
@@ -2202,12 +2233,28 @@
      selected or not (single-option products; class set by product-form).
      The inner span selectors are needed — the theme colours the label's
      child span with higher specificity (verified: #706D71 leaked through). */
-  .radio__button--soldout label,
-  .radio__button--soldout label span,
-  .radio__button--soldout input:checked + label,
-  .radio__button--soldout input:checked + label span {
+  /* 2026-08-12 team spec (g1n.12) — split into unselected vs selected states.
+     Unselected sold-out must read as disabled: default chip bg, standard grey
+     strikethrough, faded. Selected sold-out keeps the grey fill with the
+     Sold-Out label colour (#665A44) at full opacity so the active choice is
+     unmistakable. Span selectors kept — the theme colours the label's child
+     span with higher specificity (verified: #706D71 leaked through). */
+  .radio__button--soldout label {
+    background: transparent;
+    border-color: rgba(50, 46, 52, 0.05); /* default chip border, unchanged */
+    opacity: 0.45;
+  }
+  .radio__button--soldout label span {
+    color: #706D71;
+    text-decoration: line-through;
+    text-decoration-color: #706D71;
+  }
+  .radio__button--soldout input:checked + label {
     background: #E0E1E0;
     border-color: #E0E1E0;
+    opacity: 1;
+  }
+  .radio__button--soldout input:checked + label span {
     color: #665A44;
     text-decoration: line-through;
     text-decoration-color: #665A44;

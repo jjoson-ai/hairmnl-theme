@@ -159,6 +159,16 @@
           <p class="notify-modal__success-body"
              data-notify-success-body
              data-template="{{ 'products.product.notify_success_body' | t: product: '%PRODUCT%' }}"></p>
+          {%- comment -%}
+            2026-08-12 team spec (g1n.12): secondary action. data-micromodal-close
+            makes Micromodal handle the dismiss — no JS changes needed.
+          {%- endcomment -%}
+          <button
+            type="button"
+            class="notify-modal__continue"
+            data-micromodal-close>
+            {{ 'products.product.notify_continue_shopping' | t }}
+          </button>
         </div>
       </div>
     </div>
