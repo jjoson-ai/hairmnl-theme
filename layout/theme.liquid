@@ -430,6 +430,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <link
         rel="preload"
         as="image"
+        fetchpriority="high"
         href="{{ article.image | image_url: width: 900, format: 'webp' }}"
         imagesrcset="{%- if article.image.width >= 540 -%}{{ article.image | image_url: width: 540, format: 'webp' }} 540w,{%- endif -%}
           {%- if article.image.width >= 900 -%}{{ article.image | image_url: width: 900, format: 'webp' }} 900w,{%- endif -%}
