@@ -2249,12 +2249,19 @@
     text-decoration: line-through;
     text-decoration-color: #706D71;
   }
-  .radio__button--soldout input:checked + label {
-    background: #E0E1E0;
-    border-color: #E0E1E0;
+  /* Selected sold-out needs (0,4,2): the theme's section-inline rule
+     `.radio__fieldset .radio__button input:checked ~ label` is (0,3,2) AND
+     renders in <body> after this block, so an equal-specificity selector
+     loses on order. Verified 2026-08-12 on the draft preview. */
+  /* !important required: the theme's own section-inline selected-chip rule is
+     `background: #CAD1D3 !important` — un-important declarations lose to it
+     regardless of specificity. Among importants, (0,4,2) beats its (0,3,2). */
+  .radio__fieldset .radio__button.radio__button--soldout input:checked + label {
+    background: #E0E1E0 !important;
+    border-color: #E0E1E0 !important;
     opacity: 1;
   }
-  .radio__button--soldout input:checked + label span {
+  .radio__fieldset .radio__button.radio__button--soldout input:checked + label span {
     color: #665A44;
     text-decoration: line-through;
     text-decoration-color: #665A44;
