@@ -8,7 +8,7 @@
   | placement                | data source                                         |
   |--------------------------|-----------------------------------------------------|
   | pdp_below_atc            | product.metafields.vertex.recs                      |
-  | pdp_below_description    | product.metafields.vertex.recs (TAIL, offset 8 — bd 67d) |
+  | pdp_below_description    | product.metafields.vertex.recs (ranks 2-6 probe — see below) |
   | cart_above_checkout      | cart.items[0].vertex.cart_recs → .recs fallback     |
   | home_below_hero          | customer.vertex.recommended_for_you → shop.trending |
   | cart_drawer_below_items  | cart.items[0].vertex.recs (v1 fallback)             |
@@ -60,20 +60,29 @@
 
     when 'pdp_below_description'
       comment
-        bd 67d (2026-07-18 audit): this placement read product.metafields.vertex.similar,
-        which NO precompute writer ever writes (the similar model has no serving path),
-        so it ALWAYS fell through to the sample:4 random-products fallback below — a prime
-        PDP surface showing pseudo-random items on every product page. Re-point at the
-        REAL FBT recs and show the TAIL (ranks 9-12) so it never duplicates the "Complete
-        Your Routine" rail above (which renders the top 8). Products with <9 recs render
-        nothing here and the section self-suppresses (empty rail_html check below) rather
-        than showing random. Also lets us skip the $80-160 similar-model tune (bd 6hu).
+        History: bd 67d (2026-07-18 audit) found this placement reading
+        product.metafields.vertex.similar, which no precompute writer ever writes,
+        so it always fell through to the sample:4 random-products fallback — then
+        re-pointed it at the FBT recs TAIL (offset 8, ranks 9-12) to avoid
+        duplicating the "Complete Your Routine" top-8 rail above.
+
+        2026-08-11 probe (bd cji): the tail measured 0.01% CTR over the first two
+        post-cutover weeks (6 clicks / 42,727 impressions) vs pdp-fbt's 0.17% —
+        ranks 9-12 are the model's dregs. Now testing STRONG ranks 2-6 in this
+        slot (offset 1, limit 5). This DELIBERATELY overlaps 5 of the 8 products
+        in the below-ATC rail: the slots are far apart on the page and second
+        exposure of strong recs vs first exposure of weak ones is exactly the
+        hypothesis under test. Expect impressions to rise too — products with
+        2+ recs now render here (previously needed 9+). Judge on CTR, not
+        clicks. If the slot still can't clear ~0.1% CTR after ~2 weeks, kill
+        the rail entirely rather than tuning the similar model
+        (evaluation task filed under the cji epic).
       endcomment
       if product and product.metafields.vertex.recs
         assign rec_products = product.metafields.vertex.recs.value
-        assign rec_offset   = 8
-        assign rec_limit    = 4
-        assign rec_source   = 'metafield_recs_tail'
+        assign rec_offset   = 1
+        assign rec_limit    = 5
+        assign rec_source   = 'metafield_recs_r2_6'
       endif
 
     when 'cart_above_checkout'
