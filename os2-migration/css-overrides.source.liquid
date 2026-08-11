@@ -394,6 +394,39 @@
     aspect-ratio: 1;
   }
 
+  /* CLS fix 2026-08-11 (bd hairmnl-theme-2ya0) — the THIRD attempt at this
+     element, and the one that measured to zero. T8 and T27 above both assumed
+     the wrapper COLLAPSES when Flickity initialises, and reserved a floor
+     (min-height:80px) against that. Measured on live, the failure is the
+     opposite: the strip starts TALLER than its final size and shrinks.
+
+     Traced on mobile 390px, 8 media, throttled 1.6Mbps/4xCPU:
+       923ms  height 162px   <- 8 inline-block thumbs (60px + ~14px gap) WRAP
+                                to 2 rows in a 358px-wide container
+       5924ms height 164px
+       8869ms height  80px   <- Flickity converts the strip to a single-row
+                                slider; the second row disappears
+     The transient second row pushes the whole .grid__item info column (title,
+     price, Add to Cart) down ~162px, producing a single 0.2307 layout shift —
+     94% of the page's 0.2461 CLS. min-height:80px cannot help because 80 is
+     the FINAL height, not the transient one; and raising it to 162px would
+     leave ~82px of dead space once Flickity settles.
+
+     Fix: keep the strip on ONE row from first paint so the pre- and
+     post-Flickity heights are identical. white-space:nowrap does it with no
+     visual change — the thumbs are inline-block, the wrapper already has
+     overflow:hidden (T8), and Flickity supplies the horizontal scrolling, so
+     the clipped thumbs were never reachable without JS anyway.
+
+     Measured A/B on live, 4 runs per arm, mobile 390px throttled:
+       control  CLS 0.0152 median (0.0152/0.2461/0.0152/0.0152 — the big shift
+                fires on roughly 1 load in 4, hence the noisy median)
+       with fix CLS 0        on all 4 runs; 0.2307 shift gone
+       final thumb-strip height 80px in BOTH arms — no layout change. */
+  [data-product-thumbs].media__thumb__wrapper {
+    white-space: nowrap;
+  }
+
   /* CLS fix 2026-05-01 T9 — Header CLS:
      GA4 debug_target theme__header recorded 88 poor-CLS events in 7d.
      Two causes:
