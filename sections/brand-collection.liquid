@@ -97,11 +97,31 @@
   {%- assign brand_title = collection.title -%}
 {%- endif -%}
 
-{%- if request.design_mode or request.page_type == null -%}
-  {%- comment -%}
-    Theme Editor preview OR Section Rendering API request (?section_id=...):
-    render the full section normally.
-  {%- endcomment -%}
+{%- comment -%}
+  gg1r (2026-08-12): lazy-render DISABLED — always render the full section,
+  mirroring exactly what bd 2i8b.35 did to section-collection.liquid on
+  2026-05-19, whose comment explicitly said to apply the same change here
+  "if their lazy-render shows the same symptom". It does, and worse:
+
+  The gate below was meant to detect Section Rendering API requests via
+  request.page_type == null, but Shopify does NOT null page_type for
+  ?section_id= requests — so the API returned the placeholder too, and the
+  page depended on the noscript-extraction hydration in hairmnl-common.js.
+  Measured on live collection pages (throttled desktop): the section's
+  content did not exist until a second ~20KB fetch that STARTED at ~12.3s,
+  producing LCP 10,800-13,508ms and CLS 0.834-0.872. A measured variant with
+  the section server-rendered: LCP 3,564ms (-66%) and CLS 0.075, at
+  essentially unchanged document bytes (137,288 -> 137,184 gzip) — this is a
+  latency bug, not a byte trade.
+
+  The {%- else -%} placeholder + noscript branch below is now DEAD CODE,
+  kept (like 2i8b.35 kept its own) so the diff is one line and trivially
+  reversible; the noscript-extraction path in hairmnl-common.js stays for
+  sections/related.liquid, which is genuinely below the fold and keeps
+  lazy-render. Under the CLAUDE.md customization freeze this is subtraction
+  (disabling a bespoke Pipeline-6 mechanism), not new debt.
+{%- endcomment -%}
+{%- if true -%}
 {%- paginate collection.products by display_count -%}
 <div data-section-id="{{ section.id }}" data-section-type="collection">
     
