@@ -2,16 +2,27 @@
 
 ## Theme IDs
 
-THREE themes exist on `creations-gdc.myshopify.com`. **Pushing to the wrong dev theme caused multiple bug-fix reverts** in 2026-05-20 (operator viewing P8 while CC pushed to Claude Code). Disambiguation:
+> **⚠ UPDATED 2026-08-11 — THE CUTOVER HAPPENED. The IDs below were inverted
+> and are now corrected.** The P8 cutover completed 2026-08-04 16:00 UTC
+> (midnight Manila Aug 5): `141168312419` was published in place and IS NOW
+> LIVE; `131664707683` is RETIRED (role: unpublished). Verified repeatedly by
+> reading `Shopify.theme` off the live storefront. Every instruction in this
+> file that previously routed "live" work at `131664707683` was, post-cutover,
+> pointing at a dead theme — and the pre-flight-pull rule would have diffed
+> against the wrong source. Corrected below.
 
-- **Live theme**: `131664707683` ("Pipeline 6 - Fix share image") — P6, never pushed to from CC without explicit operator confirm.
-- **Claude Code Draft**: `140785582179` ("Claude Code") — P6-based smoke-test surface for stream:a (LIVE optimization) work. Wide sync from `main` HEAD is OK.
-- **P8 Cutover Target**: `141168312419` ("Pipeline 8 Working Demo") — the actual P8 dev theme for the cutover. **stream:b (MIGRATION) work pushes here.** P8 has different theme structure than P6/`main`; some files (`templates/product.json`, `templates/cart.json`, `layout/theme.liquid`) are edited out-of-tree via `/tmp/p8-current/` checkout — see bd `hairmnl-theme-2i8b.38` for the tracking list.
+TWO themes are in active use on `creations-gdc.myshopify.com` (a third is retired).
+**Pushing to the wrong theme caused multiple bug-fix reverts** in 2026-05-20
+(operator viewing P8 while CC pushed to Claude Code). Disambiguation:
+
+- **LIVE theme**: `141168312419` ("Pipeline 8 Working Demo") — Pipeline 8, published 2026-08-04. This is what customers see. Single-file pushes only, with `--allow-live`, after the pre-flight pull below.
+- **Draft / smoke-test surface**: `140785582179` ("Claude Code") — push here first for anything non-trivial, preview, then promote to live. Note it has drift from live (e.g. it lacks `snippets/vertex-recs-instrumentation.liquid`, so `layout/theme.liquid` renders a benign "Could not find asset" there — not a real error).
+- **RETIRED**: `131664707683` ("Pipeline 6 - Fix share image") — the pre-cutover P6 theme, now unpublished. Do NOT push to it. It is still useful read-only: pulling a file from it recovers pre-cutover state, which is how the dropped GTM container was recovered on 2026-08-09.
 
 **Which theme to push to:**
-- Bug fixes that apply to both P6 + P8 (Vertex code, snippets, css-overrides, kt0 fixes) → push to BOTH `140785582179` AND `141168312419`
-- P8-only architecture work (cutover prep, P8 section wiring) → push to `141168312419` only
-- P6-only LIVE fixes → push to `140785582179` only (then operator promotes to live `131664707683`)
+- Anything customer-facing → draft `140785582179` first, verify, then live `141168312419` with `--allow-live`
+- Comment-only / documentation changes → commit to git, do NOT push to live (zero upside, nonzero blast radius on files that render on every page)
+- The old P6/P8 "stream:a / stream:b" split is obsolete post-cutover; there is one live theme now.
 - **Always verify which theme the operator is viewing** before declaring a fix verified. Check the `Pipeline 8 Working Demo Draft` vs `Claude Code Draft` badge in the bottom-left of the dev preview.
 
 ## START HERE: Migration Contract (read before touching layout / sections / snippets)
@@ -249,19 +260,26 @@ several other perf optimizations that **were already live**. The
 ## The rule
 
 **Before any `shopify theme push --only=<file>` to the LIVE theme
-(`131664707683`), always:**
+(`141168312419` — see the corrected Theme IDs section at the top; this
+said `131664707683` until 2026-08-11), always:**
 
 1. Inspect `git diff HEAD <file>` — confirm the diff is exactly the
    intended hunks. If you see unexpected changes, stop.
 2. If the diff is unexpected, decide:
    - Restore from HEAD: `git checkout HEAD -- <file>`, then re-apply
      just the intended edit.
-   - Or pull from live: `shopify theme pull --theme=131664707683
+   - Or pull from live: `shopify theme pull --theme=141168312419
      --only=<file> --path=/tmp/live-pull` and diff against that.
 3. Only push after the diff matches the intended change.
 
+**Pre-flight pull (MIGRATION-CONTRACT Rule 7) — do this for shared files.**
+Pull the file from live to a temp dir and diff it against `git show HEAD:<file>`.
+If live == HEAD, your working-tree delta is the only change and the push is safe.
+If they differ, another session pushed since your last pull — reconcile before
+pushing or you will clobber their change.
+
 **Never** `shopify theme push` without `--only=<file>` flags **when
-targeting the LIVE theme `131664707683`**. A no-filter push to live
+targeting the LIVE theme `141168312419`**. A no-filter push to live
 uploads the entire working tree, which is almost guaranteed to drag
 stale or WIP content into customer-facing pages (this is the 2026-04-26
 regression class above).
@@ -274,15 +292,14 @@ required:
 
 | Theme target | Wide push (`shopify theme push --theme=<id> --nodelete`) | Why |
 |---|---|---|
-| **`131664707683`** (LIVE — "Pipeline 6 - Fix share image") | ❌ **Prohibited** | 2026-04-26 regression class. Always use `--only=<file>` filters AND `--allow-live`. |
+| **`141168312419`** (**LIVE** — "Pipeline 8 Working Demo") | ❌ **Prohibited** | **Changed 2026-08-11**: this theme was published at the cutover, so it inherits the live prohibition. This row previously said ✅ Allowed because it was the dev theme — following that now would push the entire working tree to customers (the 2026-04-26 regression class). Always `--only=<file>` + `--allow-live`. |
 | **`140785582179`** (Draft — "Claude Code") | ✅ Allowed | Draft theme is the smoke-test surface; wide sync from main HEAD is the intended workflow. |
-| **`141168312419`** (Dev — "Pipeline 8 Working Demo") | ✅ Allowed | `os2-migration/p8-cutover-checklist.md` Phase A.2 **prescribes** a wide push to sync dev to current main HEAD. Required for P8 work. |
+| **`131664707683`** (RETIRED — "Pipeline 6 - Fix share image") | ❌ Don't push at all | Unpublished post-cutover. Read-only value only (pull to recover pre-cutover state). |
 
-Operationally: an AI session running the P8 cutover checklist will hit
-this distinction. The classifier should accept wide pushes to
-`140785582179` or `141168312419`; only `131664707683` triggers the
-prohibition. If you're an AI session and the classifier blocks a wide
-push to a dev / draft theme, surface the conflict to the operator —
+Operationally: post-cutover there is exactly ONE theme that accepts wide
+pushes — the draft `140785582179`. Wide pushes to `141168312419` (live) and
+`131664707683` (retired) are both wrong. If you're an AI session and the
+classifier blocks a wide push to the draft theme, surface the conflict to the operator —
 the operator can approve the specific bash run.
 
 ### Cross-reference

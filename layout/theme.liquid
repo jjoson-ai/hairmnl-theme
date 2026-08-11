@@ -362,24 +362,55 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     {% comment %} 2026-05-09: Treedify uninstalled (issue ijh) — removed empty snippet render. {% endcomment %}
 
-    {% if product.featured_media.preview_image %}
-      {%- assign media = product.featured_media -%}
+    {%- comment -%}
+      PDP LCP image preload — REPAIRED 2026-08-11 (bd hairmnl-theme-aqlg).
+      RUM (first clean post-cutover window, crawler-filtered) put the PDP
+      gallery image at 22% of all mobile LCP not-good events, product being
+      the #1 template. Measured cause was NOT the gallery markup: the <img>
+      in snippets/media.liquid already carries loading=eager +
+      fetchpriority=high for the lead media. The cause was this preload,
+      which was silently useless in three ways:
+
+        1. WRONG MEDIA. It read product.featured_media, but the gallery
+           renders product.selected_or_first_available_variant.featured_media
+           (sections/product.liquid:83, sections/section-product.liquid:77).
+           Those differ on ?variant= URLs and on products whose first media
+           is not the default variant's — so it preloaded an image the page
+           never displayed.
+        2. INERT ATTRIBUTES. On <link rel=preload>, the responsive attributes
+           are imagesrcset / imagesizes. Plain srcset / sizes are ignored, so
+           only href (width:550) was ever fetched — a candidate the gallery
+           never selects (it picks 1100w at mobile dpr3 and desktop dpr1).
+        3. NO PRIORITY. No fetchpriority, so it competed as a normal fetch.
+
+      Net effect: a wasted 550w download while the real LCP image went
+      undiscovered until the parser reached it deep in a ~650KB document.
+      Measured on live, throttled 1.6Mbps/150ms/4xCPU, n=8 per arm:
+      LCP 4,300ms -> 1,280ms (-70%); the LCP image's own fetch moved from
+      start 3,280ms to start 388ms. Every run of the fixed arm beat every
+      run of the control. FCP was unharmed (972ms -> 768ms).
+
+      imagesizes MUST stay in sync with the <img> sizes in
+      snippets/media.liquid:32 — if they resolve differently the browser
+      fetches two candidates and the preload becomes pure waste.
+      Do NOT put Liquid comments between attributes inside the <link> tag:
+      the whitespace-stripping delimiters would glue attributes together
+      (...4096w"imagesizes=...) and break the tag.
+    {%- endcomment -%}
+    {%- assign lcp_media = product.selected_or_first_available_variant.featured_media | default: product.media[0] -%}
+    {%- if lcp_media.preview_image and lcp_media.media_type == 'image' -%}
       <link
         rel="preload"
         as="image"
-        href="{{ media.preview_image | image_url: width: 550 }}"
-        srcset="{%- if media.preview_image.width >= 550 -%}
-        {{ media.preview_image | image_url: width: 550 }} 550w,{%- endif -%}
-      {%- if media.preview_image.width >= 1100 -%}
-        {{ media.preview_image | image_url: width: 1100 }} 1100w,{%- endif -%}
-      {%- if media.preview_image.width >= 1680 -%}
-        {{ media.preview_image | image_url: width: 1680 }} 1680w,{%- endif -%}
-      {%- if media.preview_image.width >= 2048 -%}
-        {{ media.preview_image | image_url: width: 2048 }} 2048w,{%- endif -%}
-      {%- if media.preview_image.width >= 4096 -%}
-        {{ media.preview_image | image_url: width: 4096 }} 4096w{%- endif -%}"
-      sizes="(min-width: 768px), 50vw, 100vw">
-    {% endif %}
+        fetchpriority="high"
+        href="{{ lcp_media.preview_image | image_url: width: 1100 }}"
+        imagesrcset="{%- if lcp_media.preview_image.width >= 550 -%}{{ lcp_media.preview_image | image_url: width: 550 }} 550w,{%- endif -%}
+                     {%- if lcp_media.preview_image.width >= 1100 -%}{{ lcp_media.preview_image | image_url: width: 1100 }} 1100w,{%- endif -%}
+                     {%- if lcp_media.preview_image.width >= 1680 -%}{{ lcp_media.preview_image | image_url: width: 1680 }} 1680w,{%- endif -%}
+                     {%- if lcp_media.preview_image.width >= 2048 -%}{{ lcp_media.preview_image | image_url: width: 2048 }} 2048w,{%- endif -%}
+                     {%- if lcp_media.preview_image.width >= 4096 -%}{{ lcp_media.preview_image | image_url: width: 4096 }} 4096w{%- endif -%}"
+        imagesizes="(min-width: 768px) 50vw, 100vw">
+    {%- endif -%}
 
     {%- comment -%}
       Article hero LCP preload 2026-05-04 (issue 9hw). GA4 RUM showed

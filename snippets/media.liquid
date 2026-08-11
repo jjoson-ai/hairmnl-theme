@@ -29,10 +29,34 @@
                     {%- if media.preview_image.width >= 1680 -%}{{ media.preview_image | image_url: width: 1680 }} 1680w,{%- endif -%}
                     {%- if media.preview_image.width >= 2048 -%}{{ media.preview_image | image_url: width: 2048 }} 2048w,{%- endif -%}
                     {%- if media.preview_image.width >= 4096 -%}{{ media.preview_image | image_url: width: 4096 }} 4096w{%- endif -%}"
-            sizes="(min-width: 768px), 50vw,
-                   100vw"
+            {% comment %}
+              2026-08-11 (bd hairmnl-theme-aqlg): was
+              "(min-width: 768px), 50vw, 100vw" — MALFORMED. A source-size is
+              "<media-condition> <width>" with NO comma between them, so the
+              old value parsed as three entries of which the first two were
+              errors, leaving a bare 100vw that applied at every viewport.
+              Desktop therefore requested a 1100w candidate to fill a ~542px
+              box. Same defect class as the collection-grid sizes bug (958r.5).
+              MUST stay in sync with imagesizes on the PDP preload in
+              layout/theme.liquid — a mismatch makes the browser fetch two
+              different candidates and wastes the preload entirely.
+              50vw over-declares the real ~37.6vw desktop box on purpose:
+              over-declaring costs a few bytes, under-declaring causes blur.
+
+              NOTE: this comment and the one below deliberately use the
+              NON-stripping comment delimiters (no hyphens). The hyphenated,
+              whitespace-stripping form placed between two attributes eats the
+              separating whitespace and glues the neighbours together, e.g.
+              srcset ending in 4096w" immediately followed by sizes= with no
+              space. That is a missing-whitespace-between-attributes parse
+              error; browsers recover, but the HTML is invalid. Do not "tidy"
+              these back to the hyphenated form.
+              (Never write Liquid tag delimiters inside a Liquid comment
+              either — describe them in words, as here.)
+            {% endcomment %}
+            sizes="(min-width: 768px) 50vw, 100vw"
             src="{{ media.preview_image | image_url: width: 1100 }}"
-            {%- comment -%}
+            {% comment %}
               First product media is the LCP element on PDPs — load it
               eagerly with high fetch priority so the browser starts
               the request during HTML parse instead of waiting for the
@@ -40,7 +64,11 @@
               observed in QA on 2026-04-25). All other variant images
               keep `loading="lazy"` since they're below-the-fold or
               swapped in only on variant change.
-            {%- endcomment -%}
+
+              2026-08-11: switched to the non-stripping comment delimiters —
+              the hyphenated form was emitting src="..." and loading="eager"
+              glued together with no separating space on every PDP.
+            {% endcomment %}
             loading="{% if is_first %}eager{% else %}lazy{% endif %}"
             {% if is_first %}fetchpriority="high" decoding="sync"{% endif %}
             width="1180"
