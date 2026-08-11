@@ -1454,6 +1454,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       if (disarmed) return;
       disarmed = true;
       triggerAt = Date.now();
+      // q9aa INP fix 2026-08-12: everything below this line is deferred until
+      // AFTER the triggering interaction has painted. The old synchronous body
+      // put the dataLayer push (GTM processes pushes in the same task), the
+      // observer teardown and the SDK script append inside the click's capture
+      // phase; the SDK's ~255ms parse then landed on the interaction, which is
+      // the measured mechanism behind the GSC mobile-INP flag on articles
+      // (p75 203ms, resurgent from the guard's ~7/24 sitewide rollout). rAF ->
+      // setTimeout(0) is the after-next-paint idiom; a bare setTimeout(0) task
+      // can still run before the rendering update. disarmed/triggerAt stay
+      // synchronous: re-entry stays impossible and load-latency telemetry
+      // still measures from the interaction itself.
+      var runDisarm = function() { disarmNow(path); };
+      if (window.requestAnimationFrame) {
+        requestAnimationFrame(function() { setTimeout(runDisarm, 0); });
+      } else {
+        setTimeout(runDisarm, 16);
+      }
+    }
+    function disarmNow(path) {
       dl('reamaze_load_path', { path: path });
       mo.disconnect();
       // rxh7 (bd item A): restore the previous createElement, but ONLY if ours is
@@ -1658,6 +1677,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       if (disarmed) return;
       disarmed = true;
       triggerAt = Date.now();
+      // q9aa INP fix 2026-08-12: everything below this line is deferred until
+      // AFTER the triggering interaction has painted. The old synchronous body
+      // put the dataLayer push (GTM processes pushes in the same task), the
+      // observer teardown and the SDK script append inside the click's capture
+      // phase; the SDK's ~255ms parse then landed on the interaction, which is
+      // the measured mechanism behind the GSC mobile-INP flag on articles
+      // (p75 203ms, resurgent from the guard's ~7/24 sitewide rollout). rAF ->
+      // setTimeout(0) is the after-next-paint idiom; a bare setTimeout(0) task
+      // can still run before the rendering update. disarmed/triggerAt stay
+      // synchronous: re-entry stays impossible and load-latency telemetry
+      // still measures from the interaction itself.
+      var runDisarm = function() { disarmNow(path); };
+      if (window.requestAnimationFrame) {
+        requestAnimationFrame(function() { setTimeout(runDisarm, 0); });
+      } else {
+        setTimeout(runDisarm, 16);
+      }
+    }
+    function disarmNow(path) {
       dl('octane_load_path', { path: path });
       mo.disconnect();
       // rxh7 (bd item A): LIFO-safe restore, see the Reamaze guard above. This
