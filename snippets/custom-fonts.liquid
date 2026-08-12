@@ -25,7 +25,11 @@
     font-style: normal;
     font-weight: normal;
     font-display: swap;
-    src: local('SelfModern'), url('{{ "SelfModern.woff2" | asset_url }}') format('woff');
+    {%- comment -%} bd v9o3: the file is a real woff2 (magic bytes wOF2, verified
+      against the live CDN copy) but declared format('woff'). Chrome sniffs the
+      bytes so it worked, but the hint was wrong and a stricter engine could skip
+      the source entirely. This URL already matches theme.liquid's preload. {%- endcomment -%}
+    src: local('SelfModern'), url('{{ "SelfModern.woff2" | asset_url }}') format('woff2');
   }
 
   @font-face {
@@ -49,7 +53,23 @@
     font-style: normal;
     font-weight: normal;
     font-display: swap;
-    src: local('BasisGrotesquePro-Regular'), url('{{ "BasisGrotesquePro-Regular.woff" | asset_url }}') format('woff');
+    {%- comment -%}
+      bd v9o3 (2026-08-13) — WASTED PRELOAD + DUPLICATE DOWNLOAD.
+      layout/theme.liquid preloads BasisGrotesquePro-Regular.woff2, but this src
+      pointed at the .woff twin, so every uncached pageview fetched the font
+      TWICE (14.1 KB preloaded-and-never-used + 16.0 KB actually used) and the
+      preload bought nothing. woff2 first makes the preload land; the .woff stays
+      as a second source for any browser without woff2 support (browsers download
+      only the first supported format, so this is not a second request).
+      MEASURED on the live sulfate article, interleaved A/B n=6/arm via HTML
+      rewrite (scratchpad ab-inject.mjs, MODE=rewrite, chrome-headless-shell):
+        before 6 font requests / 153.8 KB   after 5 requests / 138.0 KB
+        Basis still active (document.fonts.check true), CLS 0.0296 -> 0.0297 (noise).
+      Asset verified as a real woff2 (magic bytes wOF2), not a mislabelled woff.
+    {%- endcomment -%}
+    src: local('BasisGrotesquePro-Regular'),
+         url('{{ "BasisGrotesquePro-Regular.woff2" | asset_url }}') format('woff2'),
+         url('{{ "BasisGrotesquePro-Regular.woff" | asset_url }}') format('woff');
   }
 
   @font-face {
