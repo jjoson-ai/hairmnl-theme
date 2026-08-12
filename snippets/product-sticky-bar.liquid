@@ -1,9 +1,14 @@
 {%- comment -%}
-  Sticky purchase bar — desktop only.
+  Sticky purchase bar — desktop (top-docked) + mobile (bottom-docked).
 
   Two modes:
-  - PDP mode (default): appears when primary ATC leaves viewport
-    (IntersectionObserver). Per task-2-pdp-progression.md PR-2.
+  - PDP mode (default): appears when the main purchase-action block
+    (.product__submit__buttons — ATC + notify + payment buttons) fully
+    leaves the viewport; hides whenever any part of it is visible.
+    IntersectionObserver on the CONTAINER, not the button — the OOS
+    state swaps buttons via display, and a display:none button never
+    "intersects", which made the bar show at the top of the page
+    (operator spec 2026-08-12, bd pic6 Phase 1).
   - Collection mode (is_collection=true): always-visible on collection
     + brand pages (full STKY app replacement). Per bd a7av.8. JS
     hydrates the bar with the last-viewed product from sessionStorage
@@ -11,17 +16,29 @@
     fallback. Card clicks on the collection page update the bar
     in-place via the JS in assets/hairmnl-common.js.
 
+  OOS behaviour (bd pic6 Phase 2+3): syncs on theme:variant:change
+  (the event Pipeline actually fires — the old variant:change listener
+  never received anything). In-stock variant: qty + ATC. OOS variant:
+  qty hidden, ATC swapped for the brand-brown NOTIFY ME WHEN AVAILABLE
+  ([data-notify-trigger]) which opens the same BIS modal as the main
+  PDP button via the delegated handler in assets/notify-when-available.js.
+
   Arguments:
     product       {Product}  required — what to render on first paint
     is_collection {Boolean}  optional, default false — switch to
                   collection always-visible mode
 
-  Mobile/tablet: bar is display:none below 1024px (CSS gate in
-  snippets/css-overrides.liquid).
+  CSS in snippets/css-overrides.liquid (generated — edit
+  os2-migration/css-overrides.source.liquid and rebuild).
 {%- endcomment -%}
 
+{%- comment -%}
+  bd pic6: selected_or_first_available_variant (was first_available_variant)
+  so a ?variant= deep link to an OOS variant renders the bar in the same
+  OOS state as the main form on first paint.
+{%- endcomment -%}
 {%- liquid
-  assign first_variant = product.first_available_variant
+  assign first_variant = product.selected_or_first_available_variant
   if first_variant == nil
     assign first_variant = product.variants.first
   endif
@@ -30,7 +47,7 @@
 -%}
 
 {%- if product != blank -%}
-  <div class="vrec-product-sticky-bar{% if is_collection_mode %} vrec-product-sticky-bar--always-visible is-visible{% endif %}"
+  <div class="vrec-product-sticky-bar{% if is_collection_mode %} vrec-product-sticky-bar--always-visible is-visible{% endif %}{% unless is_collection_mode or first_variant.available %} vrec-product-sticky-bar--oos{% endunless %}"
        id="vrec-product-sticky-bar"
        data-product-id="{{ product.id }}"
        data-product-handle="{{ product.handle }}"
@@ -101,6 +118,7 @@
       <button type="submit"
               name="add"
               class="vrec-product-sticky-bar__cta"
+              data-vrec-sticky-atc
               {% if settings.sticky_atc_skip_to_checkout %}data-vrec-checkout{% endif %}
               {% unless first_variant.available %}disabled aria-disabled="true"{% endunless %}>
         {%- if first_variant.available -%}
@@ -113,6 +131,28 @@
           {{ 'products.product.sold_out' | t | default: 'Sold out' }}
         {%- endif -%}
       </button>
+      {%- unless is_collection_mode -%}
+        {%- comment -%} bd pic6 Phase 3: OOS CTA. Carries [data-notify-trigger]
+            so the delegated click handler in assets/notify-when-available.js
+            opens the SAME BIS modal as the main PDP button. That JS also owns
+            this button's hidden attr + data-variant-* refresh on every
+            theme:variant:change (it updates ALL [data-notify-trigger] nodes),
+            so the bar and the main form can never disagree. Shown/hidden
+            layout (qty removal, full-width on mobile) is CSS driven by the
+            bar's --oos class. Brown mirrors the main .btn--notify:
+            var(---color-primary) with the g1n.12 measured fallback #AC604F. {%- endcomment -%}
+        <button type="button"
+                class="vrec-product-sticky-bar__notify"
+                data-vrec-sticky-notify
+                data-notify-trigger
+                data-variant-id="{{ first_variant.id }}"
+                data-sku="{{ first_variant.sku | escape }}"
+                data-product-title="{{ product.title | escape }}"
+                data-variant-title="{{ first_variant.title | escape }}"
+                {% if first_variant.available %}hidden{% endif %}>
+          {{ 'products.product.notify_when_available' | t | default: 'Notify me when available' }}
+        </button>
+      {%- endunless -%}
     {%- endform -%}
   </div>
 
@@ -135,27 +175,61 @@
         return;
       }
 
-      // PDP mode: find the primary product-form ATC button and observe it.
-      // Pipeline uses <form action="/cart/add"> with button[name="add"].
-      var primaryATC = document.querySelector(
-        'form[action*="/cart/add"]:not(.vrec-product-sticky-bar__form) button[name="add"], ' +
-        'form[action*="/cart/add"]:not(.vrec-product-sticky-bar__form) input[name="add"]'
-      );
-      if (!primaryATC) return;
+      // bd pic6 Phase 1: observe the purchase-action CONTAINER, not the ATC
+      // button. The OOS state swaps ATC/notify via display:none, and a
+      // display:none element never intersects — observing the button made the
+      // bar show while the visible NOTIFY block was on screen. The container
+      // (.product__submit__buttons wraps ATC + notify + payment buttons) stays
+      // laid out in every state. Fallbacks keep old behaviour if the theme
+      // markup changes.
+      var targets = document.querySelectorAll('.product__submit__buttons');
+      if (!targets.length) {
+        targets = document.querySelectorAll('form[action*="/cart/add"]:not(.vrec-product-sticky-bar__form)');
+      }
+      if (!targets.length) {
+        targets = document.querySelectorAll(
+          'form[action*="/cart/add"]:not(.vrec-product-sticky-bar__form) button[name="add"], ' +
+          'form[action*="/cart/add"]:not(.vrec-product-sticky-bar__form) input[name="add"]'
+        );
+      }
+      if (!targets.length) return;
 
-      // Show the sticky bar when ATC leaves viewport
+      // bd pic6 Phase 1 (desktop docking): the bar top-docks below the sticky
+      // header. The old hardcoded top:70px overlapped the taller stuck header
+      // and its dropdowns. Measure the real header bottom edge and publish it
+      // as --vrec-sticky-top; CSS falls back to 70px if JS never runs.
+      var headerEl = document.querySelector('.theme__header');
+      function dockBelowHeader() {
+        if (!headerEl || !window.matchMedia('(min-width: 1024px)').matches) return;
+        var b = headerEl.getBoundingClientRect().bottom;
+        bar.style.setProperty('--vrec-sticky-top', Math.max(0, Math.round(b)) + 'px');
+      }
+
+      // Hide the bar if ANY observed action container is visible (threshold 0
+      // = shows only once the block has completely left the viewport).
+      var visibleMap = new Map();
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            bar.classList.remove('is-visible');
-            bar.setAttribute('aria-hidden', 'true');
-          } else {
-            bar.classList.add('is-visible');
-            bar.setAttribute('aria-hidden', 'false');
-          }
+          visibleMap.set(entry.target, entry.isIntersecting);
         });
+        var anyVisible = false;
+        visibleMap.forEach(function (v) { if (v) anyVisible = true; });
+        if (anyVisible) {
+          bar.classList.remove('is-visible');
+          bar.setAttribute('aria-hidden', 'true');
+        } else {
+          dockBelowHeader();
+          bar.classList.add('is-visible');
+          bar.setAttribute('aria-hidden', 'false');
+        }
       }, { rootMargin: '0px 0px 0px 0px', threshold: 0 });
-      io.observe(primaryATC);
+      targets.forEach(function (t) { io.observe(t); });
+
+      var dockTimer = null;
+      window.addEventListener('resize', function () {
+        if (dockTimer) window.clearTimeout(dockTimer);
+        dockTimer = window.setTimeout(dockBelowHeader, 150);
+      });
 
       // PDP mode also writes to sessionStorage so the collection-mode bar can
       // hydrate to "last viewed product" on subsequent collection navigation.
@@ -175,28 +249,40 @@
         sessionStorage.setItem('hairmnl_last_viewed_product', JSON.stringify(sessionPayload));
       } catch (e) { /* sessionStorage disabled — silent no-op */ }
 
-      // Keep variant + price in sync. Pipeline fires `variant:change`
-      // on the product section when the variant selector updates.
-      // Best-effort — if the event shape differs, the sticky bar
-      // just keeps the first-variant defaults rendered server-side.
-      document.addEventListener('variant:change', function (e) {
-        var variant = e && e.detail && (e.detail.variant || e.detail);
-        if (!variant) return;
+      // bd pic6 Phase 2: sync on `theme:variant:change` — the event Pipeline's
+      // theme.js actually dispatches (assets/notify-when-available.js consumes
+      // the same one). The old listener waited on `variant:change`, which
+      // nothing fires, so the bar froze on its server-rendered defaults.
+      // e.detail.variant is null when the chosen option combination doesn't
+      // exist — handled without touching the last-good display.
+      function formatCents(p) {
+        return typeof p === 'string' ? p : (p / 100).toLocaleString('en-PH', { style: 'currency', currency: 'PHP' });
+      }
+      function setBarOOS(oos) {
+        bar.classList.toggle('vrec-product-sticky-bar--oos', oos);
+      }
+      document.addEventListener('theme:variant:change', function (e) {
+        var variant = e && e.detail ? e.detail.variant : null;
+        var atcBtn = bar.querySelector('[data-vrec-sticky-atc]');
+        if (!variant) {
+          // Unavailable combination: nothing purchasable, nothing to notify on.
+          // Disable the CTA; notify stays hidden (notify-when-available.js only
+          // un-hides it for a real OOS variant).
+          if (atcBtn) atcBtn.disabled = true;
+          return;
+        }
         var idInput = bar.querySelector('[data-vrec-sticky-id]');
         var priceEl = bar.querySelector('[data-vrec-sticky-price]');
         var variantEl = bar.querySelector('[data-vrec-sticky-variant]');
-        if (idInput && variant.id) idInput.value = variant.id;
-        if (priceEl && variant.price != null) {
-          // Variant price is in cents on Shopify Liquid; format defensively.
-          var p = variant.price;
-          var formatted = typeof p === 'string' ? p : (p / 100).toLocaleString('en-PH', { style: 'currency', currency: 'PHP' });
-          priceEl.textContent = formatted;
-        }
+        if (idInput && variant.id) idInput.value = variant.id;   // <select> or hidden input — both take .value
+        if (priceEl && variant.price != null) priceEl.textContent = formatCents(variant.price);
         if (variantEl && variant.title) variantEl.textContent = variant.title;
-        var btn = bar.querySelector('.vrec-product-sticky-bar__cta');
-        if (btn && typeof variant.available !== 'undefined') {
-          btn.disabled = !variant.available;
-        }
+        var oos = variant.available === false;
+        setBarOOS(oos);
+        if (atcBtn) atcBtn.disabled = oos;
+        // Phase 3: the bar's [data-notify-trigger] hidden state + data-variant-*
+        // attrs are refreshed globally by notify-when-available.js on this same
+        // event — no duplicate bookkeeping here.
       });
 
       // bd a7av.11: in-bar variant <select> (PDP parity with STKY). When the
@@ -211,10 +297,15 @@
           var priceEl = bar.querySelector('[data-vrec-sticky-price]');
           var cents = parseInt(opt.getAttribute('data-price'), 10);
           if (priceEl && !isNaN(cents)) {
-            priceEl.textContent = (cents / 100).toLocaleString('en-PH', { style: 'currency', currency: 'PHP' });
+            priceEl.textContent = formatCents(cents);
           }
-          var btn = bar.querySelector('.vrec-product-sticky-bar__cta');
-          if (btn) btn.disabled = (opt.getAttribute('data-available') !== 'true');
+          var available = (opt.getAttribute('data-available') === 'true');
+          var btn = bar.querySelector('[data-vrec-sticky-atc]');
+          if (btn) btn.disabled = !available;
+          // bd pic6: an in-bar pick is always an available option (OOS options
+          // are disabled in the <select>), so it exits the OOS layout the main
+          // picker may have put the bar into.
+          setBarOOS(!available);
         });
       }
 

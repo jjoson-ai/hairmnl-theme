@@ -954,14 +954,18 @@
       position: fixed;
       left: 0;
       right: 0;
-      /* bd a7av.11: desktop bar moved from bottom:0 to the TOP, pinned just below
-         the ~70px sticky header (web-team "move to top" trial). Slides DOWN from
-         above the viewport. DEVICE-VERIFY the 70px offset on the draft — tune
-         70–100px if the header height differs (announcement bar / shrink-on-scroll).
+      /* bd a7av.11 → pic6 Phase 1 (2026-08-13): docks below the sticky header.
+         The old hardcoded top:70px sat OVER the real stuck header (taller with
+         the announcement bar) and covered its dropdowns — operator screenshot
+         2026-08-12 22.41.09. JS in product-sticky-bar.liquid measures the live
+         bottom edge of .theme__header on every show/resize and publishes it as
+         --vrec-sticky-top; 70px is only the no-JS fallback. z-index is
+         strictly BELOW .theme__header (5000) and .js__header__stuck (6000), so
+         the bar can never overlap the nav or its dropdowns.
          Mobile keeps the bottom-fixed bar (the @max-width:1023px block below). */
-      top: 70px;
+      top: var(--vrec-sticky-top, 70px);
       bottom: auto;
-      z-index: 9000;
+      z-index: 4990;
       align-items: center;
       gap: 16px;
       /* J10 S10 (bd a7av.16): contain the bar's content to the page content grid —
@@ -973,11 +977,19 @@
       border-bottom: 1px solid var(--border, #e5e5e5);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
       transform: translateY(calc(-100% - 80px)); /* kt0-OK: transform is the bar's OWN slide animation (overlay itself, not an ancestor); no fixed/absolute descendants — the QB popover portals to <body> when open */
-      transition: transform 200ms ease-out;
+      /* pic6 Phase 1: hidden means HIDDEN — off-screen AND visibility:hidden +
+         pointer-events:none so the docked bar can't be focused, read by AT, or
+         clicked while hidden. visibility flips after the 200ms slide-out. */
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 200ms ease-out, visibility 0s linear 200ms;
       font-family: inherit;
     }
     .vrec-product-sticky-bar.is-visible {
       transform: translateY(0); /* kt0-OK: bar's own slide-in (see base rule) */
+      visibility: visible;
+      pointer-events: auto;
+      transition: transform 200ms ease-out, visibility 0s;
     }
     /*
      * a7av.8 — collection-mode bar is always-visible (no scroll trigger).
@@ -987,6 +999,8 @@
      */
     .vrec-product-sticky-bar--always-visible {
       transform: translateY(0); /* kt0-OK: bar's own slide-in (see base rule) */
+      visibility: visible;
+      pointer-events: auto;
     }
     @media (prefers-reduced-motion: reduce) {
       .vrec-product-sticky-bar {
@@ -1049,6 +1063,41 @@
     .vrec-product-sticky-bar__cta:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+    }
+    /* pic6 Phase 3 (desktop): OOS layout. The bar's --oos class (set
+       server-side on first paint, kept in sync by the theme:variant:change
+       listener in product-sticky-bar.liquid) hides the qty input and the
+       ATC button and shows the brand-brown notify CTA instead — same colour
+       pair as the main PDP .btn--notify (g1n.12 measured #AC604F/#853A2A;
+       var(---color-primary) tracks the palette when in scope). The notify
+       button opens the SAME BIS modal via [data-notify-trigger]. */
+    .vrec-product-sticky-bar__notify {
+      display: none;
+      flex: 0 0 auto;
+      min-height: 44px;
+      padding: 0 24px;
+      background: var(---color-primary, #AC604F);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .vrec-product-sticky-bar__notify:hover,
+    .vrec-product-sticky-bar__notify:focus {
+      background: var(---color-primary-hover, #853A2A);
+      color: #ffffff;
+    }
+    .vrec-product-sticky-bar--oos .vrec-product-sticky-bar__qty,
+    .vrec-product-sticky-bar--oos [data-vrec-sticky-atc] {
+      display: none !important; /* spec: no stray [ 1 ] qty box, no SOLD OUT/ATC button */
+    }
+    .vrec-product-sticky-bar--oos .vrec-product-sticky-bar__notify {
+      display: inline-flex;
+      align-items: center;
     }
     /* bd a7av.11: the form holds variant <select> + qty + CTA — it MUST be a flex
        row, else the three controls stack vertically and the bar grows ~3× tall
@@ -1124,7 +1173,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 9000; /* below Reamaze's very-high z so the chat bubble stays tappable */
+      z-index: 4990; /* pic6: below .theme__header (5000/6000 stuck) per spec; still below Reamaze's very-high z so the chat bubble stays tappable */
       align-items: center;
       gap: 10px;
       padding: 8px 12px;
@@ -1133,12 +1182,19 @@
       border-top: 1px solid var(--border, #e5e5e5);
       box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
       transform: translateY(100%); /* kt0-OK: transform is the bar's OWN slide animation (overlay itself, not an ancestor); no fixed/absolute descendants — the QB popover portals to <body> when open */
-      transition: transform 200ms ease-out;
+      /* pic6 Phase 1: hidden = off-screen AND visibility:hidden +
+         pointer-events:none (no focus/AT/click while hidden). */
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 200ms ease-out, visibility 0s linear 200ms;
       font-family: inherit;
     }
     .vrec-product-sticky-bar.is-visible,
     .vrec-product-sticky-bar--always-visible {
       transform: translateY(0); /* kt0-OK: bar's own slide-in (see base rule) */
+      visibility: visible;
+      pointer-events: auto;
+      transition: transform 200ms ease-out, visibility 0s;
     }
     .vrec-product-sticky-bar__thumb { display: none; } /* save width on small screens */
     /* J10 S12 (bd a7av.18): product title/vendor removed from the MOBILE bar — it
@@ -1191,6 +1247,29 @@
       margin: 0 6px 0 0 !important; padding: 0 4px;
       border: 1px solid var(--border, #e5e5e5); background: #ffffff;
       font-family: inherit; font-size: 13px; text-align: center;
+    }
+    /* pic6 Phase 3 (mobile): OOS layout — qty + ATC out; the brown notify CTA
+       flex-grows to fill the remaining bar width (spec: clean balanced row,
+       no stray [ 1 ] box). Same brown pair as the main .btn--notify. */
+    .vrec-product-sticky-bar__notify {
+      display: none;
+      flex: 1 1 auto; min-width: 0; min-height: 44px;
+      padding: 0 16px; margin-right: 8px;
+      background: var(---color-primary, #AC604F); color: #ffffff;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      border: 0; cursor: pointer; font-family: inherit;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .vrec-product-sticky-bar__notify:hover,
+    .vrec-product-sticky-bar__notify:focus {
+      background: var(---color-primary-hover, #853A2A); color: #ffffff;
+    }
+    .vrec-product-sticky-bar--oos .vrec-product-sticky-bar__qty,
+    .vrec-product-sticky-bar--oos [data-vrec-sticky-atc] {
+      display: none !important;
+    }
+    .vrec-product-sticky-bar--oos .vrec-product-sticky-bar__notify {
+      display: inline-flex; align-items: center; justify-content: center;
     }
     /* On the smallest phones title + variant + qty + price + CTA overflow a single
        row; drop qty (defaults to 1) below 380px to keep the bar one line. */
@@ -1986,34 +2065,14 @@
     display: none;
   }
 
-  /* Sticky right-edge tab (fixed; rotated via writing-mode, kt0-safe) */
+  /* bd pic6 Phase 4 (2026-08-13): the floating right-edge tab is REMOVED —
+     markup deleted from snippets/product-form.liquid; the sticky purchase
+     bar's own NOTIFY CTA covers OOS conversion on every breakpoint. This
+     kill rule only guards the ~4min storefront page cache window (old HTML
+     still carrying the tab) and any stray render — delete it in a future
+     pass once no markup references .notify-tab. */
   .notify-tab {
-    position: fixed;
-    right: 0;
-    top: 50%;
-    z-index: 5; /* below cart drawer / modals (Stky's old overlay used 6) */
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    padding: 16px 10px;
-    background: #2d2d2d;
-    color: #ffffff;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border: 0;
-    border-radius: 4px 0 0 4px;
-    cursor: pointer;
-  }
-  .notify-tab:hover,
-  .notify-tab:focus {
-    background: #000000;
-    color: #ffffff;
-  }
-  @media (max-width: 767px) {
-    .notify-tab {
-      font-size: 11px;
-      padding: 12px 8px;
-    }
+    display: none !important;
   }
 
   /* Modal form fields */

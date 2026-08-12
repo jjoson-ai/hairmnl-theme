@@ -349,23 +349,12 @@
   {% endform %}
 
   {%- comment -%}
-    MIGRATION-DEBT: bd hairmnl-theme-g1n.4 (2026-07-24). BIS sticky
-    right-edge tab (PDP-only by living in this snippet). JS portals it to
-    <body> on init — Pipeline sections animate with AOS transforms, which
-    would trap the fixed tab (kt0 containing-block rule). Rotation is done
-    with writing-mode, NOT transform, for the same reason.
+    bd pic6 Phase 4 (2026-08-13): the g1n.4 BIS floating right-edge tab
+    (.notify-tab / [data-notify-tab]) was REMOVED — redundant now that the
+    sticky purchase bar handles OOS with its own NOTIFY ME WHEN AVAILABLE
+    CTA on both breakpoints (operator spec 2026-08-12). The [data-notify-tab]
+    portal code in assets/notify-when-available.js is null-guarded, and a
+    display:none kill rule stays in css-overrides for any cached HTML.
   {%- endcomment -%}
-  <button
-    type="button"
-    class="notify-tab"
-    data-notify-tab
-    data-notify-trigger
-    data-variant-id="{{ current_variant.id }}"
-    data-product-title="{{ product.title | escape }}"
-    data-variant-title="{{ current_variant.title | escape }}"
-    data-sku="{{ current_variant.sku | escape }}"
-    {% if current_variant.available %}hidden{% endif %}>
-    {{ 'products.product.notify_when_available' | t }}
-  </button>
 
 </div>

@@ -267,7 +267,10 @@
    theme without the deps. CUTOVER NOTE (a7av.7): if cutover ever deviates from publish-the-
    demo-directly (e.g. duplicate-then-publish creates a NEW id), flip this gate to plain
    true in the same change — otherwise the bar silently disappears with STKY gone. {%- endcomment -%}
-{%- if theme.id == 141168312419 -%}{%- assign show_sticky_purchase_bar = true -%}{%- endif -%}
+{%- if theme.id == 141168312419 or theme.id == 140785582179 -%}{%- assign show_sticky_purchase_bar = true -%}{%- endif -%}
+{%- comment -%} pic6 2026-08-13: 140785582179 = the Claude Code draft theme, added so the
+   bar is testable on the preview (its deps exist there too). Same leak-guard logic —
+   any OTHER theme id still gets false. {%- endcomment -%}
 {%- if show_sticky_purchase_bar -%}{% render 'product-sticky-bar', product: product %}{%- endif -%}
 
 <script data-product-json type="application/json">
