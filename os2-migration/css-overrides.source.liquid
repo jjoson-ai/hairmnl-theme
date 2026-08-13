@@ -732,6 +732,34 @@
     contain: layout !important;
   }
 
+  /* A11y/conversion fix 2026-08-13 (web-team report) — the PDP ADD TO CART
+     label was INVISIBLE: measured color rgb(50,46,52) on background
+     rgb(50,46,52) = 1.00:1 contrast on the live PDP.
+
+     Cause: the button markup carries `btn--outline btn--full btn--primary
+     uppercase btn--add-to-cart` but NOT the base `btn` class, so the sane rule
+     `.btn--primary.btn { --btn-text: var(---color-primary-opposite) }` never
+     matches while `.btn--primary.btn--outline { --btn-text: var(---color-primary) }`
+     does — setting the label to the same brand colour the button uses as its
+     background. An outline button is supposed to be transparent-backgrounded;
+     this one is not, so the two classes contradict each other.
+
+     Measured candidates (live PDP, computed contrast):
+       as-is                          1.00:1  (invisible)
+       remove btn--outline            1.00:1  (no help — colour comes via --btn-text)
+       remove btn--outline + add .btn 13.32:1
+       force white label (this fix)   13.32:1
+     Chose the CSS fix over editing the markup because adding the base `.btn`
+     class would also pull in its padding/border/font and change the button's
+     geometry; only the label colour is wrong. Hover is safe: --btn-bg-hover is
+     #45414a, so white stays high-contrast.
+
+     :not([disabled]) keeps the greyed sold-out state exactly as-is — white on
+     the light disabled fill would be its own contrast bug. */
+  .btn--add-to-cart:not([disabled]) {
+    color: #ffffff !important;
+  }
+
   /* CLS fix 2026-08-13 hairmnl-theme-9ms4 — LoyaltyLion notification toast:
      make its enter/exit animations compositor-only.
 

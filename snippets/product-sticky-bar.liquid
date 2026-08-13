@@ -115,21 +115,27 @@
           becomes "Buy it now" + data-vrec-checkout — a global handler in
           hairmnl-common.js adds the selected variant+qty then redirects to
           /checkout. The native submit (add to cart) is the JS-off fallback. {%- endcomment -%}
+      {%- comment -%} bd pic6 followup (2026-08-13, web-team report): the CTA label
+          must be rebuilt by JS on every variant change, so BOTH labels ship as
+          data attributes here rather than being hardcoded in the script. Before
+          this, switching OOS -> in-stock via the bar's own <select> restored the
+          qty box and price but left the server-rendered "Sold out" text on an
+          otherwise enabled black button. Localised strings stay in Liquid. {%- endcomment -%}
+      {%- if settings.sticky_atc_skip_to_checkout -%}
+        {%- assign sticky_available_label = 'products.product.buy_now' | t | default: 'Buy it now' -%}
+      {%- else -%}
+        {%- assign sticky_available_label = 'products.product.add_to_cart' | t | default: 'Add to cart' -%}
+      {%- endif -%}
+      {%- assign sticky_soldout_label = 'products.product.sold_out' | t | default: 'Sold out' -%}
       <button type="submit"
               name="add"
               class="vrec-product-sticky-bar__cta"
               data-vrec-sticky-atc
+              data-label-available="{{ sticky_available_label | escape }}"
+              data-label-soldout="{{ sticky_soldout_label | escape }}"
               {% if settings.sticky_atc_skip_to_checkout %}data-vrec-checkout{% endif %}
               {% unless first_variant.available %}disabled aria-disabled="true"{% endunless %}>
-        {%- if first_variant.available -%}
-          {%- if settings.sticky_atc_skip_to_checkout -%}
-            {{ 'products.product.buy_now' | t | default: 'Buy it now' }}
-          {%- else -%}
-            {{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}
-          {%- endif -%}
-        {%- else -%}
-          {{ 'products.product.sold_out' | t | default: 'Sold out' }}
-        {%- endif -%}
+        {%- if first_variant.available -%}{{ sticky_available_label }}{%- else -%}{{ sticky_soldout_label }}{%- endif -%}
       </button>
       {%- unless is_collection_mode -%}
         {%- comment -%} bd pic6 Phase 3: OOS CTA. Carries [data-notify-trigger]
@@ -261,6 +267,24 @@
       function setBarOOS(oos) {
         bar.classList.toggle('vrec-product-sticky-bar--oos', oos);
       }
+      // bd pic6 followup (2026-08-13): rebuild the CTA COMPLETELY on every
+      // variant change. The first version only toggled .disabled and the --oos
+      // class, so a shopper going OOS -> in-stock through the bar's own <select>
+      // got the qty box and price back but kept the server-rendered "Sold out"
+      // text on an enabled black button. Label, disabled state and aria all have
+      // to be driven from the variant, never left at whatever Liquid rendered.
+      function setCtaState(available) {
+        var btn = bar.querySelector('[data-vrec-sticky-atc]');
+        if (!btn) return;
+        var label = available
+          ? (btn.getAttribute('data-label-available') || 'Add to cart')
+          : (btn.getAttribute('data-label-soldout') || 'Sold out');
+        if (btn.textContent.trim() !== label) btn.textContent = label;
+        btn.disabled = !available;
+        if (available) { btn.removeAttribute('disabled'); btn.removeAttribute('aria-disabled'); }
+        else { btn.setAttribute('aria-disabled', 'true'); }
+        setBarOOS(!available);
+      }
       document.addEventListener('theme:variant:change', function (e) {
         var variant = e && e.detail ? e.detail.variant : null;
         var atcBtn = bar.querySelector('[data-vrec-sticky-atc]');
@@ -277,9 +301,7 @@
         if (idInput && variant.id) idInput.value = variant.id;   // <select> or hidden input — both take .value
         if (priceEl && variant.price != null) priceEl.textContent = formatCents(variant.price);
         if (variantEl && variant.title) variantEl.textContent = variant.title;
-        var oos = variant.available === false;
-        setBarOOS(oos);
-        if (atcBtn) atcBtn.disabled = oos;
+        setCtaState(variant.available !== false);   // label + disabled + --oos, all from the variant
         // Phase 3: the bar's [data-notify-trigger] hidden state + data-variant-*
         // attrs are refreshed globally by notify-when-available.js on this same
         // event — no duplicate bookkeeping here.
@@ -300,12 +322,19 @@
             priceEl.textContent = formatCents(cents);
           }
           var available = (opt.getAttribute('data-available') === 'true');
-          var btn = bar.querySelector('[data-vrec-sticky-atc]');
-          if (btn) btn.disabled = !available;
-          // bd pic6: an in-bar pick is always an available option (OOS options
-          // are disabled in the <select>), so it exits the OOS layout the main
-          // picker may have put the bar into.
-          setBarOOS(!available);
+          // bd pic6 followup: full rebuild, not just .disabled — this is the
+          // exact path the web team reported (OOS -> in-stock via the bar's own
+          // dropdown kept a black "Sold out" button).
+          setCtaState(available);
+          // Keep the BIS trigger's variant in sync too: notify-when-available.js
+          // refreshes [data-notify-trigger] on theme:variant:change, which the
+          // bar's own <select> does not fire.
+          var ntf = bar.querySelector('[data-vrec-sticky-notify]');
+          if (ntf) {
+            ntf.setAttribute('data-variant-id', opt.value || '');
+            ntf.setAttribute('data-variant-title', (opt.textContent || '').replace(/\s+—.*$/, '').trim());
+            ntf.hidden = available;
+          }
         });
       }
 
