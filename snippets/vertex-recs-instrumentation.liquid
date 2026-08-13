@@ -104,7 +104,28 @@
     } catch (_) {}
   }
 
+  // Incrementality holdout (bd cji.9). Bucket is normally set by the inline
+  // script in vertex-recommendations.liquid, which runs earlier in the document
+  // (it also injects the display:none rule). Recomputed here from the SAME
+  // _shopify_y cookie getVisitorId() stamps on events, so the bucket can never
+  // disagree with the visitor_id the analysis re-buckets from. Fallback matters:
+  // on a page where no rail rendered, the inline script never ran.
+  function vxBucket() {
+    if (!window.__vxBucket) {
+      var id = getVisitorId();
+      var isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id);
+      window.__vxBucket =
+        (isUuid && "89abcdef".indexOf(id.charAt(id.length - 1)) >= 0)
+          ? "holdout" : "treatment";
+    }
+    return window.__vxBucket;
+  }
+
   function fireImpressions() {
+    // Holdout sees no rails, so it must log no impressions — there is no
+    // IntersectionObserver here, and without this guard a display:none rail
+    // would still emit a full set of impressions and destroy the CTR baseline.
+    if (vxBucket() === "holdout") return;
     var widgets = document.querySelectorAll("[data-vertex-widget-id]");
     if (!widgets.length) return;
     var visitorId = getVisitorId();
@@ -128,7 +149,12 @@
         .split(",").map(function (s) { return s.trim(); }).filter(Boolean);
       // Emit one impression event per product so per-product analytics work
       for (var j = 0; j < products.length; j++) {
-        var meta = { position: j };
+        // vx_bucket is the holdout self-check: every impression must carry
+        // "treatment", AND re-bucketing its visitor_id in SQL must agree. Any
+        // mismatch means the cookie the theme reads and the id the pixel stamps
+        // have diverged — which would silently invalidate the ATC/purchase
+        // bucketing (those events come from the pixel, not this snippet).
+        var meta = { position: j, vx_bucket: vxBucket() };
         if (handles[j]) meta.handle = handles[j];
         events.push({
           event_type: "vertex-rec-impression",
@@ -146,6 +172,9 @@
   }
 
   function attachClickHandler() {
+    // Holdout rails are display:none so they cannot be clicked, but guard here
+    // too: a click logged with no matching impression would corrupt CTR.
+    if (vxBucket() === "holdout") return;
     document.addEventListener("click", function (e) {
       var link = e.target && e.target.closest && e.target.closest("a[href]");
       if (!link) return;

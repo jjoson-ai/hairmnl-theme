@@ -266,6 +266,53 @@
 {%- assign rail_trimmed = rail_html | strip -%}
 {%- if card_count == 0 or rail_trimmed == '' -%}{%- else -%}
 
+{%- comment -%}
+  INCREMENTALITY HOLDOUT (bd cji.9, 2026-08-11) — 50/50 deterministic split.
+
+  Why this exists: the ROI card attributes the FULL revenue of any order whose
+  visitor clicked a rec, which is correlation, not causation (rec-clickers had
+  PHP 5,501 AOV vs PHP 4,235 for non-clickers — the signature of engaged-shopper
+  selection bias). Nothing shipped can say whether the rails CAUSE revenue, and
+  a pre/post store comparison is hopeless: weekly revenue CV is 10.5%, so the
+  minimum detectable effect is 29.5% at 1wk/side. This holdout is the only way
+  to get a real answer.
+
+  Bucket = last hex char of the `_shopify_y` cookie: 0-7 treatment, 8-f holdout.
+  Verified uniform on 24,257 real visitor IDs (50.03% / 49.97%). Only
+  well-formed lowercase UUIDs participate — ~18% of events carry the pixel's
+  `anon-<random><Date.now()>` fallback ID, which is regenerated per event and
+  therefore cannot be bucketed stably; those always fall to treatment and are
+  excluded analysis-side.
+
+  Placement matters: this runs INLINE, immediately before the <section> below,
+  so the style lands in <head> before the rail is parsed — no flash, no CLS.
+  It cannot live in assets/vertex-recommendations.css because that sheet is
+  loaded deferred (media="print" swap) and would apply after first paint.
+  Hiding alone is not enough — the instrumentation has NO IntersectionObserver
+  and would still log impressions for an invisible rail, so
+  vertex-recs-instrumentation.liquid reads window.__vxBucket and fires nothing
+  for the holdout arm. Both halves must ship together.
+
+  TO END THE TEST: delete this block (and the guard in the instrumentation).
+{%- endcomment -%}
+<script>
+  (function () {
+    if (window.__vxBucket) return;
+    var m = (document.cookie || "").match(/(?:^|;\s*)_shopify_y=([^;]+)/);
+    var id = m ? decodeURIComponent(m[1]) : "";
+    // Same regex + rule the analysis SQL uses. Non-UUID ids -> treatment.
+    var isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id);
+    window.__vxBucket =
+      (isUuid && "89abcdef".indexOf(id.charAt(id.length - 1)) >= 0)
+        ? "holdout" : "treatment";
+    if (window.__vxBucket === "holdout") {
+      var s = document.createElement("style");
+      s.textContent = ".vrec-slot{display:none!important}";
+      (document.head || document.documentElement).appendChild(s);
+    }
+  })();
+</script>
+
 <section
   class="vrec-slot vrec-slot--{{ placement }}"
   data-vertex-placement="{{ placement }}"
