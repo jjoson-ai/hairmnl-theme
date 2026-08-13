@@ -732,6 +732,64 @@
     contain: layout !important;
   }
 
+  /* CLS fix 2026-08-13 hairmnl-theme-9ms4 — LoyaltyLion notification toast:
+     make its enter/exit animations compositor-only.
+
+     LoyaltyLion's own keyframes animate LAYOUT properties, so every frame of
+     each 0.2s animation registers as a layout shift (verbatim from
+     sdk-static.loyaltylion.net/static/2/themes/modern/29476be/css/main.legacy-compat.id-isolated.css):
+       @keyframes lion-notification-fadein  { from{opacity:0;left:335px} to{opacity:1;left:0} }
+       @keyframes lion-notification-fadeout { from{opacity:1;margin-bottom:10px;max-height:150px}
+                                              to{opacity:0;max-height:0;margin-bottom:0;padding:0} }
+     `left` on enter slides the toast 335px; `max-height`/`margin-bottom` on
+     exit collapses it. Both are layout-affecting. transform + opacity are
+     compositor-only and excluded from CLS by definition, so the substitutions
+     below keep the identical 0.2s slide-and-fade with zero layout cost.
+
+     MEASURED (chrome-headless-shell — the full Chrome app misreports shifts on
+     this machine, see bd hairmnl-theme-pewh; scratchpad/ab-inject.mjs splices
+     this CSS into <head> of the LIVE page, arms interleaved, n=8/arm, desktop
+     1440x900 / 10Mbps / 40ms / CPU 1x, gradual scroll, sulfate article):
+       without  median 0.0297  p75 0.0297   LoyaltyLion shift term 0.0105
+       with     median 0.0191  p75 0.0191   LoyaltyLion shift term 0.0000
+       -0.0106 median = 35.7% of the page's total CLS, and it was the single
+       largest source in every arm and profile. Toast fired 8/8 in BOTH arms,
+       so the arms are comparable; no other shift source moved.
+
+     Why CSS and not the LoyaltyLion admin: disabling the guest-introduction
+     toast would also remove its marketing function. This keeps the toast and
+     its animation exactly as designed and only changes WHICH properties carry
+     it, so there is nothing for the operator to decide.
+
+     Specificity: id + two classes (LL uses `#loyaltylion .lion-notification--x`)
+     plus !important, so it wins regardless of stylesheet order — LL's SDK CSS
+     loads async and can land after this file. */
+  @keyframes hairmnl-lion-notification-in {
+    from { opacity: 0; transform: translateX(335px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes hairmnl-lion-notification-out {
+    from { opacity: 1; transform: none; }
+    to   { opacity: 0; transform: translateX(335px); }
+  }
+  #loyaltylion .lion-notification.lion-notification--enter-active {
+    /* kt0-OK: transform here is the toast's OWN slide animation, not an
+       ancestor's. `.lion-notification` is already `position: relative` in
+       LoyaltyLion's CSS, so it is ALREADY the containing block for its only
+       positioned descendant (`.lion-notification__close-button`, which is
+       position:absolute) — adding transform changes nothing for it. Verified
+       against LL's stylesheet: no `position: fixed` descendant exists inside
+       `.lion-notification`, so there is nothing a transform could trap. The
+       transform also resolves to `none` at animation end. */
+    animation: .2s hairmnl-lion-notification-in both !important;
+  }
+  #loyaltylion .lion-notification.lion-notification--exit-active {
+    /* kt0-OK: same reasoning as the enter animation above. `both` fill-mode
+       holds the faded-out state until LL removes the node, which avoids a
+       one-frame flash back to full opacity. */
+    animation: .2s hairmnl-lion-notification-out both !important;
+  }
+
   /* CLS fix 2026-05-04 0u4 — Booster EU Cookie Bar / Nova GDPR cookie banner:
      The Nova EU Cookie Bar GDPR app embed (settings_data.json: nova-eu-cookie-bar-gdpr,
      confirmed active) uses the cookieconsent library which:

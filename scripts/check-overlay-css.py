@@ -77,6 +77,13 @@ OVERLAY_PATTERNS = re.compile(
       | notify[-_]?tab              # BIS sticky tab, position:fixed (g1n.6)
       | notify[-_]?modal            # BIS notify modal + fields (g1n.6)
       | notify[-_]?when[-_]?available  # BIS modal id/asset selectors (g1n.6)
+      # bd 9ms4 (2026-08-13): the LoyaltyLion notification toast is a genuine
+      # overlay — its container is position:fixed at z-index 1000000003 — but it
+      # was NOT covered here, so a containment mistake on it would have slipped
+      # through silently. Its own transform usage carries a kt0-OK note in
+      # os2-migration/css-overrides.source.liquid.
+      | lion[-_]notification        # LoyaltyLion toast container + toast itself
+      | \#loyaltylion               # LL SDK root element
     )""",
     re.IGNORECASE | re.VERBOSE,
 )
