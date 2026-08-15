@@ -169,8 +169,74 @@
     {% endif %}
     {%- when 'group' -%}
       <div class="sidebar__filter__group" data-tag-group {{ block.shopify_attributes }}>
+        {%- comment -%}
+          bd hairmnl-theme-8ile - crawl-trap containment (2026-08-16).
+
+          max_tag_depth bounds the reachable URL space. Past it, the add-links
+          below are emitted WITHOUT an href, and remove-links on over-cap legacy
+          URLs collapse to the bare collection URL.
+
+          WHY 2, NOT 3. Reachable URLs per collection = sum(k=0..D) C(n,k) given
+          the sort normalisation below. Summed across the 398 collections in
+          sitemap_collections_1.xml using each template's real tag count
+          (default templates/collection.json = 59 tags; median bespoke = 32):
+            D=1 ->     22,918
+            D=2 ->    663,596
+            D=3 -> 12,707,904
+          D=3 sets a ceiling ~27x above any observed activity, so it does not
+          bind in any useful timeframe - the crawler simply gets 12.7M fresh
+          URLs to chew through. D=2 is the only setting whose ceiling is the
+          same order of magnitude as what was actually seen. Shopper cost is
+          ~0: measured unique product URLs on live 2026-08-15 were 6-23 at
+          depth 2 (kerastase+shampoo 23, shampoo+cruelty-free 12), 0-2 at
+          depth 3, and 0 at depth 4+.
+
+          NOT FIXED BY THIS CAP: the single worst URL in bd 8ile
+          (/collections/kerastase-resistance-extentioniste/free-of-hars...,
+          10,215 events) is DEPTH 1 and sits below any cap that preserves
+          filtering. Depth-0 -> depth-1 fan-out is inherent.
+
+          SORTING: current_tags comes back in URL order, so /c/a+b and /c/b+a
+          were distinct 200-OK URLs each emitting a full fan-out - the reachable
+          set was ordered sequences P(n,k), not subsets C(n,k). Emitting the tag
+          list sorted makes every ordering of the same SET produce identical
+          child URLs. Pre-existing unsorted URLs keep working; Shopify accepts
+          any order. The sort key is the RAW tag name (case-sensitive ASCII)
+          while the URL carries handles, so the handle sequence is not
+          alphabetical - that is fine and deliberate. Correctness needs only
+          that the order is a DETERMINISTIC function of the tag set, and it is
+          idempotent because a child page's current_tags come back in URL order.
+          Do not "fix" this to sort handles.
+
+          NIL GUARD: on an unfiltered collection page current_tags is nil, NOT
+          an empty array - layout/theme.liquid:535 and
+          snippets/collections-sidebar.liquid both rely on that truthiness.
+          Depth is therefore computed inside an explicit nil check rather than
+          trusting the size filter's behaviour on a nil input. If that ever
+          evaluated to nil, the depth comparison below would be falsy and every
+          add-link on every unfiltered collection page would lose its href -
+          total loss of tag navigation storewide on the highest-traffic route.
+          The draft smoke test asserts 59 live hrefs at depth 0 for this reason.
+
+          EXPECTED SHAPE OF THE RESULT: sort normalisation makes every already-
+          discovered UNSORTED depth-2 URL emit sorted children on re-fetch -
+          URL strings the crawler has not seen. New-URL discovery can RISE
+          briefly before it falls. Do not read that transient as failure.
+
+          ROLLBACK, in order: (1) set max_tag_depth = 25 - keeps the sort
+          normalisation and rel=nofollow, removes the user-visible cap entirely;
+          (2) only revert the whole file if the SORT itself is implicated.
+          Both are single --only pushes.
+        {%- endcomment -%}
+        {%- assign max_tag_depth = 2 -%}
+        {%- assign current_tag_depth = 0 -%}
+        {%- assign sorted_current_tags = '' | split: ',' -%}
+        {%- if current_tags -%}
+          {%- assign current_tag_depth = current_tags | size -%}
+          {%- assign sorted_current_tags = current_tags | sort -%}
+        {%- endif -%}
         {%- capture current_tags_url -%}
-        {%- for tag in current_tags -%}{{ tag | handleize }}+{%- endfor -%}
+        {%- for tag in sorted_current_tags -%}{{ tag | handleize }}+{%- endfor -%}
         {%- endcapture -%}
         {%- if current_tags_url == '+' -%}{%- assign current_tags_url = '' -%}{%- endif -%}
         {% assign current_tags_compare = current_tags_url | prepend: '+' %}
@@ -206,7 +272,7 @@
             {%- if current_tags_compare contains settings_tag_handle_plus -%}
               {%- assign link_style = 'link--remove' -%}
               {%- assign removed_tag_array = '' -%}
-              {%- for product_tag in current_tags -%}
+              {%- for product_tag in sorted_current_tags -%}
                 {%- assign product_tag_handle = product_tag | handleize -%}
                 {%- unless settings_tag_handle == product_tag_handle -%}
                   {%- assign removed_tag_array = removed_tag_array | append: product_tag_handle | append: '[!ヽ(´ー｀)/!]' -%}
@@ -217,8 +283,26 @@
                 {%- for tag in removed_tag_array -%}{{ tag | handleize }}{%- unless forloop.last -%}+{%- endunless -%}{%- endfor -%}
               {%- endcapture -%}
     
+              {%- comment -%}
+                bd 8ile: over-cap legacy URLs (depth > max_tag_depth - reachable
+                now only from a bookmark or the crawler's existing backlog)
+                collapse every remove link to the unfiltered collection URL.
+                WITHOUT THIS the cap is defeated in the DESCENDING direction:
+                a depth-k page still emits k remove links, each pointing at a
+                newly-sorted (k-1)-tag URL that emits k-1 more, so one seed
+                discovers its whole subset lattice - 2^k URLs, 2^10 = 1,024 -
+                and the ~467k already-discovered URLs would keep breeding.
+                /collections/<handle>/ is the same URL shape the depth-1 remove
+                link already emits on live and returns HTTP 200.
+                Cost: a shopper on a bookmarked 3+-tag URL who removes a tag
+                lands on the unfiltered collection rather than a 2-tag URL.
+                Such URLs are unreachable through the UI post-patch.
+                removed_tag_url is re-captured at the top of every active-tag
+                iteration before use, so mutating it here is safe.
+              {%- endcomment -%}
+              {%- if current_tag_depth > max_tag_depth -%}{%- assign removed_tag_url = '' -%}{%- endif -%}
               <li class="sidebar__item sidebar__item--active {{ link_style }}">
-                <a href="{{ routes.collections_url }}/{{ collection_handle }}/{{ removed_tag_url }}" title="✕ {{ settings_tag }}">
+                <a href="{{ routes.collections_url }}/{{ collection_handle }}/{{ removed_tag_url }}" title="✕ {{ settings_tag }}" rel="nofollow">
                   {{ settings_tag }}
                 </a>
                 {% render 'icon-box' %}
@@ -228,10 +312,67 @@
               {% if shop_tags_compare contains settings_tag_handle_plus %}
                 {%- assign link_style = 'link--add' -%}
               {%- endif -%}
-              <li class="sidebar__item {{ link_style }}">
-                <a href="{{ routes.collections_url }}/{{ collection_handle }}/{{ current_tags_url }}{{ settings_tag_handle }}" title="+ {{ settings_tag }}">
+              {%- comment -%}
+                bd 8ile - THIS <a> WAS THE CRAWL TRAP. It emitted an append href
+                for every un-selected tag, on every faceted page, at every
+                depth, with no termination. Measured live 2026-08-15:
+                /collections/all emits 59 append links; a depth-10 URL returning
+                ZERO products still emitted 49 more (507 KB of HTML per dead
+                end). A breadth-first crawler walked it to depth 26; one URL
+                drew 10,215 GA4 events.
+
+                Levers ALREADY in place that did NOT stop it:
+                  - robots.txt already carries Disallow: /collections/*+* plus
+                    the %2B/%2b and locale variants, from Shopify's defaults.
+                  - Shopify already sends a noindex robots meta on every
+                    tag-filtered collection page, at every depth.
+                This crawler honours neither, so withholding the href is the
+                only lever that binds it - hence a cap, not another directive.
+
+                The capped item keeps the <a> ELEMENT (a <span> would lose
+                .sidebar__item a{text-transform} from custom-theme-core.css) but
+                it must LOOK inert. .link--disable{display:none} is currently
+                DEAD on collection pages - that rule ships only in theme.css /
+                theme.dev.css / theme-search.css, none of which load here - so
+                all 59 items are visible and nothing else does this job. Without
+                a visible state the shopper clicks a live-looking filter that
+                does nothing. opacity is used, NOT filter/transform: kt0
+                containing-block rule.
+
+                role="link" is REQUIRED for aria-disabled to be exposed at all -
+                an <a> without href has no implicit role. Note the item also
+                leaves the tab order, so this is an accessibility delta, not a
+                cursor-only change.
+
+                .link--add is deliberately still emitted on capped items:
+                theme.js removeUnusableFilters() hides an entire
+                [data-tag-group] containing neither .link--add nor
+                .link--remove, so dropping it would make whole filter groups
+                vanish after paint. Do not "clean that up".
+
+                link--capped is an additive hook so the inline style can move
+                into assets/theme-collection.css later WITHOUT another live
+                push. That rule must go on the <a>, NEVER on
+                .collection__filters__wrapper or .collection__filters__outer -
+                those are the mobile filter DRAWER and would trip kt0.
+
+                rel="nofollow" on the links still emitted is hygiene for
+                compliant crawlers only. Googlebot is already robots-blocked
+                from these URLs, so it buys close to nothing.
+              {%- endcomment -%}
+              <li class="sidebar__item {{ link_style }}{% if current_tag_depth >= max_tag_depth %} link--capped{% endif %}">
+                {%- if current_tag_depth < max_tag_depth -%}
+                <a href="{{ routes.collections_url }}/{{ collection_handle }}/{{ current_tags_url }}{{ settings_tag_handle }}" title="+ {{ settings_tag }}" rel="nofollow">
                   {{ settings_tag }}
                 </a>
+                {%- else -%}
+                <a role="link"
+                   aria-disabled="true"
+                   style="opacity:.45;cursor:default"
+                   title="{{ settings_tag }} - remove a filter to add another (max {{ max_tag_depth }})">
+                  {{ settings_tag }}
+                </a>
+                {%- endif -%}
                 {% render 'icon-box' %}
               </li>
             {%- endif -%}
