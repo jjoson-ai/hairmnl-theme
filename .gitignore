@@ -17,3 +17,12 @@ __pycache__/
 
 # session/auth artifacts (phase4 audit 2i8b.88 — never commit browser session state)
 .auth/
+
+# Generated perf-dashboard artifacts — tracked on the `dashboard-data` branch
+# (CI commits refreshes there; pages.yml overlays it at deploy time) and
+# regenerated locally by launchd (com.hairmnl.daily-perf). Untracked on main
+# 2026-08-15: bot commits to main + local regeneration of the same tracked
+# files caused a rebase conflict in three separate sessions.
+dashboard/index.html
+dashboard/data/snapshots.jsonl
+dashboard/data/archive/

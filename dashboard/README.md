@@ -55,10 +55,20 @@ Total time: ~6 minutes (PSI is the slow part — 3 runs × 2 strategies × ~30�
 
 The dashboard also refreshes daily via GitHub Actions at 13:00 UTC (5am Manila time), even when the laptop is off. See `.github/workflows/perf-dashboard.yml`.
 
-- Runs `build-perf-dashboard.py --no-crux --psi-runs 2` on `ubuntu-latest`
-- Commits updated `dashboard/` back to `main` with `[skip ci]` (avoids re-triggering)
+- Runs `build-perf-dashboard.py --psi-runs 3` on `ubuntu-latest`
+- Commits `index.html` + `data/snapshots.jsonl` to the **`dashboard-data` branch**
+  (since 2026-08-15 — main no longer tracks generated output; both files are
+  gitignored there because bot commits to main + local launchd regeneration of
+  the same tracked files caused recurring rebase conflicts)
+- The workflow overlays `dashboard-data` onto its checkout before building, so
+  snapshot history accumulates on that branch
 - Can be triggered manually via the **Run workflow** button on the Actions tab
 - Requires 3 repo secrets (see `.github/SECRETS.md`) to be added before first run
+
+Local builds (launchd 6am + manual runs) keep writing `dashboard/index.html` and
+`dashboard/data/snapshots.jsonl` on disk for local viewing — git ignores them.
+Local snapshot rows are NOT merged into the canonical history on `dashboard-data`;
+the CI run is the canonical writer.
 
 ## Required setup (already done locally)
 
@@ -69,13 +79,12 @@ The dashboard also refreshes daily via GitHub Actions at 13:00 UTC (5am Manila t
 
 ## Optional: free public hosting via GitHub Pages
 
-The repo's `dashboard/` directory can be served as a static site:
-
-1. Repo Settings → Pages → Source: `main` branch, folder: `/dashboard`
-2. Your dashboard URL becomes `https://<org>.github.io/<repo>/`
-3. Each commit that updates `dashboard/index.html` auto-deploys (≤1 min).
-
-Combined with a GitHub Action that runs the dashboard build daily and commits the result, this gives you a free, public, always-up-to-date dashboard.
+The dashboard is served via `.github/workflows/pages.yml`, which stages the
+static files from main's `dashboard/`, overlays the generated `index.html` +
+`data/` from the `dashboard-data` branch, and deploys to
+`https://jjoson-ai.github.io/hairmnl-theme/`. It fires automatically after each
+successful perf-dashboard refresh (`workflow_run`) and on pushes touching
+`dashboard/**` or `os2-migration/**` on main.
 
 (If you don't want it public: skip Pages, the local file works fine. Or push to a private gh-pages branch with auth gate.)
 

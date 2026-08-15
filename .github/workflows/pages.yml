@@ -46,6 +46,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Generated artifacts (index.html, data/snapshots.jsonl) live on the
+      # dashboard-data branch since 2026-08-15; main carries only the static
+      # dashboard files (README, ai-referrals, compare pages).
+      - name: Checkout dashboard-data branch (generated artifacts)
+        uses: actions/checkout@v4
+        with:
+          ref: dashboard-data
+          path: dashboard-data
+
       - name: Configure Pages
         uses: actions/configure-pages@v4
 
@@ -53,8 +62,12 @@ jobs:
         run: |
           set -e
           rm -rf _site
-          mkdir -p _site/os2-migration
+          mkdir -p _site/os2-migration _site/data
           cp -R dashboard/. _site/
+          # Overlay generated artifacts — explicit copies, never the .git dir
+          cp dashboard-data/index.html _site/index.html
+          cp dashboard-data/data/snapshots.jsonl _site/data/snapshots.jsonl
+          if [ -d dashboard-data/data/archive ]; then cp -R dashboard-data/data/archive _site/data/; fi
           cp -R os2-migration/. _site/os2-migration/
           echo "Staged files:"
           find _site -maxdepth 2 -type f | sort

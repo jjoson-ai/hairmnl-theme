@@ -20,6 +20,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Generated artifacts (index.html, data/snapshots.jsonl) live on the
+      # dashboard-data branch since 2026-08-15 — main stopped tracking them
+      # because bot commits to main + local launchd regeneration of the same
+      # tracked files caused recurring rebase conflicts.
+      - name: Checkout dashboard-data branch (generated artifacts)
+        uses: actions/checkout@v4
+        with:
+          ref: dashboard-data
+          path: dashboard-data
+
+      - name: Overlay generated artifacts into dashboard/
+        run: |
+          mkdir -p dashboard/data
+          cp dashboard-data/data/snapshots.jsonl dashboard/data/snapshots.jsonl
+          cp dashboard-data/index.html dashboard/index.html || true
+          if [ -d dashboard-data/data/archive ]; then cp -R dashboard-data/data/archive dashboard/data/; fi
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -75,7 +92,7 @@ jobs:
           PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
         run: python3 scripts/build-perf-dashboard.py --psi-runs 3
 
-      - name: Commit updated dashboard
+      - name: Commit refreshed artifacts to dashboard-data branch
         id: commit
         # Hard cap to bound CI-minute burn if the retry loop hangs against an
         # unresponsive remote. The loop itself does 3 attempts with 5+10+15=30s
@@ -83,23 +100,25 @@ jobs:
         # Per epic-audit dashboard-20260515 (Low finding).
         timeout-minutes: 5
         run: |
+          cp dashboard/index.html dashboard-data/index.html
+          mkdir -p dashboard-data/data
+          cp dashboard/data/snapshots.jsonl dashboard-data/data/snapshots.jsonl
+          if [ -d dashboard/data/archive ]; then cp -R dashboard/data/archive dashboard-data/data/; fi
+          cd dashboard-data
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git add dashboard/
-          # NO [skip ci] in commit message — GitHub treats it globally and would
-          # skip the pages.yml deploy too. Self-loop on this workflow is already
-          # prevented by `paths-ignore: ['dashboard/**']` in the push trigger.
+          git add -A
           if git diff --staged --quiet; then
             echo "committed=false" >> "$GITHUB_OUTPUT"
             echo "No dashboard changes — nothing to commit."
           else
             git commit -m "chore: auto-refresh dashboard"
-            # Rebase-then-push in a retry loop — protects against concurrent
-            # pushes (e.g. a developer push lands while this cron is mid-run).
-            # Without this, the cron randomly fails ~once per active dev day
-            # (observed 2026-05-12 run 25754289844).
+            # Rebase-then-push in a retry loop — protects against a concurrent
+            # writer on the branch (rare now that CI is the only committer, but
+            # kept from the main-branch era where it fired ~once per active dev
+            # day, observed 2026-05-12 run 25754289844).
             for attempt in 1 2 3; do
-              git pull --rebase --autostash origin main && git push && break
+              git pull --rebase origin dashboard-data && git push origin dashboard-data && break
               echo "push attempt $attempt failed; retrying in $((attempt * 5))s"
               sleep $((attempt * 5))
             done
