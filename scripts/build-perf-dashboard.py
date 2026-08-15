@@ -339,26 +339,35 @@ def query_ga4_rum(days: int = 7) -> dict:
     def _in(field, values):
         return Filter(field_name=field, in_list_filter=Filter.InListFilter(values=values))
 
+    def _not_eq_exact(field, value):
+        return FilterExpression(not_expression=FilterExpression(filter=Filter(
+            field_name=field,
+            string_filter=Filter.StringFilter(
+                match_type=Filter.StringFilter.MatchType.EXACT, value=value),
+        )))
+
+    # bd 8ile: a single crawler fingerprint (Chrome / Macintosh / Singapore,
+    # screenResolution 1366x1366 — a square screen is not a real monitor)
+    # produced 397,543 events on 2026-08-04 = 42% of the property that day,
+    # and was STILL running on 2026-08-15 (7-day LCP event volume 467k vs
+    # ~18k real). web-vitals-report.py has excluded it since 8ile; this
+    # script only excluded /pages/privacy-policy and only on two of its six
+    # queries, so every dashboard RUM panel and snapshot ga4 row from
+    # 2026-08-03 onward is bot-poisoned (root cause of bd vzoa's phantom
+    # CLS regression). _and() below now injects these into EVERY query.
+    BOT_EXCLUSIONS = (
+        _not_eq_exact("screenResolution", "1366x1366"),
+        _not_eq_exact("pagePath", "/pages/privacy-policy"),
+    )
+
     def _and(*filters):
-        if len(filters) == 1:
-            return FilterExpression(filter=filters[0])
+        exprs = [f if isinstance(f, FilterExpression) else FilterExpression(filter=f)
+                 for f in filters]
         return FilterExpression(and_group=FilterExpressionList(
-            expressions=[FilterExpression(filter=f) for f in filters]))
+            expressions=exprs + list(BOT_EXCLUSIONS)))
 
     client, prop = get_ga4_client()
     date_range = [DateRange(start_date=f"{days}daysAgo", end_date="today")]
-
-    bot_exclude = FilterExpression(
-        not_expression=FilterExpression(
-            filter=Filter(
-                field_name="pagePath",
-                string_filter=Filter.StringFilter(
-                    match_type=Filter.StringFilter.MatchType.EXACT,
-                    value="/pages/privacy-policy",
-                ),
-            ),
-        )
-    )
 
     # Overall metric distribution by rating
     print(f"  GA4 RUM: querying {days}-day rating distribution...", flush=True)
@@ -403,17 +412,12 @@ def query_ga4_rum(days: int = 7) -> dict:
     print("  GA4 RUM: querying top friction pages per metric...", flush=True)
     top_pages = {}
     for metric_name in ("LCP", "INP", "CLS"):
-        page_dim_filter = FilterExpression(and_group=FilterExpressionList(
-            expressions=[
-                FilterExpression(filter=_eq("eventName", metric_name)),
-                bot_exclude,
-            ]))
         r = client.run_report(RunReportRequest(
             property=prop,
             date_ranges=date_range,
             dimensions=[Dimension(name="pagePath"), Dimension(name="customEvent:metric_rating")],
             metrics=[Metric(name="eventCount")],
-            dimension_filter=page_dim_filter,
+            dimension_filter=_and(_eq("eventName", metric_name)),
             limit=2000,
         ))
         page_data = defaultdict(lambda: {"good": 0, "needs-improvement": 0, "poor": 0})
@@ -442,18 +446,13 @@ def query_ga4_rum(days: int = 7) -> dict:
     print(f"  GA4 RUM: querying per-template friction...", flush=True)
     top_templates: dict[str, list[dict]] = {}
     for metric_name in ("LCP", "INP", "CLS"):
-        template_dim_filter = FilterExpression(and_group=FilterExpressionList(
-            expressions=[
-                FilterExpression(filter=_eq("eventName", metric_name)),
-                bot_exclude,
-            ]))
         try:
             r = client.run_report(RunReportRequest(
                 property=prop,
                 date_ranges=date_range,
                 dimensions=[Dimension(name="customEvent:template"), Dimension(name="customEvent:metric_rating")],
                 metrics=[Metric(name="eventCount")],
-                dimension_filter=template_dim_filter,
+                dimension_filter=_and(_eq("eventName", metric_name)),
                 limit=200,
             ))
         except Exception as e:
