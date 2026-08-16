@@ -63,8 +63,38 @@ def get_svc():
     return build("tagmanager", "v2", credentials=creds, cache_discovery=False)
 
 
-def workspace_path():
-    return f"accounts/{ACCOUNT_ID}/containers/{CONTAINER_ID}/workspaces/{WORKSPACE_ID}"
+_RESOLVED_WS = None
+
+
+def workspace_path(svc=None):
+    """Resolve the container's CURRENT default workspace at runtime.
+
+    WORKSPACE_ID above is a fallback only. It was hardcoded to "190", which by
+    2026-08-16 was a STALE ABANDONED workspace: it still held 131 tags including
+    63 dead Universal Analytics tags, while the live published container (v145)
+    and the real Default Workspace (197) held 38 tags and zero UA. Auditing 190
+    produced a completely false picture of the live container and nearly drove a
+    224-entity "prune" of tags that do not exist in production. Resolve, never
+    assume. (bd hairmnl-theme-z3z1)
+    """
+    global _RESOLVED_WS
+    parent = f"accounts/{ACCOUNT_ID}/containers/{CONTAINER_ID}"
+    if svc is not None and _RESOLVED_WS is None:
+        try:
+            wss = svc.accounts().containers().workspaces().list(
+                parent=parent).execute().get("workspace", [])
+            default = next((w for w in wss if w.get("name") == "Default Workspace"), None)
+            if default is None and wss:
+                default = min(wss, key=lambda w: int(w["workspaceId"]))
+            if default:
+                _RESOLVED_WS = default["workspaceId"]
+                if _RESOLVED_WS != WORKSPACE_ID:
+                    print(f"  NOTE: resolved default workspace {_RESOLVED_WS} "
+                          f"(hardcoded fallback {WORKSPACE_ID} is stale)", file=sys.stderr)
+        except Exception as e:
+            print(f"  WARN: workspace resolve failed ({e}); "
+                  f"falling back to {WORKSPACE_ID}", file=sys.stderr)
+    return f"{parent}/workspaces/{_RESOLVED_WS or WORKSPACE_ID}"
 
 
 def list_all(svc, kind: str) -> list[dict]:
@@ -73,7 +103,7 @@ def list_all(svc, kind: str) -> list[dict]:
     method = getattr(svc.accounts().containers().workspaces(), kind)
     next_page = None
     while True:
-        kw = {"parent": workspace_path()}
+        kw = {"parent": workspace_path(svc)}
         if next_page:
             kw["pageToken"] = next_page
         resp = method().list(**kw).execute()
