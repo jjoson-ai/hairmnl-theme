@@ -24,41 +24,64 @@
 -- exactly how a first run of this script reported a window nobody asked for.
 \if :{?start_date}
 \else
-  \set start_date '2026-08-12'
+  \set start_date '2026-08-14'
 \endif
 \echo 'Holdout analysis — window starts:' :start_date
+-- Default is 2026-08-14, NOT the 2026-08-11 deploy date: Shopify's page cache
+-- kept serving pre-deploy HTML (no suppression, no instrumentation guard) for
+-- ~2 days. Measured decay of unstamped impressions: Aug 12 = 19,527, Aug 13 =
+-- 13,522, Aug 14 = 480, Aug 15+ = ~150/day. Aug 12-13 are contaminated and
+-- must not be analysed as test data.
 
 -- ── 0. Integrity gate — run FIRST, believe nothing until this passes ────────
--- (a) The split must be ~50/50 among participating visitors.
--- (b) Holdout must have ZERO rec impressions/clicks. Any row here means
---     suppression is leaking and the test is invalid.
--- (c) Theme-computed bucket (metadata.vx_bucket) must equal the SQL-derived
---     bucket. A mismatch means the cookie the theme reads has diverged from the
---     id the pixel stamps, which would invalidate ATC/purchase bucketing.
-WITH participants AS (
+-- (a) split_balance: must be ~50/50. Derived from PIXEL events ONLY. The first
+--     version derived it from ALL events and reported 64/36 — an artifact, not
+--     broken randomization: ad-blocked browsers block the sandboxed pixel but
+--     run inline theme JS, so they appear ONLY via impressions, and only when
+--     in treatment (holdout fires nothing). Rec events must never define the
+--     population.
+-- (b) holdout_contamination_pct: share of holdout PDP viewers who saw a rail
+--     anyway. NOT "must be 0" — a ~6% residual is structural and known: a
+--     first-time visitor has no _shopify_y when the inline bucket script runs,
+--     defaults to treatment for that one page, then buckets correctly once the
+--     cookie exists. Dilutes measured lift by ~x0.94. INVALID above ~10%:
+--     that level means suppression is actually broken (or cache washout is
+--     incomplete — check the unstamped-impression decay).
+-- (c) bucket_mismatch: stamped bucket vs SQL re-bucket, on STAMPED rows only
+--     (unstamped rows are pre-deploy cached pages, excluded by the window).
+--     'treatment vs sql:holdout' rows are the (b) cookie race. Any OTHER
+--     combination (holdout-stamped impressions at all, or holdout vs
+--     sql:treatment) means the theme cookie and pixel clientId diverged —
+--     that DOES invalidate the test.
+WITH pixel_participants AS (
   SELECT DISTINCT visitor_id,
          CASE WHEN position(right(visitor_id, 1) in '01234567') > 0
               THEN 'treatment' ELSE 'holdout' END AS bucket
   FROM vertex_events
   WHERE occurred_at >= :'start_date'
+    AND event_type IN ('detail-page-view', 'add-to-cart', 'purchase-complete',
+                       'home-page-view', 'search', 'shopping-cart-page-view')
     AND visitor_id ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
 )
-SELECT 'split_balance' AS check, bucket AS detail, count(*)::text AS value
-FROM participants GROUP BY bucket
+SELECT 'split_balance (pixel visitors)' AS check, bucket AS detail, count(*)::text AS value
+FROM pixel_participants GROUP BY bucket
 UNION ALL
-SELECT 'LEAK_holdout_rec_events (must be 0)', e.event_type, count(*)::text
-FROM vertex_events e JOIN participants p USING (visitor_id)
+SELECT 'holdout_contamination_pct (warn >6, invalid >10)', 'pdp viewers w/ rail',
+       round(100.0 * count(DISTINCT e.visitor_id) FILTER (
+               WHERE e.event_type = 'vertex-rec-impression')
+             / NULLIF(count(DISTINCT e.visitor_id) FILTER (
+               WHERE e.event_type = 'detail-page-view'), 0), 1)::text
+FROM vertex_events e JOIN pixel_participants p USING (visitor_id)
 WHERE e.occurred_at >= :'start_date' AND p.bucket = 'holdout'
-  AND e.event_type IN ('vertex-rec-impression', 'vertex-rec-click')
-GROUP BY e.event_type
 UNION ALL
-SELECT 'bucket_mismatch (must be 0)',
-       coalesce(e.event_metadata->>'vx_bucket', 'null') || ' vs sql:' || p.bucket,
+SELECT 'bucket_mismatch (stamped rows; treatment-vs-holdout = cookie race)',
+       (e.event_metadata->>'vx_bucket') || ' vs sql:' || p.bucket,
        count(*)::text
-FROM vertex_events e JOIN participants p USING (visitor_id)
+FROM vertex_events e JOIN pixel_participants p USING (visitor_id)
 WHERE e.occurred_at >= :'start_date'
   AND e.event_type = 'vertex-rec-impression'
-  AND coalesce(e.event_metadata->>'vx_bucket', '') <> p.bucket
+  AND e.event_metadata->>'vx_bucket' IS NOT NULL
+  AND e.event_metadata->>'vx_bucket' <> p.bucket
 GROUP BY 2;
 
 -- ── 1. Primary metric: PDP -> add-to-cart rate, with a 95% CI on the lift ───
