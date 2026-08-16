@@ -1757,6 +1757,73 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   })();
   </script>
 
+  {%- comment -%}
+    BOGOS free-gifts — BLOCK on /pages/search-results-page only. (bd hairmnl-theme-m8ne, 2026-08-16)
+
+    Family A guard (MutationObserver above content_for_header) because the BOGOS
+    theme-app-extension emits STATIC <script src> tags we do not control. Unlike
+    the other Family A guards this one does NOT replay on disarm: on this one
+    template the app has nothing to do, so the correct behaviour is never to run
+    it, not to run it later.
+
+    WHY. Measured on the live search page (mobile 1.6Mbps/150ms/4x CPU):
+      2 x /search.js?q=handle:"..."          214 kB, arriving 18.3s and 19.5s
+      8 x /apps/secomapp_freegifts_get_order ~109 kB, arriving 10.3s - 20.9s
+      TAE bundles (gift/bundle/glider/lz)     ~90 kB, arriving 3.5s - 12.8s
+    ~400 kB across ~20 requests spanning 3.5-21s. CDP initiator stacks attribute
+    the /search.js calls unambiguously to BOGOS:
+      fetchProductsByHandle -> fetchBySearchJS -> fetch @ freegifts_data_*.min.js
+
+    WHY IT IS SAFE HERE. BOGOS renders NOTHING a shopper can see on this page:
+    19 elements with id*="bogos" and 0 visible; the only laid-out node is an
+    EMPTY 390x844 `freegifts-main-container sca-modal-fg` shell. And there is no
+    cart interaction to attach a gift to — measured on the live page:
+    0 form[action*="/cart/add"], 0 [name="add"], 0 quick-add controls; the 15
+    Searchanise results link out to PDPs, where BOGOS loads normally and
+    unmodified. Gift eligibility is computed in cart/checkout, both untouched.
+
+    SCOPE. Gated on page.handle, so this block does not exist on any other
+    template. The existing sitewide Element.prototype BOGOS guard (~L1123) is
+    unaffected — note it only matches 'bogos.io' and so never saw these
+    cdn.shopify.com/extensions assets at all, which is why they load freely.
+
+    ROLLBACK: set KILL_SWITCH = true below and push this file (~60s), or delete
+    the whole {%- if -%} block.
+  {%- endcomment -%}
+  {%- if page.handle == 'search-results-page' -%}
+  <script>
+  (function() {
+    var KILL_SWITCH = false;
+    if (KILL_SWITCH) return;
+
+    var BLOCKED = ['freegifts-213', 'cdn.bogos.io', 'freegifts_data'];
+    function isBlocked(src) {
+      if (typeof src !== 'string' || !src) return false;
+      for (var i = 0; i < BLOCKED.length; i++) {
+        if (src.indexOf(BLOCKED[i]) !== -1) return true;
+      }
+      return false;
+    }
+    function neutralize(node) {
+      if (!node || node.nodeName !== 'SCRIPT') return;
+      var src = node.getAttribute && node.getAttribute('src');
+      if (!isBlocked(src)) return;
+      node.type = 'javascript/blocked';
+      node.setAttribute('data-blocked-src', src);
+      node.removeAttribute('src');
+    }
+    try {
+      new MutationObserver(function(muts) {
+        for (var i = 0; i < muts.length; i++) {
+          var added = muts[i].addedNodes;
+          for (var j = 0; j < added.length; j++) neutralize(added[j]);
+        }
+      }).observe(document.documentElement, { childList: true, subtree: true });
+    } catch (e) { /* observer unsupported — app simply loads as before */ }
+  })();
+  </script>
+  {%- endif -%}
+
     <!-- Shopify app scripts =========================================================== -->
     {{ content_for_header }}
 
