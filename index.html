@@ -246,7 +246,7 @@
       <div>
         <h1>HairMNL — Performance Dashboard</h1>
         <div class="meta">
-          Last updated: <strong>2026-08-16 09:11 UTC</strong>
+          Last updated: <strong>2026-08-16 13:24 UTC</strong>
           &nbsp;·&nbsp; Snapshots: <strong>108</strong>
           &nbsp;·&nbsp; RUM window: <strong>last 7 days</strong>
         </div>
@@ -276,7 +276,7 @@
   </div>
 
   <div class="tab-content active" id="snapshot-mobile">
-    <div class="kpi-grid"><div class="kpi poor"><div class="label">Score<span class="info" tabindex="0" aria-label="What is Score?">ⓘ<span class="tip" role="tooltip">The overall 0–100 perf grade Google gives the page (weighted blend of all metrics below).<span class="goal"><strong>Goal:</strong> 90+</span><span class="fix"><strong>How to act:</strong> Caveat: swings ±5–10 points between runs. Trust trends, not single numbers.</span></span></span></div><div class="value">42</div><div class="delta regress">↓ 2 vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi warn"><div class="label">LCP<span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></div><div class="value">2.53 s</div><div class="delta regress">↑ 0.08s vs prev</div> <span class="info" tabindex="0" style="color:var(--amber);font-size:11px" aria-label="CrUX vs GA4 divergence">⚠ Δ<span class="tip" role="tooltip">CrUX (28d p75) and GA4 RUM (7d) diverge by 12pp on this metric. Possible cause: sampling bias, time-window difference, or bot contamination. Investigate before drawing conclusions.</span></span><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">CLS<span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></div><div class="value">0.010</div><div class="delta">no change vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi warn"><div class="label">INP<span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></div><div class="value">221 ms</div><div class="delta regress">↑ 6ms vs prev</div> <span class="info" tabindex="0" style="color:var(--amber);font-size:11px" aria-label="CrUX vs GA4 divergence">⚠ Δ<span class="tip" role="tooltip">CrUX (28d p75) and GA4 RUM (7d) diverge by 21pp on this metric. Possible cause: sampling bias, time-window difference, or bot contamination. Investigate before drawing conclusions.</span></span><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi poor"><div class="label">TBT<span class="info" tabindex="0" aria-label="What is TBT?">ⓘ<span class="tip" role="tooltip">Total Blocking Time — how long the main thread is frozen by heavy JavaScript during page load. Lab proxy for INP.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> defer non-critical JS (add the defer attribute), code-split bundles, lazy-load below-fold scripts.</span></span></span></div><div class="value">1179 ms</div><div class="delta regress">↑ 218ms vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi warn"><div class="label">FCP<span class="info" tabindex="0" aria-label="What is FCP?">ⓘ<span class="tip" role="tooltip">First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).<span class="goal"><strong>Goal:</strong> ≤ 1.8 s</span><span class="fix"><strong>How to act:</strong> reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.</span></span></span></div><div class="value">1.97 s</div><div class="delta regress">↑ 0.04s vs prev</div> <span class="info" tabindex="0" style="color:var(--amber);font-size:11px" aria-label="CrUX vs GA4 divergence">⚠ Δ<span class="tip" role="tooltip">CrUX (28d p75) and GA4 RUM (7d) diverge by 22pp on this metric. Possible cause: sampling bias, time-window difference, or bot contamination. Investigate before drawing conclusions.</span></span><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">TTFB<span class="info" tabindex="0" aria-label="What is TTFB?">ⓘ<span class="tip" role="tooltip">Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.<span class="goal"><strong>Goal:</strong> ≤ 800 ms</span><span class="fix"><strong>How to act:</strong> minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.</span></span></span></div><div class="value">606 ms</div><div class="delta regress">↑ 86ms vs prev</div> <span class="info" tabindex="0" style="color:var(--amber);font-size:11px" aria-label="CrUX vs GA4 divergence">⚠ Δ<span class="tip" role="tooltip">CrUX (28d p75) and GA4 RUM (7d) diverge by 10pp on this metric. Possible cause: sampling bias, time-window difference, or bot contamination. Investigate before drawing conclusions.</span></span><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div></div>
+    <div class="kpi-grid"><div class="kpi poor"><div class="label">Score<span class="info" tabindex="0" aria-label="What is Score?">ⓘ<span class="tip" role="tooltip">The overall 0–100 perf grade Google gives the page (weighted blend of all metrics below).<span class="goal"><strong>Goal:</strong> 90+</span><span class="fix"><strong>How to act:</strong> Caveat: swings ±5–10 points between runs. Trust trends, not single numbers.</span></span></span></div><div class="value">41</div><div class="delta regress">↓ 3 vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi warn"><div class="label">LCP<span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></div><div class="value">2.53 s</div><div class="delta regress">↑ 0.08s vs prev</div> <span class="info" tabindex="0" style="color:var(--amber);font-size:11px" aria-label="CrUX vs GA4 divergence">⚠ Δ<span class="tip" role="tooltip">CrUX (28d p75) and GA4 RUM (7d) diverge by 12pp on this metric. Possible cause: sampling bias, time-window difference, or bot contamination. Investigate before drawing conclusions.</span></span><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">CLS<span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></div><div class="value">0.010</div><div class="delta">no change vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi warn"><div class="label">INP<span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></div><div class="value">221 ms</div><div class="delta regress">↑ 6ms vs prev</div> <span class="info" tabindex="0" style="color:var(--amber);font-size:11px" aria-label="CrUX vs GA4 divergence">⚠ Δ<span class="tip" role="tooltip">CrUX (28d p75) and GA4 RUM (7d) diverge by 21pp on this metric. Possible cause: sampling bias, time-window difference, or bot contamination. Investigate before drawing conclusions.</span></span><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi poor"><div class="label">TBT<span class="info" tabindex="0" aria-label="What is TBT?">ⓘ<span class="tip" role="tooltip">Total Blocking Time — how long the main thread is frozen by heavy JavaScript during page load. Lab proxy for INP.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> defer non-critical JS (add the defer attribute), code-split bundles, lazy-load below-fold scripts.</span></span></span></div><div class="value">1158 ms</div><div class="delta regress">↑ 197ms vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi warn"><div class="label">FCP<span class="info" tabindex="0" aria-label="What is FCP?">ⓘ<span class="tip" role="tooltip">First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).<span class="goal"><strong>Goal:</strong> ≤ 1.8 s</span><span class="fix"><strong>How to act:</strong> reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.</span></span></span></div><div class="value">1.97 s</div><div class="delta regress">↑ 0.04s vs prev</div> <span class="info" tabindex="0" style="color:var(--amber);font-size:11px" aria-label="CrUX vs GA4 divergence">⚠ Δ<span class="tip" role="tooltip">CrUX (28d p75) and GA4 RUM (7d) diverge by 22pp on this metric. Possible cause: sampling bias, time-window difference, or bot contamination. Investigate before drawing conclusions.</span></span><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">TTFB<span class="info" tabindex="0" aria-label="What is TTFB?">ⓘ<span class="tip" role="tooltip">Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.<span class="goal"><strong>Goal:</strong> ≤ 800 ms</span><span class="fix"><strong>How to act:</strong> minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.</span></span></span></div><div class="value">606 ms</div><div class="delta regress">↑ 86ms vs prev</div> <span class="info" tabindex="0" style="color:var(--amber);font-size:11px" aria-label="CrUX vs GA4 divergence">⚠ Δ<span class="tip" role="tooltip">CrUX (28d p75) and GA4 RUM (7d) diverge by 10pp on this metric. Possible cause: sampling bias, time-window difference, or bot contamination. Investigate before drawing conclusions.</span></span><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div></div>
 
     <h3 class="trend-heading">Trend over time — PSI Lab mobile</h3>
     <div class="grid-2">
@@ -287,7 +287,7 @@
     </div>
   </div>
   <div class="tab-content" id="snapshot-desktop">
-    <div class="kpi-grid"><div class="kpi warn"><div class="label">Score<span class="info" tabindex="0" aria-label="What is Score?">ⓘ<span class="tip" role="tooltip">The overall 0–100 perf grade Google gives the page (weighted blend of all metrics below).<span class="goal"><strong>Goal:</strong> 90+</span><span class="fix"><strong>How to act:</strong> Caveat: swings ±5–10 points between runs. Trust trends, not single numbers.</span></span></span></div><div class="value">62</div><div class="delta">no change vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi good"><div class="label">LCP<span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></div><div class="value">1.81 s</div><div class="delta improve">↓ 0.03s vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">CLS<span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></div><div class="value">0.020</div><div class="delta">no change vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">INP<span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></div><div class="value">112 ms</div><div class="delta improve">↓ 5ms vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi poor"><div class="label">TBT<span class="info" tabindex="0" aria-label="What is TBT?">ⓘ<span class="tip" role="tooltip">Total Blocking Time — how long the main thread is frozen by heavy JavaScript during page load. Lab proxy for INP.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> defer non-critical JS (add the defer attribute), code-split bundles, lazy-load below-fold scripts.</span></span></span></div><div class="value">836 ms</div><div class="delta regress">↑ 79ms vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi good"><div class="label">FCP<span class="info" tabindex="0" aria-label="What is FCP?">ⓘ<span class="tip" role="tooltip">First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).<span class="goal"><strong>Goal:</strong> ≤ 1.8 s</span><span class="fix"><strong>How to act:</strong> reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.</span></span></span></div><div class="value">1.49 s</div><div class="delta regress">↑ 0.02s vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">TTFB<span class="info" tabindex="0" aria-label="What is TTFB?">ⓘ<span class="tip" role="tooltip">Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.<span class="goal"><strong>Goal:</strong> ≤ 800 ms</span><span class="fix"><strong>How to act:</strong> minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.</span></span></span></div><div class="value">570 ms</div><div class="delta regress">↑ 15ms vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div></div>
+    <div class="kpi-grid"><div class="kpi warn"><div class="label">Score<span class="info" tabindex="0" aria-label="What is Score?">ⓘ<span class="tip" role="tooltip">The overall 0–100 perf grade Google gives the page (weighted blend of all metrics below).<span class="goal"><strong>Goal:</strong> 90+</span><span class="fix"><strong>How to act:</strong> Caveat: swings ±5–10 points between runs. Trust trends, not single numbers.</span></span></span></div><div class="value">63</div><div class="delta improve">↑ 1 vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi good"><div class="label">LCP<span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></div><div class="value">1.81 s</div><div class="delta improve">↓ 0.03s vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">CLS<span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></div><div class="value">0.020</div><div class="delta">no change vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">INP<span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></div><div class="value">112 ms</div><div class="delta improve">↓ 5ms vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi poor"><div class="label">TBT<span class="info" tabindex="0" aria-label="What is TBT?">ⓘ<span class="tip" role="tooltip">Total Blocking Time — how long the main thread is frozen by heavy JavaScript during page load. Lab proxy for INP.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> defer non-critical JS (add the defer attribute), code-split bundles, lazy-load below-fold scripts.</span></span></span></div><div class="value">763 ms</div><div class="delta regress">↑ 6ms vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">PSI lab</div></div><div class="kpi good"><div class="label">FCP<span class="info" tabindex="0" aria-label="What is FCP?">ⓘ<span class="tip" role="tooltip">First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).<span class="goal"><strong>Goal:</strong> ≤ 1.8 s</span><span class="fix"><strong>How to act:</strong> reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.</span></span></span></div><div class="value">1.49 s</div><div class="delta regress">↑ 0.02s vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div><div class="kpi good"><div class="label">TTFB<span class="info" tabindex="0" aria-label="What is TTFB?">ⓘ<span class="tip" role="tooltip">Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.<span class="goal"><strong>Goal:</strong> ≤ 800 ms</span><span class="fix"><strong>How to act:</strong> minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.</span></span></span></div><div class="value">570 ms</div><div class="delta regress">↑ 15ms vs prev</div><div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">CrUX p75</div></div></div>
 
     <h3 class="trend-heading">Trend over time — PSI Lab desktop</h3>
     <div class="grid-2">
@@ -306,12 +306,12 @@
         <div class="cwv ">
           <div class="name">LCP<span class="info" tabindex="0" aria-label="What is LCP?">ⓘ<span class="tip" role="tooltip">Largest Contentful Paint — how long the biggest visible thing (usually the hero image) takes to appear. Slow LCP = shoppers think the site is broken.<span class="goal"><strong>Goal:</strong> ≤ 2.5 s</span><span class="fix"><strong>How to act:</strong> preload the hero image, defer non-critical scripts, serve images in WebP at the right size.</span></span></span></div>
           <div class="pct">87%</div>
-          <div class="sample-size">(N=22,475)</div>
-          <div class="total">good · 22,475 events <span class="badge pass">✓ PASS</span></div>
+          <div class="sample-size">(N=23,097)</div>
+          <div class="total">good · 23,097 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
-            <span class="good" style="flex: 87.20800889877643;"></span>
-            <span class="warn" style="flex: 7.839822024471635;"></span>
-            <span class="poor" style="flex: 4.952169076751947;"></span>
+            <span class="good" style="flex: 87.31436983157987;"></span>
+            <span class="warn" style="flex: 7.793219898688141;"></span>
+            <span class="poor" style="flex: 4.892410269731999;"></span>
           </div>
           <div class="stack-legend">87% good · 8% NI · 5% poor</div>
         </div>
@@ -319,12 +319,12 @@
         <div class="cwv ">
           <div class="name">CLS<span class="info" tabindex="0" aria-label="What is CLS?">ⓘ<span class="tip" role="tooltip">Cumulative Layout Shift — how much page content jumps around as it loads (a button moving just as you tap it).<span class="goal"><strong>Goal:</strong> ≤ 0.10</span><span class="fix"><strong>How to act:</strong> set width + height on every image, reserve space for ads/embeds, never inject content above existing elements.</span></span></span></div>
           <div class="pct">93%</div>
-          <div class="sample-size">(N=16,737)</div>
-          <div class="total">good · 16,737 events <span class="badge pass">✓ PASS</span></div>
+          <div class="sample-size">(N=17,119)</div>
+          <div class="total">good · 17,119 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
-            <span class="good" style="flex: 93.05132341518791;"></span>
-            <span class="warn" style="flex: 3.9493338113162455;"></span>
-            <span class="poor" style="flex: 2.9993427734958478;"></span>
+            <span class="good" style="flex: 93.10123254863018;"></span>
+            <span class="warn" style="flex: 3.907938547812372;"></span>
+            <span class="poor" style="flex: 2.9908289035574507;"></span>
           </div>
           <div class="stack-legend">93% good · 4% NI · 3% poor</div>
         </div>
@@ -332,12 +332,12 @@
         <div class="cwv ">
           <div class="name">INP<span class="info" tabindex="0" aria-label="What is INP?">ⓘ<span class="tip" role="tooltip">Interaction to Next Paint — how long the page takes to react when a shopper taps or clicks. Slow INP feels laggy.<span class="goal"><strong>Goal:</strong> ≤ 200 ms</span><span class="fix"><strong>How to act:</strong> break up long JavaScript tasks, defer third-party scripts, lazy-init heavy widgets (carousels, modals).</span></span></span></div>
           <div class="pct">92%</div>
-          <div class="sample-size">(N=16,595)</div>
-          <div class="total">good · 16,595 events <span class="badge pass">✓ PASS</span></div>
+          <div class="sample-size">(N=17,162)</div>
+          <div class="total">good · 17,162 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
-            <span class="good" style="flex: 91.52154263332329;"></span>
-            <span class="warn" style="flex: 5.579993974088581;"></span>
-            <span class="poor" style="flex: 2.898463392588129;"></span>
+            <span class="good" style="flex: 91.56858175037874;"></span>
+            <span class="warn" style="flex: 5.54131220137513;"></span>
+            <span class="poor" style="flex: 2.890106048246125;"></span>
           </div>
           <div class="stack-legend">92% good · 6% NI · 3% poor</div>
         </div>
@@ -345,12 +345,12 @@
         <div class="cwv ">
           <div class="name">FCP<span class="info" tabindex="0" aria-label="What is FCP?">ⓘ<span class="tip" role="tooltip">First Contentful Paint — how long until the shopper sees ANYTHING (often the header or page background).<span class="goal"><strong>Goal:</strong> ≤ 1.8 s</span><span class="fix"><strong>How to act:</strong> reduce server response time, eliminate render-blocking CSS/JS in the head, use a CDN.</span></span></span></div>
           <div class="pct">91%</div>
-          <div class="sample-size">(N=16,745)</div>
-          <div class="total">good · 16,745 events <span class="badge pass">✓ PASS</span></div>
+          <div class="sample-size">(N=17,234)</div>
+          <div class="total">good · 17,234 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
-            <span class="good" style="flex: 90.52254404299791;"></span>
-            <span class="warn" style="flex: 6.401911018214393;"></span>
-            <span class="poor" style="flex: 3.0755449387876976;"></span>
+            <span class="good" style="flex: 90.53034698851108;"></span>
+            <span class="warn" style="flex: 6.405941743066032;"></span>
+            <span class="poor" style="flex: 3.063711268422885;"></span>
           </div>
           <div class="stack-legend">91% good · 6% NI · 3% poor</div>
         </div>
@@ -358,12 +358,12 @@
         <div class="cwv ">
           <div class="name">TTFB<span class="info" tabindex="0" aria-label="What is TTFB?">ⓘ<span class="tip" role="tooltip">Time to First Byte — how long Shopify takes to respond after the shopper clicks a link.<span class="goal"><strong>Goal:</strong> ≤ 800 ms</span><span class="fix"><strong>How to act:</strong> minimize Shopify app overhead, cache where possible. Largely determined by Shopify's servers + apps installed.</span></span></span></div>
           <div class="pct">88%</div>
-          <div class="sample-size">(N=15,570)</div>
-          <div class="total">good · 15,570 events <span class="badge pass">✓ PASS</span></div>
+          <div class="sample-size">(N=16,026)</div>
+          <div class="total">good · 16,026 events <span class="badge pass">✓ PASS</span></div>
           <div class="rating-stack">
-            <span class="good" style="flex: 88.13102119460501;"></span>
-            <span class="warn" style="flex: 8.754014129736673;"></span>
-            <span class="poor" style="flex: 3.1149646756583174;"></span>
+            <span class="good" style="flex: 88.12554598776987;"></span>
+            <span class="warn" style="flex: 8.791963060027456;"></span>
+            <span class="poor" style="flex: 3.082490952202671;"></span>
           </div>
           <div class="stack-legend">88% good · 9% NI · 3% poor</div>
         </div>
@@ -377,9 +377,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/pages/search-results-page" target="_blank" rel="noopener">/pages/search-results-page</a>
           <div class="stats">
-            <span class="impact">137 impact</span>
+            <span class="impact">140 impact</span>
             <span class="pct-poor poor-low">5.7% poor</span>
-            <span class="meta">N=2,398 · 137 poor</span>
+            <span class="meta">N=2,468 · 140 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fpages%2Fsearch-results-page" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -390,8 +390,8 @@
           <a class="path" href="https://www.hairmnl.com/" target="_blank" rel="noopener">/</a>
           <div class="stats">
             <span class="impact">104 impact</span>
-            <span class="pct-poor poor-low">7.4% poor</span>
-            <span class="meta">N=1,401 · 104 poor</span>
+            <span class="pct-poor poor-low">7.3% poor</span>
+            <span class="meta">N=1,433 · 104 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2F" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -402,8 +402,8 @@
           <a class="path" href="https://www.hairmnl.com/account/login" target="_blank" rel="noopener">/account/login</a>
           <div class="stats">
             <span class="impact">36 impact</span>
-            <span class="pct-poor poor-mid">11.4% poor</span>
-            <span class="meta">N=315 · 36 poor</span>
+            <span class="pct-poor poor-mid">11.2% poor</span>
+            <span class="meta">N=321 · 36 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Faccount%2Flogin" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -414,8 +414,8 @@
           <a class="path" href="https://www.hairmnl.com/pages/azta-urban-salon-service-menu" target="_blank" rel="noopener">/pages/azta-urban-salon-service-menu</a>
           <div class="stats">
             <span class="impact">34 impact</span>
-            <span class="pct-poor poor-low">4.5% poor</span>
-            <span class="meta">N=760 · 34 poor</span>
+            <span class="pct-poor poor-low">4.4% poor</span>
+            <span class="meta">N=777 · 34 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fpages%2Fazta-urban-salon-service-menu" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -425,9 +425,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/collections/reuzel" target="_blank" rel="noopener">/collections/reuzel</a>
           <div class="stats">
-            <span class="impact">28 impact</span>
-            <span class="pct-poor poor-high">40.0% poor</span>
-            <span class="meta">N=70 · 28 poor</span>
+            <span class="impact">27 impact</span>
+            <span class="pct-poor poor-high">39.4% poor</span>
+            <span class="meta">N=71 · 28 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcollections%2Freuzel" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -437,9 +437,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/pages/search-results-page" target="_blank" rel="noopener">/pages/search-results-page</a>
           <div class="stats">
-            <span class="impact">88 impact</span>
-            <span class="pct-poor poor-low">5.6% poor</span>
-            <span class="meta">N=1,572 · 88 poor</span>
+            <span class="impact">93 impact</span>
+            <span class="pct-poor poor-low">5.8% poor</span>
+            <span class="meta">N=1,615 · 93 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fpages%2Fsearch-results-page" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -449,9 +449,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/" target="_blank" rel="noopener">/</a>
           <div class="stats">
-            <span class="impact">32 impact</span>
-            <span class="pct-poor poor-low">2.9% poor</span>
-            <span class="meta">N=1,090 · 32 poor</span>
+            <span class="impact">34 impact</span>
+            <span class="pct-poor poor-low">3.0% poor</span>
+            <span class="meta">N=1,131 · 34 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2F" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -462,8 +462,8 @@
           <a class="path" href="https://www.hairmnl.com/collections/kerastase" target="_blank" rel="noopener">/collections/kerastase</a>
           <div class="stats">
             <span class="impact">11 impact</span>
-            <span class="pct-poor poor-low">3.7% poor</span>
-            <span class="meta">N=297 · 11 poor</span>
+            <span class="pct-poor poor-low">3.5% poor</span>
+            <span class="meta">N=313 · 11 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcollections%2Fkerastase" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -483,13 +483,13 @@
         </div>
 
         <div class="page-row">
-          <a class="path" href="https://www.hairmnl.com/collections/davines" target="_blank" rel="noopener">/collections/davines</a>
+          <a class="path" href="https://www.hairmnl.com/pages/azta-urban-salon-service-menu" target="_blank" rel="noopener">/pages/azta-urban-salon-service-menu</a>
           <div class="stats">
             <span class="impact">8 impact</span>
-            <span class="pct-poor poor-low">6.6% poor</span>
-            <span class="meta">N=122 · 8 poor</span>
+            <span class="pct-poor poor-low">1.0% poor</span>
+            <span class="meta">N=782 · 8 poor</span>
             <span class="deeplinks">
-              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fcollections%2Fdavines" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
+              <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fpages%2Fazta-urban-salon-service-menu" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
           </div>
         </div></div>
@@ -497,9 +497,9 @@
         <div class="page-row">
           <a class="path" href="https://www.hairmnl.com/pages/search-results-page" target="_blank" rel="noopener">/pages/search-results-page</a>
           <div class="stats">
-            <span class="impact">47 impact</span>
-            <span class="pct-poor poor-low">4.8% poor</span>
-            <span class="meta">N=979 · 47 poor</span>
+            <span class="impact">50 impact</span>
+            <span class="pct-poor poor-low">5.0% poor</span>
+            <span class="meta">N=1,008 · 50 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fpages%2Fsearch-results-page" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -510,8 +510,8 @@
           <a class="path" href="https://www.hairmnl.com/pages/rewards" target="_blank" rel="noopener">/pages/rewards</a>
           <div class="stats">
             <span class="impact">41 impact</span>
-            <span class="pct-poor poor-mid">19.2% poor</span>
-            <span class="meta">N=214 · 41 poor</span>
+            <span class="pct-poor poor-mid">19.0% poor</span>
+            <span class="meta">N=216 · 41 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fpages%2Frewards" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -522,8 +522,8 @@
           <a class="path" href="https://www.hairmnl.com/pages/azta-urban-salon-service-menu" target="_blank" rel="noopener">/pages/azta-urban-salon-service-menu</a>
           <div class="stats">
             <span class="impact">36 impact</span>
-            <span class="pct-poor poor-low">5.3% poor</span>
-            <span class="meta">N=679 · 36 poor</span>
+            <span class="pct-poor poor-low">5.2% poor</span>
+            <span class="meta">N=691 · 36 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fpages%2Fazta-urban-salon-service-menu" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -547,7 +547,7 @@
           <div class="stats">
             <span class="impact">17 impact</span>
             <span class="pct-poor poor-low">7.3% poor</span>
-            <span class="meta">N=232 · 17 poor</span>
+            <span class="meta">N=234 · 17 poor</span>
             <span class="deeplinks">
               <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.hairmnl.com%2Fblogs%2Fproduct-spotlight%2Fserioxyl-vs-minoxidil-a-comprehensive-hair-growth-solution-comparison" target="_blank" rel="noopener" title="Open in PageSpeed Insights">PSI ↗</a>
             </span>
@@ -560,45 +560,45 @@
     <div class="card">
       <h3>LCP — by template</h3>
       <div class="table-scroll"><table><thead><tr><th>Template</th><th class="num">Impact</th><th class="num">% poor</th><th class="num">N events</th><th class="num">Poor count</th></tr></thead><tbody>
-<tr><td><strong>product</strong></td><td class="num"><strong>372</strong></td><td class="num pct-poor poor-low">5.4%</td><td class="num">6,833</td><td class="num">372</td></tr>
-<tr><td><strong>page</strong></td><td class="num"><strong>149</strong></td><td class="num pct-poor poor-low">5.8%</td><td class="num">2,562</td><td class="num">149</td></tr>
-<tr><td><strong>index</strong></td><td class="num"><strong>104</strong></td><td class="num pct-poor poor-low">7.4%</td><td class="num">1,401</td><td class="num">104</td></tr>
-<tr><td><strong>product.faq-genesis-serum</strong></td><td class="num"><strong>42</strong></td><td class="num pct-poor poor-mid">18.1%</td><td class="num">232</td><td class="num">42</td></tr>
-<tr><td><strong>collection</strong></td><td class="num"><strong>40</strong></td><td class="num pct-poor poor-low">1.7%</td><td class="num">2,350</td><td class="num">40</td></tr>
-<tr><td><strong>customers/login</strong></td><td class="num"><strong>36</strong></td><td class="num pct-poor poor-mid">11.4%</td><td class="num">317</td><td class="num">36</td></tr>
-<tr><td><strong>article</strong></td><td class="num"><strong>35</strong></td><td class="num pct-poor poor-low">4.7%</td><td class="num">738</td><td class="num">35</td></tr>
-<tr><td><strong>page.salon-menu-azta</strong></td><td class="num"><strong>34</strong></td><td class="num pct-poor poor-low">4.5%</td><td class="num">760</td><td class="num">34</td></tr>
-<tr><td><strong>collection.branded</strong></td><td class="num"><strong>30</strong></td><td class="num pct-poor poor-low">6.5%</td><td class="num">465</td><td class="num">30</td></tr>
-<tr><td><strong>collection.brand-reuzel</strong></td><td class="num"><strong>28</strong></td><td class="num pct-poor poor-high">38.4%</td><td class="num">73</td><td class="num">28</td></tr>
+<tr><td><strong>product</strong></td><td class="num"><strong>376</strong></td><td class="num pct-poor poor-low">5.4%</td><td class="num">7,009</td><td class="num">376</td></tr>
+<tr><td><strong>page</strong></td><td class="num"><strong>152</strong></td><td class="num pct-poor poor-low">5.8%</td><td class="num">2,638</td><td class="num">152</td></tr>
+<tr><td><strong>index</strong></td><td class="num"><strong>104</strong></td><td class="num pct-poor poor-low">7.3%</td><td class="num">1,433</td><td class="num">104</td></tr>
+<tr><td><strong>product.faq-genesis-serum</strong></td><td class="num"><strong>42</strong></td><td class="num pct-poor poor-mid">18.0%</td><td class="num">233</td><td class="num">42</td></tr>
+<tr><td><strong>collection</strong></td><td class="num"><strong>41</strong></td><td class="num pct-poor poor-low">1.7%</td><td class="num">2,428</td><td class="num">41</td></tr>
+<tr><td><strong>customers/login</strong></td><td class="num"><strong>36</strong></td><td class="num pct-poor poor-mid">11.1%</td><td class="num">323</td><td class="num">36</td></tr>
+<tr><td><strong>article</strong></td><td class="num"><strong>35</strong></td><td class="num pct-poor poor-low">4.6%</td><td class="num">754</td><td class="num">35</td></tr>
+<tr><td><strong>page.salon-menu-azta</strong></td><td class="num"><strong>34</strong></td><td class="num pct-poor poor-low">4.4%</td><td class="num">777</td><td class="num">34</td></tr>
+<tr><td><strong>collection.branded</strong></td><td class="num"><strong>30</strong></td><td class="num pct-poor poor-low">6.3%</td><td class="num">479</td><td class="num">30</td></tr>
+<tr><td><strong>collection.brand-reuzel</strong></td><td class="num"><strong>28</strong></td><td class="num pct-poor poor-high">37.8%</td><td class="num">74</td><td class="num">28</td></tr>
 </tbody></table></div>
     </div>
     <div class="card">
       <h3>INP — by template</h3>
       <div class="table-scroll"><table><thead><tr><th>Template</th><th class="num">Impact</th><th class="num">% poor</th><th class="num">N events</th><th class="num">Poor count</th></tr></thead><tbody>
-<tr><td><strong>product</strong></td><td class="num"><strong>189</strong></td><td class="num pct-poor poor-low">3.8%</td><td class="num">4,987</td><td class="num">189</td></tr>
-<tr><td><strong>page</strong></td><td class="num"><strong>90</strong></td><td class="num pct-poor poor-low">5.3%</td><td class="num">1,685</td><td class="num">90</td></tr>
-<tr><td><strong>collection</strong></td><td class="num"><strong>34</strong></td><td class="num pct-poor poor-low">2.0%</td><td class="num">1,696</td><td class="num">34</td></tr>
-<tr><td><strong>index</strong></td><td class="num"><strong>32</strong></td><td class="num pct-poor poor-low">2.9%</td><td class="num">1,090</td><td class="num">32</td></tr>
-<tr><td><strong>collection.branded</strong></td><td class="num"><strong>11</strong></td><td class="num pct-poor poor-low">3.7%</td><td class="num">297</td><td class="num">11</td></tr>
-<tr><td><strong>article</strong></td><td class="num"><strong>9</strong></td><td class="num pct-poor poor-low">1.8%</td><td class="num">487</td><td class="num">9</td></tr>
+<tr><td><strong>product</strong></td><td class="num"><strong>192</strong></td><td class="num pct-poor poor-low">3.7%</td><td class="num">5,152</td><td class="num">192</td></tr>
+<tr><td><strong>page</strong></td><td class="num"><strong>95</strong></td><td class="num pct-poor poor-low">5.5%</td><td class="num">1,730</td><td class="num">95</td></tr>
+<tr><td><strong>collection</strong></td><td class="num"><strong>35</strong></td><td class="num pct-poor poor-low">2.0%</td><td class="num">1,769</td><td class="num">35</td></tr>
+<tr><td><strong>index</strong></td><td class="num"><strong>34</strong></td><td class="num pct-poor poor-low">3.0%</td><td class="num">1,131</td><td class="num">34</td></tr>
+<tr><td><strong>collection.branded</strong></td><td class="num"><strong>11</strong></td><td class="num pct-poor poor-low">3.5%</td><td class="num">313</td><td class="num">11</td></tr>
+<tr><td><strong>article</strong></td><td class="num"><strong>9</strong></td><td class="num pct-poor poor-low">1.8%</td><td class="num">504</td><td class="num">9</td></tr>
 <tr><td><strong>collection.faq-thinning</strong></td><td class="num"><strong>9</strong></td><td class="num pct-poor poor-low">6.2%</td><td class="num">145</td><td class="num">9</td></tr>
-<tr><td><strong>collection.brand.davines-sis</strong></td><td class="num"><strong>8</strong></td><td class="num pct-poor poor-low">6.6%</td><td class="num">122</td><td class="num">8</td></tr>
-<tr><td><strong>page.salon-menu-azta</strong></td><td class="num"><strong>6</strong></td><td class="num pct-poor poor-low">0.8%</td><td class="num">762</td><td class="num">6</td></tr>
-<tr><td><strong>product.faq-k18</strong></td><td class="num"><strong>5</strong></td><td class="num pct-poor poor-low">2.4%</td><td class="num">209</td><td class="num">5</td></tr>
+<tr><td><strong>page.salon-menu-azta</strong></td><td class="num"><strong>8</strong></td><td class="num pct-poor poor-low">1.0%</td><td class="num">782</td><td class="num">8</td></tr>
+<tr><td><strong>collection.brand.davines-sis</strong></td><td class="num"><strong>8</strong></td><td class="num pct-poor poor-low">6.4%</td><td class="num">125</td><td class="num">8</td></tr>
+<tr><td><strong>product.faq-k18</strong></td><td class="num"><strong>5</strong></td><td class="num pct-poor poor-low">2.3%</td><td class="num">214</td><td class="num">5</td></tr>
 </tbody></table></div>
     </div>
     <div class="card">
       <h3>CLS — by template</h3>
       <div class="table-scroll"><table><thead><tr><th>Template</th><th class="num">Impact</th><th class="num">% poor</th><th class="num">N events</th><th class="num">Poor count</th></tr></thead><tbody>
-<tr><td><strong>product</strong></td><td class="num"><strong>111</strong></td><td class="num pct-poor poor-low">2.2%</td><td class="num">5,145</td><td class="num">111</td></tr>
-<tr><td><strong>page</strong></td><td class="num"><strong>102</strong></td><td class="num pct-poor poor-low">8.8%</td><td class="num">1,163</td><td class="num">102</td></tr>
-<tr><td><strong>page.rewards-main</strong></td><td class="num"><strong>41</strong></td><td class="num pct-poor poor-mid">19.2%</td><td class="num">214</td><td class="num">41</td></tr>
+<tr><td><strong>page</strong></td><td class="num"><strong>112</strong></td><td class="num pct-poor poor-low">9.3%</td><td class="num">1,199</td><td class="num">112</td></tr>
+<tr><td><strong>product</strong></td><td class="num"><strong>111</strong></td><td class="num pct-poor poor-low">2.1%</td><td class="num">5,293</td><td class="num">111</td></tr>
+<tr><td><strong>page.rewards-main</strong></td><td class="num"><strong>41</strong></td><td class="num pct-poor poor-mid">19.0%</td><td class="num">216</td><td class="num">41</td></tr>
 <tr><td><strong>404</strong></td><td class="num"><strong>38</strong></td><td class="num pct-poor poor-high">60.3%</td><td class="num">63</td><td class="num">38</td></tr>
-<tr><td><strong>page.salon-menu-azta</strong></td><td class="num"><strong>36</strong></td><td class="num pct-poor poor-low">5.3%</td><td class="num">679</td><td class="num">36</td></tr>
+<tr><td><strong>page.salon-menu-azta</strong></td><td class="num"><strong>36</strong></td><td class="num pct-poor poor-low">5.2%</td><td class="num">691</td><td class="num">36</td></tr>
 <tr><td><strong>collection.cat.rebonded-hair</strong></td><td class="num"><strong>24</strong></td><td class="num pct-poor poor-high">30.0%</td><td class="num">80</td><td class="num">24</td></tr>
-<tr><td><strong>collection</strong></td><td class="num"><strong>17</strong></td><td class="num pct-poor poor-low">1.1%</td><td class="num">1,550</td><td class="num">17</td></tr>
-<tr><td><strong>article.faq-serioxyl-minoxidil</strong></td><td class="num"><strong>17</strong></td><td class="num pct-poor poor-low">7.3%</td><td class="num">232</td><td class="num">17</td></tr>
-<tr><td><strong>customers/login</strong></td><td class="num"><strong>16</strong></td><td class="num pct-poor poor-low">6.6%</td><td class="num">243</td><td class="num">16</td></tr>
+<tr><td><strong>collection</strong></td><td class="num"><strong>17</strong></td><td class="num pct-poor poor-low">1.1%</td><td class="num">1,571</td><td class="num">17</td></tr>
+<tr><td><strong>article.faq-serioxyl-minoxidil</strong></td><td class="num"><strong>17</strong></td><td class="num pct-poor poor-low">7.3%</td><td class="num">234</td><td class="num">17</td></tr>
+<tr><td><strong>customers/login</strong></td><td class="num"><strong>16</strong></td><td class="num pct-poor poor-low">6.6%</td><td class="num">244</td><td class="num">16</td></tr>
 <tr><td><strong>article.faq-rebonded-summer</strong></td><td class="num"><strong>14</strong></td><td class="num pct-poor poor-mid">10.4%</td><td class="num">134</td><td class="num">14</td></tr>
 </tbody></table></div>
     </div>
@@ -609,16 +609,16 @@
   </h2>
   <div class="card">
     <div class="table-scroll"><table><thead><tr><th>Attribution target (CSS selector / element)</th><th class="num">Poor INP count</th></tr></thead><tbody>
-<tr><td><span class="code">div.flickity-viewport > div.flickity-slider > div.product__media > div > div.laz</span></td><td class="num">50</td></tr>
-<tr><td><span class="code">#search-popdown > div.search__predictive__outer > div.wrapper > div.search__pred</span></td><td class="num">36</td></tr>
+<tr><td><span class="code">div.flickity-viewport > div.flickity-slider > div.product__media > div > div.laz</span></td><td class="num">51</td></tr>
+<tr><td><span class="code">#search-popdown > div.search__predictive__outer > div.wrapper > div.search__pred</span></td><td class="num">37</td></tr>
 <tr><td><span class="code">#shopify-pc__banner__btn-accept</span></td><td class="num">23</td></tr>
 <tr><td><span class="code">div.js-grid > div > div.product-grid-item > div.product-grid-item__media > a.laz</span></td><td class="num">20</td></tr>
 <tr><td><span class="code">div.header__wrapper > header.theme__header > div.wrapper > form.search-bar-mobil</span></td><td class="num">17</td></tr>
 <tr><td><span class="code">div.grid__item > div.media__thumb__wrapper > div.flickity-viewport > div.flickit</span></td><td class="num">13</td></tr>
+<tr><td><span class="code">div > div.product-grid-item > div.product__grid__info > a > div.product__grid__t</span></td><td class="num">10</td></tr>
+<tr><td><span class="code">div.grid > div.grid__item > div.product-grid-item__media > a.grid__image > pictu</span></td><td class="num">10</td></tr>
 <tr><td><span class="code">div.wrapper > div.js-grid > div.product-grid-item > div.product-grid-item__media</span></td><td class="num">10</td></tr>
-<tr><td><span class="code">div > div.product-grid-item > div.product__grid__info > a > div.product__grid__t</span></td><td class="num">9</td></tr>
 <tr><td><span class="code">div.form__selectors > div.selector-wrapper > fieldset.radio__fieldset > span.rad</span></td><td class="num">9</td></tr>
-<tr><td><span class="code">div.grid > div.grid__item > div.product-grid-item__media > a.grid__image > pictu</span></td><td class="num">9</td></tr>
 </tbody></table></div>
   </div>
 
@@ -627,16 +627,16 @@
   </h2>
   <div class="card">
     <div class="table-scroll"><table><thead><tr><th>Type</th><th>Message</th><th>Source</th><th class="num">Count</th></tr></thead><tbody>
-<tr><td>rejection</td><td class="code">Cannot update a null/nonexistent service worker registration</td><td class="code">(unknown)</td><td class="num">5,789</td></tr>
-<tr><td>ReferenceError</td><td class="code">ReferenceError: Can't find variable: _AutofillCallbackHandler</td><td class="code">https://www.hairmnl.com/collections/kerastase-travel-sizes?utm_source=facebook&u</td><td class="num">563</td></tr>
-<tr><td>rejection</td><td class="code">Error completing request. A network failure may have prevented the request from completing. Error: T</td><td class="code">at ze.produce (https://www.hairmnl.com/cdn/shopifycloud/privacy-banner/storefron</td><td class="num">498</td></tr>
-<tr><td>rejection</td><td class="code">Load failed</td><td class="code">(unknown)</td><td class="num">347</td></tr>
+<tr><td>rejection</td><td class="code">Cannot update a null/nonexistent service worker registration</td><td class="code">(unknown)</td><td class="num">6,003</td></tr>
+<tr><td>ReferenceError</td><td class="code">ReferenceError: Can't find variable: _AutofillCallbackHandler</td><td class="code">https://www.hairmnl.com/collections/kerastase-travel-sizes?utm_source=facebook&u</td><td class="num">569</td></tr>
+<tr><td>rejection</td><td class="code">Error completing request. A network failure may have prevented the request from completing. Error: T</td><td class="code">at ze.produce (https://www.hairmnl.com/cdn/shopifycloud/privacy-banner/storefron</td><td class="num">506</td></tr>
+<tr><td>rejection</td><td class="code">Load failed</td><td class="code">(unknown)</td><td class="num">361</td></tr>
 <tr><td>ReferenceError</td><td class="code">ReferenceError: Can't find variable: _AutofillCallbackHandler</td><td class="code">https://www.hairmnl.com/collections/davines-alchemic?utm_source=facebook&utm_med</td><td class="num">305</td></tr>
+<tr><td>ReferenceError</td><td class="code">ReferenceError: Can't find variable: _AutofillCallbackHandler</td><td class="code">https://www.hairmnl.com/?utm_source=ig&utm_medium=social&utm_content=link_in_bio</td><td class="num">228</td></tr>
 <tr><td>rejection</td><td class="code">Failed to fetch</td><td class="code">at fetch (event-observer-collector.js:2:837)</td><td class="num">222</td></tr>
-<tr><td>ReferenceError</td><td class="code">ReferenceError: Can't find variable: _AutofillCallbackHandler</td><td class="code">https://www.hairmnl.com/?utm_source=ig&utm_medium=social&utm_content=link_in_bio</td><td class="num">208</td></tr>
-<tr><td>rejection</td><td class="code">[object Object]</td><td class="code">(unknown)</td><td class="num">208</td></tr>
-<tr><td>rejection</td><td class="code">Error completing request. A network failure may have prevented the request from completing. Error: T</td><td class="code">(unknown)</td><td class="num">174</td></tr>
-<tr><td>ReferenceError</td><td class="code">ReferenceError: Can't find variable: _AutofillCallbackHandler</td><td class="code">https://www.hairmnl.com/?utm_id=97759_v0_s00_e0_tv3:1:25</td><td class="num">160</td></tr>
+<tr><td>rejection</td><td class="code">[object Object]</td><td class="code">(unknown)</td><td class="num">217</td></tr>
+<tr><td>rejection</td><td class="code">Error completing request. A network failure may have prevented the request from completing. Error: T</td><td class="code">(unknown)</td><td class="num">177</td></tr>
+<tr><td>ReferenceError</td><td class="code">ReferenceError: Can't find variable: _AutofillCallbackHandler</td><td class="code">https://www.hairmnl.com/?utm_id=97759_v0_s00_e0_tv3:1:25</td><td class="num">170</td></tr>
 </tbody></table></div>
   </div>
 
@@ -645,18 +645,18 @@
   </h2>
   <div class="card">
     <div class="table-scroll"><table style="table-layout:fixed"><colgroup><col style="width:30%"><col style="width:22%"><col style="width:18%"><col style="width:15%"><col style="width:15%"></colgroup><thead><tr><th>Metric</th><th class="num">Apr 26 baseline</th><th class="num">Now</th><th class="num">Δ</th><th>Direction</th></tr></thead><tbody>
-<tr><td><strong>Score</strong></td><td class="num">26</td><td class="num">42</td><td class="num" style="color:var(--green); font-weight:600">↑ +62%</td><td style="color:var(--green);">better</td></tr>
-<tr><td><strong>LCP (s)</strong></td><td class="num">11.8</td><td class="num">8.974</td><td class="num" style="color:var(--green); font-weight:600">↓ -24%</td><td style="color:var(--green);">better</td></tr>
-<tr><td><strong>TBT (ms)</strong></td><td class="num">4340</td><td class="num">1179</td><td class="num" style="color:var(--green); font-weight:600">↓ -73%</td><td style="color:var(--green);">better</td></tr>
+<tr><td><strong>Score</strong></td><td class="num">26</td><td class="num">41</td><td class="num" style="color:var(--green); font-weight:600">↑ +58%</td><td style="color:var(--green);">better</td></tr>
+<tr><td><strong>LCP (s)</strong></td><td class="num">11.8</td><td class="num">11.1</td><td class="num" style="color:var(--green); font-weight:600">↓ -6%</td><td style="color:var(--green);">better</td></tr>
+<tr><td><strong>TBT (ms)</strong></td><td class="num">4340</td><td class="num">1158</td><td class="num" style="color:var(--green); font-weight:600">↓ -73%</td><td style="color:var(--green);">better</td></tr>
 <tr><td><strong>CLS</strong></td><td class="num">0.043</td><td class="num">0.000</td><td class="num" style="color:var(--green); font-weight:600">↓ -100%</td><td style="color:var(--green);">better</td></tr>
-<tr><td><strong>FCP (s)</strong></td><td class="num">3.140</td><td class="num">2.626</td><td class="num" style="color:var(--green); font-weight:600">↓ -16%</td><td style="color:var(--green);">better</td></tr>
-<tr><td><strong>Speed Index (s)</strong></td><td class="num">23.5</td><td class="num">9.923</td><td class="num" style="color:var(--green); font-weight:600">↓ -58%</td><td style="color:var(--green);">better</td></tr>
+<tr><td><strong>FCP (s)</strong></td><td class="num">3.140</td><td class="num">4.524</td><td class="num" style="color:var(--red); font-weight:600">↑ +44%</td><td style="color:var(--red);">worse</td></tr>
+<tr><td><strong>Speed Index (s)</strong></td><td class="num">23.5</td><td class="num">11.1</td><td class="num" style="color:var(--green); font-weight:600">↓ -53%</td><td style="color:var(--green);">better</td></tr>
 </tbody></table></div>
   </div>
 
   <h2>Third-party weight by origin <span class="h2-help">PSI mobile · top 8 origins over last 30 snapshots, latest table</span></h2>
   <div class="card">
-    <div class="chart-wrap" style="height:240px"><canvas id="origin-chart"></canvas></div><script>(function(){  var d = {"labels": ["2026-07-18", "2026-07-19", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-25", "2026-07-26", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-01", "2026-08-02", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-08", "2026-08-09", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-15", "2026-08-16"], "series": [{"name": "hairmnl.com", "data": [3074, 2683, 3076, 2947, 3145, 2881, 3072, 3164, 3183, 3039, 3150, 3156, 2805, 3056, 2999, 2972, 2149, 1930, 3120, 2910, 3054, 2881, 2985, 3090, 2879, 2822, 2944, 2813, 2838, 2957]}, {"name": "Google Tag Manager", "data": [1429, 1429, 1429, 1429, 1430, 1251, 1251, 1251, 1251, 1254, 1252, 1252, 1255, 1255, 1257, 1255, 1255, 471, 803, 793, 624, 624, 1262, 1262, 1261, 1261, 1261, 1260, 1260, 1264]}, {"name": "Shopify CDN", "data": [688, 543, 688, 546, 547, 562, 704, 704, 562, 562, 561, 703, 565, 707, 565, 565, 565, 452, 674, 533, 534, 534, 676, 676, 673, 534, 623, 534, 673, 531]}, {"name": "Facebook Pixel", "data": [176, 177, 176, 177, 176, 179, 178, 178, 178, 179, 180, 180, 180, 180, 180, 180, 180, 180, 181, 181, 181, 181, 181, 181, 181, 181, 184, 184, 184, 184]}, {"name": "Klaviyo", "data": [167, 168, 191, 191, 167, 167, 167, 171, 171, 171, 173, 173, 175, 173, 173, 173, 175, 171, 171, 273, 171, 175, 172, 170, 171, 171, 171, 171, 171, 170]}, {"name": "searchanise-ef84.kxcdn.com", "data": [132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133]}, {"name": "judgeme-public-images.imgix.net", "data": [75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75]}, {"name": "cdn.bogos.io", "data": [60, 60, 65, 58, 65, 65, 59, 59, 59, 59, 59, 59, 59, 59, 59, 58, 58, 58, 58, 58, 58, 58, 58, 58, 65, 60, 60, 66, 66, 59]}]};  var ctx = document.getElementById("origin-chart").getContext("2d");  var palette = ["#1E2761","#C03A3A","#2F8F3F","#C97A1A","#3A4A8A","#6B7280","#922525","#8F5210"];  new Chart(ctx, {type:"line", data:{labels:d.labels, datasets:d.series.map(function(s,i){return {label:s.name, data:s.data, borderColor:palette[i%palette.length], backgroundColor:palette[i%palette.length]+"33", fill:true, tension:0.25, pointRadius:2}})}, options:{responsive:true, maintainAspectRatio:false, scales:{y:{stacked:true, title:{display:true,text:"KB"}},x:{stacked:true}},plugins:{legend:{position:"bottom",labels:{boxWidth:12,font:{size:10}}}}}});})();</script><div class="table-scroll"><table><thead><tr><th>Origin</th><th class="num">Bytes</th><th class="num">% of total</th></tr></thead><tbody><tr><td><strong>Total transfer</strong></td><td class="num"><strong>5636 KB</strong></td><td class="num"><strong>100%</strong></td></tr><tr><td>hairmnl.com</td><td class="num">2957 KB</td><td class="num">52.5%</td></tr><tr><td>Google Tag Manager</td><td class="num">1264 KB</td><td class="num">22.4%</td></tr><tr><td>Shopify CDN</td><td class="num">531 KB</td><td class="num">9.4%</td></tr><tr><td>Facebook Pixel</td><td class="num">184 KB</td><td class="num">3.3%</td></tr><tr><td>Klaviyo</td><td class="num">170 KB</td><td class="num">3.0%</td></tr><tr><td>searchanise-ef84.kxcdn.com</td><td class="num">133 KB</td><td class="num">2.4%</td></tr><tr><td>judgeme-public-images.imgix.net</td><td class="num">75 KB</td><td class="num">1.3%</td></tr><tr><td>cdn.bogos.io</td><td class="num">59 KB</td><td class="num">1.0%</td></tr><tr><td>analytics.tiktok.com</td><td class="num">57 KB</td><td class="num">1.0%</td></tr><tr><td>tgtag.io</td><td class="num">37 KB</td><td class="num">0.6%</td></tr><tr><td>bat.bing.com</td><td class="num">35 KB</td><td class="num">0.6%</td></tr><tr><td>ajax.aspnetcdn.com</td><td class="num">30 KB</td><td class="num">0.5%</td></tr><tr><td>Shopify storefront</td><td class="num">18 KB</td><td class="num">0.3%</td></tr><tr><td>pwa-cdn.shopsheriff.com</td><td class="num">14 KB</td><td class="num">0.3%</td></tr><tr><td>static.ads-twitter.com</td><td class="num">14 KB</td><td class="num">0.2%</td></tr></tbody></table></div>
+    <div class="chart-wrap" style="height:240px"><canvas id="origin-chart"></canvas></div><script>(function(){  var d = {"labels": ["2026-07-18", "2026-07-19", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-25", "2026-07-26", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-01", "2026-08-02", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-08", "2026-08-09", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-15", "2026-08-16"], "series": [{"name": "hairmnl.com", "data": [3074, 2683, 3076, 2947, 3145, 2881, 3072, 3164, 3183, 3039, 3150, 3156, 2805, 3056, 2999, 2972, 2149, 1930, 3120, 2910, 3054, 2881, 2985, 3090, 2879, 2822, 2944, 2813, 2838, 2964]}, {"name": "Google Tag Manager", "data": [1429, 1429, 1429, 1429, 1430, 1251, 1251, 1251, 1251, 1254, 1252, 1252, 1255, 1255, 1257, 1255, 1255, 471, 803, 793, 624, 624, 1262, 1262, 1261, 1261, 1261, 1260, 1260, 1264]}, {"name": "Shopify CDN", "data": [688, 543, 688, 546, 547, 562, 704, 704, 562, 562, 561, 703, 565, 707, 565, 565, 565, 452, 674, 533, 534, 534, 676, 676, 673, 534, 623, 534, 673, 534]}, {"name": "LoyaltyLion", "data": [286, 286, 275, 281, 283, 287, 282, 287, 287, 283, 287, 290, 290, 290, 292, 290, 290, 291, 291, 281, 283, 291, 283, 293, 293, 299, 0, 306, 306, 306]}, {"name": "Facebook Pixel", "data": [176, 177, 176, 177, 176, 179, 178, 178, 178, 179, 180, 180, 180, 180, 180, 180, 180, 180, 181, 181, 181, 181, 181, 181, 181, 181, 184, 184, 184, 184]}, {"name": "Klaviyo", "data": [167, 168, 191, 191, 167, 167, 167, 171, 171, 171, 173, 173, 175, 173, 173, 173, 175, 171, 171, 273, 171, 175, 172, 170, 171, 171, 171, 171, 171, 171]}, {"name": "searchanise-ef84.kxcdn.com", "data": [132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 132, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133, 133]}, {"name": "judgeme-public-images.imgix.net", "data": [75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75]}]};  var ctx = document.getElementById("origin-chart").getContext("2d");  var palette = ["#1E2761","#C03A3A","#2F8F3F","#C97A1A","#3A4A8A","#6B7280","#922525","#8F5210"];  new Chart(ctx, {type:"line", data:{labels:d.labels, datasets:d.series.map(function(s,i){return {label:s.name, data:s.data, borderColor:palette[i%palette.length], backgroundColor:palette[i%palette.length]+"33", fill:true, tension:0.25, pointRadius:2}})}, options:{responsive:true, maintainAspectRatio:false, scales:{y:{stacked:true, title:{display:true,text:"KB"}},x:{stacked:true}},plugins:{legend:{position:"bottom",labels:{boxWidth:12,font:{size:10}}}}}});})();</script><div class="table-scroll"><table><thead><tr><th>Origin</th><th class="num">Bytes</th><th class="num">% of total</th></tr></thead><tbody><tr><td><strong>Total transfer</strong></td><td class="num"><strong>5980 KB</strong></td><td class="num"><strong>100%</strong></td></tr><tr><td>hairmnl.com</td><td class="num">2964 KB</td><td class="num">49.6%</td></tr><tr><td>Google Tag Manager</td><td class="num">1264 KB</td><td class="num">21.1%</td></tr><tr><td>Shopify CDN</td><td class="num">534 KB</td><td class="num">8.9%</td></tr><tr><td>LoyaltyLion</td><td class="num">306 KB</td><td class="num">5.1%</td></tr><tr><td>Facebook Pixel</td><td class="num">184 KB</td><td class="num">3.1%</td></tr><tr><td>Klaviyo</td><td class="num">171 KB</td><td class="num">2.9%</td></tr><tr><td>searchanise-ef84.kxcdn.com</td><td class="num">133 KB</td><td class="num">2.2%</td></tr><tr><td>judgeme-public-images.imgix.net</td><td class="num">75 KB</td><td class="num">1.3%</td></tr><tr><td>cdn.bogos.io</td><td class="num">59 KB</td><td class="num">1.0%</td></tr><tr><td>analytics.tiktok.com</td><td class="num">48 KB</td><td class="num">0.8%</td></tr><tr><td>tgtag.io</td><td class="num">37 KB</td><td class="num">0.6%</td></tr><tr><td>bat.bing.com</td><td class="num">35 KB</td><td class="num">0.6%</td></tr><tr><td>ajax.aspnetcdn.com</td><td class="num">30 KB</td><td class="num">0.5%</td></tr><tr><td>widgets.goaffpro.app</td><td class="num">18 KB</td><td class="num">0.3%</td></tr><tr><td>Shopify storefront</td><td class="num">18 KB</td><td class="num">0.3%</td></tr></tbody></table></div>
   </div>
 
   <hr style="margin:32px 0 24px;border:0;border-top:2px solid var(--navy)">
@@ -672,12 +672,12 @@
           <div style="font-size:36px;font-weight:700;color:var(--green);line-height:1">
             92%
           </div>
-          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">good · 16,595 events <span class="badge pass" style="font-size:11px">✓ PASS</span></div>
-          <div class="delta improve" style="font-size:14px;margin-top:4px">↑ +3.3 pp vs prev 7d</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">good · 17,162 events <span class="badge pass" style="font-size:11px">✓ PASS</span></div>
+          <div class="delta improve" style="font-size:14px;margin-top:4px">↑ +3.4 pp vs prev 7d</div>
           <div class="rating-stack" style="margin-top:12px">
-            <span class="good" style="flex:91.52154263332329"></span>
-            <span class="warn" style="flex:5.579993974088581"></span>
-            <span class="poor" style="flex:2.898463392588129"></span>
+            <span class="good" style="flex:91.56858175037874"></span>
+            <span class="warn" style="flex:5.54131220137513"></span>
+            <span class="poor" style="flex:2.890106048246125"></span>
           </div>
           <div class="stack-legend">92% good · 6% NI · 3% poor</div>
           
@@ -699,12 +699,12 @@
           <div style="font-size:36px;font-weight:700;color:var(--green);line-height:1">
             93%
           </div>
-          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">good · 16,737 events <span class="badge pass" style="font-size:11px">✓ PASS</span></div>
-          <div class="delta improve" style="font-size:14px;margin-top:4px">↑ +1.9 pp vs prev 7d</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">good · 17,119 events <span class="badge pass" style="font-size:11px">✓ PASS</span></div>
+          <div class="delta improve" style="font-size:14px;margin-top:4px">↑ +2.0 pp vs prev 7d</div>
           <div class="rating-stack" style="margin-top:12px">
-            <span class="good" style="flex:93.05132341518791"></span>
-            <span class="warn" style="flex:3.9493338113162455"></span>
-            <span class="poor" style="flex:2.9993427734958478"></span>
+            <span class="good" style="flex:93.10123254863018"></span>
+            <span class="warn" style="flex:3.907938547812372"></span>
+            <span class="poor" style="flex:2.9908289035574507"></span>
           </div>
           <div class="stack-legend">93% good · 4% NI · 3% poor</div>
           
@@ -733,7 +733,7 @@
     </div>
 
   <hr style="margin:32px 0 24px;border:0;border-top:2px solid var(--navy)">
-  <h2>AI-assistant referrals <span class="h2-help">GA4 · purchases via ChatGPT / Perplexity / Claude / Gemini · last 12 mo · current month = month-to-date · floor estimate (referrer-less AI clicks land in Direct/Unassigned)</span></h2><div class="card"><p style="margin:0 0 12px">Last 12 months (2025-09 – 2026-08, current month-to-date): <strong>43 purchases</strong> · <strong>₱120,536</strong> · 3,502 sessions. ChatGPT dominates; this is a <em>floor</em> — many AI clicks arrive referrer-less and are counted as Direct/Unassigned. (Cross-checked vs Shopify referring_site; bd v33f.)</p><div class="table-scroll"><table><thead><tr><th>Engine</th><th class="num">Sessions</th><th class="num">Purchases</th><th class="num">Revenue</th></tr></thead><tbody><tr><td><strong>ChatGPT</strong></td><td class="num">3,022</td><td class="num">42</td><td class="num">₱118,786</td></tr><tr><td><strong>Gemini</strong></td><td class="num">354</td><td class="num">1</td><td class="num">₱1,750</td></tr><tr><td><strong>Perplexity</strong></td><td class="num">80</td><td class="num">0</td><td class="num">₱0</td></tr><tr><td><strong>Copilot</strong></td><td class="num">23</td><td class="num">0</td><td class="num">₱0</td></tr><tr><td><strong>Claude</strong></td><td class="num">23</td><td class="num">0</td><td class="num">₱0</td></tr></tbody></table></div><h4 style="margin:16px 0 0">Purchases by month</h4><div style="display:flex;align-items:flex-end;gap:3px;height:88px;margin-top:6px"><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">2</div><div style="width:62%;height:14px;background:var(--green);border-radius:2px 2px 0 0" title="202509: 2 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">09/25</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">4</div><div style="width:62%;height:27px;background:var(--green);border-radius:2px 2px 0 0" title="202510: 4 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">10/25</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">2</div><div style="width:62%;height:14px;background:var(--green);border-radius:2px 2px 0 0" title="202511: 2 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">11/25</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">3</div><div style="width:62%;height:21px;background:var(--green);border-radius:2px 2px 0 0" title="202512: 3 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">12/25</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">9</div><div style="width:62%;height:58px;background:var(--green);border-radius:2px 2px 0 0" title="202601: 9 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">01/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">2</div><div style="width:62%;height:14px;background:var(--green);border-radius:2px 2px 0 0" title="202602: 2 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">02/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">3</div><div style="width:62%;height:21px;background:var(--green);border-radius:2px 2px 0 0" title="202603: 3 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">03/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">5</div><div style="width:62%;height:33px;background:var(--green);border-radius:2px 2px 0 0" title="202604: 5 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">04/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">6</div><div style="width:62%;height:39px;background:var(--green);border-radius:2px 2px 0 0" title="202605: 6 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">05/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">4</div><div style="width:62%;height:27px;background:var(--green);border-radius:2px 2px 0 0" title="202606: 4 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">06/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">1</div><div style="width:62%;height:8px;background:var(--green);border-radius:2px 2px 0 0" title="202607: 1 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">07/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">2</div><div style="width:62%;height:14px;background:var(--green);opacity:.45;border-radius:2px 2px 0 0" title="202608: 2 purchases (month-to-date)"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">08/26*</div></div></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px">* current month = month-to-date (partial)</div></div>
+  <h2>AI-assistant referrals <span class="h2-help">GA4 · purchases via ChatGPT / Perplexity / Claude / Gemini · last 12 mo · current month = month-to-date · floor estimate (referrer-less AI clicks land in Direct/Unassigned)</span></h2><div class="card"><p style="margin:0 0 12px">Last 12 months (2025-09 – 2026-08, current month-to-date): <strong>43 purchases</strong> · <strong>₱120,536</strong> · 3,503 sessions. ChatGPT dominates; this is a <em>floor</em> — many AI clicks arrive referrer-less and are counted as Direct/Unassigned. (Cross-checked vs Shopify referring_site; bd v33f.)</p><div class="table-scroll"><table><thead><tr><th>Engine</th><th class="num">Sessions</th><th class="num">Purchases</th><th class="num">Revenue</th></tr></thead><tbody><tr><td><strong>ChatGPT</strong></td><td class="num">3,023</td><td class="num">42</td><td class="num">₱118,786</td></tr><tr><td><strong>Gemini</strong></td><td class="num">354</td><td class="num">1</td><td class="num">₱1,750</td></tr><tr><td><strong>Perplexity</strong></td><td class="num">80</td><td class="num">0</td><td class="num">₱0</td></tr><tr><td><strong>Copilot</strong></td><td class="num">23</td><td class="num">0</td><td class="num">₱0</td></tr><tr><td><strong>Claude</strong></td><td class="num">23</td><td class="num">0</td><td class="num">₱0</td></tr></tbody></table></div><h4 style="margin:16px 0 0">Purchases by month</h4><div style="display:flex;align-items:flex-end;gap:3px;height:88px;margin-top:6px"><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">2</div><div style="width:62%;height:14px;background:var(--green);border-radius:2px 2px 0 0" title="202509: 2 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">09/25</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">4</div><div style="width:62%;height:27px;background:var(--green);border-radius:2px 2px 0 0" title="202510: 4 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">10/25</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">2</div><div style="width:62%;height:14px;background:var(--green);border-radius:2px 2px 0 0" title="202511: 2 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">11/25</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">3</div><div style="width:62%;height:21px;background:var(--green);border-radius:2px 2px 0 0" title="202512: 3 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">12/25</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">9</div><div style="width:62%;height:58px;background:var(--green);border-radius:2px 2px 0 0" title="202601: 9 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">01/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">2</div><div style="width:62%;height:14px;background:var(--green);border-radius:2px 2px 0 0" title="202602: 2 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">02/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">3</div><div style="width:62%;height:21px;background:var(--green);border-radius:2px 2px 0 0" title="202603: 3 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">03/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">5</div><div style="width:62%;height:33px;background:var(--green);border-radius:2px 2px 0 0" title="202604: 5 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">04/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">6</div><div style="width:62%;height:39px;background:var(--green);border-radius:2px 2px 0 0" title="202605: 6 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">05/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">4</div><div style="width:62%;height:27px;background:var(--green);border-radius:2px 2px 0 0" title="202606: 4 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">06/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">1</div><div style="width:62%;height:8px;background:var(--green);border-radius:2px 2px 0 0" title="202607: 1 purchases"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">07/26</div></div><div style="display:flex;flex-direction:column;align-items:center;flex:1"><div style="font-size:10px;color:var(--text-muted);line-height:1">2</div><div style="width:62%;height:14px;background:var(--green);opacity:.45;border-radius:2px 2px 0 0" title="202608: 2 purchases (month-to-date)"></div><div style="font-size:9px;color:var(--text-muted);margin-top:3px">08/26*</div></div></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px">* current month = month-to-date (partial)</div></div>
 
   <footer>
     Data sources: PSI v5 API · CrUX HTTP API · GA4 Data API (property 248106289)<br>
@@ -743,7 +743,7 @@
 </div>
 
 <script>
-const CHART_DATA = {"mobile": {"labels": ["Jul 18", "Jul 19", "Jul 20", "Jul 21", "Jul 22", "Jul 23", "Jul 24", "Jul 25", "Jul 26", "Jul 27", "Jul 28", "Jul 29", "Jul 30", "Jul 31", "Aug 01", "Aug 02", "Aug 03", "Aug 04", "Aug 05", "Aug 06", "Aug 07", "Aug 08", "Aug 09", "Aug 10", "Aug 11", "Aug 12", "Aug 13", "Aug 14", "Aug 15", "Aug 16"], "score": [43, 39, 33, 57, 42, 29, 41, 36, 40, 38, 35, 31, 40, 33, 37, 30, 40, 49, 44, 43, 41, 34, 49, 34, 47, 38, 45, 52, 44, 42], "score_min": [40, 29, 33, 57, 42, 29, 30, 29, 33, 38, 35, 31, 36, 33, 37, 30, 31, 29, 30, 33, 39, 34, 47, 34, 31, 29, 33, 45, 32, 30], "score_max": [48, 46, 33, 57, 42, 29, 47, 43, 53, 38, 35, 31, 45, 33, 37, 30, 45, 63, 57, 71, 44, 34, 51, 34, 66, 53, 61, 59, 61, 66], "lcp_s": [5.401, 5.476, 18.42, 3.826, 5.401, 9.151, 5.926, 12.301, 5.551, 6.301, 6.067, 15.974, 4.913, 18.856, 13.876, 15.686, 23.623, 9.724, 13.519, 13.199, 10.411, 13.126, 5.626, 15.526, 9.344, 12.411, 13.949, 4.481, 12.714, 8.974], "lcp_s_min": [4.201, 5.401, 18.42, 3.826, 5.401, 9.151, 5.401, 6.001, 4.951, 6.301, 6.067, 15.974, 4.276, 18.856, 13.876, 15.686, 22.755, 4.164, 5.326, 3.901, 5.551, 13.126, 5.476, 15.526, 3.751, 6.376, 5.101, 4.05, 4.501, 4.201], "lcp_s_max": [5.551, 10.876, 18.42, 3.826, 5.401, 9.151, 15.643, 20.321, 9.151, 6.301, 6.067, 15.974, 5.551, 18.856, 13.876, 15.686, 25.25, 22.447, 23.661, 17.76, 15.272, 13.126, 5.776, 15.526, 22.436, 28.039, 24.928, 4.913, 20.76, 24.505], "tbt_ms": [1996, 2832, 1216, 879, 1878, 4375, 1158, 1554, 1496, 1591, 4129, 2689, 4033, 1126, 1167, 1732, 617, 805, 611, 716, 733, 1127, 837, 1148, 665, 890, 586, 1219, 961, 1179], "tbt_ms_min": [859, 1277, 1216, 879, 1878, 4375, 742, 855, 581, 1591, 4129, 2689, 2234, 1126, 1167, 1732, 458, 158, 191, 263, 731, 1127, 755, 1148, 245, 316, 227, 651, 360, 302], "tbt_ms_max": [2635, 3193, 1216, 879, 1878, 4375, 1733, 2829, 3022, 1591, 4129, 2689, 5832, 1126, 1167, 1732, 2262, 2332, 2269, 1616, 736, 1127, 920, 1148, 1674, 3120, 1238, 1788, 1593, 2511], "cls": [0.037, 0.036, 0.034, 0.047, 0.035, 0.014, 0.036, 0.032, 0.027, 0.043, 0.014, 0.029, 0.054, 0.047, 0.042, 0.009, 0.045, 0.019, 0.005, 0.009, 0.03, 0.027, 0.033, 0.027, 0.038, 0.027, 0.0, 0.001, 0.0, 0.0], "cls_min": [0.0, 0.006, 0.034, 0.047, 0.035, 0.014, 0.034, 0.02, 0.026, 0.043, 0.014, 0.029, 0.049, 0.047, 0.042, 0.009, 0, 0.0, 0.0, 0, 0.027, 0.027, 0.02, 0.027, 0.0, 0.0, 0.0, 0.0, 0, 0.0], "cls_max": [0.045, 0.043, 0.034, 0.047, 0.035, 0.014, 0.041, 0.047, 0.045, 0.043, 0.014, 0.029, 0.059, 0.047, 0.042, 0.009, 0.097, 0.027, 0.042, 0.046, 0.034, 0.027, 0.046, 0.027, 0.049, 0.044, 0.0, 0.001, 0.001, 0.0]}, "desktop": {"labels": ["Jul 17", "Jul 18", "Jul 19", "Jul 20", "Jul 21", "Jul 22", "Jul 23", "Jul 24", "Jul 25", "Jul 26", "Jul 27", "Jul 28", "Jul 30", "Jul 31", "Aug 01", "Aug 02", "Aug 03", "Aug 04", "Aug 05", "Aug 06", "Aug 07", "Aug 08", "Aug 09", "Aug 10", "Aug 11", "Aug 12", "Aug 13", "Aug 14", "Aug 15", "Aug 16"], "score": [62, 58, 58, 60, 57, 61, 57, 63, 57, 57, 56, 61, 59, 57, 66, 59, 61, 62, 70, 72, 60, 79, 71, 57, 70, 62, 65, 70, 62, 62], "score_min": [58, 56, 58, 60, 57, 61, 57, 55, 56, 57, 56, 61, 56, 57, 66, 59, 60, 52, 17, 40, 58, 79, 69, 57, 57, 58, 57, 60, 57, 58], "score_max": [66, 60, 65, 60, 57, 61, 57, 72, 61, 61, 56, 61, 62, 57, 66, 59, 66, 94, 88, 89, 62, 79, 73, 57, 81, 77, 87, 81, 86, 84], "lcp_s": [1.247, 1.241, 1.321, 1.23, 1.331, 1.161, 1.454, 1.471, 1.364, 1.305, 1.415, 1.261, 1.284, 1.287, 1.114, 1.15, 1.208, 1.126, 1.19, 1.151, 1.291, 1.441, 1.089, 1.31, 1.241, 1.184, 1.138, 1.009, 1.171, 1.154], "lcp_s_min": [1.231, 1.135, 1.227, 1.23, 1.331, 1.161, 1.454, 1.314, 1.161, 1.274, 1.415, 1.261, 1.048, 1.287, 1.114, 1.15, 1.201, 0.823, 0.968, 0.967, 1.281, 1.441, 1.064, 1.31, 0.874, 1.029, 0.963, 0.861, 0.921, 0.948], "lcp_s_max": [1.361, 1.409, 1.352, 1.23, 1.331, 1.161, 1.454, 1.521, 1.541, 1.333, 1.415, 1.261, 1.521, 1.287, 1.114, 1.15, 1.328, 1.521, 5.62, 5.732, 1.301, 1.441, 1.114, 1.31, 1.421, 1.301, 1.296, 1.157, 1.37, 1.251], "tbt_ms": [1113, 1679, 1454, 985, 2715, 966, 1205, 708, 1325, 2693, 4840, 960, 1264, 2627, 623, 1209, 910, 586, 482, 561, 1352, 268, 446, 2434, 448, 944, 687, 692, 757, 836], "tbt_ms_min": [666, 1422, 818, 985, 2715, 966, 1205, 356, 839, 851, 4840, 960, 839, 2627, 623, 1209, 885, 28, 75, 162, 689, 268, 391, 2434, 225, 322, 188, 289, 204, 223], "tbt_ms_max": [4132, 2387, 1895, 985, 2715, 966, 1205, 1763, 5152, 2770, 4840, 960, 1690, 2627, 623, 1209, 3202, 1420, 1445, 1962, 2015, 268, 502, 2434, 1671, 2214, 3063, 1095, 1784, 1140], "cls": [0.013, 0.009, 0.011, 0.01, 0.015, 0.012, 0.017, 0.009, 0.012, 0.01, 0.003, 0.012, 0.011, 0.008, 0.013, 0.009, 0.011, 0.028, 0.005, 0.005, 0.016, 0.002, 0.009, 0.008, 0.009, 0.006, 0.001, 0.001, 0.001, 0.001], "cls_min": [0.01, 0.004, 0.004, 0.01, 0.015, 0.012, 0.017, 0.0, 0.004, 0.007, 0.003, 0.012, 0.011, 0.008, 0.013, 0.009, 0.01, 0.005, 0.0, 0.001, 0.008, 0.002, 0.009, 0.008, 0.002, 0.001, 0.0, 0.0, 0.0, 0.0], "cls_max": [0.021, 0.011, 0.013, 0.01, 0.015, 0.012, 0.017, 0.013, 0.028, 0.013, 0.003, 0.012, 0.012, 0.008, 0.013, 0.009, 0.014, 0.517, 0.523, 0.024, 0.024, 0.002, 0.01, 0.008, 0.165, 0.011, 0.001, 0.001, 0.001, 0.001]}};
+const CHART_DATA = {"mobile": {"labels": ["Jul 18", "Jul 19", "Jul 20", "Jul 21", "Jul 22", "Jul 23", "Jul 24", "Jul 25", "Jul 26", "Jul 27", "Jul 28", "Jul 29", "Jul 30", "Jul 31", "Aug 01", "Aug 02", "Aug 03", "Aug 04", "Aug 05", "Aug 06", "Aug 07", "Aug 08", "Aug 09", "Aug 10", "Aug 11", "Aug 12", "Aug 13", "Aug 14", "Aug 15", "Aug 16"], "score": [43, 39, 33, 57, 42, 29, 41, 36, 40, 38, 35, 31, 40, 33, 37, 30, 40, 49, 44, 43, 41, 34, 49, 34, 47, 38, 45, 52, 44, 41], "score_min": [40, 29, 33, 57, 42, 29, 30, 29, 33, 38, 35, 31, 36, 33, 37, 30, 31, 29, 30, 33, 39, 34, 47, 34, 31, 29, 33, 45, 32, 30], "score_max": [48, 46, 33, 57, 42, 29, 47, 43, 53, 38, 35, 31, 45, 33, 37, 30, 45, 63, 57, 71, 44, 34, 51, 34, 66, 53, 61, 59, 61, 66], "lcp_s": [5.401, 5.476, 18.42, 3.826, 5.401, 9.151, 5.926, 12.301, 5.551, 6.301, 6.067, 15.974, 4.913, 18.856, 13.876, 15.686, 23.623, 9.724, 13.519, 13.199, 10.411, 13.126, 5.626, 15.526, 9.344, 12.411, 13.949, 4.481, 12.714, 11.087], "lcp_s_min": [4.201, 5.401, 18.42, 3.826, 5.401, 9.151, 5.401, 6.001, 4.951, 6.301, 6.067, 15.974, 4.276, 18.856, 13.876, 15.686, 22.755, 4.164, 5.326, 3.901, 5.551, 13.126, 5.476, 15.526, 3.751, 6.376, 5.101, 4.05, 4.501, 4.201], "lcp_s_max": [5.551, 10.876, 18.42, 3.826, 5.401, 9.151, 15.643, 20.321, 9.151, 6.301, 6.067, 15.974, 5.551, 18.856, 13.876, 15.686, 25.25, 22.447, 23.661, 17.76, 15.272, 13.126, 5.776, 15.526, 22.436, 28.039, 24.928, 4.913, 20.76, 24.505], "tbt_ms": [1996, 2832, 1216, 879, 1878, 4375, 1158, 1554, 1496, 1591, 4129, 2689, 4033, 1126, 1167, 1732, 617, 805, 611, 716, 733, 1127, 837, 1148, 665, 890, 586, 1219, 961, 1158], "tbt_ms_min": [859, 1277, 1216, 879, 1878, 4375, 742, 855, 581, 1591, 4129, 2689, 2234, 1126, 1167, 1732, 458, 158, 191, 263, 731, 1127, 755, 1148, 245, 316, 227, 651, 360, 302], "tbt_ms_max": [2635, 3193, 1216, 879, 1878, 4375, 1733, 2829, 3022, 1591, 4129, 2689, 5832, 1126, 1167, 1732, 2262, 2332, 2269, 1616, 736, 1127, 920, 1148, 1674, 3120, 1238, 1788, 1593, 2511], "cls": [0.037, 0.036, 0.034, 0.047, 0.035, 0.014, 0.036, 0.032, 0.027, 0.043, 0.014, 0.029, 0.054, 0.047, 0.042, 0.009, 0.045, 0.019, 0.005, 0.009, 0.03, 0.027, 0.033, 0.027, 0.038, 0.027, 0.0, 0.001, 0.0, 0.0], "cls_min": [0.0, 0.006, 0.034, 0.047, 0.035, 0.014, 0.034, 0.02, 0.026, 0.043, 0.014, 0.029, 0.049, 0.047, 0.042, 0.009, 0, 0.0, 0.0, 0, 0.027, 0.027, 0.02, 0.027, 0.0, 0.0, 0.0, 0.0, 0, 0.0], "cls_max": [0.045, 0.043, 0.034, 0.047, 0.035, 0.014, 0.041, 0.047, 0.045, 0.043, 0.014, 0.029, 0.059, 0.047, 0.042, 0.009, 0.097, 0.027, 0.042, 0.046, 0.034, 0.027, 0.046, 0.027, 0.049, 0.044, 0.0, 0.001, 0.001, 0.001]}, "desktop": {"labels": ["Jul 17", "Jul 18", "Jul 19", "Jul 20", "Jul 21", "Jul 22", "Jul 23", "Jul 24", "Jul 25", "Jul 26", "Jul 27", "Jul 28", "Jul 30", "Jul 31", "Aug 01", "Aug 02", "Aug 03", "Aug 04", "Aug 05", "Aug 06", "Aug 07", "Aug 08", "Aug 09", "Aug 10", "Aug 11", "Aug 12", "Aug 13", "Aug 14", "Aug 15", "Aug 16"], "score": [62, 58, 58, 60, 57, 61, 57, 63, 57, 57, 56, 61, 59, 57, 66, 59, 61, 62, 70, 72, 60, 79, 71, 57, 70, 62, 65, 70, 62, 63], "score_min": [58, 56, 58, 60, 57, 61, 57, 55, 56, 57, 56, 61, 56, 57, 66, 59, 60, 52, 17, 40, 58, 79, 69, 57, 57, 58, 57, 60, 57, 58], "score_max": [66, 60, 65, 60, 57, 61, 57, 72, 61, 61, 56, 61, 62, 57, 66, 59, 66, 94, 88, 89, 62, 79, 73, 57, 81, 77, 87, 81, 86, 84], "lcp_s": [1.247, 1.241, 1.321, 1.23, 1.331, 1.161, 1.454, 1.471, 1.364, 1.305, 1.415, 1.261, 1.284, 1.287, 1.114, 1.15, 1.208, 1.126, 1.19, 1.151, 1.291, 1.441, 1.089, 1.31, 1.241, 1.184, 1.138, 1.009, 1.171, 1.16], "lcp_s_min": [1.231, 1.135, 1.227, 1.23, 1.331, 1.161, 1.454, 1.314, 1.161, 1.274, 1.415, 1.261, 1.048, 1.287, 1.114, 1.15, 1.201, 0.823, 0.968, 0.967, 1.281, 1.441, 1.064, 1.31, 0.874, 1.029, 0.963, 0.861, 0.921, 0.948], "lcp_s_max": [1.361, 1.409, 1.352, 1.23, 1.331, 1.161, 1.454, 1.521, 1.541, 1.333, 1.415, 1.261, 1.521, 1.287, 1.114, 1.15, 1.328, 1.521, 5.62, 5.732, 1.301, 1.441, 1.114, 1.31, 1.421, 1.301, 1.296, 1.157, 1.37, 1.251], "tbt_ms": [1113, 1679, 1454, 985, 2715, 966, 1205, 708, 1325, 2693, 4840, 960, 1264, 2627, 623, 1209, 910, 586, 482, 561, 1352, 268, 446, 2434, 448, 944, 687, 692, 757, 763], "tbt_ms_min": [666, 1422, 818, 985, 2715, 966, 1205, 356, 839, 851, 4840, 960, 839, 2627, 623, 1209, 885, 28, 75, 162, 689, 268, 391, 2434, 225, 322, 188, 289, 204, 223], "tbt_ms_max": [4132, 2387, 1895, 985, 2715, 966, 1205, 1763, 5152, 2770, 4840, 960, 1690, 2627, 623, 1209, 3202, 1420, 1445, 1962, 2015, 268, 502, 2434, 1671, 2214, 3063, 1095, 1784, 1140], "cls": [0.013, 0.009, 0.011, 0.01, 0.015, 0.012, 0.017, 0.009, 0.012, 0.01, 0.003, 0.012, 0.011, 0.008, 0.013, 0.009, 0.011, 0.028, 0.005, 0.005, 0.016, 0.002, 0.009, 0.008, 0.009, 0.006, 0.001, 0.001, 0.001, 0.001], "cls_min": [0.01, 0.004, 0.004, 0.01, 0.015, 0.012, 0.017, 0.0, 0.004, 0.007, 0.003, 0.012, 0.011, 0.008, 0.013, 0.009, 0.01, 0.005, 0.0, 0.001, 0.008, 0.002, 0.009, 0.008, 0.002, 0.001, 0.0, 0.0, 0.0, 0.0], "cls_max": [0.021, 0.011, 0.013, 0.01, 0.015, 0.012, 0.017, 0.013, 0.028, 0.013, 0.003, 0.012, 0.012, 0.008, 0.013, 0.009, 0.014, 0.517, 0.523, 0.024, 0.024, 0.002, 0.01, 0.008, 0.165, 0.011, 0.001, 0.001, 0.001, 0.001]}};
 let activeRange = 0;  // 0 = all
 let currentStrategy = 'mobile';
 let charts = {};
