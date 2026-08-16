@@ -26,3 +26,7 @@ __pycache__/
 dashboard/index.html
 dashboard/data/snapshots.jsonl
 dashboard/data/archive/
+
+# GTM container backups — large JSON dumps captured before destructive work.
+# Keep the directory, ignore the dumps (they can contain tag config/IDs).
+gtm-backups/*.json

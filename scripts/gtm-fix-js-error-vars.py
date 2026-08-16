@@ -20,7 +20,7 @@ from googleapiclient.discovery import build
 
 ACCOUNT_ID = "4702257664"
 CONTAINER_ID = "12266146"
-WORKSPACE_ID = "190"
+WORKSPACE_ID = "190"  # STALE FALLBACK ONLY — resolved at runtime (bd 6spt)
 TOKEN_PATH = Path.home() / ".config" / "hairmnl-gtm-token.json"
 SCOPES = [
     "https://www.googleapis.com/auth/tagmanager.edit.containers",
@@ -46,7 +46,10 @@ def get_svc():
 
 
 def workspace_path():
-    return f"accounts/{ACCOUNT_ID}/containers/{CONTAINER_ID}/workspaces/{WORKSPACE_ID}"
+    """Resolve the CURRENT default workspace. WORKSPACE_ID above is a stale
+    fallback only — see scripts/gtm_common.py and bd hairmnl-theme-6spt."""
+    from gtm_common import resolve_workspace_path
+    return resolve_workspace_path(get_svc(), ACCOUNT_ID, CONTAINER_ID, WORKSPACE_ID)
 
 
 def find_target_variables(svc):

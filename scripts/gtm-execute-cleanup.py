@@ -19,6 +19,19 @@ Process:
 Rollback path: GTM keeps version history. To restore: GTM admin →
 Versions → previous version → "Set as Latest" → Publish. 1 click.
 
+⚠ BEHAVIOUR CHANGE 2026-08-16 (bd hairmnl-theme-6spt) — THIS SCRIPT GOT SHARPER.
+Until today it hardcoded WORKSPACE_ID="190", which had gone stale: 190 is an
+abandoned workspace (131 tags, 63 dead Universal Analytics tags) that is not
+even listed by workspaces().list(). So `--apply` used to mutate a workspace
+nobody publishes — mostly harmless, and completely useless. It now resolves the
+REAL default workspace (197, matching live version 145), so `--apply` deletes
+from, and by default PUBLISHES to, the live container that serves
+www.hairmnl.com.
+
+Before running with --apply: re-read the target list against
+`versions().live()`, not a workspace, and strongly prefer --no-publish so a
+human reviews the diff in the GTM UI before it reaches customers.
+
 Usage:
   python3 scripts/gtm-execute-cleanup.py --dry-run          # show what would happen
   python3 scripts/gtm-execute-cleanup.py --apply             # do the deletions + publish
@@ -37,7 +50,7 @@ from googleapiclient.errors import HttpError
 
 ACCOUNT_ID = "4702257664"
 CONTAINER_ID = "12266146"
-WORKSPACE_ID = "190"
+WORKSPACE_ID = "190"  # STALE FALLBACK ONLY — resolved at runtime (bd 6spt)
 TOKEN_PATH = Path.home() / ".config" / "hairmnl-gtm-token.json"
 SCOPES = [
     "https://www.googleapis.com/auth/tagmanager.edit.containers",
@@ -73,7 +86,18 @@ def get_svc():
 
 
 def workspace_path():
-    return f"accounts/{ACCOUNT_ID}/containers/{CONTAINER_ID}/workspaces/{WORKSPACE_ID}"
+    """Resolve the CURRENT default workspace, or ABORT.
+
+    NOTE the deliberate `fallback=None`: unlike the read-only inspectors, this
+    script DELETES and PUBLISHES. If the workspace lookup fails (the GTM API
+    times out on connect fairly often from this machine), falling back to the
+    hardcoded WORKSPACE_ID would point a deletion run at the abandoned
+    workspace 190 — or, if that id is ever reused, at something arbitrary.
+    Raising is the only safe failure mode here. Re-run when the API is
+    reachable. See scripts/gtm_common.py and bd hairmnl-theme-6spt.
+    """
+    from gtm_common import resolve_workspace_path
+    return resolve_workspace_path(get_svc(), ACCOUNT_ID, CONTAINER_ID, fallback=None)
 
 
 def categorize(tags: list[dict]) -> dict:
