@@ -2434,4 +2434,44 @@
   aspect-ratio: 1 / 1;
 }
 
+/* Pause drawer loading-skeleton animations while the drawer is CLOSED.
+   bd hairmnl-theme-fgcj, 2026-08-16.
+
+   Collection pages were the worst main-thread page on the site: 50 long tasks /
+   6,923ms, versus 24/3,003ms on the search page pre-fix and 7/480ms on a PDP.
+   Profiling attributed it to four INFINITE animations still running inside the
+   closed cart drawer:
+
+     .item--loadbar:before  animation: 2s linear infinite loadbar
+        @keyframes loadbar animates `left` AND `width` -> forces LAYOUT every
+        frame. This is the expensive one.
+     .empty-content         animation: shimmer (x3 nodes)
+        @keyframes shimmer animates `background-position-x` -> paint work.
+
+   The drawer is hidden with visibility:hidden + translateX, NOT display:none —
+   and visibility:hidden elements are STILL LAID OUT. So loadbar kept forcing a
+   relayout of the drawer subtree every frame, ~1,050 Layout and ~1,111
+   UpdateLayoutTree events over a 17s load, for a drawer nobody had opened.
+   Collections hurt most because the large product grid makes each forced
+   relayout costly; the same animations run sitewide but are cheaper on a
+   smaller DOM.
+
+   `.drawer--visible` is the theme's own open-state class — see its existing
+   rule `.drawer--right:not(.drawer--visible) .drawer__content`. So the skeleton
+   animations resume the moment the drawer actually opens, and the loading
+   affordance is unchanged for users.
+
+   kt0 NOTE: `animation-play-state` does NOT create a containing block, so this
+   is safe on an overlay. Do NOT try to solve this with contain /
+   content-visibility / will-change on the drawer — that is the exact change
+   class that hid the Reamaze chat widget for ~10 days (bd lki).
+
+   NOT TOUCHED: the announcement-bar `ticker` animation. It is also infinite but
+   animates transform:translate3d, which is compositor-only and costs no layout
+   or paint. It was an earlier suspect and is innocent; leave it alone. */
+.drawer:not(.drawer--visible) .item--loadbar:before,
+.drawer:not(.drawer--visible) .empty-content {
+  animation-play-state: paused;
+}
+
 </style>
