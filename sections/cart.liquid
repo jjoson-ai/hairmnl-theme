@@ -18,6 +18,24 @@
     assign empty_init = ''
     assign full_init = 'cart--hidden'
   endif
+
+  # MIGRATION-DEBT: bd hairmnl-theme-ioba.1 (2026-08-25). Reward-gift checkout
+  # gate — server-rendered initial state; assets/hairmnl-common.js section 11
+  # owns updates from the theme:cart:change payload. Detection is the
+  # 'hrewards' tag, never price (reward gift prices vary — team 2026-08-25).
+  assign rg_has_paid = false
+  for rg_item in cart.items
+    unless rg_item.product.tags contains 'hrewards'
+      assign rg_has_paid = true
+      break
+    endunless
+  endfor
+  assign rg_gated = false
+  if settings.reward_gate_enabled and cart.item_count > 0
+    if rg_has_paid == false or cart.total_price == 0
+      assign rg_gated = true
+    endif
+  endif
 -%}
 
 <div class="cart__template {{ no_ajax_class }} {{ hide_quantity }}"  data-section-id="{{ section.id }}" data-section-type="cart" data-ajax-disable="{{ ajax_disable }}">
@@ -188,7 +206,13 @@
 
 
           <div class="cart__footer__checkout">
-            <button type="submit" name="checkout" class="btn btn--primary btn--large uppercase checkout__button">
+            {%- comment -%}
+              Disable the BUTTON, never the form: this same form carries every
+              updates[] quantity input and the name="update" submit below.
+              aria-disabled (not the disabled attribute) because a disabled
+              button fires no click, and the click is what opens the explainer.
+            {%- endcomment -%}
+            <button type="submit" name="checkout" data-checkout-gate class="btn btn--primary btn--large uppercase checkout__button{% if rg_gated %} is-reward-gated{% endif %}"{% if rg_gated %} aria-disabled="true"{% endif %}>
               {{ 'cart.general.checkout' | t }}
             </button>
           </div>
@@ -203,7 +227,7 @@
           </div>
 
           {% if additional_checkout_buttons and settings.cart_show_additional_buttons %}
-            <div class="cart__footer__additional">
+            <div class="cart__footer__additional{% if rg_gated %} is-reward-gated-hidden{% endif %}">
               <div class="additional-checkout-buttons">
                 {{ content_for_additional_checkout_buttons }}
               </div>

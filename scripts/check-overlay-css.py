@@ -84,6 +84,11 @@ OVERLAY_PATTERNS = re.compile(
       # os2-migration/css-overrides.source.liquid.
       | lion[-_]notification        # LoyaltyLion toast container + toast itself
       | \#loyaltylion               # LL SDK root element
+      # bd ioba.1 (2026-08-25): the reward-gift modals use the stock .modal
+      # markup (already covered by \.modal\b above), but they are ALSO
+      # addressable by id — #reward-gate-modal / #reward-reminder-modal — and
+      # an id-based rule would slip past every pattern here.
+      | reward[-_]?(gate|reminder)  # reward-gift explainer + redemption reminder
     )""",
     re.IGNORECASE | re.VERBOSE,
 )

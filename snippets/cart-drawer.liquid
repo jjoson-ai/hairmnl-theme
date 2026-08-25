@@ -205,13 +205,40 @@
         {% render 'cart-subtotal' %}
       </div>
 
+      {%- comment -%}
+        MIGRATION-DEBT: bd hairmnl-theme-ioba.1 (2026-08-25). Reward-gift
+        checkout gate — server-rendered initial state only. assets/hairmnl-common.js
+        section 11 owns every update from the theme:cart:change PAYLOAD, because
+        the api-cart-items / api-cart-subtotal sections do NOT re-render this
+        button, so Liquid alone would go stale after an AJAX quantity change.
+        See the re-render warning at the top of this file (lines ~116-135) for
+        the prior bug that this split avoids.
+
+        Detection is the 'hrewards' product tag. NEVER price — reward gift
+        prices vary per product (team, 2026-08-25).
+      {%- endcomment -%}
+      {%- liquid
+        assign rg_has_paid = false
+        for rg_item in cart.items
+          unless rg_item.product.tags contains 'hrewards'
+            assign rg_has_paid = true
+            break
+          endunless
+        endfor
+        assign rg_gated = false
+        if settings.reward_gate_enabled and cart.item_count > 0
+          if rg_has_paid == false or cart.total_price == 0
+            assign rg_gated = true
+          endif
+        endif
+      -%}
       <form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
-        <button type="submit" name="checkout" class="btn btn--primary btn--large btn--full uppercase checkout__button">
+        <button type="submit" name="checkout" data-checkout-gate class="btn btn--primary btn--large btn--full uppercase checkout__button{% if rg_gated %} is-reward-gated{% endif %}"{% if rg_gated %} aria-disabled="true"{% endif %}>
           {{ 'cart.general.checkout' | t }} • <span data-cart-final><span style="display:none" class="tdf-cart-total-flag"></span>{{ cart.total_price | money }}</span>
         </button>
       </form>
       {% if additional_checkout_buttons and settings.cart_show_additional_buttons %}
-        <div class="drawer__checkout__additional">
+        <div class="drawer__checkout__additional{% if rg_gated %} is-reward-gated-hidden{% endif %}">
           <div class="additional-checkout-buttons">
             {{ content_for_additional_checkout_buttons }}
           </div>

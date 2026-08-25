@@ -1,0 +1,113 @@
+{%- comment -%}
+  MIGRATION-DEBT: bd hairmnl-theme-ioba.1 (2026-08-25). Reward-gift checkout
+  safeguards — two Micromodal dialogs, markup only. Behaviour lives in
+  assets/hairmnl-common.js section 11.
+
+  Rendered once from layout/theme.liquid before </body>, gated on the two
+  settings, so with both switched off this file emits nothing at all and the
+  JS section self-disables (it looks for these element ids).
+
+  Copy approved by the team in the feasibility doc, 2026-08-25. Strings live in
+  locales/en.default.json under cart.general.reward_* so ops can retitle without
+  a deploy.
+
+  Port to OS 2.0: copy this snippet + the theme.liquid render line + JS
+  section 11. No Pipeline-6 coupling beyond themeVendor.MicroModal and the
+  theme:cart:change event. Audit row in
+  os2-migration/customization-audit.md "Recent additions".
+{%- endcomment -%}
+
+{%- if settings.reward_reminder_enabled -%}
+  {%- comment -%}
+    Post-redemption reminder. Shown once per redemption when a reward gift
+    newly lands in the cart. Team constraint (Vikky, 2026-08-25): this must
+    never close or cover LoyaltyLion's own voucher-code window — section 11
+    holds it until that window is gone. Our DOM is entirely separate from
+    LL's, so we cannot close theirs even by accident.
+  {%- endcomment -%}
+  <div
+    class="modal micromodal-slide"
+    id="reward-reminder-modal"
+    data-modal
+    aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <button
+        data-micromodal-close
+        class="modal__close"
+        aria-label="{{ 'cart.general.close_cart' | t }}">
+      </button>
+      <div
+        class="modal__container modal__container--inline"
+        data-modal-content
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reward-reminder-title">
+        <div class="modal__content">
+          <h3 id="reward-reminder-title">{{ 'cart.general.reward_reminder_title' | t }}</h3>
+          <p>{{ 'cart.general.reward_reminder_body' | t }}</p>
+          <button
+            type="button"
+            class="btn btn--primary btn--full uppercase"
+            data-micromodal-close>
+            {{ 'cart.general.reward_reminder_continue' | t }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- if settings.reward_gate_enabled -%}
+  {%- comment -%}
+    Reward-only checkout explainer. Opened by section 11 when a shopper taps a
+    checkout button whose cart contains nothing but reward gifts.
+
+    The CTA falls back through settings.reward_gate_offers_url ->
+    settings.cart_continue_browsing -> all-products, so a blank setting can
+    never render a dead link.
+  {%- endcomment -%}
+  {%- liquid
+    assign rg_offers_url = settings.reward_gate_offers_url
+    if rg_offers_url == blank
+      assign rg_offers_url = settings.cart_continue_browsing
+    endif
+    if rg_offers_url == blank
+      assign rg_offers_url = routes.all_products_collection_url
+    endif
+  -%}
+  <div
+    class="modal micromodal-slide"
+    id="reward-gate-modal"
+    data-modal
+    aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <button
+        data-micromodal-close
+        class="modal__close"
+        aria-label="{{ 'cart.general.close_cart' | t }}">
+      </button>
+      <div
+        class="modal__container modal__container--inline"
+        data-modal-content
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reward-gate-title">
+        <div class="modal__content">
+          <h3 id="reward-gate-title">{{ 'cart.general.reward_gate_title' | t }}</h3>
+          <p>{{ 'cart.general.reward_gate_body' | t }}</p>
+          <a
+            href="{{ rg_offers_url }}"
+            class="btn btn--primary btn--full uppercase">
+            {{ 'cart.general.reward_gate_cta' | t }}
+          </a>
+          <button
+            type="button"
+            class="notify-modal__continue"
+            data-micromodal-close>
+            {{ 'cart.general.reward_gate_close' | t }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

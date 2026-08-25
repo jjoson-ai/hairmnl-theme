@@ -135,6 +135,13 @@
       "close_cart": "Close Cart",
       "qualified_shipping_message": "Congratulations! Your order qualifies for free shipping",
       "add_message": "You added a product: ",
+      "reward_reminder_title": "A Quick Reminder",
+      "reward_reminder_body": "Reward gifts must be checked out together with at least one regular paid item. Please add a paid item to your cart before proceeding with checkout so we can process your reward gift. Thank you for your purchase!",
+      "reward_reminder_continue": "Got it",
+      "reward_gate_title": "Add a paid item to check out",
+      "reward_gate_body": "Your cart only contains reward gifts right now. Reward gifts must be checked out together with at least one regular paid item so we can process them.",
+      "reward_gate_cta": "Complete your order",
+      "reward_gate_close": "Back to cart",
       "total_message": {
         "one": "and you have {{ count }} product in the cart",
         "other": "and you have {{ count }} products in the cart"

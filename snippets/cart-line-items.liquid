@@ -3,7 +3,7 @@
 
 <div class="cart__items">
   {% for line_item in cart.items %}
-    <div class="cart__items__row" data-cart-item {% if line_item.product.tags contains 'with-consent' %}data-with-consent{% endif %}>
+    <div class="cart__items__row" data-cart-item {% if line_item.product.tags contains 'with-consent' %}data-with-consent{% endif %}{% if line_item.product.tags contains 'hrewards' %} data-reward-item{% endif %}>
       <div class="item--loadbar" style="display: none;">&nbsp;</div>
       <div class="cart__items__grid" data-item>
         <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0"

@@ -812,6 +812,30 @@
       },
       {
         "type": "header",
+        "content": "Reward gifts (LoyaltyLion)"
+      },
+      {
+        "type": "checkbox",
+        "id": "reward_gate_enabled",
+        "label": "Block checkout when the cart has only reward gifts",
+        "info": "Disables the checkout button and shows an explainer when every line in the cart is a reward gift (product tag 'hrewards'). Reward gift prices vary, so this never checks price. bd hairmnl-theme-ioba.",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "reward_reminder_enabled",
+        "label": "Show a reminder popup after a reward gift is redeemed",
+        "info": "Appears once per redemption, when a reward gift newly lands in the cart. Waits for LoyaltyLion's own voucher-code window to be closed first — it never closes or covers it.",
+        "default": false
+      },
+      {
+        "type": "url",
+        "id": "reward_gate_offers_url",
+        "label": "\"Complete your order\" link",
+        "info": "Where the reward-gift explainer sends shoppers to add a paid item. Falls back to the Empty cart link if blank."
+      },
+      {
+        "type": "header",
         "content": "Sticky add to cart bar"
       },
       {

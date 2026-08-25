@@ -2474,4 +2474,30 @@
   animation-play-state: paused;
 }
 
+/* Reward-gift checkout gate — bd hairmnl-theme-ioba.1, 2026-08-25.
+
+   The theme ships no reusable disabled-button style (only .upsell__btn:disabled),
+   so the visual disable is authored here. The button keeps aria-disabled rather
+   than the disabled attribute, because a disabled button fires no click event and
+   the click is exactly what opens the explainer popup.
+
+   The express-pay wrappers are inert today (settings.cart_show_additional_buttons
+   is off), but they bypass the gated button entirely if that setting is ever
+   flipped, so hide them defensively while gated. body.is-reward-gated is set by
+   assets/hairmnl-common.js section 11; the .is-reward-gated-hidden class is the
+   server-rendered equivalent for first paint.
+
+   kt0: no contain / transform / filter / will-change anywhere here. These
+   selectors sit inside the cart drawer, which is an overlay — that property
+   family is what hid the Reamaze widget for ten days (bd lki). */
+[data-checkout-gate][aria-disabled="true"] {
+  opacity: .5;
+  cursor: not-allowed;
+}
+.is-reward-gated-hidden,
+body.is-reward-gated .drawer__checkout__additional,
+body.is-reward-gated .cart__footer__additional {
+  display: none !important;
+}
+
 </style>

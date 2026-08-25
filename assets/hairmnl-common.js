@@ -721,7 +721,25 @@
       body: JSON.stringify({ id: id, quantity: qty })
     })
       .then(function (r) { if (!r.ok) throw new Error('add failed: ' + r.status); return r.json(); })
-      .then(function () { window.location.href = '/checkout'; })
+      .then(function () {
+        // bd ioba.1: this path jumps straight to /checkout, bypassing both
+        // gated checkout buttons. Normally the item just added is a paid
+        // product, which un-gates the cart anyway — this is pure defence in
+        // case the sticky bar is ever used on a reward gift.
+        if (!window.__hmRewardGate) { window.location.href = '/checkout'; return; }
+        return fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (cart) {
+            if (cart && window.__hmRewardGate.computeGated(cart)) {
+              window.__hmRewardGate.show();
+              btn.removeAttribute('aria-busy');
+              btn.disabled = false;
+              return;
+            }
+            window.location.href = '/checkout';
+          })
+          .catch(function () { window.location.href = '/checkout'; });
+      })
       .catch(function (err) {
         if (window.console && console.warn) console.warn('[vrec-checkout]', err && err.message ? err.message : err);
         btn.removeAttribute('aria-busy');
@@ -928,4 +946,213 @@
   //
   // Reference: os2-migration/p4-spike-report.md (vendor-lib analysis).
   // ============================================================
+
+  // ============================================================
+  // 11) reward-gate — reward-only checkout gate + redemption reminder
+  //     (bd hairmnl-theme-ioba.1, 2026-08-25)
+  // ------------------------------------------------------------
+  // Two features, one state source:
+  //   (a) GATE  — when every line in the cart is a LoyaltyLion reward gift,
+  //       the checkout buttons on both surfaces (cart drawer + cart page) are
+  //       shown disabled and tapping one opens an explainer instead of
+  //       submitting.
+  //   (b) REMINDER — once per redemption, when a reward gift newly lands in
+  //       the cart, a reminder popup asks the shopper to add a paid item.
+  //
+  // WHY STATE COMES FROM THE EVENT PAYLOAD, NOT THE DOM.
+  // theme.js re-renders only [data-line-items] and [data-cart-subtotal] after
+  // an AJAX cart change; the checkout buttons are never replaced, so anything
+  // we set on them survives. But the api-cart-* sections do NOT contain the
+  // buttons, so the Liquid-rendered initial state would go stale after a
+  // quantity change. We therefore recompute from e.detail.cart on every
+  // theme:cart:change. See the long re-render warning near the top of
+  // snippets/cart-drawer.liquid: a previous attempt that kept a class in sync
+  // by reading the DOM shipped a visible bug. Reading the payload also
+  // sidesteps the §7 ordering trap — our handlers run before theme.js's
+  // CartItems finishes, which only matters if you touch re-rendered DOM.
+  //
+  // WHY NO LOYALTYLION SDK LISTENERS.
+  // LL's shipped bundle does, after mutating the cart:
+  //   fire cart.changed -> if nobody is listening, window.location.reload()
+  // Registering a cart.changed listener would SUPPRESS that reload and change
+  // live behaviour. So we register none, and the reminder is instead made
+  // reload-proof: sessionStorage remembers which reward line keys we have
+  // already announced, so the popup survives the reload and shows exactly once.
+  //
+  // TEAM CONSTRAINT (Vikky, 2026-08-25): the reminder must never close or
+  // cover LL's own voucher-code window. We hold it while a visible LL modal is
+  // on screen and show it only once that window is gone. Our modal is separate
+  // DOM and we never call an LL API, so we cannot close theirs even by mistake.
+  //
+  // DETECTION: reward gifts are identified by vendor / product type, never by
+  // price — reward gift prices vary per product (team, 2026-08-25). The Liquid
+  // side uses the 'hrewards' tag; /cart.js line items carry no tags, hence the
+  // vendor + product_type pair here. cart.total_price === 0 is kept only as a
+  // harmless backup for a future pricing setup.
+  // ============================================================
+  (function () {
+    var gateModal = document.getElementById('reward-gate-modal');
+    var reminderModal = document.getElementById('reward-reminder-modal');
+    // Both modals render only when their theme setting is on, so this is also
+    // the feature switch: settings off -> no markup -> section does nothing.
+    if (!gateModal && !reminderModal) return;
+
+    var STORE_KEY = 'hmRewardLineKeys';
+    var LL_MODAL_SEL = '.lion-modal, [class*="lion-redeem-reward-modal"]';
+    var gated = false;
+    var reminderShownThisPageload = false;
+
+    function isReward(item) {
+      if (!item) return false;
+      return item.vendor === 'HairMNL Rewards' || item.product_type === 'Promo Tracking';
+    }
+
+    function computeGated(cart) {
+      if (!cart || !cart.items || !cart.items.length) return false;
+      if (cart.item_count === 0) return false;
+      if (cart.total_price === 0) return true;
+      for (var i = 0; i < cart.items.length; i++) {
+        if (!isReward(cart.items[i])) return false;
+      }
+      return true;
+    }
+
+    function showModal(id) {
+      try {
+        if (window.themeVendor && window.themeVendor.MicroModal) {
+          window.themeVendor.MicroModal.show(id);
+        }
+      } catch (err) {
+        if (window.console && console.warn) console.warn('[reward-gate] modal', err);
+      }
+    }
+
+    function applyGate() {
+      // Re-query every time: cheap, and immune to any future re-render.
+      var buttons = document.querySelectorAll('[data-checkout-gate]');
+      for (var i = 0; i < buttons.length; i++) {
+        if (gated) {
+          buttons[i].classList.add('is-reward-gated');
+          buttons[i].setAttribute('aria-disabled', 'true');
+        } else {
+          buttons[i].classList.remove('is-reward-gated');
+          buttons[i].removeAttribute('aria-disabled');
+        }
+      }
+      // Body class drives the defensive express-pay hide (cart state is global).
+      if (document.body) document.body.classList.toggle('is-reward-gated', gated);
+    }
+
+    // ---- reminder: which reward line keys have we already announced? -------
+    function readSeen() {
+      try {
+        var raw = window.sessionStorage.getItem(STORE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (err) { return []; }
+    }
+    function writeSeen(keys) {
+      try { window.sessionStorage.setItem(STORE_KEY, JSON.stringify(keys)); } catch (err) { /* private mode */ }
+    }
+
+    function llModalVisible() {
+      try {
+        var nodes = document.querySelectorAll(LL_MODAL_SEL);
+        for (var i = 0; i < nodes.length; i++) {
+          var el = nodes[i];
+          var cs = window.getComputedStyle(el);
+          var r = el.getBoundingClientRect();
+          if (cs.display !== 'none' && cs.visibility !== 'hidden' && r.width > 2 && r.height > 2) return true;
+        }
+      } catch (err) { /* fall through: treat as not visible */ }
+      return false;
+    }
+
+    // Show the reminder, but only once LL's voucher window has gone. If it
+    // never resolves we deliberately do nothing AND do not mark the keys as
+    // seen, so the reminder simply fires on the shopper's next surface (cart
+    // page or drawer) instead of being lost.
+    function showReminderWhenClear(newKeys, allKeys) {
+      var waited = 0;
+      var LIMIT_MS = 30000;
+      var STEP_MS = 500;
+
+      function fire() {
+        if (reminderShownThisPageload) return;
+        reminderShownThisPageload = true;
+        writeSeen(allKeys);
+        showModal('reward-reminder-modal');
+      }
+
+      if (!llModalVisible()) { fire(); return; }
+
+      var timer = window.setInterval(function () {
+        waited += STEP_MS;
+        if (!llModalVisible()) { window.clearInterval(timer); fire(); return; }
+        if (waited >= LIMIT_MS) { window.clearInterval(timer); /* give up silently */ }
+      }, STEP_MS);
+    }
+
+    function checkReminder(cart) {
+      if (!reminderModal || reminderShownThisPageload) return;
+      if (!cart || !cart.items) return;
+      var seen = readSeen();
+      var all = [];
+      var fresh = false;
+      for (var i = 0; i < cart.items.length; i++) {
+        var it = cart.items[i];
+        if (!isReward(it) || !it.key) continue;
+        all.push(it.key);
+        if (seen.indexOf(it.key) === -1) fresh = true;
+      }
+      if (!all.length) { writeSeen([]); return; } // rewards gone: reset cleanly
+      if (!fresh) { writeSeen(all); return; }     // nothing new: just prune
+      showReminderWhenClear(all, all);
+    }
+
+    // ---- single source of truth: the cart payload --------------------------
+    // Fires on page load too (CartItems.init GETs /cart.js then fireChange), so
+    // one listener covers first paint and every later mutation on both surfaces.
+    document.addEventListener('theme:cart:change', function (e) {
+      var cart = e && e.detail && e.detail.cart;
+      if (!cart) return;
+      gated = computeGated(cart);
+      applyGate();
+      checkReminder(cart);
+    });
+
+    // ---- blocking ----------------------------------------------------------
+    // Capture phase so we run before the theme's own handlers. aria-disabled
+    // (not [disabled]) keeps the button clickable, which is what lets us
+    // explain rather than silently do nothing.
+    document.addEventListener('click', function (e) {
+      if (!gated || !gateModal) return;
+      var btn = e.target.closest && e.target.closest('[data-checkout-gate]');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      showModal('reward-gate-modal');
+    }, true);
+
+    // Enter inside a cart-page quantity field submits the form implicitly. The
+    // checkout button precedes the update button in the DOM, so it is the
+    // default submitter — but never block an explicit "Update Cart".
+    document.addEventListener('submit', function (e) {
+      if (!gated || !gateModal) return;
+      var form = e.target;
+      if (!form || !form.querySelector || !form.querySelector('[data-checkout-gate]')) return;
+      if (e.submitter && e.submitter.name && e.submitter.name !== 'checkout') return;
+      e.preventDefault();
+      e.stopPropagation();
+      showModal('reward-gate-modal');
+    }, true);
+
+    // Exposed for the skip-to-checkout guard below and for headless testing.
+    window.__hmRewardGate = {
+      computeGated: computeGated,
+      isReward: isReward,
+      show: function () { showModal('reward-gate-modal'); },
+      isGated: function () { return gated; }
+    };
+  })();
+
 })();

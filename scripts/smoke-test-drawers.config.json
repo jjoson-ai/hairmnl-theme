@@ -4,10 +4,9 @@
     "preview_param": "preview_theme_id",
     "themes": {
       "draft": "140785582179",
-      "live":  "131664707683"
+      "live": "131664707683"
     }
   },
-
   "tests": [
     {
       "name": "Cart drawer on PDP",
@@ -15,7 +14,10 @@
       "trigger_selector": "[data-drawer-toggle=\"drawer-cart\"]",
       "panel_selector": ".cart__drawer .drawer__content",
       "state_selector": ".cart__drawer.drawer--visible",
-      "viewport": [1280, 800],
+      "viewport": [
+        1280,
+        800
+      ],
       "expected_height_pct": 0.9
     },
     {
@@ -24,7 +26,10 @@
       "trigger_selector": "[data-drawer-toggle=\"hamburger\"]",
       "panel_selector": ".header__drawer .drawer__content",
       "state_selector": ".header__drawer.drawer--visible",
-      "viewport": [375, 667],
+      "viewport": [
+        375,
+        667
+      ],
       "expected_height_pct": 0.9
     },
     {
@@ -33,7 +38,10 @@
       "trigger_selector": "[data-zoom-button]",
       "panel_selector": ".pswp",
       "state_selector": ".pswp--open",
-      "viewport": [1280, 800],
+      "viewport": [
+        1280,
+        800
+      ],
       "expected_height_pct": 0.9,
       "pre_click_wait_for": "() => !!window.themePhotoswipe",
       "trigger_eval_js": "async () => { const PhotoSwipe = window.themePhotoswipe.PhotoSwipe.default; const PhotoSwipeUI = window.themePhotoswipe.PhotoSwipeUI.default; const el = document.querySelector('[data-zoom-wrapper]'); const jsonEl = document.querySelector('[data-product-json]'); if (!el || !jsonEl) throw new Error('missing pswp elements'); const json = JSON.parse(jsonEl.innerHTML); const items = json.media.filter(m => m.media_type === 'image').map(m => ({src: m.src, w: m.width, h: m.height, id: m.id})); if (!items.length) throw new Error('no image media items'); el.dispatchEvent(new CustomEvent('theme:scroll:lock', {bubbles: true})); await new Promise(r => setTimeout(r, 0)); const gallery = new PhotoSwipe(el, PhotoSwipeUI, items, {index: 0, showHideOpacity: true, showAnimationDuration: 150, hideAnimationDuration: 250, bgOpacity: 1, spacing: 0, allowPanToNext: false, maxSpreadZoom: 3, history: false, loop: true, pinchToClose: false, modal: false, closeOnScroll: false, closeOnVerticalDrag: true}); gallery.init(); }"
@@ -44,7 +52,38 @@
       "trigger_selector": "[data-popdown-toggle=\"search-popdown\"]",
       "panel_selector": "#search-popdown",
       "state_selector": "#search-popdown.is-visible",
-      "viewport": [1280, 800],
+      "viewport": [
+        1280,
+        800
+      ],
+      "expected_height_pct": 0.1
+    },
+    {
+      "name": "Reward gate modal (draft only \u2014 needs reward_gate_enabled)",
+      "path": "/",
+      "trigger_selector": "body",
+      "trigger_eval_js": "async () => { window.themeVendor.MicroModal.show('reward-gate-modal'); }",
+      "pre_click_wait_for": "() => !!(window.themeVendor && window.themeVendor.MicroModal && document.getElementById('reward-gate-modal'))",
+      "panel_selector": "#reward-gate-modal .modal__container",
+      "state_selector": "#reward-gate-modal.is-open",
+      "viewport": [
+        1280,
+        800
+      ],
+      "expected_height_pct": 0.1
+    },
+    {
+      "name": "Reward reminder modal (draft only \u2014 needs reward_reminder_enabled)",
+      "path": "/",
+      "trigger_selector": "body",
+      "trigger_eval_js": "async () => { window.themeVendor.MicroModal.show('reward-reminder-modal'); }",
+      "pre_click_wait_for": "() => !!(window.themeVendor && window.themeVendor.MicroModal && document.getElementById('reward-reminder-modal'))",
+      "panel_selector": "#reward-reminder-modal .modal__container",
+      "state_selector": "#reward-reminder-modal.is-open",
+      "viewport": [
+        1280,
+        800
+      ],
       "expected_height_pct": 0.1
     }
   ]

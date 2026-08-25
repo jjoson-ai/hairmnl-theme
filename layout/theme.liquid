@@ -2244,6 +2244,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {%- render 'notify-when-available-modal' -%}
     <script src="{{ 'notify-when-available.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
+
+  {%- comment -%}
+    MIGRATION-DEBT: bd hairmnl-theme-ioba.1 (2026-08-25). Reward-gift checkout
+    safeguards. Rendered on EVERY template on purpose: the cart drawer exists
+    everywhere except /cart, and LoyaltyLion's post-redemption page reload can
+    land the shopper on any surface. Emits nothing while both settings are off.
+    Behaviour: assets/hairmnl-common.js section 11.
+  {%- endcomment -%}
+  {%- if settings.reward_gate_enabled or settings.reward_reminder_enabled -%}
+    {%- render 'reward-gate-modals' -%}
+  {%- endif -%}
   </body>
     {%- comment -%}
       ujg6.49 (2026-05-19): gate BOGOS freegifts-snippet-change to product
