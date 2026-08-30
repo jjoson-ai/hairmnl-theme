@@ -17,6 +17,19 @@
   os2-migration/customization-audit.md "Recent additions".
 {%- endcomment -%}
 
+{%- liquid
+  # Shared by BOTH modals (independent settings, so computed once up here).
+  # Falls back reward_gate_offers_url -> cart_continue_browsing -> all-products,
+  # so a blank setting can never render a dead link.
+  assign rg_offers_url = settings.reward_gate_offers_url
+  if rg_offers_url == blank
+    assign rg_offers_url = settings.cart_continue_browsing
+  endif
+  if rg_offers_url == blank
+    assign rg_offers_url = routes.all_products_collection_url
+  endif
+-%}
+
 {%- if settings.reward_reminder_enabled -%}
   {%- comment -%}
     Post-redemption reminder. Shown once per redemption when a reward gift
@@ -45,9 +58,19 @@
         <div class="modal__content">
           <h3 id="reward-reminder-title">{{ 'cart.general.reward_reminder_title' | t }}</h3>
           <p>{{ 'cart.general.reward_reminder_body' | t }}</p>
+          {%- comment -%}
+            Team decision (Basecamp, 2026-08-26): the reminder also carries the
+            "Complete your order" CTA. Same label + destination as the gate
+            modal, so ops edit one setting/locale key and both stay in step.
+          {%- endcomment -%}
+          <a
+            href="{{ rg_offers_url }}"
+            class="btn btn--primary btn--full uppercase">
+            {{ 'cart.general.reward_gate_cta' | t }}
+          </a>
           <button
             type="button"
-            class="btn btn--primary btn--full uppercase"
+            class="notify-modal__continue"
             data-micromodal-close>
             {{ 'cart.general.reward_reminder_continue' | t }}
           </button>
@@ -66,15 +89,6 @@
     settings.cart_continue_browsing -> all-products, so a blank setting can
     never render a dead link.
   {%- endcomment -%}
-  {%- liquid
-    assign rg_offers_url = settings.reward_gate_offers_url
-    if rg_offers_url == blank
-      assign rg_offers_url = settings.cart_continue_browsing
-    endif
-    if rg_offers_url == blank
-      assign rg_offers_url = routes.all_products_collection_url
-    endif
-  -%}
   <div
     class="modal micromodal-slide"
     id="reward-gate-modal"
