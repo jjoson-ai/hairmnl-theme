@@ -2500,4 +2500,73 @@ body.is-reward-gated .cart__footer__additional {
   display: none !important;
 }
 
+/* Reward modals — team revisions from the Jessica/Vikky preview pass, 2026-08-26.
+
+   (1) STACKING — THE FUNCTIONAL ONE. The tester tapped Checkout inside the open
+   mobile cart drawer and saw nothing; the explainer only appeared once the
+   drawer was closed. Cause: theme CSS puts `.micromodal-slide.is-open` at
+   z-index 10000, while an open drawer is 20000 (underlay) / 20050
+   (.drawer__content) — so the modal was painting UNDERNEATH the drawer. Raising
+   only our two modals above .drawer__content fixes it without touching the
+   stacking of every other modal in the theme (size guide, image zoom, BIS).
+   kt0: z-index does NOT create a containing block for fixed descendants, so
+   this is safe on an overlay — unlike contain/transform/filter/will-change.
+
+   (2) DESKTOP SHAPE. `.modal__container--inline` is max-width:95vw, which on a
+   desktop viewport renders as a full-width bar. Team asked for a compact card
+   matching the mobile proportions / the LoyaltyLion voucher window. Capping the
+   width from the tablet breakpoint up gets that; mobile keeps 95vw, which the
+   team confirmed is already right.
+
+   (3) BUTTONS. Side by side on desktop, stacked on mobile; the secondary action
+   (Got it / Back to cart) is an outlined button rather than a filled one. */
+#reward-gate-modal.is-open,
+#reward-reminder-modal.is-open {
+  z-index: 20100;
+}
+
+@media screen and (min-width: 768px) {
+  #reward-gate-modal .modal__container,
+  #reward-reminder-modal .modal__container {
+    max-width: 480px;
+  }
+}
+
+.reward-modal__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .reward-modal__actions {
+    flex-direction: row;
+  }
+  .reward-modal__actions > .reward-modal__primary,
+  .reward-modal__actions > .reward-modal__secondary {
+    flex: 1 1 0;
+  }
+}
+
+.reward-modal__actions > .reward-modal__primary,
+.reward-modal__actions > .reward-modal__secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+}
+
+/* Outlined secondary: black border, no fill. Overrides the theme's .btn
+   background so it reads as the quieter of the two actions. */
+.reward-modal__actions > .reward-modal__secondary,
+.reward-modal__actions > .reward-modal__secondary:hover,
+.reward-modal__actions > .reward-modal__secondary:focus {
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid #000;
+  color: #000;
+}
+
 </style>

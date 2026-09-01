@@ -63,17 +63,23 @@
             "Complete your order" CTA. Same label + destination as the gate
             modal, so ops edit one setting/locale key and both stay in step.
           {%- endcomment -%}
-          <a
-            href="{{ rg_offers_url }}"
-            class="btn btn--primary btn--full uppercase">
-            {{ 'cart.general.reward_gate_cta' | t }}
-          </a>
-          <button
-            type="button"
-            class="notify-modal__continue"
-            data-micromodal-close>
-            {{ 'cart.general.reward_reminder_continue' | t }}
-          </button>
+          {%- comment -%}
+            Actions wrapper (team revisions, 2026-08-26): side-by-side on
+            desktop, stacked on mobile. Styling in css-overrides.source.liquid.
+          {%- endcomment -%}
+          <div class="reward-modal__actions">
+            <a
+              href="{{ rg_offers_url }}"
+              class="btn btn--primary uppercase reward-modal__primary">
+              {{ 'cart.general.reward_gate_cta' | t }}
+            </a>
+            <button
+              type="button"
+              class="btn uppercase reward-modal__secondary"
+              data-micromodal-close>
+              {{ 'cart.general.reward_reminder_continue' | t }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -109,17 +115,19 @@
         <div class="modal__content">
           <h3 id="reward-gate-title">{{ 'cart.general.reward_gate_title' | t }}</h3>
           <p>{{ 'cart.general.reward_gate_body' | t }}</p>
-          <a
-            href="{{ rg_offers_url }}"
-            class="btn btn--primary btn--full uppercase">
-            {{ 'cart.general.reward_gate_cta' | t }}
-          </a>
-          <button
-            type="button"
-            class="notify-modal__continue"
-            data-micromodal-close>
-            {{ 'cart.general.reward_gate_close' | t }}
-          </button>
+          <div class="reward-modal__actions">
+            <a
+              href="{{ rg_offers_url }}"
+              class="btn btn--primary uppercase reward-modal__primary">
+              {{ 'cart.general.reward_gate_cta' | t }}
+            </a>
+            <button
+              type="button"
+              class="btn uppercase reward-modal__secondary"
+              data-micromodal-close>
+              {{ 'cart.general.reward_gate_close' | t }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
