@@ -278,6 +278,26 @@ If live == HEAD, your working-tree delta is the only change and the push is safe
 If they differ, another session pushed since your last pull — reconcile before
 pushing or you will clobber their change.
 
+**"Another session" includes humans in the Shopify code editor (learned
+2026-09-04, bd tvae).** Someone edited `sections/product.liquid` directly on
+live, moved a `</div>` above the product JSON scripts, and killed variant
+selection on every multi-variant PDP for up to three weeks — found by a
+customer report. The same session left three other live-only edits that a
+git push would have silently erased. Live drift is therefore not a theory;
+run the whole-theme check, not just the one-file diff, before any live push
+and weekly regardless:
+
+```bash
+python3 scripts/check-live-drift.py
+```
+
+It pulls live, compares every file to HEAD, and classifies each difference:
+`GIT AHEAD` (live byte-matches an older commit — safe, just unpushed),
+`LIVE EDITED` / `DIVERGED` (someone changed live outside git — exit 1, stop
+and reconcile: adopt the edit into git if wanted, else push HEAD's copy). A
+moved line shows up as DIVERGED — that is the tvae shape. Customizer JSON is
+reported separately and never blocks. Reconciliation pattern: bd `982g`.
+
 **Never** `shopify theme push` without `--only=<file>` flags **when
 targeting the LIVE theme `141168312419`**. A no-filter push to live
 uploads the entire working tree, which is almost guaranteed to drag
