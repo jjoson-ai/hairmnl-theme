@@ -82,11 +82,11 @@
 
 {%- if k_collections != blank -%}
 <section class="k-extras k-related k-xcoll">
-  <h2>Explore the Kérastase range</h2>
+  {%- if collection.handle contains 'davines' -%}<h2>Explore the Davines range</h2>{%- else -%}<h2>Explore the Kérastase range</h2>{%- endif -%}
   <ul role="list" class="k-related__list">
     {%- for url in k_collections -%}
-      {%- assign cslug = url | split: '/' | last | remove: 'kerastase-' | replace: '-', ' ' -%}
-      <li><a href="{{ url }}">{{ cslug | capitalize | default: 'Kérastase' }}</a></li>
+      {%- assign cslug = url | split: '/' | last | remove: 'kerastase-' | remove: 'davines-' | replace: '-', ' ' -%}
+      <li><a href="{{ url }}">{{ cslug | capitalize | default: 'Shop the range' }}</a></li>
     {%- endfor -%}
   </ul>
 </section>

@@ -2758,3 +2758,13 @@ body.template-index .jdgm-prev-badge {
 body.template-cart #freegifts-main-page-container {
   min-height: 240px;
 }
+/* LFS Pro Blogger - Left align Related Products & Articles titles */
+body .pb-text-title,
+body .pb-text-title-header,
+body h4.pb-text-title-header {
+  text-align: left !important;
+}
+
+body .pb-text-wrapper {
+  text-align: left !important;
+}

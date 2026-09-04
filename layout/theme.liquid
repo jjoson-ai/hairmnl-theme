@@ -2255,6 +2255,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   {%- if settings.reward_gate_enabled or settings.reward_reminder_enabled -%}
     {%- render 'reward-gate-modals' -%}
   {%- endif -%}
+{%- comment -%}
+  ADOPTED FROM LIVE 2026-09-04 (bd hairmnl-theme-982g). This block was added
+  directly on the live theme in the code editor (not via git) sometime after
+  2026-08-13 — most likely by LFS Pro Blogger support. It is mirrored here
+  verbatim so the next --only push of this file does not silently erase it.
+  The same rules also exist in assets/custom-theme.css (also a live edit);
+  de-duplicating is a separate, visually verified change — do not do it here.
+{%- endcomment -%}
+{% comment %} LFS Pro Blogger - Left align Related Products & Articles titles {% endcomment %}
+<style>
+  .pb-text-title,
+  .pb-text-title-header,
+  h4.pb-text-title-header {
+    text-align: left !important;
+  }
+  .pb-text-wrapper {
+    text-align: left !important;
+  }
+  .pb-text-excerpt {
+    text-align: left !important;
+  }
+  .pb-text-wrapper div:last-child {
+    justify-content: flex-start !important;
+  }
+</style>
   </body>
     {%- comment -%}
       ujg6.49 (2026-05-19): gate BOGOS freegifts-snippet-change to product
