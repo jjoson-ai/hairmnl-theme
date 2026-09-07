@@ -1071,7 +1071,22 @@
     // never resolves we deliberately do nothing AND do not mark the keys as
     // seen, so the reminder simply fires on the shopper's next surface (cart
     // page or drawer) instead of being lost.
-    function showReminderWhenClear(newKeys, allKeys) {
+    // Team feedback 2026-09-07 (bd ioba.5): the reminder also fires when a
+    // regular paid item is already in the cart (by design — the trigger is "a
+    // reward newly landed", and the team wants that kept). But the original
+    // body says "please add a paid item", which reads wrong then. Two bodies
+    // in the snippet; pick the right one from the cart at fire time.
+    function pickReminderBody(hasPaid) {
+      var want = hasPaid ? 'has-paid' : 'no-paid';
+      var ps = reminderModal.querySelectorAll('[data-reminder-body]');
+      for (var i = 0; i < ps.length; i++) {
+        var on = ps[i].getAttribute('data-reminder-body') === want;
+        ps[i].hidden = !on;
+        ps[i].style.display = on ? '' : 'none';
+      }
+    }
+
+    function showReminderWhenClear(newKeys, allKeys, hasPaid) {
       var waited = 0;
       var LIMIT_MS = 30000;
       var STEP_MS = 500;
@@ -1080,6 +1095,7 @@
         if (reminderShownThisPageload) return;
         reminderShownThisPageload = true;
         writeSeen(allKeys);
+        pickReminderBody(hasPaid);
         showModal('reward-reminder-modal');
       }
 
@@ -1098,15 +1114,17 @@
       var seen = readSeen();
       var all = [];
       var fresh = false;
+      var hasPaid = false;
       for (var i = 0; i < cart.items.length; i++) {
         var it = cart.items[i];
-        if (!isReward(it) || !it.key) continue;
+        if (!isReward(it)) { hasPaid = true; continue; }
+        if (!it.key) continue;
         all.push(it.key);
         if (seen.indexOf(it.key) === -1) fresh = true;
       }
       if (!all.length) { writeSeen([]); return; } // rewards gone: reset cleanly
       if (!fresh) { writeSeen(all); return; }     // nothing new: just prune
-      showReminderWhenClear(all, all);
+      showReminderWhenClear(all, all, hasPaid);
     }
 
     // ---- single source of truth: the cart payload --------------------------

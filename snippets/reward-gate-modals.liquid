@@ -57,7 +57,16 @@
         aria-labelledby="reward-reminder-title">
         <div class="modal__content">
           <h3 id="reward-reminder-title">{{ 'cart.general.reward_reminder_title' | t }}</h3>
-          <p>{{ 'cart.general.reward_reminder_body' | t }}</p>
+          {%- comment -%}
+            Team feedback (Basecamp, 2026-09-07): the reminder also fires when a
+            regular paid item is already in the cart (by design — the trigger is
+            "a reward newly landed"), and "please add a paid item" reads wrong
+            then. Two bodies; section 11 shows the right one at fire time from
+            the cart payload. The has-paid one is hidden server-side so a
+            JS-less render still shows only the original approved copy.
+          {%- endcomment -%}
+          <p data-reminder-body="no-paid">{{ 'cart.general.reward_reminder_body' | t }}</p>
+          <p data-reminder-body="has-paid" hidden style="display:none">{{ 'cart.general.reward_reminder_body_has_paid' | t }}</p>
           {%- comment -%}
             Team decision (Basecamp, 2026-08-26): the reminder also carries the
             "Complete your order" CTA. Same label + destination as the gate
