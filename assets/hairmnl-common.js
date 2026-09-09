@@ -993,13 +993,15 @@
   (function () {
     var gateModal = document.getElementById('reward-gate-modal');
     var reminderModal = document.getElementById('reward-reminder-modal');
+    var multiModal = document.getElementById('reward-multi-modal');
     // Both modals render only when their theme setting is on, so this is also
     // the feature switch: settings off -> no markup -> section does nothing.
-    if (!gateModal && !reminderModal) return;
+    if (!gateModal && !reminderModal && !multiModal) return;
 
     var STORE_KEY = 'hmRewardLineKeys';
     var LL_MODAL_SEL = '.lion-modal, [class*="lion-redeem-reward-modal"]';
     var gated = false;
+    var gatedReason = '';
     var reminderShownThisPageload = false;
 
     function isReward(item) {
@@ -1007,14 +1009,42 @@
       return item.vendor === 'HairMNL Rewards' || item.product_type === 'Promo Tracking';
     }
 
-    function computeGated(cart) {
-      if (!cart || !cart.items || !cart.items.length) return false;
-      if (cart.item_count === 0) return false;
-      if (cart.total_price === 0) return true;
+    // bd 582o: count reward UNITS, not reward LINES. A team screenshot showed a
+    // single reward line at quantity 5 — a line-count test would have waved it
+    // through, and the LoyaltyLion voucher discounts only one unit, so the
+    // shopper was charged for the other four.
+    function rewardUnits(cart) {
+      var n = 0;
+      if (!cart || !cart.items) return 0;
       for (var i = 0; i < cart.items.length; i++) {
-        if (!isReward(cart.items[i])) return false;
+        if (isReward(cart.items[i])) n += (cart.items[i].quantity || 1);
       }
-      return true;
+      return n;
+    }
+
+    // Returns '' (allowed), 'multi-reward', or 'reward-only'. Each modal is
+    // rendered only when its setting is on, so a missing modal element IS the
+    // off switch for that rule — the same trick that makes the whole section
+    // self-disable.
+    function gateReason(cart) {
+      if (!cart || !cart.items || !cart.items.length) return '';
+      if (cart.item_count === 0) return '';
+      // Multi-reward first: it is the more specific problem, it applies even
+      // when paid items are present, and its explainer is the actionable one.
+      if (multiModal && rewardUnits(cart) > 1) return 'multi-reward';
+      if (gateModal) {
+        if (cart.total_price === 0) return 'reward-only';
+        for (var i = 0; i < cart.items.length; i++) {
+          if (!isReward(cart.items[i])) return '';
+        }
+        return 'reward-only';
+      }
+      return '';
+    }
+
+    // Kept as a boolean for the skip-to-checkout guard and existing callers.
+    function computeGated(cart) {
+      return gateReason(cart) !== '';
     }
 
     function showModal(id) {
@@ -1133,7 +1163,8 @@
     document.addEventListener('theme:cart:change', function (e) {
       var cart = e && e.detail && e.detail.cart;
       if (!cart) return;
-      gated = computeGated(cart);
+      gatedReason = gateReason(cart);
+      gated = gatedReason !== '';
       applyGate();
       checkReminder(cart);
     });
@@ -1142,34 +1173,41 @@
     // Capture phase so we run before the theme's own handlers. aria-disabled
     // (not [disabled]) keeps the button clickable, which is what lets us
     // explain rather than silently do nothing.
+    function explain() {
+      showModal(gatedReason === 'multi-reward' ? 'reward-multi-modal' : 'reward-gate-modal');
+    }
+
     document.addEventListener('click', function (e) {
-      if (!gated || !gateModal) return;
+      if (!gated) return;
       var btn = e.target.closest && e.target.closest('[data-checkout-gate]');
       if (!btn) return;
       e.preventDefault();
       e.stopPropagation();
-      showModal('reward-gate-modal');
+      explain();
     }, true);
 
     // Enter inside a cart-page quantity field submits the form implicitly. The
     // checkout button precedes the update button in the DOM, so it is the
     // default submitter — but never block an explicit "Update Cart".
     document.addEventListener('submit', function (e) {
-      if (!gated || !gateModal) return;
+      if (!gated) return;
       var form = e.target;
       if (!form || !form.querySelector || !form.querySelector('[data-checkout-gate]')) return;
       if (e.submitter && e.submitter.name && e.submitter.name !== 'checkout') return;
       e.preventDefault();
       e.stopPropagation();
-      showModal('reward-gate-modal');
+      explain();
     }, true);
 
     // Exposed for the skip-to-checkout guard below and for headless testing.
     window.__hmRewardGate = {
       computeGated: computeGated,
+      gateReason: gateReason,
+      rewardUnits: rewardUnits,
       isReward: isReward,
-      show: function () { showModal('reward-gate-modal'); },
-      isGated: function () { return gated; }
+      show: function () { explain(); },
+      isGated: function () { return gated; },
+      reason: function () { return gatedReason; }
     };
   })();
 

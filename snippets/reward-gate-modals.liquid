@@ -95,6 +95,56 @@
   </div>
 {%- endif -%}
 
+{%- if settings.reward_multi_gate_enabled -%}
+  {%- comment -%}
+    "Rewards are not stackable" explainer (bd hairmnl-theme-582o, 2026-09-11).
+    Opened by section 11 when the cart holds more than one reward gift —
+    including when regular paid items are present, which the reward-only gate
+    deliberately allows through.
+
+    Why this exists: the LoyaltyLion voucher discounts ONE reward. A team
+    screenshot showed a cart with a reward line at QUANTITY 5 plus another
+    reward line; the voucher took P9,999 off P49,995, leaving the shopper
+    charged P39,996 for products meant to be free.
+
+    Only a dismiss button: the fix is removing the extra rewards, which the
+    shopper does in the cart they are already looking at. No offers CTA —
+    sending them to buy more would be the wrong instruction here.
+  {%- endcomment -%}
+  <div
+    class="modal micromodal-slide"
+    id="reward-multi-modal"
+    data-modal
+    aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <button
+        data-micromodal-close
+        class="modal__close"
+        aria-label="{{ 'cart.general.close_cart' | t }}">
+      </button>
+      <div
+        class="modal__container modal__container--inline"
+        data-modal-content
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reward-multi-title">
+        <div class="modal__content">
+          <h3 id="reward-multi-title">{{ 'cart.general.reward_multi_title' | t }}</h3>
+          <p>{{ 'cart.general.reward_multi_body' | t }}</p>
+          <div class="reward-modal__actions">
+            <button
+              type="button"
+              class="btn btn--primary uppercase reward-modal__primary"
+              data-micromodal-close>
+              {{ 'cart.general.reward_multi_close' | t }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
 {%- if settings.reward_gate_enabled -%}
   {%- comment -%}
     Reward-only checkout explainer. Opened by section 11 when a shopper taps a

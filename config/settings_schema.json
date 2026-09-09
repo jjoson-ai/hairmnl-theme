@@ -829,6 +829,13 @@
         "default": false
       },
       {
+        "type": "checkbox",
+        "id": "reward_multi_gate_enabled",
+        "label": "Block checkout when the cart has more than one reward gift",
+        "info": "Rewards are not stackable — the LoyaltyLion voucher only discounts one. Counts QUANTITY, so a single line with 2+ of the same reward is blocked too. Applies even when regular paid items are present. BOGOS promo gifts are not reward gifts and never count. bd hairmnl-theme-582o.",
+        "default": false
+      },
+      {
         "type": "url",
         "id": "reward_gate_offers_url",
         "label": "\"Complete your order\" link",

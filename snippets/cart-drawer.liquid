@@ -219,17 +219,22 @@
       {%- endcomment -%}
       {%- liquid
         assign rg_has_paid = false
+        assign rg_reward_units = 0
         for rg_item in cart.items
-          unless rg_item.product.tags contains 'hrewards'
+          if rg_item.product.tags contains 'hrewards'
+            assign rg_reward_units = rg_reward_units | plus: rg_item.quantity
+          else
             assign rg_has_paid = true
-            break
-          endunless
+          endif
         endfor
         assign rg_gated = false
         if settings.reward_gate_enabled and cart.item_count > 0
           if rg_has_paid == false or cart.total_price == 0
             assign rg_gated = true
           endif
+        endif
+        if settings.reward_multi_gate_enabled and rg_reward_units > 1
+          assign rg_gated = true
         endif
       -%}
       <form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
