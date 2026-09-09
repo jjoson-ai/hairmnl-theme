@@ -732,6 +732,53 @@
     contain: layout !important;
   }
 
+  /* Brand-collection (SIS) product cards 2026-09-09 hairmnl-theme-lewq.2 — web-team
+     spec "KR SIS - Pipeline 8.pptx": "Decrease size of product cards so that product
+     font-size is 12px (from 14px). Or follow the default product card settings" and
+     "Match the spacing (packshots, title, rating, price) of default product cards -
+     See Home Page".
+
+     MEASURED on live at 1440px, SIS Best Sellers card vs the Home page card:
+       title font-size      14px       vs 12px
+       title margin         14/10.5px  vs 8/8px
+       price font-size      16.05px    vs 14.3px
+       price margin-top     16.05px    vs 4px
+       gap packshot->title  22px       vs 16px
+       gap rating->price    16px       vs 4px
+       section header       19.49px    vs 19.49px   <- IDENTICAL on both
+     The header is NOT smaller than the home page's; it only reads that way because the
+     card text is oversized. So this shrinks the cards and deliberately does NOT touch
+     the h2 — which is what the deck asks for.
+
+     The 14px came from assets/custom-theme-core.css:
+       .collection-branded .product-grid-item .name_wrapper { font-size: 14px }
+     overriding the theme default .name_wrapper { font-size: 0.8em }. That asset is
+     GENERATED ("DO NOT EDIT DIRECTLY", scripts/ujg6.42/wave-b-emit.py) and its source
+     assets/custom-theme.css has DRIFTED from live, and a no-op re-run of the emitter
+     rewrites 12 chunks — so editing that pipeline would have dragged an unrelated diff
+     into a visual fix. Overriding here instead: css-overrides renders inline at
+     layout/theme.liquid:698, after the custom-theme-core.css link at :612.
+     Specificity 0-4-0 (.collection.collection-branded — the wrapper really does carry
+     both classes) so it wins on merit, not just on source order.
+
+     Scope note: this intentionally also covers .collection-branded-subcollection,
+     because the 14px rule it corrects was written for both and the brand sub-collection
+     pages use the same card. Every brand SIS page therefore gets the default card
+     metrics, not just Kerastase. */
+  .collection.collection-branded .product-grid-item .name_wrapper,
+  .collection.collection-branded-subcollection .product-grid-item .name_wrapper {
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 8px 0;
+  }
+  .collection.collection-branded .product-grid-item .price_wrapper,
+  .collection.collection-branded-subcollection .product-grid-item .price_wrapper {
+    /* 13px x the theme's body font-adjust (1.1) = 14.3px, the measured home value,
+       expressed so it tracks the setting instead of hardcoding the product. */
+    font-size: calc(13px * var(---font-adjust-body, 1.1));
+    margin: 4px 0;
+  }
+
   /* A11y/conversion fix 2026-08-13 (web-team report) — the PDP ADD TO CART
      label was INVISIBLE: measured color rgb(50,46,52) on background
      rgb(50,46,52) = 1.00:1 contrast on the live PDP.

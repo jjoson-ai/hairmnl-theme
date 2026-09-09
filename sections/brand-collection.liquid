@@ -544,6 +544,15 @@
               {% when "best_sellers" %}
                 {% assign best_sellers_collection = collections[block.settings.best_sellers_collection] %}
                 {% assign best_selling_products = best_sellers_collection.products %}
+                {%- comment -%}
+                  bd lewq.1 (2026-09-09, web-team spec "KR SIS - Pipeline 8.pptx"): cap this block
+                  at TWO ROWS. Expressed as columns x 2 rather than a hardcoded 6 so it stays two
+                  rows if grid_setting_large ever changes (3 today, giving 6).
+                  Until now the limit clause sat stranded inside the HTML comment on the for-tag
+                  below, so nothing capped the loop and EVERY product in the collection rendered:
+                  79 cards across the two best_sellers blocks on the Kerastase page.
+                {%- endcomment -%}
+                {% assign best_sellers_row_limit = section.settings.grid_setting_large | times: 2 %}
                 {% if best_selling_products.size > 0 %}
                   <hr>
                   <div class="best-sellers {% if settings.image_autoheight_enable %} image_autoheight_enable{% endif %}">
@@ -552,11 +561,14 @@
                       {% unless block.settings.best_sellers_collection_section_description == blank %}
                         <p class="section-header__description">{{ block.settings.best_sellers_collection_section_description }}</p>
                       {% endunless %}
+                      {%- comment -%} bd lewq.1: View All, mirroring the new_arrivals block so both
+                          section headers behave the same now that this one is capped at two rows. {%- endcomment -%}
+                      <div class="text-center"><a href="{{ best_sellers_collection.url }}" class="collection-view-all">View All</a></div>
 
                     </div>
                     <!-- Add the 'normalised-product-name-height' class to the div below, next to the 'grid' class, to fix errors in products stacking in the grid -->
                     <div class="grid normalised-product-name-height">
-                      {% for product in best_selling_products %} <!-- limit: section.settings.grid_setting_large %}
+                      {% for product in best_selling_products limit: best_sellers_row_limit %} <!-- bd lewq.1: the limit clause used to live inside this comment rather than in the for tag above, which is why every product rendered. The comment itself is retained on purpose: the Wholesale Club region it hides is assign only and emits no markup, so hiding it changes nothing, and rewriting an app injected region invites the app to mangle it again on its next update.
 {% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
 {% assign base_product = product %}
 {% assign base_variant = product.selected_or_first_available_variant %}
@@ -1375,6 +1387,15 @@
               {% when "best_sellers" %}
                 {% assign best_sellers_collection = collections[block.settings.best_sellers_collection] %}
                 {% assign best_selling_products = best_sellers_collection.products %}
+                {%- comment -%}
+                  bd lewq.1 (2026-09-09, web-team spec "KR SIS - Pipeline 8.pptx"): cap this block
+                  at TWO ROWS. Expressed as columns x 2 rather than a hardcoded 6 so it stays two
+                  rows if grid_setting_large ever changes (3 today, giving 6).
+                  Until now the limit clause sat stranded inside the HTML comment on the for-tag
+                  below, so nothing capped the loop and EVERY product in the collection rendered:
+                  79 cards across the two best_sellers blocks on the Kerastase page.
+                {%- endcomment -%}
+                {% assign best_sellers_row_limit = section.settings.grid_setting_large | times: 2 %}
                 {% if best_selling_products.size > 0 %}
                   <hr>
                   <div class="best-sellers {% if settings.image_autoheight_enable %} image_autoheight_enable{% endif %}">
@@ -1383,11 +1404,14 @@
                       {% unless block.settings.best_sellers_collection_section_description == blank %}
                         <p class="section-header__description">{{ block.settings.best_sellers_collection_section_description }}</p>
                       {% endunless %}
+                      {%- comment -%} bd lewq.1: View All, mirroring the new_arrivals block so both
+                          section headers behave the same now that this one is capped at two rows. {%- endcomment -%}
+                      <div class="text-center"><a href="{{ best_sellers_collection.url }}" class="collection-view-all">View All</a></div>
 
                     </div>
                     <!-- Add the 'normalised-product-name-height' class to the div below, next to the 'grid' class, to fix errors in products stacking in the grid -->
                     <div class="grid normalised-product-name-height">
-                      {% for product in best_selling_products %} <!-- limit: section.settings.grid_setting_large %}
+                      {% for product in best_selling_products limit: best_sellers_row_limit %} <!-- bd lewq.1: the limit clause used to live inside this comment rather than in the for tag above, which is why every product rendered. The comment itself is retained on purpose: the Wholesale Club region it hides is assign only and emits no markup, so hiding it changes nothing, and rewriting an app injected region invites the app to mangle it again on its next update.
 {% comment %} Wholesale_Club_Product_Prices Start {% endcomment %}
 {% assign base_product = product %}
 {% assign base_variant = product.selected_or_first_available_variant %}

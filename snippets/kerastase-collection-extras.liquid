@@ -21,7 +21,7 @@
   ul.collection-nav.kerastase-menu{list-style:none;padding:0;margin:0;border-top:1px solid #ece4de;}
   ul.collection-nav.kerastase-menu li{list-style:none;border:0!important;margin:0;padding:0;background:none!important;}
   ul.collection-nav.kerastase-menu li::before{display:none!important;content:none!important;}
-  .collection-nav.kerastase-menu .k-acc-head{cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:.95rem .1rem;border-bottom:1px solid #ece4de;}
+  .collection-nav.kerastase-menu .k-acc-head{cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:.5rem .1rem;border-bottom:1px solid #ece4de;}
   .collection-nav.kerastase-menu .k-acc-head a{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:#1a1a1a;text-decoration:none;pointer-events:none;}
   .collection-nav.kerastase-menu .k-acc-head::after{content:"";width:8px;height:8px;border-right:1.5px solid #b0a59b;border-bottom:1.5px solid #b0a59b;transform:rotate(45deg);transition:transform .25s;margin-right:5px;flex:0 0 auto;}
   .collection-nav.kerastase-menu .k-acc-head.open::after{transform:rotate(-135deg);}
@@ -31,8 +31,13 @@
   .collection-nav.kerastase-menu .k-acc-body li a.k-acc-active{color:#1a1a1a;border-left-color:#1a1a1a;font-weight:600;}
   .collection-nav.kerastase-menu .k-acc-body>li:first-child a{padding-top:.75rem;}
   .collection-nav.kerastase-menu .k-acc-body>li:last-child a{padding-bottom:1rem;}
+  {%- comment -%} bd lewq.3 (2026-09-09, web-team): item padding was .95rem (15.2px top and
+     bottom), giving 50px-tall rows on a 12.48px label and a 54px pitch. This menu renders 40
+     flat items on the Kerastase page, so that was a ~2,160px sidebar. Tightened to .5rem (8px)
+     -> ~36px rows, about a third shorter, label size untouched. The .k-acc-head rule above is
+     kept in sync even though no accordion heads render on this collection today. {%- endcomment -%}
   .collection-nav.kerastase-menu li.k-acc-solo{display:block;border-bottom:1px solid #ece4de;}
-  .collection-nav.kerastase-menu li.k-acc-solo a{display:block;padding:.95rem .1rem;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:#1a1a1a;text-decoration:none;}
+  .collection-nav.kerastase-menu li.k-acc-solo a{display:block;padding:.5rem .1rem;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:#1a1a1a;text-decoration:none;}
   .collection-nav.kerastase-menu li.k-acc-solo a:hover{color:#7a6f66;}
   /* Grid de-stagger — uneven card heights (reviews / "From PHP") leave gaps in the
      float-based 4-up brand grid. Clear each row-start + top-align so rows line up. */
