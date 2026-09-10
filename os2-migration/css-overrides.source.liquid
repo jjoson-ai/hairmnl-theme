@@ -767,16 +767,59 @@
      metrics, not just Kerastase. */
   .collection.collection-branded .product-grid-item .name_wrapper,
   .collection.collection-branded-subcollection .product-grid-item .name_wrapper {
-    font-size: 12px;
-    line-height: 1.6;
+    /* Round 2 (2026-09-10): 12px -> 13px. The team asked for 12px in the first
+       deck and then reported it as too small once shipped. 13px reads larger
+       while staying well under the 14px they originally objected to, and it now
+       sits ABOVE the review-count text (see the rating cap below) so the product
+       name is the dominant line in the card again. */
+    font-size: 13px;
+    line-height: 1.5;
     margin: 8px 0;
+    /* THE ACTUAL "spacing between title and ratings" DEFECT. The generated
+       custom-theme-core.css sets .grid.normalised-product-name-height
+       .name_wrapper { min-height: 57px }, so a one-line title still occupies a
+       three-line box and the rating floats 37px below it, while a three-line
+       title sits 9px above it. That inconsistency is what the team circled.
+       The old theme had NO min-height and a flat 9px gap on every card
+       (measured). Removing it here restores that; the stagger the min-height
+       was propping up is handled properly by the 3-up clears below. */
+    min-height: 0;
+  }
+  /* The de-stagger rule in snippets/kerastase-collection-extras.liquid clears at
+     nth-child(4n+1) for a four-up grid, but these Best Sellers / New Arrivals
+     grids are THREE-up (large-up--one-third) and two-up below 1024px — so no
+     clear ever landed on a row start here and uneven card heights staggered the
+     float grid. That is why the min-height crutch existed. Scoped to the branded
+     collection pages so the generic four-up grids elsewhere keep their own rule. */
+  @media (min-width: 1024px) {
+    .collection.collection-branded .grid.normalised-product-name-height > .grid__item:nth-child(3n+1),
+    .collection.collection-branded-subcollection .grid.normalised-product-name-height > .grid__item:nth-child(3n+1) {
+      clear: both;
+    }
+  }
+  @media (max-width: 767px) {
+    .collection.collection-branded .grid.normalised-product-name-height > .grid__item:nth-child(2n+1),
+    .collection.collection-branded-subcollection .grid.normalised-product-name-height > .grid__item:nth-child(2n+1) {
+      clear: both;
+    }
+  }
+  /* Rating was rendering at 18.38px on desktop (stars 18px, "62 reviews" 14.3px)
+     against a 12px product name - the "rating is significantly bigger" report.
+     The old theme measured 16.71px. Capping at 15px puts the stars just above
+     the 13px name and drops the count text to ~11.7px, i.e. below it, so the
+     name leads and the rating supports. em-based, so the stars scale with it. */
+  .collection.collection-branded .product-grid-item .jm-stars-static,
+  .collection.collection-branded-subcollection .product-grid-item .jm-stars-static {
+    font-size: 15px;
   }
   .collection.collection-branded .product-grid-item .price_wrapper,
   .collection.collection-branded-subcollection .product-grid-item .price_wrapper {
-    /* 13px x the theme's body font-adjust (1.1) = 14.3px, the measured home value,
-       expressed so it tracks the setting instead of hardcoding the product. */
+    /* 13px x the theme's body font-adjust (1.1) = 14.3px, expressed so it tracks
+       the setting instead of hardcoding the product. Margin 8px (was 4px): the
+       old theme's rating->price gap measured 15px and 4px read as cramped once
+       the title gap above it tightened. */
     font-size: calc(13px * var(---font-adjust-body, 1.1));
-    margin: 4px 0;
+    margin: 8px 0;
   }
 
   /* A11y/conversion fix 2026-08-13 (web-team report) — the PDP ADD TO CART

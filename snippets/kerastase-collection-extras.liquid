@@ -21,8 +21,8 @@
   ul.collection-nav.kerastase-menu{list-style:none;padding:0;margin:0;border-top:1px solid #ece4de;}
   ul.collection-nav.kerastase-menu li{list-style:none;border:0!important;margin:0;padding:0;background:none!important;}
   ul.collection-nav.kerastase-menu li::before{display:none!important;content:none!important;}
-  .collection-nav.kerastase-menu .k-acc-head{cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:.5rem .1rem;border-bottom:1px solid #ece4de;}
-  .collection-nav.kerastase-menu .k-acc-head a{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:#1a1a1a;text-decoration:none;pointer-events:none;}
+  .collection-nav.kerastase-menu .k-acc-head{cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:.5rem .1rem .5rem .75rem;margin-left:0;border-bottom:1px solid #ece4de;}
+  .collection-nav.kerastase-menu .k-acc-head a{font-size:.78rem;letter-spacing:.06em;text-transform:none;font-weight:600;color:#1a1a1a;text-decoration:none;pointer-events:none;}
   .collection-nav.kerastase-menu .k-acc-head::after{content:"";width:8px;height:8px;border-right:1.5px solid #b0a59b;border-bottom:1.5px solid #b0a59b;transform:rotate(45deg);transition:transform .25s;margin-right:5px;flex:0 0 auto;}
   .collection-nav.kerastase-menu .k-acc-head.open::after{transform:rotate(-135deg);}
   .collection-nav.kerastase-menu .k-acc-body{overflow:hidden;max-height:0;transition:max-height .3s ease;}
@@ -37,7 +37,19 @@
      -> ~36px rows, about a third shorter, label size untouched. The .k-acc-head rule above is
      kept in sync even though no accordion heads render on this collection today. {%- endcomment -%}
   .collection-nav.kerastase-menu li.k-acc-solo{display:block;border-bottom:1px solid #ece4de;}
-  .collection-nav.kerastase-menu li.k-acc-solo a{display:block;padding:.5rem .1rem;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:#1a1a1a;text-decoration:none;}
+  {%- comment -%} bd lewq.6 (2026-09-10, web-team): three menu asks.
+     (1) Capitalized Case instead of ALL CAPS -> text-transform:none, NOT capitalize:
+         the link text is already authored properly ("Sulfate-Free Shampoo",
+         "Shop by Product Type"), and capitalize would render "Sulfate-free".
+     (2) Left margin - on mobile the row sat ~3px off the screen edge because the
+         generic .collection-nav > li a rule hangs the link out with
+         margin-left:-13px so its colour bar clears the text column. Zeroed here so
+         the wrapper's own 16px gutter applies.
+     (3) Indent from the colour indicator - the label was 1.6px from the 3px
+         border-left bar because this rule's padding shorthand (.5rem .1rem) was
+         overriding the generic padding-left:10px. Now .75rem (12px).
+     Vertical padding stays .5rem: the team confirmed "Line spacing OK". {%- endcomment -%}
+  .collection-nav.kerastase-menu li.k-acc-solo a{display:block;padding:.5rem .1rem .5rem .75rem;margin-left:0;font-size:.78rem;letter-spacing:.06em;text-transform:none;font-weight:600;color:#1a1a1a;text-decoration:none;}
   .collection-nav.kerastase-menu li.k-acc-solo a:hover{color:#7a6f66;}
   /* Grid de-stagger — uneven card heights (reviews / "From PHP") leave gaps in the
      float-based 4-up brand grid. Clear each row-start + top-align so rows line up. */
