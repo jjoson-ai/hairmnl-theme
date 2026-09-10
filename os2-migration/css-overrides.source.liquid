@@ -2616,4 +2616,28 @@ body.is-reward-gated .cart__footer__additional {
   color: #000;
 }
 
+/* Mobile footer: even out the FIRST accordion row (2026-09-10, team report).
+
+   On mobile the footer titles stack into accordion rows. Theme CSS gives every
+   .footer__title `padding-bottom:10px; border-bottom; margin-bottom:20px`, and
+   gives only the first row a border-top — with no matching padding-top. So the
+   space between the divider line and the label was:
+
+     About Us            1px     <- its own border-top, then text immediately
+     Contact Us         20px     <- inherited from the row above's margin-bottom
+     More Information   20px
+     Newsletter         20px
+
+   (measured on live at 390px). The first label looked jammed against the line
+   while the rest breathed. Matching that 20px makes the four rows identical.
+
+   Scoped to the same breakpoint and selector the theme uses for the border-top
+   (max-width:767px), so desktop — where these are side-by-side column headings,
+   not rows — is untouched. Padding only; no containment properties (kt0). */
+@media only screen and (max-width: 767px) {
+  .grid__item:first-child .footer__title {
+    padding-top: 20px;
+  }
+}
+
 </style>
