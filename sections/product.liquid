@@ -13,6 +13,32 @@
   data-enable-video-looping="{{ section.settings.enable_video_looping }}" 
   data-thumbs-align="{{ thumbs_align }}" 
   {% if product.has_only_default_variant %}data-enable-history-state="false"{% else %}data-enable-history-state="true"{% endif %}>
+
+{%- comment -%}
+  bd 2hxf (2026-09-18) — KEEP THESE TWO SCRIPTS AT THE TOP OF THE SECTION CONTAINER.
+  theme.js resolves the product JSON with a container-scoped querySelector, where the
+  container is this div[data-section-type="product"]. They were previously emitted at the
+  very END of the section (after product-info, zoom-pswp and the sticky bar), so a single
+  stray closing tag anywhere in merchant-authored content could close the container early
+  and orphan the script OUTSIDE it. When that happened the lookup returned null,
+  ProductTemplate bailed with "Missing product JSON", no ProductForm was constructed,
+  nothing bound a change listener to the option inputs, and the hidden [name="id"] kept
+  the first variant — so Add to Cart silently added the WRONG VARIANT.
+  Reported on davines-oi-ultimate-softness-shine-set: the shopper selected the PHP 5,250
+  "Milk 135ml" bundle and the cart received the PHP 4,330 "Milk 50ml" one, because that
+  product's hmnl.product_how_to_use_tab_title metafield begins with a stray closing div.
+  Emitting them here, ahead of all merchant content, makes the lookup immune to
+  content-authored tag imbalance. Both are inert application/json, and ModelJson is read
+  by document-scoped id lookup, so position is free.
+  DO NOT move these back below the description / tabs.
+{%- endcomment -%}
+<script data-product-json type="application/json">
+  {{ product | json }}
+</script>
+
+<script type="application/json" id="ModelJson-{{ section.id }}">
+  {{ product.media | where: 'media_type', 'model' | json }}
+</script>
   
 {%- case section.settings.image_width -%}
   {%- when 'full' -%}
@@ -273,13 +299,8 @@
    any OTHER theme id still gets false. {%- endcomment -%}
 {%- if show_sticky_purchase_bar -%}{% render 'product-sticky-bar', product: product %}{%- endif -%}
 
-<script data-product-json type="application/json">
-  {{ product | json }}
-</script>
-
-<script type="application/json" id="ModelJson-{{ section.id }}">
-  {{ product.media | where: 'media_type', 'model' | json }}
-</script>
+{%- comment -%} bd 2hxf: the product JSON + ModelJson scripts used to be emitted HERE.
+  They now live directly under the section's opening tag — see the note there. {%- endcomment -%}
 
 </div>
 
