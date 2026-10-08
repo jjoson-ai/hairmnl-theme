@@ -2252,7 +2252,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     land the shopper on any surface. Emits nothing while both settings are off.
     Behaviour: assets/hairmnl-common.js section 11.
   {%- endcomment -%}
-  {%- if settings.reward_gate_enabled or settings.reward_reminder_enabled -%}
+  {%- comment -%}
+    bd 582o: include the multi-reward setting. Without it, turning the other two
+    off while keeping the one-reward rule on would render no modals, section 11
+    would self-disable, and the checkout button would LOOK disabled (server-side
+    aria-disabled) while clicking it went straight through to checkout.
+  {%- endcomment -%}
+  {%- if settings.reward_gate_enabled or settings.reward_reminder_enabled or settings.reward_multi_gate_enabled -%}
     {%- render 'reward-gate-modals' -%}
   {%- endif -%}
 {%- comment -%}

@@ -144,7 +144,7 @@
       "reward_gate_cta": "Complete your order",
       "reward_gate_close": "Back to cart",
       "reward_multi_title": "One reward per checkout",
-      "reward_multi_body": "Please note that rewards are not stackable. Only one (1) reward (either a discount or a free gift) can be redeemed per checkout.",
+      "reward_multi_body": "Please note that rewards are not stackable. Only one (1) reward (discounts and reward gifts) can be redeemed per checkout.",
       "reward_multi_close": "Back to cart",
       "total_message": {
         "one": "and you have {{ count }} product in the cart",
