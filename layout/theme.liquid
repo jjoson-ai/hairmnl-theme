@@ -2074,7 +2074,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       custom-theme.js, storepickup.js, and bss-b2b-js (see history
       comments above for each).
     {%- endcomment -%}
-    <script src="{{ 'shop.js' | asset_url }}" defer="defer"></script>
+    {%- comment -%}
+      REMOVED 2026-10-11 (bd hairmnl-theme-upc5): shop.js is the Pipeline 6 theme
+      bundle (196 KB raw) and did nothing useful on Pipeline 8. Its section system
+      registers 14 P6 handlers by data-section-type; on P8 every one is inert or
+      broken:
+        - 8 types (banner, instagram, blog, article, index-*, product-onboarding)
+          match no P8 section at all.
+        - product: targets P6 ids (#ProductJson-, #ProductSelect-, #AddToCart-,
+          #ProductPrice-...) that no P8 markup renders.
+        - collection (theme.Parallax): needs #FeaturedImage-<id>[data-img-src];
+          28 of 29 brand sections lack data-img-src, and the 29th
+          (collection-branded-subcollection) would call a jQuery .parallax()
+          plugin the theme never loads, so no parallax effect exists today.
+        - footer: targets #footerLogoImg-, absent, and throws
+          "$footerLogoImg.imagesLoaded is not a function" (~100 real users per
+          fortnight in GA4).
+        - header (theme.Default) is a no-op; slideshow / video hooks are absent.
+      No other script uses anything it defines (theme.*, lodash _, jQuery
+      plugins). Removal was simulated first by blocking shop.js on the LIVE site:
+      PDP gallery, add-to-cart, variant switching and accordion, homepage menu,
+      and collection grid were identical, with 0 errors either way.
+      REVERT: restore the line below. The asset file is left in place.
+      <script src="{{ 'shop.js' | asset_url }}" defer="defer"></script>
+    {%- endcomment -%}
 
     <!-- Core Web Vitals → GA4 reporter -->
     {%- comment -%}
