@@ -355,8 +355,15 @@ def query_ga4_rum(days: int = 7) -> dict:
     # queries, so every dashboard RUM panel and snapshot ga4 row from
     # 2026-08-03 onward is bot-poisoned (root cause of bd vzoa's phantom
     # CLS regression). _and() below now injects these into EVERY query.
+    #
+    # bd 9doi (2026-10-11): second fingerprint. screenResolution 1280x1200, Chrome /
+    # Windows, sessions from a dozen countries for a PH-only store, hitting
+    # /account/register + /account/login (88% / 72% of those pages' loads). It
+    # surged Oct 2-7 to 290-480 sessions/day and alone dragged the dashboard's
+    # LCP %good from ~87% to 77.8%. Account-security side is bd f7vt.
     BOT_EXCLUSIONS = (
         _not_eq_exact("screenResolution", "1366x1366"),
+        _not_eq_exact("screenResolution", "1280x1200"),
         _not_eq_exact("pagePath", "/pages/privacy-policy"),
     )
 
@@ -369,16 +376,66 @@ def query_ga4_rum(days: int = 7) -> dict:
     client, prop = get_ga4_client()
     date_range = [DateRange(start_date=f"{days}daysAgo", end_date="today")]
 
-    # Overall metric distribution by rating
-    print(f"  GA4 RUM: querying {days}-day rating distribution...", flush=True)
-    r = client.run_report(RunReportRequest(
-        property=prop,
-        date_ranges=date_range,
-        dimensions=[Dimension(name="eventName"), Dimension(name="customEvent:metric_rating")],
-        metrics=[Metric(name="eventCount")],
-        dimension_filter=_and(_in("eventName", VITAL_EVENTS)),
-        limit=200,
-    ))
+    # ── Per-page-load ratings (bd 9doi, 2026-10-11) ────────────────────────────
+    # The web-vitals sender re-reports LCP, INP and CLS every time the value
+    # grows (reportAllChanges-style): measured 1.64 / 1.57 / 2.00 events per
+    # page load, vs 1.01 for FCP and TTFB, which never change after first
+    # report. Counting EVENTS therefore counts every intermediate value, and
+    # intermediates are always smaller, so INP and CLS %good were overstated
+    # by ~2-3 points. Each page load carries a unique customEvent:metric_id,
+    # so we pull rows per id and keep ONE rating per id: the worst one seen,
+    # which is the final value (all three metrics only ever grow).
+    #
+    # One paginated query feeds the overall distribution, the per-page panel
+    # and the per-template panel. ~65k rows for 7 days, one page, ~4s.
+    RATING_ORDER = {"good": 0, "needs-improvement": 1, "poor": 2}
+    UNDEDUPABLE_IDS = ("", "(not set)", "(other)")
+
+    def _paged_rows(dimensions, dimension_filter, ranges, page_size=100000):
+        out, offset = [], 0
+        while True:
+            rr = client.run_report(RunReportRequest(
+                property=prop, date_ranges=ranges,
+                dimensions=[Dimension(name=d) for d in dimensions],
+                metrics=[Metric(name="eventCount")],
+                dimension_filter=dimension_filter, limit=page_size, offset=offset,
+            ))
+            out.extend(rr.rows)
+            if len(rr.rows) < page_size:
+                return out, rr
+            offset += page_size
+
+    def _per_load(event_names, extra_dims, ranges):
+        """Return ([(event, extra_tuple, rating, weight)], stats).
+
+        One record per page load (metric_id) carrying its worst rating. Rows whose
+        id is missing cannot be deduplicated; they are kept at event weight and
+        counted in stats so a sender regression stays visible instead of silent.
+        """
+        dims = ["eventName", "customEvent:metric_id", *extra_dims, "customEvent:metric_rating"]
+        rows, last = _paged_rows(dims, _and(_in("eventName", event_names)), ranges)
+        worst, loose = {}, []
+        stats = {"rows": len(rows), "events": 0, "undedupable_events": 0}
+        for row in rows:
+            v = [d.value for d in row.dimension_values]
+            ev, mid, extra, rating = v[0], v[1], tuple(v[2:-1]), (v[-1] or "(no rating)")
+            n = int(row.metric_values[0].value)
+            stats["events"] += n
+            if mid in UNDEDUPABLE_IDS:
+                stats["undedupable_events"] += n
+                loose.append((ev, extra, rating, n))
+                continue
+            cur = worst.get((ev, mid))
+            if cur is None or RATING_ORDER.get(rating, -1) > RATING_ORDER.get(cur[1], -1):
+                worst[(ev, mid)] = (extra, rating)
+        recs = [(ev, extra, rating, 1) for (ev, _mid), (extra, rating) in worst.items()] + loose
+        stats["page_loads"] = len(worst)
+        return recs, stats, last
+
+    # Overall distribution + per-page + per-template, all per PAGE LOAD (bd 9doi).
+    print(f"  GA4 RUM: querying {days}-day per-load ratings (deduped by metric_id)...", flush=True)
+    recs, dedupe_stats, r = _per_load(
+        VITAL_EVENTS, ["pagePath", "customEvent:template"], date_range)
     # Defensive: track events whose `metric_rating` custom dim came back as
     # (not set) — silent param-mapping failures used to disappear from totals
     # entirely (only good/needs-improvement/poor were summed). bd hairmnl-theme-vux
@@ -391,16 +448,19 @@ def query_ga4_rum(days: int = 7) -> dict:
             sampled = bool(r.metadata.sampling_metadatas)
     except Exception:
         pass
-    for row in r.rows:
-        ev = row.dimension_values[0].value
-        rating = row.dimension_values[1].value or "(no rating)"
-        cnt = int(row.metric_values[0].value)
-        if ev in metrics:
-            if rating in metrics[ev]:
-                metrics[ev][rating] += cnt
-            else:
-                # Catches "(not set)", "(no rating)", and any future unexpected values.
-                metrics[ev]["unknown"] += cnt
+    page_data = defaultdict(lambda: defaultdict(lambda: {"good": 0, "needs-improvement": 0, "poor": 0}))
+    template_data = defaultdict(lambda: defaultdict(lambda: {"good": 0, "needs-improvement": 0, "poor": 0}))
+    for ev, (page, template), rating, weight in recs:
+        if ev not in metrics:
+            continue
+        if rating in RATING_ORDER:
+            metrics[ev][rating] += weight
+            if ev in ("LCP", "INP", "CLS"):
+                page_data[ev][page or "(not set)"][rating] += weight
+                template_data[ev][template or "(no template)"][rating] += weight
+        else:
+            # Catches "(not set)", "(no rating)", and any future unexpected values.
+            metrics[ev]["unknown"] += weight
     for m in metrics:
         total = sum(metrics[m].values())
         metrics[m]["total"] = total
@@ -408,94 +468,35 @@ def query_ga4_rum(days: int = 7) -> dict:
         metrics[m]["p_poor"] = (metrics[m]["poor"] / total) if total else 0
         metrics[m]["p_unknown"] = (metrics[m]["unknown"] / total) if total else 0
 
-    # Top pages by poor rate per metric
-    print("  GA4 RUM: querying top friction pages per metric...", flush=True)
-    top_pages = {}
-    for metric_name in ("LCP", "INP", "CLS"):
-        r = client.run_report(RunReportRequest(
-            property=prop,
-            date_ranges=date_range,
-            dimensions=[Dimension(name="pagePath"), Dimension(name="customEvent:metric_rating")],
-            metrics=[Metric(name="eventCount")],
-            dimension_filter=_and(_eq("eventName", metric_name)),
-            limit=2000,
-        ))
-        page_data = defaultdict(lambda: {"good": 0, "needs-improvement": 0, "poor": 0})
-        for row in r.rows:
-            page = row.dimension_values[0].value or "(not set)"
-            rating = row.dimension_values[1].value or "(no rating)"
-            cnt = int(row.metric_values[0].value)
-            if rating in page_data[page]:
-                page_data[page][rating] += cnt
+    def _rank(buckets, key, min_total, top_n):
         ranked = []
-        for page, ratings in page_data.items():
-            total = sum(ratings.values())
-            if total < 50:  # filter low-volume pages
-                continue
-            poor = ratings["poor"]
-            ranked.append({
-                "page": page,
-                "total": total,
-                "poor": poor,
-                "p_poor": poor / total if total else 0,
-            })
-        ranked.sort(key=lambda r: (-(r["p_poor"] * r["total"]), -r["total"]))
-        top_pages[metric_name] = ranked[:5]
-
-    # Per-template friction (events where metric_rating="poor", grouped by template)
-    print(f"  GA4 RUM: querying per-template friction...", flush=True)
-    top_templates: dict[str, list[dict]] = {}
-    for metric_name in ("LCP", "INP", "CLS"):
-        try:
-            r = client.run_report(RunReportRequest(
-                property=prop,
-                date_ranges=date_range,
-                dimensions=[Dimension(name="customEvent:template"), Dimension(name="customEvent:metric_rating")],
-                metrics=[Metric(name="eventCount")],
-                dimension_filter=_and(_eq("eventName", metric_name)),
-                limit=200,
-            ))
-        except Exception as e:
-            print(f"  GA4 per-template {metric_name} failed (custom dim may not exist yet): {e}", file=sys.stderr)
-            top_templates[metric_name] = []
-            continue
-        template_data = defaultdict(lambda: {"good": 0, "needs-improvement": 0, "poor": 0})
-        for row in r.rows:
-            template = row.dimension_values[0].value or "(no template)"
-            rating = row.dimension_values[1].value or "(no rating)"
-            count = int(row.metric_values[0].value)
-            if rating in template_data[template]:
-                template_data[template][rating] = count
-        ranked = []
-        for template, rd in template_data.items():
+        for name, rd in buckets.items():
             total = rd["good"] + rd["needs-improvement"] + rd["poor"]
-            if total < 50:  # min sample threshold
+            if total < min_total:  # filter low-volume rows
                 continue
-            poor = rd["poor"]
-            ranked.append({
-                "template": template,
-                "total": total,
-                "poor": poor,
-                "p_poor": poor / total if total else 0,
-            })
-        ranked.sort(key=lambda r: (-(r["p_poor"] * r["total"]), -r["total"]))
-        top_templates[metric_name] = ranked[:10]
+            ranked.append({key: name, "total": total, "poor": rd["poor"],
+                           "p_poor": rd["poor"] / total if total else 0})
+        ranked.sort(key=lambda x: (-(x["p_poor"] * x["total"]), -x["total"]))
+        return ranked[:top_n]
+
+    # Top pages / templates by poor rate per metric (same per-load records).
+    print("  GA4 RUM: ranking friction pages + templates...", flush=True)
+    top_pages = {m: _rank(page_data[m], "page", 50, 5) for m in ("LCP", "INP", "CLS")}
+    top_templates: dict[str, list[dict]] = {
+        m: _rank(template_data[m], "template", 50, 10) for m in ("LCP", "INP", "CLS")}
 
     # Top INP attribution targets
+    # bd 9doi: count distinct page loads (metric_id) per target, not re-sent events.
     print("  GA4 RUM: querying INP attribution targets...", flush=True)
-    r = client.run_report(RunReportRequest(
-        property=prop,
-        date_ranges=date_range,
-        dimensions=[Dimension(name="customEvent:debug_target"), Dimension(name="customEvent:metric_rating")],
-        metrics=[Metric(name="eventCount")],
-        dimension_filter=_and(_eq("eventName", "INP"), _eq("customEvent:metric_rating", "poor")),
-        order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
-        limit=10,
-    ))
-    inp_targets = [{
-        "target": row.dimension_values[0].value or "(not set)",
-        "count": int(row.metric_values[0].value),
-    } for row in r.rows]
+    t_rows, _ = _paged_rows(
+        ["customEvent:debug_target", "customEvent:metric_id"],
+        _and(_eq("eventName", "INP"), _eq("customEvent:metric_rating", "poor")), date_range)
+    target_loads = defaultdict(set)
+    for row in t_rows:
+        tgt, mid = row.dimension_values[0].value or "(not set)", row.dimension_values[1].value
+        target_loads[tgt].add(mid if mid not in UNDEDUPABLE_IDS else ("loose", len(target_loads[tgt])))
+    inp_targets = [{"target": t, "count": len(ids)}
+                   for t, ids in sorted(target_loads.items(), key=lambda kv: -len(kv[1]))[:10]]
 
     # JS errors
     print("  GA4 RUM: querying JS errors...", flush=True)
@@ -509,7 +510,15 @@ def query_ga4_rum(days: int = 7) -> dict:
                 Dimension(name="customEvent:error_source"),
             ],
             metrics=[Metric(name="eventCount")],
-            dimension_filter=_and(_in("eventName", ["js_error", "hairmnl_js_error"])),
+            # bd 9doi: "_AutofillCallbackHandler" is injected by the Facebook /
+            # Instagram iOS in-app browser, not our code, and was ~85% of all
+            # error events (15,354 of ~18,500 in 14 days), burying real errors.
+            dimension_filter=_and(_in("eventName", ["js_error", "hairmnl_js_error"]),
+                                  FilterExpression(not_expression=FilterExpression(filter=Filter(
+                                      field_name="customEvent:error_message",
+                                      string_filter=Filter.StringFilter(
+                                          match_type=Filter.StringFilter.MatchType.CONTAINS,
+                                          value="_AutofillCallbackHandler"))))),
             order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
             limit=10,
         ))
@@ -526,27 +535,19 @@ def query_ga4_rum(days: int = 7) -> dict:
     # WoW comparison: previous period (days+1 .. days*2 ago) for INP + CLS
     print("  GA4 RUM: querying WoW comparison (INP + CLS)...", flush=True)
     wow = {}
-    for metric_name in ("INP", "CLS"):
-        try:
-            r = client.run_report(RunReportRequest(
-                property=prop,
-                date_ranges=[DateRange(start_date=f"{days * 2}daysAgo", end_date=f"{days + 1}daysAgo")],
-                dimensions=[Dimension(name="customEvent:metric_rating")],
-                metrics=[Metric(name="eventCount")],
-                dimension_filter=_and(_eq("eventName", metric_name)),
-                limit=10,
-            ))
+    try:
+        prev_range = [DateRange(start_date=f"{days * 2}daysAgo", end_date=f"{days + 1}daysAgo")]
+        prev_recs, _, _ = _per_load(["INP", "CLS"], [], prev_range)
+        for metric_name in ("INP", "CLS"):
             ratings = {"good": 0, "needs-improvement": 0, "poor": 0}
-            for row in r.rows:
-                rating = row.dimension_values[0].value or "(no rating)"
-                cnt = int(row.metric_values[0].value)
-                if rating in ratings:
-                    ratings[rating] += cnt
+            for ev, _extra, rating, weight in prev_recs:
+                if ev == metric_name and rating in ratings:
+                    ratings[rating] += weight
             total = sum(ratings.values())
             wow[metric_name] = {**ratings, "total": total,
                                 "p_good": ratings["good"] / total if total else 0}
-        except Exception as e:
-            print(f"  GA4 WoW {metric_name} failed: {e}", file=sys.stderr)
+    except Exception as e:
+        print(f"  GA4 WoW failed: {e}", file=sys.stderr)
 
     result = {
         "days": days,
@@ -557,6 +558,11 @@ def query_ga4_rum(days: int = 7) -> dict:
         "js_errors": errors,
         "wow_prev": wow,
         "_sampled": sampled,
+        # bd 9doi: ratings are per page load from 2026-10-11 on (worst rating per
+        # metric_id). Earlier rows counted events: INP/CLS %good ~2-3 pts high, and
+        # LCP was dragged ~9 pts low by the 1280x1200 bot. Expect a step here.
+        "_rum_method": "per-load-v1",
+        "_dedupe": dedupe_stats,
     }
 
     required_keys = {"metrics", "top_pages", "top_inp_targets", "js_errors"}
