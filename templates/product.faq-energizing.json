@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -9,6 +18,12 @@
             "product_show_vendor": false,
             "show_rating": false,
             "show_rating_count": false
+          }
+        },
+        "liquid_DyyRPq": {
+          "type": "liquid",
+          "settings": {
+            "custom_liquid": "{% assign badge = product.metafields.custom.badge_image %}\n{% if badge == blank %}\n  {% assign badge = product.metafields.custom.custom_badge_image %}\n{% endif %}\n{% if badge != blank %}\n  <div style=\"margin-top: 12px; margin-bottom: 4px;\">\n    <img \n      src=\"{{ badge | image_url: width: 400 }}\"\n      alt=\"Product badge\"\n      style=\"max-width: 130px; height: auto; display: block;\"\n    >\n  </div>\n{% endif %}"
           }
         },
         "ldt_gift_wrap_product_gift_option_BRTygz": {
@@ -28,15 +43,40 @@
         },
         "judge_me_reviews_review_snippet_widget_wFcDDA": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_snippet_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
+          "settings": {
+            "reviews_selection": "auto",
+            "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
+            "min_star_rating": "inherit",
+            "show_review_media": true,
+            "max_reviews": 5,
+            "review_length": "medium",
+            "text_size": "medium",
+            "max_width": 1100,
+            "max_image_size": "small",
+            "arrows_visibility": "always_shown",
+            "transition_speed": 5,
+            "corner_styling": "inherit",
+            "text_color": "",
+            "card_color": "",
+            "stars_color": "",
+            "arrows_color": "",
+            "arrows_background_color": ""
+          }
         },
         "bogos_io_free_gift_mix_match_view_m4NLr7": {
           "type": "shopify://apps/bogos-io-free-gift/blocks/mix-match-view/0432bba6-720a-4e95-be5a-b868386f7aa6",
-          "settings": {}
+          "settings": {
+            "product": ""
+          }
         },
         "bogos_io_free_gift_bundle_view_MktdRx": {
           "type": "shopify://apps/bogos-io-free-gift/blocks/bundle-view/0432bba6-720a-4e95-be5a-b868386f7aa6",
-          "settings": {}
+          "settings": {
+            "product": ""
+          }
         },
         "16ab149a-fb4a-4bb4-8938-e96861cff1a9": {
           "type": "text",
@@ -51,11 +91,11 @@
             "read_more": true,
             "style": "accordions",
             "title_1": "Benefits",
-            "raw_content_1": "<ul><li>Stimulating product for scalp and fragile hair prone to falling out.</li><li>Gently cleanses the hair giving it a sensation of energy, vigour and wellbeing to the scalp.</li><li>It gives a balancing effect to the scalp and a moisturizing action to the hair.</li><li>Paraben and sulfate-free.</li></ul>",
+            "raw_content_1": "<ul>\n<li>Stimulating product for scalp and fragile hair prone to falling out.</li>\n<li>Gently cleanses the hair giving it a sensation of energy, vigour and wellbeing to the scalp.</li>\n<li>It gives a balancing effect to the scalp and a moisturizing action to the hair.</li>\n<li>Paraben and sulfate-free.</li>\n</ul>",
             "title_2": "How To Use",
-            "raw_content_2": "<p>Gently massage 20 grams of product into damp hair, leave on for a\u00a02-3 minutes, then rinse. Repeat application if necessary.</p><p><strong>FREQUENCY OF USE</strong></p><ul><li><i>Intensive treatment</i>:\u00a0Every other day for 1 month</li><li><i>Maintenance treatment</i>:\u00a0Twice a week for 2 months</li><li>Alternate with\u00a0<a href=\"https://www.hairmnl.com/products/davines-renewing-shampoo\">Davines Renewing Shampoo</a>\u00a0or\u00a0<a href=\"https://www.hairmnl.com/products/davines-naturaltech-well-being-shampoo-for-all-kinds-of-hair\">Well-Being Shampoo</a>\u00a0for best results.</li></ul>",
+            "raw_content_2": "<p>Gently massage 20 grams of product into damp hair, leave on for a 2-3 minutes, then rinse. Repeat application if necessary.</p><p><strong>FREQUENCY OF USE</strong></p><ul>\n<li>\n<i>Intensive treatment</i>: Every other day for 1 month</li>\n<li>\n<i>Maintenance treatment</i>: Twice a week for 2 months</li>\n<li>Alternate with <a href=\"https://www.hairmnl.com/products/davines-renewing-shampoo\">Davines Renewing Shampoo</a> or <a href=\"https://www.hairmnl.com/products/davines-naturaltech-well-being-shampoo-for-all-kinds-of-hair\">Well-Being Shampoo</a> for best results.</li>\n</ul>",
             "title_3": "Ingredients",
-            "raw_content_3": "<p><strong>NATURAL ACTIVE INGREDIENTS</strong><br/>All the products in the\u00a0<a href=\"https://www.hairmnl.com/collections/davines-energizing-collection\"><i><u>Davines Energizing</u></i></a>\u00a0family are enriched with Hair Energy Complex, which stimulates the cellular metabolism of the scalp, promoting tissue oxygenation.</p><ul><li><i>Beta-glucans</i> - polysaccarides that boost the protection of the cells.</li><li><i>Caffeine phytoceuticals</i> - stimulate the cellular metabolism and improve blood circulation.</li><li><i>Sirtuins</i> - longevity proteins with a strong anti-oxidant action to strengthen and invigorate the scalp.</li></ul><p><strong>FULL INGREDIENTS</strong><br/>AQUA / WATER / EAU, SODIUM LAUROYL METHYL ISETHIONATE, COCAMIDOPROPYL BETAINE, DISODIUM COCOAMPHODIACETATE, SODIUM LAUROYL SARCOSINATE, POLYSORBATE 20, CAFFEINE, SODIUM CHLORIDE, BENZYL ALCOHOL, PARFUM / FRAGRANCE, ACRYLATES/C10-30 ALKYL ACRYLATE CROSSPOLYMER, SODIUM BENZOATE, TRISODIUM ETHYLENEDIAMINE DISUCCINATE, MENTHA PIPERITA OIL / MENTHA PIPERITA (PEPPERMINT) OIL, GLYCERYL OLEATE, COCO-GLUCOSIDE, SODIUM HYDROXIDE, EUGENOL, DISODIUM EDTA, EUCALYPTUS GLOBULUS LEAF OIL, LINALOOL, POLYQUATERNIUM-10, LIMONENE, NIACINAMIDE, CITRIC ACID, EPIGALLOCATECHIN GALLATYL GLUCOSIDE, CI 17200 / RED 33, CI 19140 / YELLOW 5.</p>",
+            "raw_content_3": "<p><strong>NATURAL ACTIVE INGREDIENTS</strong><br>All the products in the <a href=\"https://www.hairmnl.com/collections/davines-energizing-collection\"><i><u>Davines Energizing</u></i></a> family are enriched with Hair Energy Complex, which stimulates the cellular metabolism of the scalp, promoting tissue oxygenation.</p><ul>\n<li>\n<i>Beta-glucans</i> - polysaccarides that boost the protection of the cells.</li>\n<li>\n<i>Caffeine phytoceuticals</i> - stimulate the cellular metabolism and improve blood circulation.</li>\n<li>\n<i>Sirtuins</i> - longevity proteins with a strong anti-oxidant action to strengthen and invigorate the scalp.</li>\n</ul><p><strong>FULL INGREDIENTS</strong><br>AQUA / WATER / EAU, SODIUM LAUROYL METHYL ISETHIONATE, COCAMIDOPROPYL BETAINE, DISODIUM COCOAMPHODIACETATE, SODIUM LAUROYL SARCOSINATE, POLYSORBATE 20, CAFFEINE, SODIUM CHLORIDE, BENZYL ALCOHOL, PARFUM / FRAGRANCE, ACRYLATES/C10-30 ALKYL ACRYLATE CROSSPOLYMER, SODIUM BENZOATE, TRISODIUM ETHYLENEDIAMINE DISUCCINATE, MENTHA PIPERITA OIL / MENTHA PIPERITA (PEPPERMINT) OIL, GLYCERYL OLEATE, COCO-GLUCOSIDE, SODIUM HYDROXIDE, EUGENOL, DISODIUM EDTA, EUCALYPTUS GLOBULUS LEAF OIL, LINALOOL, POLYQUATERNIUM-10, LIMONENE, NIACINAMIDE, CITRIC ACID, EPIGALLOCATECHIN GALLATYL GLUCOSIDE, CI 17200 / RED 33, CI 19140 / YELLOW 5.</p>",
             "title_4": "",
             "raw_content_4": "",
             "title_5": "",
@@ -64,6 +104,7 @@
         },
         "79bf9d68-4ddc-4e34-8e9f-614789ba8c78": {
           "type": "upsell",
+          "disabled": true,
           "settings": {
             "product": ""
           }
@@ -87,6 +128,7 @@
       },
       "block_order": [
         "title",
+        "liquid_DyyRPq",
         "ldt_gift_wrap_product_gift_option_BRTygz",
         "form",
         "judge_me_reviews_review_snippet_widget_wFcDDA",
@@ -105,6 +147,63 @@
         "product_breadcrumbs": true,
         "enable_video_looping": true,
         "zoom_enable": true,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "vertex_pdp_recs": {
+      "type": "vertex-recommendations",
+      "settings": {
+        "placement": "pdp_below_atc",
+        "title": "Complete Your Routine",
+        "subtitle": "",
+        "rationale": ""
+      }
+    },
+    "faq": {
+      "type": "section-faq",
+      "blocks": {
+        "q1": {
+          "type": "text",
+          "settings": {
+            "title": "What does Davines Energizing Shampoo do for thinning hair?",
+            "content": "<p>It gently cleanses while micro-stimulating the scalp to encourage fuller, faster-looking growth and to thicken the hair you already have. It’s part of the Naturaltech line that targets specific scalp and hair concerns.</p>"
+          }
+        },
+        "q2": {
+          "type": "text",
+          "settings": {
+            "title": "Will it regrow hair where it’s already gone?",
+            "content": "<p>No. It won’t grow hair back on areas that are completely bare (shiny), but it helps thicken and strengthen existing hair and supports a healthier growth environment.</p>"
+          }
+        },
+        "q3": {
+          "type": "text",
+          "settings": {
+            "title": "Is it sulfate-free and suitable for daily use?",
+            "content": "<p>It’s free of harsh sulfates (SLS/SLES) and parabens and is plant-based — but it’s a targeted treatment shampoo, not a daily one, so it isn’t advised for daily use. The most frequent recommended use is every other day; see the usage guide below for the full schedule.</p>"
+          }
+        },
+        "q4": {
+          "type": "text",
+          "settings": {
+            "title": "How do I use the Davines Naturaltech Energizing Shampoo, and how often should I use it?",
+            "content": "<p>Gently massage about a tablespoon of the shampoo into damp hair, leave it on for 2 to 3 minutes, and rinse thoroughly. Repeat the application if necessary. For best results, alternate its use with the Davines Renewing Shampoo or Well-Being Shampoo.</p><p>Frequency of Use:</p><p>Intensive treatment: Use every other day for 1 month.</p><p>Maintenance treatment: Use twice a week for 2 months.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
         "bg": "palette--light bg--neutral"
       }
     },
@@ -169,7 +268,12 @@
       "blocks": {
         "d6ef5904-b9bf-4261-8cad-77fbc78445a5": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
         }
       },
       "block_order": [
@@ -225,64 +329,8 @@
         "bg": "palette--light bg--neutral"
       }
     },
-    "faq": {
-      "type": "section-faq",
-      "settings": {
-        "title": "Frequently Asked Questions",
-        "align_text": "text-left",
-        "text_size": 1,
-        "height": "margin--medium",
-        "width": "wrapper--narrow",
-        "text_color": "text--neutral",
-        "bg": "palette--light bg--neutral"
-      },
-      "blocks": {
-        "q1": {
-          "type": "text",
-          "settings": {
-            "title": "What does Davines Energizing Shampoo do for thinning hair?",
-            "content": "<p>It gently cleanses while micro-stimulating the scalp to encourage fuller, faster-looking growth and to thicken the hair you already have. It\u2019s part of the Naturaltech line that targets specific scalp and hair concerns.</p>"
-          }
-        },
-        "q2": {
-          "type": "text",
-          "settings": {
-            "title": "Will it regrow hair where it\u2019s already gone?",
-            "content": "<p>No.\u00a0It won\u2019t grow hair back on areas that are completely bare (shiny), but it helps thicken and strengthen existing hair and supports a healthier growth environment.</p>"
-          }
-        },
-        "q3": {
-          "type": "text",
-          "settings": {
-            "title": "Is it sulfate-free and suitable for daily use?",
-            "content": "<p>It\u2019s free of harsh sulfates (SLS/SLES) and parabens and is plant-based \u2014 but it\u2019s a targeted treatment shampoo, not a daily one, so it isn\u2019t advised for daily use. The most frequent recommended use is every other day; see the usage guide below for the full schedule.</p>"
-          }
-        },
-        "q4": {
-          "type": "text",
-          "settings": {
-            "title": "How do I use the Davines Naturaltech Energizing Shampoo, and how often should I use it?",
-            "content": "<p>Gently massage about a tablespoon of the shampoo into damp hair, leave it on for 2 to 3 minutes, and rinse thoroughly. Repeat the application if necessary. For best results, alternate its use with the Davines Renewing Shampoo or Well-Being Shampoo.</p><p>Frequency of Use:</p><p>Intensive treatment: Use every other day for 1 month.</p><p>Maintenance treatment: Use twice a week for 2 months.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "q1",
-        "q2",
-        "q3",
-        "q4"
-      ]
-    },
-    "vertex_pdp_recs": {
-      "type": "vertex-recommendations",
-      "settings": {
-        "placement": "pdp_below_atc",
-        "title": "Complete Your Routine",
-        "subtitle": "",
-        "rationale": ""
-      }
-    },
     "vertex_pdp_similar": {
+      "disabled": true,
       "type": "vertex-recommendations",
       "settings": {
         "placement": "pdp_below_description",

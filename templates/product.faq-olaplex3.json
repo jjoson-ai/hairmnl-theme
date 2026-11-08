@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -9,6 +18,12 @@
             "product_show_vendor": false,
             "show_rating": false,
             "show_rating_count": false
+          }
+        },
+        "liquid_fqyUC9": {
+          "type": "liquid",
+          "settings": {
+            "custom_liquid": "{% assign badge = product.metafields.custom.badge_image %}\n{% if badge == blank %}\n  {% assign badge = product.metafields.custom.custom_badge_image %}\n{% endif %}\n{% if badge != blank %}\n  <div style=\"margin-top: 12px; margin-bottom: 4px;\">\n    <img \n      src=\"{{ badge | image_url: width: 400 }}\"\n      alt=\"Product badge\"\n      style=\"max-width: 150px; height: auto; display: block;\"\n    >\n  </div>\n{% endif %}"
           }
         },
         "ldt_gift_wrap_product_gift_option_BRTygz": {
@@ -28,15 +43,40 @@
         },
         "judge_me_reviews_review_snippet_widget_wFcDDA": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_snippet_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
+          "settings": {
+            "reviews_selection": "auto",
+            "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
+            "min_star_rating": "inherit",
+            "show_review_media": true,
+            "max_reviews": 5,
+            "review_length": "medium",
+            "text_size": "medium",
+            "max_width": 1100,
+            "max_image_size": "small",
+            "arrows_visibility": "always_shown",
+            "transition_speed": 5,
+            "corner_styling": "inherit",
+            "text_color": "",
+            "card_color": "",
+            "stars_color": "",
+            "arrows_color": "",
+            "arrows_background_color": ""
+          }
         },
         "bogos_io_free_gift_mix_match_view_m4NLr7": {
           "type": "shopify://apps/bogos-io-free-gift/blocks/mix-match-view/0432bba6-720a-4e95-be5a-b868386f7aa6",
-          "settings": {}
+          "settings": {
+            "product": ""
+          }
         },
         "bogos_io_free_gift_bundle_view_MktdRx": {
           "type": "shopify://apps/bogos-io-free-gift/blocks/bundle-view/0432bba6-720a-4e95-be5a-b868386f7aa6",
-          "settings": {}
+          "settings": {
+            "product": ""
+          }
         },
         "16ab149a-fb4a-4bb4-8938-e96861cff1a9": {
           "type": "text",
@@ -51,11 +91,11 @@
             "read_more": true,
             "style": "accordions",
             "title_1": "Benefits",
-            "raw_content_1": "<p><strong>The Original Bond Builder\u2028</strong><br/>The only patented system to noticeably repair extreme damage\u2014turn dry, brittle hair into soft, shiny, and more resilient hair.</p><p><strong>Olaplex\u00a0works to repair broken bonds.</strong><br/>Patented active chemistry works on a molecular level. <i>Bis-Aminopropyl Diglycol Dimaleate</i>, a single molecule, dramatically improves the hair strength, protects from within, and provides immediate results for all hair types.</p><p><strong>Repairs all types of hair damage.</strong></p><ol><li>Thermal factors: High levels of heat from curling irons, blow dryers, flat irons.</li><li>Chemical factors: Colors, perms, relaxers and keratin treatments.</li><li>Mechanical factors: Brushing, friction, tugging and pulling on wet hair.</li><li>Environmental factors: UV Damage from the sun, humidity, extreme hot/ cold weather conditions, pollution.</li></ol><p><strong>AWARDS</strong></p><ul><li>The Selfridges Beauty Awards 2020,\u00a0<i>Hair Hero</i></li><li>Harper\u2019s Bazaar 2020, Top 10 Hair Winners</li><li>Harper\u2019s Bazaar 2019, Hair\u00a0Awards</li><li>Marie Claire Hair\u00a0Awards\u00a02018,\u00a0<i>Best Intensive Hair Mask</i></li><li>Vogue Beauty\u00a0Awards\u00a02017,\u00a0<i>Best of Haircare and Hairstyling</i></li><li>Allure Beauty Breakthrough\u00a0Awards\u00a02014,<i>\u00a0Conditioner for Treated Hair</i></li><li>Cult Beauty\u2019s Hall of Fame,\u00a0<i>Hair Treatment</i></li><li>PopSugar\u00a0Beauty\u00a0Awards,\u00a0<i>Best Hair Hall of Famer</i></li><li>Best of Beauty, Global Beauty\u00a0Award</li><li>Elite Daily, Best Products for Dry, Frizzy Hair,\u00a0<i>The Best Treatment</i></li></ul><p><i>*When used as a two-part system in just one use.</i></p>",
+            "raw_content_1": "<p><strong>The Original Bond Builder </strong><br>The only patented system to noticeably repair extreme damage—turn dry, brittle hair into soft, shiny, and more resilient hair.</p><p><strong>Olaplex works to repair broken bonds.</strong><br>Patented active chemistry works on a molecular level. <i>Bis-Aminopropyl Diglycol Dimaleate</i>, a single molecule, dramatically improves the hair strength, protects from within, and provides immediate results for all hair types.</p><p><strong>BENEFITS</strong></p><ul>\n<li>Fast, 3 minute pre-shampoo treatment</li>\n<li>Immediately softer, stronger hair</li>\n<li>Repairs all types of damage in all hair types; protein-free</li>\n<li>Reduces future breakage for length retention over time</li>\n</ul><p><strong>AWARDS</strong></p><ul>\n<li>The Selfridges Beauty Awards 2020, <i>Hair Hero</i>\n</li>\n<li>Harper’s Bazaar 2020, Top 10 Hair Winners</li>\n<li>Harper’s Bazaar 2019, Hair Awards</li>\n<li>Marie Claire Hair Awards 2018, <i>Best Intensive Hair Mask</i>\n</li>\n<li>Vogue Beauty Awards 2017, <i>Best of Haircare and Hairstyling</i>\n</li>\n<li>Allure Beauty Breakthrough Awards 2014,<i> Conditioner for Treated Hair</i>\n</li>\n<li>Cult Beauty’s Hall of Fame, <i>Hair Treatment</i>\n</li>\n<li>PopSugar Beauty Awards, <i>Best Hair Hall of Famer</i>\n</li>\n<li>Best of Beauty, Global Beauty Award</li>\n<li>Elite Daily, Best Products for Dry, Frizzy Hair, <i>The Best Treatment</i>\n</li>\n</ul>",
             "title_2": "How To Use",
-            "raw_content_2": "<ol><li>Apply a generous amount of\u00a0<strong>Olaplex No.3</strong>\u00a0from roots to ends on damp, towel dried hair.</li><li>Comb through once and leave on for a minimum of 10 minutes or more.</li><li>Rinse from hair, shampoo, and condition.</li><li>For best results, use the two-part system with\u00a0<a href=\"https://www.hairmnl.com/products/olaplex-no-0-intensive-bond-building-treatment\"><u>N\u00b0.0 Intensive Bond Building Treatment</u></a>\u00a0once a week or two to three times a week for damaged hair.</li></ol>",
+            "raw_content_2": "<ol>\n<li>In the shower, apply generously to wet hair from roots to ends. </li>\n<li>Leave on for 3 minutes. Rinse. </li>\n<li>Rinse from hair, shampoo, and condition.</li>\n</ol><p>For best results, use every 1-3 washes. Can be used daily if desired.</p>",
             "title_3": "Ingredients",
-            "raw_content_3": "<p><strong>Free of DEA, Aldehydes and Formaldehyde</strong></p><ul><li>PH Balanced: 3.5-5</li><li>Vegan</li><li>Cruelty Free</li><li>Gluten Free</li><li>Nut Free</li><li>Paraben Free</li><li>Phthalates Free</li><li>Phosphate Free</li><li>Sulfate Free</li></ul><p><strong>FULL INGREDIENTS</strong><br/>Water (Aqua/Eau), Bis-Aminopropyl Diglycol Dimaleate, Propylene Glycol, Cetearyl Alcohol, Behentrimonium Methosulfate, Phenoxyethanol, Cetyl Alcohol, Glycerin, Hydroxyethyl Ethylcellulose, Stearamidopropyl Dimethylamine, Quaternium-91, Sodium Benzoate, Cetrimonium Methosulfate, Cetrimonium Chloride, Fragrance (Parfum), Tetrasodium EDTA, Polyquaternium-37, Benzyl Benzoate, Etidronic Acid, Ascorbic Acid, Phytantriol, Tocopheryl Acetate, Aloe Barbadensis Leaf Juice, Panthenol, Simmondsia Chinensis (Jojoba) Seed Oil, Citric Acid, Potassium Sorbat</p>",
+            "raw_content_3": "<p><strong>KEY INGREDIENTS</strong></p><ul>\n<li>\n<strong>Natural Humectant Derived From L-Glutamic Acid</strong> - Improves manageability and infuses moisture.</li>\n<li>\n<strong>Crambe Abyssinica Seed Oil, Avocado Oil + Sunflower Seed Oil </strong>-<strong> </strong>Reduces frizz and flyaways, and improves smoothness.</li>\n</ul><p><strong>FULL INGREDIENTS</strong><br>Aqua (Water, Eau), Cetearyl Alcohol, Behentrimonium Methosulfate, Bis-Aminopropyl Diglycol Dimaleate, Hydroxypropyl Starch Phosphate, Propanediol, Distearyldimonium Chloride, Glycerin, Behentrimonium Chloride, Cetyl Alcohol, Stearyl Alcohol, Caesalpinia Spinosa Fruit Pod Extract, Panthenol, Butyrospermum Parkii (Shea) Butter, Crambe Abyssinica Seed Oil, Helianthus Annuus (Sunflower) Extract, Persea Gratissima (Avocado) Oil, Cocos Nucifera (Coconut) Oil, Helianthus Annuus (Sunflower) Seed Oil, Quaternium-91, Oryza Sativa (Rice) Bran Extract, Caprylic/Capric Triglyceride, Ethylhexylglycerin, Hydroxypropyl Guar Hydroxypropyltrimonium Chloride, Rosmarinus Officinalis (Rosemary) Leaf Extract, Tocopherol, Helianthus Annuus (Sunflower) Sprout Extract, Caprylyl Glycol, Cetrimonium Chloride, Sodium PCA, Polyhydroxystearic Acid, Polyester-37, Ethyl Linoleate, Ethyl Oleate, Cetrimonium Methosulfate, Isopropyl Alcohol, Propylene Glycol, C13-15 Alkane, Guar Hydroxypropyltrimonium Chloride, Pentaerythrityl Tetra-di-t-butyl Hydroxyhydrocinnamate, Acrylamidopropyltrimonium Chloride/Acrylamide Copolymer, Phenethyl Benzoate, Sodium Bisulfite, Trisodium Ethylenediamine Disuccinate, Sodium Metabisulfite, Citric Acid, Phenoxyethanol, Sodium Benzoate, Parfum (Fragrance), Linalyl Acetate, Linalool, Hydroxycitronellal, Alpha-Isomethyl Ionone, Citronellol, CI 19140 (Yellow 5), CI 15985 (Yellow 6).</p>",
             "title_4": "",
             "raw_content_4": "",
             "title_5": "",
@@ -64,6 +104,7 @@
         },
         "79bf9d68-4ddc-4e34-8e9f-614789ba8c78": {
           "type": "upsell",
+          "disabled": true,
           "settings": {
             "product": ""
           }
@@ -87,6 +128,7 @@
       },
       "block_order": [
         "title",
+        "liquid_fqyUC9",
         "ldt_gift_wrap_product_gift_option_BRTygz",
         "form",
         "judge_me_reviews_review_snippet_widget_wFcDDA",
@@ -105,6 +147,87 @@
         "product_breadcrumbs": true,
         "enable_video_looping": true,
         "zoom_enable": true,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "vertex_pdp_recs": {
+      "type": "vertex-recommendations",
+      "settings": {
+        "placement": "pdp_below_atc",
+        "title": "Complete Your Routine",
+        "subtitle": "",
+        "rationale": ""
+      }
+    },
+    "faq": {
+      "type": "section-faq",
+      "blocks": {
+        "q1": {
+          "type": "text",
+          "settings": {
+            "title": "What is a pre-shampoo treatment?",
+            "content": "<p>A pre-shampoo treatment is applied to wet hair in the shower, before you shampoo and condition.</p>"
+          }
+        },
+        "q2": {
+          "type": "text",
+          "settings": {
+            "title": "Does it work for all hair types and types of damage?",
+            "content": "<p>Yes! No.3PLUS works on all hair types, textures, and for all types of damage, such as heat, styling, environment, mechanical friction, color and chemicals, and hard water.</p>"
+          }
+        },
+        "q3": {
+          "type": "text",
+          "settings": {
+            "title": "Is there protein or keratin in No.3PLUS?",
+            "content": "<p>No, it is free of protein and keratin.</p>"
+          }
+        },
+        "text_TTW6Kf": {
+          "type": "text",
+          "settings": {
+            "title": "Do I need to use No.0 Intensive Bond Building Treatment with No.3PLUS Complete Repair Treatment?",
+            "content": "<p>No, you don't need to use No.0 Intensive Bond Building Treatment with No.3PLUS. No.0 was designed to be used alongside the original No.3 Hair Perfector for an extra boost. However, No.3PLUS is a next-generation formula and already delivers that enhanced performance on its own—so No.0 is not required.</p>"
+          }
+        },
+        "text_TCicgF": {
+          "type": "text",
+          "settings": {
+            "title": "Does No.3PLUS Complete Hair Treatment replace No.3 Hair Perfector?",
+            "content": "<p>Share details about your shipping policies, item returns, or customer service.</p>"
+          }
+        },
+        "text_UKTCRx": {
+          "type": "text",
+          "settings": {
+            "title": "What is the difference between No.3 and No.3PLUS?",
+            "content": "<p>While the original No.3 focused primarily on internal bond repair, the new No.3PLUS formula features an upgraded, next-generation formula that provides complete repair and protection. No.3PLUS repairs both the inside and outside of the hair strand (360° cuticle-to-cortex repair), adds protection to help prevent future damage, works in just 3 minutes (compared to 3-10 minutes for No.3), and is formulated for all hair types.</p>"
+          }
+        },
+        "text_zDJJVJ": {
+          "type": "text",
+          "settings": {
+            "title": "How do I use No.3PLUS Complete Repair Treatment, and how often should I use it? ›",
+            "content": "<p>Apply a generous amount to wet, unwashed hair from mid-lengths to ends. Leave it on for 3 minutes, then rinse, shampoo, and condition as usual. Use it 1–3 times per week (or every 1–3 washes), depending on your hair's level of damage.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "text_TTW6Kf",
+        "text_TCicgF",
+        "text_UKTCRx",
+        "text_zDJJVJ"
+      ],
+      "settings": {
+        "title": "Frequently asked questions",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
         "bg": "palette--light bg--neutral"
       }
     },
@@ -169,7 +292,12 @@
       "blocks": {
         "d6ef5904-b9bf-4261-8cad-77fbc78445a5": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
         }
       },
       "block_order": [
@@ -225,56 +353,8 @@
         "bg": "palette--light bg--neutral"
       }
     },
-    "faq": {
-      "type": "section-faq",
-      "settings": {
-        "title": "Frequently Asked Questions",
-        "align_text": "text-left",
-        "text_size": 1,
-        "height": "margin--medium",
-        "width": "wrapper--narrow",
-        "text_color": "text--neutral",
-        "bg": "palette--light bg--neutral"
-      },
-      "blocks": {
-        "q1": {
-          "type": "text",
-          "settings": {
-            "title": "Is Olaplex No.3 a conditioner?",
-            "content": "<p>No \u2014 it\u2019s an at-home bond-repair treatment used before you shampoo. It reduces breakage and strengthens damaged hair by repairing the bonds inside the hair structure.</p>"
-          }
-        },
-        "q2": {
-          "type": "text",
-          "settings": {
-            "title": "How do I use Olaplex No.3?",
-            "content": "<p>Apply to damp hair from roots to ends, leave it on for at least 10 minutes (longer for more damaged hair), then rinse, shampoo, and condition. Use it once or up to two to three times a week for damaged hair.</p>"
-          }
-        },
-        "q3": {
-          "type": "text",
-          "settings": {
-            "title": "Who is Olaplex No.3 for?",
-            "content": "<p>All hair types, especially hair with visible damage from coloring, bleaching, or heat. It\u2019s also great for maintaining results between salon chemical services.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "q1",
-        "q2",
-        "q3"
-      ]
-    },
-    "vertex_pdp_recs": {
-      "type": "vertex-recommendations",
-      "settings": {
-        "placement": "pdp_below_atc",
-        "title": "Complete Your Routine",
-        "subtitle": "",
-        "rationale": ""
-      }
-    },
     "vertex_pdp_similar": {
+      "disabled": true,
       "type": "vertex-recommendations",
       "settings": {
         "placement": "pdp_below_description",
@@ -282,6 +362,25 @@
         "subtitle": "",
         "rationale": ""
       }
+    },
+    "1788341652885532a2": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_728a2cd_c3VzGN": {
+          "type": "ai_gen_block_728a2cd",
+          "settings": {
+            "badge_size": 80,
+            "badge_size_mobile": 60,
+            "badge_offset": 10,
+            "badge_offset_mobile": 10
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_728a2cd_c3VzGN"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -295,6 +394,7 @@
     "related",
     "164447037586b39747",
     "1676916647a7e1c786",
-    "vertex_pdp_similar"
+    "vertex_pdp_similar",
+    "1788341652885532a2"
   ]
 }

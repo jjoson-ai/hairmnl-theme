@@ -104,20 +104,11 @@
     } catch (_) {}
   }
 
-  // Incrementality holdout (bd cji.9). Bucket is normally set by the inline
-  // script in vertex-recommendations.liquid, which runs earlier in the document
-  // (it also injects the display:none rule). Recomputed here from the SAME
-  // _shopify_y cookie getVisitorId() stamps on events, so the bucket can never
-  // disagree with the visitor_id the analysis re-buckets from. Fallback matters:
-  // on a page where no rail rendered, the inline script never ran.
+  // Incrementality holdout (bd cji.9) ENDED 2026-11-08: the day-26 readout was a
+  // bounded null, so every visitor sees the rails again. vxBucket() now always
+  // returns "treatment"; events keep the vx_bucket field so old queries still work.
   function vxBucket() {
-    if (!window.__vxBucket) {
-      var id = getVisitorId();
-      var isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id);
-      window.__vxBucket =
-        (isUuid && "89abcdef".indexOf(id.charAt(id.length - 1)) >= 0)
-          ? "holdout" : "treatment";
-    }
+    window.__vxBucket = "treatment";
     return window.__vxBucket;
   }
 

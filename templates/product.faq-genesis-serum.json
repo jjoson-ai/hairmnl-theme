@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -9,6 +18,12 @@
             "product_show_vendor": false,
             "show_rating": false,
             "show_rating_count": false
+          }
+        },
+        "liquid_NNqFnA": {
+          "type": "liquid",
+          "settings": {
+            "custom_liquid": "{% assign badge = product.metafields.custom.badge_image %}\n{% if badge == blank %}\n  {% assign badge = product.metafields.custom.custom_badge_image %}\n{% endif %}\n{% if badge != blank %}\n  <div style=\"margin-top: 12px; margin-bottom: 4px;\">\n    <img \n      src=\"{{ badge | image_url: width: 400 }}\"\n      alt=\"Product badge\"\n      style=\"max-width: 130px; height: auto; display: block;\"\n    >\n  </div>\n{% endif %}"
           }
         },
         "ldt_gift_wrap_product_gift_option_BRTygz": {
@@ -28,15 +43,40 @@
         },
         "judge_me_reviews_review_snippet_widget_wFcDDA": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_snippet_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
+          "settings": {
+            "reviews_selection": "auto",
+            "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
+            "min_star_rating": "inherit",
+            "show_review_media": true,
+            "max_reviews": 5,
+            "review_length": "medium",
+            "text_size": "medium",
+            "max_width": 1100,
+            "max_image_size": "small",
+            "arrows_visibility": "always_shown",
+            "transition_speed": 5,
+            "corner_styling": "inherit",
+            "text_color": "",
+            "card_color": "",
+            "stars_color": "",
+            "arrows_color": "",
+            "arrows_background_color": ""
+          }
         },
         "bogos_io_free_gift_mix_match_view_m4NLr7": {
           "type": "shopify://apps/bogos-io-free-gift/blocks/mix-match-view/0432bba6-720a-4e95-be5a-b868386f7aa6",
-          "settings": {}
+          "settings": {
+            "product": ""
+          }
         },
         "bogos_io_free_gift_bundle_view_MktdRx": {
           "type": "shopify://apps/bogos-io-free-gift/blocks/bundle-view/0432bba6-720a-4e95-be5a-b868386f7aa6",
-          "settings": {}
+          "settings": {
+            "product": ""
+          }
         },
         "16ab149a-fb4a-4bb4-8938-e96861cff1a9": {
           "type": "text",
@@ -51,11 +91,11 @@
             "read_more": true,
             "style": "accordions",
             "title_1": "Benefits",
-            "raw_content_1": "<ul><li>Re-anchor the fiber to the root.*</li><li>Helps control hair shedding.*</li><li>Significant anti hair-fall efficacy after 6 weeks of use.*</li><li>Significant soothing effect with decrease in total itchiness and discomfort after 3 weeks of use.**</li><li>Helps preserve the scalp natural protective barrier.***</li><li>Reinforces scalp.***</li><li>Helps improve barrier function of scalp.***</li></ul><p><i>*Clinical study, 99 people after 6 weeks of use (hair-loss).</i><br/><i>** Clinical study, 99 people after 3 weeks of use (soothing).</i><br/><i>***Clinical instrumental study.</i></p>",
+            "raw_content_1": "<ul>\n<li>Re-anchor the fiber to the root.*</li>\n<li>Helps control hair shedding.*</li>\n<li>Significant anti hair-fall efficacy after 6 weeks of use.*</li>\n<li>Significant soothing effect with decrease in total itchiness and discomfort after 3 weeks of use.**</li>\n<li>Helps preserve the scalp natural protective barrier.***</li>\n<li>Reinforces scalp.***</li>\n<li>Helps improve barrier function of scalp.***</li>\n</ul><p><i>*Clinical study, 99 people after 6 weeks of use (hair-loss).</i><br><i>** Clinical study, 99 people after 3 weeks of use (soothing).</i><br><i>***Clinical instrumental study.</i></p>",
             "title_2": "How To Use",
-            "raw_content_2": "<p>Use once daily in the morning or before going to bed during a 6-week period.</p><ul><li>Apply 4 doses on dry or towel-dried scalp, section by section.</li><li>1 dose = 1 pipette until the mark.</li><li>Massage gently.</li><li>Do not rinse.</li><li>Style as desired.</li></ul><p><strong>Pro Tip: </strong>Use this fortifying anti-fall Serum once daily to minimize hair-fall and maximize beautiful hair.</p>",
+            "raw_content_2": "<p>Use once daily in the morning or before going to bed during a 6-week period.</p><ul>\n<li>Apply 4 doses on dry or towel-dried scalp, section by section.</li>\n<li>1 dose = 1 pipette until the mark.</li>\n<li>Massage gently.</li>\n<li>Do not rinse.</li>\n<li>Style as desired.</li>\n</ul><p><strong>Pro Tip: </strong>Use this fortifying anti-fall Serum once daily to minimize hair-fall and maximize beautiful hair.</p>",
             "title_3": "Ingredients",
-            "raw_content_3": "<p><strong>Key Ingredients</strong><br/>A unique combination of potent anti hair-fall complex:</p><ul><li>Aminexil 1.5% helps hair to anchor more solidly into the scalp and prevents collagen from hardening around hair follicles.</li><li>Ginger Root is known for its ability to protect against daily external aggressor.</li><li>Caffeine contributes to improve scalp micro-circulation thanks to its stimulating properties.</li></ul><p><strong>Full Ingredients</strong><br/>Aqua / water / eau - Alcohol denat - Diaminopyrimidine oxide - Ammonium polyacryloyldimethyl taurate - Aminomethyl propanol - Citric acid - Peg-40 hydrogenated castor oil - Piroctone olamine - Caffeine - Arginine - Limonene - Niacinamide - Pyridoxine hcl - Linalool - Safflower glucoside - Benzyl salicylate - Coumarin - Citral - Benzyl alcohol - Xylitylglucoside - Citronellol - Benzyl benzoate - Anhydroxylitol - Xylitol - Zingiber officinale root extract / ginger root extract - Resveratrol - Tocopherol - Bht - Sodium citrate - Parfum / fragrance.</p>",
+            "raw_content_3": "<p><strong>Key Ingredients</strong><br>A unique combination of potent anti hair-fall complex:</p><ul>\n<li>Aminexil 1.5% helps hair to anchor more solidly into the scalp and prevents collagen from hardening around hair follicles.</li>\n<li>Ginger Root is known for its ability to protect against daily external aggressor.</li>\n<li>Caffeine contributes to improve scalp micro-circulation thanks to its stimulating properties.</li>\n</ul><p><strong>Full Ingredients</strong><br>Aqua / water / eau - Alcohol denat - Diaminopyrimidine oxide - Ammonium polyacryloyldimethyl taurate - Aminomethyl propanol - Citric acid - Peg-40 hydrogenated castor oil - Piroctone olamine - Caffeine - Arginine - Limonene - Niacinamide - Pyridoxine hcl - Linalool - Safflower glucoside - Benzyl salicylate - Coumarin - Citral - Benzyl alcohol - Xylitylglucoside - Citronellol - Benzyl benzoate - Anhydroxylitol - Xylitol - Zingiber officinale root extract / ginger root extract - Resveratrol - Tocopherol - Bht - Sodium citrate - Parfum / fragrance.</p>",
             "title_4": "",
             "raw_content_4": "",
             "title_5": "",
@@ -87,6 +127,7 @@
       },
       "block_order": [
         "title",
+        "liquid_NNqFnA",
         "ldt_gift_wrap_product_gift_option_BRTygz",
         "form",
         "judge_me_reviews_review_snippet_widget_wFcDDA",
@@ -105,6 +146,63 @@
         "product_breadcrumbs": true,
         "enable_video_looping": true,
         "zoom_enable": true,
+        "bg": "palette--light bg--neutral"
+      }
+    },
+    "vertex_pdp_recs": {
+      "type": "vertex-recommendations",
+      "settings": {
+        "placement": "pdp_below_atc",
+        "title": "Complete Your Routine",
+        "subtitle": "",
+        "rationale": ""
+      }
+    },
+    "faq": {
+      "type": "section-faq",
+      "blocks": {
+        "q1": {
+          "type": "text",
+          "settings": {
+            "title": "What does the Kérastase Genesis serum do?",
+            "content": "<p>It’s a daily leave-in scalp serum for weakened hair that’s prone to falling from breakage. Powered by Aminexil, Edelweiss Native Cells, and Ginger Root, it strengthens hair, helps re-anchor the follicle, and reduces hair-fall.</p>"
+          }
+        },
+        "q2": {
+          "type": "text",
+          "settings": {
+            "title": "Does it treat hair fall at the root or from breakage?",
+            "content": "<p>Both — and Genesis splits the work across the range: the Serum targets hair-fall at the root, while the shampoo and conditioner help guard against fibre breakage. Tackling both causes together is what sets the range apart.</p>"
+          }
+        },
+        "q3": {
+          "type": "text",
+          "settings": {
+            "title": "How and when do I apply it?",
+            "content": "<p>Apply the jelly-textured serum directly to a clean scalp daily and massage in. It’s a leave-in (no rinsing), and the gel-like texture stays put without dripping.</p>"
+          }
+        },
+        "q4": {
+          "type": "text",
+          "settings": {
+            "title": "Will it regrow hair on bald spots?",
+            "content": "<p>No. It’s a fortifying, anti-hair-fall serum that strengthens and protects the hair you have and supports a healthier scalp environment — it isn’t a regrowth treatment for areas where hair is already gone.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "align_text": "text-left",
+        "text_size": 1,
+        "height": "margin--medium",
+        "width": "wrapper--narrow",
+        "text_color": "text--neutral",
         "bg": "palette--light bg--neutral"
       }
     },
@@ -169,7 +267,12 @@
       "blocks": {
         "d6ef5904-b9bf-4261-8cad-77fbc78445a5": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
         }
       },
       "block_order": [
@@ -225,64 +328,8 @@
         "bg": "palette--light bg--neutral"
       }
     },
-    "faq": {
-      "type": "section-faq",
-      "settings": {
-        "title": "Frequently Asked Questions",
-        "align_text": "text-left",
-        "text_size": 1,
-        "height": "margin--medium",
-        "width": "wrapper--narrow",
-        "text_color": "text--neutral",
-        "bg": "palette--light bg--neutral"
-      },
-      "blocks": {
-        "q1": {
-          "type": "text",
-          "settings": {
-            "title": "What does the K\u00e9rastase Genesis serum do?",
-            "content": "<p>It\u2019s a daily leave-in scalp serum for weakened hair that\u2019s prone to falling from breakage. Powered by Aminexil, Edelweiss Native Cells, and Ginger Root, it strengthens hair, helps re-anchor the follicle, and reduces hair-fall.</p>"
-          }
-        },
-        "q2": {
-          "type": "text",
-          "settings": {
-            "title": "Does it treat hair fall at the root or from breakage?",
-            "content": "<p>Both \u2014 and Genesis splits the work across the range: the Serum targets hair-fall at the root, while the shampoo and conditioner help guard against fibre breakage. Tackling both causes together is what sets the range apart.</p>"
-          }
-        },
-        "q3": {
-          "type": "text",
-          "settings": {
-            "title": "How and when do I apply it?",
-            "content": "<p>Apply the jelly-textured serum directly to a clean scalp daily and massage in. It\u2019s a leave-in (no rinsing), and the gel-like texture stays put without dripping.</p>"
-          }
-        },
-        "q4": {
-          "type": "text",
-          "settings": {
-            "title": "Will it regrow hair on bald spots?",
-            "content": "<p>No.\u00a0It\u2019s a fortifying, anti-hair-fall serum that strengthens and protects the hair you have and supports a healthier scalp environment \u2014 it isn\u2019t a regrowth treatment for areas where hair is already gone.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "q1",
-        "q2",
-        "q3",
-        "q4"
-      ]
-    },
-    "vertex_pdp_recs": {
-      "type": "vertex-recommendations",
-      "settings": {
-        "placement": "pdp_below_atc",
-        "title": "Complete Your Routine",
-        "subtitle": "",
-        "rationale": ""
-      }
-    },
     "vertex_pdp_similar": {
+      "disabled": true,
       "type": "vertex-recommendations",
       "settings": {
         "placement": "pdp_below_description",
